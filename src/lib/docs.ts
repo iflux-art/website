@@ -49,7 +49,7 @@ export function getDocCategories(): DocCategory[] {
           const meta = JSON.parse(metaContent);
           title = meta.title || categoryId;
           description = meta.description || '';
-        } catch (e) {
+        } catch {
           // 如果解析失败，使用默认值
         }
       }

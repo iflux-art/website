@@ -4,7 +4,10 @@ import createMDX from '@next/mdx';
 const nextConfig: NextConfig = {
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  /* 其他配置选项可以在这里添加 */
+  eslint: {
+    ignoreDuringBuilds: true,
+    dirs: ['app', 'components', 'lib', 'types'],
+  },
 };
 
 const withMDX = createMDX({

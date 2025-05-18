@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Variants } from "framer-motion";
+import { Variants, AnimationConfig } from "framer-motion";
 import * as animations from "@/lib/animations";
 
 type AnimationKey = keyof typeof animations;
@@ -22,7 +22,7 @@ export function useAnimation(
   options?: {
     delay?: number;
     duration?: number;
-    custom?: any;
+    custom?: AnimationConfig;
   }
 ): Variants {
   const [animation, setAnimation] = useState<Variants>({});

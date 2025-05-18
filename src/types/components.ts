@@ -2,7 +2,7 @@
  * 组件类型定义
  */
 import { ReactNode } from 'react';
-import { Language } from './common';
+
 
 // 按钮组件属性
 export interface ButtonProps extends React.ComponentProps<"button"> {

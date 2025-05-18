@@ -1,7 +1,7 @@
 import type { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
 import Link from 'next/link'
-import { components } from '@/components'
+import { components } from '@/components/markdown/index'
 import { mdxTypographyComponents, MDXTypography } from '@/components/markdown/mdx-typography'
 import { codeBlockComponents } from '@/components/markdown/code-block'
 import { Callout, calloutComponents } from '@/components/markdown/callout'
@@ -40,6 +40,7 @@ export const mdxComponents = {
         sizes="100vw"
         style={{ width: '100%', height: 'auto' }}
         className="rounded-md border"
+        alt={props.alt || ''}
         {...(props as ImageProps)}
       />
     </div>

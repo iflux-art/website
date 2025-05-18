@@ -6,10 +6,9 @@ interface AuthorCardProps {
   author: string;
   authorAvatar: string | null;
   authorBio: string;
-  lang: string;
 }
 
-export function AuthorCard({ author, lang }: AuthorCardProps) {
+export function AuthorCard({ author }: AuthorCardProps) {
   return (
     <div className="mt-12 border-t pt-8">
       <Card>
@@ -28,9 +27,7 @@ export function AuthorCard({ author, lang }: AuthorCardProps) {
           </div>
         </CardContent>
         <CardFooter className="px-6 py-4 bg-muted/50 text-xs">
-          {lang === 'zh' 
-            ? '© 版权声明：本文著作权归作者所有，未经许可不得转载。' 
-            : '© Copyright: All rights reserved. No part of this article may be reproduced without permission.'}
+          © 版权声明：本文著作权归作者所有，未经许可不得转载。
         </CardFooter>
       </Card>
     </div>

@@ -73,7 +73,7 @@ export function getPostsByTag(tag: string) {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
   
-  const posts: any[] = [];
+  const posts: Post[] = [];
   
   // 递归函数来查找所有博客文件
   const findPostsWithTag = (dir: string) => {
