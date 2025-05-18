@@ -1,0 +1,22 @@
+{
+  "ai": {
+    "title": "人工智能",
+    "items": [
+      "introduction",
+      "getting-started",
+      {
+        "基础概念": [
+          "concepts",
+          "models",
+          "training"
+        ]
+      },
+      {
+        "高级应用": [
+          "applications",
+          "case-studies"
+        ]
+      }
+    ]
+  }
+}
