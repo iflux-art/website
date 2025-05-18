@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 
-import { BlogList } from '@/components/blog/blog-list';
+import { BlogList } from '@/components/features/blog/blog-list';
 import { getAllTags } from '@/lib/blog';
 
 export default function BlogPage() {

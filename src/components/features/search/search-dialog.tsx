@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSearchParams } from 'next/navigation';
+
 import { SEARCH_ITEMS, SEARCH_CATEGORIES } from "@/lib/constants";
 
 /**
@@ -42,8 +42,7 @@ export function SearchButton({ onClick }: { onClick: () => void }) {
  * 点击搜索按钮后弹出的搜索框和推荐内容列表
  */
 export function SearchDialog() {
-  const searchParams = useSearchParams();
-  const lang = searchParams.get('lang') || 'zh';
+
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
 
@@ -81,14 +80,14 @@ export function SearchDialog() {
                   (item) => 
                     item.category === category.id && 
                     (search === "" || 
-                     (lang === 'zh' ? item.title : item.titleEn).toLowerCase().includes(search.toLowerCase())
+                     item.title.toLowerCase().includes(search.toLowerCase())
                     )
                 ).map((item) => (
                   <CommandItem
                     key={item.id}
-                    value={lang === 'zh' ? item.title : item.titleEn}
+                    value={item.title}
                     onSelect={() => {
-                      window.location.href = `/${lang}${item.url}`;
+                      window.location.href = item.url;
                       setOpen(false);
                     }}
                   >
@@ -98,7 +97,7 @@ export function SearchDialog() {
                           {React.createElement(item.icon, { size: 16 })}
                         </span>
                       )}
-                      <span>{lang === 'zh' ? item.title : item.titleEn}</span>
+                      <span>{item.title}</span>
                     </div>
                     <div className="ml-auto text-xs text-muted-foreground">
                       {item.shortcut && (

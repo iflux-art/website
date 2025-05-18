@@ -5,6 +5,27 @@
 
 /* 添加全局动画变量和过渡效果 */
 @layer base {
+  /* 网格背景图案 */
+  .bg-grid-pattern {
+    background-image: linear-gradient(
+        to right,
+        rgba(128, 128, 128, 0.2) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(128, 128, 128, 0.2) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* 确保在亮色和暗色模式下都能看到网格 */
+  .dark .bg-grid-pattern {
+    background-image: linear-gradient(
+        to right,
+        rgba(128, 128, 128, 0.2) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(128, 128, 128, 0.2) 1px, transparent 1px);
+  }
+
   :root {
     --animation-duration-fast: 0.2s;
     --animation-duration-normal: 0.3s;
@@ -21,24 +42,28 @@
     opacity: 0;
     transform: translateY(8px);
   }
-  
+
   .page-transition-enter-active {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity var(--animation-duration-normal) var(--animation-timing-function),
-                transform var(--animation-duration-normal) var(--animation-timing-function);
+    transition: opacity var(--animation-duration-normal)
+        var(--animation-timing-function),
+      transform var(--animation-duration-normal)
+        var(--animation-timing-function);
   }
-  
+
   .page-transition-exit {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   .page-transition-exit-active {
     opacity: 0;
     transform: translateY(-8px);
-    transition: opacity var(--animation-duration-normal) var(--animation-timing-function),
-                transform var(--animation-duration-normal) var(--animation-timing-function);
+    transition: opacity var(--animation-duration-normal)
+        var(--animation-timing-function),
+      transform var(--animation-duration-normal)
+        var(--animation-timing-function);
   }
 }
 

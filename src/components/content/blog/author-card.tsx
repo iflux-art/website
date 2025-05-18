@@ -1,6 +1,6 @@
-import { User } from 'lucide-react';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Avatar } from '@/components/ui/avatar';
+import { User } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Avatar } from "@/components/ui/avatar";
 
 interface AuthorCardProps {
   author: string;
@@ -8,21 +8,25 @@ interface AuthorCardProps {
   authorBio: string;
 }
 
-export function AuthorCard({ author }: AuthorCardProps) {
+export function AuthorCard({
+  author,
+  authorAvatar,
+  authorBio,
+}: AuthorCardProps) {
   return (
     <div className="mt-12 border-t pt-8">
       <Card>
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            <Avatar 
-              src={"/images/bowie.jpg"} 
+            <Avatar
+              src={authorAvatar || undefined}
               alt={author}
               className="h-12 w-12"
               fallback={<User className="h-6 w-6" />}
             />
             <div>
-              <h3 className="font-medium">{"Bowie"}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{"iflux.art | 斐流艺创"}</p>
+              <h3 className="font-medium">{author}</h3>
+              <p className="text-sm text-muted-foreground mt-1">{authorBio}</p>
             </div>
           </div>
         </CardContent>

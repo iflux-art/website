@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { getDocCategories, getRecentDocs } from '@/lib/docs';
-import { DocCategoryCard } from '@/components/docs/doc-category-card';
-import { RecentDocsList } from '@/components/docs/recent-docs-list';
+import { DocCategoryCard } from '@/components/features/content/category/doc-category-card';
+import { RecentDocsList } from '@/components/features/docs/recent-docs-list';
 
 export default function DocsPage() {
   // 获取文档分类和最新文档

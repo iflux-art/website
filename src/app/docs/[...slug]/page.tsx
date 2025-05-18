@@ -9,10 +9,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { mdxComponents } from '@/mdx-components';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { DocsSidebarImproved } from '@/components/content/docs/sidebar-improved';
-import { TableOfContentsClientWrapper } from '@/components/content/toc/toc-client-wrapper';
-import { AdvertisementCard } from '@/components/content/advertisement-card';
-import { BackToTopButton } from '@/components/content/back-to-top-button';
+import { DocsSidebarImproved } from '@/components/features/docs/sidebar/sidebar-improved';
+import { TableOfContentsClientWrapper } from '@/components/features/content/toc/toc-client-wrapper';
+import { AdvertisementCard } from '@/components/features/content/advertisement-card';
+import { BackToTopButton } from '@/components/features/content/back-to-top-button';
 
 export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径

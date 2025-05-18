@@ -1,10 +1,40 @@
+/**
+ * 组件导出文件
+ * 统一导出所有UI组件、功能组件和布局组件
+ */
+
+// UI 组件
 export * from './ui/avatar'
 export * from './ui/button'
-export * from './markdown/copy'
-export * from './markdown/image'
-export * from './markdown/link'
-export * from './layout/page-layout'
+export * from './ui/card'
+export * from './ui/collapsible'
+export * from './ui/command'
+export * from './ui/dialog'
+export * from './ui/input'
+export * from './ui/sheet'
+export * from './ui/markdown'
+export * from './typography'
+
+// 功能组件
+export * from './features/theme-toggle'
 export * from './features/search'
-export * from './navigation/category-card'
-export * from './docs/doc-category-card'
-export * from './docs/recent-docs-list'
+export * from './features/blog/author-card'
+export * from './features/blog/blog-list'
+export * from './features/blog/post-card'
+export * from './features/blog/related-posts'
+export * from './features/blog/tag-cloud'
+export * from './features/content/advertisement-card'
+export * from './features/content/back-to-top-button'
+export * from './features/docs/recent-docs-list'
+export * from './features/friends/friend-card'
+export * from './features/friends/friend-cards'
+export * from './features/logo'
+export * from './features/travelling'
+
+// 布局组件
+export * from './layout/footer'
+export * from './layout/page-layout'
+export * from './layout/navbar'
+export * from './layout/home/feature-card'
+export * from './layout/home/feature-cards'
+export * from './layout/navigation/category-card'

@@ -2,6 +2,7 @@
  * 交互动画定义
  * 提供用户交互相关的动画效果
  */
+import { Variants } from "framer-motion";
 
 // 悬停缩放效果
 export const hoverScale = {
@@ -54,5 +55,29 @@ export const shake = {
   animate: {
     x: [0, -5, 5, -5, 5, 0],
     transition: { duration: 0.5 },
+  },
+};
+
+// 交错容器动画
+export const staggerContainer: Variants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+// 列表项交错动画
+export const staggerItem: Variants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
   },
 };

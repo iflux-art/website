@@ -1,24 +1,49 @@
+import React from 'react';
 import type { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
 import Link from 'next/link'
-import { components } from '@/components/markdown/index'
-import { mdxTypographyComponents, MDXTypography } from '@/components/markdown/mdx-typography'
-import { codeBlockComponents } from '@/components/markdown/code-block'
-import { Callout, calloutComponents } from '@/components/markdown/callout'
-import { enhancedTableComponents } from '@/components/markdown/enhanced-table'
+// 导入所有必要的组件
+import { mdxTypographyComponents, MDXTypography } from '@/components/ui/markdown/mdx-typography'
+import { codeBlockComponents } from '@/components/ui/markdown/code-block'
+import { Callout, calloutComponents } from '@/components/ui/markdown/callout'
+import { enhancedTableComponents } from '@/components/ui/markdown/enhanced-table'
+import Copy from '@/components/ui/markdown/copy'
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
 // React component you want, including inline styles,
 // components from other libraries, and more.
- 
+
+interface MDXProps {
+  mdxType?: string;
+  className?: string;
+  [key: string]: any;
+}
+
+type MDXChildrenProps = {
+  children: React.ReactNode;
+}
+
 export const mdxComponents = {
   // 使用自定义排版组件
   ...mdxTypographyComponents,
 
   // 覆盖段落组件处理逻辑
-  p: ({ children }) => {
-    if (typeof children === 'object' && children?.props?.mdxType === 'pre') {
+  p: ({ children }: MDXChildrenProps) => {
+    // 检查子元素是否包含任何块级元素
+    const hasBlockElement = React.Children.toArray(children).some(child => {
+      if (!React.isValidElement(child)) return false;
+      
+      const props = child.props as MDXProps;
+      
+      // 检查常见块级元素类型
+      const blockTypes = ['div', 'pre', 'ul', 'ol', 'table', 'blockquote'];
+      return blockTypes.includes(child.type as string) || 
+             (props.mdxType && blockTypes.includes(props.mdxType)) ||
+             (props.className?.includes('language-'));
+    });
+    
+    if (hasBlockElement) {
       return <>{children}</>
     }
     return <p className="leading-7 my-6">{children}</p>
@@ -34,14 +59,14 @@ export const mdxComponents = {
   ...enhancedTableComponents,
   
   // 图片组件
-  img: (props) => (
+  img: (props: ImageProps) => (
     <div className="my-8">
       <Image
+        {...(props as ImageProps)}
         sizes="100vw"
         style={{ width: '100%', height: 'auto' }}
         className="rounded-md border"
         alt={props.alt || ''}
-        {...(props as ImageProps)}
       />
     </div>
   ),
@@ -72,10 +97,8 @@ export const mdxComponents = {
   },
   
   // 包装器组件，用于包装整个MDX内容
-  wrapper: ({ children }) => (
+  wrapper: ({ children }: MDXChildrenProps) => (
     <MDXTypography>{children}</MDXTypography>
   ),
   
-  // 继承其他组件
-  ...components,
 };

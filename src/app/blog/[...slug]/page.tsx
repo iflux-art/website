@@ -8,29 +8,47 @@ import { Calendar } from 'lucide-react';
 
 import { mdxComponents } from '@/mdx-components';
 
-import { TableOfContentsClientWrapper } from '@/components/content/toc/toc-client-wrapper';
-import { BackToTopButton } from '@/components/content/back-to-top-button';
-import { AuthorCard } from '@/components/content/blog/author-card';
-import { TagCloud } from '@/components/content/blog/tag-cloud';
-import { RelatedPosts } from '@/components/content/blog/related-posts';
-import { AdvertisementCard } from '@/components/content/advertisement-card';
+import { TableOfContentsClientWrapper } from '@/components/features/content/toc/toc-client-wrapper';
+import { BackToTopButton } from '@/components/features/content/back-to-top-button';
+import { AuthorCard } from '@/components/features/blog/author-card';
+import { TagCloud } from '@/components/features/blog/tag-cloud';
+import { RelatedPosts } from '@/components/features/blog/related-posts';
+import { AdvertisementCard } from '@/components/features/content/advertisement-card';
 
-export default async function BlogPost({ params }: { params: { slug: string[] } }) {
-  const slug = Array.isArray(await params.slug) ? await params.slug : [await params.slug];
+import { PageProps } from '@/types/page-props';
+
+export default async function BlogPost({ params }: PageProps) {
+  const slug = params.slug;
   const fullSlug = slug.join('/');
-  let filePath;
+  let filePath: string | undefined;
   
   // 处理可能的子目录结构
   if (slug.length > 1) {
     const category = slug[0];
     const postName = slug.slice(1).join('/');
-    filePath = path.join(process.cwd(), 'src', 'content', 'blog', category, `${postName}.mdx`);
+    // 尝试不同的文件扩展名
+    const mdxPath = path.join(process.cwd(), 'src', 'content', 'blog', category, `${postName}.mdx`);
+    const mdPath = path.join(process.cwd(), 'src', 'content', 'blog', category, `${postName}.md`);
+    
+    if (fs.existsSync(mdxPath)) {
+      filePath = mdxPath;
+    } else if (fs.existsSync(mdPath)) {
+      filePath = mdPath;
+    }
   } else {
-    filePath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.mdx`);
+    // 尝试不同的文件扩展名
+    const mdxPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.mdx`);
+    const mdPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.md`);
+    
+    if (fs.existsSync(mdxPath)) {
+      filePath = mdxPath;
+    } else if (fs.existsSync(mdPath)) {
+      filePath = mdPath;
+    }
   }
 
   // 检查文件是否存在
-  if (!fs.existsSync(filePath)) {
+  if (!filePath || !fs.existsSync(filePath)) {
     notFound();
   }
 
@@ -70,10 +88,18 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
   });
   
   // 确保所有标题都有唯一ID
+  let processedContent = content;
+  headings.forEach((heading) => {
+    // 替换标题行，添加ID
+    const headingRegex = new RegExp(`^(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\\s*{#[\\w-]+})?$`, 'gm');
+    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
+  });
+  
+  // 确保所有标题都有唯一ID
   const processedHeadings = headings.map((heading) => {
     // 服务端渲染环境中没有document对象，移除对document的引用
     const updatedContent = content.replace(
-      new RegExp(`(^|\n)(#{${heading.level}})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'g'),
+      new RegExp(`(^|\n)(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'g'),
       `$1$2 $3 {#${heading.id}}`
     );
     return {
@@ -83,7 +109,7 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
   });
   
   // 应用所有内容更新
-  processedHeadings.reduce(
+  const finalContent = processedHeadings.reduce(
     (acc, heading) => heading.updatedContent || acc, 
     content
   );
@@ -102,14 +128,14 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
       
       if (item.isDirectory()) {
         findBlogFiles(itemPath, relativePath);
-      } else if (item.isFile() && item.name.endsWith('.mdx')) {
+      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
         // 跳过当前文章
         if (itemPath === filePath) continue;
         
         const postContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(postContent);
-        const postSlug = item.name.replace('.mdx', '');
-        const fullPostSlug = relativePath.replace('.mdx', '');
+        const postSlug = item.name.replace(/\.(mdx|md)$/, '');
+        const fullPostSlug = relativePath.replace(/\.(mdx|md)$/, '');
         
         relatedPosts.push({
           slug: fullPostSlug,
@@ -161,7 +187,7 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
             </header>
             
             <div className="prose dark:prose-invert max-w-none">
-              <MDXRemote source={content} components={mdxComponents} />
+              <MDXRemote source={finalContent} components={mdxComponents} />
             </div>
           </article>
 
