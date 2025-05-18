@@ -4,7 +4,6 @@ import * as React from "react";
 import { TramFront } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { pulse, iconSpin } from "@/lib/animations";
 
 /**
  * 开往组件，点击跳转到开往友链接力
@@ -20,7 +19,7 @@ export function Travelling() {
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
-        whileHover={iconSpin}
+        whileHover={{ rotate: 360 }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.3 }}
       >

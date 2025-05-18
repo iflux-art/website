@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "next-themes";
-import { LanguageProvider } from "@/contexts/language-context";
 import { SITE_METADATA } from "@/lib/constants";
 
 const geistSans = Geist({
@@ -18,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: SITE_METADATA.title.zh,
-  description: SITE_METADATA.description.zh,
+  title: "iFluxArt · 斐流艺创",
+  description: "斐启智境 · 流韵新生",
   authors: [{ name: SITE_METADATA.author }],
 };
 
@@ -40,13 +39,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider>
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </LanguageProvider>
+          <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

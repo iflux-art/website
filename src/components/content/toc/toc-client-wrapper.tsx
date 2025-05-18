@@ -11,20 +11,19 @@ type Heading = {
 
 interface TableOfContentsClientWrapperProps {
   headings: Heading[];
-  lang: string;
 }
 
 /**
  * 客户端包装组件，用于在服务器组件中使用TableOfContentsImproved
  */
-export function TableOfContentsClientWrapper({ headings, lang }: TableOfContentsClientWrapperProps) {
+export function TableOfContentsClientWrapper({ headings }: TableOfContentsClientWrapperProps) {
   return (
     <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
       <div className="py-2 px-4 font-medium text-sm border-b flex items-center gap-1.5">
         <FileText className="h-4 w-4" />
-        {lang === "zh" ? "目录" : "On this page"}
+        目录
       </div>
-      <TableOfContentsImproved headings={headings} lang={lang} />
+      <TableOfContentsImproved headings={headings} />
     </div>
   );
 }

@@ -5,18 +5,13 @@ import { motion } from "framer-motion";
 interface FriendCardProps {
   href: string;
   avatar: string;
-  name: {
-    zh: string;
-    en: string;
-  };
-  description: {
-    zh: string;
-    en: string;
-  };
-  lang: string;
+  // 简化为直接字符串类型
+  name: string;
+  description: string;
+  // 移除 lang 属性
 }
 
-export function FriendCard({ href, avatar, name, description, lang }: FriendCardProps) {
+export function FriendCard({ href, avatar, name, description }: FriendCardProps) {
   return (
     <motion.a 
       href={href} 
@@ -29,8 +24,9 @@ export function FriendCard({ href, avatar, name, description, lang }: FriendCard
       <div className="w-16 h-16 rounded-full bg-muted mb-3 overflow-hidden flex items-center justify-center text-2xl font-bold text-primary">
         {avatar}
       </div>
-      <h3 className="font-medium mb-1">{name[lang as keyof typeof name]}</h3>
-      <p className="text-sm text-muted-foreground">{description[lang as keyof typeof description]}</p>
+      {/* 直接显示字符串内容 */}
+      <h3 className="font-medium mb-1">{name}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
     </motion.a>
   );
 }

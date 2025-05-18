@@ -3,58 +3,35 @@
 import { FriendCard } from "./friend-card";
 
 interface FriendCardsProps {
-  lang: string;
+  className?: string;
 }
 
-export function FriendCards({ lang }: FriendCardsProps) {
+export function FriendCards({}: FriendCardsProps) {
   const friends = [
     {
       href: "https://example.com/blog",
       avatar: "A",
-      name: {
-        zh: "示例博客",
-        en: "Sample Blog"
-      },
-      description: {
-        zh: "一个分享技术与生活的个人博客",
-        en: "A personal blog sharing technology and life"
-      }
+      // 简化为直接使用字符串
+      name: "示例博客",
+      description: "一个分享技术与生活的个人博客"
     },
     {
       href: "https://example.com/blog",
       avatar: "B",
-      name: {
-        zh: "技术笔记",
-        en: "Tech Notes"
-      },
-      description: {
-        zh: "记录学习与开发过程的技术博客",
-        en: "A technical blog recording learning and development processes"
-      }
+      name: "技术笔记",
+      description: "记录学习与开发过程的技术博客"
     },
     {
       href: "https://example.com/tech",
       avatar: "C",
-      name: {
-        zh: "前端开发",
-        en: "Frontend Dev"
-      },
-      description: {
-        zh: "专注于前端技术分享的网站",
-        en: "A website focused on frontend technology sharing"
-      }
+      name: "前端开发",
+      description: "专注于前端技术分享的网站"
     },
     {
       href: "https://example.com/design",
       avatar: "D",
-      name: {
-        zh: "设计灵感",
-        en: "Design Inspiration"
-      },
-      description: {
-        zh: "分享UI/UX设计理念与案例",
-        en: "Sharing UI/UX design concepts and cases"
-      }
+      name: "设计灵感",
+      description: "分享UI/UX设计理念与案例"
     }
   ];
 
@@ -67,7 +44,7 @@ export function FriendCards({ lang }: FriendCardsProps) {
           avatar={friend.avatar}
           name={friend.name}
           description={friend.description}
-          lang={lang}
+          // 移除了 lang 属性传递
         />
       ))}
     </div>

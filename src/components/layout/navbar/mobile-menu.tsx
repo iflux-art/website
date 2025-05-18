@@ -6,11 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/features/theme-toggle/index";
 import { SearchDialog } from "@/components/features/search";
-import { LanguageToggle } from "@/components/features/language-toggle";
 import { Travelling } from "@/components/features/travelling";
 import { NavItems } from "./nav-items";
-import { useParams } from "next/navigation";
-import { useLanguage } from "@/contexts/language-context";
+
 import { hoverScale, buttonTap } from "@/lib/animations";
 
 interface MobileMenuProps {
@@ -23,17 +21,12 @@ interface MobileMenuProps {
  * 负责移动端导航和功能按钮的展示
  */
 export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
-  const { language } = useLanguage();
-  const { lang = language } = useParams();
   
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
       <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
         <SearchDialog />
-      </motion.div>
-      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-        <LanguageToggle />
       </motion.div>
       <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <ModeToggle />
@@ -56,7 +49,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
           </SheetTrigger>
           <SheetContent side="right" className="w-[80vw] sm:w-[350px] lg:hidden">
             <div className="flex flex-col gap-6 mt-8">
-              <NavItems lang={lang as string} />
+              <NavItems />
               <div className="flex items-center gap-2 mt-4 sm:hidden">
                 <SearchDialog />
                 <Travelling />

@@ -1,25 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": ["NODE_ENV"],
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "cache": true,
       "outputs": [".next/**", "!.next/cache/**"],
-      "inputs": ["src/**", "public/**", "*.config.js", "*.config.ts", "*.config.mjs", "next.config.*"],
-      "command": "pnpm run build:with-translate"
+      "env": ["NEXT_PUBLIC_*"],
+      "inputs": ["src/**", "public/**", "*.config.js", "*.config.ts", "*.config.mjs", "next.config.*"]
     },
-    "build:next": {
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "translate": {
-      "outputs": ["src/content/en/**"]
-    },
-    "lint": {
-      "outputs": []
-    },
+
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "lint": {
+      "outputs": []
     },
     "start": {
       "dependsOn": ["build"]

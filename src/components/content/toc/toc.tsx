@@ -12,10 +12,9 @@ type Heading = {
 
 interface TableOfContentsProps {
   headings: Heading[];
-  lang: string;
 }
 
-export function TableOfContents({ headings, lang }: TableOfContentsProps) {
+export function TableOfContents({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   // 监听滚动，高亮当前可见的标题
@@ -54,7 +53,7 @@ export function TableOfContents({ headings, lang }: TableOfContentsProps) {
   if (headings.length === 0) {
     return (
       <div className="text-sm text-muted-foreground">
-        {lang === "zh" ? "无目录" : "No table of contents"}
+        无目录
       </div>
     );
   }

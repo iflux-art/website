@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, ChevronRight, FileText, Folder, BookOpen } from "lucide-react";
+import { ChevronRight, FileText, Folder, BookOpen } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 type DocItem = {
   title: string;
@@ -23,7 +23,6 @@ type DocMeta = {
 };
 
 interface DocsSidebarProps {
-  lang: string;
   category: string;
   currentDoc?: string;
   meta?: DocMeta;
@@ -34,7 +33,7 @@ interface DocsSidebarProps {
   }[];
 }
 
-export function DocsSidebarImproved({ lang, category, currentDoc, meta, allDocs = [] }: DocsSidebarProps) {
+export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }: DocsSidebarProps) {
   const pathname = usePathname();
   const [items, setItems] = useState<DocItem[]>([]);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
@@ -86,7 +85,7 @@ export function DocsSidebarImproved({ lang, category, currentDoc, meta, allDocs 
             
             const subItems: DocItem[] = [];
             if (Array.isArray(subCategory)) {
-              subCategory.forEach(subItem => {
+              subCategory.forEach((subItem: string) => {
                 const doc = allDocs.find(d => d.slug === subItem);
                 if (doc) {
                   subItems.push({

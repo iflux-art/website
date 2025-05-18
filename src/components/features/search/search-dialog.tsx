@@ -3,22 +3,47 @@
 import * as React from "react";
 import { Search } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { motion, AnimatePresence } from "framer-motion";
-import { pulse } from "@/lib/animations";
-import { useTranslations } from "@/hooks/use-translations";
 import { useSearchParams } from 'next/navigation';
 import { SEARCH_ITEMS, SEARCH_CATEGORIES } from "@/lib/constants";
 
 /**
- * 搜索组件，点击弹出搜索框和推荐内容列表
+ * 搜索图标按钮组件
  * 样式与语言切换和主题切换按钮保持一致
+ */
+export function SearchButton({ onClick }: { onClick: () => void }) {
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      title="搜索"
+      onClick={onClick}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key="search"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <Search className="h-[1.1rem] w-[1.1rem]" />
+        </motion.div>
+      </AnimatePresence>
+    </Button>
+  );
+}
+
+/**
+ * 搜索对话框组件
+ * 点击搜索按钮后弹出的搜索框和推荐内容列表
  */
 export function SearchDialog() {
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang') || 'zh';
-  const t = useTranslations();
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
 
@@ -38,50 +63,32 @@ export function SearchDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          title={t('search.title')}
-          onClick={() => setOpen(true)}
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key="search"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              whileHover={pulse.animate}
-            >
-              <Search className="h-[1.1rem] w-[1.1rem]" />
-            </motion.div>
-          </AnimatePresence>
-        </Button>
+        <SearchButton onClick={() => setOpen(true)} />
       </DialogTrigger>
       <DialogContent className="p-0 max-w-[90vw] sm:max-w-[600px]">
-        <DialogTitle className="sr-only">{t('search.title')}</DialogTitle>
+        <DialogTitle className="sr-only">搜索</DialogTitle>
         <Command className="rounded-lg border shadow-md">
           <CommandInput 
-            placeholder={t('search.placeholder')} 
+            placeholder="搜索内容..." 
             value={search}
             onValueChange={setSearch}
           />
           <CommandList>
-            <CommandEmpty>{t('search.empty')}</CommandEmpty>
+            <CommandEmpty>未找到相关内容</CommandEmpty>
             {SEARCH_CATEGORIES.map((category) => (
-              <CommandGroup key={category.id} heading={t(`search.categories.${category.id}`)}>
+              <CommandGroup key={category.id} heading={category.labelKey}>
                 {SEARCH_ITEMS.filter(
                   (item) => 
                     item.category === category.id && 
                     (search === "" || 
-                     t(`search.items.${item.id}.title`).toLowerCase().includes(search.toLowerCase())
+                     (lang === 'zh' ? item.title : item.titleEn).toLowerCase().includes(search.toLowerCase())
                     )
                 ).map((item) => (
                   <CommandItem
                     key={item.id}
-                    value={t(`search.items.${item.id}.title`)}
+                    value={lang === 'zh' ? item.title : item.titleEn}
                     onSelect={() => {
-                      window.location.href = `/${lang}${item.href}`;
+                      window.location.href = `/${lang}${item.url}`;
                       setOpen(false);
                     }}
                   >
@@ -91,7 +98,7 @@ export function SearchDialog() {
                           {React.createElement(item.icon, { size: 16 })}
                         </span>
                       )}
-                      <span>{t(`search.items.${item.id}.title`)}</span>
+                      <span>{lang === 'zh' ? item.title : item.titleEn}</span>
                     </div>
                     <div className="ml-auto text-xs text-muted-foreground">
                       {item.shortcut && (

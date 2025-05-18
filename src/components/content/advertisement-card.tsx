@@ -1,22 +1,21 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import Image from 'next/image';
 
-interface AdvertisementCardProps {
-  lang: string;
-}
-
-export function AdvertisementCard({ lang }: AdvertisementCardProps) {
+export function AdvertisementCard() {
   return (
     <div>
       <Card className="overflow-hidden">
         <CardContent className="p-0">
-          <img 
+          <Image 
             src="/images/works.jpg" 
             alt="Advertisement" 
+            width={800}
+            height={450}
             className="w-full h-auto"
           />
         </CardContent>
         <CardFooter className="p-3 text-xs text-muted-foreground">
-          {lang === 'zh' ? '广告' : 'Advertisement'}
+          广告
         </CardFooter>
       </Card>
     </div>

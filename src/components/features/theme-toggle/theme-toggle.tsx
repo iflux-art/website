@@ -5,8 +5,6 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { pulse, iconSpin } from "@/lib/animations";
-import { useTranslations } from "@/hooks/use-translations";
 
 /**
  * 主题切换组件
@@ -15,7 +13,6 @@ import { useTranslations } from "@/hooks/use-translations";
 export function ThemeToggle() {
   const [mounted, setMounted] = React.useState(false);
   const { theme, setTheme } = useTheme();
-  const t = useTranslations();
 
   React.useEffect(() => {
     setMounted(true);
@@ -29,7 +26,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      title={t('theme.toggle')}
+      title={theme === "light" ? "切换到暗色模式" : "切换到亮色模式"}
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -40,7 +37,7 @@ export function ThemeToggle() {
             animate={{ opacity: 1, rotate: 0 }}
             exit={{ opacity: 0, rotate: 90 }}
             transition={{ duration: 0.3 }}
-            whileHover={pulse.animate}
+            whileHover={{ scale: 1.05 }}
           >
             <Moon className="h-[1.1rem] w-[1.1rem]" />
           </motion.div>
@@ -51,7 +48,7 @@ export function ThemeToggle() {
             animate={{ opacity: 1, rotate: 0 }}
             exit={{ opacity: 0, rotate: -90 }}
             transition={{ duration: 0.3 }}
-            whileHover={pulse.animate}
+            whileHover={{ scale: 1.05 }}
           >
             <Sun className="h-[1.1rem] w-[1.1rem]" />
           </motion.div>

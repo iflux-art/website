@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
-import { useLanguage } from "@/contexts/language-context";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/features/logo";
 import { MobileMenu } from "./mobile-menu";
@@ -15,8 +13,7 @@ import { slideDown, fadeIn } from "@/lib/animations";
  */
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { language } = useLanguage();
-  const { lang = language } = useParams();
+  // 移除语言相关逻辑
 
   return (
     <motion.nav 
@@ -44,7 +41,7 @@ export function Navbar() {
           initial="initial"
           animate="animate"
         >
-          <NavItems lang={lang as string} />
+          <NavItems />
         </motion.div>
 
         {/* 右侧部分 - 功能按钮和移动菜单 */}

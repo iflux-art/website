@@ -9,7 +9,7 @@ interface AuthorCardProps {
   lang: string;
 }
 
-export function AuthorCard({ author, authorAvatar, authorBio, lang }: AuthorCardProps) {
+export function AuthorCard({ author, lang }: AuthorCardProps) {
   return (
     <div className="mt-12 border-t pt-8">
       <Card>

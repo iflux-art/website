@@ -19,7 +19,7 @@ interface CategoryCardProps {
   lang: string;
 }
 
-export function CategoryCard({ id, name, icon, links, index, lang }: CategoryCardProps) {
+export function CategoryCard({ id, name, icon, links, index }: Omit<CategoryCardProps, 'lang'>) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,

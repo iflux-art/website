@@ -11,18 +11,18 @@ export const SUPPORTED_LANGUAGES = [
 
 // 导航菜单项配置
 export const NAV_ITEMS = [
-  { key: "docs", labelKey: "nav.docs" },
-  { key: "blog", labelKey: "nav.blog" },
-  { key: "navigation", labelKey: "nav.navigation" },
-  { key: "friends", labelKey: "nav.friends" },
+  { key: "docs", label: "文档" },
+  { key: "blog", label: "博客" },
+  { key: "navigation", label: "导航" },
+  { key: "friends", label: "友链" },
 ];
 
 // 搜索分类
 export const SEARCH_CATEGORIES = [
-  { id: "pages", labelKey: "search.category.pages" },
-  { id: "docs", labelKey: "search.category.docs" },
-  { id: "blog", labelKey: "search.category.blog" },
-  { id: "navigation", labelKey: "search.category.navigation" },
+  { id: "pages", labelKey: "页面" },
+  { id: "docs", labelKey: "文档" },
+  { id: "blog", labelKey: "博客" },
+  { id: "navigation", labelKey: "导航" },
 ];
 
 // 模拟的搜索数据

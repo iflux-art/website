@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, ChevronRight, FileText, Folder } from "lucide-react";
+import { ChevronRight, FileText, Folder } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -34,7 +34,7 @@ interface DocsSidebarProps {
   }[];
 }
 
-export function DocsSidebar({ lang, category, currentDoc, meta, allDocs = [] }: DocsSidebarProps) {
+export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSidebarProps) {
   const pathname = usePathname();
   const [items, setItems] = useState<DocItem[]>([]);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
