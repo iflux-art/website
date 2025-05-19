@@ -27,23 +27,23 @@ interface BlogSidebarProps {
  */
 export function BlogSidebar({ headings, tags, relatedPosts }: BlogSidebarProps) {
   return (
-    <div className="lg:w-64 shrink-0">
-      <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] space-y-6">
-        {/* 目录 */}
+    <div className="space-y-6">
+      {/* 目录 - 只在有标题时显示 */}
+      {headings.length > 0 && (
         <div>
           <TableOfContentsClientWrapper headings={headings} />
         </div>
-        
-        <TagCloud tags={tags} />
-        
-        <RelatedPosts posts={relatedPosts} />
-        
-        <AdvertisementCard />
-        
-        {/* 回到顶部按钮 */}
-        <div className="flex justify-left">
-          <BackToTopButton title="回到顶部" />
-        </div>
+      )}
+
+      <TagCloud tags={tags} />
+
+      <RelatedPosts posts={relatedPosts} />
+
+      <AdvertisementCard />
+
+      {/* 回到顶部按钮 */}
+      <div className="flex justify-left">
+        <BackToTopButton title="回到顶部" />
       </div>
     </div>
   );

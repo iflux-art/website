@@ -67,7 +67,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
       const categoryMeta = meta[category];
       if (categoryMeta && categoryMeta.items) {
         const newItems: DocItem[] = [];
-        
+
         categoryMeta.items.forEach(item => {
           if (typeof item === "string") {
             // 如果是字符串，查找对应的文档
@@ -82,7 +82,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
             // 如果是对象，表示是一个子分类
             const key = Object.keys(item)[0];
             const subCategory = item[key];
-            
+
             const subItems: DocItem[] = [];
             if (Array.isArray(subCategory)) {
               subCategory.forEach((subItem: string) => {
@@ -95,7 +95,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
                 }
               });
             }
-            
+
             if (subItems.length > 0) {
               newItems.push({
                 title: key,
@@ -104,7 +104,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
             }
           }
         });
-        
+
         setItems(newItems);
       }
     }
@@ -159,7 +159,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
                   </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                  <motion.ul 
+                  <motion.ul
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -175,8 +175,8 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
               href={item.href || "#"}
               className={cn(
                 "flex items-center py-2 px-2 rounded-md text-sm transition-all duration-200",
-                isActive 
-                  ? "bg-primary/10 text-primary font-medium" 
+                isActive
+                  ? "bg-primary/10 text-primary font-medium"
                   : "text-foreground/80 hover:text-primary hover:bg-primary/5"
               )}
               onMouseEnter={() => setIsHovering(itemId)}
@@ -192,13 +192,13 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
   };
 
   return (
-    <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] pr-2 -mr-2">
+    <div className="lg:sticky lg:top-20 pr-2">
       <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
         <div className="py-2 px-4 font-medium text-sm border-b flex items-center gap-1.5">
           <BookOpen className="h-4 w-4" />
           <span>{meta?.[category]?.title || category}</span>
         </div>
-        <div className="p-3">
+        <div className="p-3 max-h-[calc(100vh-10rem)] overflow-y-auto">
         <ul className="space-y-1">
           {renderItems(items)}
         </ul>

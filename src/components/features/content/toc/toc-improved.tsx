@@ -42,21 +42,18 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
     // 页面加载后检查并修复标题ID
     setTimeout(checkAndFixHeadingIds, 500);
 
+    // 再次尝试修复标题ID，以防第一次尝试失败
+    setTimeout(checkAndFixHeadingIds, 1500);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id);
 
-            // 当标题进入视图时，更新文档标题属性，便于导航栏获取
+            // 当标题进入视图时，只更新本地状态，不再设置全局属性
             const visibleHeading = entry.target.textContent;
-            if (visibleHeading) {
-              // 设置自定义数据属性，供导航栏组件读取当前可见标题
-              document.documentElement.setAttribute(
-                "data-current-heading",
-                visibleHeading
-              );
-            }
+            // 移除设置全局属性的代码，使导航栏不再跟随目录变化
           }
         });
       },
@@ -69,12 +66,32 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
         const element = document.getElementById(heading.id);
         if (element) {
           observer.observe(element);
+        } else {
+          console.log(`找不到ID为 ${heading.id} 的标题元素，文本内容: ${heading.text}`);
+          // 尝试通过文本内容查找
+          const headingElements = document.querySelectorAll('h2, h3, h4');
+          let found = false;
+          headingElements.forEach((el) => {
+            if (el.textContent?.trim() === heading.text) {
+              if (!el.id) {
+                el.id = heading.id;
+              }
+              observer.observe(el);
+              found = true;
+            }
+          });
+          if (!found) {
+            console.log(`无法通过文本内容找到标题: ${heading.text}`);
+          }
         }
       });
     };
 
     // 延迟观察以确保DOM已完全加载
     setTimeout(observeHeadings, 1000);
+
+    // 再次尝试观察，以防第一次尝试失败
+    setTimeout(observeHeadings, 2000);
 
     return () => {
       headings.forEach((heading) => {
@@ -83,18 +100,16 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
           observer.unobserve(element);
         }
       });
-      // 清理自定义数据属性
-      document.documentElement.removeAttribute("data-current-heading");
     };
   }, [headings]);
 
-  if (headings.length === 0) {
-    return (
-      <div className="text-sm text-muted-foreground p-4 text-center border-t border-border/30">
-        无目录
-      </div>
-    );
+  // 如果没有标题，返回null，不显示任何内容
+  if (!headings || headings.length === 0) {
+    return null;
   }
+
+  // 过滤掉h1标题，只显示h2-h4
+  const filteredHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
 
   // 根据标题级别对目录进行分组和嵌套
   const organizeHeadings = (headings: Heading[]) => {
@@ -124,7 +139,12 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
     });
   };
 
-  const organizedHeadings = organizeHeadings(headings);
+  // 如果过滤后没有标题，返回null，不显示任何内容
+  if (filteredHeadings.length === 0) {
+    return null;
+  }
+
+  const organizedHeadings = organizeHeadings(filteredHeadings);
 
   // 动画变体
   const container = {
@@ -145,7 +165,7 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   return (
     <div>
       <motion.div
-        className="py-2"
+        className="py-2 max-h-[300px] overflow-y-auto"
         variants={container}
         initial="hidden"
         animate="show"

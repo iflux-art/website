@@ -34,16 +34,17 @@ export default function Copy({ content }: { content: string }) {
   return (
     // 渲染按钮组件，点击时触发 handleCopy 函数
     <Button
-      variant="secondary"
-      className="border"
-      size="sm"
+      variant="ghost"
+      className="h-6 w-6 p-0 rounded-md hover:bg-background/30 hover:text-foreground"
+      size="icon"
       onClick={handleCopy}
+      title="复制代码"
     >
       {/* 根据复制状态显示不同的图标 */}
       {isCopied ? (
-        <CheckIcon className="w-3 h-3" />
+        <CheckIcon className="w-3.5 h-3.5" />
       ) : (
-        <CopyIcon className="w-3 h-3" />
+        <CopyIcon className="w-3.5 h-3.5" />
       )}
     </Button>
   );

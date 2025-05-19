@@ -66,23 +66,33 @@ export default async function BlogPost({
 
   // 提取标题作为目录
   const headings: { id: string; text: string; level: number }[] = [];
-  const contentLines = content.split('\n');
-  contentLines.forEach((line, index) => {
-    // 改进的标题匹配正则表达式，支持更多标题格式
-    const headingMatch = line.match(/^(#{1,6})\s+(.+?)(?:\s*{#([\w-]+)})?$/);
-    if (headingMatch) {
-      const level = headingMatch[1].length;
-      const text = headingMatch[2].trim();
-      // 使用自定义ID或生成一个基于文本的ID
-      const customId = headingMatch[3];
-      const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${index}`;
 
-      // 只包含2-4级标题（h2-h4）
-      if (level >= 2 && level <= 4) {
-        headings.push({ id, text, level });
-      }
+  // 使用更强大的正则表达式直接从整个内容中提取标题
+  // 匹配 ## 标题、### 标题、#### 标题 格式
+  const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
+  let match;
+
+  // 调试信息
+  console.log('提取标题前的内容长度:', content.length);
+  console.log('内容前100个字符:', content.substring(0, 100));
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const customId = match[3];
+    const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${match.index}`;
+
+    // 只包含1-4级标题（h1-h4）
+    if (level >= 1 && level <= 4) {
+      headings.push({ id, text, level });
     }
-  });
+  }
+
+  // 调试信息
+  console.log('提取到的标题数量:', headings.length);
+  if (headings.length > 0) {
+    console.log('第一个标题:', headings[0]);
+  }
 
   // 确保所有标题都有唯一ID
   let processedContent = content;
@@ -92,24 +102,17 @@ export default async function BlogPost({
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
   });
 
-  // 确保所有标题都有唯一ID
-  const processedHeadings = headings.map((heading) => {
-    // 服务端渲染环境中没有document对象，移除对document的引用
-    const updatedContent = content.replace(
-      new RegExp(`(^|\n)(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'g'),
+  // 对每个标题再次检查并确保它们有唯一ID
+  headings.forEach((heading) => {
+    // 查找没有ID的标题并添加ID
+    processedContent = processedContent.replace(
+      new RegExp(`(^|\n)(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?!\\s*{#)`, 'g'),
       `$1$2 $3 {#${heading.id}}`
     );
-    return {
-      ...heading,
-      updatedContent
-    };
   });
 
-  // 应用所有内容更新
-  const finalContent = processedHeadings.reduce(
-    (acc, heading) => heading.updatedContent || acc,
-    content
-  );
+  // 使用处理后的内容
+  const finalContent = processedContent;
 
   // 获取相关文章
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
@@ -176,11 +179,15 @@ export default async function BlogPost({
         </div>
 
         {/* 右侧边栏 - 目录、标签云和相关文章 */}
-        <BlogSidebar
-          headings={headings}
-          tags={data.tags || []}
-          relatedPosts={relatedPosts}
-        />
+        <div className="lg:w-64 shrink-0 order-2 relative">
+          <div className="sticky top-20">
+            <BlogSidebar
+              headings={headings}
+              tags={data.tags || []}
+              relatedPosts={relatedPosts}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

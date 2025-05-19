@@ -9,7 +9,10 @@ export interface FriendLink {
   name: string;
   url: string;
   desc: string;
-  icon: string;
+  icon: {
+    type: 'emoji' | 'image';
+    value: string;
+  };
 }
 
 interface FriendLinkCardProps {
@@ -37,8 +40,21 @@ export function FriendLinkCard({ link, index }: FriendLinkCardProps) {
             rel="noopener noreferrer"
             className="flex items-center gap-3"
           >
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 font-bold">
-              {link.icon}
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 font-bold overflow-hidden">
+              {link.icon.type === 'emoji' ? (
+                <span className="text-lg">{link.icon.value}</span>
+              ) : (
+                <img
+                  src={link.icon.value}
+                  alt={`${link.name} icon`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // 图片加载失败时显示首字母
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerHTML = link.name.charAt(0);
+                  }}
+                />
+              )}
             </div>
             <div>
               <div className="font-medium">{link.name}</div>

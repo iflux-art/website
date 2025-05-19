@@ -50,7 +50,8 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
   // 读取文件内容
   const fileContent = fs.readFileSync(filePath, 'utf8');
-  const { content, data } = matter(fileContent);
+  const { content: originalContent, data } = matter(fileContent);
+  let content = originalContent;
 
   // 获取目录中的所有文档
   const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', category);
@@ -84,34 +85,52 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
   // 提取标题作为目录
   const headings: { id: string; text: string; level: number }[] = [];
-  const contentLines = content.split('\n');
-  contentLines.forEach((line, index) => {
-    // 改进的标题匹配正则表达式，支持更多标题格式
-    const headingMatch = line.match(/^(#{1,6})\s+(.+?)(?:\s*{#([\w-]+)})?$/);
-    if (headingMatch) {
-      const level = headingMatch[1].length;
-      const text = headingMatch[2].trim();
-      // 使用自定义ID或生成一个基于文本的ID
-      const customId = headingMatch[3];
-      const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${index}`;
 
-      // 只包含2-4级标题（h2-h4）
-      if (level >= 2 && level <= 4) {
-        headings.push({ id, text, level });
-      }
+  // 使用更强大的正则表达式直接从整个内容中提取标题
+  const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
+  let match;
+
+  // 调试信息
+  console.log('文档页面 - 提取标题前的内容长度:', content.length);
+  console.log('文档页面 - 内容前100个字符:', content.substring(0, 100));
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const customId = match[3];
+    const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${match.index}`;
+
+    // 只包含1-4级标题（h1-h4）
+    if (level >= 1 && level <= 4) {
+      headings.push({ id, text, level });
     }
-  });
+  }
+
+  // 调试信息
+  console.log('文档页面 - 提取到的标题数量:', headings.length);
+  if (headings.length > 0) {
+    console.log('文档页面 - 第一个标题:', headings[0]);
+  }
 
   // 确保所有标题都有唯一ID
+  let processedContent = content;
   headings.forEach((heading) => {
-    content = content.replace(
-      new RegExp(`(^|\n)(#{${heading.level}})\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'g'),
+    // 替换标题行，添加ID
+    const headingRegex = new RegExp(`^(#{${heading.level}})\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\s*{#[\w-]+})?$`, 'gm');
+    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
+  });
+
+  // 对每个标题再次检查并确保它们有唯一ID
+  headings.forEach((heading) => {
+    // 查找没有ID的标题并添加ID
+    processedContent = processedContent.replace(
+      new RegExp(`(^|\n)(#{${heading.level}})\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?!\s*{#)`, 'g'),
       `$1$2 $3 {#${heading.id}}`
     );
   });
 
-  // 应用所有内容更新
-  // 移除未使用的finalContent变量
+  // 使用处理后的内容
+  content = processedContent;
 
   // 确定上一篇和下一篇文档
   const currentIndex = allDocs.findIndex(doc => doc.slug === docName);
@@ -191,13 +210,13 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
         {/* 右侧边栏 - 目录、广告和回到顶部按钮 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] pr-2 -mr-2 space-y-8">
-            {/* 目录 */}
-            <div>
-              <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
+          <div className="lg:sticky lg:top-20 pr-2 space-y-8">
+            {/* 目录 - 只在有标题时显示 */}
+            {headings.length > 0 && (
+              <div>
                 <TableOfContentsClientWrapper headings={headings} />
               </div>
-            </div>
+            )}
 
             {/* 广告卡片 */}
             <AdvertisementCard
