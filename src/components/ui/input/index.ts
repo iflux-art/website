@@ -1,5 +1,6 @@
 /**
- * input组件导出文件
+ * input 组件
+ * 用于创建文本输入框
  */
 
 export * from './input';

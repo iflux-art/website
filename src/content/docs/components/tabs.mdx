@@ -1,0 +1,117 @@
+---
+title: Tabs 标签页
+description: 在同一区域内切换不同内容的组件。
+---
+
+# Tabs 标签页
+
+Tabs 组件允许用户在同一区域内切换不同内容，提供了一种节省空间的方式来组织内容。
+
+## 基本用法
+
+以下是 Tabs 组件的基本用法示例：
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+export function TabsDemo() {
+  return (
+    <Tabs defaultValue="account" className="w-[400px]">
+      <TabsList>
+        <TabsTrigger value="account">账户</TabsTrigger>
+        <TabsTrigger value="password">密码</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">
+        <p>账户设置内容</p>
+      </TabsContent>
+      <TabsContent value="password">
+        <p>密码设置内容</p>
+      </TabsContent>
+    </Tabs>
+  );
+}
+```
+
+## 禁用状态
+
+可以通过设置 `disabled` 属性来禁用某个标签：
+
+```tsx
+<Tabs defaultValue="account">
+  <TabsList>
+    <TabsTrigger value="account">账户</TabsTrigger>
+    <TabsTrigger value="password">密码</TabsTrigger>
+    <TabsTrigger value="settings" disabled>设置</TabsTrigger>
+  </TabsList>
+  {/* 标签内容 */}
+</Tabs>
+```
+
+## 垂直布局
+
+通过设置 `orientation="vertical"` 可以创建垂直布局的标签页：
+
+```tsx
+<Tabs defaultValue="account" orientation="vertical" className="flex">
+  <TabsList className="flex-col h-auto">
+    <TabsTrigger value="account">账户</TabsTrigger>
+    <TabsTrigger value="password">密码</TabsTrigger>
+  </TabsList>
+  {/* 标签内容 */}
+</Tabs>
+```
+
+## 自定义样式
+
+可以通过 `className` 属性自定义标签页的样式：
+
+```tsx
+<Tabs defaultValue="account">
+  <TabsList className="grid w-full grid-cols-2">
+    <TabsTrigger value="account" className="rounded-tl-lg rounded-tr-none">账户</TabsTrigger>
+    <TabsTrigger value="password" className="rounded-tr-lg rounded-tl-none">密码</TabsTrigger>
+  </TabsList>
+  {/* 标签内容 */}
+</Tabs>
+```
+
+## API 参考
+
+### Tabs
+
+主容器组件，包含所有标签页相关元素。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `defaultValue` | `string` | - | 默认选中的标签值 |
+| `value` | `string` | - | 当前选中的标签值（受控模式） |
+| `onValueChange` | `(value: string) => void` | - | 标签切换时的回调函数 |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 标签页的方向 |
+
+### TabsList
+
+包含所有标签触发器的容器。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `className` | `string` | - | 自定义类名 |
+
+### TabsTrigger
+
+用于切换标签内容的按钮。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `value` | `string` | **必填** | 标签的唯一标识值 |
+| `disabled` | `boolean` | `false` | 是否禁用该标签 |
+| `className` | `string` | - | 自定义类名 |
+
+### TabsContent
+
+显示标签内容的容器。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `value` | `string` | **必填** | 对应的标签值 |
+| `forceMount` | `boolean` | `false` | 是否强制挂载内容（即使未选中） |
+| `className` | `string` | - | 自定义类名 |

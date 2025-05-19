@@ -1,5 +1,6 @@
 /**
- * 头像组件导出文件
+ * avatar 组件
+ * 用于显示用户头像
  */
 
 export * from './avatar';

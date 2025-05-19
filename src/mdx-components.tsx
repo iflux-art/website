@@ -8,6 +8,9 @@ import { codeBlockComponents } from '@/components/ui/markdown/code-block'
 import { Callout, calloutComponents } from '@/components/ui/markdown/callout'
 import { enhancedTableComponents } from '@/components/ui/markdown/enhanced-table'
 import Copy from '@/components/ui/markdown/copy'
+import Note from '@/components/ui/markdown/note'
+import CustomLink from '@/components/ui/markdown/link'
+import CustomImage from '@/components/ui/markdown/image'
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any

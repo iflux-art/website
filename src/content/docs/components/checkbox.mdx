@@ -1,0 +1,168 @@
+---
+title: Checkbox 复选框
+description: 用于选择多个选项的复选框组件。
+---
+
+# Checkbox 复选框
+
+Checkbox 组件是一个可访问的复选框组件，用于选择多个选项。
+
+## 基本用法
+
+以下是 Checkbox 组件的基本用法示例：
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox";
+
+export function CheckboxDemo() {
+  return (
+    <div className="flex items-center space-x-2">
+      <Checkbox id="terms" />
+      <label
+        htmlFor="terms"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        接受条款和条件
+      </label>
+    </div>
+  );
+}
+```
+
+## 禁用状态
+
+可以通过设置 `disabled` 属性来禁用复选框：
+
+```tsx
+<div className="flex items-center space-x-2">
+  <Checkbox id="disabled" disabled />
+  <label
+    htmlFor="disabled"
+    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  >
+    禁用状态
+  </label>
+</div>
+```
+
+## 默认选中
+
+可以通过设置 `defaultChecked` 属性来设置默认选中状态：
+
+```tsx
+<div className="flex items-center space-x-2">
+  <Checkbox id="default-checked" defaultChecked />
+  <label
+    htmlFor="default-checked"
+    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  >
+    默认选中
+  </label>
+</div>
+```
+
+## 受控组件
+
+可以通过设置 `checked` 和 `onCheckedChange` 属性来创建受控组件：
+
+```tsx
+import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+
+export function ControlledCheckbox() {
+  const [checked, setChecked] = useState(false);
+  
+  return (
+    <div className="flex items-center space-x-2">
+      <Checkbox
+        id="controlled"
+        checked={checked}
+        onCheckedChange={setChecked}
+      />
+      <label
+        htmlFor="controlled"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        {checked ? "已选中" : "未选中"}
+      </label>
+    </div>
+  );
+}
+```
+
+## 与表单一起使用
+
+Checkbox 组件可以与表单一起使用：
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox";
+
+export function CheckboxWithForm() {
+  return (
+    <form>
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2">
+          <Checkbox id="terms1" />
+          <label
+            htmlFor="terms1"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            接受条款和条件
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="newsletter" />
+          <label
+            htmlFor="newsletter"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            订阅新闻邮件
+          </label>
+        </div>
+      </div>
+    </form>
+  );
+}
+```
+
+## 带描述
+
+可以添加描述文本：
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox";
+
+export function CheckboxWithDescription() {
+  return (
+    <div className="items-top flex space-x-2">
+      <Checkbox id="terms2" />
+      <div className="grid gap-1.5 leading-none">
+        <label
+          htmlFor="terms2"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          接受条款和条件
+        </label>
+        <p className="text-sm text-muted-foreground">
+          您同意我们的服务条款和隐私政策。
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+## API 参考
+
+Checkbox 组件基于 Radix UI 的 Checkbox 组件，并接受所有标准的 HTML input[type="checkbox"] 属性。
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | - | 复选框的选中状态（受控模式） |
+| `defaultChecked` | `boolean` | `false` | 复选框的默认选中状态（非受控模式） |
+| `onCheckedChange` | `(checked: boolean) => void` | - | 选中状态变化时的回调函数 |
+| `disabled` | `boolean` | `false` | 是否禁用复选框 |
+| `required` | `boolean` | `false` | 是否为必填项 |
+| `name` | `string` | - | 表单提交时的字段名 |
+| `value` | `string` | - | 表单提交时的字段值 |
+| `className` | `string` | - | 自定义类名 |

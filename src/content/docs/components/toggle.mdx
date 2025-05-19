@@ -1,0 +1,149 @@
+---
+title: Toggle 开关
+description: 用于切换开关状态的组件。
+---
+
+# Toggle 开关
+
+Toggle 组件用于切换开关状态，通常用于表示某个功能的启用或禁用状态。
+
+## 基本用法
+
+以下是 Toggle 组件的基本用法示例：
+
+```tsx
+import { Toggle } from "@/components/ui/toggle";
+
+export function ToggleDemo() {
+  return (
+    <Toggle>切换</Toggle>
+  );
+}
+```
+
+## 变体
+
+Toggle 组件支持不同的变体：
+
+### 默认变体
+
+```tsx
+<Toggle>默认</Toggle>
+```
+
+### 轮廓变体
+
+```tsx
+<Toggle variant="outline">轮廓</Toggle>
+```
+
+## 尺寸
+
+Toggle 组件支持不同的尺寸：
+
+### 默认尺寸
+
+```tsx
+<Toggle size="default">默认</Toggle>
+```
+
+### 小尺寸
+
+```tsx
+<Toggle size="sm">小</Toggle>
+```
+
+### 大尺寸
+
+```tsx
+<Toggle size="lg">大</Toggle>
+```
+
+## 禁用状态
+
+可以通过设置 `disabled` 属性来禁用开关：
+
+```tsx
+<Toggle disabled>禁用</Toggle>
+```
+
+## 默认按下状态
+
+可以通过设置 `defaultPressed` 属性来设置默认按下状态：
+
+```tsx
+<Toggle defaultPressed>默认按下</Toggle>
+```
+
+## 受控组件
+
+可以通过设置 `pressed` 和 `onPressedChange` 属性来创建受控组件：
+
+```tsx
+import { useState } from "react";
+import { Toggle } from "@/components/ui/toggle";
+
+export function ControlledToggle() {
+  const [pressed, setPressed] = useState(false);
+  
+  return (
+    <Toggle pressed={pressed} onPressedChange={setPressed}>
+      {pressed ? "开启" : "关闭"}
+    </Toggle>
+  );
+}
+```
+
+## 带图标
+
+可以在 Toggle 组件中添加图标：
+
+```tsx
+import { Bold } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+
+export function ToggleWithIcon() {
+  return (
+    <Toggle aria-label="加粗">
+      <Bold className="h-4 w-4" />
+    </Toggle>
+  );
+}
+```
+
+## 组合使用
+
+可以将多个 Toggle 组件组合使用：
+
+```tsx
+import { Bold, Italic, Underline } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+
+export function ToggleGroup() {
+  return (
+    <div className="flex items-center space-x-2">
+      <Toggle aria-label="加粗">
+        <Bold className="h-4 w-4" />
+      </Toggle>
+      <Toggle aria-label="斜体">
+        <Italic className="h-4 w-4" />
+      </Toggle>
+      <Toggle aria-label="下划线">
+        <Underline className="h-4 w-4" />
+      </Toggle>
+    </div>
+  );
+}
+```
+
+## API 参考
+
+Toggle 组件接受所有标准的 HTML button 属性，以及以下特定属性：
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` | 开关的变体样式 |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | 开关的尺寸 |
+| `pressed` | `boolean` | - | 开关的按下状态（受控模式） |
+| `defaultPressed` | `boolean` | `false` | 开关的默认按下状态（非受控模式） |
+| `onPressedChange` | `(pressed: boolean) => void` | - | 按下状态变化时的回调函数 |

@@ -3,9 +3,27 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { InputProps } from "./input.types"
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
-
+/**
+ * Input 组件
+ * 用于创建文本输入框
+ *
+ * @example
+ * // 基本用法
+ * <Input placeholder="请输入..." />
+ *
+ * @example
+ * // 带标签的输入框
+ * <div className="grid w-full max-w-sm items-center gap-1.5">
+ *   <Label htmlFor="email">邮箱</Label>
+ *   <Input type="email" id="email" placeholder="请输入邮箱..." />
+ * </div>
+ *
+ * @example
+ * // 禁用状态
+ * <Input disabled placeholder="禁用状态" />
+ */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     return (
