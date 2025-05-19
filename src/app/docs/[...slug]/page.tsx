@@ -14,12 +14,12 @@ import { TableOfContentsClientWrapper } from '@/components/features/content/toc/
 import { AdvertisementCard } from '@/components/features/content/advertisement-card';
 import { BackToTopButton } from '@/components/features/content/back-to-top-button';
 
-export default function DocPage({ params }: { params: { slug: string[] } }) {
+export default async function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
   const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
   const category = slug[0];
   const docName = slug.length > 1 ? slug.slice(1).join('/') : slug[0];
-  
+
   // 构建完整文件路径
   let filePath;
   if (slug.length === 1) {
@@ -29,7 +29,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
       const files = fs.readdirSync(categoryDir)
         .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
         .sort();
-      
+
       if (files.length > 0) {
         filePath = path.join(categoryDir, files[0]);
       } else {
@@ -54,7 +54,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
   // 获取目录中的所有文档
   const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', category);
-  const allDocs = fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory() 
+  const allDocs = fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()
     ? fs.readdirSync(categoryDir)
       .filter(file => file.endsWith('.mdx'))
       .map(file => {
@@ -68,7 +68,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
         };
       })
     : [];
-    
+
   // 检查是否存在_meta.json文件（替代_meta.tsx）
   const metaFilePath = path.join(categoryDir, '_meta.json');
   let meta = null;
@@ -94,14 +94,14 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
       // 使用自定义ID或生成一个基于文本的ID
       const customId = headingMatch[3];
       const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${index}`;
-      
+
       // 只包含2-4级标题（h2-h4）
       if (level >= 2 && level <= 4) {
         headings.push({ id, text, level });
       }
     }
   });
-  
+
   // 确保所有标题都有唯一ID
   headings.forEach((heading) => {
     content = content.replace(
@@ -109,7 +109,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
       `$1$2 $3 {#${heading.id}}`
     );
   });
-  
+
   // 应用所有内容更新
   // 移除未使用的finalContent变量
 
@@ -124,7 +124,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <DocsSidebarImproved 
+          <DocsSidebarImproved
 
             category={category}
             currentDoc={docName}
@@ -198,15 +198,15 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
                 <TableOfContentsClientWrapper headings={headings} />
               </div>
             </div>
-            
+
             {/* 广告卡片 */}
             <AdvertisementCard
-  
+
             />
-            
+
             {/* 回到顶部按钮 */}
             <div className="flex justify-left">
-              <BackToTopButton 
+              <BackToTopButton
                 title="回到顶部"
               />
             </div>

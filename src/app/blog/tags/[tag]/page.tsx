@@ -3,10 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 
-export default function TagPage({ params }: { params: { tag: string } }) {
+export default async function TagPage({ params }: { params: { tag: string } }) {
   // 解码URL中的标签参数
   const decodedTag = decodeURIComponent(params.tag);
-  
+
   // 获取所有文章
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   const taggedPosts: { slug: string; title: string; excerpt: string; date?: string }[] = [];
@@ -14,11 +14,11 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   // 递归查找所有博客文件
   const findTaggedPosts = (dir: string, basePath: string = '') => {
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item.name);
       const relativePath = basePath ? `${basePath}/${item.name}` : item.name;
-      
+
       if (item.isDirectory()) {
         findTaggedPosts(itemPath, relativePath);
       } else if (item.isFile() && item.name.endsWith('.mdx')) {
@@ -26,7 +26,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         const { data } = matter(fileContent);
         const postSlug = item.name.replace('.mdx', '');
         const fullPostSlug = relativePath.replace('.mdx', '');
-        
+
         // 检查文章是否包含当前标签
         if (data.tags && data.tags.includes(decodedTag)) {
           taggedPosts.push({
@@ -55,7 +55,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   return (
     <main className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6">标签: {decodedTag}</h1>
-      
+
       {sortedPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sortedPosts.map(post => (
@@ -68,8 +68,8 @@ export default function TagPage({ params }: { params: { tag: string } }) {
                   </p>
                 )}
                 <p className="text-muted-foreground mb-4">{post.excerpt}</p>
-                <Link 
-                  href={`/blog/${post.slug}`} 
+                <Link
+                  href={`/blog/${post.slug}`}
                   className="text-primary hover:underline"
                 >
                   阅读全文 →

@@ -13,7 +13,7 @@ export function PostCard({ slug, title, excerpt }: PostCardProps) {
   return (
     <motion.article 
       className="border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="p-6">

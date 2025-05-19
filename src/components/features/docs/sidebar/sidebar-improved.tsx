@@ -193,16 +193,16 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
 
   return (
     <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] pr-2 -mr-2">
-      <div className="flex items-center gap-2 mb-4 px-2">
-        <BookOpen className="h-5 w-5 text-primary" />
-        <h3 className="font-medium text-lg text-foreground">
-          {meta?.[category]?.title || category}
-        </h3>
-      </div>
-      <div className="bg-card rounded-lg border shadow-sm p-3">
+      <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
+        <div className="py-2 px-4 font-medium text-sm border-b flex items-center gap-1.5">
+          <BookOpen className="h-4 w-4" />
+          <span>{meta?.[category]?.title || category}</span>
+        </div>
+        <div className="p-3">
         <ul className="space-y-1">
           {renderItems(items)}
         </ul>
+        </div>
       </div>
     </div>
   );

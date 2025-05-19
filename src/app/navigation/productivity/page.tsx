@@ -1,72 +1,14 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { slideUp } from "@/lib/animations";
+import { ResourceFilter } from "@/components/features/navigation/resource-filter";
+import { ResourceList } from "@/components/features/navigation/resource-list";
+import { productivityResources } from "@/data/navigation/productivity";
 
 export default function ProductivityToolsPage() {
-  // 效率工具资源数据
-  const productivityResources = [
-    {
-      title: "Notion",
-      description: "集笔记、知识库、任务管理于一体的协作平台，提高团队协作效率",
-      url: "https://www.notion.so",
-      category: "全能工具",
-      icon: "📝",
-      author: "Notion Labs",
-      free: true
-    },
-    {
-      title: "Trello",
-      description: "可视化项目管理工具，基于看板方法组织任务和工作流程",
-      url: "https://trello.com",
-      category: "项目管理",
-      icon: "📋",
-      author: "Atlassian",
-      free: true
-    },
-    {
-      title: "Todoist",
-      description: "简洁高效的任务管理应用，帮助用户组织日常工作和生活",
-      url: "https://todoist.com",
-      category: "任务管理",
-      icon: "✅",
-      author: "Doist",
-      free: true
-    },
-    {
-      title: "Obsidian",
-      description: "基于本地Markdown文件的知识库工具，支持双向链接和图谱可视化",
-      url: "https://obsidian.md",
-      category: "知识管理",
-      icon: "🧠",
-      author: "Obsidian",
-      free: true
-    },
-    {
-      title: "Grammarly",
-      description: "AI驱动的写作助手，提供拼写、语法检查和写作建议",
-      url: "https://www.grammarly.com",
-      category: "写作工具",
-      icon: "✍️",
-      author: "Grammarly, Inc.",
-      free: true
-    },
-    {
-      title: "Calendly",
-      description: "智能日程安排工具，简化会议预约流程，避免来回邮件沟通",
-      url: "https://calendly.com",
-      category: "日程管理",
-      icon: "📅",
-      author: "Calendly LLC",
-      free: true
-    }
-  ];
 
   // 获取所有分类
   const categories = [...new Set(productivityResources.map(resource => resource.category))];
@@ -93,40 +35,14 @@ export default function ProductivityToolsPage() {
       </div>
       
       {/* 分类筛选 */}
-      <div className="mb-8">
-        <h2 className="text-lg font-medium mb-3">按分类筛选</h2>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-3 py-1.5 rounded-md text-sm transition-colors ${!selectedCategory ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-          >
-            全部
-          </button>
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${selectedCategory === category ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ResourceFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       {/* 资源列表 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredResources.map((resource, index) => (
-          <ResourceCard key={index} resource={resource} index={index} />
-        ))}
-      </div>
-      
-      {/* 无结果提示 */}
-      {filteredResources.length === 0 && (
-        <div className="text-center py-10">
-          <p>没有找到相关资源</p>
-        </div>
-      )}
+      <ResourceList resources={filteredResources} />
     </main>
   );
 }

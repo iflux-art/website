@@ -74,15 +74,22 @@ export function SearchDialog() {
           />
           <CommandList>
             <CommandEmpty>未找到相关内容</CommandEmpty>
-            {SEARCH_CATEGORIES.map((category) => (
-              <CommandGroup key={category.id} heading={category.labelKey}>
-                {SEARCH_ITEMS.filter(
-                  (item) => 
-                    item.category === category.id && 
-                    (search === "" || 
-                     item.title.toLowerCase().includes(search.toLowerCase())
-                    )
-                ).map((item) => (
+            {SEARCH_CATEGORIES.map((category) => {
+              // 过滤当前分类下的搜索结果
+              const filteredItems = SEARCH_ITEMS.filter(
+                (item) => 
+                  item.category === category.id && 
+                  (search === "" || 
+                   item.title.toLowerCase().includes(search.toLowerCase())
+                  )
+              );
+              
+              // 如果该分类下没有匹配的结果，则不显示该分类
+              if (filteredItems.length === 0) return null;
+              
+              return (
+                <CommandGroup key={category.id} heading={category.labelKey}>
+                  {filteredItems.map((item) => (
                   <CommandItem
                     key={item.id}
                     value={item.title}
@@ -109,7 +116,8 @@ export function SearchDialog() {
                   </CommandItem>
                 ))}
               </CommandGroup>
-            ))}
+              );
+            })}
           </CommandList>
         </Command>
       </DialogContent>

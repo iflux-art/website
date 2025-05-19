@@ -4,14 +4,14 @@ import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 
-export default function TimelinePage() {
+export default async function TimelinePage() {
   // 获取博客文章并按年份分组
   const postsByYear = getPostsByYear();
 
   return (
     <main className="container mx-auto py-10 px-4">
       <div className="mb-8">
-        <Link 
+        <Link
           href="/blog"
           className="flex items-center text-muted-foreground hover:text-primary transition-colors"
         >
@@ -19,12 +19,12 @@ export default function TimelinePage() {
           返回博客列表
         </Link>
       </div>
-      
+
       <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
         <Clock className="h-6 w-6" />
         时间轴
       </h1>
-      
+
       <div className="relative border-l-2 border-muted pl-8 ml-4 mt-10">
         {Object.keys(postsByYear).length > 0 ? (
           Object.keys(postsByYear)
@@ -50,8 +50,8 @@ export default function TimelinePage() {
                         {post.tags && post.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mb-4">
                             {post.tags.map((tag, index) => (
-                              <Link 
-                                key={index} 
+                              <Link
+                                key={index}
                                 href={`/blog/tags/${encodeURIComponent(tag)}`}
                                 className="px-1.5 py-0.5 bg-muted rounded text-xs hover:bg-primary/10 hover:text-primary transition-colors"
                               >
@@ -83,7 +83,7 @@ export default function TimelinePage() {
 function getPostsByYear() {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return {};
-  
+
   const postsByYear: Record<string, Array<{
     slug: string;
     title: string;
@@ -91,30 +91,30 @@ function getPostsByYear() {
     excerpt: string;
     tags: string[];
   }>> = {};
-  
+
   // 递归函数来查找所有博客文件
   const findPostsInDirectory = (dir: string) => {
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item.name);
-      
+
       if (item.isDirectory()) {
         findPostsInDirectory(itemPath);
       } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
         const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
-        
+
         // 确保文章有日期且已发布
         if (data.date && data.published !== false) {
           const date = new Date(data.date);
           const year = date.getFullYear().toString();
-          
+
           // 创建年份分组（如果不存在）
           if (!postsByYear[year]) {
             postsByYear[year] = [];
           }
-          
+
           // 添加文章到对应年份
           const slug = path.basename(itemPath).replace(/\.(mdx|md)$/, '');
           postsByYear[year].push({
@@ -128,15 +128,15 @@ function getPostsByYear() {
       }
     }
   };
-  
+
   findPostsInDirectory(blogDir);
-  
+
   // 对每个年份内的文章按日期排序（从新到旧）
   Object.keys(postsByYear).forEach(year => {
     postsByYear[year].sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
   });
-  
+
   return postsByYear;
 }

@@ -1,72 +1,14 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { slideUp } from "@/lib/animations";
+import { ResourceFilter } from "@/components/features/navigation/resource-filter";
+import { ResourceList } from "@/components/features/navigation/resource-list";
+import { designResources } from "@/data/navigation/design";
 
 export default function DesignResourcesPage() {
-  // 设计资源数据
-  const designResources = [
-    {
-      title: "Figma",
-      description: "专业的在线设计工具，支持协作和原型设计，是UI/UX设计师的首选工具",
-      url: "https://www.figma.com",
-      category: "设计工具",
-      icon: "🎨",
-      author: "Figma, Inc.",
-      free: true
-    },
-    {
-      title: "Dribbble",
-      description: "设计师社区平台，展示UI、插画、网页和移动应用设计作品",
-      url: "https://dribbble.com",
-      category: "设计灵感",
-      icon: "🏀",
-      author: "Dribbble LLC",
-      free: true
-    },
-    {
-      title: "Behance",
-      description: "创意作品展示平台，包含各类设计项目和创意作品集",
-      url: "https://www.behance.net",
-      category: "作品集",
-      icon: "🎭",
-      author: "Adobe",
-      free: true
-    },
-    {
-      title: "Coolors",
-      description: "色彩搭配生成工具，帮助设计师快速创建和探索配色方案",
-      url: "https://coolors.co",
-      category: "配色工具",
-      icon: "🎨",
-      author: "Coolors",
-      free: true
-    },
-    {
-      title: "Unsplash",
-      description: "免费高质量图片资源网站，提供可商用的摄影作品",
-      url: "https://unsplash.com",
-      category: "图片资源",
-      icon: "📷",
-      author: "Unsplash Inc.",
-      free: true
-    },
-    {
-      title: "Adobe Creative Cloud",
-      description: "专业创意设计软件套件，包含Photoshop、Illustrator等工具",
-      url: "https://www.adobe.com/creativecloud.html",
-      category: "设计软件",
-      icon: "🖌️",
-      author: "Adobe Inc.",
-      free: false
-    }
-  ];
 
   // 获取所有分类
   const categories = [...new Set(designResources.map(resource => resource.category))];
@@ -93,40 +35,14 @@ export default function DesignResourcesPage() {
       </div>
       
       {/* 分类筛选 */}
-      <div className="mb-8">
-        <h2 className="text-lg font-medium mb-3">按分类筛选</h2>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-3 py-1.5 rounded-md text-sm transition-colors ${!selectedCategory ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-          >
-            全部
-          </button>
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${selectedCategory === category ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ResourceFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       {/* 资源列表 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredResources.map((resource, index) => (
-          <ResourceCard key={index} resource={resource} index={index} />
-        ))}
-      </div>
-      
-      {/* 无结果提示 */}
-      {filteredResources.length === 0 && (
-        <div className="text-center py-10">
-          <p>没有找到相关资源</p>
-        </div>
-      )}
+      <ResourceList resources={filteredResources} />
     </main>
   );
 }

@@ -8,39 +8,10 @@ import Link from "next/link";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { fadeIn, slideUp } from "@/lib/animations";
+import { navigationCategories, getFeaturedResources, getRecentResources } from "@/data/navigation";
+
 
 export default function NavigationPage() {
-  // 导航分类数据
-  const navigationCategories = [
-    { 
-      id: 'ai', 
-      title: 'AI工具',
-      description: '人工智能和机器学习相关工具',
-      icon: '🤖',
-      color: 'bg-blue-100 dark:bg-blue-950'
-    },
-    { 
-      id: 'design', 
-      title: '设计资源',
-      description: 'UI/UX设计工具和资源',
-      icon: '🎨',
-      color: 'bg-purple-100 dark:bg-purple-950'
-    },
-    { 
-      id: 'development', 
-      title: '开发工具',
-      description: '编程和开发相关工具',
-      icon: '💻',
-      color: 'bg-green-100 dark:bg-green-950'
-    },
-    { 
-      id: 'productivity', 
-      title: '效率工具',
-      description: '提高工作效率的应用和服务',
-      icon: '⚡',
-      color: 'bg-yellow-100 dark:bg-yellow-950'
-    }
-  ];
 
   // 动画效果
   const container = {
@@ -111,7 +82,7 @@ function CategoryCard({ category }: { category: Category }) {
     <motion.div
       ref={ref}
       variants={fadeIn}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
       <Link href={`/navigation/${category.id}`}>
@@ -184,70 +155,4 @@ function ResourceCard({ resource, index }: { resource: Resource, index: number }
       </a>
     </motion.div>
   );
-}
-
-// 获取精选资源
-function getFeaturedResources() {
-  return [
-    {
-      title: "Figma",
-      description: "专业的在线设计工具，支持协作和原型设计",
-      url: "https://www.figma.com",
-      category: "设计",
-      icon: "🎨",
-      author: "Figma, Inc.",
-      free: true
-    },
-    {
-      title: "ChatGPT",
-      description: "OpenAI开发的强大AI对话模型",
-      url: "https://chat.openai.com",
-      category: "AI",
-      icon: "🤖",
-      author: "OpenAI",
-      free: true
-    },
-    {
-      title: "VS Code",
-      description: "微软开发的轻量级代码编辑器",
-      url: "https://code.visualstudio.com",
-      category: "开发",
-      icon: "💻",
-      author: "Microsoft",
-      free: true
-    }
-  ];
-}
-
-// 获取最新资源
-function getRecentResources() {
-  return [
-    {
-      title: "Notion",
-      description: "集笔记、知识库、任务管理于一体的协作平台",
-      url: "https://www.notion.so",
-      category: "效率",
-      icon: "📝",
-      author: "Notion Labs",
-      free: true
-    },
-    {
-      title: "Midjourney",
-      description: "AI图像生成工具，可创建高质量艺术图像",
-      url: "https://www.midjourney.com",
-      category: "AI",
-      icon: "🖼️",
-      author: "Midjourney, Inc.",
-      free: false
-    },
-    {
-      title: "Vercel",
-      description: "前端应用部署平台，支持Next.js等框架",
-      url: "https://vercel.com",
-      category: "开发",
-      icon: "🚀",
-      author: "Vercel, Inc.",
-      free: true
-    }
-  ];
 }

@@ -1,72 +1,14 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { slideUp } from "@/lib/animations";
+import { ResourceFilter } from "@/components/features/navigation/resource-filter";
+import { ResourceList } from "@/components/features/navigation/resource-list";
+import { developmentResources } from "@/data/navigation/development";
 
 export default function DevelopmentToolsPage() {
-  // 开发工具资源数据
-  const developmentResources = [
-    {
-      title: "VS Code",
-      description: "微软开发的轻量级代码编辑器，拥有丰富的插件生态系统",
-      url: "https://code.visualstudio.com",
-      category: "编辑器",
-      icon: "💻",
-      author: "Microsoft",
-      free: true
-    },
-    {
-      title: "GitHub",
-      description: "代码托管和协作平台，支持Git版本控制和项目管理",
-      url: "https://github.com",
-      category: "版本控制",
-      icon: "🐙",
-      author: "GitHub, Inc.",
-      free: true
-    },
-    {
-      title: "Vercel",
-      description: "前端应用部署平台，支持Next.js等框架的自动部署和预览",
-      url: "https://vercel.com",
-      category: "部署",
-      icon: "🚀",
-      author: "Vercel, Inc.",
-      free: true
-    },
-    {
-      title: "Stack Overflow",
-      description: "程序员问答社区，解决编程问题的最大资源库",
-      url: "https://stackoverflow.com",
-      category: "社区",
-      icon: "❓",
-      author: "Stack Exchange Inc.",
-      free: true
-    },
-    {
-      title: "MDN Web Docs",
-      description: "Web技术文档库，提供HTML、CSS和JavaScript等详细参考资料",
-      url: "https://developer.mozilla.org",
-      category: "文档",
-      icon: "📚",
-      author: "Mozilla",
-      free: true
-    },
-    {
-      title: "CodePen",
-      description: "在线代码编辑器和社区，用于测试和展示HTML、CSS和JavaScript代码片段",
-      url: "https://codepen.io",
-      category: "工具",
-      icon: "✏️",
-      author: "CodePen",
-      free: true
-    }
-  ];
 
   // 获取所有分类
   const categories = [...new Set(developmentResources.map(resource => resource.category))];
@@ -93,40 +35,14 @@ export default function DevelopmentToolsPage() {
       </div>
       
       {/* 分类筛选 */}
-      <div className="mb-8">
-        <h2 className="text-lg font-medium mb-3">按分类筛选</h2>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-3 py-1.5 rounded-md text-sm transition-colors ${!selectedCategory ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-          >
-            全部
-          </button>
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${selectedCategory === category ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-primary/10 hover:text-primary'}`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ResourceFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       {/* 资源列表 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredResources.map((resource, index) => (
-          <ResourceCard key={index} resource={resource} index={index} />
-        ))}
-      </div>
-      
-      {/* 无结果提示 */}
-      {filteredResources.length === 0 && (
-        <div className="text-center py-10">
-          <p>没有找到相关资源</p>
-        </div>
-      )}
+      <ResourceList resources={filteredResources} />
     </main>
   );
 }

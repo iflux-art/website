@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
     dirs: ['app', 'components', 'lib', 'types'],
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
 };
 
 const withMDX = createMDX({

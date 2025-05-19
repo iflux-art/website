@@ -1,54 +1,12 @@
 "use client";
 
 import React from "react";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Card, CardContent } from "@/components/ui/card";
+import { slideUp } from "@/lib/animations";
 
-import { ResourceFilter } from "@/components/features/navigation/resource-filter";
-import { ResourceList } from "@/components/features/navigation/resource-list";
-import { aiResources } from "@/data/navigation/ai";
-
-export default function AIToolsPage() {
-
-  // 获取所有分类
-  const categories = [...new Set(aiResources.map(resource => resource.category))];
-  
-  // 状态管理
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
-  
-  // 根据选中的分类筛选资源
-  const filteredResources = selectedCategory
-    ? aiResources.filter(resource => resource.category === selectedCategory)
-    : aiResources;
-
-  return (
-    <main className="container mx-auto py-10 px-4">
-      <div className="mb-8">
-        <Link href="/navigation" className="flex items-center text-primary hover:underline mb-4">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          返回导航
-        </Link>
-        <h1 className="text-3xl font-bold mb-4">AI工具</h1>
-        <p className="text-muted-foreground max-w-3xl mb-8">
-          探索人工智能和机器学习相关工具，包括AI对话模型、图像生成、语音识别等智能应用。
-        </p>
-      </div>
-      
-      {/* 分类筛选 */}
-      <ResourceFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-      />
-
-      {/* 资源列表 */}
-      <ResourceList resources={filteredResources} />
-    </main>
-  );
-}
-
-// 资源卡片组件
-interface Resource {
+export interface Resource {
   title: string;
   description: string;
   url: string;
@@ -58,7 +16,16 @@ interface Resource {
   free: boolean;
 }
 
-function ResourceCard({ resource, index }: { resource: Resource, index: number }) {
+interface ResourceCardProps {
+  resource: Resource;
+  index: number;
+}
+
+/**
+ * 资源卡片组件
+ * 用于显示导航和友情链接页面中的资源卡片
+ */
+export function ResourceCard({ resource, index }: ResourceCardProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1

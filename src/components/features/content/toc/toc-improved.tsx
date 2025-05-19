@@ -22,6 +22,26 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   useEffect(() => {
     if (headings.length === 0) return;
 
+    // 确保所有标题都有ID并且可以被正确观察
+    const checkAndFixHeadingIds = () => {
+      headings.forEach((heading) => {
+        // 检查元素是否存在
+        if (!document.getElementById(heading.id)) {
+          // 查找匹配文本内容的标题元素
+          const headingElements = document.querySelectorAll('h2, h3, h4');
+          headingElements.forEach((el) => {
+            if (el.textContent?.trim() === heading.text && !el.id) {
+              // 为没有ID的标题元素添加ID
+              el.id = heading.id;
+            }
+          });
+        }
+      });
+    };
+
+    // 页面加载后检查并修复标题ID
+    setTimeout(checkAndFixHeadingIds, 500);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,16 +60,21 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
           }
         });
       },
-      { rootMargin: "-100px 0px -80% 0px" }
+      { rootMargin: "-100px 0px -80% 0px", threshold: 0.1 }
     );
 
     // 观察所有标题元素
-    headings.forEach((heading) => {
-      const element = document.getElementById(heading.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
+    const observeHeadings = () => {
+      headings.forEach((heading) => {
+        const element = document.getElementById(heading.id);
+        if (element) {
+          observer.observe(element);
+        }
+      });
+    };
+
+    // 延迟观察以确保DOM已完全加载
+    setTimeout(observeHeadings, 1000);
 
     return () => {
       headings.forEach((heading) => {

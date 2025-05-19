@@ -17,7 +17,7 @@ export function CategoryCard({ category, title, description, docCount }: Categor
     <Card className="overflow-hidden hover:shadow-md transition-all border border-border">
       <CardContent className="p-6">
         <motion.div
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
           <h2 className="text-xl font-semibold mb-2">{title}</h2>
