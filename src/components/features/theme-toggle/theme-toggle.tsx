@@ -5,12 +5,16 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeToggleProps } from "./theme-toggle.types";
 
 /**
  * 主题切换组件
  * 用于切换明暗主题模式
+ *
+ * @example
+ * <ThemeToggle />
  */
-export function ThemeToggle() {
+export function ThemeToggle({}: ThemeToggleProps = {}) {
   const [mounted, setMounted] = React.useState(false);
   const { theme, setTheme } = useTheme();
 

@@ -3,13 +3,13 @@
 import React from "react";
 import { PageTransition } from "@/components/ui/page-transition";
 
-// 导入新的首页组件
-import { NewHeroSection } from "@/components/layout/home/new-hero-section";
+// 导入首页组件
+import { HeroSection } from "@/components/layout/home/hero-section";
 import { FeaturesSection } from "@/components/layout/home/features-section";
 import { BlogSection } from "@/components/layout/home/blog-section";
-import { NewNavigationSection } from "@/components/layout/home/new-navigation-section";
-import { NewFriendsSection } from "@/components/layout/home/new-friends-section";
-import { NewContactSection } from "@/components/layout/home/new-contact-section";
+import { NavigationSection } from "@/components/layout/home/navigation-section";
+import { FriendsSection } from "@/components/layout/home/friends-section";
+import { ContactSection } from "@/components/layout/home/contact-section";
 import { ScrollIndicator } from "@/components/layout/home/scroll-indicator";
 import { FullscreenScrollController } from "@/components/layout/home/fullscreen-scroll-controller";
 
@@ -37,7 +37,7 @@ export default function Home() {
           {/* 页面各部分 */}
           <section id="hero-section" className="flex items-center justify-center bg-gradient-to-b from-background to-background/95 w-full">
             <div className="w-full">
-              <NewHeroSection />
+              <HeroSection />
             </div>
           </section>
 
@@ -50,15 +50,15 @@ export default function Home() {
           </section>
 
           <section id="navigation-section" className="flex items-center justify-center bg-muted/30 w-full">
-            <NewNavigationSection />
+            <NavigationSection />
           </section>
 
           <section id="friends-section" className="flex items-center justify-center bg-background w-full">
-            <NewFriendsSection />
+            <FriendsSection />
           </section>
 
           <section id="contact-section" className="flex items-center justify-center bg-muted/30 w-full">
-            <NewContactSection />
+            <ContactSection />
           </section>
         </main>
       </FullscreenScrollController>

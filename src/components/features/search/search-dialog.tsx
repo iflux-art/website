@@ -9,12 +9,16 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/
 import { motion, AnimatePresence } from "framer-motion";
 
 import { SEARCH_ITEMS, SEARCH_CATEGORIES } from "@/lib/constants";
+import { SearchButtonProps, SearchDialogProps } from "./search.types";
 
 /**
  * 搜索图标按钮组件
  * 样式与语言切换和主题切换按钮保持一致
+ *
+ * @example
+ * <SearchButton onClick={() => setOpen(true)} />
  */
-export function SearchButton({ onClick }: { onClick: () => void }) {
+export function SearchButton({ onClick }: SearchButtonProps) {
   return (
     <Button
       variant="ghost"
@@ -41,8 +45,11 @@ export function SearchButton({ onClick }: { onClick: () => void }) {
 /**
  * 搜索对话框组件
  * 点击搜索按钮后弹出的搜索框和推荐内容列表
+ *
+ * @example
+ * <SearchDialog />
  */
-export function SearchDialog() {
+export function SearchDialog({}: SearchDialogProps = {}) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");

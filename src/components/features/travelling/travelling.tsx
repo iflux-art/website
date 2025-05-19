@@ -4,11 +4,16 @@ import * as React from "react";
 import { TramFront } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { TravellingProps } from "./travelling.types";
 
 /**
- * 开往组件，点击跳转到开往友链接力
+ * 开往组件
+ * 点击跳转到开往友链接力网站，实现网站之间的随机跳转
+ *
+ * @example
+ * <Travelling />
  */
-export function Travelling() {
+export function Travelling({}: TravellingProps = {}) {
   return (
     <Button
       variant="ghost"
@@ -23,7 +28,7 @@ export function Travelling() {
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.3 }}
       >
-        <TramFront 
+        <TramFront
           className="h-[1.1rem] w-[1.1rem]"
         />
       </motion.div>
