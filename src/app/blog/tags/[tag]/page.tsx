@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -54,6 +55,16 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
 
   return (
     <main className="container mx-auto py-10 px-4">
+      <div className="mb-8">
+        <Link
+          href="/blog"
+          className="flex items-center text-muted-foreground hover:text-primary transition-colors"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          返回博客列表
+        </Link>
+      </div>
+
       <h1 className="text-3xl font-bold mb-6">标签: {decodedTag}</h1>
 
       {sortedPosts.length > 0 ? (

@@ -4,26 +4,46 @@ import { BackToTopButton } from "@/components/features/content/back-to-top-butto
 import { TagCloud } from "./tag-cloud";
 import { RelatedPosts } from "./related-posts";
 import { AdvertisementCard } from "@/components/features/content/advertisement-card";
+import { Heading, RelatedPost } from "@/types/blog";
 
-interface Heading {
-  id: string;
-  text: string;
-  level: number;
-}
-
+/**
+ * 博客侧边栏组件属性
+ *
+ * @interface BlogSidebarProps
+ */
 interface BlogSidebarProps {
+  /**
+   * 文章标题列表，用于生成目录
+   */
   headings: Heading[];
+
+  /**
+   * 文章标签列表
+   */
   tags: string[];
-  relatedPosts: Array<{
-    slug: string;
-    title: string;
-    excerpt: string;
-  }>;
+
+  /**
+   * 相关文章列表
+   */
+  relatedPosts: RelatedPost[];
 }
 
 /**
  * 博客侧边栏组件
- * 用于显示博客文章的目录、标签云、相关文章和广告
+ *
+ * 用于显示博客文章的侧边栏，包括目录、标签云、相关文章和广告
+ *
+ * @param {BlogSidebarProps} props - 组件属性
+ * @returns {JSX.Element} 博客侧边栏组件
+ *
+ * @example
+ * ```tsx
+ * <BlogSidebar
+ *   headings={[{ id: "intro", text: "Introduction", level: 2 }]}
+ *   tags={["React", "Next.js"]}
+ *   relatedPosts={[{ slug: "hello-world", title: "Hello World", excerpt: "..." }]}
+ * />
+ * ```
  */
 export function BlogSidebar({ headings, tags, relatedPosts }: BlogSidebarProps) {
   return (

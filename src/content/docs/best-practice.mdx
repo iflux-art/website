@@ -1,0 +1,112 @@
+---
+title: 文档最佳实践
+excerpt: 如何组织和编写高质量的文档
+---
+
+# 文档最佳实践
+
+本指南介绍如何使用我们的文档系统，以及如何组织和编写高质量的文档。
+
+## 文件结构
+
+我们的文档系统支持多层级的文件夹结构，可以根据需要组织文档。例如：
+
+```
+docs/
+├── getting-started/
+│   ├── _meta.json
+│   ├── introduction.mdx
+│   ├── installation.mdx
+│   └── examples/
+│       ├── _meta.json
+│       ├── basic-example.mdx
+│       └── advanced-example.mdx
+├── api/
+│   ├── _meta.json
+│   ├── overview.mdx
+│   └── endpoints/
+│       ├── _meta.json
+│       ├── users.mdx
+│       └── posts.mdx
+└── best-practice.mdx
+```
+
+## 使用 _meta.json 文件
+
+每个文档目录可以包含一个 `_meta.json` 文件，用于自定义侧边栏的显示。例如：
+
+```json
+{
+  "introduction": "介绍",
+  "installation": {
+    "title": "安装指南",
+    "collapsed": false
+  },
+  "examples": {
+    "title": "示例",
+    "collapsed": true,
+    "items": [
+      "basic-example",
+      "advanced-example"
+    ]
+  },
+  "github": {
+    "title": "GitHub 仓库",
+    "href": "https://github.com/iflux-art/web"
+  }
+}
+```
+
+### 支持的配置选项
+
+- **字符串值**：直接指定标题，如 `"introduction": "介绍"`
+- **对象值**：提供更多配置选项
+  - `title`：自定义标题
+  - `href`：外部链接（以 `http` 开头的链接会在新标签页打开）
+  - `collapsed`：是否默认折叠（对于有子项的目录）
+  - `items`：子项目列表（对于有子项的目录）
+  - `type`：项目类型，可以是 `"separator"` 或 `"page"`
+
+## 编写文档
+
+我们使用 MDX 格式编写文档，支持 Markdown 语法和 React 组件。
+
+### 文档元数据
+
+每个文档文件应该包含元数据部分，例如：
+
+```yaml
+---
+title: 文档最佳实践
+excerpt: 如何组织和编写高质量的文档
+---
+```
+
+### 标题层级
+
+- 使用 `#` 作为文档的主标题
+- 使用 `##` 作为主要章节标题
+- 使用 `###` 作为子章节标题
+- 使用 `####` 作为小节标题
+
+### 代码块
+
+使用三个反引号（\`\`\`）创建代码块，并指定语言：
+
+```jsx
+function Example() {
+  return <div>Hello World</div>;
+}
+```
+
+## 最佳实践
+
+1. **保持文档简洁**：每个文档应该专注于一个主题
+2. **使用清晰的标题**：标题应该简洁明了，便于理解
+3. **提供示例**：尽可能提供代码示例和使用场景
+4. **保持更新**：定期更新文档，确保内容准确
+5. **使用适当的格式**：使用列表、表格和代码块等格式化元素提高可读性
+
+## 总结
+
+遵循这些最佳实践，可以创建高质量、易于理解的文档，帮助用户更好地使用我们的产品。

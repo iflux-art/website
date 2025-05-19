@@ -5,18 +5,62 @@ import { Calendar } from "lucide-react";
 import { mdxComponents } from "@/mdx-components";
 import { AuthorCard } from "./author-card";
 
+/**
+ * 博客内容组件属性
+ *
+ * @interface BlogContentProps
+ */
 interface BlogContentProps {
+  /**
+   * 文章标题
+   */
   title: string;
+
+  /**
+   * 发布日期
+   */
   date: string | null;
+
+  /**
+   * 文章内容（MDX 格式）
+   */
   content: string;
+
+  /**
+   * 作者名称
+   */
   author: string;
+
+  /**
+   * 作者头像 URL
+   */
   authorAvatar: string | null;
+
+  /**
+   * 作者简介
+   */
   authorBio: string;
 }
 
 /**
  * 博客内容组件
+ *
  * 用于显示博客文章的主要内容，包括标题、日期、正文和作者信息
+ *
+ * @param {BlogContentProps} props - 组件属性
+ * @returns {JSX.Element} 博客内容组件
+ *
+ * @example
+ * ```tsx
+ * <BlogContent
+ *   title="Hello World"
+ *   date="2023-01-01"
+ *   content="# Hello World\n\nThis is my first blog post"
+ *   author="Bowie"
+ *   authorAvatar="/images/bowie.jpg"
+ *   authorBio="iflux.art | 斐流艺创"
+ * />
+ * ```
  */
 export function BlogContent({
   title,
@@ -37,7 +81,7 @@ export function BlogContent({
           </div>
         )}
       </header>
-      
+
       <div className="prose dark:prose-invert max-w-none">
         <MDXRemote source={content} components={mdxComponents} />
       </div>

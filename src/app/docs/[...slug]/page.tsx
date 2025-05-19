@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { mdxComponents } from '@/mdx-components';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { DocsSidebarImproved } from '@/components/features/docs/sidebar/sidebar-improved';
+import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
 import { TableOfContentsClientWrapper } from '@/components/features/content/toc/toc-client-wrapper';
 import { AdvertisementCard } from '@/components/features/content/advertisement-card';
 import { BackToTopButton } from '@/components/features/content/back-to-top-button';
@@ -138,23 +138,19 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
 
   return (
-    <div className="container mx-auto py-6 px-4">
-
-      <div className="flex flex-col lg:flex-row gap-6">
+    <div className="container mx-auto py-6">
+      <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <DocsSidebarImproved
-
+          <DocSidebar
             category={category}
             currentDoc={docName}
-            meta={meta}
-            allDocs={allDocs}
           />
         </div>
 
         {/* 中间内容区 */}
         <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto">
             {/* 面包屑导航 */}
             <div className="text-sm text-muted-foreground mb-6">
               <Link href="/docs" className="hover:text-primary">
@@ -210,7 +206,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
         {/* 右侧边栏 - 目录、广告和回到顶部按钮 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20 pr-2 space-y-8">
+          <div className="lg:sticky lg:top-20 space-y-8">
             {/* 目录 - 只在有标题时显示 */}
             {headings.length > 0 && (
               <div>
@@ -219,9 +215,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
             )}
 
             {/* 广告卡片 */}
-            <AdvertisementCard
-
-            />
+            <AdvertisementCard />
 
             {/* 回到顶部按钮 */}
             <div className="flex justify-left">

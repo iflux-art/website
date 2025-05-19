@@ -1,10 +1,31 @@
 import Link from 'next/link';
 import { Tag as TagIcon } from 'lucide-react';
 
+/**
+ * 标签云组件属性
+ *
+ * @interface TagCloudProps
+ */
 interface TagCloudProps {
+  /**
+   * 标签列表
+   */
   tags: string[];
 }
 
+/**
+ * 标签云组件
+ *
+ * 用于显示博客文章的标签列表，支持点击导航到标签页面
+ *
+ * @param {TagCloudProps} props - 组件属性
+ * @returns {JSX.Element} 标签云组件
+ *
+ * @example
+ * ```tsx
+ * <TagCloud tags={["React", "Next.js", "TypeScript"]} />
+ * ```
+ */
 export function TagCloud({ tags }: TagCloudProps) {
   return (
     <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
@@ -15,8 +36,8 @@ export function TagCloud({ tags }: TagCloudProps) {
       <div className="p-3">
         <div className="flex flex-wrap gap-2">
           {(tags || []).map((tag: string, index: number) => (
-            <Link 
-              key={index} 
+            <Link
+              key={index}
               href={`/blog/tags/${encodeURIComponent(tag)}`}
               className="px-2 py-1 bg-muted rounded-md text-xs hover:bg-primary/10 hover:text-primary transition-colors"
             >
