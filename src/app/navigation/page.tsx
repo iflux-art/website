@@ -8,7 +8,12 @@ import Link from "next/link";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { fadeIn, slideUp } from "@/lib/animations";
-import { navigationCategories, getFeaturedResources, getRecentResources } from "@/data/navigation";
+import {
+  useNavigationCategories,
+  useFeaturedResources,
+  useRecentResources
+} from "@/hooks/use-navigation";
+import { Category, Resource } from "@/types/navigation";
 
 
 export default function NavigationPage() {
@@ -24,18 +29,23 @@ export default function NavigationPage() {
     }
   };
 
+  // 获取导航数据
+  const categories = useNavigationCategories();
+  const featuredResources = useFeaturedResources();
+  const recentResources = useRecentResources();
+
   return (
     <main className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6">网站导航</h1>
-      
+
       {/* 分类导航 */}
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
       >
-        {navigationCategories.map((category) => (
+        {categories.map((category) => (
           <CategoryCard key={category.id} category={category} />
         ))}
       </motion.div>
@@ -44,7 +54,7 @@ export default function NavigationPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getFeaturedResources().map((resource, index) => (
+          {featuredResources.map((resource, index) => (
             <ResourceCard key={index} resource={resource} index={index} />
           ))}
         </div>
@@ -54,7 +64,7 @@ export default function NavigationPage() {
       <section>
         <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getRecentResources().map((resource, index) => (
+          {recentResources.map((resource, index) => (
             <ResourceCard key={index} resource={resource} index={index} />
           ))}
         </div>
@@ -63,16 +73,27 @@ export default function NavigationPage() {
   );
 }
 
-// 分类卡片组件
-interface Category {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
+/**
+ * 分类卡片组件属性
+ *
+ * @interface CategoryCardProps
+ */
+interface CategoryCardProps {
+  /**
+   * 分类数据
+   */
+  category: Category;
 }
 
-function CategoryCard({ category }: { category: Category }) {
+/**
+ * 分类卡片组件
+ *
+ * 用于显示导航页面中的分类卡片，包括图标、标题和描述
+ *
+ * @param {CategoryCardProps} props - 组件属性
+ * @returns {JSX.Element} 分类卡片组件
+ */
+function CategoryCard({ category }: CategoryCardProps) {
   const { ref } = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -104,55 +125,5 @@ function CategoryCard({ category }: { category: Category }) {
   );
 }
 
-// 资源卡片组件
-interface Resource {
-  title: string;
-  description: string;
-  url: string;
-  category: string;
-  icon: string;
-  author: string;
-  free: boolean;
-}
-
-function ResourceCard({ resource, index }: { resource: Resource, index: number }) {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
-  return (
-    <motion.div
-      ref={ref}
-      variants={slideUp}
-      initial="initial"
-      animate={inView ? "animate" : "initial"}
-      transition={{ delay: index * 0.1 }}
-    >
-      <a href={resource.url} target="_blank" rel="noopener noreferrer">
-        <Card className="h-full hover:shadow-md transition-all hover:border-primary/50">
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center">
-                {resource.icon && (
-                  <span className="text-2xl mr-2">{resource.icon}</span>
-                )}
-                <h3 className="text-lg font-semibold">{resource.title}</h3>
-              </div>
-              <span className="text-xs px-2 py-1 rounded-full bg-muted">{resource.category}</span>
-            </div>
-            <p className="text-muted-foreground mb-4">{resource.description}</p>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">{resource.author}</span>
-              {resource.free && (
-                <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                  免费
-                </span>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </a>
-    </motion.div>
-  );
-}
+// 导入资源卡片组件
+import { ResourceCard } from "@/components/features/navigation";

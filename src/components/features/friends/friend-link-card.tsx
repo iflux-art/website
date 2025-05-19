@@ -4,25 +4,89 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { fadeIn } from "@/lib/animations";
+import { handleImageError, getFirstLetter } from "@/lib/image";
 
+/**
+ * 友情链接数据接口
+ *
+ * @interface FriendLink
+ */
 export interface FriendLink {
+  /**
+   * 网站名称
+   */
   name: string;
+
+  /**
+   * 网站地址
+   */
   url: string;
+
+  /**
+   * 网站描述
+   */
   desc: string;
+
+  /**
+   * 网站图标
+   */
   icon: {
+    /**
+     * 图标类型
+     * - emoji: 使用 emoji 表情作为图标
+     * - image: 使用图片 URL 作为图标
+     */
     type: 'emoji' | 'image';
+
+    /**
+     * 图标值
+     * - 当 type 为 'emoji' 时，为 emoji 表情
+     * - 当 type 为 'image' 时，为图片 URL
+     */
     value: string;
   };
 }
 
+/**
+ * 友情链接卡片组件属性
+ *
+ * @interface FriendLinkCardProps
+ */
 interface FriendLinkCardProps {
+  /**
+   * 友情链接数据
+   */
   link: FriendLink;
+
+  /**
+   * 索引，用于动画延迟
+   */
   index: number;
 }
 
 /**
  * 友情链接卡片组件
- * 用于显示友情链接页面中的友链卡片
+ *
+ * 用于显示友情链接页面中的友链卡片，支持 emoji 和图片两种图标类型
+ *
+ * @param {FriendLinkCardProps} props - 组件属性
+ * @returns {JSX.Element} 友情链接卡片组件
+ *
+ * @example
+ * ```tsx
+ * <FriendLinkCard
+ *   link={{
+ *     name: "示例网站",
+ *     url: "https://example.com",
+ *     desc: "示例网站描述",
+ *     icon: {
+ *       type: "emoji",
+ *       value: "🌟"
+ *     }
+ *   }}
+ *   index={0}
+ * />
+ * ```
  */
 export function FriendLinkCard({ link, index }: FriendLinkCardProps) {
   return (
@@ -48,11 +112,7 @@ export function FriendLinkCard({ link, index }: FriendLinkCardProps) {
                   src={link.icon.value}
                   alt={`${link.name} icon`}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // 图片加载失败时显示首字母
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = link.name.charAt(0);
-                  }}
+                  onError={(e) => handleImageError(e, getFirstLetter(link.name))}
                 />
               )}
             </div>

@@ -5,25 +5,48 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@/components/ui/card";
 import { slideUp } from "@/lib/animations";
+import { Resource } from "@/types/navigation";
 
-export interface Resource {
-  title: string;
-  description: string;
-  url: string;
-  category: string;
-  icon: string;
-  author: string;
-  free: boolean;
-}
-
+/**
+ * 资源卡片组件属性
+ *
+ * @interface ResourceCardProps
+ */
 interface ResourceCardProps {
+  /**
+   * 资源数据
+   */
   resource: Resource;
+
+  /**
+   * 索引，用于动画延迟
+   */
   index: number;
 }
 
 /**
  * 资源卡片组件
- * 用于显示导航和友情链接页面中的资源卡片
+ *
+ * 用于显示导航页面中的资源卡片，包括标题、描述、分类、作者和是否免费等信息
+ *
+ * @param {ResourceCardProps} props - 组件属性
+ * @returns {JSX.Element} 资源卡片组件
+ *
+ * @example
+ * ```tsx
+ * <ResourceCard
+ *   resource={{
+ *     title: "GitHub",
+ *     description: "代码托管平台",
+ *     url: "https://github.com",
+ *     category: "开发",
+ *     icon: "🐙",
+ *     author: "GitHub, Inc.",
+ *     free: true
+ *   }}
+ *   index={0}
+ * />
+ * ```
  */
 export function ResourceCard({ resource, index }: ResourceCardProps) {
   const [ref, inView] = useInView({

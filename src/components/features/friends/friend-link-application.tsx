@@ -3,18 +3,46 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 
+/**
+ * 友情链接申请组件属性
+ *
+ * @interface FriendLinkApplicationProps
+ */
 interface FriendLinkApplicationProps {
+  /**
+   * 友情链接申请条件列表
+   */
   requirements: string[];
+
+  /**
+   * 申请友情链接的回调函数
+   * @default () => {}
+   */
   onApply?: () => void;
 }
 
 /**
  * 友情链接申请组件
- * 用于显示友情链接页面中的申请部分
+ *
+ * 用于显示友情链接页面中的申请部分，包括申请条件和申请按钮
+ *
+ * @param {FriendLinkApplicationProps} props - 组件属性
+ * @returns {JSX.Element} 友情链接申请组件
+ *
+ * @example
+ * ```tsx
+ * <FriendLinkApplication
+ *   requirements={[
+ *     "网站内容健康，无违法内容",
+ *     "网站已稳定运行3个月以上"
+ *   ]}
+ *   onApply={() => console.log('申请友链')}
+ * />
+ * ```
  */
-export function FriendLinkApplication({ 
-  requirements, 
-  onApply = () => {} 
+export function FriendLinkApplication({
+  requirements,
+  onApply = () => {}
 }: FriendLinkApplicationProps) {
   return (
     <div className="mt-10 p-6 border border-border rounded-lg bg-muted/30">
@@ -28,7 +56,7 @@ export function FriendLinkApplication({
         ))}
       </ul>
       <div className="mt-6">
-        <Button 
+        <Button
           onClick={onApply}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
         >

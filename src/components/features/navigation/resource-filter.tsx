@@ -2,15 +2,45 @@
 
 import React from "react";
 
+/**
+ * 资源过滤组件属性
+ *
+ * @interface ResourceFilterProps
+ */
 interface ResourceFilterProps {
+  /**
+   * 可选的分类列表
+   */
   categories: string[];
+
+  /**
+   * 当前选中的分类，null 表示全部
+   */
   selectedCategory: string | null;
+
+  /**
+   * 选择分类的回调函数
+   * @param category 选中的分类，null 表示全部
+   */
   onSelectCategory: (category: string | null) => void;
 }
 
 /**
  * 资源过滤组件
- * 用于在导航页面中筛选不同类别的资源
+ *
+ * 用于在导航页面中筛选不同类别的资源，支持选择全部或特定分类
+ *
+ * @param {ResourceFilterProps} props - 组件属性
+ * @returns {JSX.Element} 资源过滤组件
+ *
+ * @example
+ * ```tsx
+ * <ResourceFilter
+ *   categories={["编辑器", "版本控制", "部署"]}
+ *   selectedCategory={selectedCategory}
+ *   onSelectCategory={setSelectedCategory}
+ * />
+ * ```
  */
 export function ResourceFilter({
   categories,

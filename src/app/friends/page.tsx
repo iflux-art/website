@@ -2,11 +2,20 @@
 
 import React from "react";
 
-import { friendLinks, friendLinkRequirements } from "@/data/friends";
 import { FriendLinkCard } from "@/components/features/friends/friend-link-card";
 import { FriendLinkApplication } from "@/components/features/friends/friend-link-application";
+import { useFriendLinks } from "@/hooks/use-friend-links";
 
+/**
+ * 友情链接页面
+ *
+ * 显示友情链接列表和申请表单
+ *
+ * @returns 友情链接页面组件
+ */
 export default function FriendsPage() {
+  // 使用友情链接钩子函数获取数据和操作
+  const { links, requirements, applyFriendLink } = useFriendLinks();
 
   return (
     <main className="container mx-auto py-10 px-4">
@@ -17,14 +26,14 @@ export default function FriendsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {/* 友链卡片 */}
-        {friendLinks.map((link, index) => (
+        {links.map((link, index) => (
           <FriendLinkCard key={link.url} link={link} index={index} />
         ))}
       </div>
 
-      <FriendLinkApplication 
-        requirements={friendLinkRequirements} 
-        onApply={() => alert('感谢您的申请，我们会尽快审核！')} 
+      <FriendLinkApplication
+        requirements={requirements}
+        onApply={() => applyFriendLink('', '', '', { type: 'emoji', value: '' })}
       />
     </main>
   );
