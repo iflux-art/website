@@ -32,6 +32,7 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
   // 处理主题切换
   const toggleTheme = React.useCallback(() => {
     if (isAnimating) return;
+    if (!setTheme || !resolvedTheme) return;
 
     setIsAnimating(true);
 
@@ -52,7 +53,7 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
 
   // 获取当前主题图标和标签
   const getThemeInfo = () => {
-    if (!mounted) return { icon: null, label: "加载中..." };
+    if (!mounted || !resolvedTheme) return { icon: null, label: "加载中..." };
 
     // 获取当前解析的主题（实际显示的主题）
     const currentTheme = resolvedTheme || "system";

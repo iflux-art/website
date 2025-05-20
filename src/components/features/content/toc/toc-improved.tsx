@@ -163,9 +163,9 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   };
 
   return (
-    <div>
+    <div className="pl-0">
       <motion.div
-        className="py-2"
+        className="py-2 pl-0"
         variants={container}
         initial="hidden"
         animate="show"
@@ -196,7 +196,7 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
                     "text-foreground/70": activeId !== heading.id,
                   }
                 )}
-                style={{ paddingLeft: heading.level > 2 ? `${indent}rem` : "0" }}
+                style={{ paddingLeft: heading.level > 2 ? `${indent}rem` : "0.25rem" }}
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById(heading.id)?.scrollIntoView({
@@ -207,7 +207,7 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
               >
                 <Hash
                   className={cn(
-                    "h-3.5 w-3.5 mr-1.5 opacity-0 group-hover:opacity-100 transition-opacity",
+                    "h-3.5 w-3.5 mr-1.5 opacity-0 group-hover:opacity-100 transition-opacity ml-0",
                     activeId === heading.id ? "opacity-100" : ""
                   )}
                 />

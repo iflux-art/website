@@ -7,6 +7,8 @@ import { ThemeProvider } from "next-themes";
 import { SITE_METADATA } from "@/lib/constants";
 import { PageTransition } from "@/components/layout/transitions/page-transition";
 import { ThemeTransition } from "@/components/layout/transitions/theme-transition";
+// 确保导入 React
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +42,6 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           storageKey="iflux-theme-preference"
-          forcedTheme={undefined}
         >
           <ThemeTransition>
             <Navbar />

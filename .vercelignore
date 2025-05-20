@@ -1,0 +1,57 @@
+# 忽略缓存目录
+.next/cache/**
+node_modules/.cache/**
+.turbo/**
+
+# 忽略测试文件
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__/**
+jest.config.js
+jest.setup.js
+
+# 忽略开发工具配置
+.vscode/**
+.idea/**
+.github/**
+.eslintrc*
+.prettierrc*
+.editorconfig
+.git/**
+
+# 忽略文档和备份
+docs/**
+backups/**
+*.md
+!README.md
+
+# 忽略构建脚本和配置
+scripts/dev-*
+scripts/test-*
+turbo.json
+tsconfig.tsbuildinfo
+*.log
+
+# 忽略大型二进制文件
+**/*.{psd,ai,pdf,docx,xlsx}
+
+# 忽略不必要的包
+node_modules/@swc/core-linux-*/**
+node_modules/@swc/core-win32-*/**
+node_modules/@swc/core-darwin-*/**
+node_modules/@esbuild/linux-*/**
+node_modules/@esbuild/win32-*/**
+node_modules/@esbuild/darwin-*/**
+node_modules/.pnpm/@swc/core-*/**
+node_modules/.pnpm/@esbuild/*/**
+
+# 忽略源代码地图
+**/*.map
+
+# 忽略临时文件
+**/.DS_Store
+**/Thumbs.db
+**/*.tmp
+**/*.temp

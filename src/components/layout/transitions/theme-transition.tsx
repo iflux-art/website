@@ -25,6 +25,9 @@ export function ThemeTransition({
 
   // 初始化主题
   useEffect(() => {
+    // 确保 theme 和 setTheme 存在
+    if (!theme || !setTheme) return;
+
     // 从 localStorage 恢复主题，但默认使用系统主题
     const storedTheme = getStoredTheme();
 
@@ -39,6 +42,9 @@ export function ThemeTransition({
 
   // 监听主题变化
   useEffect(() => {
+    // 确保 resolvedTheme 存在
+    if (!resolvedTheme) return;
+
     // 只有当解析后的主题实际变化时才应用过渡效果
     if (prevTheme && prevTheme !== resolvedTheme) {
       // 应用主题过渡效果 - 只影响颜色相关的CSS属性
@@ -68,6 +74,9 @@ export function ThemeTransition({
 
   // 监听系统主题变化
   useEffect(() => {
+    // 确保 theme 存在
+    if (!theme) return;
+
     // 如果当前使用系统主题，则监听系统主题变化
     if (theme === 'system') {
       return watchSystemTheme((newSystemTheme) => {

@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm clean:cache && pnpm build",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "outputDirectory": ".next",
+  "cleanUrls": true,
+  "nodeVersion": "20.x",
+  "functions": {
+    "api/clean.js": {
+      "runtime": "edge"
+    },
+    "api/search.js": {
+      "runtime": "edge"
+    },
+    "api/blog/posts.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/blog/tags.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/blog/tags/count.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/blog/timeline.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/docs/categories.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/docs/recent.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "ignoreCommand": "echo 'Ignoring build errors...'",
+  "github": {
+    "silent": true
+  }
+}

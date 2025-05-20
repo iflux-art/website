@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/features/theme-toggle/index";
 import { CleanSearchDialog } from "@/components/features/search/clean-search";
 import { Travelling } from "@/components/features/travelling";
+import { Logo } from "@/components/features/logo";
 import { NavItems } from "./nav-items";
 
 import { hoverScale, buttonTap } from "@/lib/animations";
@@ -46,19 +47,57 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               aria-label={isOpen ? "关闭菜单" : "打开菜单"}
               title={isOpen ? "关闭菜单" : "打开菜单"}
             >
-              {isOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[80vw] sm:w-[350px] lg:hidden">
-            <div className="flex flex-col gap-6 mt-8">
-              <NavItems />
-              <div className="flex items-center gap-2 mt-4 sm:hidden">
-                <CleanSearchDialog />
-                <Travelling />
+          <SheetContent side="fullscreen" className="lg:hidden p-0 border-none">
+            {/* 复刻导航栏样式 */}
+            <div className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/80 shadow-sm border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300">
+              <div className="container mx-auto px-4 h-full flex items-center justify-between">
+                {/* 左侧部分 - Logo */}
+                <div className="flex items-center">
+                  <Logo />
+                </div>
+
+                {/* 中间部分 - 空白 */}
+                <div className="flex-1"></div>
+
+                {/* 右侧部分 - 功能按钮和关闭按钮 */}
+                <div className="flex items-center gap-1 sm:gap-2">
+                  {/* 功能按钮 */}
+                  <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+                    <CleanSearchDialog />
+                  </motion.div>
+                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
+                    <ModeToggle />
+                  </motion.div>
+                  <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+                    <Travelling />
+                  </motion.div>
+
+                  {/* X按钮 - 与汉堡菜单位置完全一致 */}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="lg:hidden"
+                    onClick={() => setIsOpen(false)}
+                    aria-label="关闭菜单"
+                    title="关闭菜单"
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* 菜单内容 */}
+            <div className="flex-1 overflow-auto p-6 pt-8">
+              <div className="container mx-auto flex flex-col gap-8">
+                <NavItems />
+                <div className="flex items-center gap-2 mt-4 sm:hidden">
+                  <CleanSearchDialog />
+                  <Travelling />
+                </div>
               </div>
             </div>
           </SheetContent>

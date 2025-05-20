@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { SEARCH_ITEMS } from '@/lib/constants';
+
+// 使用 Edge Runtime 以减小函数大小
+export const runtime = 'edge';
 
 // 搜索结果类型
 interface SearchResult {
@@ -70,17 +70,10 @@ async function performSearch(query: string, category: string, limit: number): Pr
   const results: SearchResult[] = [];
   const searchTerm = query.toLowerCase().trim();
 
-  // 1. 搜索预定义项目
+  // 在 Edge Runtime 中，我们只搜索预定义项目
+  // 因为 Edge Functions 不能访问文件系统
   const predefinedResults = searchPredefinedItems(searchTerm, category);
   results.push(...predefinedResults);
-
-  // 2. 搜索博客内容
-  const blogResults = await searchBlogContent(searchTerm, category);
-  results.push(...blogResults);
-
-  // 3. 搜索文档内容
-  const docsResults = await searchDocsContent(searchTerm, category);
-  results.push(...docsResults);
 
   // 对结果进行排序和去重
   const uniqueResults = deduplicateResults(results);
@@ -123,7 +116,7 @@ async function searchBlogContent(searchTerm: string, category: string): Promise<
 
   const results: SearchResult[] = [];
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
-  
+
   if (!fs.existsSync(blogDir)) {
     return results;
   }
@@ -131,24 +124,24 @@ async function searchBlogContent(searchTerm: string, category: string): Promise<
   // 递归搜索博客文件
   const searchBlogFiles = (dir: string) => {
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item.name);
-      
+
       if (item.isDirectory()) {
         searchBlogFiles(itemPath);
       } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
         try {
           const fileContent = fs.readFileSync(itemPath, 'utf8');
           const { data, content } = matter(fileContent);
-          
+
           // 只包含已发布的文章
           if (data.published !== false) {
             // 计算slug
             let slug = '';
             const relativePath = path.relative(blogDir, itemPath);
             const pathParts = relativePath.split(path.sep);
-            
+
             if (pathParts.length === 1) {
               // 直接在blog目录下的文件
               slug = pathParts[0].replace(/\.(mdx|md)$/, '');
@@ -157,14 +150,14 @@ async function searchBlogContent(searchTerm: string, category: string): Promise<
               const fileName = pathParts.pop() || '';
               slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
             }
-            
+
             // 搜索标题、摘要和内容
             const titleMatch = data.title?.toLowerCase().includes(searchTerm);
             const excerptMatch = data.excerpt?.toLowerCase().includes(searchTerm);
             const contentMatch = content.toLowerCase().includes(searchTerm);
-            const tagsMatch = data.tags && Array.isArray(data.tags) && 
+            const tagsMatch = data.tags && Array.isArray(data.tags) &&
               data.tags.some((tag: string) => tag.toLowerCase().includes(searchTerm));
-            
+
             if (titleMatch || excerptMatch || contentMatch || tagsMatch) {
               results.push({
                 id: `blog-${slug}`,
@@ -184,7 +177,7 @@ async function searchBlogContent(searchTerm: string, category: string): Promise<
       }
     }
   };
-  
+
   searchBlogFiles(blogDir);
   return results;
 }
@@ -199,7 +192,7 @@ async function searchDocsContent(searchTerm: string, category: string): Promise<
 
   const results: SearchResult[] = [];
   const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
-  
+
   if (!fs.existsSync(docsDir)) {
     return results;
   }
@@ -207,10 +200,10 @@ async function searchDocsContent(searchTerm: string, category: string): Promise<
   // 递归搜索文档文件
   const searchDocsFiles = (dir: string, categoryPath: string = '') => {
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item.name);
-      
+
       if (item.isDirectory()) {
         const subCategoryPath = categoryPath ? `${categoryPath}/${item.name}` : item.name;
         searchDocsFiles(itemPath, subCategoryPath);
@@ -218,18 +211,18 @@ async function searchDocsContent(searchTerm: string, category: string): Promise<
         try {
           const fileContent = fs.readFileSync(itemPath, 'utf8');
           const { data, content } = matter(fileContent);
-          
+
           // 只包含已发布的文档
           if (data.published !== false) {
             const slug = item.name.replace(/\.(mdx|md)$/, '');
             const docPath = categoryPath ? `${categoryPath}/${slug}` : slug;
-            
+
             // 搜索标题、描述和内容
             const titleMatch = data.title?.toLowerCase().includes(searchTerm);
-            const descriptionMatch = data.description?.toLowerCase().includes(searchTerm) || 
+            const descriptionMatch = data.description?.toLowerCase().includes(searchTerm) ||
                                     data.excerpt?.toLowerCase().includes(searchTerm);
             const contentMatch = content.toLowerCase().includes(searchTerm);
-            
+
             if (titleMatch || descriptionMatch || contentMatch) {
               results.push({
                 id: `docs-${docPath}`,
@@ -247,7 +240,7 @@ async function searchDocsContent(searchTerm: string, category: string): Promise<
       }
     }
   };
-  
+
   searchDocsFiles(docsDir);
   return results;
 }
@@ -274,7 +267,7 @@ function sortResultsByRelevance(results: SearchResult[], searchTerm: string): Se
     // 计算相关性分数
     const scoreA = calculateRelevanceScore(a, searchTerm);
     const scoreB = calculateRelevanceScore(b, searchTerm);
-    
+
     // 按分数降序排序
     return scoreB - scoreA;
   });
@@ -285,7 +278,7 @@ function sortResultsByRelevance(results: SearchResult[], searchTerm: string): Se
  */
 function calculateRelevanceScore(result: SearchResult, searchTerm: string): number {
   let score = 0;
-  
+
   // 标题匹配权重最高
   if (result.title.toLowerCase().includes(searchTerm)) {
     score += 10;
@@ -294,26 +287,26 @@ function calculateRelevanceScore(result: SearchResult, searchTerm: string): numb
       score += 5;
     }
   }
-  
+
   // 描述匹配
   if (result.description?.toLowerCase().includes(searchTerm)) {
     score += 5;
   }
-  
+
   // 标签匹配
   if (result.tags && result.tags.some(tag => tag.toLowerCase().includes(searchTerm))) {
     score += 3;
   }
-  
+
   // 内容匹配
   if (result.content?.toLowerCase().includes(searchTerm)) {
     score += 2;
   }
-  
+
   // 预定义项目优先级高一些
   if (result.id.startsWith('predefined-')) {
     score += 1;
   }
-  
+
   return score;
 }

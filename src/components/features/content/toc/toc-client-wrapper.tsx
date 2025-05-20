@@ -24,7 +24,7 @@ export function TableOfContentsClientWrapper({ headings }: TableOfContentsClient
 
   return (
     <div className="pb-4 overflow-hidden">
-      <div className="py-2 font-medium text-sm flex items-center gap-1.5 mb-1">
+      <div className="py-2 font-medium text-sm flex items-center gap-1.5 mb-1 pl-0">
         <Text className="h-4 w-4" />
         目录
       </div>

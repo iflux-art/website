@@ -27,18 +27,19 @@ export function NavItems() {
   };
 
   return (
-    <ul className="flex lg:items-center lg:flex-row flex-col items-start gap-6 text-sm font-medium text-muted-foreground">
+    <ul className="flex lg:items-center lg:flex-row flex-col items-start gap-6 lg:text-sm text-base font-medium text-muted-foreground">
       {NAV_ITEMS.map((item) => (
         <motion.li
           key={item.key}
           variants={slideUp}
           whileHover={hoverScale}
           whileTap={{ scale: 0.95 }}
+          className="w-full lg:w-auto"
         >
           <Link
             href={`/${item.key}`}
             className={cn(
-              "transition-colors relative group",
+              "transition-colors relative group block py-2 lg:py-0",
               isActiveSection(item.key)
                 ? "text-primary"
                 : "text-muted-foreground hover:text-primary"
