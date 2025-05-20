@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { slideUp, hoverScale } from "@/lib/animations";
 import { NAV_ITEMS } from "@/lib/constants";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 /**
  * 导航项组件
@@ -12,6 +14,17 @@ import { NAV_ITEMS } from "@/lib/constants";
  * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function NavItems() {
+  const pathname = usePathname();
+
+  // 判断当前路径是否属于某个版块
+  const isActiveSection = (key: string) => {
+    // 检查路径是否以版块名称开头
+    if (pathname.startsWith(`/${key}`)) {
+      return true;
+    }
+    // 首页特殊处理 - 当路径为根路径时，不高亮任何导航项
+    return false;
+  };
 
   return (
     <ul className="flex lg:items-center lg:flex-row flex-col items-start gap-6 text-sm font-medium text-muted-foreground">
@@ -24,10 +37,18 @@ export function NavItems() {
         >
           <Link
             href={`/${item.key}`}
-            className="hover:text-primary transition-colors relative group"
+            className={cn(
+              "transition-colors relative group",
+              isActiveSection(item.key)
+                ? "text-primary"
+                : "text-muted-foreground hover:text-primary"
+            )}
           >
             {item.label}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <span className={cn(
+              "absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300",
+              isActiveSection(item.key) ? "w-full" : "w-0 group-hover:w-full"
+            )}></span>
           </Link>
         </motion.li>
       ))}

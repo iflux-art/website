@@ -152,7 +152,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
         {/* 中间内容区 */}
         <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* 面包屑导航 */}
             <div className="text-sm text-muted-foreground mb-6">
               <Link href="/docs" className="hover:text-primary">
@@ -208,7 +208,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
         {/* 右侧边栏 - 目录、广告和回到顶部按钮 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20 space-y-8">
+          <div className="lg:sticky lg:top-20 space-y-4">
             {/* 目录 - 只在有标题时显示 */}
             {headings.length > 0 && (
               <div>
@@ -220,7 +220,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
             <AdvertisementCard />
 
             {/* 回到顶部按钮 */}
-            <div className="flex justify-left">
+            <div className="flex justify-left mt-4">
               <BackToTopButton
                 title="回到顶部"
               />

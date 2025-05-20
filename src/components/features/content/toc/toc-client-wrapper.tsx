@@ -1,7 +1,7 @@
 "use client";
 
 import { TableOfContentsImproved } from "./toc-improved";
-import { FileText } from "lucide-react";
+import { Text } from "lucide-react";
 
 type Heading = {
   id: string;
@@ -23,9 +23,9 @@ export function TableOfContentsClientWrapper({ headings }: TableOfContentsClient
   }
 
   return (
-    <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
-      <div className="py-2 px-4 font-medium text-sm border-b flex items-center gap-1.5">
-        <FileText className="h-4 w-4" />
+    <div className="pb-4 overflow-hidden">
+      <div className="py-2 font-medium text-sm flex items-center gap-1.5 mb-1">
+        <Text className="h-4 w-4" />
         目录
       </div>
       <TableOfContentsImproved headings={headings} />

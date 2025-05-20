@@ -61,9 +61,6 @@ export default async function BlogPost({
     month: 'long',
     day: 'numeric'
   }) : null;
-  const author = data.author || '未知作者';
-  const authorAvatar = data.authorAvatar || null;
-  const authorBio = data.authorBio || '暂无作者简介';
 
   // 提取标题作为目录
   const headings: { id: string; text: string; level: number }[] = [];
@@ -115,45 +112,6 @@ export default async function BlogPost({
   // 使用处理后的内容
   const finalContent = processedContent;
 
-  // 获取相关文章
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
-  const relatedPosts: { slug: string; title: string; excerpt: string }[] = [];
-
-  // 递归函数来查找所有博客文件
-  const findBlogFiles = (dir: string, basePath: string = '') => {
-    const items = fs.readdirSync(dir, { withFileTypes: true });
-
-    for (const item of items) {
-      const itemPath = path.join(dir, item.name);
-      const relativePath = basePath ? `${basePath}/${item.name}` : item.name;
-
-      if (item.isDirectory()) {
-        findBlogFiles(itemPath, relativePath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        // 跳过当前文章
-        if (itemPath === filePath) continue;
-
-        const postContent = fs.readFileSync(itemPath, 'utf8');
-        const { data } = matter(postContent);
-        const postSlug = item.name.replace(/\.(mdx|md)$/, '');
-        const fullPostSlug = relativePath.replace(/\.(mdx|md)$/, '');
-
-        relatedPosts.push({
-          slug: fullPostSlug,
-          title: data.title || postSlug,
-          excerpt: data.excerpt || '点击阅读全文'
-        });
-
-        // 只获取最多3篇相关文章
-        if (relatedPosts.length >= 3) break;
-      }
-    }
-  };
-
-  if (fs.existsSync(blogDir)) {
-    findBlogFiles(blogDir);
-  }
-
   // 构建面包屑导航项
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: "博客", href: "/blog" },
@@ -162,30 +120,35 @@ export default async function BlogPost({
   ];
 
   return (
-    <div className="container mx-auto py-6 px-4">
-      {/* 面包屑导航 */}
-      <Breadcrumb items={breadcrumbItems} />
-
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* 主内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1">
-          <BlogContent
-            title={title}
-            date={date}
-            content={finalContent}
-            author={author}
-            authorAvatar={authorAvatar}
-            authorBio={authorBio}
-          />
+    <div className="container mx-auto py-6">
+      <div className="flex flex-col lg:flex-row gap-8 px-4">
+        {/* 左侧空白区域，用于保持与文档页面布局一致 */}
+        <div className="lg:w-64 shrink-0 order-2 lg:order-1 hidden lg:block">
+          {/* 这里可以添加博客分类或其他导航 */}
         </div>
 
-        {/* 右侧边栏 - 目录、标签云和相关文章 */}
-        <div className="lg:w-64 shrink-0 order-2 relative">
-          <div className="sticky top-20">
+        {/* 中间内容区 */}
+        <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
+          <div className="max-w-4xl mx-auto">
+            {/* 面包屑导航 */}
+            <div className="mb-6">
+              <Breadcrumb items={breadcrumbItems} />
+            </div>
+
+            <BlogContent
+              title={title}
+              date={date}
+              content={finalContent}
+              tags={data.tags || []}
+            />
+          </div>
+        </div>
+
+        {/* 右侧边栏 - 目录 */}
+        <div className="lg:w-64 shrink-0 order-3">
+          <div className="lg:sticky lg:top-20">
             <BlogSidebar
               headings={headings}
-              tags={data.tags || []}
-              relatedPosts={relatedPosts}
             />
           </div>
         </div>

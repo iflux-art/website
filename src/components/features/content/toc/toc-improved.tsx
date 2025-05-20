@@ -165,7 +165,7 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   return (
     <div>
       <motion.div
-        className="py-2 max-h-[300px] overflow-y-auto"
+        className="py-2"
         variants={container}
         initial="hidden"
         animate="show"
@@ -188,15 +188,15 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
                 key={index}
                 href={`#${heading.id}`}
                 className={cn(
-                  "flex items-center py-1.5 px-4 text-sm transition-colors hover:text-primary group",
+                  "flex items-center py-1.5 text-sm transition-colors hover:text-primary group",
                   headingSize,
                   {
-                    "text-primary font-medium bg-primary/5":
+                    "text-primary bg-primary/5":
                       activeId === heading.id,
                     "text-foreground/70": activeId !== heading.id,
                   }
                 )}
-                style={{ paddingLeft: `${indent + 1}rem` }}
+                style={{ paddingLeft: heading.level > 2 ? `${indent}rem` : "0" }}
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById(heading.id)?.scrollIntoView({

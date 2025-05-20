@@ -86,7 +86,8 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   // 限制显示年份数量
   const displayYears = limit < Infinity ? sortedYears.slice(0, limit) : sortedYears;
 
-  // 按月份分组文章
+  // 按月份分组文章（暂时未使用，但保留以备将来按月份显示文章）
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const groupPostsByMonth = (posts: any[]) => {
     const postsByMonth: PostsByMonth = {};
 
@@ -116,7 +117,9 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   };
 
   // 格式化日期为 MM-DD 格式
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "未知日期";
+
     const date = new Date(dateString);
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -129,11 +132,12 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
         {/* 时间轴线 */}
         <div className="absolute left-[120px] top-0 bottom-0 w-[2px] bg-border opacity-70"></div>
 
-        {displayYears.map((year, yearIndex) => {
+        {displayYears.map((year) => {
           const isExpanded = expandedYears[year] !== false; // 默认展开
           const postCount = getPostCountByYear(year);
-          const postsByMonth = groupPostsByMonth(postsByYear[year]);
-          const sortedMonths = Object.keys(postsByMonth).sort((a, b) => parseInt(b) - parseInt(a));
+
+          // 注意：这里暂时不使用按月份分组的功能，但保留代码以备将来使用
+          // const postsByMonth = groupPostsByMonth(postsByYear[year]);
 
           return (
             <div key={year} className="mb-10 relative">

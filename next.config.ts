@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ['img.dava.cc'],
+  },
 };
 
 const withMDX = createMDX({

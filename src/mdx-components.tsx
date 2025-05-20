@@ -11,6 +11,7 @@ import Copy from '@/components/ui/markdown/copy'
 import Note from '@/components/ui/markdown/note'
 import CustomLink from '@/components/ui/markdown/link'
 import CustomImage from '@/components/ui/markdown/image'
+import { HeadingWithAnchor } from '@/components/ui/markdown/heading-with-anchor'
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -31,21 +32,18 @@ export const mdxComponents = {
   // 使用自定义排版组件
   ...mdxTypographyComponents,
 
-  // 覆盖标题组件，确保有ID
+  // 覆盖标题组件，使用带锚点的标题组件
   h1: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-    return <h1 id={id} className="text-4xl font-bold tracking-tight mt-8 mb-4 scroll-m-20" {...props}>{children}</h1>;
+    return <HeadingWithAnchor level={1} id={id} {...props}>{children}</HeadingWithAnchor>;
   },
   h2: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-    return <h2 id={headingId} className="text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b scroll-m-20" {...props}>{children}</h2>;
+    return <HeadingWithAnchor level={2} id={id} {...props}>{children}</HeadingWithAnchor>;
   },
   h3: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-    return <h3 id={headingId} className="text-xl font-semibold tracking-tight mt-8 mb-3 scroll-m-20" {...props}>{children}</h3>;
+    return <HeadingWithAnchor level={3} id={id} {...props}>{children}</HeadingWithAnchor>;
   },
   h4: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-    return <h4 id={headingId} className="text-lg font-semibold tracking-tight mt-8 mb-3 scroll-m-20" {...props}>{children}</h4>;
+    return <HeadingWithAnchor level={4} id={id} {...props}>{children}</HeadingWithAnchor>;
   },
 
   // 覆盖段落组件处理逻辑
@@ -55,7 +53,8 @@ export const mdxComponents = {
       if (!React.isValidElement(child)) return false;
 
       const props = child.props as MDXProps;
-      const childType = child.type as string;
+      // 获取子元素的类型，可能是字符串、函数或对象
+      const childType = child.type;
 
       // 检查常见块级元素类型
       const blockTypes = ['div', 'pre', 'ul', 'ol', 'table', 'blockquote'];
@@ -65,7 +64,13 @@ export const mdxComponents = {
         return true;
       }
 
-      return blockTypes.includes(childType) ||
+      // 检查是否为Image组件（可能是img标签被转换后的组件）
+      if (childType === 'img' || childType === 'Image' ||
+          (typeof childType === 'string' && childType.includes('Image'))) {
+        return true;
+      }
+
+      return (typeof childType === 'string' && blockTypes.includes(childType)) ||
              (props.mdxType && blockTypes.includes(props.mdxType));
     });
 
@@ -85,17 +90,20 @@ export const mdxComponents = {
   ...enhancedTableComponents,
 
   // 图片组件
-  img: (props: ImageProps) => (
-    <div className="my-8">
+  img: (props: ImageProps) => {
+    // 创建一个不包含div的图片组件，避免在p标签内嵌套div
+    return (
       <Image
         {...(props as ImageProps)}
+        width={props.width || 1080}
+        height={props.height || 500}
         sizes="100vw"
         style={{ width: '100%', height: 'auto' }}
-        className="rounded-md border"
+        className="rounded-md border my-8"
         alt={props.alt || ''}
       />
-    </div>
-  ),
+    );
+  },
 
   // 自定义链接组件
   a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
