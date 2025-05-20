@@ -1,12 +1,28 @@
+"use client";
+
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { Tag, Clock } from 'lucide-react';
+import { Tag, Clock, X } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 import { BlogList } from '@/components/features/blog/blog-list';
-import { getAllTags } from '@/lib/blog';
+import { useTags } from '@/hooks/use-blog';
+import { Button } from '@/components/ui/button';
 
-export default async function BlogPage() {
+// 导入标签过滤器组件
+import { BlogTagFilter } from '@/components/features/blog/blog-tag-filter';
+
+export default function BlogPage() {
   // 获取所有标签
-  const allTags = getAllTags();
+  const { tags: allTags, loading: tagsLoading } = useTags();
+
+  // 当前选中的标签
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  // 处理标签点击
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(tag);
+  };
 
   return (
     <main className="container mx-auto py-10 px-4">
@@ -29,34 +45,23 @@ export default async function BlogPage() {
         </Link>
       </div>
 
-      {/* 标签过滤器 */}
-      {allTags.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-lg font-medium mb-3 flex items-center gap-2">
-            <Tag className="h-4 w-4" />
-            按标签浏览
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {allTags.map((tag, index) => (
-              <Link
-                key={index}
-                href={`/blog/tags/${encodeURIComponent(tag)}`}
-                className="px-3 py-1.5 bg-muted rounded-md text-sm hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* 标签过滤器 - 使用Suspense包装 */}
+      <Suspense fallback={<div className="mb-8 h-20 bg-muted/20 animate-pulse rounded-md"></div>}>
+        {allTags && allTags.length > 0 && (
+          <BlogTagFilter
+            allTags={allTags}
+            selectedTag={selectedTag}
+            setSelectedTag={setSelectedTag}
+          />
+        )}
+      </Suspense>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <BlogList />
+        <BlogList
+          filterTag={selectedTag}
+          onTagClick={handleTagClick}
+        />
       </div>
     </main>
   );
 }
-
-// 使用lib/blog中的getAllTags函数
-
-// 使用components/blog/blog-list中的BlogList组件

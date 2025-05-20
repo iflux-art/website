@@ -68,7 +68,7 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
       const categoryMeta = meta[category];
       if (categoryMeta && categoryMeta.items) {
         const newItems: DocItem[] = [];
-        
+
         categoryMeta.items.forEach(item => {
           if (typeof item === "string") {
             // 如果是字符串，查找对应的文档
@@ -83,7 +83,7 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
             // 如果是对象，表示是一个子分类
             const key = Object.keys(item)[0];
             const subCategory = item[key];
-            
+
             const subItems: DocItem[] = [];
             if (Array.isArray(subCategory)) {
               subCategory.forEach(subItem => {
@@ -96,7 +96,7 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
                 }
               });
             }
-            
+
             if (subItems.length > 0) {
               newItems.push({
                 title: key,
@@ -105,18 +105,13 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
             }
           }
         });
-        
+
         setItems(newItems);
       }
     }
   }, [meta, allDocs, category]);
 
-  const toggleCategory = (key: string) => {
-    setOpenCategories(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
+  // 使用 onOpenChange 处理程序替代此函数
 
   const renderItems = (items: DocItem[], level = 0) => {
     return items.map((item, index) => {
@@ -129,10 +124,17 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
         <li key={index} className={level > 0 ? "ml-3" : ""}>
           {hasChildren ? (
             <div>
-              <Collapsible open={isOpen}>
+              <Collapsible
+                open={isOpen}
+                onOpenChange={(open) => {
+                  setOpenCategories(prev => ({
+                    ...prev,
+                    [item.title]: open
+                  }));
+                }}
+              >
                 <div className="flex items-center">
                   <CollapsibleTrigger
-                    onClick={() => toggleCategory(item.title)}
                     className="flex items-center py-2 px-2 w-full text-sm hover:bg-accent/50 rounded-md group transition-colors duration-200"
                     onMouseEnter={() => setIsHovering(itemId)}
                     onMouseLeave={() => setIsHovering(null)}
@@ -160,7 +162,7 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
                   </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                  <motion.ul 
+                  <motion.ul
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -176,8 +178,8 @@ export function DocsSidebar({ category, currentDoc, meta, allDocs = [] }: DocsSi
               href={item.href || "#"}
               className={cn(
                 "flex items-center py-2 px-2 rounded-md text-sm transition-all duration-200",
-                isActive 
-                  ? "bg-accent/80 text-primary font-medium shadow-sm" 
+                isActive
+                  ? "bg-accent/80 text-primary font-medium shadow-sm"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
               )}
               onMouseEnter={() => setIsHovering(itemId)}

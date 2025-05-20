@@ -6,6 +6,18 @@ const config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // Tailwind CSS v4 特定配置
+  future: {
+    // 启用所有 v4 特性
+    unstable_tailwind: {
+      // 启用 v4 的颜色系统
+      colors: true,
+      // 启用 v4 的间距系统
+      spacing: true,
+      // 启用 v4 的排版系统
+      typography: true,
+    },
+  },
   theme: {
     extend: {
       fontFamily: {
@@ -13,6 +25,8 @@ const config = {
         mono: ["var(--font-geist-mono)"],
         code: ["var(--font-geist-mono)"],
       },
+      // 在 Tailwind CSS v4 中，typography 插件的配置方式有所变化
+      // 但我们可以保持大部分配置不变
       typography: {
         DEFAULT: {
           css: {
@@ -180,7 +194,10 @@ const config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  // 在 Tailwind CSS v4 中，插件的使用方式有所变化
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default config;

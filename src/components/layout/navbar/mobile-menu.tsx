@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/features/theme-toggle/index";
-import { SearchDialog } from "@/components/features/search";
+import { CleanSearchDialog } from "@/components/features/search/clean-search";
 import { Travelling } from "@/components/features/travelling";
 import { NavItems } from "./nav-items";
 
@@ -21,12 +21,12 @@ interface MobileMenuProps {
  * 负责移动端导航和功能按钮的展示
  */
 export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
-  
+
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
       <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
-        <SearchDialog />
+        <CleanSearchDialog />
       </motion.div>
       <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <ModeToggle />
@@ -34,12 +34,18 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
       <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
         <Travelling />
       </motion.div>
-      
+
       {/* 移动端菜单 */}
       <div className="lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="lg:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              aria-label={isOpen ? "关闭菜单" : "打开菜单"}
+              title={isOpen ? "关闭菜单" : "打开菜单"}
+            >
               {isOpen ? (
                 <X className="h-5 w-5" />
               ) : (
@@ -51,7 +57,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <div className="flex flex-col gap-6 mt-8">
               <NavItems />
               <div className="flex items-center gap-2 mt-4 sm:hidden">
-                <SearchDialog />
+                <CleanSearchDialog />
                 <Travelling />
               </div>
             </div>

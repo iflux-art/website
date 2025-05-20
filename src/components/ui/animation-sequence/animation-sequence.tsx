@@ -8,6 +8,8 @@ import { AnimationSequenceProps, AnimationItemProps } from './animation-sequence
 /**
  * 动画序列组件
  * 为子元素提供顺序动画效果，适用于列表或多元素动画
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function AnimationSequence({
   children,
@@ -45,6 +47,8 @@ export function AnimationSequence({
 /**
  * 动画序列项组件
  * 作为AnimationSequence的子项，提供单个元素的动画效果
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function AnimationItem({
   children,

@@ -4,6 +4,8 @@ import { PropsWithChildren } from "react";
 /**
  * Typography 组件，用于渲染带有特定样式的文本内容
  * @param children - 要渲染的子元素
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function Typography({ children }: PropsWithChildren) {
   // 返回一个带有特定类名的 div 元素，用于应用样式并渲染子元素

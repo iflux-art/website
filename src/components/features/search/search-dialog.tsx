@@ -36,6 +36,7 @@ export function SearchButton({ onClick }: SearchButtonProps) {
           whileHover={{ scale: 1.05 }}
         >
           <Search className="h-[1.1rem] w-[1.1rem]" />
+          <span className="sr-only">搜索</span>
         </motion.div>
       </AnimatePresence>
     </Button>
@@ -186,6 +187,14 @@ export function SearchDialog({}: SearchDialogProps = {}) {
                         key={item.id}
                         className="flex items-center justify-between rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent hover:text-accent-foreground"
                         onClick={() => handleItemClick(item.url)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`转到${item.title}`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleItemClick(item.url);
+                          }
+                        }}
                       >
                         <div className="flex items-center">
                           {item.icon && (

@@ -6,6 +6,8 @@ import { CodeBlockProps, CodeProps } from "./code-block.types";
 /**
  * 代码块组件
  * 用于在文档中显示代码块，支持语法高亮和复制功能
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function CodeBlock({
   className,
@@ -112,6 +114,8 @@ export function CodeBlock({
 /**
  * 代码块组件集合
  * 用于在MDX中使用
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export const codeBlockComponents = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (

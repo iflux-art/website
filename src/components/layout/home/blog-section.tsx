@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,89 +21,110 @@ interface BlogPost {
 
 /**
  * 博客展示区组件
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function BlogSection() {
   // 博客文章数据
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
 
-  // 使用useEffect在客户端获取博客文章
-  useEffect(() => {
-    // 获取博客文章数据的函数
-    const fetchBlogPosts = async () => {
-      try {
-        setIsLoading(true);
-        // 从API获取数据
-        const response = await fetch("/api/blog/posts");
+  // 使用 useCallback 定义获取博客文章的函数，避免不必要的重新创建
+  const fetchBlogPosts = React.useCallback(async () => {
+    // 设置加载状态
+    setIsLoading(true);
 
-        if (response.ok) {
-          const data = await response.json();
-          setBlogPosts(data.slice(0, 3)); // 只显示前3篇文章
-        } else {
-          // 如果API不可用，使用模拟数据
-          const mockPosts: BlogPost[] = [
-            {
-              title: "Next.js 14 新特性解析",
-              excerpt: "探索 Next.js 14 带来的性能优化和开发体验改进，包括服务器组件、流式渲染等创新功能。",
-              date: "2023-10-26",
-              slug: "nextjs-14-features",
-              coverImage: "/images/blog/1.png",
-              readingTime: "5 分钟"
-            },
-            {
-              title: "使用 Tailwind CSS 构建响应式界面",
-              excerpt: "学习如何利用 Tailwind CSS 快速构建美观的响应式用户界面，掌握实用技巧和最佳实践。",
-              date: "2023-10-18",
-              slug: "tailwind-responsive-ui",
-              coverImage: "/images/blog/2.png",
-              readingTime: "7 分钟"
-            },
-            {
-              title: "React Server Components 实战指南",
-              excerpt: "深入了解 React Server Components 的工作原理及其应用场景，探索前后端融合的新范式。",
-              date: "2023-10-15",
-              slug: "react-server-components",
-              coverImage: "/images/blog/3.png",
-              readingTime: "10 分钟"
-            },
-          ];
-          setBlogPosts(mockPosts);
+    try {
+      // 添加随机查询参数以避免缓存问题
+      const timestamp = Date.now();
+      const url = `/api/blog/posts?t=${timestamp}`;
+
+      // 从API获取数据，使用超时控制
+      // 创建一个带超时的 fetch 请求
+      const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeout = 5000) => {
+        const controller = new AbortController();
+        const { signal } = controller;
+
+        // 设置超时定时器
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        try {
+          // 执行 fetch 请求
+          const response = await fetch(url, { ...options, signal });
+          // 清除超时定时器
+          clearTimeout(timeoutId);
+          return response;
+        } catch (error) {
+          // 清除超时定时器
+          clearTimeout(timeoutId);
+          throw error;
         }
-      } catch (error) {
-        console.error("获取博客文章失败:", error);
-        // 出错时使用模拟数据
-        const mockPosts: BlogPost[] = [
-          {
-            title: "Next.js 14 新特性解析",
-            excerpt: "探索 Next.js 14 带来的性能优化和开发体验改进，包括服务器组件、流式渲染等创新功能。",
-            date: "2023-10-26",
-            slug: "nextjs-14-features",
-            readingTime: "5 分钟"
-          },
-          {
-            title: "使用 Tailwind CSS 构建响应式界面",
-            excerpt: "学习如何使用 Tailwind CSS 快速构建美观的响应式用户界面，掌握实用技巧和最佳实践。",
-            date: "2023-10-20",
-            slug: "tailwind-responsive-ui",
-            readingTime: "7 分钟"
-          },
-          {
-            title: "React Server Components 实战指南",
-            excerpt: "深入了解 React Server Components 的工作原理及其应用场景，探索前后端融合的新范式。",
-            date: "2023-10-15",
-            slug: "react-server-components",
-            readingTime: "10 分钟"
-          },
-        ];
-        setBlogPosts(mockPosts);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
+      // 执行带超时的 fetch 请求
+      const response = await fetchWithTimeout(url, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setBlogPosts(data.slice(0, 3)); // 只显示前3篇文章
+      } else {
+        console.warn("API 返回非 200 状态码:", response.status);
+        // 使用模拟数据
+        useMockData();
+      }
+    } catch (error) {
+      console.error("获取博客文章失败:", error);
+      // 使用模拟数据
+      useMockData();
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // 使用模拟数据的辅助函数
+  const useMockData = () => {
+    const mockPosts: BlogPost[] = [
+      {
+        title: "Next.js 14 新特性解析",
+        excerpt: "探索 Next.js 14 带来的性能优化和开发体验改进，包括服务器组件、流式渲染等创新功能。",
+        date: "2023-10-26",
+        slug: "nextjs-14-features",
+        coverImage: "/images/blog/1.png",
+        readingTime: "5 分钟"
+      },
+      {
+        title: "使用 Tailwind CSS 构建响应式界面",
+        excerpt: "学习如何利用 Tailwind CSS 快速构建美观的响应式用户界面，掌握实用技巧和最佳实践。",
+        date: "2023-10-18",
+        slug: "tailwind-responsive-ui",
+        coverImage: "/images/blog/2.png",
+        readingTime: "7 分钟"
+      },
+      {
+        title: "React Server Components 实战指南",
+        excerpt: "深入了解 React Server Components 的工作原理及其应用场景，探索前后端融合的新范式。",
+        date: "2023-10-15",
+        slug: "react-server-components",
+        coverImage: "/images/blog/3.png",
+        readingTime: "10 分钟"
+      },
+    ];
+    setBlogPosts(mockPosts);
+  };
+
+  // 使用 useEffect 在组件挂载和路由变化时获取数据
+  useEffect(() => {
     // 立即执行获取数据
     fetchBlogPosts();
-  }, []);
+
+    // 不需要清理函数，因为我们不使用 AbortController
+  }, [pathname, fetchBlogPosts]); // 添加 pathname 和 fetchBlogPosts 作为依赖
 
   return (
     <section className="w-full py-10">

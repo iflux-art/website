@@ -8,7 +8,7 @@ import { BlogPost, RelatedPost, TagCount } from '@/types/blog';
 
 /**
  * 使用博客文章列表
- * 
+ *
  * @returns 博客文章列表和加载状态
  */
 export function useBlogPosts() {
@@ -51,7 +51,7 @@ export function useBlogPosts() {
 
 /**
  * 使用标签过滤的博客文章
- * 
+ *
  * @param tag 标签名称
  * @returns 包含指定标签的博客文章列表和加载状态
  */
@@ -95,7 +95,7 @@ export function useTaggedPosts(tag: string) {
 
 /**
  * 使用所有标签
- * 
+ *
  * @returns 所有标签列表和加载状态
  */
 export function useTags() {
@@ -128,7 +128,7 @@ export function useTags() {
 
 /**
  * 使用标签统计
- * 
+ *
  * @returns 标签统计列表和加载状态
  */
 export function useTagCounts() {
@@ -145,16 +145,16 @@ export function useTagCounts() {
           throw new Error('Failed to fetch tag counts');
         }
         const data = await response.json();
-        
+
         // 将对象转换为数组
         const countsArray = Object.entries(data).map(([tag, count]) => ({
           tag,
           count: count as number
         }));
-        
+
         // 按文章数量排序
         const sortedCounts = countsArray.sort((a, b) => b.count - a.count);
-        
+
         setTagCounts(sortedCounts);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error'));
@@ -171,7 +171,7 @@ export function useTagCounts() {
 
 /**
  * 使用相关文章
- * 
+ *
  * @param slug 当前文章的 slug
  * @param limit 相关文章数量限制
  * @returns 相关文章列表和加载状态
@@ -202,4 +202,37 @@ export function useRelatedPosts(slug: string, limit: number = 3) {
   }, [slug, limit]);
 
   return { relatedPosts, loading, error };
+}
+
+/**
+ * 使用按年份分组的博客文章
+ *
+ * @returns 按年份分组的博客文章和加载状态
+ */
+export function useTimelinePosts() {
+  const [postsByYear, setPostsByYear] = useState<Record<string, BlogPost[]>>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    async function fetchTimelinePosts() {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/blog/timeline');
+        if (!response.ok) {
+          throw new Error('Failed to fetch timeline posts');
+        }
+        const data = await response.json();
+        setPostsByYear(data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error'));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTimelinePosts();
+  }, []);
+
+  return { postsByYear, loading, error };
 }

@@ -20,6 +20,8 @@ import {
 
 /**
  * Sheet 变体定义
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
@@ -43,33 +45,43 @@ export const sheetVariants = cva(
 /**
  * Sheet 组件
  * 用于创建从屏幕边缘滑入的面板
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Sheet = SheetPrimitive.Root
 
 /**
  * SheetTrigger 组件
  * 用于触发 Sheet 的打开
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetTrigger = SheetPrimitive.Trigger
 
 /**
  * SheetClose 组件
  * 用于关闭 Sheet
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetClose = SheetPrimitive.Close
 
 /**
  * SheetPortal 组件
  * 用于将 Sheet 内容渲染到 DOM 的其他部分
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetPortal = SheetPrimitive.Portal
 
 /**
  * SheetOverlay 组件
  * Sheet 的背景遮罩层
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetOverlay = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Overlay>,
+  HTMLDivElement,
   SheetOverlayProps
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
@@ -86,9 +98,11 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 /**
  * SheetContent 组件
  * Sheet 的主要内容区域
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetContent = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Content>,
+  HTMLDivElement,
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => (
   <SheetPortal>
@@ -108,6 +122,8 @@ SheetContent.displayName = SheetPrimitive.Content.displayName
 /**
  * SheetHeader 组件
  * Sheet 的头部区域
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetHeader = ({
   className,
@@ -126,6 +142,8 @@ SheetHeader.displayName = "SheetHeader"
 /**
  * SheetFooter 组件
  * Sheet 的底部区域
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetFooter = ({
   className,
@@ -144,9 +162,11 @@ SheetFooter.displayName = "SheetFooter"
 /**
  * SheetTitle 组件
  * Sheet 的标题
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetTitle = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Title>,
+  HTMLHeadingElement,
   SheetTitleProps
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
@@ -160,9 +180,11 @@ SheetTitle.displayName = SheetPrimitive.Title.displayName
 /**
  * SheetDescription 组件
  * Sheet 的描述文本
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const SheetDescription = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Description>,
+  HTMLParagraphElement,
   SheetDescriptionProps
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description

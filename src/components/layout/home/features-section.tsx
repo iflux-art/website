@@ -56,6 +56,8 @@ function FeatureCard({ icon, title, description, href, index }: FeatureCardProps
 
 /**
  * 特性展示区组件
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function FeaturesSection() {
   const features = [

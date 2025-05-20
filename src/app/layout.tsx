@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "next-themes";
 import { SITE_METADATA } from "@/lib/constants";
 import { PageTransition } from "@/components/layout/transitions/page-transition";
+import { ThemeTransition } from "@/components/layout/transitions/theme-transition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,15 +39,18 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          storageKey="iflux-theme-preference"
+          forcedTheme={undefined}
         >
-          <Navbar />
-          <main className="flex-1">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-          <Footer />
+          <ThemeTransition>
+            <Navbar />
+            <main className="flex-1">
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </main>
+            <Footer />
+          </ThemeTransition>
         </ThemeProvider>
       </body>
     </html>

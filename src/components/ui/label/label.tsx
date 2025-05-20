@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 
 /**
  * Label 组件变体定义
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export const labelVariants = cva(
   "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -16,9 +18,11 @@ export const labelVariants = cva(
 /**
  * Label 组件
  * 用于表单标签
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Label = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
+  HTMLLabelElement,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
     VariantProps<typeof labelVariants>
 >(({ className, ...props }, ref) => (

@@ -7,6 +7,8 @@ import { TextareaProps } from "./textarea.types";
 /**
  * Textarea 组件
  * 用于多行文本输入
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {

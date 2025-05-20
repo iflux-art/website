@@ -21,9 +21,11 @@ import {
 /**
  * Command 组件
  * 命令菜单的主容器
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Command = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive>,
+  HTMLDivElement,
   CommandProps
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
@@ -40,6 +42,8 @@ Command.displayName = CommandPrimitive.displayName
 /**
  * CommandDialog 组件
  * 在对话框中显示命令菜单
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
@@ -57,9 +61,11 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 /**
  * CommandInput 组件
  * 命令菜单的输入框
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandInput = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Input>,
+  HTMLInputElement,
   CommandInputProps
 >(({ className, ...props }, ref) => (
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
@@ -80,9 +86,11 @@ CommandInput.displayName = CommandPrimitive.Input.displayName
 /**
  * CommandList 组件
  * 命令菜单的选项列表容器
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandList = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.List>,
+  HTMLDivElement,
   CommandListProps
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
@@ -97,9 +105,11 @@ CommandList.displayName = CommandPrimitive.List.displayName
 /**
  * CommandEmpty 组件
  * 当没有匹配结果时显示的内容
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandEmpty = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Empty>,
+  HTMLDivElement,
   CommandEmptyProps
 >((props, ref) => (
   <CommandPrimitive.Empty
@@ -114,9 +124,11 @@ CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 /**
  * CommandGroup 组件
  * 命令菜单中的选项分组
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandGroup = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Group>,
+  HTMLDivElement,
   CommandGroupProps
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
@@ -134,9 +146,11 @@ CommandGroup.displayName = CommandPrimitive.Group.displayName
 /**
  * CommandSeparator 组件
  * 命令菜单中的分隔线
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandSeparator = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Separator>,
+  HTMLDivElement,
   CommandSeparatorProps
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
@@ -150,9 +164,11 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 /**
  * CommandItem 组件
  * 命令菜单中的单个选项
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandItem = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Item>,
+  HTMLDivElement,
   CommandItemProps
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
@@ -170,6 +186,8 @@ CommandItem.displayName = CommandPrimitive.Item.displayName
 /**
  * CommandShortcut 组件
  * 显示命令的键盘快捷键
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CommandShortcut = ({
   className,

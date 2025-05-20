@@ -10,9 +10,11 @@ import { CheckboxProps } from "./checkbox.types"
 /**
  * Checkbox 组件
  * 用于复选框
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  HTMLButtonElement,
   CheckboxProps
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root

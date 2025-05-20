@@ -19,6 +19,12 @@ interface BlogCardProps {
    * 索引，用于动画延迟
    */
   index: number;
+
+  /**
+   * 标签点击处理函数
+   * 如果提供，则标签点击时调用此函数而不是导航到标签页面
+   */
+  onTagClick?: (tag: string) => void;
 }
 
 /**
@@ -43,7 +49,7 @@ interface BlogCardProps {
  * />
  * ```
  */
-export function BlogCard({ post, index }: BlogCardProps) {
+export function BlogCard({ post, index, onTagClick }: BlogCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,6 +68,14 @@ export function BlogCard({ post, index }: BlogCardProps) {
       return () => clearTimeout(timeout);
     }
   }, [index]);
+
+  // 处理标签点击
+  const handleTagClick = (e: React.MouseEvent, tag: string) => {
+    if (onTagClick) {
+      e.preventDefault(); // 阻止默认链接行为
+      onTagClick(tag);
+    }
+  };
 
   return (
     <article
@@ -83,6 +97,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
                 key={tagIndex}
                 href={`/blog/tags/${encodeURIComponent(tag)}`}
                 className="px-1.5 py-0.5 bg-muted rounded text-xs hover:bg-primary/10 hover:text-primary transition-colors"
+                onClick={(e) => handleTagClick(e, tag)}
               >
                 {tag}
               </Link>

@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import Image from "next/image";
@@ -8,6 +10,8 @@ const NextImage = Image;
 /**
  * Avatar 组件
  * 用于显示用户头像
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  *
  * @example
  * <Avatar>
@@ -54,6 +58,8 @@ Avatar.displayName = "Avatar"
 /**
  * AvatarImage 组件
  * 用于显示头像图片
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
   ({ className, ...props }, ref) => (
@@ -71,6 +77,8 @@ AvatarImage.displayName = "AvatarImage"
 /**
  * AvatarFallback 组件
  * 当头像图片加载失败或不存在时显示的备用内容
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
   ({ className, ...props }, ref) => (

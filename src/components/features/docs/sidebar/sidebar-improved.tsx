@@ -110,12 +110,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
     }
   }, [meta, allDocs, category]);
 
-  const toggleCategory = (key: string) => {
-    setOpenCategories(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
+  // 使用 onOpenChange 处理程序替代此函数
 
   const renderItems = (items: DocItem[], level = 0) => {
     return items.map((item, index) => {
@@ -128,10 +123,17 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
         <li key={index} className={level > 0 ? "ml-3" : ""}>
           {hasChildren ? (
             <div>
-              <Collapsible open={isOpen}>
+              <Collapsible
+                open={isOpen}
+                onOpenChange={(open) => {
+                  setOpenCategories(prev => ({
+                    ...prev,
+                    [item.title]: open
+                  }));
+                }}
+              >
                 <div className="flex items-center">
                   <CollapsibleTrigger
-                    onClick={() => toggleCategory(item.title)}
                     className="flex items-center py-2 px-2 w-full text-sm hover:bg-accent/50 rounded-md group transition-colors duration-200"
                     onMouseEnter={() => setIsHovering(itemId)}
                     onMouseLeave={() => setIsHovering(null)}

@@ -4,6 +4,12 @@
 
 /**
  * 主题切换组件属性
- * 目前不需要任何属性，但保留此接口以便将来扩展
  */
-export interface ThemeToggleProps {}
+export interface ThemeToggleProps {
+  /**
+   * 是否显示文本标签
+   * 在移动设备上标签会被隐藏
+   * @default false
+   */
+  showLabel?: boolean;
+}

@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react";
 import { cva } from "class-variance-authority";
 
@@ -7,6 +9,8 @@ import { AlertProps, AlertTitleProps, AlertDescriptionProps } from "./alert.type
 /**
  * Alert 组件变体定义
  * 定义了警告框的不同样式变体
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export const alertVariants = cva(
   "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
@@ -15,9 +19,9 @@ export const alertVariants = cva(
       variant: {
         default: "bg-background text-foreground",
         destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+          "border-destructive/50 text-destructive [&>svg]:text-destructive",
         success:
-          "border-success/50 text-success dark:border-success [&>svg]:text-success",
+          "border-success/50 text-success [&>svg]:text-success",
       },
     },
     defaultVariants: {

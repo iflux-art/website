@@ -38,7 +38,7 @@ export function TagCloud({ tags }: TagCloudProps) {
           {(tags || []).map((tag: string, index: number) => (
             <Link
               key={index}
-              href={`/blog/tags/${encodeURIComponent(tag)}`}
+              href={`/blog?tag=${encodeURIComponent(tag)}`}
               className="px-2 py-1 bg-muted rounded-md text-xs hover:bg-primary/10 hover:text-primary transition-colors"
             >
               {tag}

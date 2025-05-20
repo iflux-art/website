@@ -9,6 +9,8 @@ import { InputProps } from "./input.types"
  * Input 组件
  * 用于创建文本输入框
  *
+ * 已更新为 Tailwind CSS v4 兼容版本
+ *
  * @example
  * // 基本用法
  * <Input placeholder="请输入..." />

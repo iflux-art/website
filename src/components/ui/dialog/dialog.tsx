@@ -22,6 +22,8 @@ import {
  * Dialog 组件
  * 用于创建对话框
  *
+ * 已更新为 Tailwind CSS v4 兼容版本
+ *
  * @example
  * <Dialog>
  *   <DialogTrigger>打开对话框</DialogTrigger>
@@ -62,7 +64,7 @@ const DialogClose = DialogPrimitive.Close
  * 对话框的背景遮罩层
  */
 const DialogOverlay = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  HTMLDivElement,
   DialogOverlayProps
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
@@ -81,7 +83,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
  * 对话框的内容容器
  */
 const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
+  HTMLDivElement,
   DialogContentProps
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
@@ -145,7 +147,7 @@ DialogFooter.displayName = "DialogFooter"
  * 对话框的标题
  */
 const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
+  HTMLHeadingElement,
   DialogTitleProps
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
@@ -164,7 +166,7 @@ DialogTitle.displayName = DialogPrimitive.Title.displayName
  * 对话框的描述文本
  */
 const DialogDescription = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
+  HTMLParagraphElement,
   DialogDescriptionProps
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description

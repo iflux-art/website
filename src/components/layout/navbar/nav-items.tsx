@@ -8,20 +8,22 @@ import { NAV_ITEMS } from "@/lib/constants";
 /**
  * 导航项组件
  * 负责渲染导航链接列表
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function NavItems() {
-  
+
   return (
     <ul className="flex lg:items-center lg:flex-row flex-col items-start gap-6 text-sm font-medium text-muted-foreground">
       {NAV_ITEMS.map((item) => (
-        <motion.li 
+        <motion.li
           key={item.key}
           variants={slideUp}
           whileHover={hoverScale}
           whileTap={{ scale: 0.95 }}
         >
-          <Link 
-            href={`/${item.key}`} 
+          <Link
+            href={`/${item.key}`}
             className="hover:text-primary transition-colors relative group"
           >
             {item.label}

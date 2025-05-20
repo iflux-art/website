@@ -16,7 +16,9 @@ import { BackToTopButton } from '@/components/features/content/back-to-top-butto
 
 export default async function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
-  const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
+  // 使用解构赋值来避免直接访问 params.slug
+  const { slug: slugParam } = params;
+  const slug = Array.isArray(slugParam) ? slugParam : [slugParam];
   const category = slug[0];
   const docName = slug.length > 1 ? slug.slice(1).join('/') : slug[0];
 

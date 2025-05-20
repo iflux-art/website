@@ -14,8 +14,9 @@ export default async function BlogPost({
   params: { slug: string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  // 使用解构赋值来避免直接访问 params.slug
   const { slug } = params;
-  const resolvedSearchParams = searchParams;
+  // 不需要额外的变量来存储 searchParams
   const fullSlug = slug.join('/');
   let filePath: string | undefined;
 

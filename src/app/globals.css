@@ -31,10 +31,27 @@
     --animation-duration-normal: 0.3s;
     --animation-duration-slow: 0.5s;
     --animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --theme-transition-duration: 0.3s;
+    --theme-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* 全局颜色过渡效果 - 只应用于颜色相关属性 */
   * {
     @apply transition-colors duration-300;
+  }
+
+  /* 主题切换时的特殊过渡效果 - 优化版本 */
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-duration: 300ms !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    /* 确保所有颜色相关属性同步过渡 */
+    transition-property: background-color, color, border-color, text-decoration-color, fill, stroke, box-shadow, outline-color !important;
+    transition-delay: 0s !important;
+    /* 阻止不必要的重新渲染 */
+    will-change: background-color, color, border-color, text-decoration-color, fill, stroke;
   }
 
   /* 添加页面过渡效果 */

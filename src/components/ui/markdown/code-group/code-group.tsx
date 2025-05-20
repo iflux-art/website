@@ -8,6 +8,8 @@ import { CodeGroupProps, CodeTabProps } from "./code-group.types";
 /**
  * 代码标签组件
  * 用于在代码组中显示单个代码标签
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function CodeTab({ children, title, language, className }: CodeTabProps) {
   return (
@@ -20,6 +22,8 @@ export function CodeTab({ children, title, language, className }: CodeTabProps) 
 /**
  * 代码组组件
  * 用于在文档中显示多个代码标签，支持切换和复制功能
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function CodeGroup({ children, className }: CodeGroupProps) {
   // 提取子元素中的标题和内容
@@ -74,8 +78,8 @@ export function CodeGroup({ children, className }: CodeGroupProps) {
                 onClick={() => setActiveTab(index)}
                 className={cn(
                   "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-                  activeTab === index 
-                    ? "bg-background/50 text-foreground shadow-sm" 
+                  activeTab === index
+                    ? "bg-background/50 text-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-muted/50"
                 )}
               >
@@ -99,8 +103,8 @@ export function CodeGroup({ children, className }: CodeGroupProps) {
       {/* 代码内容 */}
       <div className="w-full">
         {tabs.map((tab, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className={cn(
               "mt-0 transition-opacity duration-200",
               activeTab === index ? "block" : "hidden"

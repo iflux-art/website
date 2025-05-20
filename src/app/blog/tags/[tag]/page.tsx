@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Tag, Clock } from 'lucide-react';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -55,17 +55,26 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
 
   return (
     <main className="container mx-auto py-10 px-4">
-      <div className="mb-8">
+      <h1 className="text-3xl font-bold mb-6">博客</h1>
+
+      <div className="flex flex-wrap gap-4 mb-8">
         <Link
           href="/blog"
-          className="flex items-center text-muted-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-md transition-colors"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          返回博客列表
+          <Tag className="h-4 w-4" />
+          全部文章
+        </Link>
+        <Link
+          href="/blog/timeline"
+          className="flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-md transition-colors"
+        >
+          <Clock className="h-4 w-4" />
+          时间轴
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">标签: {decodedTag}</h1>
+      <h2 className="text-2xl font-bold mb-6">标签: {decodedTag}</h2>
 
       {sortedPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

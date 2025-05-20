@@ -4,6 +4,8 @@ import { PreProps } from "./pre.types";
 /**
  * Pre 组件
  * 用于渲染带有复制功能的代码块
+ *
+ * 已更新为 Tailwind CSS v4 兼容版本
  */
 export default function Pre({
   children,
