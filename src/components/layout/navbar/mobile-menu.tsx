@@ -8,7 +8,7 @@ import { ModeToggle } from "@/components/features/theme-toggle/index";
 import { CleanSearchDialog } from "@/components/features/search/clean-search";
 import { Travelling } from "@/components/features/travelling";
 import { Logo } from "@/components/features/logo";
-import { NavItems } from "./nav-items";
+import { NavCards } from "./nav-cards";
 
 import { hoverScale, buttonTap } from "@/lib/animations";
 
@@ -26,13 +26,13 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
-      <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <CleanSearchDialog />
       </motion.div>
       <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <ModeToggle />
       </motion.div>
-      <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <Travelling />
       </motion.div>
 
@@ -65,13 +65,13 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 {/* 右侧部分 - 功能按钮和关闭按钮 */}
                 <div className="flex items-center gap-1 sm:gap-2">
                   {/* 功能按钮 */}
-                  <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
                     <CleanSearchDialog />
                   </motion.div>
                   <motion.div whileHover={hoverScale} whileTap={buttonTap}>
                     <ModeToggle />
                   </motion.div>
-                  <motion.div whileHover={hoverScale} whileTap={buttonTap} className="hidden sm:block">
+                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
                     <Travelling />
                   </motion.div>
 
@@ -93,11 +93,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             {/* 菜单内容 */}
             <div className="flex-1 overflow-auto p-6 pt-8">
               <div className="container mx-auto flex flex-col gap-8">
-                <NavItems />
-                <div className="flex items-center gap-2 mt-4 sm:hidden">
-                  <CleanSearchDialog />
-                  <Travelling />
-                </div>
+                <NavCards onClose={() => setIsOpen(false)} />
               </div>
             </div>
           </SheetContent>
