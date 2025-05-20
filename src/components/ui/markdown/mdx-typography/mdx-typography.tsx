@@ -5,37 +5,15 @@ import { TypographyProps, HeadingProps } from './mdx-typography.types';
 /**
  * 主要排版容器
  * 为MDX内容提供统一的排版样式
+ *
+ * 使用 Tailwind Typography 插件的 prose 类
+ * 所有样式配置集中在 tailwind.config.mjs 中
  */
 export function MDXTypography({ className, children }: TypographyProps) {
   return (
     <div className={cn(
-      'prose dark:prose-invert prose-headings:scroll-m-20 max-w-none',
-      // 基础文本样式
-      'prose-p:text-base prose-p:leading-7 prose-p:my-6',
-      // 标题样式
-      'prose-h1:text-4xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-4',
-      'prose-h2:text-2xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:border-b prose-h2:pb-2 prose-h2:mt-10 prose-h2:mb-4',
-      'prose-h3:text-xl prose-h3:font-semibold prose-h3:tracking-tight prose-h3:mt-8 prose-h3:mb-3',
-      'prose-h4:text-lg prose-h4:font-semibold prose-h4:tracking-tight prose-h4:mt-8 prose-h4:mb-3',
-      // 列表样式
-      'prose-ul:my-6 prose-ul:list-disc prose-ul:pl-10',
-      'prose-ol:my-6 prose-ol:list-decimal prose-ol:pl-10',
-      'prose-li:my-2',
-      // 代码块样式
-      'prose-code:rounded prose-code:bg-muted prose-code:p-1 prose-code:text-sm prose-code:font-mono',
-      'prose-pre:rounded-lg prose-pre:border prose-pre:bg-muted prose-pre:p-4',
-      // 引用块样式
-      'prose-blockquote:border-l-4 prose-blockquote:border-muted-foreground/30 prose-blockquote:pl-6 prose-blockquote:italic',
-      // 表格样式
-      'prose-table:w-full prose-table:border-collapse',
-      'prose-th:border prose-th:bg-muted prose-th:px-4 prose-th:py-2 prose-th:text-left',
-      'prose-td:border prose-td:px-4 prose-td:py-2',
-      // 图片样式
-      'prose-img:rounded-md prose-img:border prose-img:my-8',
-      // 链接样式
-      'prose-a:text-primary prose-a:font-medium prose-a:underline-offset-4 hover:prose-a:text-primary/80',
-      // 水平线样式
-      'prose-hr:my-8 prose-hr:border-muted-foreground/20',
+      // 基础排版样式
+      'prose dark:prose-invert max-w-none',
       className
     )}>
       {children}
@@ -76,7 +54,7 @@ export function MDXParagraph({ className, children }: TypographyProps) {
  * 代码块组件
  */
 export function MDXCode({ className, children }: TypographyProps) {
-  return <code className={cn('rounded bg-muted px-1.5 py-0.5 text-sm font-mono', className)}>{children}</code>;
+  return <code className={cn('font-mono', className)}>{children}</code>;
 }
 
 /**
@@ -84,7 +62,7 @@ export function MDXCode({ className, children }: TypographyProps) {
  */
 export function MDXPre({ className, children }: TypographyProps) {
   return (
-    <pre className={cn('mt-6 mb-6 rounded-lg border bg-muted p-4 overflow-x-auto', className)}>
+    <pre className={cn('overflow-x-auto', className)}>
       {children}
     </pre>
   );

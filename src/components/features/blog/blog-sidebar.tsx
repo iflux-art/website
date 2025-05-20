@@ -2,19 +2,7 @@ import React from "react";
 import { TableOfContentsClientWrapper } from "@/components/features/content/toc/toc-client-wrapper";
 import { BackToTopButton } from "@/components/features/content/back-to-top-button";
 import { AdvertisementCard } from "@/components/features/content/advertisement-card";
-import { Heading } from "@/types/blog";
-
-/**
- * 博客侧边栏组件属性
- *
- * @interface BlogSidebarProps
- */
-interface BlogSidebarProps {
-  /**
-   * 文章标题列表，用于生成目录
-   */
-  headings: Heading[];
-}
+import { BlogSidebarProps } from "./blog-sidebar.types";
 
 /**
  * 博客侧边栏组件

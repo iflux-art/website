@@ -4,22 +4,26 @@
 
 import * as React from "react";
 import { DialogProps } from "@radix-ui/react-dialog";
-import { Command as CommandPrimitive } from "cmdk";
 
-export interface CommandProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive> {}
+export interface CommandProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export type CommandDialogProps = DialogProps;
 
-export interface CommandInputProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> {}
+export interface CommandInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export interface CommandListProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.List> {}
+export interface CommandListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface CommandEmptyProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty> {}
+export interface CommandEmptyProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface CommandGroupProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group> {}
+export interface CommandGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+  heading?: React.ReactNode;
+}
 
-export interface CommandSeparatorProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator> {}
+export interface CommandSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface CommandItemProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> {}
+export interface CommandItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  onSelect?: (value: string) => void;
+  disabled?: boolean;
+}
 
 export interface CommandShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {}

@@ -4,18 +4,14 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ModeToggle } from "@/components/features/theme-toggle/index";
+import { ThemeToggle } from "@/components/features/theme-toggle";
 import { CleanSearchDialog } from "@/components/features/search/clean-search";
 import { Travelling } from "@/components/features/travelling";
 import { Logo } from "@/components/features/logo";
 import { NavCards } from "./nav-cards";
 
 import { hoverScale, buttonTap } from "@/lib/animations";
-
-interface MobileMenuProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}
+import { MobileMenuProps } from "./mobile-menu.types";
 
 /**
  * 移动端菜单组件
@@ -30,7 +26,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
         <CleanSearchDialog />
       </motion.div>
       <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-        <ModeToggle />
+        <ThemeToggle />
       </motion.div>
       <motion.div whileHover={hoverScale} whileTap={buttonTap}>
         <Travelling />
@@ -69,7 +65,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     <CleanSearchDialog />
                   </motion.div>
                   <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-                    <ModeToggle />
+                    <ThemeToggle />
                   </motion.div>
                   <motion.div whileHover={hoverScale} whileTap={buttonTap}>
                     <Travelling />

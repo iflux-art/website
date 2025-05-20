@@ -11,12 +11,13 @@ const icons = {
   tip: HelpCircle,
 };
 
+// 使用 OKLCH 颜色和 CSS 变量
 const styles = {
-  info: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-900/50 text-blue-800 dark:text-blue-300',
-  warning: 'bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900/50 text-amber-800 dark:text-amber-300',
-  success: 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-900/50 text-green-800 dark:text-green-300',
-  error: 'bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-900/50 text-red-800 dark:text-red-300',
-  tip: 'bg-purple-50 border-purple-200 dark:bg-purple-950/30 dark:border-purple-900/50 text-purple-800 dark:text-purple-300',
+  info: 'bg-[oklch(0.96_0.03_240)] border-[oklch(0.85_0.1_240)] dark:bg-[oklch(0.2_0.1_240/0.3)] dark:border-[oklch(0.3_0.1_240/0.5)] text-[oklch(0.5_0.15_240)] dark:text-[oklch(0.8_0.1_240)]',
+  warning: 'bg-[oklch(0.96_0.03_80)] border-[oklch(0.85_0.1_80)] dark:bg-[oklch(0.2_0.1_80/0.3)] dark:border-[oklch(0.3_0.1_80/0.5)] text-[oklch(0.5_0.15_80)] dark:text-[oklch(0.8_0.1_80)]',
+  success: 'bg-[oklch(0.96_0.03_140)] border-[oklch(0.85_0.1_140)] dark:bg-[oklch(0.2_0.1_140/0.3)] dark:border-[oklch(0.3_0.1_140/0.5)] text-[oklch(0.5_0.15_140)] dark:text-[oklch(0.8_0.1_140)]',
+  error: 'bg-[oklch(0.96_0.03_20)] border-[oklch(0.85_0.1_20)] dark:bg-[oklch(0.2_0.1_20/0.3)] dark:border-[oklch(0.3_0.1_20/0.5)] text-[oklch(0.5_0.15_20)] dark:text-[oklch(0.8_0.1_20)]',
+  tip: 'bg-[oklch(0.96_0.03_300)] border-[oklch(0.85_0.1_300)] dark:bg-[oklch(0.2_0.1_300/0.3)] dark:border-[oklch(0.3_0.1_300/0.5)] text-[oklch(0.5_0.15_300)] dark:text-[oklch(0.8_0.1_300)]',
 };
 
 /**

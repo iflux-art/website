@@ -56,6 +56,7 @@ export function storeTheme(theme: Theme): void {
  * - 使用 requestAnimationFrame 确保在下一帧应用过渡效果
  * - 只影响颜色相关的 CSS 属性，不触发布局重新计算
  * - 减少过渡持续时间，提高响应速度
+ * - 兼容 Tailwind CSS v4 的 @theme 指令
  */
 export function applyThemeTransition(): void {
   if (typeof window === 'undefined') return;

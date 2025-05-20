@@ -32,7 +32,7 @@ export default function Copy({ content }: CopyProps) {
     // 渲染按钮组件，点击时触发 handleCopy 函数
     <Button
       variant="ghost"
-      className="h-6 w-6 p-0 rounded-md hover:bg-background/30 hover:text-foreground"
+      className="h-6 w-6 p-0 rounded-md hover:bg-background/30 dark:hover:text-gray-300 hover:text-gray-700"
       size="icon"
       onClick={handleCopy}
       title="复制代码"

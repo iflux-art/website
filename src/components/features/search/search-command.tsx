@@ -15,7 +15,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command/command";
+} from "@/components/ui/command/command-dialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useSearch } from "@/hooks/use-search";
 import { SearchButtonProps, SearchDialogProps, SearchResult } from "@/types/search";

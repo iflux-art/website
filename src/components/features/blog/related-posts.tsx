@@ -1,18 +1,6 @@
 import Link from 'next/link';
 import { FileText } from 'lucide-react';
-import { RelatedPost } from '@/types/blog';
-
-/**
- * 相关文章组件属性
- *
- * @interface RelatedPostsProps
- */
-interface RelatedPostsProps {
-  /**
-   * 相关文章列表
-   */
-  posts: RelatedPost[];
-}
+import { RelatedPostsProps } from './related-posts.types';
 
 /**
  * 相关文章组件

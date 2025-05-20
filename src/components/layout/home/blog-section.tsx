@@ -8,16 +8,7 @@ import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/ui/lazy-image";
-
-// 博客文章类型
-interface BlogPost {
-  title: string;
-  excerpt: string;
-  date: string;
-  slug: string;
-  coverImage?: string;
-  readingTime?: string;
-}
+import { BlogPost } from "./blog-section.types";
 
 /**
  * 博客展示区组件

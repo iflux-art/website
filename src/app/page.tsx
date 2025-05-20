@@ -5,7 +5,7 @@ import { PageTransition } from "@/components/ui/page-transition";
 
 // 导入首页组件
 import { HeroSection } from "@/components/layout/home/hero-section";
-import { FeaturesSection } from "@/components/layout/home/features-section";
+import { FeaturesSection } from "@/components/layout/home/features-section-new";
 import { BlogSection } from "@/components/layout/home/blog-section";
 import { NavigationSection } from "@/components/layout/home/navigation-section";
 import { FriendsSection } from "@/components/layout/home/friends-section";

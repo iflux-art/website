@@ -41,7 +41,7 @@ export function LabelDemo() {
       <div>
         <h3 className="text-lg font-medium mb-2">与复选框一起使用</h3>
         <div className="flex items-center space-x-2">
-          <input type="checkbox" id="terms" className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+          <input type="checkbox" id="terms" className="h-4 w-4 rounded border-input text-primary focus:ring-primary" />
           <Label htmlFor="terms">接受条款和条件</Label>
         </div>
       </div>
@@ -50,7 +50,7 @@ export function LabelDemo() {
       <div>
         <h3 className="text-lg font-medium mb-2">必填标签</h3>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="name" className="after:content-['*'] after:ml-0.5 after:text-red-500">
+          <Label htmlFor="name" className="after:content-['*'] after:ml-0.5 after:text-[oklch(0.6_0.2_20)]">
             姓名
           </Label>
           <Input id="name" placeholder="输入您的姓名" required />
@@ -71,31 +71,31 @@ export function LabelDemo() {
         <h3 className="text-lg font-medium mb-2">完整表单示例</h3>
         <form className="space-y-4 border p-4 rounded-md">
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="full-name" className="after:content-['*'] after:ml-0.5 after:text-red-500">
+            <Label htmlFor="full-name" className="after:content-['*'] after:ml-0.5 after:text-[oklch(0.6_0.2_20)]">
               姓名
             </Label>
             <Input id="full-name" placeholder="输入您的姓名" required />
           </div>
-          
+
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="full-email">
               电子邮箱
             </Label>
             <Input type="email" id="full-email" placeholder="输入您的电子邮箱" />
           </div>
-          
+
           <div className="grid w-full gap-1.5">
             <Label htmlFor="full-message">
               消息
             </Label>
             <Textarea id="full-message" placeholder="输入您的消息..." />
           </div>
-          
+
           <div className="flex items-center space-x-2">
-            <input type="checkbox" id="full-terms" className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+            <input type="checkbox" id="full-terms" className="h-4 w-4 rounded border-input text-primary focus:ring-primary" />
             <Label htmlFor="full-terms">接受条款和条件</Label>
           </div>
-          
+
           <Button type="submit">提交</Button>
         </form>
       </div>

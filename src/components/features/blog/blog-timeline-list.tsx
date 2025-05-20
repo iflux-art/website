@@ -5,27 +5,7 @@ import Link from 'next/link';
 import { useTimelinePosts } from '@/hooks/use-blog';
 import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-
-/**
- * 博客时间轴列表组件属性
- *
- * @interface BlogTimelineListProps
- */
-interface BlogTimelineListProps {
-  /**
-   * 最大显示年份数量
-   * @default Infinity
-   */
-  limit?: number;
-}
-
-// 按月份分组的文章类型
-interface PostsByMonth {
-  [month: string]: {
-    date: Date;
-    posts: any[];
-  }
-}
+import { BlogTimelineListProps, PostsByMonth } from './blog-timeline-list.types';
 
 /**
  * 博客时间轴列表组件

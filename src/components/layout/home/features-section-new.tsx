@@ -9,19 +9,44 @@ import {
   Compass,
   FileText,
   Link2,
-  MessageSquare,
-  Users
+  MessageSquare
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ScrollAnimation } from "@/components/ui/scroll-animation";
+import { hoverScale, buttonTap } from "@/lib/animations";
+import { FeatureCardProps, FeaturesSectionProps } from "./features-section-new.types";
 
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  href: string;
-  index: number;
-}
+/**
+ * 特性卡片组件
+ * 支持两种样式：带图标的高级样式和简单样式
+ */
+function FeatureCard({ icon, title, description, href, index, simple = false }: FeatureCardProps) {
+  // 简单样式
+  if (simple) {
+    return (
+      <ScrollAnimation
+        type="fadeIn"
+        delay={index * 0.1}
+        className="border border-border rounded-lg p-6 hover:shadow-md transition-all hover:border-primary/50 text-center"
+      >
+        <Link href={href}>
+          <motion.div
+            whileHover={hoverScale}
+            whileTap={buttonTap}
+          >
+            <h2 className="text-xl font-semibold mb-2">
+              {title}
+            </h2>
+            <p className="text-muted-foreground">
+              {description}
+            </p>
+          </motion.div>
+        </Link>
+      </ScrollAnimation>
+    );
+  }
 
-function FeatureCard({ icon, title, description, href, index }: FeatureCardProps) {
+  // 高级样式（带图标）
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,9 +62,11 @@ function FeatureCard({ icon, title, description, href, index }: FeatureCardProps
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 to-primary/0 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
 
           <div className="flex items-center mb-4">
-            <div className="p-2 rounded-lg bg-primary/10 text-primary mr-4">
-              {icon}
-            </div>
+            {icon && (
+              <div className="p-2 rounded-lg bg-primary/10 text-primary mr-4">
+                {icon}
+              </div>
+            )}
             <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
               {title}
             </h3>
@@ -54,12 +81,18 @@ function FeatureCard({ icon, title, description, href, index }: FeatureCardProps
   );
 }
 
+
+
 /**
  * 特性展示区组件
- *
- * 已更新为 Tailwind CSS v4 兼容版本
+ * 展示网站的主要功能和特性
  */
-export function FeaturesSection() {
+export function FeaturesSection({
+  className,
+  simple = false,
+  title = "探索我们的功能",
+  subtitle = "全面的功能和资源，满足您的各种需求"
+}: FeaturesSectionProps) {
   const features = [
     {
       icon: <BookOpen className="h-6 w-6" />,
@@ -100,7 +133,7 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="w-full py-10">
+    <section className={cn("w-full py-10", className)}>
       <div className="container px-6 md:px-8 mx-auto w-full">
         <motion.div
           className="text-center mb-16"
@@ -109,9 +142,9 @@ export function FeaturesSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">探索我们的功能</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            全面的功能和资源，满足您的各种需求
+            {subtitle}
           </p>
         </motion.div>
 
@@ -119,11 +152,12 @@ export function FeaturesSection() {
           {features.map((feature, index) => (
             <FeatureCard
               key={feature.title}
-              icon={feature.icon}
+              icon={simple ? undefined : feature.icon}
               title={feature.title}
               description={feature.description}
               href={feature.href}
               index={index}
+              simple={simple}
             />
           ))}
         </div>

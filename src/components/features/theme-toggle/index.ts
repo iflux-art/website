@@ -6,5 +6,7 @@
 export { ThemeToggle } from './theme-toggle';
 export type { ThemeToggleProps } from './theme-toggle.types';
 
-// 为了兼容现有代码，导出别名
+/**
+ * @deprecated 请使用 ThemeToggle 替代 ModeToggle，ModeToggle 将在未来版本中移除
+ */
 export { ThemeToggle as ModeToggle } from './theme-toggle';

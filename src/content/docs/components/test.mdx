@@ -1,0 +1,43 @@
+清理脚本文件：
+将一次性使用的脚本移动到 scripts/legacy 目录
+在 README.md 中记录这些脚本的用途，以便将来参考
+
+不完全兼容 Tailwind CSS v4 的组件
+在我的分析中，我发现以下几个组件或文件中存在可能不完全兼容 Tailwind CSS v4 的代码：
+
+传统颜色名称使用：
+ src/components/ui/markdown/code-block/code-block.tsx - 使用了传统的颜色名称（如 text-purple-500, text-green-500）而不是 OKLCH 颜色
+ src/components/ui/markdown/callout/callout.tsx - 使用了传统的颜色名称（如 bg-blue-50, bg-amber-50）
+ src/data/navigation/categories.ts 和  src/data/navigation.ts - 使用了传统的颜色名称（如 bg-blue-100, bg-purple-100）
+ src/components/features/card-list/card-list.tsx - 使用了 text-gray-500 而不是 OKLCH 颜色
+ src/components/examples/label-demo.tsx - 使用了 border-gray-300, text-red-500 等传统颜色名称
+旧版 CSS 语法：
+在一些 MDX 内容文件中（如  src/content/blog/performance_accessibility_guide.md）使用了旧版的 Tailwind CSS 示例代码
+
+建议修复方案
+为了确保项目完全兼容 Tailwind CSS v4，建议进行以下修改：
+
+更新颜色名称：
+将  src/components/ui/markdown/code-block/code-block.tsx 中的传统颜色名称替换为使用 CSS 变量或 OKLCH 颜色
+例如，将 text-purple-500 替换为 text-primary 或自定义的 CSS 变量
+更新 Callout 组件：
+修改  src/components/ui/markdown/callout/callout.tsx 中的颜色定义，使用 CSS 变量或 OKLCH 颜色
+可以在  tailwind.config.mjs 中定义这些颜色，然后在组件中引用
+更新导航数据：
+修改  src/data/navigation/categories.ts 和  src/data/navigation.ts 中的颜色类名
+可以定义一组基于 CSS 变量的颜色类，然后在导航数据中使用
+更新示例代码：
+审查并更新文档和博客内容中的 Tailwind CSS 示例代码
+确保示例代码使用最新的 Tailwind CSS v4 语法
+优先级建议
+根据影响程度，建议按以下优先级进行修复：
+
+高优先级：
+更新 UI 组件中的颜色名称，特别是 code-block.tsx 和 callout.tsx
+这些组件直接影响用户界面的外观
+中优先级：
+更新导航数据和卡片列表中的颜色名称
+这些影响特定页面的外观
+低优先级：
+更新文档和博客内容中的示例代码
+这些不影响实际应用的运行，但应该在时间允许时更新

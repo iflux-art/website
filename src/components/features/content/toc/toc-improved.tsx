@@ -4,16 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Hash } from "lucide-react";
-
-type Heading = {
-  id: string;
-  text: string;
-  level: number;
-};
-
-interface TableOfContentsProps {
-  headings: Heading[];
-}
+import { Heading, TableOfContentsProps } from "./toc-improved.types";
 
 export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");

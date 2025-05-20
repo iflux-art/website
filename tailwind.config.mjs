@@ -1,23 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
-  darkMode: "class",
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  // Tailwind CSS v4 特定配置
-  future: {
-    // 启用所有 v4 特性
-    unstable_tailwind: {
-      // 启用 v4 的颜色系统
-      colors: true,
-      // 启用 v4 的间距系统
-      spacing: true,
-      // 启用 v4 的排版系统
-      typography: true,
-    },
-  },
   theme: {
     extend: {
       fontFamily: {
@@ -25,8 +13,49 @@ const config = {
         mono: ["var(--font-geist-mono)"],
         code: ["var(--font-geist-mono)"],
       },
-      // 在 Tailwind CSS v4 中，typography 插件的配置方式有所变化
-      // 但我们可以保持大部分配置不变
+      colors: {
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+
+      // Tailwind Typography 插件配置
+      // 集中管理所有与排版相关的样式
       typography: {
         DEFAULT: {
           css: {
@@ -93,7 +122,7 @@ const config = {
               color: 'var(--tw-prose-code)',
               fontWeight: '400',
               fontSize: '0.875em',
-              backgroundColor: 'var(--tw-prose-code-bg)',
+              backgroundColor: 'transparent',
               borderRadius: '0.25rem',
               paddingLeft: '0.4em',
               paddingRight: '0.4em',
@@ -109,17 +138,19 @@ const config = {
             },
             pre: {
               color: 'var(--tw-prose-pre-code)',
-              backgroundColor: 'var(--tw-prose-pre-bg)',
-              borderRadius: '0.375rem',
-              padding: '1em',
+              backgroundColor: 'transparent',
+              borderRadius: '0',
+              padding: '0',
+              margin: '0',
               overflowX: 'auto',
-              border: '1px solid var(--tw-prose-pre-border)',
+              border: '0',
             },
             'pre code': {
               backgroundColor: 'transparent',
               borderWidth: '0',
               borderRadius: '0',
               padding: '0',
+              margin: '0',
               color: 'inherit',
               fontSize: 'inherit',
               fontWeight: 'inherit',
