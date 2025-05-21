@@ -5,6 +5,7 @@ import React from "react";
 import { FriendLinkCard } from "@/components/features/friends/friend-link-card";
 import { FriendLinkApplication } from "@/components/features/friends/friend-link-application";
 import { useFriendLinks } from "@/hooks/use-friend-links";
+import { AnimatedContainer } from "@/components/ui/animated-container";
 
 /**
  * 友情链接页面
@@ -24,12 +25,30 @@ export default function FriendsPage() {
         感谢以下朋友对本站的支持与帮助，欢迎互相交流学习。
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {/* 友链卡片 */}
-        {links.map((link, index) => (
-          <FriendLinkCard key={link.url} link={link} index={index} />
-        ))}
-      </div>
+      {/* 预先创建友链卡片网格 */}
+      {(() => {
+        const friendLinksGrid = (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {/* 友链卡片 */}
+            {links.map((link, index) => (
+              <FriendLinkCard key={link.url} link={link} index={index} />
+            ))}
+          </div>
+        );
+
+        return (
+          <AnimatedContainer
+            baseDelay={0.1}
+            staggerDelay={0.15}
+            variant="fade"
+            autoWrap={false}
+            threshold={0.1}
+            rootMargin="0px"
+          >
+            {friendLinksGrid}
+          </AnimatedContainer>
+        );
+      })()}
 
       <FriendLinkApplication
         requirements={requirements}

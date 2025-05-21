@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { DocCategory } from '@/types/docs';
+import { AnimatedCard } from '@/components/ui/animated-card';
 
 /**
  * 文档分类卡片组件属性
@@ -17,12 +17,18 @@ interface DocCategoryCardProps {
    * 文档分类
    */
   category: DocCategory;
+
+  /**
+   * 索引，用于动画延迟
+   */
+  index?: number;
 }
 
 /**
  * 文档分类卡片组件
  *
  * 用于显示文档分类，包括标题、描述和文档数量
+ * 使用 AnimatedCard 组件实现动画效果
  *
  * @param {DocCategoryCardProps} props - 组件属性
  * @returns {JSX.Element} 文档分类卡片组件
@@ -36,28 +42,19 @@ interface DocCategoryCardProps {
  *     description: "快速上手项目的基本使用方法",
  *     count: 5
  *   }}
+ *   index={0}
  * />
  * ```
  */
-export function DocCategoryCard({ category }: DocCategoryCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
-
+export function DocCategoryCard({ category, index = 0 }: DocCategoryCardProps) {
   return (
-    <div
-      className="transition-transform duration-200"
-      style={{
-        transform: `scale(${isHovered ? 1.02 : isPressed ? 0.98 : 1})`
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setIsPressed(false);
-      }}
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
+    <AnimatedCard
+      delay={index * 0.1}
+      duration={0.7}
+      variant="fade"
+      className="h-full"
     >
-      <Card key={category.id} className="overflow-hidden h-full">
+      <Card key={category.id} className="overflow-hidden h-full hover:shadow-md transition-shadow">
         <CardContent className="pt-6 flex-grow">
           <h2 className="text-xl font-semibold mb-2">{category.title}</h2>
           <p className="text-muted-foreground">{category.description}</p>
@@ -73,6 +70,6 @@ export function DocCategoryCard({ category }: DocCategoryCardProps) {
           <span className="text-xs text-muted-foreground">{category.count} 篇文章</span>
         </CardFooter>
       </Card>
-    </div>
+    </AnimatedCard>
   );
 }

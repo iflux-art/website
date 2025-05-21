@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/features/theme-toggle";
 import { CleanSearchDialog } from "@/components/features/search/clean-search";
 import { Travelling } from "@/components/features/travelling";
@@ -47,6 +47,9 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             </Button>
           </SheetTrigger>
           <SheetContent side="fullscreen" className="lg:hidden p-0 border-none">
+            {/* 添加 SheetTitle 以满足无障碍性要求，但使用 sr-only 类隐藏它 */}
+            <SheetTitle className="sr-only">导航菜单</SheetTitle>
+
             {/* 复刻导航栏样式 */}
             <div className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/80 shadow-sm border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300">
               <div className="container mx-auto px-4 h-full flex items-center justify-between">

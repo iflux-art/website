@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight, FileText, Folder } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -11,7 +11,7 @@ import { useDocSidebar } from "@/hooks/use-docs";
 import { DocSidebarItem } from "@/types/docs";
 
 // 检查是否在客户端环境
-const isClient = typeof window !== 'undefined';
+const isBrowser = typeof window !== 'undefined';
 
 /**
  * 文档侧边栏组件属性
@@ -51,6 +51,8 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   const { items, loading, error } = useDocSidebar(category);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const [isHovering, setIsHovering] = useState<string | null>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   // 用于存储折叠状态的本地存储键
   const localStorageKey = `docs-sidebar-${category}-open-categories`;
@@ -62,16 +64,73 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
       currentDoc,
       itemsCount: items.length,
       loading,
-      error
+      error,
+      windowHeight: typeof window !== 'undefined' ? window.innerHeight : 'unknown',
+      documentHeight: typeof document !== 'undefined' ? document.documentElement.clientHeight : 'unknown'
     });
   }, [category, currentDoc, items, loading, error]);
+
+  // 检测内容高度是否超过视口
+  useEffect(() => {
+    if (!sidebarRef.current || typeof ResizeObserver === 'undefined') return;
+
+    const updateScrollState = () => {
+      if (sidebarRef.current) {
+        // 获取内容高度
+        const contentHeight = sidebarRef.current.scrollHeight;
+        // 获取视口高度（减去顶部间距和导航栏高度）
+        const navbarHeight = 64; // 导航栏高度
+        const topSpacing = 20; // 顶部间距
+        const bottomSpacing = 20; // 底部间距
+        const viewportHeight = window.innerHeight - navbarHeight - topSpacing - bottomSpacing;
+
+        // 如果内容高度超过视口高度，则允许滚动
+        const shouldAllowScroll = contentHeight > viewportHeight;
+        setShouldScroll(shouldAllowScroll);
+
+        // 调试信息
+        console.log('DocSidebar 滚动计算:', {
+          contentHeight,
+          viewportHeight,
+          shouldScroll: shouldAllowScroll,
+          elementHeight: sidebarRef.current.offsetHeight,
+          windowHeight: window.innerHeight
+        });
+      }
+    };
+
+    // 初始计算
+    updateScrollState();
+
+    // 延迟再次计算，确保内容完全渲染
+    const timer = setTimeout(updateScrollState, 500);
+
+    // 使用 ResizeObserver 监听内容大小变化
+    const resizeObserver = new ResizeObserver(() => {
+      updateScrollState();
+    });
+
+    if (sidebarRef.current) {
+      resizeObserver.observe(sidebarRef.current);
+    }
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', updateScrollState);
+
+    // 清理函数
+    return () => {
+      window.removeEventListener('resize', updateScrollState);
+      clearTimeout(timer);
+      resizeObserver.disconnect();
+    };
+  }, [items]);
 
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback((itemId: string, open: boolean) => {
     setOpenCategories(prev => {
       const newState = { ...prev, [itemId]: open };
       // 保存到 localStorage（仅在客户端）
-      if (isClient) {
+      if (isBrowser) {
         try {
           localStorage.setItem(localStorageKey, JSON.stringify(newState));
         } catch (e) {
@@ -92,15 +151,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     setIsHovering(null);
   }, []);
 
-  // 处理内容引用
-  const handleContentRef = useCallback((itemId: string, el: HTMLUListElement | null) => {
-    if (el && openCategories[itemId]) {
-      // 当折叠面板打开时，添加淡入效果
-      setTimeout(() => {
-        el.style.opacity = '1';
-      }, 50);
-    }
-  }, [openCategories]);
+  // 移除了内容引用处理函数
 
   // 渲染侧边栏项目
   const renderItems = useCallback((items: DocSidebarItem[], level: number = 0, parentPath: string = '') => {
@@ -134,18 +185,18 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                 onOpenChange={(open) => handleOpenChange(itemId, open)}
               >
                 <div className="flex items-center">
-                  <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-2 rounded-md text-sm group hover:bg-accent/50 transition-colors">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-2 rounded-md text-sm group hover:bg-accent/50">
                     <span className={cn(
-                      "font-medium transition-colors",
+                      "font-medium",
                       isHovering === itemId ? "text-foreground" : "text-muted-foreground"
                     )}>
                       {item.title}
                     </span>
-                    <span className="ml-1 text-muted-foreground transition-transform duration-200">
+                    <span className="ml-1 text-muted-foreground">
                       <ChevronRight
                         className={cn(
                           "h-4 w-4",
-                          openCategories[itemId] && "transform rotate-90"
+                          openCategories[itemId] && "rotate-90"
                         )}
                       />
                     </span>
@@ -153,8 +204,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                 </div>
                 <CollapsibleContent>
                   <ul
-                    className="mt-1 space-y-1 pl-3 pt-1 opacity-0 transition-opacity duration-200 border-l border-border/30 ml-2"
-                    ref={(el) => handleContentRef(itemId, el)}
+                    className="mt-1 space-y-1 pl-3 pt-1 border-l border-border/30 ml-2"
                   >
                     {renderItems(item.items || [], level + 1, itemId)}
                   </ul>
@@ -167,7 +217,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
               target={isExternal ? "_blank" : undefined}
               rel={isExternal ? "noopener noreferrer" : undefined}
               className={cn(
-                "flex items-center justify-between py-2 px-2 rounded-md text-sm transition-all duration-200",
+                "flex items-center justify-between py-2 px-2 rounded-md text-sm",
                 isActive
                   ? "bg-accent/80 text-primary font-medium shadow-sm rounded-md"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
@@ -199,7 +249,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
         </li>
       );
     });
-  }, [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave, handleContentRef]);
+  }, [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave]);
 
   // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
   const MemoizedSidebarItems = useMemo(() => {
@@ -270,7 +320,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   useEffect(() => {
     // 尝试从 localStorage 中读取保存的状态（仅在客户端）
     let savedState: Record<string, boolean> = {};
-    if (isClient) {
+    if (isBrowser) {
       try {
         const savedStateStr = localStorage.getItem(localStorageKey);
         if (savedStateStr) {
@@ -301,7 +351,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   // 加载状态
   if (loading) {
     return (
-      <div className="animate-pulse">
+      <div>
         <div className="h-6 bg-muted rounded w-3/4 mb-4"></div>
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => (
@@ -338,8 +388,16 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     );
   }
 
+
+
   return (
-    <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] scrollbar-hide">
+    <div
+      ref={sidebarRef}
+      className={`${shouldScroll ? 'overflow-y-auto' : 'overflow-y-visible'} scrollbar-hide`}
+      style={{
+        maxHeight: shouldScroll ? 'calc(100vh - 7rem)' : 'none'
+      }}
+    >
       <div>
         <ul className="space-y-1">
           {MemoizedSidebarItems}

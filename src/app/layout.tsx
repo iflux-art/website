@@ -5,9 +5,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "next-themes";
 import { SITE_METADATA } from "@/lib/constants";
-import { PageTransition } from "@/components/layout/transitions/page-transition";
 import { ThemeTransition } from "@/components/layout/transitions/theme-transition";
-// 确保导入 React
+import { PageTransitionWrapper } from "@/components/ui/page-transition-wrapper";
 import React from "react";
 
 const geistSans = Geist({
@@ -48,11 +47,11 @@ export default function RootLayout({
         >
           <ThemeTransition>
             <Navbar />
-            <main className="flex-1">
-              <PageTransition>
+            <PageTransitionWrapper>
+              <main className="flex-1">
                 {children}
-              </PageTransition>
-            </main>
+              </main>
+            </PageTransitionWrapper>
             <Footer />
           </ThemeTransition>
         </ThemeProvider>

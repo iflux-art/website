@@ -27,13 +27,8 @@
   html.theme-transition *,
   html.theme-transition *::before,
   html.theme-transition *::after {
-    transition-duration: 300ms !important;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-    /* 确保所有颜色相关属性同步过渡 */
-    transition-property: background-color, color, border-color, text-decoration-color, fill, stroke, box-shadow, outline-color !important;
-    transition-delay: 0s !important;
-    /* 阻止不必要的重新渲染 */
-    will-change: background-color, color, border-color, text-decoration-color, fill, stroke;
+    /* 移除过渡效果，使用涟漪动画代替 */
+    transition: none !important;
   }
 }
 
@@ -281,6 +276,12 @@ article code::after,
 /* 暗色模式下的超链接颜色 */
 .dark .prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]) {
   color: oklch(0.7 0.2 240); /* 暗色模式下更亮的蓝色 */
+}
+
+/* 禁用侧边栏动画 */
+.no-animation * {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* 确保行内代码有正确的间距和样式 */

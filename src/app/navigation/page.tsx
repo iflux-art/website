@@ -1,33 +1,21 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { fadeIn, slideUp } from "@/lib/animations";
 import {
   useNavigationCategories,
   useFeaturedResources,
   useRecentResources
 } from "@/hooks/use-navigation";
-import { Category, Resource } from "@/types/navigation";
+import { Category } from "@/types/navigation";
+import { AnimatedCard } from "@/components/ui/animated-card";
+import { AnimatedContainer } from "@/components/ui/animated-container";
 
 
 export default function NavigationPage() {
-
-  // 动画效果
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
 
   // 获取导航数据
   const { categories, loading: categoriesLoading } = useNavigationCategories();
@@ -74,47 +62,97 @@ export default function NavigationPage() {
       <h1 className="text-3xl font-bold mb-6">网站导航</h1>
 
       {/* 分类导航 */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
-      >
-        {categories && categories.length > 0 ? (
-          categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))
-        ) : (
-          <p className="col-span-4 text-center text-muted-foreground">暂无分类数据</p>
-        )}
-      </motion.div>
+      {(() => {
+        // 预先创建分类网格
+        const categoriesGrid = (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories && categories.length > 0 ? (
+              categories.map((category, index) => (
+                <CategoryCard key={category.id} category={category} index={index} />
+              ))
+            ) : (
+              <p className="col-span-4 text-center text-muted-foreground">暂无分类数据</p>
+            )}
+          </div>
+        );
+
+        return (
+          <AnimatedContainer
+            baseDelay={0.1}
+            staggerDelay={0.15}
+            variant="fade"
+            autoWrap={false}
+            className="mb-12"
+            threshold={0.1}
+            rootMargin="0px"
+          >
+            {categoriesGrid}
+          </AnimatedContainer>
+        );
+      })()}
 
       {/* 精选资源 */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredResources && featuredResources.length > 0 ? (
-            featuredResources.map((resource, index) => (
-              <ResourceCard key={index} resource={resource} index={index} />
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-muted-foreground">暂无精选资源</p>
-          )}
-        </div>
+        {(() => {
+          // 预先创建资源网格
+          const resourcesGrid = (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredResources && featuredResources.length > 0 ? (
+                featuredResources.map((resource, index) => (
+                  <ResourceCard key={index} resource={resource} index={index} />
+                ))
+              ) : (
+                <p className="col-span-3 text-center text-muted-foreground">暂无精选资源</p>
+              )}
+            </div>
+          );
+
+          return (
+            <AnimatedContainer
+              baseDelay={0.1}
+              staggerDelay={0.15}
+              variant="fade"
+              autoWrap={false}
+              threshold={0.1}
+              rootMargin="0px"
+            >
+              {resourcesGrid}
+            </AnimatedContainer>
+          );
+        })()}
       </section>
 
       {/* 最新添加 */}
       <section>
         <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recentResources && recentResources.length > 0 ? (
-            recentResources.map((resource, index) => (
-              <ResourceCard key={index} resource={resource} index={index} />
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-muted-foreground">暂无最新资源</p>
-          )}
-        </div>
+        {(() => {
+          // 预先创建最新资源网格
+          const recentResourcesGrid = (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentResources && recentResources.length > 0 ? (
+                recentResources.map((resource, index) => (
+                  <ResourceCard key={index} resource={resource} index={index} />
+                ))
+              ) : (
+                <p className="col-span-3 text-center text-muted-foreground">暂无最新资源</p>
+              )}
+            </div>
+          );
+
+          return (
+            <AnimatedContainer
+              baseDelay={0.1}
+              staggerDelay={0.15}
+              variant="fade"
+              autoWrap={false}
+              threshold={0.1}
+              rootMargin="0px"
+            >
+              {recentResourcesGrid}
+            </AnimatedContainer>
+          );
+        })()}
       </section>
     </main>
   );
@@ -130,28 +168,29 @@ interface CategoryCardProps {
    * 分类数据
    */
   category: Category;
+
+  /**
+   * 索引，用于动画延迟
+   */
+  index?: number;
 }
 
 /**
  * 分类卡片组件
  *
  * 用于显示导航页面中的分类卡片，包括图标、标题和描述
+ * 使用 AnimatedCard 组件实现动画效果
  *
  * @param {CategoryCardProps} props - 组件属性
  * @returns {JSX.Element} 分类卡片组件
  */
-function CategoryCard({ category }: CategoryCardProps) {
-  const { ref } = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
+function CategoryCard({ category, index = 0 }: CategoryCardProps) {
   return (
-    <motion.div
-      ref={ref}
-      variants={fadeIn}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.98 }}
+    <AnimatedCard
+      delay={index * 0.1}
+      duration={0.7}
+      variant="fade"
+      className="h-full"
     >
       <Link href={`/navigation/${category.id}`}>
         <Card className={`h-full border-2 hover:border-primary transition-colors overflow-hidden`}>
@@ -168,7 +207,7 @@ function CategoryCard({ category }: CategoryCardProps) {
           </CardFooter>
         </Card>
       </Link>
-    </motion.div>
+    </AnimatedCard>
   );
 }
 

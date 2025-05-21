@@ -27,6 +27,8 @@ interface BlogListProps {
    * 当用户点击文章卡片中的标签时调用
    */
   onTagClick?: (tag: string) => void;
+
+
 }
 
 /**
@@ -42,14 +44,23 @@ interface BlogListProps {
  * <BlogList limit={10} />
  * ```
  */
-export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: BlogListProps) {
+export function BlogList({
+  limit = Infinity,
+  filterTag = null,
+  onTagClick
+}: BlogListProps) {
   const { posts, loading, error } = useBlogPosts();
 
   // 加载状态
   if (loading) {
     return (
-      <div className="col-span-full text-center py-10">
-        <p>加载中...</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="h-[300px] bg-muted/30 animate-pulse rounded-lg"
+          ></div>
+        ))}
       </div>
     );
   }
@@ -57,7 +68,7 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
   // 错误状态
   if (error) {
     return (
-      <div className="col-span-full text-center py-10">
+      <div className="text-center py-10">
         <p className="text-destructive">加载失败: {error.message}</p>
       </div>
     );
@@ -66,7 +77,7 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
   // 空状态
   if (posts.length === 0) {
     return (
-      <div className="col-span-full text-center py-10">
+      <div className="text-center py-10">
         <p>暂无博客文章</p>
       </div>
     );
@@ -85,7 +96,7 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
   // 筛选后没有文章
   if (displayPosts.length === 0) {
     return (
-      <div className="col-span-full text-center py-10">
+      <div className="text-center py-10">
         <p>没有找到包含标签 "{filterTag}" 的文章</p>
       </div>
     );
@@ -102,16 +113,31 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
     }
   };
 
+  // 导入动画容器组件
+  const { AnimatedContainer } = require("@/components/ui/animated-container");
+
+  // 预先创建博客卡片列表
+  const blogCards = displayPosts.map((post, index) => (
+    <BlogCard
+      key={post.slug}
+      post={post}
+      index={index}
+      onTagClick={handleTagClick}
+    />
+  ));
+
   return (
-    <>
-      {displayPosts.map((post, index) => (
-        <BlogCard
-          key={post.slug}
-          post={post}
-          index={index}
-          onTagClick={handleTagClick}
-        />
-      ))}
-    </>
+    <AnimatedContainer
+      baseDelay={0.1}
+      staggerDelay={0.15}
+      variant="fade"
+      autoWrap={false}
+      threshold={0.1}
+      rootMargin="0px"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {blogCards}
+      </div>
+    </AnimatedContainer>
   );
 }

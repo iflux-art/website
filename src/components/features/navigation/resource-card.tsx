@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@/components/ui/card";
-import { slideUp } from "@/lib/animations";
 import { Resource } from "@/types/navigation";
+import { AnimatedCard } from "@/components/ui/animated-card";
 
 /**
  * 资源卡片组件属性
@@ -49,18 +47,12 @@ interface ResourceCardProps {
  * ```
  */
 export function ResourceCard({ resource, index }: ResourceCardProps) {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
   return (
-    <motion.div
-      ref={ref}
-      variants={slideUp}
-      initial="initial"
-      animate={inView ? "animate" : "initial"}
-      transition={{ delay: index * 0.1 }}
+    <AnimatedCard
+      delay={index * 0.05}
+      duration={0.7}
+      variant="fade"
+      className="h-full"
     >
       <a href={resource.url} target="_blank" rel="noopener noreferrer">
         <Card className="h-full hover:shadow-md transition-all hover:border-primary/50">
@@ -90,6 +82,6 @@ export function ResourceCard({ resource, index }: ResourceCardProps) {
           </CardContent>
         </Card>
       </a>
-    </motion.div>
+    </AnimatedCard>
   );
 }

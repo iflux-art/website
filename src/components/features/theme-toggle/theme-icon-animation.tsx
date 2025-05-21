@@ -34,23 +34,18 @@ export const ThemeIconAnimation = React.memo(
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={theme || "system"}
-          initial={{ rotate: 0 }}
+          initial={{ opacity: 0 }}
           animate={{
-            rotate: 360
+            opacity: 1
           }}
           exit={{
-            rotate: 360
+            opacity: 0
           }}
           transition={{
-            duration: 0.3,
-            ease: "easeInOut",
-            rotate: { duration: 0.3 }
+            duration: 0.2,
+            ease: "easeInOut"
           }}
           className="flex items-center justify-center"
-          style={{
-            willChange: 'transform',
-            transformOrigin: 'center'
-          }}
         >
           {icon}
         </motion.div>

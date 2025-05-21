@@ -5,13 +5,13 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Suspense } from 'react';
-import { Transition } from '@/components/ui/transition';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
 import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
 import { MDXContent } from '@/components/features/content/mdx-content';
 import { ServerMDX } from '@/components/features/content/server-mdx';
+import { Breadcrumb } from '@/components/features/content/breadcrumb';
 
 export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
@@ -83,6 +83,18 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
     }
   }
 
+  // 读取根目录的 _meta.json 文件，获取分类的中文名称
+  const rootMetaFilePath = path.join(process.cwd(), 'src', 'content', 'docs', '_meta.json');
+  let rootMeta = null;
+  if (fs.existsSync(rootMetaFilePath)) {
+    try {
+      const rootMetaContent = fs.readFileSync(rootMetaFilePath, 'utf8');
+      rootMeta = JSON.parse(rootMetaContent);
+    } catch (error) {
+      console.error('Error loading root _meta.json file:', error);
+    }
+  }
+
   // 提取标题作为目录
   const headings: { id: string; text: string; level: number }[] = [];
 
@@ -142,76 +154,75 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <Suspense fallback={<div className="animate-pulse h-[500px] bg-muted rounded-md"></div>}>
-            <DocSidebar
-              category={category}
-              currentDoc={docName}
-            />
-          </Suspense>
+          <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
+            <Suspense fallback={<div className="h-[500px] bg-muted rounded-md"></div>}>
+              <div className="no-animation">
+                <DocSidebar
+                  category={category}
+                  currentDoc={docName}
+                />
+              </div>
+            </Suspense>
+          </div>
         </div>
 
         {/* 中间内容区 */}
         <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
-          <Transition>
-            <div className="max-w-4xl mx-auto">
-              {/* 面包屑导航 */}
-              <div className="text-sm text-muted-foreground mb-6">
-                <Link href="/docs" className="hover:text-primary">
-                  文档
-                </Link>
-                <span className="mx-2">/</span>
-                <Link href={`/docs/${category}`} className="hover:text-primary">
-                  {data.categoryTitle || category}
-                </Link>
-                {slug.length > 1 && (
-                  <>
-                    <span className="mx-2">/</span>
-                    <span>{data.title}</span>
-                  </>
-                )}
-              </div>
-              <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
-              <MDXContent>
-                <ServerMDX content={content} />
-              </MDXContent>
-
-              {/* 上一页/下一页导航 */}
-              <div className="mt-12 grid grid-cols-2 gap-4">
-                {prevDoc && (
-                  <Card className="col-start-1">
-                    <CardContent className="p-4">
-                      <Link href={prevDoc.path} className="flex flex-col">
-                        <span className="text-sm text-muted-foreground flex items-center">
-                          <ChevronLeft className="h-4 w-4 mr-1" />
-                          上一页
-                        </span>
-                        <span className="font-medium">{prevDoc.title}</span>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                )}
-                {nextDoc && (
-                  <Card className="col-start-2">
-                    <CardContent className="p-4">
-                      <Link href={nextDoc.path} className="flex flex-col items-end text-right">
-                        <span className="text-sm text-muted-foreground flex items-center">
-                          下一页
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </span>
-                        <span className="font-medium">{nextDoc.title}</span>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
+          <div className="max-w-4xl mx-auto">
+            {/* 面包屑导航 */}
+            <div className="mb-6">
+              <Breadcrumb
+                items={[
+                  { label: "文档", href: "/docs" },
+                  {
+                    label: rootMeta && rootMeta[category] ? rootMeta[category].title : category,
+                    href: `/docs/${category}`
+                  },
+                  ...(slug.length > 1 ? [{ label: data.title }] : [])
+                ]}
+              />
             </div>
-          </Transition>
-        </div>
+            <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
+            <MDXContent>
+              <ServerMDX content={content} />
+            </MDXContent>
+
+            {/* 上一页/下一页导航 */}
+            <div className="mt-12 grid grid-cols-2 gap-4">
+              {prevDoc && (
+                <Card className="col-start-1">
+                  <CardContent className="p-4">
+                    <Link href={prevDoc.path} className="flex flex-col">
+                      <span className="text-sm text-muted-foreground flex items-center">
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        上一页
+                      </span>
+                      <span className="font-medium">{prevDoc.title}</span>
+                    </Link>
+                  </CardContent>
+                </Card>
+              )}
+              {nextDoc && (
+                <Card className="col-start-2">
+                  <CardContent className="p-4">
+                    <Link href={nextDoc.path} className="flex flex-col items-end text-right">
+                      <span className="text-sm text-muted-foreground flex items-center">
+                        下一页
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </span>
+                      <span className="font-medium">{nextDoc.title}</span>
+                    </Link>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+            </div>
+          </div>
 
         {/* 右侧边栏 - 目录和广告 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20">
-            <Suspense fallback={<div className="animate-pulse h-[300px] bg-muted rounded-md"></div>}>
+          <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
+            <Suspense fallback={<div className="h-[300px] bg-muted rounded-md"></div>}>
               {/* 使用自适应侧边栏组件，根据目录内容高度动态调整广告卡片位置 */}
               <AdaptiveSidebar headings={headings} />
             </Suspense>

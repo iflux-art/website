@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { fadeIn } from "@/lib/animations";
 import { handleImageError, getFirstLetter } from "@/lib/image";
+import { AnimatedCard } from "@/components/ui/animated-card";
 
 /**
  * 友情链接数据接口
@@ -90,11 +89,11 @@ interface FriendLinkCardProps {
  */
 export function FriendLinkCard({ link, index }: FriendLinkCardProps) {
   return (
-    <motion.div
-      variants={fadeIn}
-      initial="initial"
-      animate="animate"
-      whileHover={{ y: -5 }}
+    <AnimatedCard
+      delay={index * 0.05}
+      duration={0.7}
+      variant="fade"
+      className="h-full"
     >
       <Card className="h-full hover:shadow-md transition-shadow">
         <CardContent className="p-4">
@@ -125,6 +124,6 @@ export function FriendLinkCard({ link, index }: FriendLinkCardProps) {
           </a>
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedCard>
   );
 }

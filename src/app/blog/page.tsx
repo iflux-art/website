@@ -56,12 +56,11 @@ export default function BlogPage() {
         )}
       </Suspense>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <BlogList
-          filterTag={selectedTag}
-          onTagClick={handleTagClick}
-        />
-      </div>
+      {/* 直接使用 BlogList 组件，不需要额外的网格容器 */}
+      <BlogList
+        filterTag={selectedTag}
+        onTagClick={handleTagClick}
+      />
     </main>
   );
 }

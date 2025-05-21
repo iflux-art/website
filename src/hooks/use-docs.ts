@@ -245,7 +245,7 @@ export function useDocSidebar(category: string) {
       return;
     }
 
-    // 如果缓存中有数据，先使用缓存数据，然后在后台更新
+    // 如果缓存中有数据，先使用缓存数据
     const cachedData = sidebarCache[category];
     if (cachedData) {
       setItems(cachedData.items);
@@ -256,8 +256,12 @@ export function useDocSidebar(category: string) {
         return;
       }
 
-      // 在后台更新缓存
-      fetchSidebar(category, true).catch(console.error);
+      // 延迟在后台更新缓存，避免影响页面渲染
+      const timer = setTimeout(() => {
+        fetchSidebar(category, true).catch(console.error);
+      }, 1000); // 延迟1秒后更新
+
+      return () => clearTimeout(timer);
     } else {
       // 没有缓存，正常获取数据
       fetchSidebar(category);

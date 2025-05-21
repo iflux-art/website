@@ -113,10 +113,25 @@ export default async function BlogPost({
   // 使用处理后的内容
   const finalContent = processedContent;
 
+  // 读取根目录的 _meta.json 文件，获取分类的中文名称
+  const rootMetaFilePath = path.join(process.cwd(), 'src', 'content', 'blog', '_meta.json');
+  let rootMeta = null;
+  if (fs.existsSync(rootMetaFilePath)) {
+    try {
+      const rootMetaContent = fs.readFileSync(rootMetaFilePath, 'utf8');
+      rootMeta = JSON.parse(rootMetaContent);
+    } catch (error) {
+      console.error('Error loading root _meta.json file:', error);
+    }
+  }
+
   // 构建面包屑导航项
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: "博客", href: "/blog" },
-    ...(slug.length > 1 ? [{ label: slug[0], href: `/blog/${slug[0]}` }] : []),
+    ...(slug.length > 1 ? [{
+      label: rootMeta && rootMeta[slug[0]] ? rootMeta[slug[0]].title : slug[0],
+      href: `/blog/${slug[0]}`
+    }] : []),
     { label: title }
   ];
 
