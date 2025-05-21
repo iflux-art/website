@@ -82,12 +82,22 @@ export function Navbar() {
   // 判断是否显示标题 - 在向下滚动且滚动超过阈值时显示标题，向上滚动时显示导航
   const showTitle = scrollDirection === "down" && lastScrollY > 100 && pageTitle && (pathname.startsWith("/blog/") || pathname.startsWith("/docs/"));
 
+  // 滚动到页面顶部的函数
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <motion.nav
       initial="initial"
       animate="animate"
       variants={slideDown}
       className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/80 shadow-sm border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300"
+      onDoubleClick={scrollToTop}
+      title={showTitle ? "双击返回顶部" : ""}
     >
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
 
@@ -110,10 +120,12 @@ export function Navbar() {
         >
           {showTitle ? (
             <motion.h2
-              className="text-lg font-semibold truncate max-w-md"
+              className="text-lg font-semibold truncate max-w-md cursor-pointer hover:text-primary transition-colors"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
+              onClick={scrollToTop}
+              title="点击返回顶部"
             >
               {pageTitle}
             </motion.h2>
