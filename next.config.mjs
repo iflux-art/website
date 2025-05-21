@@ -19,7 +19,7 @@ const nextConfig = {
 
   // 图片域名
   images: {
-    domains: ['img.dava.cc'],
+    domains: ['img.dava.cc', 'www.google.com'],
   },
 
   // 优化输出大小 - 生成独立部署包

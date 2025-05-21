@@ -30,9 +30,44 @@ export default function NavigationPage() {
   };
 
   // 获取导航数据
-  const categories = useNavigationCategories();
-  const featuredResources = useFeaturedResources();
-  const recentResources = useRecentResources();
+  const { categories, loading: categoriesLoading } = useNavigationCategories();
+  const { resources: featuredResources, loading: featuredLoading } = useFeaturedResources();
+  const { resources: recentResources, loading: recentLoading } = useRecentResources();
+
+  // 加载状态
+  const isLoading = categoriesLoading || featuredLoading || recentLoading;
+
+  // 加载状态显示
+  if (isLoading) {
+    return (
+      <main className="container mx-auto py-10 px-4">
+        <h1 className="text-3xl font-bold mb-6">网站导航</h1>
+
+        {/* 加载状态 */}
+        <div className="animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-40 bg-muted rounded"></div>
+            ))}
+          </div>
+
+          <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-40 bg-muted rounded"></div>
+            ))}
+          </div>
+
+          <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-40 bg-muted rounded"></div>
+            ))}
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container mx-auto py-10 px-4">
@@ -45,18 +80,26 @@ export default function NavigationPage() {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
       >
-        {categories.map((category) => (
-          <CategoryCard key={category.id} category={category} />
-        ))}
+        {categories && categories.length > 0 ? (
+          categories.map((category) => (
+            <CategoryCard key={category.id} category={category} />
+          ))
+        ) : (
+          <p className="col-span-4 text-center text-muted-foreground">暂无分类数据</p>
+        )}
       </motion.div>
 
       {/* 精选资源 */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredResources.map((resource, index) => (
-            <ResourceCard key={index} resource={resource} index={index} />
-          ))}
+          {featuredResources && featuredResources.length > 0 ? (
+            featuredResources.map((resource, index) => (
+              <ResourceCard key={index} resource={resource} index={index} />
+            ))
+          ) : (
+            <p className="col-span-3 text-center text-muted-foreground">暂无精选资源</p>
+          )}
         </div>
       </section>
 
@@ -64,9 +107,13 @@ export default function NavigationPage() {
       <section>
         <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recentResources.map((resource, index) => (
-            <ResourceCard key={index} resource={resource} index={index} />
-          ))}
+          {recentResources && recentResources.length > 0 ? (
+            recentResources.map((resource, index) => (
+              <ResourceCard key={index} resource={resource} index={index} />
+            ))
+          ) : (
+            <p className="col-span-3 text-center text-muted-foreground">暂无最新资源</p>
+          )}
         </div>
       </section>
     </main>

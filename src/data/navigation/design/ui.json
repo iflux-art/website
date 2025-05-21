@@ -1,0 +1,44 @@
+{
+  "id": "ui",
+  "title": "UI 设计",
+  "description": "UI设计工具和平台",
+  "links": [
+    {
+      "id": "figma",
+      "title": "Figma",
+      "description": "专业的在线设计工具，支持协作和原型设计，是UI/UX设计师的首选工具",
+      "url": "https://www.figma.com",
+      "tags": ["设计工具", "原型设计", "协作"],
+      "featured": true
+    },
+    {
+      "id": "adobe-cc",
+      "title": "Adobe Creative Cloud",
+      "description": "专业创意设计软件套件，包含Photoshop、Illustrator等工具",
+      "url": "https://www.adobe.com/creativecloud.html",
+      "tags": ["设计软件", "创意工具", "Adobe"],
+      "featured": true
+    },
+    {
+      "id": "sketch",
+      "title": "Sketch",
+      "description": "Mac平台上的专业UI设计工具，拥有强大的插件生态系统",
+      "url": "https://www.sketch.com",
+      "tags": ["设计工具", "Mac", "UI设计"]
+    },
+    {
+      "id": "invision",
+      "title": "InVision",
+      "description": "设计协作和原型制作平台，支持交互式原型和设计系统",
+      "url": "https://www.invisionapp.com",
+      "tags": ["原型设计", "协作", "设计系统"]
+    },
+    {
+      "id": "framer",
+      "title": "Framer",
+      "description": "交互式设计工具，支持高保真原型和动效设计",
+      "url": "https://www.framer.com",
+      "tags": ["原型设计", "动效", "交互设计"]
+    }
+  ]
+}

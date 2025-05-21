@@ -1,0 +1,44 @@
+{
+  "id": "image",
+  "title": "AI 图像生成",
+  "description": "AI 图像生成工具和模型",
+  "links": [
+    {
+      "id": "midjourney",
+      "title": "Midjourney",
+      "description": "高质量 AI 图像生成服务",
+      "url": "https://www.midjourney.com",
+      "tags": ["AI", "图像生成", "艺术"],
+      "featured": true
+    },
+    {
+      "id": "dalle",
+      "title": "DALL-E",
+      "description": "OpenAI 开发的 AI 图像生成模型",
+      "url": "https://openai.com/dall-e-3",
+      "tags": ["AI", "图像生成", "OpenAI"],
+      "featured": true
+    },
+    {
+      "id": "stable-diffusion",
+      "title": "Stable Diffusion",
+      "description": "开源 AI 图像生成模型",
+      "url": "https://stability.ai",
+      "tags": ["AI", "图像生成", "开源"]
+    },
+    {
+      "id": "leonardo",
+      "title": "Leonardo.AI",
+      "description": "AI 创意设计平台",
+      "url": "https://leonardo.ai",
+      "tags": ["AI", "图像生成", "设计"]
+    },
+    {
+      "id": "runway",
+      "title": "Runway",
+      "description": "AI 视频和图像创作工具",
+      "url": "https://runwayml.com",
+      "tags": ["AI", "视频", "图像生成"]
+    }
+  ]
+}

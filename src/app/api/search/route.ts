@@ -75,6 +75,16 @@ async function performSearch(query: string, category: string, limit: number): Pr
   const predefinedResults = searchPredefinedItems(searchTerm, category);
   results.push(...predefinedResults);
 
+  // 搜索导航链接
+  if (!category || category === 'navigation') {
+    try {
+      const navigationResults = await searchNavigationLinks(searchTerm);
+      results.push(...navigationResults);
+    } catch (error) {
+      console.error('搜索导航链接失败:', error);
+    }
+  }
+
   // 对结果进行排序和去重
   const uniqueResults = deduplicateResults(results);
   const sortedResults = sortResultsByRelevance(uniqueResults, searchTerm);
@@ -274,6 +284,63 @@ function sortResultsByRelevance(results: SearchResult[], searchTerm: string): Se
 }
 
 /**
+ * 搜索导航链接
+ * 使用动态导入获取 JSON 文件
+ */
+async function searchNavigationLinks(searchTerm: string): Promise<SearchResult[]> {
+  const results: SearchResult[] = [];
+
+  try {
+    // 获取所有导航分类
+    const categories = await import('@/data/navigation/index.json').then(module => module.default);
+
+    // 遍历每个分类
+    for (const category of categories) {
+      try {
+        // 获取分类下的子分类
+        const categoryData = await import(`@/data/navigation/${category.id}/index.json`).then(module => module.default);
+
+        // 遍历每个子分类
+        for (const subcategory of categoryData.subcategories) {
+          try {
+            // 获取子分类下的链接
+            const subcategoryData = await import(`@/data/navigation/${category.id}/${subcategory.id}.json`).then(module => module.default);
+
+            // 搜索链接
+            const matchedLinks = subcategoryData.links.filter(link => {
+              const titleMatch = link.title.toLowerCase().includes(searchTerm);
+              const descriptionMatch = link.description?.toLowerCase().includes(searchTerm);
+              const tagsMatch = link.tags?.some(tag => tag.toLowerCase().includes(searchTerm));
+
+              return titleMatch || descriptionMatch || tagsMatch;
+            });
+
+            // 添加到结果中
+            results.push(...matchedLinks.map(link => ({
+              id: `navigation-${category.id}-${subcategory.id}-${link.id}`,
+              title: link.title,
+              description: link.description,
+              url: link.url,
+              category: 'navigation',
+              subcategory: `${category.title} - ${subcategory.title}`,
+              tags: link.tags
+            })));
+          } catch (error) {
+            console.error(`获取子分类 ${subcategory.id} 的链接失败:`, error);
+          }
+        }
+      } catch (error) {
+        console.error(`获取分类 ${category.id} 的子分类失败:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('获取导航分类失败:', error);
+  }
+
+  return results;
+}
+
+/**
  * 计算搜索结果的相关性分数
  */
 function calculateRelevanceScore(result: SearchResult, searchTerm: string): number {
@@ -305,6 +372,11 @@ function calculateRelevanceScore(result: SearchResult, searchTerm: string): numb
 
   // 预定义项目优先级高一些
   if (result.id.startsWith('predefined-')) {
+    score += 1;
+  }
+
+  // 导航链接优先级
+  if (result.id.startsWith('navigation-')) {
     score += 1;
   }
 

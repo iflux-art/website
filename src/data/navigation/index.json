@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ai",
+    "title": "AI 导航",
+    "description": "人工智能相关工具、模型和资源",
+    "icon": "Brain",
+    "color": "blue",
+    "subcategories": [
+      {
+        "id": "llm",
+        "title": "大语言模型"
+      },
+      {
+        "id": "image",
+        "title": "AI 图像生成"
+      },
+      {
+        "id": "tools",
+        "title": "AI 工具"
+      }
+    ]
+  },
+  {
+    "id": "dev",
+    "title": "开发导航",
+    "description": "开发工具、框架和资源",
+    "icon": "Code",
+    "color": "green",
+    "subcategories": [
+      {
+        "id": "frontend",
+        "title": "前端开发"
+      },
+      {
+        "id": "backend",
+        "title": "后端开发"
+      },
+      {
+        "id": "tools",
+        "title": "开发工具"
+      }
+    ]
+  },
+  {
+    "id": "ops",
+    "title": "运营导航",
+    "description": "市场营销、数据分析和运营工具",
+    "icon": "BarChart",
+    "color": "orange",
+    "subcategories": [
+      {
+        "id": "marketing",
+        "title": "市场营销"
+      },
+      {
+        "id": "analytics",
+        "title": "数据分析"
+      },
+      {
+        "id": "productivity",
+        "title": "效率工具"
+      }
+    ]
+  },
+  {
+    "id": "design",
+    "title": "设计导航",
+    "description": "UI/UX设计工具和资源",
+    "icon": "Palette",
+    "color": "purple",
+    "subcategories": [
+      {
+        "id": "ui",
+        "title": "UI 设计"
+      },
+      {
+        "id": "resources",
+        "title": "设计资源"
+      }
+    ]
+  }
+]

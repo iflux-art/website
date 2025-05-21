@@ -6,7 +6,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/card/card";
+import { Card } from "@/components/ui/card";
 
 // 从集中管理的类型定义中导入类型
 import { CardProps } from "@/types";

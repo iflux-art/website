@@ -1,0 +1,51 @@
+{
+  "id": "tools",
+  "title": "开发工具",
+  "description": "开发环境、IDE和辅助工具",
+  "links": [
+    {
+      "id": "vscode",
+      "title": "VS Code",
+      "description": "微软开发的轻量级代码编辑器，拥有丰富的插件生态系统",
+      "url": "https://code.visualstudio.com",
+      "tags": ["编辑器", "IDE", "Microsoft"],
+      "featured": true
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "description": "代码托管和协作平台，支持Git版本控制和项目管理",
+      "url": "https://github.com",
+      "tags": ["版本控制", "Git", "协作"],
+      "featured": true
+    },
+    {
+      "id": "vercel",
+      "title": "Vercel",
+      "description": "前端应用部署平台，支持Next.js等框架的自动部署和预览",
+      "url": "https://vercel.com",
+      "tags": ["部署", "前端", "CI/CD"]
+    },
+    {
+      "id": "stackoverflow",
+      "title": "Stack Overflow",
+      "description": "程序员问答社区，解决编程问题的最大资源库",
+      "url": "https://stackoverflow.com",
+      "tags": ["社区", "问答", "编程资源"]
+    },
+    {
+      "id": "mdn",
+      "title": "MDN Web Docs",
+      "description": "Web技术文档库，提供HTML、CSS和JavaScript等详细参考资料",
+      "url": "https://developer.mozilla.org",
+      "tags": ["文档", "Web", "参考资料"]
+    },
+    {
+      "id": "codepen",
+      "title": "CodePen",
+      "description": "在线代码编辑器和社区，用于测试和展示HTML、CSS和JavaScript代码片段",
+      "url": "https://codepen.io",
+      "tags": ["工具", "代码分享", "前端"]
+    }
+  ]
+}

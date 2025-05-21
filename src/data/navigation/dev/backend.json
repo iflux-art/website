@@ -1,0 +1,51 @@
+{
+  "id": "backend",
+  "title": "后端开发",
+  "description": "后端框架、数据库和服务",
+  "links": [
+    {
+      "id": "nodejs",
+      "title": "Node.js",
+      "description": "基于Chrome V8引擎的JavaScript运行环境，用于构建服务器端应用",
+      "url": "https://nodejs.org",
+      "tags": ["JavaScript", "运行时", "服务器"],
+      "featured": true
+    },
+    {
+      "id": "express",
+      "title": "Express",
+      "description": "Node.js的Web应用框架，提供了一系列强大的功能",
+      "url": "https://expressjs.com",
+      "tags": ["Node.js", "框架", "Web"],
+      "featured": true
+    },
+    {
+      "id": "mongodb",
+      "title": "MongoDB",
+      "description": "流行的NoSQL数据库，使用JSON格式存储数据",
+      "url": "https://www.mongodb.com",
+      "tags": ["数据库", "NoSQL", "JSON"]
+    },
+    {
+      "id": "postgresql",
+      "title": "PostgreSQL",
+      "description": "强大的开源关系型数据库系统",
+      "url": "https://www.postgresql.org",
+      "tags": ["数据库", "SQL", "关系型"]
+    },
+    {
+      "id": "graphql",
+      "title": "GraphQL",
+      "description": "API查询语言和运行时，用于更高效地获取数据",
+      "url": "https://graphql.org",
+      "tags": ["API", "查询语言", "数据获取"]
+    },
+    {
+      "id": "docker",
+      "title": "Docker",
+      "description": "容器化平台，简化应用的部署和运行",
+      "url": "https://www.docker.com",
+      "tags": ["容器", "DevOps", "部署"]
+    }
+  ]
+}
