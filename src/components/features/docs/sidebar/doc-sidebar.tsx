@@ -10,6 +10,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useDocSidebar } from "@/hooks/use-docs";
 import { DocSidebarItem } from "@/types/docs";
 
+// 检查是否在客户端环境
+const isClient = typeof window !== 'undefined';
+
 /**
  * 文档侧边栏组件属性
  *
@@ -49,6 +52,9 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const [isHovering, setIsHovering] = useState<string | null>(null);
 
+  // 用于存储折叠状态的本地存储键
+  const localStorageKey = `docs-sidebar-${category}-open-categories`;
+
   // 添加调试日志
   useEffect(() => {
     console.log('DocSidebar 渲染:', {
@@ -60,64 +66,21 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     });
   }, [category, currentDoc, items, loading, error]);
 
-  // 递归函数，用于设置初始折叠状态
-  const setInitialState = useCallback((items: DocSidebarItem[], parentPath: string = '', result: Record<string, boolean> = {}) => {
-    items.forEach((item, index) => {
-      const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
-
-      // 如果项目有 collapsed 属性，使用它
-      if (item.collapsed !== undefined) {
-        result[itemId] = !item.collapsed;
-      }
-
-      // 如果有子项目，递归处理
-      if (item.items && item.items.length > 0) {
-        setInitialState(item.items, itemId, result);
-      }
-    });
-
-    return result;
-  }, []);
-
-  // 递归函数，用于查找当前文档并打开其路径
-  const findAndOpenPath = useCallback((items: DocSidebarItem[], pathname: string, parentPath: string = '', result: Record<string, boolean> = {}) => {
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const itemId = parentPath ? `${parentPath}-${i}` : `${i}`;
-
-      // 检查是否是当前文档
-      if (item.href === pathname) {
-        // 打开从根到当前文档的所有父级
-        let currentParent = parentPath;
-        while (currentParent) {
-          const lastDashIndex = currentParent.lastIndexOf('-');
-          if (lastDashIndex === -1) {
-            result[currentParent] = true;
-            break;
-          }
-          result[currentParent] = true;
-          currentParent = currentParent.substring(0, lastDashIndex);
-        }
-        return true;
-      }
-
-      // 如果有子项目，递归查找
-      if (item.items && item.items.length > 0) {
-        const found = findAndOpenPath(item.items, pathname, itemId, result);
-        if (found) {
-          result[itemId] = true;
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }, []);
-
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback((itemId: string, open: boolean) => {
-    setOpenCategories(prev => ({ ...prev, [itemId]: open }));
-  }, []);
+    setOpenCategories(prev => {
+      const newState = { ...prev, [itemId]: open };
+      // 保存到 localStorage（仅在客户端）
+      if (isClient) {
+        try {
+          localStorage.setItem(localStorageKey, JSON.stringify(newState));
+        } catch (e) {
+          console.error('保存折叠状态失败:', e);
+        }
+      }
+      return newState;
+    });
+  }, [localStorageKey]);
 
   // 处理鼠标悬停
   const handleMouseEnter = useCallback((itemId: string) => {
@@ -138,19 +101,6 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
       }, 50);
     }
   }, [openCategories]);
-
-  // 初始化打开的分类
-  useEffect(() => {
-    // 初始化折叠状态
-    const initialOpenState = setInitialState(items);
-
-    // 如果有当前文档，确保其所在路径上的所有分类都是打开的
-    if (currentDoc && pathname) {
-      findAndOpenPath(items, pathname, '', initialOpenState);
-    }
-
-    setOpenCategories(initialOpenState);
-  }, [items, currentDoc, pathname, setInitialState, findAndOpenPath]);
 
   // 渲染侧边栏项目
   const renderItems = useCallback((items: DocSidebarItem[], level: number = 0, parentPath: string = '') => {
@@ -251,6 +201,103 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     });
   }, [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave, handleContentRef]);
 
+  // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
+  const MemoizedSidebarItems = useMemo(() => {
+    if (loading) return null;
+    if (error) return null;
+    if (items.length === 0) return null;
+
+    return renderItems(items);
+  }, [items, loading, error, renderItems]);
+
+  // 递归函数，用于设置初始折叠状态
+  const setInitialState = useCallback((items: DocSidebarItem[], parentPath: string = '', result: Record<string, boolean> = {}) => {
+    items.forEach((item, index) => {
+      const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
+
+      // 如果项目有 collapsed 属性，使用它
+      if (item.collapsed !== undefined) {
+        result[itemId] = !item.collapsed;
+      }
+
+      // 如果有子项目，递归处理
+      if (item.items && item.items.length > 0) {
+        setInitialState(item.items, itemId, result);
+      }
+    });
+
+    return result;
+  }, []);
+
+  // 递归函数，用于查找当前文档并打开其路径
+  const findAndOpenPath = useCallback((items: DocSidebarItem[], pathname: string, parentPath: string = '', result: Record<string, boolean> = {}) => {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const itemId = parentPath ? `${parentPath}-${i}` : `${i}`;
+
+      // 检查是否是当前文档
+      if (item.href === pathname) {
+        // 打开从根到当前文档的所有父级
+        let currentParent = parentPath;
+        while (currentParent) {
+          const lastDashIndex = currentParent.lastIndexOf('-');
+          if (lastDashIndex === -1) {
+            result[currentParent] = true;
+            break;
+          }
+          result[currentParent] = true;
+          currentParent = currentParent.substring(0, lastDashIndex);
+        }
+        return true;
+      }
+
+      // 如果有子项目，递归查找
+      if (item.items && item.items.length > 0) {
+        const found = findAndOpenPath(item.items, pathname, itemId, result);
+        if (found) {
+          result[itemId] = true;
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }, []);
+
+
+
+  // 初始化打开的分类
+  useEffect(() => {
+    // 尝试从 localStorage 中读取保存的状态（仅在客户端）
+    let savedState: Record<string, boolean> = {};
+    if (isClient) {
+      try {
+        const savedStateStr = localStorage.getItem(localStorageKey);
+        if (savedStateStr) {
+          savedState = JSON.parse(savedStateStr);
+          console.log('从 localStorage 读取折叠状态:', savedState);
+        }
+      } catch (e) {
+        console.error('读取折叠状态失败:', e);
+      }
+    }
+
+    // 初始化折叠状态
+    const initialOpenState = setInitialState(items);
+
+    // 如果有当前文档，确保其所在路径上的所有分类都是打开的
+    if (currentDoc && pathname) {
+      findAndOpenPath(items, pathname, '', initialOpenState);
+    }
+
+    // 合并保存的状态和初始状态，优先使用保存的状态
+    const mergedState = { ...initialOpenState, ...savedState };
+
+    setOpenCategories(mergedState);
+  }, [items, currentDoc, pathname, setInitialState, findAndOpenPath, localStorageKey]);
+
+
+
   // 加载状态
   if (loading) {
     return (
@@ -295,7 +342,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)]">
       <div>
         <ul className="space-y-1">
-          {renderItems(items)}
+          {MemoizedSidebarItems}
         </ul>
       </div>
     </div>

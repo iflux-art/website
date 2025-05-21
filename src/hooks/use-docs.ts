@@ -3,7 +3,7 @@
  * @module hooks/use-docs
  */
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { DocCategory, DocItem, DocMeta, DocSidebarItem, DocListItem } from '@/types/docs';
 
 /**
@@ -170,6 +170,11 @@ export function useDocMeta(category: string) {
   return { meta, loading, error };
 }
 
+// 创建一个全局缓存对象，用于存储侧边栏数据
+const sidebarCache: Record<string, { items: DocSidebarItem[], timestamp: number }> = {};
+// 缓存过期时间（毫秒）
+const CACHE_EXPIRY = 5 * 60 * 1000; // 5分钟
+
 /**
  * 使用文档侧边栏结构
  *
@@ -181,13 +186,33 @@ export function useDocSidebar(category: string) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
+  // 使用 useRef 存储上一次的分类，用于比较是否变化
+  const prevCategoryRef = useRef<string | null>(null);
+
   // 使用 useCallback 包装 fetchSidebar 函数，避免在每次渲染时重新创建
-  const fetchSidebar = useCallback(async (category: string) => {
+  const fetchSidebar = useCallback(async (category: string, force: boolean = false) => {
+    // 检查缓存
+    const now = Date.now();
+    const cachedData = sidebarCache[category];
+
+    // 如果有缓存且未过期且不强制刷新，直接使用缓存
+    if (!force && cachedData && (now - cachedData.timestamp < CACHE_EXPIRY)) {
+      console.log(`使用缓存的分类 ${category} 的侧边栏结构`);
+      setItems(cachedData.items);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       console.log(`开始获取分类 ${category} 的侧边栏结构`);
 
-      const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`);
+      const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`, {
+        // 添加缓存控制头
+        headers: {
+          'Cache-Control': 'max-age=300', // 5分钟
+        }
+      });
       const data = await response.json();
 
       if (!response.ok) {
@@ -197,6 +222,13 @@ export function useDocSidebar(category: string) {
       }
 
       console.log(`成功获取分类 ${category} 的侧边栏结构:`, data);
+
+      // 更新缓存
+      sidebarCache[category] = {
+        items: data,
+        timestamp: now
+      };
+
       setItems(data);
     } catch (err) {
       console.error(`获取分类 ${category} 的侧边栏结构出错:`, err);
@@ -209,11 +241,20 @@ export function useDocSidebar(category: string) {
 
         if (fallbackResponse.ok && Array.isArray(fallbackData) && fallbackData.length > 0) {
           console.log(`使用旧方法获取分类 ${category} 的侧边栏结构`);
-          // 使用函数形式的 setState，避免闭包问题
-          setItems(fallbackData.map(doc => ({
+
+          const mappedItems = fallbackData.map(doc => ({
             title: doc.title,
             href: doc.path
-          })));
+          }));
+
+          // 更新缓存
+          sidebarCache[category] = {
+            items: mappedItems,
+            timestamp: now
+          };
+
+          // 使用函数形式的 setState，避免闭包问题
+          setItems(mappedItems);
           // 清除错误，因为我们成功降级了
           setError(null);
         }
@@ -227,15 +268,48 @@ export function useDocSidebar(category: string) {
 
   // 使用 useEffect 调用 fetchSidebar
   useEffect(() => {
-    fetchSidebar(category);
-  }, [category, fetchSidebar]);
+    // 只有当分类变化时才重新获取数据
+    const categoryChanged = prevCategoryRef.current !== category;
+    prevCategoryRef.current = category;
+
+    // 如果分类没有变化，且已经有数据，不重新获取
+    if (!categoryChanged && items.length > 0) {
+      // 即使不重新获取，也设置 loading 为 false，确保 UI 不显示加载状态
+      setLoading(false);
+      return;
+    }
+
+    // 如果缓存中有数据，先使用缓存数据，然后在后台更新
+    const cachedData = sidebarCache[category];
+    if (cachedData) {
+      setItems(cachedData.items);
+      setLoading(false);
+
+      // 如果缓存未过期，不在后台更新
+      if (Date.now() - cachedData.timestamp < CACHE_EXPIRY) {
+        return;
+      }
+
+      // 在后台更新缓存
+      fetchSidebar(category, true).catch(console.error);
+    } else {
+      // 没有缓存，正常获取数据
+      fetchSidebar(category);
+    }
+
+    // 返回清理函数
+    return () => {
+      // 在组件卸载或分类变化时，可以在这里执行清理操作
+    };
+  }, [category, fetchSidebar, items.length]);
 
   // 使用 useMemo 返回结果，避免在每次渲染时创建新对象
   return useMemo(() => ({
     items,
     loading,
-    error
-  }), [items, loading, error]);
+    error,
+    refetch: () => fetchSidebar(category, true) // 添加刷新方法
+  }), [items, loading, error, category, fetchSidebar]);
 }
 
 /**

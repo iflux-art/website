@@ -5,6 +5,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Suspense } from 'react';
+import { Transition } from '@/components/ui/transition';
 
 import { mdxComponents } from '@/mdx-components';
 
@@ -14,11 +16,10 @@ import { TableOfContentsClientWrapper } from '@/components/features/content/toc/
 import { AdvertisementCard } from '@/components/features/content/advertisement-card';
 import { BackToTopButton } from '@/components/features/content/back-to-top-button';
 
-export default async function DocPage({ params }: { params: { slug: string[] } }) {
+export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
   // 使用解构赋值来避免直接访问 params.slug
-  const { slug: slugParam } = params;
-  const slug = Array.isArray(slugParam) ? slugParam : [slugParam];
+  const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
   const category = slug[0];
   const docName = slug.length > 1 ? slug.slice(1).join('/') : slug[0];
 
@@ -144,66 +145,70 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <DocSidebar
-            category={category}
-            currentDoc={docName}
-          />
+          <Suspense fallback={<div className="animate-pulse h-[500px] bg-muted rounded-md"></div>}>
+            <DocSidebar
+              category={category}
+              currentDoc={docName}
+            />
+          </Suspense>
         </div>
 
         {/* 中间内容区 */}
         <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
-          <div className="max-w-4xl mx-auto">
-            {/* 面包屑导航 */}
-            <div className="text-sm text-muted-foreground mb-6">
-              <Link href="/docs" className="hover:text-primary">
-                文档
-              </Link>
-              <span className="mx-2">/</span>
-              <Link href={`/docs/${category}`} className="hover:text-primary">
-                {data.categoryTitle || category}
-              </Link>
-              {slug.length > 1 && (
-                <>
-                  <span className="mx-2">/</span>
-                  <span>{data.title}</span>
-                </>
-              )}
-            </div>
-            <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
-            <div className="prose dark:prose-invert max-w-none">
-              <MDXRemote source={content} components={mdxComponents} />
-            </div>
+          <Transition>
+            <div className="max-w-4xl mx-auto">
+              {/* 面包屑导航 */}
+              <div className="text-sm text-muted-foreground mb-6">
+                <Link href="/docs" className="hover:text-primary">
+                  文档
+                </Link>
+                <span className="mx-2">/</span>
+                <Link href={`/docs/${category}`} className="hover:text-primary">
+                  {data.categoryTitle || category}
+                </Link>
+                {slug.length > 1 && (
+                  <>
+                    <span className="mx-2">/</span>
+                    <span>{data.title}</span>
+                  </>
+                )}
+              </div>
+              <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
+              <div className="prose dark:prose-invert max-w-none">
+                <MDXRemote source={content} components={mdxComponents} />
+              </div>
 
-            {/* 上一页/下一页导航 */}
-            <div className="mt-12 grid grid-cols-2 gap-4">
-              {prevDoc && (
-                <Card className="col-start-1">
-                  <CardContent className="p-4">
-                    <Link href={prevDoc.path} className="flex flex-col">
-                      <span className="text-sm text-muted-foreground flex items-center">
-                        <ChevronLeft className="h-4 w-4 mr-1" />
-                        上一页
-                      </span>
-                      <span className="font-medium">{prevDoc.title}</span>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )}
-              {nextDoc && (
-                <Card className="col-start-2">
-                  <CardContent className="p-4">
-                    <Link href={nextDoc.path} className="flex flex-col items-end text-right">
-                      <span className="text-sm text-muted-foreground flex items-center">
-                        下一页
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </span>
-                      <span className="font-medium">{nextDoc.title}</span>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )}
+              {/* 上一页/下一页导航 */}
+              <div className="mt-12 grid grid-cols-2 gap-4">
+                {prevDoc && (
+                  <Card className="col-start-1">
+                    <CardContent className="p-4">
+                      <Link href={prevDoc.path} className="flex flex-col">
+                        <span className="text-sm text-muted-foreground flex items-center">
+                          <ChevronLeft className="h-4 w-4 mr-1" />
+                          上一页
+                        </span>
+                        <span className="font-medium">{prevDoc.title}</span>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                )}
+                {nextDoc && (
+                  <Card className="col-start-2">
+                    <CardContent className="p-4">
+                      <Link href={nextDoc.path} className="flex flex-col items-end text-right">
+                        <span className="text-sm text-muted-foreground flex items-center">
+                          下一页
+                          <ChevronRight className="h-4 w-4 ml-1" />
+                        </span>
+                        <span className="font-medium">{nextDoc.title}</span>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
             </div>
-          </div>
+          </Transition>
         </div>
 
         {/* 右侧边栏 - 目录、广告和回到顶部按钮 */}
@@ -212,7 +217,9 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
             {/* 目录 - 只在有标题时显示 */}
             {headings.length > 0 && (
               <div>
-                <TableOfContentsClientWrapper headings={headings} />
+                <Suspense fallback={<div className="animate-pulse h-[300px] bg-muted rounded-md"></div>}>
+                  <TableOfContentsClientWrapper headings={headings} />
+                </Suspense>
               </div>
             )}
 
