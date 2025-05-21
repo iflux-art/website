@@ -211,7 +211,7 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
     <div className="pl-0">
       <motion.div
         ref={tocRef}
-        className="py-2 pl-0 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-hide"
+        className="py-2 pl-0 pr-2"
         variants={container}
         initial="hidden"
         animate="show"

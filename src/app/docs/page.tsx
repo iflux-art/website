@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { getDocCategories, getRecentDocs } from '@/lib/docs';
+import { getDocCategories } from '@/lib/docs';
 import { DocCategoryCard } from '@/components/features/docs/category/doc-category-card';
-import { RecentDocsList } from '@/components/features/docs/recent-docs-list';
 
 export default function DocsPage() {
-  // 获取文档分类和最新文档
+  // 获取文档分类
   const categories = getDocCategories();
-  const recentDocs = getRecentDocs();
 
   return (
     <main className="container mx-auto py-10 px-4">
@@ -18,15 +16,6 @@ export default function DocsPage() {
           <DocCategoryCard key={category.id} category={category} />
         ))}
       </div>
-
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-4">最新文档</h2>
-        <RecentDocsList docs={recentDocs} />
-      </div>
     </main>
   );
 }
-
-// 使用lib/docs中的getDocCategories函数
-
-// 使用lib/docs中的getRecentDocs函数

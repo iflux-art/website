@@ -40,40 +40,6 @@ export function useDocCategories() {
 }
 
 /**
- * 使用最近文档
- *
- * @param limit 最大显示文档数量
- * @returns 最近文档列表和加载状态
- */
-export function useRecentDocs(limit: number = 5) {
-  const [docs, setDocs] = useState<DocItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    async function fetchRecentDocs() {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/docs/recent?limit=${limit}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch recent documents');
-        }
-        const data = await response.json();
-        setDocs(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchRecentDocs();
-  }, [limit]);
-
-  return { docs, loading, error };
-}
-
-/**
  * 使用分类文档
  *
  * @param category 分类名称
