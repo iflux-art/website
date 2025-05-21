@@ -27,11 +27,16 @@ const nextConfig = {
 
   // 实验性功能
   experimental: {
-    // 可以添加 Next.js 15 支持的实验性功能
+    // 优化构建输出
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    // 减少 serverless 函数大小
+    serverMinification: true,
+    // 优化服务器组件
+    serverComponentsExternalPackages: ['@mdx-js/react'],
   },
 
   // 优化 webpack 配置
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     // 只保留必要的语言环境
     if (config.optimization && config.optimization.minimizer) {
       config.optimization.minimizer.forEach((plugin) => {
@@ -44,6 +49,12 @@ const nextConfig = {
           }
         }
       });
+    }
+
+    // 减少 serverless 函数大小
+    if (isServer) {
+      // 排除不必要的依赖
+      config.externals = [...(config.externals || []), 'canvas', 'jsdom'];
     }
 
     return config;

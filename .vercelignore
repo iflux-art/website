@@ -46,6 +46,9 @@ next-env.d.ts
 # 忽略缓存目录
 .next/cache/**
 node_modules/.cache/**
+.next/trace
+.turbo/**
+.cache/**
 
 # 忽略测试文件
 **/*.test.ts
@@ -90,6 +93,14 @@ node_modules/@esbuild/win32-*/**
 node_modules/@esbuild/darwin-*/**
 node_modules/.pnpm/@swc/core-*/**
 node_modules/.pnpm/@esbuild/*/**
+node_modules/.pnpm/@testing-library/**
+node_modules/.pnpm/jest*/**
+node_modules/.pnpm/babel-jest*/**
+node_modules/.pnpm/ts-node*/**
+node_modules/.pnpm/typescript*/**
+node_modules/.pnpm/eslint*/**
+node_modules/.pnpm/@eslint*/**
+node_modules/.pnpm/@typescript-eslint*/**
 
 # 忽略源代码地图
 **/*.map

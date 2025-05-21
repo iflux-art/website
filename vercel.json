@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "pnpm clean:cache && pnpm build",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "rm -rf .next/cache .next/trace && pnpm build",
+  "installCommand": "corepack enable && corepack prepare pnpm@10.5.0 --activate && pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
   "cleanUrls": true,
   "nodeVersion": "20.x",
@@ -10,6 +10,18 @@
       "runtime": "edge"
     },
     "api/search.js": {
+      "runtime": "edge"
+    },
+    "api/git.js": {
+      "runtime": "edge"
+    },
+    "api/blog/related/[slug].js": {
+      "runtime": "edge"
+    },
+    "api/docs/meta/[category].js": {
+      "runtime": "edge"
+    },
+    "api/docs/sidebar/[category].js": {
       "runtime": "edge"
     },
     "api/blog/posts.js": {
