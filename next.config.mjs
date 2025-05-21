@@ -31,9 +31,9 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
     // 减少 serverless 函数大小
     serverMinification: true,
-    // 优化服务器组件
-    serverComponentsExternalPackages: ['@mdx-js/react'],
   },
+  // 优化服务器组件
+  serverExternalPackages: ['@mdx-js/react'],
 
   // 优化 webpack 配置
   webpack: (config, { isServer }) => {
