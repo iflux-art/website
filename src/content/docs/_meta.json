@@ -1,0 +1,26 @@
+{
+  "official": {
+    "title": "官方文档",
+    "description": "关于本站的介绍、安装和配置指南"
+  },
+  "film": {
+    "title": "电影",
+    "description": "关于本站的介绍、安装和配置指南"
+  },
+  "drama": {
+    "title": "剧本创作",
+    "description": "如何创建和编辑剧本"
+  },
+  "ad": {
+    "title": "广告指南",
+    "description": "广告创建和投放的完整指南"
+  },
+  "api": {
+    "title": "API参考",
+    "description": "开发者API接口文档和使用示例"
+  },
+  "best-practice": {
+    "title": "最佳实践",
+    "description": "使用本项目的推荐方法和技巧"
+  }
+}

@@ -53,30 +53,75 @@ export function getDocCategories(): DocCategory[] {
 
   const categories: DocCategory[] = [];
 
+  // 读取根目录的 _meta.json 文件
+  const rootMetaPath = path.join(docsDir, '_meta.json');
+  let rootMeta: Record<string, any> = {};
+
+  if (fs.existsSync(rootMetaPath)) {
+    try {
+      const rootMetaContent = fs.readFileSync(rootMetaPath, 'utf8');
+      rootMeta = JSON.parse(rootMetaContent);
+    } catch (error) {
+      console.error('解析根目录 _meta.json 文件失败:', error);
+    }
+  }
+
   // 读取目录内容
   const dirs = fs.readdirSync(docsDir, { withFileTypes: true });
 
+  // 创建一个有序的目录列表，根据 rootMeta 中的顺序
+  const orderedDirs: { name: string; isDirectory: boolean }[] = [];
+
+  // 首先添加 rootMeta 中定义的目录
+  Object.keys(rootMeta).forEach(key => {
+    const found = dirs.find(dir => dir.name === key && dir.isDirectory());
+    if (found) {
+      orderedDirs.push({ name: found.name, isDirectory: true });
+    }
+  });
+
+  // 然后添加其余的目录
   dirs.forEach(dir => {
-    if (dir.isDirectory()) {
+    if (dir.isDirectory() && !orderedDirs.some(ordered => ordered.name === dir.name) && !dir.name.startsWith('_')) {
+      orderedDirs.push({ name: dir.name, isDirectory: true });
+    }
+  });
+
+  // 处理每个目录
+  orderedDirs.forEach(dir => {
+    if (dir.isDirectory) {
       const categoryId = dir.name;
       const categoryDir = path.join(docsDir, categoryId);
 
       // 递归计算文档数量，包括子目录中的文档
       const docCount = countDocsRecursively(categoryDir);
 
-      // 尝试读取元数据文件
+      // 尝试从根目录的 _meta.json 获取元数据
       let title = categoryId;
       let description = '';
 
+      // 首先检查根目录的 _meta.json
+      if (rootMeta[categoryId]) {
+        const meta = rootMeta[categoryId];
+        if (typeof meta === 'string') {
+          title = meta;
+        } else if (typeof meta === 'object') {
+          title = meta.title || categoryId;
+          description = meta.description || '';
+        }
+      }
+
+      // 然后检查分类目录下的 _meta.json（优先级更高）
       const metaPath = path.join(categoryDir, '_meta.json');
       if (fs.existsSync(metaPath)) {
         try {
           const metaContent = fs.readFileSync(metaPath, 'utf8');
           const meta = JSON.parse(metaContent);
-          title = meta.title || categoryId;
-          description = meta.description || '';
-        } catch {
-          // 如果解析失败，使用默认值
+          // 只有当分类目录下的 _meta.json 中有 title 或 description 时才覆盖
+          if (meta.title) title = meta.title;
+          if (meta.description) description = meta.description;
+        } catch (error) {
+          console.error(`解析 ${categoryId} 的 _meta.json 文件失败:`, error);
         }
       }
 

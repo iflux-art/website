@@ -1,0 +1,80 @@
+---
+title: DeepSeek-R1 全功能部署与维护指南
+---
+
+import { Cards } from "nextra/components";
+
+## 硬件配置与环境准备
+
+### 1. 基础版配置（1.5 B-7 B）
+
+- **模型版本**：1.5 B、7 B（量化与非量化）
+- **显存需求**：
+  - **1.5 B**：纯 CPU 推理（无需显存）或最低 4 GB 显存
+  - **7 B（FP 16）**：需 14 GB 显存（如 RTX 3090+）
+  - **7 B（Q 4_K_M 量化）**：显存降至 6.8 GB
+- **硬件要求**：
+  - CPU：Intel i5-8500+ 
+  - 内存：16 GB+
+
+### 2. 中等性能版（8 B-14 B）
+
+- **模型版本**：8 B、14 B
+- **显存需求**：
+  - **8 B（FP 16）**：需 8-10 GB 显存
+  - **14 B（FP 16）**：需 16 GB+显存
+  - **量化优化**：通过 4-bit 量化可降低显存 30-50%
+
+## 完整部署流程
+
+### 1. Ollama 环境安装
+
+- **Windows/macOS**：
+  ```bash
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+- **模型存储路径配置**：
+  - Windows：`C:\Users\<用户名>\.ollama\models`
+
+### 2. 模型运行与测试
+
+```bash
+ollama run deepseek-r1:7b
+```
+
+### 3. Open WebUI 可视化部署
+
+```bash
+docker run -d -p 3000:8080 --gpus all -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:cuda
+```
+
+## 运维管理
+
+### 模型版本删除
+
+1. **命令行删除**：
+   ```bash
+   ollama list
+   ollama rm deepseek-r1:8b
+   ```
+
+2. **手动清理**：
+   - 删除模型文件：
+     ```
+     deepseek-r1-8b.bin
+     deepseek-r1-8b.manifest
+     ```
+
+## 优化方案
+
+- **量化技术**：使用 GGUF 格式实时量化（Q4_K_M）
+- **混合计算策略**：
+  ```bash
+  OLLAMA_GPU_LAYER=auto_split
+  ```
+
+## 注意事项
+
+- 删除模型前建议备份 `.bin` 文件
+- 量化会轻微降低模型精度
+- 多卡部署需设置 `CUDA_VISIBLE_DEVICES` 环境变量

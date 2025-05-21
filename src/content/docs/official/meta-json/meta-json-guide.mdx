@@ -1,0 +1,261 @@
+---
+title: _meta.json 元数据配置指南
+description: 详细介绍如何使用 _meta.json 文件管理文档结构、标题和描述
+date: 2023-12-15
+tags: [文档, 配置, 元数据]
+---
+
+# _meta.json 元数据配置指南
+
+`_meta.json` 文件是一个强大的工具，用于自定义文档的结构、标题、描述和显示顺序。本指南将详细介绍如何使用 `_meta.json` 文件来管理您的文档集。
+
+## 什么是 _meta.json 文件？
+
+`_meta.json` 是一个特殊的配置文件，可以放置在文档目录中，用于：
+
+1. 自定义文档和目录的显示标题
+2. 添加描述信息
+3. 控制文档的显示顺序
+4. 设置目录的折叠状态
+5. 添加外部链接
+6. 创建分隔符和特殊项目
+
+## _meta.json 文件的位置
+
+`_meta.json` 文件可以放置在两个位置：
+
+1. **根目录**：`src/content/docs/_meta.json`
+   - 用于集中管理所有顶级文档集的标题、描述和顺序
+
+2. **分类目录**：`src/content/docs/分类名称/_meta.json`
+   - 用于管理特定分类内的文档和子目录
+
+## 基本语法和结构
+
+`_meta.json` 文件使用 JSON 格式，基本结构如下：
+
+```json
+{
+  "文档ID或目录名": "显示标题",
+  "另一个文档ID": {
+    "title": "显示标题",
+    "description": "描述文本"
+  }
+}
+```
+
+### 简单形式
+
+最简单的形式是直接将文档ID映射到显示标题：
+
+```json
+{
+  "getting-started": "入门指南",
+  "installation": "安装教程",
+  "configuration": "配置说明"
+}
+```
+
+### 对象形式
+
+更复杂的形式是使用对象，可以提供更多配置选项：
+
+```json
+{
+  "getting-started": {
+    "title": "入门指南",
+    "description": "快速上手的入门教程"
+  },
+  "advanced-topics": {
+    "title": "高级主题",
+    "description": "深入了解高级功能和技巧",
+    "collapsed": true
+  }
+}
+```
+
+## 根目录 _meta.json
+
+根目录的 `_meta.json` 文件用于集中管理所有顶级文档集。例如：
+
+```json
+{
+  "official": {
+    "title": "官方文档",
+    "description": "关于本站的介绍、安装和配置指南"
+  },
+  "api": {
+    "title": "API参考",
+    "description": "开发者API接口文档和使用示例"
+  },
+  "tutorials": {
+    "title": "教程",
+    "description": "详细的使用教程和示例"
+  }
+}
+```
+
+这个配置会影响文档中心页面（`/docs`）上显示的文档集卡片，包括它们的标题、描述和显示顺序。
+
+## 分类目录 _meta.json
+
+分类目录中的 `_meta.json` 文件用于管理该分类内的文档和子目录。例如：
+
+```json
+{
+  "introduction": "介绍",
+  "installation": {
+    "title": "安装指南",
+    "collapsed": false
+  },
+  "configuration": "配置",
+  "examples": {
+    "title": "示例",
+    "collapsed": true,
+    "items": [
+      "basic-example",
+      "advanced-example"
+    ]
+  }
+}
+```
+
+## 支持的配置选项
+
+### 基本配置
+
+- **title**: 显示标题
+- **description**: 描述文本
+
+### 目录配置
+
+- **collapsed**: 是否默认折叠（`true` 或 `false`）
+- **items**: 子项目列表，可以是字符串数组或嵌套对象
+
+### 特殊配置
+
+- **type**: 项目类型
+  - `"separator"`: 显示为分隔符
+  - `"page"`: 显示为页面
+- **href**: 外部链接（以 `http` 开头的链接会在新标签页打开）
+- **display**: 显示模式
+  - `"hidden"`: 在侧边栏中隐藏
+  - `"normal"`: 正常显示
+
+## 优先级规则
+
+当根目录和分类目录都有 `_meta.json` 文件时，系统会按照以下优先级规则处理：
+
+1. 首先读取根目录的 `_meta.json` 文件，获取分类的标题和描述
+2. 然后读取分类目录的 `_meta.json` 文件，如果有相同的配置项，会覆盖根目录的配置
+
+这样，您可以在根目录设置默认值，然后在分类目录中根据需要覆盖这些值。
+
+## 实际应用示例
+
+### 示例1：基本配置
+
+```json
+{
+  "introduction": "介绍",
+  "getting-started": "入门指南",
+  "advanced-usage": "高级用法"
+}
+```
+
+### 示例2：带描述的配置
+
+```json
+{
+  "introduction": {
+    "title": "介绍",
+    "description": "项目概述和基本信息"
+  },
+  "getting-started": {
+    "title": "入门指南",
+    "description": "快速上手的步骤和说明"
+  }
+}
+```
+
+### 示例3：嵌套目录和分组
+
+```json
+{
+  "introduction": "介绍",
+  "guides": {
+    "title": "使用指南",
+    "collapsed": false,
+    "items": [
+      "basic-guide",
+      "advanced-guide"
+    ]
+  },
+  "api": {
+    "title": "API参考",
+    "collapsed": true
+  },
+  "separator-1": {
+    "title": "其他资源",
+    "type": "separator"
+  },
+  "github": {
+    "title": "GitHub仓库",
+    "href": "https://github.com/iflux-art/web"
+  }
+}
+```
+
+### 示例4：完整的根目录配置
+
+```json
+{
+  "official": {
+    "title": "官方文档",
+    "description": "关于本站的介绍、安装和配置指南"
+  },
+  "tutorials": {
+    "title": "教程",
+    "description": "详细的使用教程和示例"
+  },
+  "api": {
+    "title": "API参考",
+    "description": "开发者API接口文档和使用示例"
+  },
+  "separator-1": {
+    "title": "社区资源",
+    "type": "separator"
+  },
+  "community": {
+    "title": "社区贡献",
+    "description": "社区贡献的插件、主题和工具"
+  },
+  "best-practice": {
+    "title": "最佳实践",
+    "description": "使用本项目的推荐方法和技巧"
+  }
+}
+```
+
+## 注意事项和最佳实践
+
+1. **文件名匹配**：`_meta.json` 中的键名应与文档文件名（不含扩展名）或目录名匹配
+2. **JSON格式**：确保 `_meta.json` 文件是有效的JSON格式，不要遗漏逗号或引号
+3. **顺序重要性**：项目会按照在 `_meta.json` 中定义的顺序显示
+4. **未列出的项目**：未在 `_meta.json` 中列出的文档和目录会按字母顺序显示在已配置项目之后
+5. **特殊字符**：避免在键名中使用特殊字符，使用连字符（`-`）代替空格
+
+## 故障排除
+
+如果您的 `_meta.json` 配置没有生效，请检查以下几点：
+
+1. 确保 `_meta.json` 文件是有效的JSON格式
+2. 确保键名与文档文件名或目录名完全匹配
+3. 尝试清除浏览器缓存或强制刷新页面
+4. 检查服务器日志中是否有解析错误
+
+## 总结
+
+`_meta.json` 文件是一个强大的工具，可以帮助您自定义文档的结构和显示方式。通过合理使用根目录和分类目录的 `_meta.json` 文件，您可以创建组织良好、易于导航的文档系统。
+
+希望本指南能帮助您充分利用 `_meta.json` 文件的功能，创建出更好的文档体验！
