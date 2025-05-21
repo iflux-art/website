@@ -19,7 +19,7 @@ export function TableOfContentsClientWrapper({
   }
 
   return (
-    <div className={cn("pb-4 overflow-hidden", className)}>
+    <div className={cn("pb-4", className)}>
       <div className="py-2 font-medium text-sm flex items-center gap-1.5 mb-1 pl-0">
         <Text className="h-4 w-4" />
         {title}

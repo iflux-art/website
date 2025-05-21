@@ -21,7 +21,7 @@ import { BlogSidebarProps } from "./blog-sidebar.types";
  */
 export function BlogSidebar({ headings }: BlogSidebarProps) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-hide pr-1">
       {/* 目录 - 只在有标题时显示 */}
       {headings.length > 0 && (
         <div>

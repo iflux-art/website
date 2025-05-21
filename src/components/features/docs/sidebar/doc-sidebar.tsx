@@ -339,7 +339,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   }
 
   return (
-    <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)]">
+    <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] scrollbar-hide">
       <div>
         <ul className="space-y-1">
           {MemoizedSidebarItems}

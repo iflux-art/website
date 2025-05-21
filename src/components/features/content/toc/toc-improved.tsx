@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Hash } from "lucide-react";
@@ -8,6 +8,34 @@ import { Heading, TableOfContentsProps } from "./toc-improved.types";
 
 export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
+  const tocRef = useRef<HTMLDivElement>(null);
+
+  // 自动滚动目录到当前活动标题
+  useEffect(() => {
+    if (activeId && tocRef.current) {
+      const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
+      if (activeElement) {
+        // 计算需要滚动的位置
+        const containerRect = tocRef.current.getBoundingClientRect();
+        const activeRect = activeElement.getBoundingClientRect();
+
+        // 检查活动元素是否在可视区域内
+        const isInView = (
+          activeRect.top >= containerRect.top &&
+          activeRect.bottom <= containerRect.bottom
+        );
+
+        // 如果不在可视区域内，滚动到该元素
+        if (!isInView) {
+          const scrollTop = activeRect.top - containerRect.top - containerRect.height / 2 + activeRect.height / 2;
+          tocRef.current.scrollTo({
+            top: tocRef.current.scrollTop + scrollTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [activeId]);
 
   // 监听滚动，高亮当前可见的标题
   useEffect(() => {
@@ -19,18 +47,27 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
         // 检查元素是否存在
         if (!document.getElementById(heading.id)) {
           // 查找匹配文本内容的标题元素
-          const headingElements = document.querySelectorAll('h2, h3, h4');
+          const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
           headingElements.forEach((el) => {
-            if (el.textContent?.trim() === heading.text && !el.id) {
+            if (el.textContent?.trim() === heading.text) {
               // 为没有ID的标题元素添加ID
-              el.id = heading.id;
+              if (!el.id) {
+                el.id = heading.id;
+                console.log(`为标题 "${heading.text}" 添加ID: ${heading.id}`);
+              } else if (el.id !== heading.id) {
+                // 如果元素已有ID但与我们的不同，记录下来
+                console.log(`标题 "${heading.text}" 已有ID: ${el.id}，与预期的 ${heading.id} 不同`);
+              }
             }
           });
         }
       });
     };
 
-    // 页面加载后检查并修复标题ID
+    // 页面加载后立即检查并修复标题ID
+    checkAndFixHeadingIds();
+
+    // 延迟再次检查，以防DOM还未完全加载
     setTimeout(checkAndFixHeadingIds, 500);
 
     // 再次尝试修复标题ID，以防第一次尝试失败
@@ -43,7 +80,6 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
             setActiveId(entry.target.id);
 
             // 当标题进入视图时，只更新本地状态，不再设置全局属性
-            const visibleHeading = entry.target.textContent;
             // 移除设置全局属性的代码，使导航栏不再跟随目录变化
           }
         });
@@ -57,22 +93,40 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
         const element = document.getElementById(heading.id);
         if (element) {
           observer.observe(element);
+          console.log(`正在观察ID为 ${heading.id} 的标题元素: ${heading.text}`);
         } else {
           console.log(`找不到ID为 ${heading.id} 的标题元素，文本内容: ${heading.text}`);
           // 尝试通过文本内容查找
-          const headingElements = document.querySelectorAll('h2, h3, h4');
+          const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
           let found = false;
           headingElements.forEach((el) => {
             if (el.textContent?.trim() === heading.text) {
               if (!el.id) {
                 el.id = heading.id;
+                console.log(`为标题 "${heading.text}" 添加ID: ${heading.id}`);
               }
               observer.observe(el);
+              console.log(`通过文本内容找到并观察标题: ${heading.text}`);
               found = true;
             }
           });
           if (!found) {
-            console.log(`无法通过文本内容找到标题: ${heading.text}`);
+            // 尝试使用部分文本匹配
+            headingElements.forEach((el) => {
+              if (el.textContent && el.textContent.includes(heading.text)) {
+                if (!el.id) {
+                  el.id = heading.id;
+                  console.log(`为部分匹配的标题 "${el.textContent}" 添加ID: ${heading.id}`);
+                }
+                observer.observe(el);
+                console.log(`通过部分文本匹配找到并观察标题: ${heading.text}`);
+                found = true;
+              }
+            });
+
+            if (!found) {
+              console.log(`无法通过文本内容找到标题: ${heading.text}`);
+            }
           }
         }
       });
@@ -156,7 +210,8 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
   return (
     <div className="pl-0">
       <motion.div
-        className="py-2 pl-0"
+        ref={tocRef}
+        className="py-2 pl-0 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-hide"
         variants={container}
         initial="hidden"
         animate="show"
@@ -190,9 +245,61 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
                 style={{ paddingLeft: heading.level > 2 ? `${indent}rem` : "0.25rem" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById(heading.id)?.scrollIntoView({
-                    behavior: "smooth",
-                  });
+                  const element = document.getElementById(heading.id);
+                  if (element) {
+                    // 滚动到元素位置，并添加一些偏移以避免被导航栏遮挡
+                    const offset = 80; // 根据您的导航栏高度调整
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth"
+                    });
+
+                    // 更新 URL 中的锚点，但不触发滚动
+                    history.pushState(null, "", `#${heading.id}`);
+
+                    // 设置活动 ID
+                    setActiveId(heading.id);
+                  } else {
+                    console.error(`找不到ID为 ${heading.id} 的元素`);
+
+                    // 尝试通过文本内容查找元素
+                    const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                    let found = false;
+
+                    headingElements.forEach((el) => {
+                      if (el.textContent?.trim() === heading.text) {
+                        // 如果找到匹配的元素但没有 ID，添加 ID
+                        if (!el.id) {
+                          el.id = heading.id;
+                        }
+
+                        // 滚动到元素位置
+                        const offset = 80;
+                        const elementPosition = el.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: "smooth"
+                        });
+
+                        // 更新 URL 中的锚点
+                        history.pushState(null, "", `#${el.id}`);
+
+                        // 设置活动 ID
+                        setActiveId(el.id);
+
+                        found = true;
+                      }
+                    });
+
+                    if (!found) {
+                      console.error(`无法通过文本内容找到标题: ${heading.text}`);
+                    }
+                  }
                 }}
                 variants={item}
               >

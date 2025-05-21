@@ -213,7 +213,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
         {/* 右侧边栏 - 目录、广告和回到顶部按钮 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20 space-y-4">
+          <div className="lg:sticky lg:top-20 space-y-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-hide">
             {/* 目录 - 只在有标题时显示 */}
             {headings.length > 0 && (
               <div>
