@@ -1,16 +1,13 @@
 import React from 'react';
-import type { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 // 导入所有必要的组件
 import { mdxTypographyComponents, MDXTypography } from '@/components/ui/markdown/mdx-typography'
-import { codeBlockComponents } from '@/components/ui/markdown/code-block'
-import { Callout, calloutComponents } from '@/components/ui/markdown/callout'
+import { DirectCodeBlock } from '@/components/ui/markdown/code-block/direct-code-block'
+import { InlineCode } from '@/components/ui/markdown/inline-code'
+import { calloutComponents } from '@/components/ui/markdown/callout'
 import { enhancedTableComponents } from '@/components/ui/markdown/enhanced-table'
-import Copy from '@/components/ui/markdown/copy'
-import Note from '@/components/ui/markdown/note'
-import CustomLink from '@/components/ui/markdown/link'
-import CustomImage from '@/components/ui/markdown/image'
 import { HeadingWithAnchor } from '@/components/ui/markdown/heading-with-anchor'
 
 // This file allows you to provide custom React components
@@ -80,8 +77,43 @@ export const mdxComponents = {
     return <p className="leading-7 my-6">{children}</p>
   },
 
-  // 代码块组件
-  ...codeBlockComponents,
+  // 代码块组件 - 使用 DirectCodeBlock 组件
+  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+    <pre className={cn("overflow-x-auto bg-transparent border-0", className)} {...props} />
+  ),
+  code: ({ className, ...props }: any) => {
+    // 从className中提取语言信息
+    const match = /language-(\w+)/.exec(className || "");
+    const language = match ? match[1] : undefined;
+
+    // 添加调试信息
+    console.log('MDX 代码块处理:', { className, language, hasChildren: !!props.children });
+
+    // 如果有language类，说明这是一个代码块
+    if (language) {
+      // 使用 DirectCodeBlock 组件
+      return (
+        <DirectCodeBlock language={language}>
+          {props.children}
+        </DirectCodeBlock>
+      );
+    } else {
+      // 内联代码 - 使用 InlineCode 组件
+      // 添加调试信息
+      console.log('内联代码处理:', {
+        children: props.children,
+        childrenType: typeof props.children,
+        className
+      });
+
+      // 使用专门的内联代码组件
+      return (
+        <InlineCode className={className}>
+          {props.children}
+        </InlineCode>
+      );
+    }
+  },
 
   // Callout组件
   ...calloutComponents,

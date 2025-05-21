@@ -1,0 +1,91 @@
+---
+title: UI 组件介绍
+description: 项目中使用的 UI 组件概述和使用指南
+date: 2023-12-20
+tags: [UI组件, 开发指南]
+---
+
+# UI 组件介绍
+
+本项目使用 [shadcn/ui](https://ui.shadcn.com/) 作为基础组件库，这是一个基于 [Radix UI](https://www.radix-ui.com/) 和 [Tailwind CSS](https://tailwindcss.com/) 构建的组件集合。这些组件不是作为依赖包安装的，而是直接集成到项目代码中，这使得它们更加灵活和可定制。
+
+## 组件分类
+
+项目中的 UI 组件主要分为以下几类：
+
+### 基础组件
+
+基础组件是构建用户界面的基本元素，如按钮、输入框、复选框等。这些组件通常是其他复杂组件的构建块。
+
+- [按钮 (Button)](/docs/official/components/button)
+- [卡片 (Card)](/docs/official/components/card)
+- [输入框 (Input)](/docs/official/components/input)
+- [文本域 (Textarea)](/docs/official/components/textarea)
+- [复选框 (Checkbox)](/docs/official/components/checkbox)
+
+### 布局组件
+
+布局组件用于组织和排列页面内容，如对话框、抽屉、选项卡等。
+
+- [对话框 (Dialog)](/docs/official/components/dialog)
+- [抽屉 (Sheet)](/docs/official/components/sheet)
+- [选项卡 (Tabs)](/docs/official/components/tabs)
+- [折叠面板 (Collapsible)](/docs/official/components/collapsible)
+
+### 数据展示组件
+
+数据展示组件用于展示各种类型的数据和信息，如头像、标签、警告框等。
+
+- [头像 (Avatar)](/docs/official/components/avatar)
+- [标签 (Label)](/docs/official/components/label)
+- [开关 (Toggle)](/docs/official/components/toggle)
+- [命令菜单 (Command)](/docs/official/components/command)
+- [警告框 (Alert)](/docs/official/components/alert)
+
+## 组件使用原则
+
+在使用这些组件时，请遵循以下原则：
+
+1. **保持一致性**：在整个应用中使用一致的组件样式和行为
+2. **遵循可访问性标准**：确保组件符合 WCAG 2.1 AA 级别的可访问性标准
+3. **响应式设计**：确保组件在不同屏幕尺寸下都能正常工作
+4. **性能优化**：避免不必要的渲染和重绘
+
+## 组件导入方式
+
+所有组件都使用统一的导入路径，例如：
+
+```jsx
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+```
+
+## 组件定制
+
+所有组件都可以通过 Tailwind CSS 类名进行定制，例如：
+
+```jsx
+<Button className="bg-blue-500 hover:bg-blue-600">
+  自定义按钮
+</Button>
+```
+
+此外，许多组件还提供了变体（variants）和尺寸（sizes）选项，可以通过组件属性进行配置。
+
+## 主题支持
+
+组件支持亮色和暗色主题，通过 CSS 变量实现。主题切换不会导致组件重新渲染，提供了流畅的用户体验。
+
+## 组件文档
+
+每个组件的文档包括以下内容：
+
+- 组件概述
+- 基本用法
+- 属性说明
+- 变体和尺寸
+- 示例代码
+- 最佳实践
+
+通过阅读这些文档，您可以快速了解和使用各种组件，构建出功能丰富、外观一致的用户界面。

@@ -22,35 +22,6 @@ export function MDXTypography({ className, children }: TypographyProps) {
 }
 
 /**
- * 标题组件
- */
-export function MDXHeading1({ className, children, id, ...props }: HeadingProps) {
-  return <h1 id={id} className={cn('text-4xl font-bold tracking-tight mt-8 mb-4 scroll-m-20', className)} {...props}>{children}</h1>;
-}
-
-export function MDXHeading2({ className, children, id, ...props }: HeadingProps) {
-  const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-  return <h2 id={headingId} className={cn('text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b scroll-m-20', className)} {...props}>{children}</h2>;
-}
-
-export function MDXHeading3({ className, children, id, ...props }: HeadingProps) {
-  const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-  return <h3 id={headingId} className={cn('text-xl font-semibold tracking-tight mt-8 mb-3 scroll-m-20', className)} {...props}>{children}</h3>;
-}
-
-export function MDXHeading4({ className, children, id, ...props }: HeadingProps) {
-  const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
-  return <h4 id={headingId} className={cn('text-lg font-semibold tracking-tight mt-8 mb-3 scroll-m-20', className)} {...props}>{children}</h4>;
-}
-
-/**
- * 段落组件
- */
-export function MDXParagraph({ className, children }: TypographyProps) {
-  return <p className={cn('leading-7 my-6', className)}>{children}</p>;
-}
-
-/**
  * 代码块组件
  */
 export function MDXCode({ className, children }: TypographyProps) {
@@ -139,11 +110,6 @@ export function MDXHorizontalRule({ className }: Omit<TypographyProps, 'children
  * 导出所有MDX排版组件
  */
 export const mdxTypographyComponents = {
-  h1: MDXHeading1,
-  h2: MDXHeading2,
-  h3: MDXHeading3,
-  h4: MDXHeading4,
-  p: MDXParagraph,
   code: MDXCode,
   pre: MDXPre,
   blockquote: MDXBlockquote,

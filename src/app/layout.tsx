@@ -33,7 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hans" suppressHydrationWarning>
-      <head />
+      <head>
+        {/* 添加 mermaid 脚本，用于流程图渲染 */}
+        <script async src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >

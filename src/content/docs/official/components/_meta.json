@@ -1,0 +1,29 @@
+{
+  "introduction": "组件介绍",
+  "separator-1": {
+    "title": "基础组件",
+    "type": "separator"
+  },
+  "button": "按钮",
+  "card": "卡片",
+  "input": "输入框",
+  "textarea": "文本域",
+  "checkbox": "复选框",
+  "separator-2": {
+    "title": "布局组件",
+    "type": "separator"
+  },
+  "dialog": "对话框",
+  "sheet": "抽屉",
+  "tabs": "选项卡",
+  "collapsible": "折叠面板",
+  "separator-3": {
+    "title": "数据展示",
+    "type": "separator"
+  },
+  "avatar": "头像",
+  "label": "标签",
+  "toggle": "开关",
+  "command": "命令菜单",
+  "alert": "警告框"
+}

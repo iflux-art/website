@@ -1,0 +1,209 @@
+---
+title: 按钮组件
+description: 用于触发操作的交互式按钮组件
+date: 2023-12-21
+tags: [UI组件, 按钮, 交互]
+---
+
+import { Button } from "@/components/ui/button"
+import { PlusIcon, SettingsIcon, ArrowRightIcon } from "lucide-react"
+
+# 按钮组件
+
+按钮组件用于触发操作，如表单提交、对话框打开、菜单展开等。按钮提供了多种样式变体和尺寸选项，可以根据不同的使用场景进行定制。
+
+## 导入
+
+```jsx
+import { Button } from "@/components/ui/button"
+```
+
+## 基本用法
+
+<div className="flex flex-wrap gap-4">
+  <Button>默认按钮</Button>
+  <Button disabled>禁用按钮</Button>
+</div>
+
+```jsx
+<Button>默认按钮</Button>
+<Button disabled>禁用按钮</Button>
+```
+
+## 变体
+
+按钮组件提供了多种样式变体，可以通过 `variant` 属性进行设置。
+
+<div className="flex flex-wrap gap-4">
+  <Button variant="default">默认</Button>
+  <Button variant="destructive">危险</Button>
+  <Button variant="outline">轮廓</Button>
+  <Button variant="secondary">次要</Button>
+  <Button variant="ghost">幽灵</Button>
+  <Button variant="link">链接</Button>
+</div>
+
+```jsx
+<Button variant="default">默认</Button>
+<Button variant="destructive">危险</Button>
+<Button variant="outline">轮廓</Button>
+<Button variant="secondary">次要</Button>
+<Button variant="ghost">幽灵</Button>
+<Button variant="link">链接</Button>
+```
+
+## 尺寸
+
+按钮组件提供了多种尺寸选项，可以通过 `size` 属性进行设置。
+
+<div className="flex items-center flex-wrap gap-4">
+  <Button size="default">默认尺寸</Button>
+  <Button size="sm">小尺寸</Button>
+  <Button size="lg">大尺寸</Button>
+  <Button size="icon" variant="outline">
+    <PlusIcon className="h-4 w-4" />
+  </Button>
+</div>
+
+```jsx
+<Button size="default">默认尺寸</Button>
+<Button size="sm">小尺寸</Button>
+<Button size="lg">大尺寸</Button>
+<Button size="icon" variant="outline">
+  <PlusIcon className="h-4 w-4" />
+</Button>
+```
+
+## 带图标的按钮
+
+按钮可以包含图标，以提供更直观的视觉提示。
+
+<div className="flex flex-wrap gap-4">
+  <Button>
+    <PlusIcon className="mr-2 h-4 w-4" /> 添加
+  </Button>
+  <Button variant="outline">
+    设置 <SettingsIcon className="ml-2 h-4 w-4" />
+  </Button>
+  <Button variant="secondary">
+    下一步 <ArrowRightIcon className="ml-2 h-4 w-4" />
+  </Button>
+</div>
+
+```jsx
+<Button>
+  <PlusIcon className="mr-2 h-4 w-4" /> 添加
+</Button>
+<Button variant="outline">
+  设置 <SettingsIcon className="ml-2 h-4 w-4" />
+</Button>
+<Button variant="secondary">
+  下一步 <ArrowRightIcon className="ml-2 h-4 w-4" />
+</Button>
+```
+
+## 作为子元素
+
+使用 `asChild` 属性可以将按钮渲染为其子元素，这在需要保留按钮样式但使用不同的元素（如链接）时非常有用。
+
+<div className="flex flex-wrap gap-4">
+  <Button asChild>
+    <a href="https://example.com">链接按钮</a>
+  </Button>
+</div>
+
+```jsx
+<Button asChild>
+  <a href="https://example.com">链接按钮</a>
+</Button>
+```
+
+## 加载状态
+
+可以通过添加加载指示器和禁用状态来表示按钮的加载状态。
+
+<div className="flex flex-wrap gap-4">
+  <Button disabled>
+    <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+    加载中...
+  </Button>
+</div>
+
+```jsx
+<Button disabled>
+  <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
+    <circle
+      className="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+    ></circle>
+    <path
+      className="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    ></path>
+  </svg>
+  加载中...
+</Button>
+```
+
+## 属性
+
+按钮组件接受以下属性：
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `variant` | `'default' \| 'destructive' \| 'outline' \| 'secondary' \| 'ghost' \| 'link'` | `'default'` | 按钮的样式变体 |
+| `size` | `'default' \| 'sm' \| 'lg' \| 'icon'` | `'default'` | 按钮的尺寸 |
+| `asChild` | `boolean` | `false` | 是否将按钮渲染为其子元素 |
+
+此外，按钮组件还接受所有标准的 HTML 按钮元素属性，如 `onClick`、`disabled` 等。
+
+## 自定义样式
+
+可以通过 `className` 属性添加自定义样式：
+
+<div className="flex flex-wrap gap-4">
+  <Button className="bg-blue-500 hover:bg-blue-600">
+    自定义颜色
+  </Button>
+  <Button className="rounded-full">
+    圆形按钮
+  </Button>
+</div>
+
+```jsx
+<Button className="bg-blue-500 hover:bg-blue-600">
+  自定义颜色
+</Button>
+<Button className="rounded-full">
+  圆形按钮
+</Button>
+```
+
+## 最佳实践
+
+- 使用明确的动词或动词短语作为按钮文本，如"保存"、"提交表单"、"删除项目"等
+- 为危险操作使用 `destructive` 变体，如删除、移除等
+- 为次要操作使用 `outline`、`secondary` 或 `ghost` 变体
+- 为导航链接使用 `link` 变体
+- 在表单中，将提交按钮放在右侧或底部
+- 为禁用的按钮提供视觉反馈，并考虑添加工具提示解释原因
+- 在移动设备上，确保按钮有足够大的点击区域（至少 44x44 像素）

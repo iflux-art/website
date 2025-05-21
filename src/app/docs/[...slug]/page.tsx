@@ -12,8 +12,7 @@ import { mdxComponents } from '@/mdx-components';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
-import { TableOfContentsClientWrapper } from '@/components/features/content/toc/toc-client-wrapper';
-import { AdvertisementCard } from '@/components/features/content/advertisement-card';
+import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
 
 export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
@@ -212,20 +211,11 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
         {/* 右侧边栏 - 目录和广告 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20 space-y-4 flex flex-col h-[calc(100vh-5rem)]">
-            {/* 目录 - 只在有标题时显示，占用可用空间但可滚动 */}
-            {headings.length > 0 && (
-              <div className="flex-grow overflow-y-auto scrollbar-hide">
-                <Suspense fallback={<div className="animate-pulse h-[300px] bg-muted rounded-md"></div>}>
-                  <TableOfContentsClientWrapper headings={headings} />
-                </Suspense>
-              </div>
-            )}
-
-            {/* 广告卡片 - 固定在底部 */}
-            <div className="flex-shrink-0">
-              <AdvertisementCard />
-            </div>
+          <div className="lg:sticky lg:top-20">
+            <Suspense fallback={<div className="animate-pulse h-[300px] bg-muted rounded-md"></div>}>
+              {/* 使用自适应侧边栏组件，根据目录内容高度动态调整广告卡片位置 */}
+              <AdaptiveSidebar headings={headings} />
+            </Suspense>
           </div>
         </div>
       </div>

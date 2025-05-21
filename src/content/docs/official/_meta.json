@@ -1,5 +1,10 @@
 {
   "info": "官方简介",
   "meta-json": "元数据",
-  "lazy-loading": "懒加载和动画优化指南"
+  "lazy-loading": "懒加载和动画优化指南",
+  "components": {
+    "title": "组件文档",
+    "description": "UI组件的使用指南和示例",
+  "style-management": "样式管理"
+  }
 }
