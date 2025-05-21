@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import * as Icons from 'lucide-react';
 import { ArrowLeft, ExternalLink, Search, Filter, Globe } from 'lucide-react';
+import { getTagColorClasses } from '@/lib/color-utils';
 
 interface LinkItem {
   id: string;
@@ -38,37 +39,67 @@ interface CategoryData {
   }[];
 }
 
-import { useCategoryDetail } from '@/hooks/use-navigation-data';
-
 export default function CategoryPage({ params }: { params: { category: string } }) {
   const { category } = params;
-
-  // 使用统一的数据加载hook
-  const { category: categoryData, subcategories: subcategoriesData, loading, error } = useCategoryDetail(category);
+  const [categoryData, setCategoryData] = useState<CategoryData | null>(null);
+  const [subcategoriesData, setSubcategoriesData] = useState<SubcategoryData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // 筛选状态
-  const [activeTab, setActiveTab] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [faviconCache, setFaviconCache] = useState<Record<string, string>>({});
 
-  // 收集所有标签
   useEffect(() => {
-    if (subcategoriesData && subcategoriesData.length > 0) {
-      const allTagsSet = new Set<string>();
-      subcategoriesData.forEach((subcategory: any) => {
-        if (subcategory.links && Array.isArray(subcategory.links)) {
+    async function loadData() {
+      try {
+        // 使用 API 获取分类数据
+        const response = await fetch(`/api/navigation/category-data/${category}`);
+
+        if (!response.ok) {
+          throw new Error(`获取分类数据失败: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // 添加调试日志
+        console.log('API 响应数据:', data);
+        console.log('子分类数量:', data.subcategories.length);
+        console.log(
+          '链接总数:',
+          data.subcategories.reduce((total: number, sub: any) => total + sub.links.length, 0)
+        );
+
+        // 设置分类数据
+        setCategoryData(data.category);
+
+        // 设置子分类数据
+        setSubcategoriesData(data.subcategories);
+
+        // 收集所有标签
+        const allTagsSet = new Set<string>();
+        data.subcategories.forEach((subcategory: any) => {
           subcategory.links.forEach((link: any) => {
             if (link.tags) {
               link.tags.forEach((tag: string) => allTagsSet.add(tag));
             }
           });
-        }
-      });
-      setAllTags(Array.from(allTagsSet).sort());
+        });
+
+        setAllTags(Array.from(allTagsSet).sort());
+      } catch (err) {
+        console.error('加载分类数据失败:', err);
+        setError('无法加载该分类数据');
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [subcategoriesData]);
+
+    loadData();
+  }, [category]);
 
   // 获取网站图标
   const getFavicon = async (url: string) => {
@@ -100,7 +131,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
         });
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, subcategoriesData]);
 
   // 筛选链接
@@ -118,7 +149,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
         subcategory.links.forEach(link => {
           links.push({
             ...link,
-            subcategory: subcategory.title
+            subcategory: subcategory.title,
           });
         });
       }
@@ -128,7 +159,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
     console.log('收集到的链接:', JSON.stringify(links));
 
     // 按子分类筛选
-    if (activeTab !== "all") {
+    if (activeTab !== 'all') {
       links = links.filter(link => {
         const subcategory = subcategoriesData.find(sub => sub.title === activeTab);
         return subcategory && link.subcategory === subcategory.title;
@@ -138,17 +169,23 @@ export default function CategoryPage({ params }: { params: { category: string } 
     // 按搜索词筛选
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      links = links.filter(link =>
-        link.title.toLowerCase().includes(query) ||
-        link.description.toLowerCase().includes(query) ||
-        (link.tags && Array.isArray(link.tags) && link.tags.some(tag => tag.toLowerCase().includes(query)))
+      links = links.filter(
+        link =>
+          link.title.toLowerCase().includes(query) ||
+          link.description.toLowerCase().includes(query) ||
+          (link.tags &&
+            Array.isArray(link.tags) &&
+            link.tags.some(tag => tag.toLowerCase().includes(query)))
       );
     }
 
     // 按标签筛选
     if (selectedTags.length > 0) {
-      links = links.filter(link =>
-        link.tags && Array.isArray(link.tags) && selectedTags.every(tag => link.tags!.includes(tag))
+      links = links.filter(
+        link =>
+          link.tags &&
+          Array.isArray(link.tags) &&
+          selectedTags.every(tag => link.tags!.includes(tag))
       );
     }
 
@@ -165,7 +202,10 @@ export default function CategoryPage({ params }: { params: { category: string } 
     return (
       <div className="container mx-auto py-10 px-4">
         <div className="flex items-center space-x-2 mb-8">
-          <Link href="/navigation" className="text-sm text-muted-foreground hover:text-primary flex items-center">
+          <Link
+            href="/navigation"
+            className="text-sm text-muted-foreground hover:text-primary flex items-center"
+          >
             <ArrowLeft className="mr-1 h-4 w-4" />
             返回导航首页
           </Link>
@@ -192,7 +232,10 @@ export default function CategoryPage({ params }: { params: { category: string } 
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="mb-8">
-        <Link href="/navigation" className="text-sm text-muted-foreground hover:text-primary flex items-center">
+        <Link
+          href="/navigation"
+          className="text-sm text-muted-foreground hover:text-primary flex items-center"
+        >
           <ArrowLeft className="mr-1 h-4 w-4" />
           返回导航首页
         </Link>
@@ -210,7 +253,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
               placeholder="搜索资源..."
               className="pl-8"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
             />
           </div>
 
@@ -223,8 +266,8 @@ export default function CategoryPage({ params }: { params: { category: string } 
                   key={tag}
                   className={`text-xs px-2 py-1 rounded-md cursor-pointer ${
                     selectedTags.includes(tag)
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground'
                   }`}
                   onClick={() => {
                     if (selectedTags.includes(tag)) {
@@ -295,7 +338,11 @@ export default function CategoryPage({ params }: { params: { category: string } 
                 rel="noopener noreferrer"
                 className="block transition-transform hover:scale-[1.02]"
               >
-                <Card className={`h-full hover:shadow-md transition-shadow ${link.featured ? 'border-2 border-primary/20' : ''}`}>
+                <Card
+                  className={`h-full hover:shadow-md transition-shadow ${
+                    link.featured ? 'border-2 border-primary/20' : ''
+                  }`}
+                >
                   <CardHeader className="pb-2 p-4">
                     <div className="flex items-center gap-2 mb-2">
                       {favicon ? (
@@ -316,7 +363,9 @@ export default function CategoryPage({ params }: { params: { category: string } 
                         <ExternalLink className="h-3 w-3 text-muted-foreground flex-shrink-0" />
                       </CardTitle>
                     </div>
-                    <CardDescription className="line-clamp-2 text-xs">{link.description}</CardDescription>
+                    <CardDescription className="line-clamp-2 text-xs">
+                      {link.description}
+                    </CardDescription>
                   </CardHeader>
                   {link.tags && Array.isArray(link.tags) && link.tags.length > 0 && (
                     <CardContent className="pt-0 p-4">
@@ -329,8 +378,8 @@ export default function CategoryPage({ params }: { params: { category: string } 
                             key={`${tag}-${tagIndex}`}
                             className={`text-xs px-2 py-1 rounded-md ${
                               selectedTags.includes(tag)
-                                ? "bg-primary/10 border border-primary/30"
-                                : "bg-muted text-muted-foreground"
+                                ? 'bg-primary/10 border border-primary/30'
+                                : 'bg-muted text-muted-foreground'
                             }`}
                           >
                             {tag}
