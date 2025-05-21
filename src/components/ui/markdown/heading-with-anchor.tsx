@@ -1,78 +1,97 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeadingWithAnchorProps {
-  level: 1 | 2 | 3 | 4;
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   id?: string;
-  className?: string;
   children: React.ReactNode;
+  className?: string;
+  [key: string]: any;
 }
 
 /**
  * 带锚点的标题组件
- * 鼠标悬停时显示 # 符号，便于分辨标题和正文
+ *
+ * 标题悬停效果通过 CSS 伪元素实现
  */
-export function HeadingWithAnchor({
-  level,
-  id,
-  className,
-  children,
-  ...props
-}: HeadingWithAnchorProps & React.HTMLAttributes<HTMLHeadingElement>) {
-  const [isHovered, setIsHovered] = useState(false);
+export function HeadingWithAnchor({ as: Component, id, children, className, ...props }: HeadingWithAnchorProps) {
+  // 如果没有提供ID，根据内容生成一个
+  const headingId = id || (typeof children === 'string'
+    ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+    : undefined);
 
-  // 根据标题级别生成ID
-  const headingId = id || (typeof children === 'string' ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') : undefined);
+  return (
+    <Component
+      id={headingId}
+      className={cn(
+        "scroll-mt-20",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
 
-  // 根据标题级别选择合适的样式
-  const styles = {
-    1: "text-4xl font-bold tracking-tight mt-8 mb-4 scroll-m-20",
-    2: "text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b scroll-m-20",
-    3: "text-xl font-semibold tracking-tight mt-8 mb-3 scroll-m-20",
-    4: "text-lg font-semibold tracking-tight mt-8 mb-3 scroll-m-20",
-  };
+/**
+ * H1 标题组件
+ */
+export function H1({ children, className, ...props }: Omit<HeadingWithAnchorProps, 'as'>) {
+  return (
+    <HeadingWithAnchor
+      as="h1"
+      className={cn("text-4xl font-bold tracking-tight mt-8 mb-4", className)}
+      {...props}
+    >
+      {children}
+    </HeadingWithAnchor>
+  );
+}
 
-  // 根据标题级别渲染不同的标题元素
-  const renderHeading = () => {
-    const headingContent = (
-      <div
-        className="group relative flex items-center hover:text-primary transition-colors"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <span
-          className={cn(
-            "absolute opacity-0 group-hover:opacity-70 transition-opacity -left-5 text-primary",
-            {
-              "text-4xl": level === 1,
-              "text-2xl": level === 2,
-              "text-xl": level === 3,
-              "text-lg": level === 4,
-            }
-          )}
-          aria-hidden="true"
-        >
-          #
-        </span>
-        {children}
-      </div>
-    );
+/**
+ * H2 标题组件
+ */
+export function H2({ children, className, ...props }: Omit<HeadingWithAnchorProps, 'as'>) {
+  return (
+    <HeadingWithAnchor
+      as="h2"
+      className={cn("text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b", className)}
+      {...props}
+    >
+      {children}
+    </HeadingWithAnchor>
+  );
+}
 
-    switch (level) {
-      case 1:
-        return <h1 id={headingId} className={cn(styles[1], className)} {...props}>{headingContent}</h1>;
-      case 2:
-        return <h2 id={headingId} className={cn(styles[2], className)} {...props}>{headingContent}</h2>;
-      case 3:
-        return <h3 id={headingId} className={cn(styles[3], className)} {...props}>{headingContent}</h3>;
-      case 4:
-        return <h4 id={headingId} className={cn(styles[4], className)} {...props}>{headingContent}</h4>;
-      default:
-        return <h2 id={headingId} className={cn(styles[2], className)} {...props}>{headingContent}</h2>;
-    }
-  };
+/**
+ * H3 标题组件
+ */
+export function H3({ children, className, ...props }: Omit<HeadingWithAnchorProps, 'as'>) {
+  return (
+    <HeadingWithAnchor
+      as="h3"
+      className={cn("text-xl font-semibold tracking-tight mt-8 mb-3", className)}
+      {...props}
+    >
+      {children}
+    </HeadingWithAnchor>
+  );
+}
 
-  return renderHeading();
+/**
+ * H4 标题组件
+ */
+export function H4({ children, className, ...props }: Omit<HeadingWithAnchorProps, 'as'>) {
+  return (
+    <HeadingWithAnchor
+      as="h4"
+      className={cn("text-lg font-semibold tracking-tight mt-8 mb-3", className)}
+      {...props}
+    >
+      {children}
+    </HeadingWithAnchor>
+  );
 }

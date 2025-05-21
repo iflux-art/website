@@ -6,6 +6,7 @@ import matter from 'gray-matter';
 import { Breadcrumb, BreadcrumbItem } from '@/components/features/content/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
+import { ServerMDX } from '@/components/features/content/server-mdx';
 
 export default async function BlogPost({
   params,
@@ -138,8 +139,9 @@ export default async function BlogPost({
             <BlogContent
               title={title}
               date={date}
-              content={finalContent}
               tags={data.tags || []}
+              content={finalContent}
+              mdxContent={<ServerMDX content={finalContent} />}
             />
           </div>
         </div>

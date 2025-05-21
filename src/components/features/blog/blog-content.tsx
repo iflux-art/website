@@ -1,11 +1,10 @@
 import React from "react";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { Calendar, Calculator } from "lucide-react";
 import Link from "next/link";
 
-import { mdxComponents } from "@/mdx-components";
 import { countWords } from "@/lib/utils";
 import { BlogContentProps } from "./blog-content.types";
+import { MDXContent } from "@/components/features/content/mdx-content";
 
 /**
  * 博客内容组件
@@ -28,6 +27,7 @@ export function BlogContent({
   title,
   date,
   content,
+  mdxContent,
   tags = [],
 }: BlogContentProps) {
   return (
@@ -69,14 +69,14 @@ export function BlogContent({
           {/* 字数统计 */}
           <div className="flex items-center">
             <Calculator className="h-4 w-4 mr-1" />
-            <span>{countWords(content)} 字</span>
+            <span>{content ? countWords(content) : 0} 字</span>
           </div>
         </div>
       </header>
 
-      <div className="prose dark:prose-invert max-w-none">
-        <MDXRemote source={content} components={mdxComponents} />
-      </div>
+      <MDXContent>
+        {mdxContent}
+      </MDXContent>
     </article>
   );
 }

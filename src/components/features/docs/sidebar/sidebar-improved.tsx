@@ -178,7 +178,7 @@ export function DocsSidebarImproved({ category, currentDoc, meta, allDocs = [] }
               className={cn(
                 "flex items-center py-2 px-2 rounded-md text-sm transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary font-medium"
+                  ? "bg-primary/10 text-primary font-medium rounded-md"
                   : "text-foreground/80 hover:text-primary hover:bg-primary/5"
               )}
               onMouseEnter={() => setIsHovering(itemId)}

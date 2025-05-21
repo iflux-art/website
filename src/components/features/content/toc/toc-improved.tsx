@@ -234,15 +234,15 @@ export function TableOfContentsImproved({ headings }: TableOfContentsProps) {
                 key={index}
                 href={`#${heading.id}`}
                 className={cn(
-                  "flex items-center py-1.5 text-sm transition-colors hover:text-primary group",
+                  "flex items-center py-1.5 px-2 text-sm transition-colors hover:text-primary group rounded-md",
                   headingSize,
                   {
-                    "text-primary bg-primary/5":
+                    "text-primary bg-primary/5 rounded-md":
                       activeId === heading.id,
                     "text-foreground/70": activeId !== heading.id,
                   }
                 )}
-                style={{ paddingLeft: heading.level > 2 ? `${indent}rem` : "0.25rem" }}
+                style={{ paddingLeft: heading.level > 2 ? `calc(${indent}rem + 0.5rem)` : "0.5rem" }}
                 onClick={(e) => {
                   e.preventDefault();
                   const element = document.getElementById(heading.id);

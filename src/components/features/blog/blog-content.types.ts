@@ -19,9 +19,14 @@ export interface BlogContentProps {
   date: string | null;
 
   /**
-   * 文章内容（MDX 格式）
+   * 文章内容（MDX 格式）- 已弃用，使用 mdxContent 代替
    */
-  content: string;
+  content?: string;
+
+  /**
+   * 渲染后的 MDX 内容
+   */
+  mdxContent?: React.ReactNode;
 
   /**
    * 文章标签

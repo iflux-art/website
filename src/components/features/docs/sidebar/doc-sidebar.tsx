@@ -169,7 +169,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
               className={cn(
                 "flex items-center justify-between py-2 px-2 rounded-md text-sm transition-all duration-200",
                 isActive
-                  ? "bg-accent/80 text-primary font-medium shadow-sm"
+                  ? "bg-accent/80 text-primary font-medium shadow-sm rounded-md"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
               )}
               onMouseEnter={() => handleMouseEnter(itemId)}

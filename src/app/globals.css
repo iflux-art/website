@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* 注意：Typography 插件同时在此处和 tailwind.config.mjs 中导入 */
+/* 这是必要的：tailwind.config.mjs 中导入用于配置插件，此处导入确保样式在正确位置加载 */
 @plugin "@tailwindcss/typography"; /* 使用 Typography 插件提供的 prose 类 */
 
 @custom-variant dark (&:is(.dark *));
@@ -77,6 +79,7 @@
 
 :root {
   --radius: 0.625rem;
+  --accent-hue: 264.376; /* 默认色调值 */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -199,4 +202,122 @@ html {
 
 .hover\:scrollbar-thumb-primary\/30:hover::-webkit-scrollbar-thumb {
   background-color: oklch(from var(--primary) l c h / 0.3);
+}
+
+/* 代码样式 */
+
+/* 隐藏行内代码中的反引号 */
+.prose code::before,
+.prose code::after,
+.prose *:not(pre) > code::before,
+.prose *:not(pre) > code::after,
+article code::before,
+article code::after,
+*:not(pre) > code::before,
+*:not(pre) > code::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* 标题样式 - 简单版本 */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  position: relative;
+}
+
+/* 标题悬停效果 - 简单版本 */
+.prose h1:hover::before,
+.prose h2:hover::before,
+.prose h3:hover::before,
+.prose h4:hover::before,
+.prose h5:hover::before,
+.prose h6:hover::before {
+  content: "#";
+  position: absolute;
+  left: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: inherit; /* 使用与标题相同的颜色 */
+  opacity: 0.7;
+  font-weight: inherit; /* 使用与标题相同的字重 */
+  font-size: 0.9em; /* 稍微小一点的字体大小 */
+  line-height: 1;
+  text-align: center;
+  width: 1rem; /* 固定宽度，确保对齐 */
+}
+
+/* 超链接样式 */
+.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]) {
+  color: oklch(0.5 0.2 240); /* 在黑白模式下都清晰可见的蓝色 */
+  text-decoration: none; /* 默认不带下划线 */
+  position: relative;
+  transition: color 0.3s ease;
+  padding-bottom: 1px; /* 为下划线留出空间 */
+}
+
+/* 超链接悬停效果 */
+.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"])::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background-color: currentColor;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* 更平滑的非线性动画 */
+  opacity: 0.8; /* 稍微透明一点 */
+}
+
+/* 超链接悬停时下划线从中心向两侧扩散 */
+.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]):hover::after {
+  left: 0;
+  right: 0;
+}
+
+/* 暗色模式下的超链接颜色 */
+.dark .prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]) {
+  color: oklch(0.7 0.2 240); /* 暗色模式下更亮的蓝色 */
+}
+
+/* 确保行内代码有正确的间距和样式 */
+.prose p code:not(pre code),
+.prose li code:not(pre code),
+.prose h1 code:not(pre code),
+.prose h2 code:not(pre code),
+.prose h3 code:not(pre code),
+.prose h4 code:not(pre code),
+.prose h5 code:not(pre code),
+.prose h6 code:not(pre code),
+.prose blockquote code:not(pre code),
+.prose td code:not(pre code),
+.prose th code:not(pre code) {
+  margin: 0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: oklch(0.97 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  color: oklch(0.205 0 0);
+  font-family: var(--font-geist-mono);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.dark .prose p code:not(pre code),
+.dark .prose li code:not(pre code),
+.dark .prose h1 code:not(pre code),
+.dark .prose h2 code:not(pre code),
+.dark .prose h3 code:not(pre code),
+.dark .prose h4 code:not(pre code),
+.dark .prose h5 code:not(pre code),
+.dark .prose h6 code:not(pre code),
+.dark .prose blockquote code:not(pre code),
+.dark .prose td code:not(pre code),
+.dark .prose th code:not(pre code) {
+  background-color: oklch(0.269 0 0);
+  border-color: oklch(0.3 0 0 / 0.3);
+  color: oklch(0.922 0 0);
 }

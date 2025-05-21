@@ -1,18 +1,17 @@
 import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Suspense } from 'react';
 import { Transition } from '@/components/ui/transition';
 
-import { mdxComponents } from '@/mdx-components';
-
 import { Card, CardContent } from '@/components/ui/card';
 import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
 import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
+import { MDXContent } from '@/components/features/content/mdx-content';
+import { ServerMDX } from '@/components/features/content/server-mdx';
 
 export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
@@ -172,9 +171,9 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
                 )}
               </div>
               <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
-              <div className="prose dark:prose-invert max-w-none">
-                <MDXRemote source={content} components={mdxComponents} />
-              </div>
+              <MDXContent>
+                <ServerMDX content={content} />
+              </MDXContent>
 
               {/* 上一页/下一页导航 */}
               <div className="mt-12 grid grid-cols-2 gap-4">
