@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { CodeBlockProps } from "./code-block.types";
+import React, { useEffect, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
+import { CodeBlockProps } from './code-block.types';
 
 /**
  * 特殊代码块组件
@@ -11,11 +11,7 @@ import { CodeBlockProps } from "./code-block.types";
  * 用于处理特殊类型的代码块，如 mermaid 流程图、图表等
  * 保持 macOS 风格的外观，但内部渲染特殊内容
  */
-export function SpecialCodeBlock({
-  className,
-  children,
-  language,
-}: CodeBlockProps) {
+export function SpecialCodeBlock({ className, children, language }: CodeBlockProps) {
   // 添加调试信息
   console.log('SpecialCodeBlock 渲染:', { language, className });
   const { resolvedTheme } = useTheme();
@@ -118,31 +114,24 @@ export function SpecialCodeBlock({
     }
   }, [isCopied]);
 
-  // 根据主题设置背景和边框颜色
-  const bgColor = theme === 'dark'
-    ? 'bg-zinc-900'
-    : 'bg-zinc-50';
+  // 使用CSS变量替代传统颜色名称
+  const bgColor = theme === 'dark' ? 'bg-card' : 'bg-muted/30';
 
-  const borderColor = theme === 'dark'
-    ? 'border-zinc-700'
-    : 'border-zinc-200';
+  const borderColor = theme === 'dark' ? 'border-border' : 'border-border';
 
-  const textColor = theme === 'dark'
-    ? 'text-zinc-300'
-    : 'text-zinc-800';
+  const textColor = theme === 'dark' ? 'text-foreground' : 'text-foreground';
 
   return (
-    <div className={cn(
-      "relative my-6 rounded-lg overflow-hidden border shadow-sm",
-      bgColor,
-      borderColor,
-      className
-    )}>
+    <div
+      className={cn(
+        'relative my-6 rounded-lg overflow-hidden border shadow-sm',
+        bgColor,
+        borderColor,
+        className
+      )}
+    >
       {/* 标题栏 - macOS 风格 */}
-      <div className={cn(
-        "flex items-center px-4 h-10 border-b",
-        borderColor
-      )}>
+      <div className={cn('flex items-center px-4 h-10 border-b', borderColor)}>
         {/* 左侧三个圆点按钮 */}
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-[#FF5F56] shadow-sm shadow-[#FF5F56]/20"></div>
@@ -153,10 +142,12 @@ export function SpecialCodeBlock({
         {/* 语言标识 - 居中 */}
         {language && (
           <div className="flex-1 text-center">
-            <span className={cn(
-              "text-xs uppercase font-medium",
-              theme === 'dark' ? "text-zinc-400" : "text-zinc-500"
-            )}>
+            <span
+              className={cn(
+                'text-xs uppercase font-medium',
+                'text-muted-foreground' // 使用CSS变量替代传统颜色名称
+              )}
+            >
               {language}
             </span>
           </div>
@@ -170,15 +161,15 @@ export function SpecialCodeBlock({
               setIsCopied(true);
             }}
             className={cn(
-              "text-xs px-2 py-1 rounded transition-colors",
+              'text-xs px-2 py-1 rounded transition-colors',
               isCopied
-                ? "bg-green-500/10 text-green-500"
+                ? 'bg-[oklch(0.96_0.03_140/0.1)] text-[oklch(0.5_0.15_140)]' // 成功状态使用绿色OKLCH颜色
                 : theme === 'dark'
-                  ? "hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-300"
-                  : "hover:bg-zinc-200/70 text-zinc-500 hover:text-zinc-700"
+                ? 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                : 'hover:bg-muted/70 text-muted-foreground hover:text-foreground'
             )}
           >
-            {isCopied ? "已复制!" : "复制"}
+            {isCopied ? '已复制!' : '复制'}
           </button>
         </div>
       </div>
@@ -186,11 +177,7 @@ export function SpecialCodeBlock({
       {/* 内容区域 */}
       <div
         ref={containerRef}
-        className={cn(
-          "overflow-x-auto p-4",
-          textColor,
-          !isRendered && "font-mono text-sm"
-        )}
+        className={cn('overflow-x-auto p-4', textColor, !isRendered && 'font-mono text-sm')}
       >
         {/* 初始显示代码内容，后续会被替换为渲染后的内容 */}
         {!isRendered && language === 'mermaid' && (

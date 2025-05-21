@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { cn } from "@/lib/utils";
-import Copy from "@/components/ui/markdown/copy";
-import { CodeBlockProps } from "./code-block.types";
-import { useTheme } from "next-themes";
+import React, { useRef } from 'react';
+import { cn } from '@/lib/utils';
+import Copy from '@/components/ui/markdown/copy';
+import { CodeBlockProps } from './code-block.types';
+import { useTheme } from 'next-themes';
 
 // 为 Window 接口添加 Prism 属性
 declare global {
@@ -22,11 +22,7 @@ declare global {
  *
  * 已更新为 Tailwind CSS v4 兼容版本
  */
-export function CodeBlock({
-  className,
-  children,
-  language,
-}: CodeBlockProps) {
+export function CodeBlock({ className, children, language }: CodeBlockProps) {
   const { resolvedTheme } = useTheme();
   const theme = (resolvedTheme || 'light') as 'light' | 'dark';
   const codeRef = useRef<HTMLElement>(null);
@@ -53,15 +49,19 @@ export function CodeBlock({
   }, []);
 
   return (
-    <div className={cn(
-      "relative my-6 rounded-lg shadow-md overflow-hidden",
-      theme === 'dark' ? "bg-[#1e1e1e]" : "bg-[#f5f5f5]"
-    )}>
+    <div
+      className={cn(
+        'relative my-6 rounded-lg shadow-md overflow-hidden',
+        theme === 'dark' ? 'bg-[#1e1e1e]' : 'bg-[#f5f5f5]'
+      )}
+    >
       {/* 标题栏 */}
-      <div className={cn(
-        "flex items-center px-4 h-9",
-        theme === 'dark' ? "border-b border-gray-700" : "border-b border-gray-200"
-      )}>
+      <div
+        className={cn(
+          'flex items-center px-4 h-9',
+          theme === 'dark' ? 'border-b border-gray-700' : 'border-b border-gray-200'
+        )}
+      >
         {/* 左侧三个圆点 */}
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -72,10 +72,12 @@ export function CodeBlock({
         {/* 语言标识 - 居中 */}
         {language && (
           <div className="flex-1 text-center">
-            <span className={cn(
-              "text-xs uppercase font-medium",
-              theme === 'dark' ? "text-gray-400" : "text-gray-500"
-            )}>
+            <span
+              className={cn(
+                'text-xs uppercase font-medium',
+                theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+              )}
+            >
               {language}
             </span>
           </div>
@@ -88,17 +90,16 @@ export function CodeBlock({
       </div>
 
       {/* 代码内容 */}
-      <pre className={cn(
-        "p-4 bg-transparent border-0",
-        theme === 'dark' ? "text-gray-300" : "text-gray-800",
-        className
-      )}>
+      <pre
+        className={cn(
+          'p-4 bg-transparent border-0',
+          'text-foreground', // 使用CSS变量替代传统颜色名称
+          className
+        )}
+      >
         <code
           ref={codeRef}
-          className={cn(
-            "font-mono text-sm block",
-            language ? `language-${language}` : ""
-          )}
+          className={cn('font-mono text-sm block', language ? `language-${language}` : '')}
         >
           {codeContent}
         </code>

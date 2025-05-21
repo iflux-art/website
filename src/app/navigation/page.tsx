@@ -1,32 +1,22 @@
-"use client";
+'use client';
 
-import React from "react";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import {
-  useNavigationCategories,
-  useFeaturedResources,
-  useRecentResources
-} from "@/hooks/use-navigation";
-import { Category } from "@/types/navigation";
-import { AnimatedCard } from "@/components/ui/animated-card";
-import { AnimatedContainer } from "@/components/ui/animated-container";
-
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { useNavigationData } from '@/hooks/use-navigation-data';
+import { Category } from '@/types/navigation';
+import { AnimatedCard } from '@/components/ui/animated-card';
+import { AnimatedContainer } from '@/components/ui/animated-container';
+import { CategoryColorCard } from '@/components/ui/navigation/category-color';
 
 export default function NavigationPage() {
-
-  // 获取导航数据
-  const { categories, loading: categoriesLoading } = useNavigationCategories();
-  const { resources: featuredResources, loading: featuredLoading } = useFeaturedResources();
-  const { resources: recentResources, loading: recentLoading } = useRecentResources();
-
-  // 加载状态
-  const isLoading = categoriesLoading || featuredLoading || recentLoading;
+  // 使用统一的数据加载hook
+  const { categories, featuredResources, recentResources, loading, error } = useNavigationData();
 
   // 加载状态显示
-  if (isLoading) {
+  if (loading) {
     return (
       <main className="container mx-auto py-10 px-4">
         <h1 className="text-3xl font-bold mb-6">网站导航</h1>
@@ -78,8 +68,8 @@ export default function NavigationPage() {
 
         return (
           <AnimatedContainer
-            baseDelay={0.1}
-            staggerDelay={0.15}
+            baseDelay={0.05}
+            staggerDelay={0.05}
             variant="fade"
             autoWrap={false}
             className="mb-12"
@@ -110,8 +100,8 @@ export default function NavigationPage() {
 
           return (
             <AnimatedContainer
-              baseDelay={0.1}
-              staggerDelay={0.15}
+              baseDelay={0.05}
+              staggerDelay={0.05}
               variant="fade"
               autoWrap={false}
               threshold={0.1}
@@ -142,8 +132,8 @@ export default function NavigationPage() {
 
           return (
             <AnimatedContainer
-              baseDelay={0.1}
-              staggerDelay={0.15}
+              baseDelay={0.05}
+              staggerDelay={0.05}
               variant="fade"
               autoWrap={false}
               threshold={0.1}
@@ -186,30 +176,25 @@ interface CategoryCardProps {
  */
 function CategoryCard({ category, index = 0 }: CategoryCardProps) {
   return (
-    <AnimatedCard
-      delay={index * 0.1}
-      duration={0.7}
-      variant="fade"
-      className="h-full"
-    >
+    <AnimatedCard delay={index * 0.05} duration={0.5} variant="fade" className="h-full">
       <Link href={`/navigation/${category.id}`}>
-        <Card className={`h-full border-2 hover:border-primary transition-colors overflow-hidden`}>
-          <CardContent className={`p-6 ${category.color}`}>
+        <CategoryColorCard color={category.color} className="h-full overflow-hidden">
+          <CardContent className="p-6">
             <div className="text-4xl mb-4">{category.icon}</div>
             <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
             <p className="text-muted-foreground">{category.description}</p>
           </CardContent>
-          <CardFooter className="p-4 flex justify-end">
+          <CardFooter className="p-4 flex justify-end bg-background/50">
             <div className="flex items-center text-sm font-medium">
               浏览
               <ArrowRight className="ml-1 h-4 w-4" />
             </div>
           </CardFooter>
-        </Card>
+        </CategoryColorCard>
       </Link>
     </AnimatedCard>
   );
 }
 
 // 导入资源卡片组件
-import { ResourceCard } from "@/components/features/navigation";
+import { ResourceCard } from '@/components/features/navigation';

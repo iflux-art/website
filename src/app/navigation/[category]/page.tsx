@@ -38,12 +38,13 @@ interface CategoryData {
   }[];
 }
 
+import { useCategoryDetail } from '@/hooks/use-navigation-data';
+
 export default function CategoryPage({ params }: { params: { category: string } }) {
   const { category } = params;
-  const [categoryData, setCategoryData] = useState<CategoryData | null>(null);
-  const [subcategoriesData, setSubcategoriesData] = useState<SubcategoryData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+  // 使用统一的数据加载hook
+  const { category: categoryData, subcategories: subcategoriesData, loading, error } = useCategoryDetail(category);
 
   // 筛选状态
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -52,50 +53,22 @@ export default function CategoryPage({ params }: { params: { category: string } 
   const [allTags, setAllTags] = useState<string[]>([]);
   const [faviconCache, setFaviconCache] = useState<Record<string, string>>({});
 
+  // 收集所有标签
   useEffect(() => {
-    async function loadData() {
-      try {
-        // 使用 API 获取分类数据
-        const response = await fetch(`/api/navigation/category-data/${category}`);
-
-        if (!response.ok) {
-          throw new Error(`获取分类数据失败: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // 添加调试日志
-        console.log('API 响应数据:', data);
-        console.log('子分类数量:', data.subcategories.length);
-        console.log('链接总数:', data.subcategories.reduce((total: number, sub: any) => total + sub.links.length, 0));
-
-        // 设置分类数据
-        setCategoryData(data.category);
-
-        // 设置子分类数据
-        setSubcategoriesData(data.subcategories);
-
-        // 收集所有标签
-        const allTagsSet = new Set<string>();
-        data.subcategories.forEach((subcategory: any) => {
+    if (subcategoriesData && subcategoriesData.length > 0) {
+      const allTagsSet = new Set<string>();
+      subcategoriesData.forEach((subcategory: any) => {
+        if (subcategory.links && Array.isArray(subcategory.links)) {
           subcategory.links.forEach((link: any) => {
             if (link.tags) {
               link.tags.forEach((tag: string) => allTagsSet.add(tag));
             }
           });
-        });
-
-        setAllTags(Array.from(allTagsSet).sort());
-      } catch (err) {
-        console.error('加载分类数据失败:', err);
-        setError('无法加载该分类数据');
-      } finally {
-        setLoading(false);
-      }
+        }
+      });
+      setAllTags(Array.from(allTagsSet).sort());
     }
-
-    loadData();
-  }, [category]);
+  }, [subcategoriesData]);
 
   // 获取网站图标
   const getFavicon = async (url: string) => {

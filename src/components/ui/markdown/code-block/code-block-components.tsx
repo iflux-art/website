@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import { cn } from "@/lib/utils";
-import { MacStyleCodeBlock } from "./mac-style-code-block";
-import { SpecialCodeBlock } from "./special-code-block";
-import { CodeProps } from "./code-block.types";
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { MacStyleCodeBlock } from './mac-style-code-block';
+import { SpecialCodeBlock } from './special-code-block';
+import { CodeProps } from './code-block.types';
 
 /**
  * 代码块组件集合
@@ -17,11 +17,11 @@ import { CodeProps } from "./code-block.types";
  */
 export const codeBlockComponents = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className={cn("overflow-x-auto bg-transparent border-0", className)} {...props} />
+    <pre className={cn('overflow-x-auto bg-transparent border-0', className)} {...props} />
   ),
   code: ({ className, ...props }: CodeProps) => {
     // 从className中提取语言信息
-    const match = /language-(\w+)/.exec(className || "");
+    const match = /language-(\w+)/.exec(className || '');
     const language = match ? match[1] : undefined;
 
     // 如果有language类，说明这是一个代码块
@@ -47,9 +47,9 @@ export const codeBlockComponents = {
       return (
         <code
           className={cn(
-            "rounded-md px-1.5 py-0.5 text-sm font-mono border",
-            "dark:bg-zinc-800/50 dark:border-zinc-700/50 dark:text-zinc-200",
-            "bg-zinc-100/70 border-zinc-200/70 text-zinc-800",
+            'rounded-md px-1.5 py-0.5 text-sm font-mono border',
+            'dark:bg-muted/50 dark:border-border/50 dark:text-foreground',
+            'bg-muted/30 border-border/30 text-foreground',
             className
           )}
           {...props}

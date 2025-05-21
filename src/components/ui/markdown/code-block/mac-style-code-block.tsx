@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-import Copy from "@/components/ui/markdown/copy";
-import { CodeBlockProps } from "./code-block.types";
-import { useTheme } from "next-themes";
+import React, { useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
+import Copy from '@/components/ui/markdown/copy';
+import { CodeBlockProps } from './code-block.types';
+import { useTheme } from 'next-themes';
 
 /**
  * macOS 风格代码块组件
@@ -60,31 +60,24 @@ export function MacStyleCodeBlock({
     }
   }, [isCopied]);
 
-  // 根据主题设置背景和边框颜色
-  const bgColor = theme === 'dark'
-    ? 'bg-zinc-900'
-    : 'bg-zinc-50';
+  // 使用CSS变量替代传统颜色名称
+  const bgColor = theme === 'dark' ? 'bg-card' : 'bg-muted/30';
 
-  const borderColor = theme === 'dark'
-    ? 'border-zinc-700'
-    : 'border-zinc-200';
+  const borderColor = theme === 'dark' ? 'border-border' : 'border-border';
 
-  const textColor = theme === 'dark'
-    ? 'text-zinc-300'
-    : 'text-zinc-800';
+  const textColor = theme === 'dark' ? 'text-foreground' : 'text-foreground';
 
   return (
-    <div className={cn(
-      "relative my-6 rounded-lg overflow-hidden border shadow-sm",
-      bgColor,
-      borderColor,
-      className
-    )}>
+    <div
+      className={cn(
+        'relative my-6 rounded-lg overflow-hidden border shadow-sm',
+        bgColor,
+        borderColor,
+        className
+      )}
+    >
       {/* 标题栏 - macOS 风格 */}
-      <div className={cn(
-        "flex items-center px-4 h-10 border-b",
-        borderColor
-      )}>
+      <div className={cn('flex items-center px-4 h-10 border-b', borderColor)}>
         {/* 左侧三个圆点按钮 */}
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-[#FF5F56] shadow-sm shadow-[#FF5F56]/20"></div>
@@ -95,10 +88,12 @@ export function MacStyleCodeBlock({
         {/* 语言标识 - 居中 */}
         {language && (
           <div className="flex-1 text-center">
-            <span className={cn(
-              "text-xs uppercase font-medium",
-              theme === 'dark' ? "text-zinc-400" : "text-zinc-500"
-            )}>
+            <span
+              className={cn(
+                'text-xs uppercase font-medium',
+                theme === 'dark' ? 'text-zinc-400' : 'text-zinc-500'
+              )}
+            >
               {language}
             </span>
           </div>
@@ -112,15 +107,15 @@ export function MacStyleCodeBlock({
               setIsCopied(true);
             }}
             className={cn(
-              "text-xs px-2 py-1 rounded transition-colors",
+              'text-xs px-2 py-1 rounded transition-colors',
               isCopied
-                ? "bg-green-500/10 text-green-500"
+                ? 'bg-green-500/10 text-green-500'
                 : theme === 'dark'
-                  ? "hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-300"
-                  : "hover:bg-zinc-200/70 text-zinc-500 hover:text-zinc-700"
+                ? 'hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-300'
+                : 'hover:bg-zinc-200/70 text-zinc-500 hover:text-zinc-700'
             )}
           >
-            {isCopied ? "已复制!" : "复制"}
+            {isCopied ? '已复制!' : '复制'}
           </button>
         </div>
       </div>
@@ -129,11 +124,15 @@ export function MacStyleCodeBlock({
       <div className="relative">
         {/* 行号 - 只在 showLineNumbers 为 true 时显示 */}
         {showLineNumbers && (
-          <div className={cn(
-            "absolute left-0 top-0 bottom-0 w-12 text-right pr-2 select-none pt-4",
-            theme === 'dark' ? "bg-zinc-800/50 border-r border-zinc-700" : "bg-zinc-100/70 border-r border-zinc-200",
-            theme === 'dark' ? "text-zinc-500" : "text-zinc-400"
-          )}>
+          <div
+            className={cn(
+              'absolute left-0 top-0 bottom-0 w-12 text-right pr-2 select-none pt-4',
+              theme === 'dark'
+                ? 'bg-muted/50 border-r border-border'
+                : 'bg-muted/30 border-r border-border',
+              'text-muted-foreground' // 使用CSS变量替代传统颜色名称
+            )}
+          >
             {codeContent.split('\n').map((_, i) => (
               <div key={i} className="h-6 text-xs leading-6">
                 {i + 1}
@@ -143,18 +142,10 @@ export function MacStyleCodeBlock({
         )}
 
         {/* 代码 */}
-        <pre className={cn(
-          "p-4 overflow-x-auto",
-          showLineNumbers && "pl-16",
-          bgColor,
-          textColor
-        )}>
+        <pre className={cn('p-4 overflow-x-auto', showLineNumbers && 'pl-16', bgColor, textColor)}>
           <code
             ref={codeRef}
-            className={cn(
-              "font-mono text-sm block",
-              language ? `language-${language}` : ""
-            )}
+            className={cn('font-mono text-sm block', language ? `language-${language}` : '')}
           >
             {codeContent}
           </code>
