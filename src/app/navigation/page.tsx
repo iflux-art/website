@@ -10,17 +10,18 @@ import { Category } from '@/types/navigation';
 import { AnimatedCard } from '@/components/ui/animated-card';
 import { AnimatedContainer } from '@/components/ui/animated-container';
 import { CategoryColorCard } from '@/components/ui/navigation/category-color';
+import { PageLayout } from '@/components/layout/page-layout';
 
 export default function NavigationPage() {
   // 使用统一的数据加载hook
   const { categories, featuredResources, recentResources, loading, error } = useNavigationData();
 
+  // PageLayout 组件已在顶部导入
+
   // 加载状态显示
   if (loading) {
     return (
-      <main className="container mx-auto py-10 px-4">
-        <h1 className="text-3xl font-bold mb-6">网站导航</h1>
-
+      <PageLayout pageTitle="网站导航" className="py-10">
         {/* 加载状态 */}
         <div className="animate-pulse">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -43,14 +44,12 @@ export default function NavigationPage() {
             ))}
           </div>
         </div>
-      </main>
+      </PageLayout>
     );
   }
 
   return (
-    <main className="container mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">网站导航</h1>
-
+    <PageLayout pageTitle="网站导航" className="py-10">
       {/* 分类导航 */}
       {(() => {
         // 预先创建分类网格
@@ -144,7 +143,7 @@ export default function NavigationPage() {
           );
         })()}
       </section>
-    </main>
+    </PageLayout>
   );
 }
 

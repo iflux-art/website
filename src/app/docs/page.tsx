@@ -1,18 +1,41 @@
-import React from 'react';
+'use client';
 
-import { getDocCategories } from '@/lib/docs';
+import React, { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+
 import { DocsList } from '@/components/features/docs/category/docs-list';
+import { PageLayout } from '@/components/layout/page-layout';
+import { useDocCategories } from '@/hooks/use-docs';
 
 export default function DocsPage() {
-  // 获取文档分类（在服务器端执行）
-  const categories = getDocCategories();
+  const pathname = usePathname();
+
+  // 使用客户端钩子获取文档分类
+  const { categories, loading, error } = useDocCategories();
+
+  // 调试信息
+  useEffect(() => {
+    console.log('文档页面路径:', pathname);
+    console.log('文档分类加载状态:', loading);
+    console.log('文档分类数量:', categories.length);
+    if (error) {
+      console.error('文档分类加载错误:', error);
+    }
+  }, [pathname, loading, categories.length, error]);
 
   return (
-    <main className="container mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">文档中心</h1>
-
-      {/* 使用客户端组件渲染文档列表 */}
-      <DocsList categories={categories} />
-    </main>
+    <PageLayout pageTitle="文档中心" className="py-10">
+      {loading ? (
+        <div className="animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-40 bg-muted rounded"></div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <DocsList categories={categories} />
+      )}
+    </PageLayout>
   );
 }

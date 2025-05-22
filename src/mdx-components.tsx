@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
 import React from 'react';
-import Image, { ImageProps } from 'next/image'
-import Link from 'next/link'
-import { CodeBlock, InlineCode } from '@/components/ui/markdown'
-import { H1, H2, H3, H4 } from '@/components/ui/markdown/heading-with-anchor'
+import Image, { ImageProps } from 'next/image';
+import { CodeBlock, InlineCode } from '@/components/ui/markdown';
+import { H1, H2, H3, H4 } from '@/components/ui/markdown/heading-with-anchor';
+import { MarkdownLink } from '@/components/ui/markdown/link';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -15,9 +15,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
   return {
     // 基础包装器，使用 Typography 插件样式
     wrapper: ({ children }: { children: React.ReactNode }) => (
-      <article className="prose dark:prose-invert max-w-none pl-8 relative">
-        {children}
-      </article>
+      <article className="prose dark:prose-invert max-w-none pl-8 relative">{children}</article>
     ),
 
     // 标题组件
@@ -43,32 +41,28 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
 
     // 自定义链接组件
     a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-      const isInternal = href && !href.startsWith('http') && !href.startsWith('#');
-
-      if (isInternal) {
-        return (
-          <Link href={href || '#'} {...props} className="text-primary font-medium underline-offset-4 hover:text-primary/80 text-right">
-            {children}
-          </Link>
-        );
-      }
+      if (!href) return <span {...props}>{children}</span>;
 
       return (
-        <a
+        <MarkdownLink
           href={href}
-          target={href?.startsWith('http') ? '_blank' : undefined}
-          rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="text-primary font-medium underline-offset-4 hover:text-primary/80"
+          isExternal={
+            href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')
+          }
           {...props}
         >
           {children}
-        </a>
+        </MarkdownLink>
       );
     },
 
     // 使用自定义代码块组件
     pre: ({ children, className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
-      return <CodeBlock className={className} {...props}>{children}</CodeBlock>;
+      return (
+        <CodeBlock className={className} {...props}>
+          {children}
+        </CodeBlock>
+      );
     },
 
     // 使用自定义行内代码组件

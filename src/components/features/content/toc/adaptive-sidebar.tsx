@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
-import { TableOfContentsClientWrapper } from "./toc-client-wrapper";
-import { AdvertisementCard } from "../advertisement-card";
-import { cn } from "@/lib/utils";
+import React, { useEffect, useRef, useState } from 'react';
+import { TableOfContentsClientWrapper } from './toc-client-wrapper';
+import { cn } from '@/lib/utils';
 
 interface AdaptiveSidebarProps {
   headings: Array<{
@@ -16,11 +15,9 @@ interface AdaptiveSidebarProps {
 
 /**
  * 自适应侧边栏组件
- * 
- * 根据目录内容的高度动态调整广告卡片的位置：
- * - 当目录内容较短时，广告卡片直接跟随在目录下方
- * - 当目录内容即将超出视口高度时，广告卡片固定在右下角
- * 
+ *
+ * 显示文档目录，自适应视口高度
+ *
  * @param props 组件属性
  * @returns 侧边栏组件
  */
@@ -42,11 +39,9 @@ export function AdaptiveSidebar({ headings, className }: AdaptiveSidebarProps) {
       if (tocRef.current) {
         const height = tocRef.current.scrollHeight;
         setTocHeight(height);
-        
-        // 判断是否需要固定广告卡片
-        // 如果目录高度 + 广告卡片高度(约150px) + 顶部间距(80px) > 视口高度 - 底部间距(20px)
-        const shouldFix = height + 150 + 80 > window.innerHeight - 20;
-        setIsFixed(shouldFix);
+
+        // 不再需要判断是否固定广告卡片，因为已经移除了广告卡片
+        setIsFixed(false);
       }
     };
 
@@ -69,33 +64,11 @@ export function AdaptiveSidebar({ headings, className }: AdaptiveSidebarProps) {
   }, [headings]);
 
   return (
-    <div className={cn("space-y-4 flex flex-col h-[calc(100vh-5rem)]", className)}>
+    <div className={cn('flex flex-col h-[calc(100vh-5rem)]', className)}>
       {/* 目录容器 */}
-      <div 
-        ref={tocRef} 
-        className={cn(
-          "overflow-y-auto scrollbar-hide",
-          isFixed ? "flex-grow" : ""
-        )}
-      >
-        {headings.length > 0 && (
-          <TableOfContentsClientWrapper headings={headings} />
-        )}
-        
-        {/* 当不需要固定时，广告卡片直接跟随在目录下方 */}
-        {!isFixed && (
-          <div className="mt-4">
-            <AdvertisementCard />
-          </div>
-        )}
+      <div ref={tocRef} className="overflow-y-auto scrollbar-hide flex-grow">
+        {headings.length > 0 && <TableOfContentsClientWrapper headings={headings} />}
       </div>
-
-      {/* 当需要固定时，广告卡片固定在底部 */}
-      {isFixed && (
-        <div className="flex-shrink-0 sticky bottom-4">
-          <AdvertisementCard />
-        </div>
-      )}
     </div>
   );
 }

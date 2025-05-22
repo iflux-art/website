@@ -264,10 +264,20 @@ export default function CategoryPage({ params }: { params: { category: string } 
               {allTags.slice(0, 5).map(tag => (
                 <div
                   key={tag}
-                  className={`text-xs px-2 py-1 rounded-md cursor-pointer ${
+                  className={`text-xs px-2 py-1 rounded-md cursor-pointer border ${
                     selectedTags.includes(tag)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground'
+                      ? 'bg-primary text-primary-foreground border-primary/50'
+                      : getTagColorClasses(
+                          tag.toLowerCase().includes('react')
+                            ? 'blue'
+                            : tag.toLowerCase().includes('vue')
+                            ? 'green'
+                            : tag.toLowerCase().includes('angular')
+                            ? 'red'
+                            : tag.toLowerCase().includes('design')
+                            ? 'purple'
+                            : 'default'
+                        )
                   }`}
                   onClick={() => {
                     if (selectedTags.includes(tag)) {
@@ -294,7 +304,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
               {selectedTags.map(tag => (
                 <div
                   key={tag}
-                  className="flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-primary text-primary-foreground"
+                  className="flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-primary text-primary-foreground border border-primary/50"
                 >
                   {tag}
                   <span
@@ -373,18 +383,31 @@ export default function CategoryPage({ params }: { params: { category: string } 
                         <div className="text-xs px-2 py-1 rounded-md bg-secondary text-secondary-foreground mr-1">
                           {link.subcategory}
                         </div>
-                        {link.tags.slice(0, 2).map((tag, tagIndex) => (
-                          <div
-                            key={`${tag}-${tagIndex}`}
-                            className={`text-xs px-2 py-1 rounded-md ${
-                              selectedTags.includes(tag)
-                                ? 'bg-primary/10 border border-primary/30'
-                                : 'bg-muted text-muted-foreground'
-                            }`}
-                          >
-                            {tag}
-                          </div>
-                        ))}
+                        {link.tags.slice(0, 2).map((tag, tagIndex) => {
+                          // 根据标签名称选择颜色
+                          const tagColor = tag.toLowerCase().includes('react')
+                            ? 'blue'
+                            : tag.toLowerCase().includes('vue')
+                            ? 'green'
+                            : tag.toLowerCase().includes('angular')
+                            ? 'red'
+                            : tag.toLowerCase().includes('design')
+                            ? 'purple'
+                            : 'default';
+
+                          return (
+                            <div
+                              key={`${tag}-${tagIndex}`}
+                              className={`text-xs px-2 py-1 rounded-md border ${
+                                selectedTags.includes(tag)
+                                  ? 'bg-primary/10 border-primary/30 text-primary-foreground'
+                                  : getTagColorClasses(tagColor)
+                              }`}
+                            >
+                              {tag}
+                            </div>
+                          );
+                        })}
                         {link.tags.length > 2 && (
                           <div className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground">
                             +{link.tags.length - 2}

@@ -1,7 +1,7 @@
 ---
-title: "Tailwind CSS 动画完全指南：实用技巧与最佳实践"
-excerpt: "探索 Tailwind CSS 的动画功能，从内置动画类到自定义配置，轻松实现优雅的 UI 动效"
-date: "2024-05-25"
+title: 'Tailwind CSS 动画完全指南：实用技巧与最佳实践'
+excerpt: '探索 Tailwind CSS 的动画功能，从内置动画类到自定义配置，轻松实现优雅的 UI 动效'
+date: '2024-05-25'
 tags:
   - Tailwind CSS
   - 动画
@@ -28,16 +28,16 @@ Tailwind CSS 默认提供了几个内置的动画类：
 
 ```html
 <!-- 旋转动画 -->
-<div class="animate-spin h-5 w-5 rounded-full border-2 border-gray-300 border-t-blue-600"></div>
+<div class="animate-spin h-5 w-5 rounded-full border-2 border-border border-t-primary"></div>
 
 <!-- 缩放淡出动画 -->
-<span class="animate-ping absolute h-3 w-3 rounded-full bg-red-500 opacity-75"></span>
+<span class="animate-ping absolute h-3 w-3 rounded-full bg-[oklch(0.6_0.2_20)] opacity-75"></span>
 
 <!-- 淡入淡出动画 -->
-<div class="animate-pulse bg-gray-200 rounded h-10 w-full"></div>
+<div class="animate-pulse bg-muted rounded h-10 w-full"></div>
 
 <!-- 弹跳动画 -->
-<div class="animate-bounce w-10 h-10 bg-blue-500 rounded-full"></div>
+<div class="animate-bounce w-10 h-10 bg-primary rounded-full"></div>
 ```
 
 ### 内置动画的实现
@@ -55,23 +55,26 @@ Tailwind CSS 默认提供了几个内置的动画类：
 }
 
 @keyframes ping {
-  75%, 100% {
+  75%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
@@ -116,45 +119,41 @@ module.exports = {
         'fade-in-down': {
           '0%': {
             opacity: '0',
-            transform: 'translateY(-10px)'
+            transform: 'translateY(-10px)',
           },
           '100%': {
             opacity: '1',
-            transform: 'translateY(0)'
+            transform: 'translateY(0)',
           },
         },
         'fade-out-up': {
-          'from': {
+          from: {
             opacity: '1',
-            transform: 'translateY(0px)'
+            transform: 'translateY(0px)',
           },
-          'to': {
+          to: {
             opacity: '0',
-            transform: 'translateY(-10px)'
+            transform: 'translateY(-10px)',
           },
-        }
+        },
       },
       // 定义动画
       animation: {
         'fade-in-down': 'fade-in-down 0.5s ease-out',
         'fade-out-up': 'fade-out-up 0.5s ease-out',
-      }
+      },
     },
   },
   plugins: [],
-}
+};
 ```
 
 然后，你可以在 HTML 中使用这些自定义动画类：
 
 ```html
-<div class="animate-fade-in-down">
-  这个元素会从上方淡入
-</div>
+<div class="animate-fade-in-down">这个元素会从上方淡入</div>
 
-<div class="animate-fade-out-up">
-  这个元素会向上淡出
-</div>
+<div class="animate-fade-out-up">这个元素会向上淡出</div>
 ```
 
 ### 动画持续时间和时间函数
@@ -214,7 +213,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       const newUtilities = {
         '.iteration-count-1': {
           'animation-iteration-count': '1',
@@ -222,11 +221,11 @@ module.exports = {
         '.iteration-count-infinite': {
           'animation-iteration-count': 'infinite',
         },
-      }
-      addUtilities(newUtilities)
-    }
+      };
+      addUtilities(newUtilities);
+    },
   ],
-}
+};
 ```
 
 ## 高级 Tailwind CSS 动画技巧
@@ -244,14 +243,14 @@ module.exports = {
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg) scale(1.1)' },
           '50%': { transform: 'rotate(3deg) scale(0.9)' },
-        }
+        },
       },
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
-      }
+      },
     },
   },
-}
+};
 ```
 
 ### 2. 响应式动画
@@ -289,7 +288,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       const newUtilities = {
         '.animate-fill-none': {
           'animation-fill-mode': 'none',
@@ -303,11 +302,11 @@ module.exports = {
         '.animate-fill-both': {
           'animation-fill-mode': 'both',
         },
-      }
-      addUtilities(newUtilities)
-    }
+      };
+      addUtilities(newUtilities);
+    },
   ],
-}
+};
 ```
 
 然后在 HTML 中使用：
@@ -331,20 +330,20 @@ module.exports = {
         'fade-in-delay': {
           '0%': {
             opacity: '0',
-            transform: 'translateY(var(--offset, 10px))'
+            transform: 'translateY(var(--offset, 10px))',
           },
           '100%': {
             opacity: '1',
-            transform: 'translateY(0)'
+            transform: 'translateY(0)',
           },
-        }
+        },
       },
       animation: {
         'fade-in-delay': 'fade-in-delay var(--duration, 0.5s) var(--delay, 0s) ease-out forwards',
-      }
+      },
     },
   },
-}
+};
 ```
 
 在 HTML 中使用：
@@ -370,11 +369,18 @@ module.exports = {
 ```html
 <div class="relative">
   <span class="absolute top-0 right-0 block h-2 w-2">
-    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+    <span
+      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+    ></span>
     <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
   </span>
   <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+    />
   </svg>
 </div>
 ```
@@ -397,7 +403,9 @@ module.exports = {
 ### 4. 按钮点击效果
 
 ```html
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 transform active:scale-95">
+<button
+  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 transform active:scale-95"
+>
   点击我
 </button>
 ```
@@ -405,7 +413,9 @@ module.exports = {
 ### 5. 卡片悬停效果
 
 ```html
-<div class="transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg bg-white rounded-lg p-6">
+<div
+  class="transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg bg-white rounded-lg p-6"
+>
   <h3 class="text-lg font-semibold">卡片标题</h3>
   <p class="text-gray-600">卡片内容</p>
 </div>
@@ -429,15 +439,15 @@ module.exports = {
 添加对 `prefers-reduced-motion` 的支持：
 
 ```js
-// tailwind.config.js
-module.exports = {
+// tailwind.config.mjs
+export default {
   theme: {
     extend: {
       // ...
     },
   },
   plugins: [
-    function({ addBase }) {
+    function ({ addBase }) {
       addBase({
         '@media (prefers-reduced-motion: reduce)': {
           '*': {
@@ -447,10 +457,10 @@ module.exports = {
             'scroll-behavior': 'auto !important',
           },
         },
-      })
-    }
+      });
+    },
   ],
-}
+};
 ```
 
 ### 4. 组织动画配置
@@ -459,26 +469,26 @@ module.exports = {
 
 ```js
 // animations.js
-module.exports = {
+export default {
   keyframes: {
     // 所有关键帧定义
   },
   animation: {
     // 所有动画定义
-  }
-}
+  },
+};
 
-// tailwind.config.js
-const animations = require('./animations.js')
+// tailwind.config.mjs
+import animations from './animations.js';
 
-module.exports = {
+export default {
   theme: {
     extend: {
       keyframes: animations.keyframes,
       animation: animations.animation,
     },
   },
-}
+};
 ```
 
 ## 结论

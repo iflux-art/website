@@ -1,18 +1,23 @@
-"use client";
+'use client';
 
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { Tag, Clock, X } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 
 import { BlogList } from '@/components/features/blog/blog-list';
-import { useTags } from '@/hooks/use-blog';
+import { useTags, useBlogPosts } from '@/hooks/use-blog';
 import { Button } from '@/components/ui/button';
 
 // 导入标签过滤器组件
 import { BlogTagFilter } from '@/components/features/blog/blog-tag-filter';
 
 export default function BlogPage() {
+  const pathname = usePathname();
+
+  // 预加载博客文章
+  const { posts, loading: postsLoading } = useBlogPosts();
+
   // 获取所有标签
   const { tags: allTags, loading: tagsLoading } = useTags();
 
@@ -23,6 +28,13 @@ export default function BlogPage() {
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag);
   };
+
+  // 调试信息
+  useEffect(() => {
+    console.log('博客页面路径:', pathname);
+    console.log('博客文章加载状态:', postsLoading);
+    console.log('博客文章数量:', posts.length);
+  }, [pathname, postsLoading, posts.length]);
 
   return (
     <main className="container mx-auto py-10 px-4">
@@ -57,10 +69,7 @@ export default function BlogPage() {
       </Suspense>
 
       {/* 直接使用 BlogList 组件，不需要额外的网格容器 */}
-      <BlogList
-        filterTag={selectedTag}
-        onTagClick={handleTagClick}
-      />
+      <BlogList filterTag={selectedTag} onTagClick={handleTagClick} />
     </main>
   );
 }

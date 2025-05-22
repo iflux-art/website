@@ -26,7 +26,8 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
     // 如果只有一个段落，尝试查找该目录下的第一个文件
     const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', category);
     if (fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()) {
-      const files = fs.readdirSync(categoryDir)
+      const files = fs
+        .readdirSync(categoryDir)
         .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
         .sort();
 
@@ -55,20 +56,22 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
   // 获取目录中的所有文档
   const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', category);
-  const allDocs = fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()
-    ? fs.readdirSync(categoryDir)
-      .filter(file => file.endsWith('.mdx'))
-      .map(file => {
-        const docPath = path.join(categoryDir, file);
-        const docContent = fs.readFileSync(docPath, 'utf8');
-        const { data } = matter(docContent);
-        return {
-          slug: file.replace('.mdx', ''),
-          title: data.title || file.replace('.mdx', ''),
-          path: `/docs/${category}/${file.replace('.mdx', '')}`
-        };
-      })
-    : [];
+  const allDocs =
+    fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()
+      ? fs
+          .readdirSync(categoryDir)
+          .filter(file => file.endsWith('.mdx'))
+          .map(file => {
+            const docPath = path.join(categoryDir, file);
+            const docContent = fs.readFileSync(docPath, 'utf8');
+            const { data } = matter(docContent);
+            return {
+              slug: file.replace('.mdx', ''),
+              title: data.title || file.replace('.mdx', ''),
+              path: `/docs/${category}/${file.replace('.mdx', '')}`,
+            };
+          })
+      : [];
 
   // 检查是否存在_meta.json文件（替代_meta.tsx）
   const metaFilePath = path.join(categoryDir, '_meta.json');
@@ -110,7 +113,12 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
     const level = match[1].length;
     const text = match[2].trim();
     const customId = match[3];
-    const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${match.index}`;
+    const id =
+      customId ||
+      `heading-${text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
 
     // 只包含1-4级标题（h1-h4）
     if (level >= 1 && level <= 4) {
@@ -126,17 +134,29 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
   // 确保所有标题都有唯一ID
   let processedContent = content;
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     // 替换标题行，添加ID
-    const headingRegex = new RegExp(`^(#{${heading.level}})\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\s*{#[\w-]+})?$`, 'gm');
+    const headingRegex = new RegExp(
+      `^(#{${heading.level}})\s+(${heading.text.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )})(?:\s*{#[\w-]+})?$`,
+      'gm'
+    );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
   });
 
   // 对每个标题再次检查并确保它们有唯一ID
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     // 查找没有ID的标题并添加ID
     processedContent = processedContent.replace(
-      new RegExp(`(^|\n)(#{${heading.level}})\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?!\s*{#)`, 'g'),
+      new RegExp(
+        `(^|\n)(#{${heading.level}})\s+(${heading.text.replace(
+          /[-/\\^$*+?.()|[\]{}]/g,
+          '\\$&'
+        )})(?!\s*{#)`,
+        'g'
+      ),
       `$1$2 $3 {#${heading.id}}`
     );
   });
@@ -157,10 +177,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
           <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
             <Suspense fallback={<div className="h-[500px] bg-muted rounded-md"></div>}>
               <div className="no-animation">
-                <DocSidebar
-                  category={category}
-                  currentDoc={docName}
-                />
+                <DocSidebar category={category} currentDoc={docName} />
               </div>
             </Suspense>
           </div>
@@ -173,12 +190,12 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
             <div className="mb-6">
               <Breadcrumb
                 items={[
-                  { label: "文档", href: "/docs" },
+                  { label: '文档', href: '/docs' },
                   {
                     label: rootMeta && rootMeta[category] ? rootMeta[category].title : category,
-                    href: `/docs/${category}`
+                    href: `/docs/${category}`,
                   },
-                  ...(slug.length > 1 ? [{ label: data.title }] : [])
+                  ...(slug.length > 1 ? [{ label: data.title }] : []),
                 ]}
               />
             </div>
@@ -216,14 +233,14 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
                 </Card>
               )}
             </div>
-            </div>
           </div>
+        </div>
 
-        {/* 右侧边栏 - 目录和广告 */}
+        {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
           <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
             <Suspense fallback={<div className="h-[300px] bg-muted rounded-md"></div>}>
-              {/* 使用自适应侧边栏组件，根据目录内容高度动态调整广告卡片位置 */}
+              {/* 使用自适应侧边栏组件显示文档目录 */}
               <AdaptiveSidebar headings={headings} />
             </Suspense>
           </div>

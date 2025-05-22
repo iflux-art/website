@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { MacStyleCodeBlock } from './mac-style-code-block';
 import { SpecialCodeBlock } from './special-code-block';
 import { CodeProps } from './code-block.types';
+import { InlineCode } from '../inline-code';
 
 /**
  * 代码块组件集合
@@ -43,17 +44,11 @@ export const codeBlockComponents = {
         </MacStyleCodeBlock>
       );
     } else {
-      // 内联代码 - 使用简单的内联样式，与 macOS 风格协调
+      // 内联代码 - 使用 InlineCode 组件
       return (
-        <code
-          className={cn(
-            'rounded-md px-1.5 py-0.5 text-sm font-mono border',
-            'dark:bg-muted/50 dark:border-border/50 dark:text-foreground',
-            'bg-muted/30 border-border/30 text-foreground',
-            className
-          )}
-          {...props}
-        />
+        <InlineCode className={className} {...props}>
+          {props.children}
+        </InlineCode>
       );
     }
   },

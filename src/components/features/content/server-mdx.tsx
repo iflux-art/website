@@ -1,16 +1,14 @@
-import React from "react";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import React from 'react';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image, { ImageProps } from 'next/image';
-import Link from 'next/link';
 import { CodeBlock, InlineCode } from '@/components/ui/markdown';
+import { MarkdownLink } from '@/components/ui/markdown/link';
 
 // 定义服务器端 MDX 组件
 const components = {
   // 基础包装器
   wrapper: ({ children }: { children: React.ReactNode }) => (
-    <div className="prose dark:prose-invert max-w-none">
-      {children}
-    </div>
+    <div className="prose dark:prose-invert max-w-none">{children}</div>
   ),
 
   // 图片组件
@@ -30,36 +28,25 @@ const components = {
 
   // 自定义链接组件
   a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const isInternal = href && !href.startsWith('http') && !href.startsWith('#');
-
-    if (isInternal) {
-      return (
-        <Link href={href || '#'} {...props} className="text-primary font-medium underline-offset-4 hover:text-primary/80">
-          {children}
-        </Link>
-      );
-    }
+    if (!href) return <span {...props}>{children}</span>;
 
     return (
-      <a
+      <MarkdownLink
         href={href}
-        target={href?.startsWith('http') ? '_blank' : undefined}
-        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className="text-primary font-medium underline-offset-4 hover:text-primary/80"
+        isExternal={
+          href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')
+        }
         {...props}
       >
         {children}
-      </a>
+      </MarkdownLink>
     );
   },
 
   // 代码块组件
   pre: ({ children, className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
     return (
-      <CodeBlock
-        className={className}
-        {...props}
-      >
+      <CodeBlock className={className} {...props}>
         {children}
       </CodeBlock>
     );

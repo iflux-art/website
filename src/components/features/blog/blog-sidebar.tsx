@@ -1,12 +1,12 @@
-import React from "react";
-import { AdaptiveSidebar } from "@/components/features/content/toc/adaptive-sidebar";
-import { BlogSidebarProps } from "./blog-sidebar.types";
+import React from 'react';
+import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
+import { BlogSidebarProps } from './blog-sidebar.types';
 
 /**
  * 博客侧边栏组件
  *
- * 用于显示博客文章的侧边栏，包括目录和广告
- * 使用自适应侧边栏组件，根据目录内容高度动态调整广告卡片位置
+ * 用于显示博客文章的侧边栏，包括目录
+ * 使用自适应侧边栏组件显示文章目录
  *
  * @param {BlogSidebarProps} props - 组件属性
  * @returns {JSX.Element} 博客侧边栏组件
@@ -19,7 +19,5 @@ import { BlogSidebarProps } from "./blog-sidebar.types";
  * ```
  */
 export function BlogSidebar({ headings }: BlogSidebarProps) {
-  return (
-    <AdaptiveSidebar headings={headings} className="pr-1" />
-  );
+  return <AdaptiveSidebar headings={headings} className="pr-1" />;
 }

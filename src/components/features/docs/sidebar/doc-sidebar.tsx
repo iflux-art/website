@@ -1,14 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ChevronRight } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useDocSidebar } from "@/hooks/use-docs";
-import { DocSidebarItem } from "@/types/docs";
+import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useDocSidebar } from '@/hooks/use-docs';
+import { DocSidebarItem } from '@/types/docs';
+import { ActiveLink } from './active-link';
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== 'undefined';
@@ -66,7 +67,8 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
       loading,
       error,
       windowHeight: typeof window !== 'undefined' ? window.innerHeight : 'unknown',
-      documentHeight: typeof document !== 'undefined' ? document.documentElement.clientHeight : 'unknown'
+      documentHeight:
+        typeof document !== 'undefined' ? document.documentElement.clientHeight : 'unknown',
     });
   }, [category, currentDoc, items, loading, error]);
 
@@ -94,7 +96,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
           viewportHeight,
           shouldScroll: shouldAllowScroll,
           elementHeight: sidebarRef.current.offsetHeight,
-          windowHeight: window.innerHeight
+          windowHeight: window.innerHeight,
         });
       }
     };
@@ -126,20 +128,23 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   }, [items]);
 
   // 处理折叠面板打开/关闭
-  const handleOpenChange = useCallback((itemId: string, open: boolean) => {
-    setOpenCategories(prev => {
-      const newState = { ...prev, [itemId]: open };
-      // 保存到 localStorage（仅在客户端）
-      if (isBrowser) {
-        try {
-          localStorage.setItem(localStorageKey, JSON.stringify(newState));
-        } catch (e) {
-          console.error('保存折叠状态失败:', e);
+  const handleOpenChange = useCallback(
+    (itemId: string, open: boolean) => {
+      setOpenCategories(prev => {
+        const newState = { ...prev, [itemId]: open };
+        // 保存到 localStorage（仅在客户端）
+        if (isBrowser) {
+          try {
+            localStorage.setItem(localStorageKey, JSON.stringify(newState));
+          } catch (e) {
+            console.error('保存折叠状态失败:', e);
+          }
         }
-      }
-      return newState;
-    });
-  }, [localStorageKey]);
+        return newState;
+      });
+    },
+    [localStorageKey]
+  );
 
   // 处理鼠标悬停
   const handleMouseEnter = useCallback((itemId: string) => {
@@ -154,102 +159,99 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   // 移除了内容引用处理函数
 
   // 渲染侧边栏项目
-  const renderItems = useCallback((items: DocSidebarItem[], level: number = 0, parentPath: string = '') => {
-    return items.map((item, index) => {
-      const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
-      const hasItems = item.items && item.items.length > 0;
-      const isActive = item.href ? pathname === item.href : false;
-      const isSeparator = item.type === 'separator';
-      const isExternal = item.isExternal;
+  const renderItems = useCallback(
+    (items: DocSidebarItem[], level: number = 0, parentPath: string = '') => {
+      return items.map((item, index) => {
+        const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
+        const hasItems = item.items && item.items.length > 0;
 
-      // 分隔符
-      if (isSeparator) {
+        // 不再需要在这里判断活动状态，由 ActiveLink 组件处理
+
+        const isSeparator = item.type === 'separator';
+        const isExternal = item.isExternal;
+
+        // 分隔符
+        if (isSeparator) {
+          return (
+            <li key={itemId} className="my-3">
+              <div className="h-px bg-border/60 w-full" />
+              {item.title && (
+                <div className="text-xs text-muted-foreground mt-2 px-2 uppercase font-medium">
+                  {item.title}
+                </div>
+              )}
+            </li>
+          );
+        }
+
         return (
-          <li key={itemId} className="my-3">
-            <div className="h-px bg-border/60 w-full" />
-            {item.title && (
-              <div className="text-xs text-muted-foreground mt-2 px-2 uppercase font-medium">
-                {item.title}
+          <li key={itemId} className="my-1">
+            {hasItems ? (
+              <div>
+                <Collapsible
+                  open={openCategories[itemId]}
+                  onOpenChange={open => handleOpenChange(itemId, open)}
+                >
+                  <div className="flex items-center">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-2 rounded-md text-sm group hover:bg-accent/50">
+                      <span
+                        className={cn(
+                          'font-medium',
+                          isHovering === itemId ? 'text-foreground' : 'text-muted-foreground'
+                        )}
+                      >
+                        {item.title}
+                      </span>
+                      <span className="ml-1 text-muted-foreground">
+                        <ChevronRight
+                          className={cn('h-4 w-4', openCategories[itemId] && 'rotate-90')}
+                        />
+                      </span>
+                    </CollapsibleTrigger>
+                  </div>
+                  <CollapsibleContent>
+                    <ul className="mt-1 space-y-1 pl-3 pt-1 border-l border-border/30 ml-2">
+                      {renderItems(item.items || [], level + 1, itemId)}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
               </div>
+            ) : (
+              <ActiveLink
+                href={item.href || '#'}
+                currentDoc={currentDoc}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                onMouseEnter={() => handleMouseEnter(itemId)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <span>{item.title}</span>
+                {isExternal && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="ml-1"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                )}
+              </ActiveLink>
             )}
           </li>
         );
-      }
-
-      return (
-        <li key={itemId} className="my-1">
-          {hasItems ? (
-            <div>
-              <Collapsible
-                open={openCategories[itemId]}
-                onOpenChange={(open) => handleOpenChange(itemId, open)}
-              >
-                <div className="flex items-center">
-                  <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-2 rounded-md text-sm group hover:bg-accent/50">
-                    <span className={cn(
-                      "font-medium",
-                      isHovering === itemId ? "text-foreground" : "text-muted-foreground"
-                    )}>
-                      {item.title}
-                    </span>
-                    <span className="ml-1 text-muted-foreground">
-                      <ChevronRight
-                        className={cn(
-                          "h-4 w-4",
-                          openCategories[itemId] && "rotate-90"
-                        )}
-                      />
-                    </span>
-                  </CollapsibleTrigger>
-                </div>
-                <CollapsibleContent>
-                  <ul
-                    className="mt-1 space-y-1 pl-3 pt-1 border-l border-border/30 ml-2"
-                  >
-                    {renderItems(item.items || [], level + 1, itemId)}
-                  </ul>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          ) : (
-            <Link
-              href={item.href || "#"}
-              target={isExternal ? "_blank" : undefined}
-              rel={isExternal ? "noopener noreferrer" : undefined}
-              className={cn(
-                "flex items-center justify-between py-2 px-2 rounded-md text-sm",
-                isActive
-                  ? "bg-accent/80 text-primary font-medium shadow-sm rounded-md"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
-              )}
-              onMouseEnter={() => handleMouseEnter(itemId)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <span>{item.title}</span>
-              {isExternal && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="ml-1"
-                >
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  <polyline points="15 3 21 3 21 9"></polyline>
-                  <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-              )}
-            </Link>
-          )}
-        </li>
-      );
-    });
-  }, [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave]);
+      });
+    },
+    [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave]
+  );
 
   // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
   const MemoizedSidebarItems = useMemo(() => {
@@ -261,60 +263,69 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   }, [items, loading, error, renderItems]);
 
   // 递归函数，用于设置初始折叠状态
-  const setInitialState = useCallback((items: DocSidebarItem[], parentPath: string = '', result: Record<string, boolean> = {}) => {
-    items.forEach((item, index) => {
-      const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
+  const setInitialState = useCallback(
+    (items: DocSidebarItem[], parentPath: string = '', result: Record<string, boolean> = {}) => {
+      items.forEach((item, index) => {
+        const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
 
-      // 如果项目有 collapsed 属性，使用它
-      if (item.collapsed !== undefined) {
-        result[itemId] = !item.collapsed;
-      }
+        // 如果项目有 collapsed 属性，使用它
+        if (item.collapsed !== undefined) {
+          result[itemId] = !item.collapsed;
+        }
 
-      // 如果有子项目，递归处理
-      if (item.items && item.items.length > 0) {
-        setInitialState(item.items, itemId, result);
-      }
-    });
+        // 如果有子项目，递归处理
+        if (item.items && item.items.length > 0) {
+          setInitialState(item.items, itemId, result);
+        }
+      });
 
-    return result;
-  }, []);
+      return result;
+    },
+    []
+  );
 
   // 递归函数，用于查找当前文档并打开其路径
-  const findAndOpenPath = useCallback((items: DocSidebarItem[], pathname: string, parentPath: string = '', result: Record<string, boolean> = {}) => {
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const itemId = parentPath ? `${parentPath}-${i}` : `${i}`;
+  const findAndOpenPath = useCallback(
+    (
+      items: DocSidebarItem[],
+      pathname: string,
+      parentPath: string = '',
+      result: Record<string, boolean> = {}
+    ) => {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const itemId = parentPath ? `${parentPath}-${i}` : `${i}`;
 
-      // 检查是否是当前文档
-      if (item.href === pathname) {
-        // 打开从根到当前文档的所有父级
-        let currentParent = parentPath;
-        while (currentParent) {
-          const lastDashIndex = currentParent.lastIndexOf('-');
-          if (lastDashIndex === -1) {
+        // 检查是否是当前文档
+        if (item.href === pathname) {
+          // 打开从根到当前文档的所有父级
+          let currentParent = parentPath;
+          while (currentParent) {
+            const lastDashIndex = currentParent.lastIndexOf('-');
+            if (lastDashIndex === -1) {
+              result[currentParent] = true;
+              break;
+            }
             result[currentParent] = true;
-            break;
+            currentParent = currentParent.substring(0, lastDashIndex);
           }
-          result[currentParent] = true;
-          currentParent = currentParent.substring(0, lastDashIndex);
-        }
-        return true;
-      }
-
-      // 如果有子项目，递归查找
-      if (item.items && item.items.length > 0) {
-        const found = findAndOpenPath(item.items, pathname, itemId, result);
-        if (found) {
-          result[itemId] = true;
           return true;
         }
+
+        // 如果有子项目，递归查找
+        if (item.items && item.items.length > 0) {
+          const found = findAndOpenPath(item.items, pathname, itemId, result);
+          if (found) {
+            result[itemId] = true;
+            return true;
+          }
+        }
       }
-    }
 
-    return false;
-  }, []);
-
-
+      return false;
+    },
+    []
+  );
 
   // 初始化打开的分类
   useEffect(() => {
@@ -345,8 +356,6 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
 
     setOpenCategories(mergedState);
   }, [items, currentDoc, pathname, setInitialState, findAndOpenPath, localStorageKey]);
-
-
 
   // 加载状态
   if (loading) {
@@ -388,20 +397,16 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
     );
   }
 
-
-
   return (
     <div
       ref={sidebarRef}
       className={`${shouldScroll ? 'overflow-y-auto' : 'overflow-y-visible'} scrollbar-hide`}
       style={{
-        maxHeight: shouldScroll ? 'calc(100vh - 7rem)' : 'none'
+        maxHeight: shouldScroll ? 'calc(100vh - 7rem)' : 'none',
       }}
     >
       <div>
-        <ul className="space-y-1">
-          {MemoizedSidebarItems}
-        </ul>
+        <ul className="space-y-1">{MemoizedSidebarItems}</ul>
       </div>
     </div>
   );

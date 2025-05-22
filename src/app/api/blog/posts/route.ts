@@ -7,29 +7,29 @@ import matter from 'gray-matter';
 function getAllPosts() {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
-  
+
   const posts = [];
-  
+
   // 递归函数来查找所有博客文件
   const findPosts = (dir: string) => {
     const items = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item.name);
-      
+
       if (item.isDirectory()) {
         findPosts(itemPath);
       } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
         const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
-        
+
         // 只包含已发布的文章
         if (data.published !== false) {
           // 计算slug
           let slug = '';
           const relativePath = path.relative(blogDir, itemPath);
           const pathParts = relativePath.split(path.sep);
-          
+
           if (pathParts.length === 1) {
             // 直接在blog目录下的文件
             slug = pathParts[0].replace(/\.(mdx|md)$/, '');
@@ -38,21 +38,21 @@ function getAllPosts() {
             const fileName = pathParts.pop() || '';
             slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
           }
-          
+
           posts.push({
             slug,
             title: data.title || slug,
             excerpt: data.excerpt || '点击阅读全文',
             date: data.date,
-            tags: data.tags || []
+            tags: data.tags || [],
           });
         }
       }
     }
   };
-  
+
   findPosts(blogDir);
-  
+
   // 按日期排序
   return posts.sort((a, b) => {
     if (a.date && b.date) {
@@ -65,12 +65,14 @@ function getAllPosts() {
 export async function GET() {
   try {
     const posts = getAllPosts();
-    return NextResponse.json(posts);
+    // 设置缓存控制头，避免浏览器缓存
+    return NextResponse.json(posts, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    });
   } catch (error) {
     console.error('获取博客文章列表失败:', error);
-    return NextResponse.json(
-      { error: '获取博客文章列表失败' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: '获取博客文章列表失败' }, { status: 500 });
   }
 }

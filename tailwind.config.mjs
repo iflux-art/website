@@ -53,7 +53,6 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-
     },
   },
   // 在 Tailwind CSS v4 中，插件的使用方式有所变化

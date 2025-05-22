@@ -11,11 +11,13 @@ import { TypographyProps, HeadingProps } from './mdx-typography.types';
  */
 export function MDXTypography({ className, children }: TypographyProps) {
   return (
-    <div className={cn(
-      // 基础排版样式
-      'prose dark:prose-invert max-w-none',
-      className
-    )}>
+    <div
+      className={cn(
+        // 基础排版样式
+        'prose dark:prose-invert max-w-none',
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -25,18 +27,25 @@ export function MDXTypography({ className, children }: TypographyProps) {
  * 代码块组件
  */
 export function MDXCode({ className, children }: TypographyProps) {
-  return <code className={cn('font-mono', className)}>{children}</code>;
+  // 检查是否是代码块的一部分
+  const isCodeBlock = className?.includes('language-');
+
+  if (isCodeBlock) {
+    return <code className={cn('font-mono', className)}>{children}</code>;
+  }
+
+  // 导入 InlineCode 组件
+  const { InlineCode } = require('../inline-code');
+
+  // 使用 InlineCode 组件
+  return <InlineCode className={className}>{children}</InlineCode>;
 }
 
 /**
  * 预格式化文本块组件
  */
 export function MDXPre({ className, children }: TypographyProps) {
-  return (
-    <pre className={cn('overflow-x-auto', className)}>
-      {children}
-    </pre>
-  );
+  return <pre className={cn('overflow-x-auto', className)}>{children}</pre>;
 }
 
 /**
@@ -44,7 +53,9 @@ export function MDXPre({ className, children }: TypographyProps) {
  */
 export function MDXBlockquote({ className, children }: TypographyProps) {
   return (
-    <blockquote className={cn('mt-6 mb-6 border-l-4 border-muted-foreground/30 pl-6 italic', className)}>
+    <blockquote
+      className={cn('mt-6 mb-6 border-l-4 border-muted-foreground/30 pl-6 italic', className)}
+    >
       {children}
     </blockquote>
   );

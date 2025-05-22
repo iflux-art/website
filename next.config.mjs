@@ -34,6 +34,12 @@ const nextConfig = {
     // 优化页面加载
     optimisticClientCache: true,
   },
+  // 添加 CSS 优化
+  optimizeCss: true,
+  // 添加图片优化
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
   // 优化服务器组件
   serverExternalPackages: ['@mdx-js/react'],
 

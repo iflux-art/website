@@ -82,12 +82,12 @@ import Image from 'next/image';
 function Gallery() {
   return (
     <div>
-      <Image 
-        src="/images/large-image.jpg" 
-        alt="大图片" 
-        width={800} 
-        height={600} 
-        loading="lazy" 
+      <Image
+        src="/images/large-image.jpg"
+        alt="大图片"
+        width={800}
+        height={600}
+        loading="lazy"
       />
     </div>
   );
@@ -138,10 +138,10 @@ export default function Page() {
 ```tsx
 // 标签与表单控件关联
 <label htmlFor="username">用户名</label>
-<input 
-  id="username" 
-  name="username" 
-  aria-required="true" 
+<input
+  id="username"
+  name="username"
+  aria-required="true"
   aria-invalid={errors.username ? "true" : "false"}
   aria-describedby="username-error"
 />
@@ -177,10 +177,10 @@ function NavigationMenu() {
 
 ```tsx
 // 不推荐 - 低对比度
-<p className="text-gray-300 bg-gray-100">这段文字对比度不足</p>
+<p className="text-[oklch(0.8_0_0)] bg-[oklch(0.95_0_0)]">这段文字对比度不足</p>
 
 // 推荐 - 高对比度
-<p className="text-gray-900 bg-white">这段文字对比度充足</p>
+<p className="text-foreground bg-background">这段文字对比度充足</p>
 ```
 
 ### 5. 焦点管理
@@ -191,7 +191,7 @@ function NavigationMenu() {
 // 在全局样式中定义焦点样式
 // globals.css
 :focus-visible {
-  outline: 2px solid #4f46e5;
+  outline: 2px solid oklch(0.5 0.2 240);
   outline-offset: 2px;
 }
 
@@ -233,12 +233,12 @@ import HeavyComponent from './HeavyComponent';
 
 test('HeavyComponent 渲染性能测试', async () => {
   const { renderCount } = perf(React);
-  
+
   render(<HeavyComponent />);
-  
+
   // 等待所有异步操作完成
   await wait(() => expect(renderCount.current.HeavyComponent).toBe(1));
-  
+
   // 验证组件只渲染了一次
   expect(renderCount.current.HeavyComponent).toBe(1);
 });

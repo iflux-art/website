@@ -1,7 +1,7 @@
 ---
-title: "协调 shadcn/ui 与 Tailwind Typography：构建一致的设计系统"
-excerpt: "深入分析 shadcn/ui 与 Tailwind Typography 插件的异同，并提供实用策略来协调两者，打造和谐统一的用户界面"
-date: "2024-05-22"
+title: '协调 shadcn/ui 与 Tailwind Typography：构建一致的设计系统'
+excerpt: '深入分析 shadcn/ui 与 Tailwind Typography 插件的异同，并提供实用策略来协调两者，打造和谐统一的用户界面'
+date: '2024-05-22'
 tags:
   - shadcn/ui
   - Tailwind CSS
@@ -49,7 +49,7 @@ tags:
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -109,14 +109,17 @@ Typography 插件通过 CSS 变量定义了一系列排版相关的颜色和样�
 ### 关键区别
 
 1. **目标不同**：
+
    - **shadcn/ui**：专注于 UI 组件，如按钮、卡片、表单等。
    - **Typography**：专注于内容排版，如标题、段落、列表等。
 
 2. **应用范围**：
+
    - **shadcn/ui**：样式变量全局应用于整个应用。
    - **Typography**：样式仅应用于添加了 `prose` 类的元素。
 
 3. **变量定义**：
+
    - **shadcn/ui**：定义了 UI 相关的变量（背景、前景、卡片等）。
    - **Typography**：定义了排版相关的变量（正文、标题、链接等）。
 
@@ -193,7 +196,7 @@ Typography 为内容元素定义了特定的间距和排版规则，可能与 sh
 export default {
   theme: {
     extend: {
-      typography: (theme) => ({
+      typography: theme => ({
         DEFAULT: {
           css: {
             // 使用 shadcn/ui 的颜色变量
@@ -218,10 +221,8 @@ export default {
       }),
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
-}
+  plugins: [require('@tailwindcss/typography')],
+};
 ```
 
 这样，Typography 的颜色就会与 shadcn/ui 保持一致，创造统一的视觉体验。
@@ -242,21 +243,23 @@ interface ContentProps {
 
 export function Content({ children, className }: ContentProps) {
   return (
-    <div className={cn(
-      "prose dark:prose-invert max-w-none",
-      // 自定义样式，与 shadcn/ui 协调
-      "prose-headings:text-foreground prose-headings:font-heading",
-      "prose-p:text-muted-foreground",
-      "prose-a:text-primary prose-a:no-underline hover:prose-a:underline",
-      "prose-strong:text-foreground",
-      "prose-code:text-primary prose-code:bg-muted prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5 prose-code:before:content-none prose-code:after:content-none",
-      "prose-pre:bg-muted prose-pre:border prose-pre:border-border",
-      "prose-img:rounded-md prose-img:border prose-img:border-border",
-      "prose-hr:border-border",
-      "prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground",
-      "prose-table:text-foreground",
-      className
-    )}>
+    <div
+      className={cn(
+        'prose dark:prose-invert max-w-none',
+        // 自定义样式，与 shadcn/ui 协调
+        'prose-headings:text-foreground prose-headings:font-heading',
+        'prose-p:text-muted-foreground',
+        'prose-a:text-primary prose-a:no-underline hover:prose-a:underline',
+        'prose-strong:text-foreground',
+        // 使用 InlineCode 组件样式，不需要在这里定义内联代码样式
+        'prose-pre:bg-muted prose-pre:border prose-pre:border-border',
+        'prose-img:rounded-md prose-img:border prose-img:border-border',
+        'prose-hr:border-border',
+        'prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground',
+        'prose-table:text-foreground',
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -272,7 +275,7 @@ export default function BlogPost() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">博客标题</h1>
-      
+
       <Content>
         <h2>内容标题</h2>
         <p>这是一段内容，使用了统一的样式。</p>
@@ -280,7 +283,9 @@ export default function BlogPost() {
           <li>列表项一</li>
           <li>列表项二</li>
         </ul>
-        <pre><code>// 代码示例</code></pre>
+        <pre>
+          <code>// 代码示例</code>
+        </pre>
       </Content>
     </div>
   );
@@ -295,11 +300,11 @@ export default function BlogPost() {
 <Content>
   <h2>标题</h2>
   <p>内容</p>
-  
+
   <div className="not-prose">
     <Button>按钮</Button>
   </div>
-  
+
   <p>更多内容...</p>
 </Content>
 ```
@@ -317,7 +322,7 @@ import { cn } from '@/lib/utils';
 export function ContentButton({ className, ...props }: ButtonProps) {
   return (
     <div className="not-prose my-4">
-      <Button className={cn("font-normal", className)} {...props} />
+      <Button className={cn('font-normal', className)} {...props} />
     </div>
   );
 }
@@ -352,7 +357,7 @@ export default {
       lineHeight: {
         // 定义统一的行高
       },
-      typography: (theme) => ({
+      typography: theme => ({
         DEFAULT: {
           css: {
             // 使用统一的间距和排版规则
@@ -369,7 +374,7 @@ export default {
       }),
     },
   },
-}
+};
 ```
 
 ## 实际应用案例
@@ -393,14 +398,14 @@ export default function BlogPost({ post }) {
         <h1 className="text-3xl font-bold">{post.title}</h1>
         <Button variant="outline">分享</Button>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* 主要内容区域，使用 Typography */}
         <div className="md:col-span-2">
           <Content>
             {/* 博客内容 */}
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            
+
             {/* 在内容中使用混合组件 */}
             <div className="my-8">
               <h3>喜欢这篇文章？</h3>
@@ -408,22 +413,24 @@ export default function BlogPost({ post }) {
             </div>
           </Content>
         </div>
-        
+
         {/* 侧边栏，使用 shadcn/ui 组件 */}
         <div className="md:col-span-1">
           <Card>
             <div className="p-4">
               <h3 className="text-lg font-semibold mb-4">作者信息</h3>
               <p className="text-muted-foreground mb-4">{post.author.bio}</p>
-              <Button variant="secondary" className="w-full">查看更多文章</Button>
+              <Button variant="secondary" className="w-full">
+                查看更多文章
+              </Button>
             </div>
           </Card>
-          
+
           <Card className="mt-4">
             <div className="p-4">
               <h3 className="text-lg font-semibold mb-4">相关文章</h3>
               <ul className="space-y-2">
-                {post.relatedPosts.map((relatedPost) => (
+                {post.relatedPosts.map(relatedPost => (
                   <li key={relatedPost.id}>
                     <a href={`/blog/${relatedPost.slug}`} className="text-primary hover:underline">
                       {relatedPost.title}
@@ -441,6 +448,7 @@ export default function BlogPost({ post }) {
 ```
 
 在这个例子中，我们：
+
 - 使用 shadcn/ui 组件构建页面结构和侧边栏
 - 使用 Typography（通过 Content 组件）渲染主要内容
 - 使用混合组件（ContentButton）在内容中添加按钮
@@ -461,6 +469,7 @@ export default function BlogPost({ post }) {
 5. **统一间距和排版系统**：在 Tailwind 配置中定义统一的间距和排版规则。
 
 6. **明确职责分工**：
+
    - UI 结构和交互组件使用 shadcn/ui
    - 富文本内容使用 Typography
 

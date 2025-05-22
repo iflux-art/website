@@ -1,6 +1,6 @@
 /**
  * 增强的 ESLint 配置文件 (扁平配置格式)
- * 
+ *
  * 这个文件使用 ESLint v9 的新扁平配置格式，增强了代码质量检查
  */
 
@@ -18,10 +18,13 @@ import sonarjsPlugin from 'eslint-plugin-sonarjs';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
+// 导入自定义插件
+import tailwindColorChecker from './eslint-plugins/tailwind-color-checker.js';
+
 export default [
   // 基础 JavaScript 规则
   js.configs.recommended,
-  
+
   // 全局变量
   {
     languageOptions: {
@@ -39,7 +42,7 @@ export default [
       },
     },
   },
-  
+
   // Next.js 规则
   {
     plugins: {
@@ -50,7 +53,7 @@ export default [
       '@next/next/no-img-element': 'off',
     },
   },
-  
+
   // React 规则
   {
     plugins: {
@@ -62,16 +65,22 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/self-closing-comp': 'error',
-      'react/jsx-sort-props': ['warn', {
-        callbacksLast: true,
-        shorthandFirst: true,
-        ignoreCase: true,
-        reservedFirst: true,
-      }],
-      'react/function-component-definition': ['warn', {
-        namedComponents: 'function-declaration',
-        unnamedComponents: 'arrow-function',
-      }],
+      'react/jsx-sort-props': [
+        'warn',
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          ignoreCase: true,
+          reservedFirst: true,
+        },
+      ],
+      'react/function-component-definition': [
+        'warn',
+        {
+          namedComponents: 'function-declaration',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
       'react/jsx-no-useless-fragment': 'warn',
       'react/jsx-pascal-case': 'error',
     },
@@ -81,7 +90,7 @@ export default [
       },
     },
   },
-  
+
   // React Hooks 规则
   {
     plugins: {
@@ -92,7 +101,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
-  
+
   // TypeScript 规则
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -107,7 +116,10 @@ export default [
     },
     rules: {
       ...typescriptPlugin.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/consistent-type-imports': 'warn',
@@ -115,16 +127,19 @@ export default [
       '@typescript-eslint/no-unnecessary-condition': 'warn',
       '@typescript-eslint/prefer-nullish-coalescing': 'warn',
       '@typescript-eslint/prefer-optional-chain': 'warn',
-      '@typescript-eslint/ban-ts-comment': ['warn', {
-        'ts-expect-error': 'allow-with-description',
-        'ts-ignore': 'allow-with-description',
-        'ts-nocheck': 'allow-with-description',
-        'ts-check': false,
-        minimumDescriptionLength: 5,
-      }],
+      '@typescript-eslint/ban-ts-comment': [
+        'warn',
+        {
+          'ts-expect-error': 'allow-with-description',
+          'ts-ignore': 'allow-with-description',
+          'ts-nocheck': 'allow-with-description',
+          'ts-check': false,
+          minimumDescriptionLength: 5,
+        },
+      ],
     },
   },
-  
+
   // 导入规则
   {
     plugins: {
@@ -133,48 +148,51 @@ export default [
     rules: {
       'import/first': 'error',
       'import/no-duplicates': 'error',
-      'import/order': ['warn', {
-        'groups': [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          'object',
-          'type'
-        ],
-        'newlines-between': 'always',
-        'alphabetize': {
-          'order': 'asc',
-          'caseInsensitive': true
+      'import/order': [
+        'warn',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type',
+          ],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: 'next/**',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '@/**',
+              group: 'internal',
+              position: 'after',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['react', 'next'],
         },
-        'pathGroups': [
-          {
-            'pattern': 'react',
-            'group': 'builtin',
-            'position': 'before'
-          },
-          {
-            'pattern': 'next/**',
-            'group': 'builtin',
-            'position': 'before'
-          },
-          {
-            'pattern': '@/**',
-            'group': 'internal',
-            'position': 'after'
-          }
-        ],
-        'pathGroupsExcludedImportTypes': ['react', 'next']
-      }],
+      ],
       'import/no-unresolved': 'off', // TypeScript 已经处理这个问题
       'import/extensions': 'off', // TypeScript 已经处理这个问题
       'import/no-cycle': 'warn',
       'import/no-useless-path-segments': 'warn',
     },
   },
-  
+
   // Promise 规则
   {
     plugins: {
@@ -189,7 +207,7 @@ export default [
       'promise/no-promise-in-callback': 'warn',
     },
   },
-  
+
   // 安全规则
   {
     plugins: {
@@ -206,7 +224,7 @@ export default [
       'security/detect-unsafe-regex': 'warn',
     },
   },
-  
+
   // SonarJS 规则 (代码质量)
   {
     plugins: {
@@ -225,7 +243,7 @@ export default [
       'sonarjs/prefer-single-boolean-return': 'warn',
     },
   },
-  
+
   // Unicorn 规则 (现代 JavaScript)
   {
     plugins: {
@@ -245,7 +263,7 @@ export default [
       'unicorn/prefer-string-slice': 'warn',
     },
   },
-  
+
   // 可访问性规则
   {
     plugins: {
@@ -261,23 +279,33 @@ export default [
       'jsx-a11y/alt-text': 'error',
     },
   },
-  
+
   // 通用代码风格规则
   {
     rules: {
-      'no-console': ['warn', { 'allow': ['warn', 'error'] }],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
       'no-duplicate-imports': 'error',
       'no-var': 'error',
-      'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
-      'no-unused-expressions': ['error', { 'allowShortCircuit': true, 'allowTernary': true }],
-      'no-param-reassign': ['warn', { 'props': false }],
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
+      'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+      'no-param-reassign': ['warn', { props: false }],
       'no-nested-ternary': 'warn',
       'no-unneeded-ternary': 'warn',
       'no-useless-return': 'warn',
       'prefer-template': 'warn',
       'spaced-comment': ['warn', 'always'],
-      'yoda': 'warn',
+      yoda: 'warn',
+    },
+  },
+
+  // Tailwind CSS 颜色检查规则
+  {
+    plugins: {
+      'tailwind-color-checker': tailwindColorChecker,
+    },
+    rules: {
+      'tailwind-color-checker/no-traditional-colors': 'warn',
     },
   },
 ];
