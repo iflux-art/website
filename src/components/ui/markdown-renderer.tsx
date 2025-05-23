@@ -108,6 +108,12 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
 export function processMdxContent(content: string): string {
   return (
     content
+      // 确保 Markdown 标题正确渲染
+      .replace(/^# (.+)$/gm, '<h1 class="text-4xl font-bold mb-6 tracking-tight">$1</h1>')
+      .replace(/^## (.+)$/gm, '<h2 class="text-3xl font-bold mb-4 mt-8 tracking-tight">$1</h2>')
+      .replace(/^### (.+)$/gm, '<h3 class="text-2xl font-bold mb-3 mt-6">$1</h3>')
+      .replace(/^#### (.+)$/gm, '<h4 class="text-xl font-bold mb-2 mt-4">$1</h4>')
+
       // 处理 ResourceGrid 组件
       .replace(/<ResourceGrid([^>]*)>/g, '<div data-resource-grid$1>')
       .replace(/<\/ResourceGrid>/g, '</div>')

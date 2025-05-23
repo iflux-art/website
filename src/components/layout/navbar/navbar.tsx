@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/logo';
 import { MobileMenu } from './mobile-menu';
 import { NavItems } from './nav-items';
+import { SearchIcon } from './search-icon';
 
 /**
  * 主导航栏组件
@@ -94,7 +95,7 @@ export function Navbar({ className = '' }: { className?: string }) {
 
   return (
     <nav
-      className={`w-full h-14 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className}`}
+      className={`w-full h-16 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className}`}
       onDoubleClick={scrollToTop}
       title={showTitle ? '双击返回顶部' : ''}
     >
@@ -119,8 +120,13 @@ export function Navbar({ className = '' }: { className?: string }) {
           )}
         </div>
 
-        {/* 右侧部分 - 功能按钮和移动菜单 */}
-        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        {/* 右侧部分 - 搜索图标和移动菜单 */}
+        <div className="flex items-center gap-2">
+          <div className="hidden md:flex">
+            <SearchIcon />
+          </div>
+          <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        </div>
       </div>
     </nav>
   );

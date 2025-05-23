@@ -90,7 +90,11 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
     <Button
       variant="ghost"
       size={showLabel ? 'default' : 'icon'}
-      className={showLabel ? 'gap-2' : ''}
+      className={
+        showLabel
+          ? 'gap-2 text-muted-foreground hover:text-foreground'
+          : 'h-9 w-9 text-muted-foreground hover:text-foreground'
+      }
       title={label}
       aria-label={label}
       onClick={toggleTheme}

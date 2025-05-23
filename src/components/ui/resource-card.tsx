@@ -79,22 +79,14 @@ export function ResourceCard({
   description,
   url,
   icon,
-  tags = [],
+  tags = undefined,
   featured = false,
   index = 0,
   className,
   variant = 'default',
 }: ResourceCardProps) {
-  // 处理标签，可以是字符串数组或逗号分隔的字符串
-  const tagArray =
-    typeof tags === 'string'
-      ? tags
-          .split(',')
-          .map(t => t.trim())
-          .filter(Boolean)
-      : Array.isArray(tags)
-      ? tags
-      : [];
+  // 不再处理标签
+  const tagArray = [];
 
   // 默认样式
   if (variant === 'default') {
@@ -102,7 +94,7 @@ export function ResourceCard({
       <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
         <Card
           className={cn(
-            'h-full overflow-hidden hover:shadow-lg border border-border hover:scale-[1.02]',
+            'h-full overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/20',
             featured && 'border-primary/30',
             className
           )}
@@ -117,24 +109,11 @@ export function ResourceCard({
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
             <p className="text-muted-foreground text-sm flex-grow">{description}</p>
 
-            {tagArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-4">
-                {tagArray.map(tag => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
             {featured && (
               <div className="absolute top-2 right-2">
-                <span className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">
+                <Badge variant="default" className="text-xs">
                   精选
-                </span>
+                </Badge>
               </div>
             )}
           </CardContent>
@@ -169,16 +148,6 @@ export function ResourceCard({
             </div>
           </div>
         </CardContent>
-
-        {tagArray.length > 0 && (
-          <CardFooter className="p-3 pt-0 flex flex-wrap gap-1">
-            {tagArray.map(tag => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </CardFooter>
-        )}
       </Card>
     </a>
   );

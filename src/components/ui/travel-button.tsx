@@ -22,6 +22,7 @@ export function TravelButton({}: TravelButtonProps = {}) {
     <Button
       variant="ghost"
       size="icon"
+      className="h-9 w-9 text-muted-foreground hover:text-foreground"
       title="开往"
       onClick={() => window.open('https://www.travellings.cn/go.html', '_blank')}
     >

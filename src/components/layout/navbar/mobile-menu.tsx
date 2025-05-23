@@ -4,10 +4,10 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { SearchButton } from '@/components/ui/search-button';
 import { TravelButton } from '@/components/ui/travel-button';
 import { Logo } from '@/components/logo';
 import { NavCards } from './nav-cards';
+import { SearchIcon } from './search-icon';
 
 /**
  * 移动端菜单组件属性接口
@@ -32,8 +32,8 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
-      <div>
-        <SearchButton />
+      <div className="md:hidden">
+        <SearchIcon />
       </div>
       <div>
         <ThemeToggle />
@@ -61,7 +61,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <SheetTitle className="sr-only">导航菜单</SheetTitle>
 
             {/* 复刻导航栏样式 */}
-            <div className="w-full h-14 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="w-full h-16 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="container mx-auto px-4 h-full flex items-center justify-between">
                 {/* 左侧部分 - Logo */}
                 <div className="flex items-center">
@@ -75,7 +75,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 <div className="flex items-center gap-1 sm:gap-2">
                   {/* 功能按钮 */}
                   <div>
-                    <SearchButton />
+                    <SearchIcon />
                   </div>
                   <div>
                     <ThemeToggle />

@@ -10,7 +10,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full py-6 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <footer className="w-full py-4 md:py-6 border-t border-border/30 bg-transparent">
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-center">
         <div className="text-sm text-muted-foreground text-center">
           © {currentYear} iFluxArt. 保留所有权利。

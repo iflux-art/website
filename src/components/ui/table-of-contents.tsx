@@ -225,7 +225,7 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
   return (
     <div className={cn('pl-0', className)}>
       <div ref={tocRef} className="pb-4 pr-2">
-        <h3 className="text-sm font-medium pl-0.5 mb-2 text-foreground flex items-center">
+        <h3 className="text-sm font-medium mb-2 text-foreground flex items-center">
           <Text className="h-4 w-4 mr-1.5 text-primary/80" />
           <span>{title}</span>
         </h3>

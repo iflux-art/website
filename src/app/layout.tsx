@@ -39,7 +39,7 @@ export default function RootLayout({
               storageKey="iflux-theme-preference"
             >
               <StyleManager />
-              <div className="flex flex-col min-h-screen">
+              <div className="flex flex-col min-h-screen bg-background dark:bg-[#0a0a0a]">
                 <Navbar className="flex-shrink-0" />
                 <div className="flex-1 flex-grow overflow-auto">
                   <main className="flex-1 flex-grow">{children}</main>

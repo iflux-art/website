@@ -181,7 +181,7 @@ export function UnifiedCard({
   isExternal = false,
   icon,
   iconType = 'emoji',
-  tags = [],
+  tags = undefined,
   image,
   date,
   author,
@@ -193,15 +193,7 @@ export function UnifiedCard({
   children,
 }: UnifiedCardProps) {
   // 处理标签，可以是字符串数组或逗号分隔的字符串
-  const tagArray =
-    typeof tags === 'string'
-      ? tags
-          .split(',')
-          .map(t => t.trim())
-          .filter(Boolean)
-      : Array.isArray(tags)
-      ? tags
-      : [];
+  const tagArray = [];
 
   // 处理图标
   const renderIcon = () => {
