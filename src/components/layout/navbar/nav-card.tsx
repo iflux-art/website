@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 interface NavCardProps {
   title: string;
@@ -37,32 +36,27 @@ export function NavCard({ title, description, href, isActive, onClose }: NavCard
   };
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="w-full"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div className="w-full opacity-0 translate-y-5 animate-in fade-in slide-in-from-bottom-5 duration-300 fill-mode-forwards hover:scale-[1.02] active:scale-[0.98] transition-transform">
       <a href={href} className="block w-full" onClick={handleClick}>
         <div
           className={cn(
-            "rounded-lg p-4 transition-all duration-200 h-full",
+            'rounded-xl p-6 h-full shadow-sm transition-all duration-300',
             isActive
-              ? "bg-primary/10 border border-primary/20"
-              : "bg-card hover:bg-accent border border-border hover:border-primary/20"
+              ? 'bg-primary/10 border border-primary/20'
+              : 'bg-card border border-border hover:bg-accent hover:border-primary/20'
           )}
         >
-          <h3 className={cn(
-            "text-lg font-medium mb-1",
-            isActive ? "text-primary" : "text-foreground"
-          )}>
+          <h3
+            className={cn(
+              'text-xl font-semibold tracking-tight mb-2',
+              isActive ? 'text-primary' : 'text-foreground'
+            )}
+          >
             {title}
           </h3>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>
       </a>
-    </motion.div>
+    </div>
   );
 }

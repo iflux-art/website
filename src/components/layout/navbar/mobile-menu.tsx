@@ -1,36 +1,46 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/features/theme-toggle";
-import { CleanSearchDialog } from "@/components/features/search/clean-search";
-import { Travelling } from "@/components/features/travelling";
-import { Logo } from "@/components/features/logo";
-import { NavCards } from "./nav-cards";
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { SearchButton } from '@/components/ui/search-button';
+import { TravelButton } from '@/components/ui/travel-button';
+import { Logo } from '@/components/logo';
+import { NavCards } from './nav-cards';
 
-import { hoverScale, buttonTap } from "@/lib/animations";
-import { MobileMenuProps } from "./mobile-menu.types";
+/**
+ * 移动端菜单组件属性接口
+ */
+export interface MobileMenuProps {
+  /**
+   * 菜单是否打开
+   */
+  isOpen: boolean;
+
+  /**
+   * 设置菜单打开状态的函数
+   */
+  setIsOpen: (isOpen: boolean) => void;
+}
 
 /**
  * 移动端菜单组件
  * 负责移动端导航和功能按钮的展示
  */
 export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
-
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
-      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-        <CleanSearchDialog />
-      </motion.div>
-      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
+      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+        <SearchButton />
+      </div>
+      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
         <ThemeToggle />
-      </motion.div>
-      <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-        <Travelling />
-      </motion.div>
+      </div>
+      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+        <TravelButton />
+      </div>
 
       {/* 移动端菜单 */}
       <div className="lg:hidden">
@@ -39,9 +49,9 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
-              aria-label={isOpen ? "关闭菜单" : "打开菜单"}
-              title={isOpen ? "关闭菜单" : "打开菜单"}
+              className="lg:hidden rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-accent/50"
+              aria-label={isOpen ? '关闭菜单' : '打开菜单'}
+              title={isOpen ? '关闭菜单' : '打开菜单'}
             >
               <Menu className="h-5 w-5" />
             </Button>
@@ -51,7 +61,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <SheetTitle className="sr-only">导航菜单</SheetTitle>
 
             {/* 复刻导航栏样式 */}
-            <div className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/80 shadow-sm border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300">
+            <div className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/90 shadow-md border-b border-border transition-all duration-300">
               <div className="container mx-auto px-4 h-full flex items-center justify-between">
                 {/* 左侧部分 - Logo */}
                 <div className="flex items-center">
@@ -64,21 +74,21 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 {/* 右侧部分 - 功能按钮和关闭按钮 */}
                 <div className="flex items-center gap-1 sm:gap-2">
                   {/* 功能按钮 */}
-                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-                    <CleanSearchDialog />
-                  </motion.div>
-                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
+                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+                    <SearchButton />
+                  </div>
+                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
                     <ThemeToggle />
-                  </motion.div>
-                  <motion.div whileHover={hoverScale} whileTap={buttonTap}>
-                    <Travelling />
-                  </motion.div>
+                  </div>
+                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+                    <TravelButton />
+                  </div>
 
                   {/* X按钮 - 与汉堡菜单位置完全一致 */}
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="lg:hidden"
+                    className="lg:hidden rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-accent/50"
                     onClick={() => setIsOpen(false)}
                     aria-label="关闭菜单"
                     title="关闭菜单"
@@ -90,7 +100,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             </div>
 
             {/* 菜单内容 */}
-            <div className="flex-1 overflow-auto p-6 pt-8">
+            <div className="flex-1 overflow-auto p-8">
               <div className="container mx-auto flex flex-col gap-8">
                 <NavCards onClose={() => setIsOpen(false)} />
               </div>

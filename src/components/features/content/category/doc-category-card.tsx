@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { DocCategory } from '@/lib/docs';
+import { DocCategory } from '@/lib/content';
 
 interface DocCategoryCardProps {
   category: DocCategory;
@@ -16,7 +16,7 @@ export function DocCategoryCard({ category }: DocCategoryCardProps) {
         <p className="text-muted-foreground">{category.description}</p>
       </CardContent>
       <CardFooter className="flex justify-between items-center bg-muted/50 p-4">
-        <Link 
+        <Link
           href={`/docs/${category.id}`}
           className="text-sm font-medium flex items-center hover:text-primary transition-colors"
         >

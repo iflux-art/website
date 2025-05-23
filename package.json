@@ -9,31 +9,13 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "rimraf .next/cache .next/trace && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:enhanced": "ESLINT_CONFIG_FILE=eslint.config.enhanced.mjs next lint",
-    "lint:fix": "next lint --fix",
-    "lint:enhanced:fix": "ESLINT_CONFIG_FILE=eslint.config.enhanced.mjs next lint --fix",
-    "lint:tailwind-colors": "ESLINT_CONFIG_FILE=eslint.config.enhanced.mjs next lint --no-cache --rule 'tailwind-color-checker/no-traditional-colors: error'",
-    "turbo:lint": "turbo run lint",
-    "clean": "rimraf .turbo/ node_modules/ .next/",
-    "clean:cache": "rimraf .next/cache node_modules/.cache .next/trace",
-    "preview": "next build && next start",
-    "fix-install": "node scripts/fix-install.js",
-    "check-deps": "node scripts/check-deps.js",
-    "prebuild": "rimraf .next/cache .next/trace",
-    "build:safe": "node scripts/build.js",
-    "fix-deps": "node scripts/fix-deprecated-deps.js",
-    "fix-deps:simple": "node scripts/fix-deprecated-deps-simple.js",
-    "fix-glob": "node scripts/fix-glob-imports.js",
-    "check-deprecated": "node scripts/check-deprecated-deps.js"
+    "preview": "next build && next start"
   },
   "repository": {
     "type": "git",
-    "url": ""
-  },
-  "bugs": {
     "url": ""
   },
   "dependencies": {
@@ -50,7 +32,6 @@
     "@radix-ui/react-visually-hidden": "^1.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.12.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.510.0",
     "next": "^15.3.2",
@@ -61,36 +42,25 @@
     "react-intersection-observer": "^9.16.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
     "remark-toc": "^9.0.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.27.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.17.48",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.27.0",
     "eslint-config-next": "15.3.2",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "glob": "^10.3.10",
     "rimraf": "^5.0.10",
     "tailwindcss": "^4.1.7",
     "ts-node": "^10.9.2",
-    "turbo": "^2.5.3",
     "typescript": "^5.8.3"
   },
   "pnpm": {
-    "overrides": {
-      "abab": "^2.1.0",
-      "domexception": "^4.0.0",
-      "inflight": "^1.0.6"
-    }
+    "overrides": {}
   }
 }

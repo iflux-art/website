@@ -159,7 +159,7 @@ export function useCategoryResources(categoryId: string) {
                   icon: '🔗', // 默认图标
                   author: '',
                   free: true,
-                  tags: link.tags
+                  tags: link.tags,
                 });
               });
             }
@@ -185,7 +185,7 @@ export function useCategoryResources(categoryId: string) {
     setSelectedCategory,
     filteredResources,
     loading,
-    error
+    error,
   };
 }
 

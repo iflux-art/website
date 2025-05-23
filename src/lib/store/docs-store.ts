@@ -2,7 +2,8 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { DocCategory, DocSidebarItem } from '@/types/docs';
+import { DocSidebarItem } from '@/components/features/docs/sidebar/doc-sidebar';
+import { DocCategory } from '@/hooks/use-docs';
 
 /**
  * 文档状态接口
@@ -22,7 +23,7 @@ interface DocsState {
   loading: boolean;
   // 错误信息
   error: Error | null;
-  
+
   // 操作方法
   setCategories: (categories: DocCategory[]) => void;
   setCurrentCategory: (category: string) => void;
@@ -31,7 +32,7 @@ interface DocsState {
   setOpenCategory: (id: string, isOpen: boolean) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: Error | null) => void;
-  
+
   // 复合操作
   fetchCategories: () => Promise<void>;
   fetchSidebarItems: (category: string) => Promise<void>;
@@ -51,31 +52,32 @@ export const useDocsStore = create<DocsState>()(
       openCategories: {},
       loading: false,
       error: null,
-      
+
       // 基本操作
-      setCategories: (categories) => set({ categories }),
-      setCurrentCategory: (category) => set({ currentCategory: category }),
-      setCurrentDoc: (doc) => set({ currentDoc: doc }),
-      setSidebarItems: (items) => set({ sidebarItems: items }),
-      setOpenCategory: (id, isOpen) => set((state) => ({
-        openCategories: { ...state.openCategories, [id]: isOpen }
-      })),
-      setLoading: (loading) => set({ loading }),
-      setError: (error) => set({ error }),
-      
+      setCategories: categories => set({ categories }),
+      setCurrentCategory: category => set({ currentCategory: category }),
+      setCurrentDoc: doc => set({ currentDoc: doc }),
+      setSidebarItems: items => set({ sidebarItems: items }),
+      setOpenCategory: (id, isOpen) =>
+        set(state => ({
+          openCategories: { ...state.openCategories, [id]: isOpen },
+        })),
+      setLoading: loading => set({ loading }),
+      setError: error => set({ error }),
+
       // 复合操作
       fetchCategories: async () => {
         const { setLoading, setError, setCategories } = get();
-        
+
         try {
           setLoading(true);
           setError(null);
-          
+
           const response = await fetch('/api/docs/categories?t=' + Date.now());
           if (!response.ok) {
             throw new Error('Failed to fetch document categories');
           }
-          
+
           const data = await response.json();
           setCategories(data);
         } catch (err) {
@@ -85,20 +87,20 @@ export const useDocsStore = create<DocsState>()(
           setLoading(false);
         }
       },
-      
-      fetchSidebarItems: async (category) => {
+
+      fetchSidebarItems: async category => {
         const { setLoading, setError, setSidebarItems, setCurrentCategory } = get();
-        
+
         try {
           setLoading(true);
           setError(null);
           setCurrentCategory(category);
-          
+
           const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`);
           if (!response.ok) {
             throw new Error(`Failed to fetch sidebar for category: ${category}`);
           }
-          
+
           const data = await response.json();
           setSidebarItems(data);
         } catch (err) {
@@ -107,11 +109,11 @@ export const useDocsStore = create<DocsState>()(
         } finally {
           setLoading(false);
         }
-      }
+      },
     }),
     {
       name: 'docs-storage',
-      partialize: (state) => ({
+      partialize: state => ({
         openCategories: state.openCategories,
         currentCategory: state.currentCategory,
       }),
@@ -121,12 +123,12 @@ export const useDocsStore = create<DocsState>()(
 
 /**
  * 文档操作钩子
- * 
+ *
  * 提供更简洁的API来操作文档状态
  */
 export function useDocOperations() {
   const store = useDocsStore();
-  
+
   return {
     // 状态
     categories: store.categories,
@@ -136,7 +138,7 @@ export function useDocOperations() {
     openCategories: store.openCategories,
     loading: store.loading,
     error: store.error,
-    
+
     // 操作
     loadCategories: store.fetchCategories,
     loadSidebar: store.fetchSidebarItems,
@@ -145,22 +147,22 @@ export function useDocOperations() {
       const isCurrentlyOpen = store.openCategories[id] || false;
       store.setOpenCategory(id, !isCurrentlyOpen);
     },
-    
+
     // 辅助方法
     isActive: (href: string, doc: string | null) => {
       if (!href) return false;
-      
+
       // 直接比较路径
       if (window.location.pathname === href) return true;
-      
+
       // 如果有当前文档，尝试匹配
       if (doc) {
         const hrefSegments = href.split('/').filter(Boolean);
         const lastSegment = hrefSegments[hrefSegments.length - 1];
         return lastSegment === doc;
       }
-      
+
       return false;
-    }
+    },
   };
 }

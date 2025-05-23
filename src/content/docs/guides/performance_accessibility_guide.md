@@ -1,0 +1,106 @@
+### 2. 懒加载实现
+
+#### 组件懒加载
+
+使用 `React.lazy` 和 `Suspense` 实现组件懒加载：
+
+```tsx
+import React, { Suspense } from 'react';
+
+// 懒加载组件
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    <div>
+      <Suspense fallback={<div>加载中...</div>}>
+        <HeavyComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+#### 图片懒加载
+
+使用 Next.js 的 Image 组件自动实现图片懒加载：
+
+```tsx
+import Image from 'next/image';
+
+function Gallery() {
+  return (
+    <div>
+      <Image
+        src="/images/large-image.jpg"
+        alt="大图片"
+        width={800}
+        height={600}
+        loading="lazy"
+      />
+    </div>
+  );
+}
+```
+
+### 3. 代码分割
+
+利用 Next.js 的动态导入功能实现代码分割：
+
+```tsx
+import dynamic from 'next/dynamic';
+
+// 动态导入组件
+const DynamicComponent = dynamic(() => import('../components/HeavyComponent'), {
+  loading: () => <p>加载中...</p>,
+  ssr: false, // 如果组件不需要服务端渲染，可以设置为 false
+});
+
+export default function Page() {
+  return (
+    <div>
+      <h1>带有动态组件的页面</h1>
+      <DynamicComponent />
+    </div>
+  );
+}
+```
+
+### 3. 键盘导航支持
+
+确保所有交互元素可通过键盘访问：
+
+```tsx
+function NavigationMenu() {
+  return (
+    <nav>
+      <ul role="menubar">
+        <li role="none">
+          <a href="/" role="menuitem" tabIndex={0}>首页</a>
+        </li>
+        <li role="none">
+          <a href="/about" role="menuitem" tabIndex={0}>关于</a>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+```
+
+### 5. 焦点管理
+
+为交互元素提供清晰的焦点状态：
+
+```tsx
+// 在全局样式中定义焦点样式
+// globals.css
+:focus-visible {
+  outline: 2px solid oklch(0.5 0.2 240);
+  outline-offset: 2px;
+}
+
+// 组件中使用
+<button className="focus:ring-2 focus:ring-primary focus:outline-none">
+  可聚焦按钮
+</button>
+```

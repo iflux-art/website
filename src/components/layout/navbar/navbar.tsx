@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Logo } from '@/components/features/logo';
+import { Logo } from '@/components/logo';
 import { MobileMenu } from './mobile-menu';
 import { NavItems } from './nav-items';
-import { slideDown, fadeIn } from '@/lib/animations';
 
 /**
  * 主导航栏组件
@@ -95,51 +93,35 @@ export function Navbar({ className = '' }: { className?: string }) {
   };
 
   return (
-    <motion.nav
-      initial="initial"
-      animate="animate"
-      variants={slideDown}
-      className={`w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/80 shadow-sm border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300 ${className}`}
+    <nav
+      className={`w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/90 shadow-md border-b border-border transition-all duration-300 ${className}`}
       onDoubleClick={scrollToTop}
       title={showTitle ? '双击返回顶部' : ''}
     >
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         {/* 左侧部分 - Logo */}
-        <motion.div
-          className="flex items-center"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
+        <div className="flex items-center opacity-100">
           <Logo />
-        </motion.div>
+        </div>
 
         {/* 居中部分 - 桌面导航或页面标题 */}
-        <motion.div
-          className="hidden lg:flex items-center justify-center overflow-hidden"
-          variants={fadeIn}
-          initial="initial"
-          animate="animate"
-        >
+        <div className="hidden lg:flex items-center justify-center overflow-hidden opacity-100">
           {showTitle ? (
-            <motion.h2
-              className="text-lg font-semibold truncate max-w-md cursor-pointer hover:text-primary transition-colors"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+            <h2
+              className="text-xl font-semibold tracking-tight truncate max-w-md cursor-pointer transition-all duration-300 hover:text-primary"
               onClick={scrollToTop}
               title="点击返回顶部"
             >
               {pageTitle}
-            </motion.h2>
+            </h2>
           ) : (
             <NavItems />
           )}
-        </motion.div>
+        </div>
 
         {/* 右侧部分 - 功能按钮和移动菜单 */}
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
-    </motion.nav>
+    </nav>
   );
 }

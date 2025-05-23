@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
+import * as React from 'react';
+import * as TabsPrimitive from '@radix-ui/react-tabs';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 /**
  * Tabs 组件属性
@@ -50,17 +50,17 @@ export interface TabsContentProps {
  *
  * 已更新为 Tailwind CSS v4 兼容版本
  */
-const Tabs = React.forwardRef<
-  HTMLDivElement,
-  TabsProps
->(({ className, ...props }, ref) => (
+const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(({ className, ...props }, ref) => (
   <TabsPrimitive.Root
     ref={ref}
-    className={cn("data-[orientation=vertical]:flex data-[orientation=vertical]:flex-row", className)}
+    className={cn(
+      'data-[orientation=vertical]:flex data-[orientation=vertical]:flex-row',
+      className
+    )}
     {...props}
   />
-))
-Tabs.displayName = TabsPrimitive.Root.displayName
+));
+Tabs.displayName = TabsPrimitive.Root.displayName;
 
 /**
  * TabsList 组件
@@ -68,20 +68,17 @@ Tabs.displayName = TabsPrimitive.Root.displayName
  *
  * 已更新为 Tailwind CSS v4 兼容版本
  */
-const TabsList = React.forwardRef<
-  HTMLDivElement,
-  TabsListProps
->(({ className, ...props }, ref) => (
+const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      'inline-flex h-12 items-center justify-center rounded-xl bg-muted p-1.5 text-muted-foreground shadow-sm',
       className
     )}
     {...props}
   />
-))
-TabsList.displayName = TabsPrimitive.List.displayName
+));
+TabsList.displayName = TabsPrimitive.List.displayName;
 
 /**
  * TabsTrigger 组件
@@ -89,20 +86,19 @@ TabsList.displayName = TabsPrimitive.List.displayName
  *
  * 已更新为 Tailwind CSS v4 兼容版本
  */
-const TabsTrigger = React.forwardRef<
-  HTMLButtonElement,
-  TabsTriggerProps
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
+  ({ className, ...props }, ref) => (
+    <TabsPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        'inline-flex items-center justify-center whitespace-nowrap rounded-lg px-5 py-2.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-background/80',
+        className
+      )}
+      {...props}
+    />
+  )
+);
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 /**
  * TabsContent 组件
@@ -110,19 +106,18 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
  *
  * 已更新为 Tailwind CSS v4 兼容版本
  */
-const TabsContent = React.forwardRef<
-  HTMLDivElement,
-  TabsContentProps
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      className
-    )}
-    {...props}
-  />
-))
-TabsContent.displayName = TabsPrimitive.Content.displayName
+const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
+  ({ className, ...props }, ref) => (
+    <TabsPrimitive.Content
+      ref={ref}
+      className={cn(
+        'mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 p-1',
+        className
+      )}
+      {...props}
+    />
+  )
+);
+TabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent };

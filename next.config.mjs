@@ -17,56 +17,37 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // 图片域名
-  images: {
-    domains: ['img.dava.cc', 'www.google.com'],
-  },
-
-  // 优化输出大小 - 生成独立部署包
-  output: 'standalone',
-
   // 实验性功能
   experimental: {
-    // 优化构建输出
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
-    // 减少 serverless 函数大小
-    serverMinification: true,
+    // 优化构建输出 - 添加所有可能影响性能的包
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-toggle',
+      '@radix-ui/react-checkbox',
+      '@radix-ui/react-collapsible',
+      '@radix-ui/react-label',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-visually-hidden',
+      'react-intersection-observer'
+    ],
     // 优化页面加载
     optimisticClientCache: true,
   },
-  // 添加 CSS 优化
-  optimizeCss: true,
+
   // 添加图片优化
   images: {
     formats: ['image/avif', 'image/webp'],
+    domains: ['img.dava.cc', 'www.google.com'],
+    // 图片质量优化
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
   },
+
   // 优化服务器组件
   serverExternalPackages: ['@mdx-js/react'],
-
-  // 优化 webpack 配置
-  webpack: (config, { isServer }) => {
-    // 只保留必要的语言环境
-    if (config.optimization && config.optimization.minimizer) {
-      config.optimization.minimizer.forEach((plugin) => {
-        if (plugin.constructor.name === 'TerserPlugin') {
-          if (plugin.options && plugin.options.terserOptions) {
-            plugin.options.terserOptions.compress = {
-              ...plugin.options.terserOptions.compress,
-              drop_console: true,
-            };
-          }
-        }
-      });
-    }
-
-    // 减少 serverless 函数大小
-    if (isServer) {
-      // 排除不必要的依赖
-      config.externals = [...(config.externals || []), 'canvas', 'jsdom'];
-    }
-
-    return config;
-  },
 };
 
 // MDX 配置

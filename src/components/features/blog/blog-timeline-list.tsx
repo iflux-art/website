@@ -1,11 +1,30 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTimelinePosts } from '@/hooks/use-blog';
-import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { BlogTimelineListProps, PostsByMonth } from './blog-timeline-list.types';
+
+/**
+ * 博客时间轴列表组件属性
+ */
+export interface BlogTimelineListProps {
+  /**
+   * 最大显示年份数量
+   * @default Infinity
+   */
+  limit?: number;
+}
+
+/**
+ * 按月份分组的文章类型
+ */
+export interface PostsByMonth {
+  [month: string]: {
+    date: Date;
+    posts: any[];
+  };
+}
 
 /**
  * 博客时间轴列表组件
@@ -28,7 +47,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   const toggleYearExpand = (year: string) => {
     setExpandedYears(prev => ({
       ...prev,
-      [year]: !prev[year]
+      [year]: !prev[year],
     }));
   };
 
@@ -80,7 +99,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
         if (!postsByMonth[monthKey]) {
           postsByMonth[monthKey] = {
             date,
-            posts: []
+            posts: [],
           };
         }
 
@@ -98,7 +117,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
 
   // 格式化日期为 MM-DD 格式
   const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return "未知日期";
+    if (!dateString) return '未知日期';
 
     const date = new Date(dateString);
     const month = date.getMonth() + 1;
@@ -112,7 +131,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
         {/* 时间轴线 */}
         <div className="absolute left-[120px] top-0 bottom-0 w-[2px] bg-border opacity-70"></div>
 
-        {displayYears.map((year) => {
+        {displayYears.map(year => {
           const isExpanded = expandedYears[year] !== false; // 默认展开
           const postCount = getPostCountByYear(year);
 
@@ -145,20 +164,21 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
                     const date = formatDate(post.date);
 
                     return (
-                      <motion.div
+                      <div
                         key={post.slug}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: postIndex * 0.03,
-                          ease: "easeOut"
+                        className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2 transition-all duration-300 opacity-0 translate-y-2 animate-in"
+                        style={{
+                          animationDelay: `${postIndex * 30}ms`,
+                          animationDuration: '300ms',
+                          animationFillMode: 'forwards',
+                          animationTimingFunction: 'ease-out',
                         }}
-                        className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2 transition-colors"
                       >
                         {/* 日期 */}
                         <div className="w-[100px] text-right mr-10 relative group-hover:text-primary transition-colors">
-                          <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary transition-colors">{date}</span>
+                          <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                            {date}
+                          </span>
                           <div className="absolute left-[120px] -translate-x-1/2 top-[10px] w-1.5 h-1.5 rounded-full border border-primary bg-background group-hover:scale-125 transition-transform"></div>
                         </div>
 
@@ -171,7 +191,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
                             {post.title}
                           </Link>
                         </div>
-                      </motion.div>
+                      </div>
                     );
                   })}
                 </div>

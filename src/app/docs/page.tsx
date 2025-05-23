@@ -3,8 +3,8 @@
 import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-import { DocsList } from '@/components/features/docs/category/docs-list';
-import { PageLayout } from '@/components/layout/page-layout';
+import { CategoryGrid as DocsList } from '@/components/ui/category-grid';
+import { PageLayout } from '@/components/layout/page-layout/page-layout';
 import { useDocCategories } from '@/hooks/use-docs';
 
 export default function DocsPage() {
@@ -29,7 +29,7 @@ export default function DocsPage() {
         <div className="animate-pulse">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-40 bg-muted rounded"></div>
+              <div key={i} className="h-40 bg-muted rounded-xl shadow-sm"></div>
             ))}
           </div>
         </div>

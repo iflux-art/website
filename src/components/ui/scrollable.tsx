@@ -1,29 +1,59 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * 滚动容器组件
- * 
- * 提供自定义滚动条样式的容器组件，可以选择隐藏滚动条、使用细滚动条、圆角滚动条等
- * 
- * @param children - 子元素
- * @param className - 额外的类名
- * @param hideScrollbar - 是否隐藏滚动条
- * @param thinScrollbar - 是否使用细滚动条
- * @param roundedThumb - 是否使用圆角滚动条滑块
- * @param primaryThumb - 是否使用主题色滚动条滑块
+ * 滚动容器组件属性
  */
 export interface ScrollableProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * 子元素
+   */
   children: React.ReactNode;
+
+  /**
+   * 自定义类名
+   */
   className?: string;
+
+  /**
+   * 是否隐藏滚动条
+   * @default false
+   */
   hideScrollbar?: boolean;
+
+  /**
+   * 是否使用细滚动条
+   * @default false
+   */
   thinScrollbar?: boolean;
+
+  /**
+   * 是否使用圆角滚动条滑块
+   * @default false
+   */
   roundedThumb?: boolean;
+
+  /**
+   * 是否使用主题色滚动条滑块
+   * @default false
+   */
   primaryThumb?: boolean;
 }
 
+/**
+ * 滚动容器组件
+ *
+ * 提供自定义滚动条样式的容器组件，可以选择隐藏滚动条、使用细滚动条、圆角滚动条等
+ *
+ * @example
+ * ```tsx
+ * <Scrollable hideScrollbar thinScrollbar>
+ *   <div>长内容...</div>
+ * </Scrollable>
+ * ```
+ */
 export function Scrollable({
   children,
   className,
@@ -36,11 +66,11 @@ export function Scrollable({
   return (
     <div
       className={cn(
-        "overflow-auto",
-        hideScrollbar && "scrollbar-hide",
-        thinScrollbar && "scrollbar-thin",
-        roundedThumb && "scrollbar-thumb-rounded",
-        primaryThumb && "scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/30",
+        'overflow-auto',
+        hideScrollbar && 'scrollbar-hide',
+        thinScrollbar && 'scrollbar-thin',
+        roundedThumb && 'scrollbar-thumb-rounded',
+        primaryThumb && 'scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/30',
         className
       )}
       {...props}

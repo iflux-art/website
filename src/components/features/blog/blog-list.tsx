@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { useBlogPosts } from '@/hooks/use-blog';
@@ -27,8 +27,6 @@ interface BlogListProps {
    * 当用户点击文章卡片中的标签时调用
    */
   onTagClick?: (tag: string) => void;
-
-
 }
 
 /**
@@ -44,21 +42,17 @@ interface BlogListProps {
  * <BlogList limit={10} />
  * ```
  */
-export function BlogList({
-  limit = Infinity,
-  filterTag = null,
-  onTagClick
-}: BlogListProps) {
+export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: BlogListProps) {
   const { posts, loading, error } = useBlogPosts();
 
   // 加载状态
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[...Array(6)].map((_, index) => (
           <div
             key={index}
-            className="h-[300px] bg-muted/30 animate-pulse rounded-lg"
+            className="h-[300px] bg-muted/30 animate-pulse rounded-xl shadow-sm"
           ></div>
         ))}
       </div>
@@ -68,8 +62,14 @@ export function BlogList({
   // 错误状态
   if (error) {
     return (
-      <div className="text-center py-10">
-        <p className="text-destructive">加载失败: {error.message}</p>
+      <div className="text-center py-12">
+        <p className="text-destructive font-medium text-lg">加载失败: {error.message}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-muted rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors shadow-sm"
+        >
+          点击重试
+        </button>
       </div>
     );
   }
@@ -77,8 +77,8 @@ export function BlogList({
   // 空状态
   if (posts.length === 0) {
     return (
-      <div className="text-center py-10">
-        <p>暂无博客文章</p>
+      <div className="text-center py-12">
+        <p className="text-muted-foreground font-medium text-lg">暂无博客文章</p>
       </div>
     );
   }
@@ -89,15 +89,15 @@ export function BlogList({
     : posts;
 
   // 限制显示数量
-  const displayPosts = limit < Infinity
-    ? filteredPosts.slice(0, limit)
-    : filteredPosts;
+  const displayPosts = limit < Infinity ? filteredPosts.slice(0, limit) : filteredPosts;
 
   // 筛选后没有文章
   if (displayPosts.length === 0) {
     return (
-      <div className="text-center py-10">
-        <p>没有找到包含标签 "{filterTag}" 的文章</p>
+      <div className="text-center py-12">
+        <p className="text-muted-foreground font-medium text-lg">
+          没有找到包含标签 "<span className="text-primary font-semibold">{filterTag}</span>" 的文章
+        </p>
       </div>
     );
   }
@@ -113,31 +113,10 @@ export function BlogList({
     }
   };
 
-  // 导入动画容器组件
-  const { AnimatedContainer } = require("@/components/ui/animated-container");
-
   // 预先创建博客卡片列表
   const blogCards = displayPosts.map((post, index) => (
-    <BlogCard
-      key={post.slug}
-      post={post}
-      index={index}
-      onTagClick={handleTagClick}
-    />
+    <BlogCard key={post.slug} post={post} index={index} onTagClick={handleTagClick} />
   ));
 
-  return (
-    <AnimatedContainer
-      baseDelay={0.1}
-      staggerDelay={0.15}
-      variant="fade"
-      autoWrap={false}
-      threshold={0.1}
-      rootMargin="0px"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {blogCards}
-      </div>
-    </AnimatedContainer>
-  );
+  return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">{blogCards}</div>;
 }

@@ -1,0 +1,15 @@
+{
+  "1-info": "项目简介",
+  "color-system": {
+    "title": "颜色系统",
+    "description": "了解如何在项目中使用 CSS 变量和 OKLCH 颜色格式"
+  },
+  "interaction-system": {
+    "title": "交互效果系统",
+    "description": "了解如何使用统一的交互效果系统，确保按钮、链接和卡片的悬停效果一致"
+  },
+  "performance-optimization": {
+    "title": "性能优化",
+    "description": "了解如何优化页面加载速度，提高用户体验"
+  }
+}

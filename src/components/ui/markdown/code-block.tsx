@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -76,7 +76,8 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
   const language = className?.match(/language-(\w+)/)?.[1] || '';
 
   // 获取语言显示名称
-  const languageDisplayName = languageNames[language] || language.charAt(0).toUpperCase() + language.slice(1);
+  const languageDisplayName =
+    languageNames[language] || language.charAt(0).toUpperCase() + language.slice(1);
 
   // 构建文件名
   const fileName = language ? `example${fileExtensions[language] || ''}` : '';
@@ -130,9 +131,9 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative mt-4 mb-0 overflow-hidden rounded-lg border border-[oklch(0.922_0_0)] bg-[oklch(0.97_0_0)] dark:bg-[oklch(0.205_0_0)] dark:border-[oklch(0.3_0_0/0.3)] max-w-full">
+    <div className="relative mt-6 mb-0 overflow-hidden rounded-xl border border-border bg-card shadow-md max-w-full">
       {/* 标题栏 */}
-      <div className="flex items-center justify-between px-4 py-1.5 border-b border-[oklch(0.922_0_0)] bg-[oklch(0.95_0_0)] dark:bg-[oklch(0.25_0_0)] dark:border-[oklch(0.3_0_0/0.3)]">
+      <div className="flex items-center justify-between px-5 py-2.5 border-b border-border bg-muted/50">
         <div className="flex items-center space-x-2">
           {/* 窗口按钮 */}
           <div className="flex gap-1.5">
@@ -142,28 +143,50 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
           </div>
 
           {/* 语言标签 - 始终显示 */}
-          <span className="text-xs font-medium ml-2 px-1.5 py-0.5 rounded bg-[oklch(0.9_0.1_var(--accent-hue)/0.2)] text-[oklch(0.4_0.2_var(--accent-hue))] dark:bg-[oklch(0.3_0.1_var(--accent-hue)/0.3)] dark:text-[oklch(0.8_0.2_var(--accent-hue))]">
+          <span className="text-xs font-medium ml-2 px-2 py-1 rounded-md bg-primary/10 text-primary">
             {languageDisplayName || 'Text'}
           </span>
 
           {/* 文件名 */}
           {fileName && (
-            <span className="text-xs font-medium ml-2 opacity-70 hidden sm:inline-block">{fileName}</span>
+            <span className="text-xs font-medium ml-2 opacity-70 hidden sm:inline-block">
+              {fileName}
+            </span>
           )}
 
           {/* 移动端复制按钮 */}
           <button
             onClick={copyToClipboard}
-            className="p-1 rounded-md bg-[oklch(0.9_0_0/0.5)] text-[oklch(0.3_0_0)] hover:bg-[oklch(0.9_0_0/0.8)] dark:bg-[oklch(0.3_0_0/0.5)] dark:text-[oklch(0.8_0_0)] dark:hover:bg-[oklch(0.3_0_0/0.8)] transition-colors sm:hidden ml-auto"
+            className="p-1.5 rounded-lg bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors sm:hidden ml-auto shadow-sm"
             aria-label="复制代码"
             title="复制代码"
           >
             {copied ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
                 <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
               </svg>
@@ -175,16 +198,36 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
           {/* 桌面端复制按钮 */}
           <button
             onClick={copyToClipboard}
-            className="p-1 rounded-md bg-[oklch(0.9_0_0/0.5)] text-[oklch(0.3_0_0)] hover:bg-[oklch(0.9_0_0/0.8)] dark:bg-[oklch(0.3_0_0/0.5)] dark:text-[oklch(0.8_0_0)] dark:hover:bg-[oklch(0.3_0_0/0.8)] transition-colors hidden sm:block"
+            className="p-1.5 rounded-lg bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors hidden sm:block shadow-sm"
             aria-label="复制代码"
             title="复制代码"
           >
             {copied ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
                 <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
               </svg>
@@ -197,9 +240,12 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
       <div className="relative">
         <div className="flex overflow-hidden">
           {/* 行号 */}
-          <div className="hidden sm:flex sm:flex-col sm:justify-center text-right py-2 pr-1 select-none bg-[oklch(0.96_0_0)] dark:bg-[oklch(0.22_0_0)] text-[oklch(0.6_0_0)] dark:text-[oklch(0.7_0_0)] flex-shrink-0 border-r border-[oklch(0.922_0_0)] dark:border-[oklch(0.3_0_0/0.3)]">
+          <div className="hidden sm:flex sm:flex-col sm:justify-center text-right py-3 pr-2 select-none bg-muted/30 text-muted-foreground flex-shrink-0 border-r border-border">
             {codeLines.map((_, i) => (
-              <div key={i} className="w-7 px-2 text-xs leading-[22px] font-mono min-h-[22px] flex items-center justify-end">
+              <div
+                key={i}
+                className="w-7 px-2 text-xs leading-[22px] font-mono min-h-[22px] flex items-center justify-end"
+              >
                 {i + 1}
               </div>
             ))}
@@ -207,12 +253,15 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
 
           {/* 代码 */}
           <div className="overflow-x-auto w-full">
-            <pre className={cn(
-              "m-0 py-2 pl-3 pr-4 sm:pl-3 sm:pr-4 bg-transparent border-none w-full",
-              "font-mono text-sm whitespace-pre break-words tab-[2]",
-              className
-            )} {...props}>
-              <code className="block text-[oklch(0.205_0_0)] dark:text-[oklch(0.85_0_0)]">
+            <pre
+              className={cn(
+                'm-0 py-3 pl-4 pr-5 sm:pl-4 sm:pr-5 bg-transparent border-none w-full',
+                'font-mono text-sm whitespace-pre break-words tab-[2]',
+                className
+              )}
+              {...props}
+            >
+              <code className="block text-foreground">
                 {codeLines.map((line, i) => (
                   <div key={i} className="min-h-[22px] leading-[22px] flex items-center">
                     {line || ' '}

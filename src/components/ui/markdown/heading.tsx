@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -20,36 +20,60 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 
 /**
  * Markdown 标题组件
- * 
+ *
  * 用于在 Markdown 内容中显示标题，支持锚点链接
- * 
+ * 简化版本，移除了悬停显示 # 符号的效果
+ *
  * @param level - 标题级别 (1-6)
  * @param id - 标题 ID，用于锚点链接
  * @param children - 标题内容
  * @param className - 额外的类名
  */
 export function Heading({ level, id, children, className, ...props }: HeadingProps) {
-  const Component = `h${level}` as keyof JSX.IntrinsicElements;
-  
-  return (
-    <Component
-      id={id}
-      className={cn(
-        "relative group",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <a
-        href={id ? `#${id}` : '#'}
-        className="absolute left-[-1.5rem] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-70 text-[0.9em] w-[1rem] text-center"
-        aria-hidden="true"
-      >
-        #
-      </a>
-    </Component>
-  );
+  switch (level) {
+    case 1:
+      return (
+        <h1 id={id} className={cn(className)} {...props}>
+          {children}
+        </h1>
+      );
+    case 2:
+      return (
+        <h2 id={id} className={cn(className)} {...props}>
+          {children}
+        </h2>
+      );
+    case 3:
+      return (
+        <h3 id={id} className={cn(className)} {...props}>
+          {children}
+        </h3>
+      );
+    case 4:
+      return (
+        <h4 id={id} className={cn(className)} {...props}>
+          {children}
+        </h4>
+      );
+    case 5:
+      return (
+        <h5 id={id} className={cn(className)} {...props}>
+          {children}
+        </h5>
+      );
+    case 6:
+      return (
+        <h6 id={id} className={cn(className)} {...props}>
+          {children}
+        </h6>
+      );
+    default:
+      return (
+        <h2 id={id} className={cn(className)} {...props}>
+          {children}
+        </h2>
+      );
+  }
 }
 
 /* 标题样式 - 用于全局样式表引用 */
@@ -62,26 +86,6 @@ export const headingStyles = `
   .prose h5,
   .prose h6 {
     position: relative;
-  }
-
-  /* 标题悬停效果 - 简单版本 */
-  .prose h1:hover::before,
-  .prose h2:hover::before,
-  .prose h3:hover::before,
-  .prose h4:hover::before,
-  .prose h5:hover::before,
-  .prose h6:hover::before {
-    content: "#";
-    position: absolute;
-    left: -1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: inherit; /* 使用与标题相同的颜色 */
-    opacity: 0.7;
-    font-weight: inherit; /* 使用与标题相同的字重 */
-    font-size: 0.9em; /* 稍微小一点的字体大小 */
-    line-height: 1;
-    text-align: center;
-    width: 1rem; /* 固定宽度，确保对齐 */
+    scroll-margin-top: 5rem; /* 为锚点导航添加顶部边距 */
   }
 `;

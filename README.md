@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-这是一个使用 Next.js 和 React 构建的现代化网站，采用模块化架构设计，支持多语言、主题切换等功能。
+这是一个使用 Next.js 和 React 构建的现代化网站，采用模块化架构设计，支持主题切换等功能。
 
 ## 技术栈
 
@@ -23,7 +23,6 @@
 ```
 src/
   ├── app/                 # Next.js App Router 页面
-  │   ├── [lang]/          # 多语言路由
   │   ├── layout.tsx       # 根布局
   │   └── globals.css      # 全局样式
   ├── components/          # 组件库
@@ -35,28 +34,11 @@ src/
   ├── lib/                 # 工具函数和常量
   │   ├── animations.ts    # 动画配置
   │   ├── constants.ts     # 全局常量
-  │   ├── i18n.ts          # 国际化工具
   │   └── utils.ts         # 工具函数
   └── content/             # 内容数据
-      ├── en/              # 英文内容（自动生成）
-      └── zh/              # 中文内容（源内容）
-scripts/
-  ├── translate-content.ts # 内容翻译脚本
-  ├── next-build-hook.js   # Next.js构建钩子
-  └── env.ts               # 环境变量加载工具
+      ├── blog/            # 博客内容
+      └── docs/            # 文档内容
 ```
-
-## 自动翻译功能
-
-本项目实现了自动翻译功能，在构建时会自动将中文内容（`src/content/zh`）翻译为英文内容（`src/content/en`）。开发者只需维护中文版本，英文版本会在构建过程中自动生成。
-
-### 使用方法
-
-1. 复制 `.env.example` 为 `.env.local` 并配置翻译API密钥
-2. 只需编辑 `src/content/zh` 目录中的中文内容
-3. 运行 `pnpm build` 命令时，系统会自动翻译并生成英文内容
-
-更多详细信息请参阅 [自动翻译功能文档](docs/AUTO_TRANSLATION.md)
 
 ## 组件分类
 
@@ -70,7 +52,7 @@ scripts/
 
 功能组件实现特定的功能或业务逻辑，可能使用多个UI组件，与状态管理交互。
 
-例如：ThemeToggle, LanguageToggle, SearchButton 等。
+例如：ThemeToggle, SearchButton 等。
 
 ### 布局组件 (`components/layout/`)
 
@@ -83,15 +65,6 @@ scripts/
 项目使用 React Context API 进行状态管理：
 
 - **主题状态**：使用 next-themes 管理明暗主题
-- **语言状态**：使用自定义 LanguageContext 管理多语言
-
-## 国际化
-
-项目支持中英文两种语言：
-
-1. **路由**：使用 [lang] 动态路由参数
-2. **内容**：在 content 目录中按语言组织内容
-3. **UI文本**：使用 i18n.ts 和 useTranslations hook 管理不同语言的UI文本
 
 ## 动画系统
 
@@ -249,10 +222,7 @@ status: success
 - **类型定义分散**：类型定义分布在不同文件中，缺乏集中管理
 - **缺少严格的类型检查**：虽然启用了TypeScript严格模式，但未发现明显的`any`类型，这是好的实践
 
-## 3. 国际化实现
 
-- **国际化支持不完整**：项目中有部分国际化实现（如`NavItems`中的`labelKey`），但缺乏完整的国际化解决方案
-- **HTML语言属性**：`layout.tsx`中设置了`lang="zh-Hans"`，但未实现动态切换
 
 ## 4. 性能优化
 
@@ -284,11 +254,7 @@ status: success
 - 为所有组件添加完整的类型定义
 - 确保所有函数参数和返回值都有明确类型
 
-### 3. 国际化完善
 
-- 实现完整的国际化解决方案，使用next-intl或类似库
-- 将硬编码的文本替换为国际化键
-- 实现语言切换功能
 
 ### 4. 性能优化
 

@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import * as SheetPrimitive from "@radix-ui/react-dialog"
-import { cva, type VariantProps } from "class-variance-authority"
-import { X } from "lucide-react"
+import * as React from 'react';
+import * as SheetPrimitive from '@radix-ui/react-dialog';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { X } from 'lucide-react';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 /**
  * Sheet 变体定义
@@ -13,25 +13,25 @@ import { cn } from "@/lib/utils"
  * 已更新为 Tailwind CSS v4 兼容版本
  */
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  'fixed z-50 gap-5 bg-background p-8 shadow-xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
   {
     variants: {
       side: {
-        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        top: 'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
         bottom:
-          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+          'inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+        left: 'inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm',
         right:
-          "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          'inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm',
         fullscreen:
-          "inset-0 w-full h-full border-none data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+          'inset-0 w-full h-full border-none data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       },
     },
     defaultVariants: {
-      side: "right",
+      side: 'right',
     },
   }
-)
+);
 
 /**
  * Sheet 组件属性
@@ -41,22 +41,26 @@ export interface SheetProps extends React.ComponentPropsWithoutRef<typeof SheetP
 /**
  * Sheet 触发器组件属性
  */
-export interface SheetTriggerProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger> {}
+export interface SheetTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger> {}
 
 /**
  * Sheet 关闭按钮组件属性
  */
-export interface SheetCloseProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close> {}
+export interface SheetCloseProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close> {}
 
 /**
  * Sheet 传送门组件属性
  */
-export interface SheetPortalProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal> {}
+export interface SheetPortalProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal> {}
 
 /**
  * Sheet 遮罩层组件属性
  */
-export interface SheetOverlayProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {}
+export interface SheetOverlayProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {}
 
 /**
  * Sheet 内容组件属性
@@ -78,12 +82,14 @@ export interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Sheet 标题组件属性
  */
-export interface SheetTitleProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title> {}
+export interface SheetTitleProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title> {}
 
 /**
  * Sheet 描述组件属性
  */
-export interface SheetDescriptionProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description> {}
+export interface SheetDescriptionProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description> {}
 
 /**
  * Sheet 组件
@@ -106,137 +112,121 @@ export interface SheetDescriptionProps extends React.ComponentPropsWithoutRef<ty
  *   </SheetContent>
  * </Sheet>
  */
-const Sheet = SheetPrimitive.Root
+const Sheet = SheetPrimitive.Root;
 
 /**
  * SheetTrigger 组件
  * 用于触发 Sheet 的打开
  */
-const SheetTrigger = SheetPrimitive.Trigger
+const SheetTrigger = SheetPrimitive.Trigger;
 
 /**
  * SheetClose 组件
  * 用于关闭 Sheet
  */
-const SheetClose = SheetPrimitive.Close
+const SheetClose = SheetPrimitive.Close;
 
 /**
  * SheetPortal 组件
  * 用于将 Sheet 内容渲染到 DOM 的其他部分
  */
-const SheetPortal = SheetPrimitive.Portal
+const SheetPortal = SheetPrimitive.Portal;
 
 /**
  * SheetOverlay 组件
  * Sheet 的背景遮罩层
  */
-const SheetOverlay = React.forwardRef<
-  HTMLDivElement,
-  SheetOverlayProps
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Overlay
-    className={cn(
-      "fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
-    )}
-    {...props}
-    ref={ref}
-  />
-))
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
+const SheetOverlay = React.forwardRef<HTMLDivElement, SheetOverlayProps>(
+  ({ className, ...props }, ref) => (
+    <SheetPrimitive.Overlay
+      className={cn(
+        'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        className
+      )}
+      {...props}
+      ref={ref}
+    />
+  )
+);
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 /**
  * SheetContent 组件
  * Sheet 的主要内容区域
  */
-const SheetContent = React.forwardRef<
-  HTMLDivElement,
-  SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      {children}
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-        <X className="h-4 w-4" />
-        <span className="sr-only">关闭</span>
-      </SheetPrimitive.Close>
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
-SheetContent.displayName = SheetPrimitive.Content.displayName
+const SheetContent = React.forwardRef<HTMLDivElement, SheetContentProps>(
+  ({ side = 'right', className, children, ...props }, ref) => (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(sheetVariants({ side }), className)}
+        {...props}
+      >
+        {children}
+        <SheetPrimitive.Close className="absolute right-5 top-5 rounded-lg opacity-70 ring-offset-background transition-all duration-300 hover:opacity-100 hover:bg-muted focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground p-2 shadow-sm hover:shadow-md">
+          <X className="h-5 w-5" />
+          <span className="sr-only">关闭</span>
+        </SheetPrimitive.Close>
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+);
+SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 /**
  * SheetHeader 组件
  * Sheet 的头部区域
  */
-const SheetHeader = ({
-  className,
-  ...props
-}: SheetHeaderProps) => (
+const SheetHeader = ({ className, ...props }: SheetHeaderProps) => (
   <div
-    className={cn(
-      "flex flex-col space-y-2 text-center sm:text-left",
-      className
-    )}
+    className={cn('flex flex-col space-y-3 text-center sm:text-left mb-3', className)}
     {...props}
   />
-)
-SheetHeader.displayName = "SheetHeader"
+);
+SheetHeader.displayName = 'SheetHeader';
 
 /**
  * SheetFooter 组件
  * Sheet 的底部区域
  */
-const SheetFooter = ({
-  className,
-  ...props
-}: SheetFooterProps) => (
+const SheetFooter = ({ className, ...props }: SheetFooterProps) => (
   <div
-    className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-      className
-    )}
+    className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-3 mt-4', className)}
     {...props}
   />
-)
-SheetFooter.displayName = "SheetFooter"
+);
+SheetFooter.displayName = 'SheetFooter';
 
 /**
  * SheetTitle 组件
  * Sheet 的标题
  */
-const SheetTitle = React.forwardRef<
-  HTMLHeadingElement,
-  SheetTitleProps
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title
-    ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
-    {...props}
-  />
-))
-SheetTitle.displayName = SheetPrimitive.Title.displayName
+const SheetTitle = React.forwardRef<HTMLHeadingElement, SheetTitleProps>(
+  ({ className, ...props }, ref) => (
+    <SheetPrimitive.Title
+      ref={ref}
+      className={cn('text-xl font-semibold tracking-tight text-foreground', className)}
+      {...props}
+    />
+  )
+);
+SheetTitle.displayName = SheetPrimitive.Title.displayName;
 
 /**
  * SheetDescription 组件
  * Sheet 的描述文本
  */
-const SheetDescription = React.forwardRef<
-  HTMLParagraphElement,
-  SheetDescriptionProps
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-))
-SheetDescription.displayName = SheetPrimitive.Description.displayName
+const SheetDescription = React.forwardRef<HTMLParagraphElement, SheetDescriptionProps>(
+  ({ className, ...props }, ref) => (
+    <SheetPrimitive.Description
+      ref={ref}
+      className={cn('text-sm text-muted-foreground leading-relaxed mt-1', className)}
+      {...props}
+    />
+  )
+);
+SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
 export {
   Sheet,
@@ -250,4 +240,4 @@ export {
   SheetTitle,
   SheetDescription,
   sheetVariants,
-}
+};

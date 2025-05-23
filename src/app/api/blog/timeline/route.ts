@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { BlogPost } from '@/types/blog';
+import { BlogPost } from '@/hooks/use-blog';
 
 /**
  * 获取所有博客文章并按年份分组
@@ -41,9 +41,7 @@ function getPostsByYear(): Record<string, BlogPost[]> {
 
           // 获取文章路径（不包含扩展名）
           const relativeDir = path.relative(blogDir, path.dirname(itemPath));
-          const fullSlug = relativeDir
-            ? `${relativeDir}/${slug}`.replace(/\\/g, '/')
-            : slug;
+          const fullSlug = relativeDir ? `${relativeDir}/${slug}`.replace(/\\/g, '/') : slug;
 
           postsByYear[year].push({
             slug: fullSlug,
@@ -54,7 +52,7 @@ function getPostsByYear(): Record<string, BlogPost[]> {
             author: data.author || '',
             authorAvatar: data.authorAvatar || null,
             authorBio: data.authorBio || '',
-            published: data.published !== false
+            published: data.published !== false,
           });
         }
       }

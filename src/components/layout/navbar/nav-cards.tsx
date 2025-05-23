@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { NAV_ITEMS } from "@/lib/constants";
-import { NavCard } from "./nav-card";
+import { usePathname } from 'next/navigation';
+import { NAV_ITEMS } from '@/lib/constants';
+import { NavCard } from './nav-card';
 
 // 导航项描述
 const NAV_DESCRIPTIONS = {
-  docs: "查看详细的文档和指南，了解如何使用我们的产品和服务",
-  blog: "阅读最新的博客文章，了解行业动态和技术趋势",
-  navigation: "发现精选的网站和工具，提高您的工作效率",
-  friends: "查看我们的合作伙伴和友情链接"
+  docs: '查看详细的文档和指南，了解如何使用我们的产品和服务',
+  blog: '阅读最新的博客文章，了解行业动态和技术趋势',
+  navigation: '发现精选的网站和工具，提高您的工作效率',
+  friends: '查看我们的合作伙伴和友情链接',
 };
 
 interface NavCardsProps {
@@ -36,7 +35,7 @@ export function NavCards({ onClose }: NavCardsProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map(item => (
         <NavCard
           key={item.key}
           title={item.label}

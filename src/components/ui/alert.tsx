@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 /**
  * Alert 组件变体定义
@@ -12,19 +12,19 @@ import { cn } from "@/lib/utils";
  * 已更新为 Tailwind CSS v4 兼容版本
  */
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  'relative w-full rounded-xl border p-5 [&>svg~*]:pl-8 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-5 [&>svg]:top-5 [&>svg]:text-foreground shadow-sm',
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: 'bg-background text-foreground hover:shadow-md transition-all',
         destructive:
-          "border-destructive/50 text-destructive [&>svg]:text-destructive",
+          'border-destructive/50 text-destructive [&>svg]:text-destructive hover:shadow-md transition-all',
         success:
-          "border-success/50 text-success [&>svg]:text-success",
+          'border-success/50 text-success [&>svg]:text-success hover:shadow-md transition-all',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
   }
 );
@@ -64,15 +64,10 @@ export interface AlertDescriptionProps extends React.HTMLAttributes<HTMLParagrap
  */
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   ({ className, variant, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    />
+    <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
   )
 );
-Alert.displayName = "Alert";
+Alert.displayName = 'Alert';
 
 /**
  * AlertTitle 组件
@@ -82,12 +77,12 @@ const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
   ({ className, ...props }, ref) => (
     <h5
       ref={ref}
-      className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+      className={cn('mb-2 font-semibold leading-none tracking-tight text-lg', className)}
       {...props}
     />
   )
 );
-AlertTitle.displayName = "AlertTitle";
+AlertTitle.displayName = 'AlertTitle';
 
 /**
  * AlertDescription 组件
@@ -95,13 +90,9 @@ AlertTitle.displayName = "AlertTitle";
  */
 const AlertDescription = React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("text-sm [&_p]:leading-relaxed", className)}
-      {...props}
-    />
+    <div ref={ref} className={cn('text-sm [&_p]:leading-relaxed mt-1', className)} {...props} />
   )
 );
-AlertDescription.displayName = "AlertDescription";
+AlertDescription.displayName = 'AlertDescription';
 
 export { Alert, AlertTitle, AlertDescription, alertVariants };

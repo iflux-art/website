@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDocCategories } from '@/lib/docs';
+import { getDocCategories } from '@/lib/content';
 
 /**
  * 获取所有文档分类的 API 路由

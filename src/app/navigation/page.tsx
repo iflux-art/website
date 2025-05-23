@@ -1,199 +1,129 @@
-'use client';
+import { notFound } from 'next/navigation';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { Suspense } from 'react';
 
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { MarkdownContent as MDXContent } from '@/components/ui/markdown/markdown-content';
+import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
+import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
+import { MdxContentWrapper } from '@/components/ui/markdown/mdx-content-wrapper';
+import { MdxServerRenderer } from '@/components/ui/markdown/mdx-server-renderer';
 
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { useNavigationData } from '@/hooks/use-navigation-data';
-import { Category } from '@/types/navigation';
-import { AnimatedCard } from '@/components/ui/animated-card';
-import { AnimatedContainer } from '@/components/ui/animated-container';
-import { CategoryColorCard } from '@/components/ui/navigation/category-color';
-import { PageLayout } from '@/components/layout/page-layout';
+export default async function NavigationPage() {
+  // 默认显示 development 页面内容
+  const slug = ['development'];
+  const fullSlug = slug.join('/');
 
-export default function NavigationPage() {
-  // 使用统一的数据加载hook
-  const { categories, featuredResources, recentResources, loading, error } = useNavigationData();
+  // 直接读取 MDX 文件
+  let filePath = '';
+  const mdxPath = path.join(process.cwd(), 'src', 'content', 'navigation', `${fullSlug}.mdx`);
+  const mdPath = path.join(process.cwd(), 'src', 'content', 'navigation', `${fullSlug}.md`);
 
-  // PageLayout 组件已在顶部导入
-
-  // 加载状态显示
-  if (loading) {
-    return (
-      <PageLayout pageTitle="网站导航" className="py-10">
-        {/* 加载状态 */}
-        <div className="animate-pulse">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-40 bg-muted rounded"></div>
-            ))}
-          </div>
-
-          <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-40 bg-muted rounded"></div>
-            ))}
-          </div>
-
-          <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-40 bg-muted rounded"></div>
-            ))}
-          </div>
-        </div>
-      </PageLayout>
-    );
+  if (fs.existsSync(mdxPath)) {
+    filePath = mdxPath;
+  } else if (fs.existsSync(mdPath)) {
+    filePath = mdPath;
+  } else {
+    console.error(`找不到导航页面: ${fullSlug}`);
+    notFound();
   }
 
+  // 读取文件内容
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const { data: frontmatter, content: mdxContent } = matter(fileContent);
+
+  console.log(`成功读取导航页面: ${fullSlug}`, {
+    contentLength: mdxContent.length,
+    frontmatterKeys: Object.keys(frontmatter),
+  });
+
+  // 获取标题
+  const title = frontmatter.title || '网址导航';
+
+  // 提取标题作为目录
+  const headings: { id: string; text: string; level: number }[] = [];
+  const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
+  let match;
+
+  while ((match = headingRegex.exec(mdxContent)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const customId = match[3];
+    const id =
+      customId ||
+      `heading-${text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
+
+    // 只包含1-4级标题（h1-h4）
+    if (level >= 1 && level <= 4) {
+      headings.push({ id, text, level });
+    }
+  }
+
+  // 处理内容中的代码块
+  let processedContent = mdxContent;
+
+  // 读取根目录的 _meta.json 文件
+  const rootMetaPath = path.join(process.cwd(), 'src', 'content', 'navigation', '_meta.json');
+  let rootMeta = {};
+
+  if (fs.existsSync(rootMetaPath)) {
+    try {
+      rootMeta = JSON.parse(fs.readFileSync(rootMetaPath, 'utf8'));
+    } catch (error) {
+      console.error('解析根目录 _meta.json 文件失败:', error);
+    }
+  }
+
+  // 构建面包屑导航项
+  const breadcrumbItems: BreadcrumbItem[] = [{ label: '网址导航', href: '/navigation' }];
+
   return (
-    <PageLayout pageTitle="网站导航" className="py-10">
-      {/* 分类导航 */}
-      {(() => {
-        // 预先创建分类网格
-        const categoriesGrid = (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories && categories.length > 0 ? (
-              categories.map((category, index) => (
-                <CategoryCard key={category.id} category={category} index={index} />
-              ))
-            ) : (
-              <p className="col-span-4 text-center text-muted-foreground">暂无分类数据</p>
-            )}
+    <div className="container mx-auto py-10">
+      <div className="flex flex-col lg:flex-row gap-8 px-4">
+        {/* 左侧边栏 - 导航列表 */}
+        <div className="lg:w-64 shrink-0 order-2 lg:order-1">
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+            <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
+              <div className="no-animation">
+                <SidebarErrorWrapper>
+                  <DocSidebar category="navigation" currentDoc="development" />
+                </SidebarErrorWrapper>
+              </div>
+            </Suspense>
           </div>
-        );
+        </div>
 
-        return (
-          <AnimatedContainer
-            baseDelay={0.05}
-            staggerDelay={0.05}
-            variant="fade"
-            autoWrap={false}
-            className="mb-12"
-            threshold={0.1}
-            rootMargin="0px"
-          >
-            {categoriesGrid}
-          </AnimatedContainer>
-        );
-      })()}
-
-      {/* 精选资源 */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">精选资源</h2>
-        {(() => {
-          // 预先创建资源网格
-          const resourcesGrid = (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredResources && featuredResources.length > 0 ? (
-                featuredResources.map((resource, index) => (
-                  <ResourceCard key={index} resource={resource} index={index} />
-                ))
-              ) : (
-                <p className="col-span-3 text-center text-muted-foreground">暂无精选资源</p>
-              )}
+        {/* 中间内容区 */}
+        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
+          <div className="max-w-4xl mx-auto">
+            {/* 面包屑导航 */}
+            <div className="mb-6">
+              <Breadcrumb items={breadcrumbItems} />
             </div>
-          );
 
-          return (
-            <AnimatedContainer
-              baseDelay={0.05}
-              staggerDelay={0.05}
-              variant="fade"
-              autoWrap={false}
-              threshold={0.1}
-              rootMargin="0px"
-            >
-              {resourcesGrid}
-            </AnimatedContainer>
-          );
-        })()}
-      </section>
+            <h1 className="text-4xl font-bold mb-8 tracking-tight">{title}</h1>
+            <MDXContent>
+              <MdxContentWrapper html={await MdxServerRenderer({ content: mdxContent })} />
+            </MDXContent>
+          </div>
+        </div>
 
-      {/* 最新添加 */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-6">最新添加</h2>
-        {(() => {
-          // 预先创建最新资源网格
-          const recentResourcesGrid = (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recentResources && recentResources.length > 0 ? (
-                recentResources.map((resource, index) => (
-                  <ResourceCard key={index} resource={resource} index={index} />
-                ))
-              ) : (
-                <p className="col-span-3 text-center text-muted-foreground">暂无最新资源</p>
-              )}
-            </div>
-          );
-
-          return (
-            <AnimatedContainer
-              baseDelay={0.05}
-              staggerDelay={0.05}
-              variant="fade"
-              autoWrap={false}
-              threshold={0.1}
-              rootMargin="0px"
-            >
-              {recentResourcesGrid}
-            </AnimatedContainer>
-          );
-        })()}
-      </section>
-    </PageLayout>
+        {/* 右侧边栏 - 目录 */}
+        <div className="lg:w-64 shrink-0 order-3">
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+            <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
+              {/* 使用自适应侧边栏组件显示文档目录 */}
+              <AdaptiveSidebar headings={headings} />
+            </Suspense>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
-
-/**
- * 分类卡片组件属性
- *
- * @interface CategoryCardProps
- */
-interface CategoryCardProps {
-  /**
-   * 分类数据
-   */
-  category: Category;
-
-  /**
-   * 索引，用于动画延迟
-   */
-  index?: number;
-}
-
-/**
- * 分类卡片组件
- *
- * 用于显示导航页面中的分类卡片，包括图标、标题和描述
- * 使用 AnimatedCard 组件实现动画效果
- *
- * @param {CategoryCardProps} props - 组件属性
- * @returns {JSX.Element} 分类卡片组件
- */
-function CategoryCard({ category, index = 0 }: CategoryCardProps) {
-  return (
-    <AnimatedCard delay={index * 0.05} duration={0.5} variant="fade" className="h-full">
-      <Link href={`/navigation/${category.id}`}>
-        <CategoryColorCard color={category.color} className="h-full overflow-hidden">
-          <CardContent className="p-6">
-            <div className="text-4xl mb-4">{category.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-            <p className="text-muted-foreground">{category.description}</p>
-          </CardContent>
-          <CardFooter className="p-4 flex justify-end bg-background/50">
-            <div className="flex items-center text-sm font-medium">
-              浏览
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </div>
-          </CardFooter>
-        </CategoryColorCard>
-      </Link>
-    </AnimatedCard>
-  );
-}
-
-// 导入资源卡片组件
-import { ResourceCard } from '@/components/features/navigation';

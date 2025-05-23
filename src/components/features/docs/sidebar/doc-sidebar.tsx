@@ -8,8 +8,47 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
-import { DocSidebarItem } from '@/types/docs';
-import { ActiveLink } from './active-link';
+import { NavLink as ActiveLink } from '@/components/ui/nav-link';
+
+/**
+ * 文档侧边栏项（用于侧边栏）
+ */
+export interface DocSidebarItem {
+  /**
+   * 文档标题
+   */
+  title: string;
+
+  /**
+   * 文档链接
+   */
+  href?: string;
+
+  /**
+   * 子文档列表
+   */
+  items?: DocSidebarItem[];
+
+  /**
+   * 是否默认折叠
+   */
+  collapsed?: boolean;
+
+  /**
+   * 项目类型
+   */
+  type?: 'separator' | 'page' | 'menu';
+
+  /**
+   * 是否为外部链接
+   */
+  isExternal?: boolean;
+
+  /**
+   * 文件路径（用于匹配当前页面）
+   */
+  filePath?: string;
+}
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== 'undefined';
@@ -193,7 +232,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                   onOpenChange={open => handleOpenChange(itemId, open)}
                 >
                   <div className="flex items-center">
-                    <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-2 rounded-md text-sm group hover:bg-accent/50">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-3 rounded-lg text-sm group hover:bg-accent/50 transition-colors shadow-sm hover:shadow-md">
                       <span
                         className={cn(
                           'font-medium',
@@ -210,7 +249,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                     </CollapsibleTrigger>
                   </div>
                   <CollapsibleContent>
-                    <ul className="mt-1 space-y-1 pl-3 pt-1 border-l border-border/30 ml-2">
+                    <ul className="mt-2 space-y-2 pl-4 pt-1 border-l border-border/40 ml-2">
                       {renderItems(item.items || [], level + 1, itemId)}
                     </ul>
                   </CollapsibleContent>
@@ -375,11 +414,11 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   if (error) {
     console.error('文档侧边栏加载失败:', error);
     return (
-      <div className="text-destructive p-4 border border-destructive/50 rounded-md">
+      <div className="text-destructive p-5 border border-destructive/50 rounded-lg shadow-sm">
         加载文档导航失败
         <button
           onClick={() => window.location.reload()}
-          className="mt-2 px-2 py-1 bg-muted rounded text-xs hover:bg-primary/10 hover:text-primary transition-colors"
+          className="mt-3 px-3 py-1.5 bg-muted rounded-md text-xs font-medium hover:bg-primary/10 hover:text-primary transition-colors shadow-sm"
         >
           点击重试
         </button>
@@ -391,7 +430,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   if (items.length === 0 && !loading && !error) {
     console.log('文档侧边栏项目为空');
     return (
-      <div className="p-4 border border-border rounded-md text-muted-foreground">
+      <div className="p-5 border border-border rounded-lg shadow-sm text-muted-foreground">
         此分类下暂无文档
       </div>
     );

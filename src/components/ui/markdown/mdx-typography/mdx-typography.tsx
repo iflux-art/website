@@ -1,6 +1,30 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { TypographyProps, HeadingProps } from './mdx-typography.types';
+
+/**
+ * 排版组件属性
+ */
+export interface TypographyProps {
+  /**
+   * 子元素
+   */
+  children?: React.ReactNode;
+
+  /**
+   * 自定义类名
+   */
+  className?: string;
+}
+
+/**
+ * 标题组件属性
+ */
+export interface HeadingProps extends TypographyProps {
+  /**
+   * 标题ID，用于锚点链接
+   */
+  id?: string;
+}
 
 /**
  * 主要排版容器
@@ -80,27 +104,39 @@ export function MDXListItem({ className, children }: TypographyProps) {
  * 表格组件
  */
 export function MDXTable({ className, children }: TypographyProps) {
-  return <table className={cn('w-full border-collapse my-8', className)}>{children}</table>;
+  return (
+    <table
+      className={cn('w-full border-collapse my-8 rounded-lg overflow-hidden shadow-sm', className)}
+    >
+      {children}
+    </table>
+  );
 }
 
 export function MDXTableHead({ className, children }: TypographyProps) {
-  return <thead className={cn('bg-muted', className)}>{children}</thead>;
+  return <thead className={cn('bg-muted/70 border-b border-border', className)}>{children}</thead>;
 }
 
 export function MDXTableBody({ className, children }: TypographyProps) {
-  return <tbody className={cn('', className)}>{children}</tbody>;
+  return <tbody className={cn('bg-card', className)}>{children}</tbody>;
 }
 
 export function MDXTableRow({ className, children }: TypographyProps) {
-  return <tr className={cn('', className)}>{children}</tr>;
+  return (
+    <tr className={cn('border-b border-border/50 hover:bg-muted/30 transition-colors', className)}>
+      {children}
+    </tr>
+  );
 }
 
 export function MDXTableHeader({ className, children }: TypographyProps) {
-  return <th className={cn('border px-4 py-2 text-left', className)}>{children}</th>;
+  return (
+    <th className={cn('px-5 py-3 text-left font-medium text-foreground', className)}>{children}</th>
+  );
 }
 
 export function MDXTableCell({ className, children }: TypographyProps) {
-  return <td className={cn('border px-4 py-2', className)}>{children}</td>;
+  return <td className={cn('px-5 py-3 text-muted-foreground', className)}>{children}</td>;
 }
 
 /**

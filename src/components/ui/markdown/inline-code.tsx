@@ -30,11 +30,11 @@ export function InlineCode({ children, className, ...props }: InlineCodeProps) {
     <code
       className={cn(
         // 基础样式
-        'inline-block rounded-md px-1.5 py-0.5 mx-1 text-sm font-normal font-mono',
-        // 浅色模式样式
-        'bg-[oklch(0.97_0_0)] border border-[oklch(0.922_0_0)] text-[oklch(0.205_0_0)]',
-        // 深色模式样式
-        'dark:bg-[oklch(0.269_0_0)] dark:border-[oklch(0.3_0_0/0.3)] dark:text-[oklch(0.922_0_0)]',
+        'inline-block rounded-lg px-2 py-0.5 mx-1 text-sm font-medium font-mono',
+        // 使用主题变量
+        'bg-muted border border-border text-foreground',
+        // 添加阴影和过渡效果
+        'shadow-sm transition-colors',
         className
       )}
       {...props}
@@ -72,14 +72,14 @@ export const inlineCodeStyles = `
   .prose td code:not(pre code),
   .prose th code:not(pre code) {
     margin: 0;
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.25rem;
-    background-color: oklch(0.97 0 0);
-    border: 1px solid oklch(0.922 0 0);
-    color: oklch(0.205 0 0);
+    padding: 0.15rem 0.6rem;
+    border-radius: 0.375rem;
+    background-color: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
     font-family: var(--font-geist-mono);
     font-size: 0.9rem;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .dark .prose p code:not(pre code),
@@ -93,8 +93,8 @@ export const inlineCodeStyles = `
   .dark .prose blockquote code:not(pre code),
   .dark .prose td code:not(pre code),
   .dark .prose th code:not(pre code) {
-    background-color: oklch(0.269 0 0);
-    border-color: oklch(0.3 0 0 / 0.3);
-    color: oklch(0.922 0 0);
+    background-color: hsl(var(--muted));
+    border-color: hsl(var(--border));
+    color: hsl(var(--foreground));
   }
 `;

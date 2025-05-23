@@ -1,10 +1,39 @@
-import React from "react";
-import { Calendar, Calculator } from "lucide-react";
-import Link from "next/link";
+import React from 'react';
+import { Calendar, Calculator } from 'lucide-react';
+import Link from 'next/link';
 
-import { countWords } from "@/lib/utils";
-import { BlogContentProps } from "./blog-content.types";
-import { MDXContent } from "@/components/features/content/mdx-content";
+import { countWords } from '@/lib/utils';
+import { MarkdownContent as MDXContent } from '@/components/ui/markdown/markdown-content';
+
+/**
+ * 博客内容组件属性
+ */
+export interface BlogContentProps {
+  /**
+   * 文章标题
+   */
+  title: string;
+
+  /**
+   * 发布日期
+   */
+  date: string | null;
+
+  /**
+   * 文章内容（MDX 格式）- 已弃用，使用 mdxContent 代替
+   */
+  content?: string;
+
+  /**
+   * 渲染后的 MDX 内容
+   */
+  mdxContent?: React.ReactNode;
+
+  /**
+   * 文章标签
+   */
+  tags?: string[];
+}
 
 /**
  * 博客内容组件
@@ -23,18 +52,12 @@ import { MDXContent } from "@/components/features/content/mdx-content";
  * />
  * ```
  */
-export function BlogContent({
-  title,
-  date,
-  content,
-  mdxContent,
-  tags = [],
-}: BlogContentProps) {
+export function BlogContent({ title, date, content, mdxContent, tags = [] }: BlogContentProps) {
   return (
     <article>
       <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">{title}</h1>
-        <div className="flex flex-wrap items-center text-sm text-muted-foreground">
+        <h1 className="text-5xl font-bold tracking-tight mb-8">{title}</h1>
+        <div className="flex flex-wrap items-center text-sm text-muted-foreground font-medium">
           {date && (
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-1" />
@@ -43,7 +66,7 @@ export function BlogContent({
           )}
 
           {/* 分隔符 */}
-          {date && (tags && tags.length > 0) && (
+          {date && tags && tags.length > 0 && (
             <div className="mx-2 text-muted-foreground/50">|</div>
           )}
 
@@ -53,7 +76,7 @@ export function BlogContent({
                 <Link
                   key={index}
                   href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="px-2 py-0.5 bg-muted rounded-md text-xs hover:bg-primary/10 hover:text-primary transition-colors"
+                  className="px-3 py-1.5 bg-muted rounded-xl text-xs font-medium hover:bg-primary/10 hover:text-primary transition-all shadow-sm hover:shadow-md"
                 >
                   {tag}
                 </Link>
@@ -62,7 +85,7 @@ export function BlogContent({
           )}
 
           {/* 分隔符 */}
-          {((date || (tags && tags.length > 0))) && (
+          {(date || (tags && tags.length > 0)) && (
             <div className="mx-2 text-muted-foreground/50">|</div>
           )}
 
@@ -74,9 +97,7 @@ export function BlogContent({
         </div>
       </header>
 
-      <MDXContent>
-        {mdxContent}
-      </MDXContent>
+      <MDXContent>{mdxContent}</MDXContent>
     </article>
   );
 }

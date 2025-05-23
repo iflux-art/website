@@ -1,0 +1,10 @@
+{
+  "marketing": {
+    "title": "营销工具",
+    "description": "市场营销和推广工具"
+  },
+  "analytics": {
+    "title": "数据分析",
+    "description": "数据分析和可视化工具"
+  }
+}

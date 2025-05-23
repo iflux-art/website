@@ -5,6 +5,10 @@ import Image, { ImageProps } from 'next/image';
 import { CodeBlock, InlineCode } from '@/components/ui/markdown';
 import { H1, H2, H3, H4 } from '@/components/ui/markdown/heading-with-anchor';
 import { MarkdownLink } from '@/components/ui/markdown/link';
+import { MDXResourceCard } from '@/components/mdx/mdx-resource-card';
+import { MDXResourceGrid } from '@/components/mdx/mdx-resource-grid';
+import { MDXFriendLinkCard } from '@/components/mdx/mdx-friend-link-card';
+import { MDXFriendLinkGrid } from '@/components/mdx/mdx-friend-link-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -13,9 +17,11 @@ import { MarkdownLink } from '@/components/ui/markdown/link';
 
 export function useMDXComponents(components: Record<string, React.ComponentType<any>>) {
   return {
-    // 基础包装器，使用 Typography 插件样式
+    // 基础包装器，使用 Typography 插件样式，符合 New York 风格
     wrapper: ({ children }: { children: React.ReactNode }) => (
-      <article className="prose dark:prose-invert max-w-none pl-8 relative">{children}</article>
+      <article className="prose dark:prose-invert prose-neutral max-w-none pl-8 relative">
+        {children}
+      </article>
     ),
 
     // 标题组件
@@ -24,7 +30,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     h3: H3,
     h4: H4,
 
-    // 图片组件
+    // 图片组件 - New York 风格更圆润的边角
     img: (props: ImageProps) => {
       return (
         <Image
@@ -33,7 +39,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
           height={props.height || 500}
           sizes="100vw"
           style={{ width: '100%', height: 'auto' }}
-          className="rounded-md border my-8"
+          className="rounded-lg border border-border my-8 shadow-sm"
           alt={props.alt || ''}
         />
       );
@@ -75,6 +81,14 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
       // 使用行内代码组件
       return <InlineCode className={className}>{children}</InlineCode>;
     },
+
+    // 资源导航组件
+    ResourceCard: MDXResourceCard,
+    ResourceGrid: MDXResourceGrid,
+
+    // 友情链接组件
+    FriendLinkCard: MDXFriendLinkCard,
+    FriendLinkGrid: MDXFriendLinkGrid,
 
     // 使用传入的组件
     ...components,

@@ -5,25 +5,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 添加全局动画变量和过渡效果 */
 @layer base {
-  :root {
-    --animation-duration-fast: 0.2s;
-    --animation-duration-normal: 0.3s;
-    --animation-duration-slow: 0.5s;
-    --animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    --theme-transition-duration: 0.3s;
-    --theme-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* 主题切换时的特殊过渡效果 - 优化版本 */
-  html.theme-transition,
-  html.theme-transition *,
-  html.theme-transition *::before,
-  html.theme-transition *::after {
-    /* 移除过渡效果，使用涟漪动画代替 */
-    transition: none !important;
-  }
+  /* 基础样式 */
 }
 
 /**
@@ -61,6 +44,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
 
   /* 边框和输入框 */
   --color-border: var(--border);
@@ -95,13 +81,10 @@
 
 :root {
   /* ===== 基础变量 ===== */
-  /* 圆角 */
-  --radius: 0.625rem;
+  /* 圆角 - New York 风格使用更圆润的边角 */
+  --radius: 0.75rem;
 
-  /* 基础色调 */
-  --accent-hue: 264.376; /* 默认色调值 */
-
-  /* 基础亮度 */
+  /* 基础亮度 - neutral 基础色 */
   --light-bg: 1; /* 浅色背景亮度 */
   --light-fg: 0.145; /* 浅色前景亮度 */
   --light-surface: 0.97; /* 浅色表面亮度 */
@@ -114,42 +97,46 @@
   --dark-card: 0.205; /* 深色卡片亮度 */
 
   /* ===== 主题变量 - 浅色模式 ===== */
-  /* 主要界面颜色 */
+  /* 主要界面颜色 - neutral 基础色 */
   --background: oklch(var(--light-bg) 0 0);
   --foreground: oklch(var(--light-fg) 0 0);
 
-  /* 卡片颜色 */
-  --card: var(--background);
+  /* 卡片颜色 - 轻微区分于背景 */
+  --card: oklch(0.98 0 0);
   --card-foreground: var(--foreground);
 
   /* 弹出层颜色 */
   --popover: var(--background);
   --popover-foreground: var(--foreground);
 
-  /* 主要颜色 */
-  --primary: oklch(var(--dark-card) 0 0);
-  --primary-foreground: oklch(var(--dark-fg) 0 0);
+  /* 主要颜色 - New York 风格更强对比度 */
+  --primary: oklch(0.25 0 0);
+  --primary-foreground: oklch(0.98 0 0);
 
   /* 次要颜色 */
-  --secondary: oklch(var(--light-surface) 0 0);
-  --secondary-foreground: var(--primary);
+  --secondary: oklch(0.94 0 0);
+  --secondary-foreground: oklch(0.35 0 0);
 
   /* 柔和颜色 */
-  --muted: var(--secondary);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.64 0 0);
 
   /* 强调颜色 */
-  --accent: var(--secondary);
-  --accent-foreground: var(--primary);
+  --accent: oklch(0.94 0 0);
+  --accent-foreground: oklch(0.35 0 0);
 
   /* 破坏性操作颜色 */
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(var(--light-bg) 0 0);
+  --destructive: oklch(0.65 0.18 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* 成功操作颜色 */
+  --success: oklch(0.65 0.15 140);
+  --success-foreground: oklch(0.98 0 0);
 
   /* 边框和输入框 */
-  --border: oklch(var(--light-border) 0 0);
-  --input: var(--border);
-  --ring: oklch(var(--light-ring) 0 0);
+  --border: oklch(0.85 0 0);
+  --input: oklch(0.85 0 0);
+  --ring: oklch(0.7 0 0);
 
   /* 图表颜色 */
   --chart-1: oklch(0.646 0.222 41.116);
@@ -171,42 +158,46 @@
 
 .dark {
   /* ===== 主题变量 - 深色模式 ===== */
-  /* 主要界面颜色 */
-  --background: oklch(var(--dark-bg) 0 0);
-  --foreground: oklch(var(--dark-fg) 0 0);
+  /* 主要界面颜色 - neutral 基础色 */
+  --background: oklch(0.12 0 0);
+  --foreground: oklch(0.98 0 0);
 
-  /* 卡片颜色 */
-  --card: oklch(var(--dark-card) 0 0);
+  /* 卡片颜色 - 轻微区分于背景 */
+  --card: oklch(0.16 0 0);
   --card-foreground: var(--foreground);
 
   /* 弹出层颜色 */
-  --popover: var(--card);
+  --popover: oklch(0.16 0 0);
   --popover-foreground: var(--foreground);
 
-  /* 主要颜色 */
-  --primary: oklch(var(--light-border) 0 0);
-  --primary-foreground: oklch(var(--dark-card) 0 0);
+  /* 主要颜色 - New York 风格更强对比度 */
+  --primary: oklch(0.9 0 0);
+  --primary-foreground: oklch(0.12 0 0);
 
   /* 次要颜色 */
-  --secondary: oklch(var(--dark-surface) 0 0);
-  --secondary-foreground: var(--foreground);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(0.9 0 0);
 
   /* 柔和颜色 */
-  --muted: var(--secondary);
-  --muted-foreground: oklch(var(--light-ring) 0 0);
+  --muted: oklch(0.18 0 0);
+  --muted-foreground: oklch(0.7 0 0);
 
   /* 强调颜色 */
-  --accent: var(--secondary);
-  --accent-foreground: var(--foreground);
+  --accent: oklch(0.2 0 0);
+  --accent-foreground: oklch(0.9 0 0);
 
   /* 破坏性操作颜色 */
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(var(--light-bg) 0 0);
+  --destructive: oklch(0.7 0.18 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* 成功操作颜色 */
+  --success: oklch(0.7 0.15 140);
+  --success-foreground: oklch(0.98 0 0);
 
   /* 边框和输入框 */
-  --border: oklch(var(--light-bg) 0 0 / 10%);
-  --input: oklch(var(--light-bg) 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(0.3 0 0);
+  --input: oklch(0.3 0 0);
+  --ring: oklch(0.5 0 0);
 
   /* 图表颜色 */
   --chart-1: oklch(0.488 0.243 264.376);
@@ -238,6 +229,11 @@
 /* 添加全局平滑滚动效果 */
 html {
   scroll-behavior: smooth;
+}
+
+/* 首页特殊处理 - 隐藏滚动条 */
+body.home-page {
+  overflow: hidden;
 }
 
 /* 禁用侧边栏动画 */

@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { getDocSidebar } from '@/lib/docs-fs';
-import { DocListItem } from '@/types/docs';
+import { getDocSidebar } from '@/lib/content';
+import { DocListItem } from '@/hooks/use-docs';
 
 /**
  * 获取指定分类的文档列表的 API 路由
@@ -12,10 +12,7 @@ import { DocListItem } from '@/types/docs';
  * @param params 路由参数，包含分类名称
  * @returns 指定分类的文档列表
  */
-export async function GET(
-  request: Request,
-  { params }: { params: { category: string } }
-) {
+export async function GET(request: Request, { params }: { params: { category: string } }) {
   try {
     const { category } = params;
     const decodedCategory = decodeURIComponent(category);
@@ -24,10 +21,7 @@ export async function GET(
     const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', decodedCategory);
 
     if (!fs.existsSync(categoryDir) || !fs.statSync(categoryDir).isDirectory()) {
-      return NextResponse.json(
-        { error: `分类 ${decodedCategory} 不存在` },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: `分类 ${decodedCategory} 不存在` }, { status: 404 });
     }
 
     // 使用新的文件系统工具函数获取文档结构
@@ -46,7 +40,7 @@ export async function GET(
           docs.push({
             slug,
             title: item.title,
-            path: item.href
+            path: item.href,
           });
         }
 
@@ -62,7 +56,8 @@ export async function GET(
     if (docs.length === 0) {
       console.log(`使用旧方法获取分类 ${decodedCategory} 的文档列表`);
 
-      const fallbackDocs = fs.readdirSync(categoryDir)
+      const fallbackDocs = fs
+        .readdirSync(categoryDir)
         .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
         .map(file => {
           const docPath = path.join(categoryDir, file);
@@ -73,7 +68,7 @@ export async function GET(
           return {
             slug,
             title: data.title || slug,
-            path: `/docs/${decodedCategory}/${slug}`
+            path: `/docs/${decodedCategory}/${slug}`,
           };
         });
 

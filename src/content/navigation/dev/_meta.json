@@ -1,0 +1,14 @@
+{
+  "frontend": {
+    "title": "前端开发",
+    "description": "前端框架、库和工具"
+  },
+  "backend": {
+    "title": "后端开发",
+    "description": "后端框架、数据库和服务"
+  },
+  "tools": {
+    "title": "开发工具",
+    "description": "开发环境、IDE和辅助工具"
+  }
+}

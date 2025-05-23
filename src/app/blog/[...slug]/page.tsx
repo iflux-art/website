@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/features/content/breadcrumb';
+import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
-import { ServerMDX } from '@/components/features/content/server-mdx';
+import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown/markdown-renderer';
 
 export default async function BlogPost({
   params,
@@ -57,11 +57,13 @@ export default async function BlogPost({
 
   // 提取文章元数据
   const title = data.title || fullSlug;
-  const date = data.date ? new Date(data.date).toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }) : null;
+  const date = data.date
+    ? new Date(data.date).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
 
   // 提取标题作为目录
   const headings: { id: string; text: string; level: number }[] = [];
@@ -79,7 +81,12 @@ export default async function BlogPost({
     const level = match[1].length;
     const text = match[2].trim();
     const customId = match[3];
-    const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${match.index}`;
+    const id =
+      customId ||
+      `heading-${text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
 
     // 只包含1-4级标题（h1-h4）
     if (level >= 1 && level <= 4) {
@@ -95,17 +102,29 @@ export default async function BlogPost({
 
   // 确保所有标题都有唯一ID
   let processedContent = content;
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     // 替换标题行，添加ID
-    const headingRegex = new RegExp(`^(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\\s*{#[\\w-]+})?$`, 'gm');
+    const headingRegex = new RegExp(
+      `^(#{${heading.level})\\s+(${heading.text.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )})(?:\\s*{#[\\w-]+})?$`,
+      'gm'
+    );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
   });
 
   // 对每个标题再次检查并确保它们有唯一ID
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     // 查找没有ID的标题并添加ID
     processedContent = processedContent.replace(
-      new RegExp(`(^|\n)(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?!\\s*{#)`, 'g'),
+      new RegExp(
+        `(^|\n)(#{${heading.level})\\s+(${heading.text.replace(
+          /[-/\\^$*+?.()|[\]{}]/g,
+          '\\$&'
+        )})(?!\\s*{#)`,
+        'g'
+      ),
       `$1$2 $3 {#${heading.id}}`
     );
   });
@@ -127,16 +146,20 @@ export default async function BlogPost({
 
   // 构建面包屑导航项
   const breadcrumbItems: BreadcrumbItem[] = [
-    { label: "博客", href: "/blog" },
-    ...(slug.length > 1 ? [{
-      label: rootMeta && rootMeta[slug[0]] ? rootMeta[slug[0]].title : slug[0],
-      href: `/blog/${slug[0]}`
-    }] : []),
-    { label: title }
+    { label: '博客', href: '/blog' },
+    ...(slug.length > 1
+      ? [
+          {
+            label: rootMeta && rootMeta[slug[0]] ? rootMeta[slug[0]].title : slug[0],
+            href: `/blog/${slug[0]}`,
+          },
+        ]
+      : []),
+    { label: title },
   ];
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-10">
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧空白区域，用于保持与文档页面布局一致 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1 hidden lg:block">
@@ -144,7 +167,7 @@ export default async function BlogPost({
         </div>
 
         {/* 中间内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
+        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
           <div className="max-w-4xl mx-auto">
             {/* 面包屑导航 */}
             <div className="mb-6">
@@ -163,10 +186,8 @@ export default async function BlogPost({
 
         {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20">
-            <BlogSidebar
-              headings={headings}
-            />
+          <div className="lg:sticky lg:top-24">
+            <BlogSidebar headings={headings} />
           </div>
         </div>
       </div>

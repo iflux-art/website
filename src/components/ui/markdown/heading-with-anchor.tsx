@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -14,23 +14,27 @@ interface HeadingWithAnchorProps {
 /**
  * 带锚点的标题组件
  *
- * 标题悬停效果通过 CSS 伪元素实现
+ * 简化版本，移除了悬停显示 # 符号的效果
  */
-export function HeadingWithAnchor({ as: Component, id, children, className, ...props }: HeadingWithAnchorProps) {
+export function HeadingWithAnchor({
+  as: Component,
+  id,
+  children,
+  className,
+  ...props
+}: HeadingWithAnchorProps) {
   // 如果没有提供ID，根据内容生成一个
-  const headingId = id || (typeof children === 'string'
-    ? children.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-    : undefined);
+  const headingId =
+    id ||
+    (typeof children === 'string'
+      ? children
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]/g, '')
+      : undefined);
 
   return (
-    <Component
-      id={headingId}
-      className={cn(
-        "scroll-mt-20",
-        className
-      )}
-      {...props}
-    >
+    <Component id={headingId} className={cn('scroll-mt-20', className)} {...props}>
       {children}
     </Component>
   );
@@ -43,7 +47,7 @@ export function H1({ children, className, ...props }: Omit<HeadingWithAnchorProp
   return (
     <HeadingWithAnchor
       as="h1"
-      className={cn("text-4xl font-bold tracking-tight mt-8 mb-4", className)}
+      className={cn('text-4xl font-bold tracking-tight mt-10 mb-6', className)}
       {...props}
     >
       {children}
@@ -58,7 +62,7 @@ export function H2({ children, className, ...props }: Omit<HeadingWithAnchorProp
   return (
     <HeadingWithAnchor
       as="h2"
-      className={cn("text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b", className)}
+      className={cn('text-3xl font-semibold tracking-tight mt-12 mb-6 pb-3 border-b', className)}
       {...props}
     >
       {children}
@@ -73,7 +77,7 @@ export function H3({ children, className, ...props }: Omit<HeadingWithAnchorProp
   return (
     <HeadingWithAnchor
       as="h3"
-      className={cn("text-xl font-semibold tracking-tight mt-8 mb-3", className)}
+      className={cn('text-2xl font-semibold tracking-tight mt-10 mb-4', className)}
       {...props}
     >
       {children}
@@ -88,7 +92,7 @@ export function H4({ children, className, ...props }: Omit<HeadingWithAnchorProp
   return (
     <HeadingWithAnchor
       as="h4"
-      className={cn("text-lg font-semibold tracking-tight mt-8 mb-3", className)}
+      className={cn('text-xl font-semibold tracking-tight mt-8 mb-4', className)}
       {...props}
     >
       {children}

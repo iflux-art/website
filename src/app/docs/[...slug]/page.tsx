@@ -8,10 +8,10 @@ import { Suspense } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
-import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
-import { MDXContent } from '@/components/features/content/mdx-content';
-import { ServerMDX } from '@/components/features/content/server-mdx';
-import { Breadcrumb } from '@/components/features/content/breadcrumb';
+import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { MarkdownContent as MDXContent } from '@/components/ui/markdown/markdown-content';
+import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown/markdown-renderer';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 
 export default function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
@@ -170,12 +170,12 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
   const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-10">
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
-            <Suspense fallback={<div className="h-[500px] bg-muted rounded-md"></div>}>
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+            <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
               <div className="no-animation">
                 <DocSidebar category={category} currentDoc={docName} />
               </div>
@@ -184,7 +184,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
         </div>
 
         {/* 中间内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1 lg:order-2">
+        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
           <div className="max-w-4xl mx-auto">
             {/* 面包屑导航 */}
             <div className="mb-6">
@@ -199,7 +199,7 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
                 ]}
               />
             </div>
-            <h1 className="text-3xl font-bold mb-6">{data.title}</h1>
+            <h1 className="text-4xl font-bold mb-8 tracking-tight">{data.title}</h1>
             <MDXContent>
               <ServerMDX content={content} />
             </MDXContent>
@@ -207,27 +207,27 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
             {/* 上一页/下一页导航 */}
             <div className="mt-12 grid grid-cols-2 gap-4">
               {prevDoc && (
-                <Card className="col-start-1">
-                  <CardContent className="p-4">
+                <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
+                  <CardContent className="p-5">
                     <Link href={prevDoc.path} className="flex flex-col">
                       <span className="text-sm text-muted-foreground flex items-center">
                         <ChevronLeft className="h-4 w-4 mr-1" />
                         上一页
                       </span>
-                      <span className="font-medium">{prevDoc.title}</span>
+                      <span className="font-semibold tracking-tight">{prevDoc.title}</span>
                     </Link>
                   </CardContent>
                 </Card>
               )}
               {nextDoc && (
-                <Card className="col-start-2">
-                  <CardContent className="p-4">
+                <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
+                  <CardContent className="p-5">
                     <Link href={nextDoc.path} className="flex flex-col items-end text-right">
                       <span className="text-sm text-muted-foreground flex items-center">
                         下一页
                         <ChevronRight className="h-4 w-4 ml-1" />
                       </span>
-                      <span className="font-medium">{nextDoc.title}</span>
+                      <span className="font-semibold tracking-tight">{nextDoc.title}</span>
                     </Link>
                   </CardContent>
                 </Card>
@@ -238,8 +238,8 @@ export default function DocPage({ params }: { params: { slug: string[] } }) {
 
         {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)]">
-            <Suspense fallback={<div className="h-[300px] bg-muted rounded-md"></div>}>
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+            <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
               {/* 使用自适应侧边栏组件显示文档目录 */}
               <AdaptiveSidebar headings={headings} />
             </Suspense>

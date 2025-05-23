@@ -5,7 +5,92 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { DocCategory, DocItem, DocMeta, DocSidebarItem, DocListItem } from '@/types/docs';
+import { DocSidebarItem } from '@/components/features/docs/sidebar/doc-sidebar';
+
+/**
+ * 文档分类
+ */
+export interface DocCategory {
+  /**
+   * 分类唯一标识
+   */
+  id: string;
+
+  /**
+   * 分类标题
+   */
+  title: string;
+
+  /**
+   * 分类描述
+   */
+  description: string;
+
+  /**
+   * 分类下的文档数量
+   */
+  count: number;
+}
+
+/**
+ * 文档项
+ */
+export interface DocItem {
+  /**
+   * 文档唯一标识（URL 路径）
+   */
+  slug: string;
+
+  /**
+   * 所属分类
+   */
+  category: string;
+
+  /**
+   * 文档标题
+   */
+  title: string;
+
+  /**
+   * 文档描述
+   */
+  description: string;
+
+  /**
+   * 发布日期
+   */
+  date?: string;
+}
+
+/**
+ * 文档元数据
+ */
+export interface DocMeta {
+  /**
+   * 分类名称作为键，分类元数据作为值
+   */
+  [key: string]: string | any;
+}
+
+/**
+ * 文档列表项（用于侧边栏）
+ */
+export interface DocListItem {
+  /**
+   * 文档唯一标识
+   */
+  slug: string;
+
+  /**
+   * 文档标题
+   */
+  title: string;
+
+  /**
+   * 文档路径
+   */
+  path: string;
+}
 
 /**
  * 使用文档分类

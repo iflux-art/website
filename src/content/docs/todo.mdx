@@ -1,0 +1,117 @@
+## 项目优化
+
+### 当前优化
+
+1. 继续删除未使用的代码、组件、文件和文件夹
+2. 将单文件组件从文件夹中移出
+3. 简化组件实现，减少组件中的复杂逻辑和动画效果
+4. 优化导入结构，使用更简洁的导入路径，减少嵌套层级
+5. 优化项目结构和分类，将功能相似的组件整合到一起，减少代码重复，shadcn/ui 原生组件使用默认路径
+6. 优化文件、文件夹和函数名，统一命名风格
+7. 优化后保证项目顺利运行
+
+## 后续优化
+
+完全移除 Framer Motion 依赖，使用更高效的 CSS 动画，减少重绘和重排
+
+- 扩展懒加载应用范围 ：对大型组件和非首屏内容应用懒加载
+- 实施代码分割 ：利用 Next.js 的动态导入功能，对路由和大型组件进行代码分割
+- 图片优化 ：
+  - 使用 Next.js 的 Image 组件替代原生 img 标签
+  - 实施响应式图片加载策略
+- 减少 JavaScript 包体积 ：
+  - 分析并优化依赖项
+  - 使用 tree-shaking 移除未使用的代码
+
+如果不需要自动生成目录，可以移除 remark-toc
+考虑使用更轻量级的 Markdown 解析器，如 marked 或 micromark，如果不需要 MDX 的全部功能
+将 MDX 处理移至构建时而非运行时，减少客户端负担
+
+@mdx-js/loader, @mdx-js/react, @next/mdx: 核心 MDX 处理库
+next-mdx-remote: 用于远程 MDX 内容渲染
+rehype-autolink-headings: 为标题添加自动链接
+rehype-slug: 为标题生成 slug
+remark-toc: 自动生成目录
+
+react-intersection-observer: 用于检测元素是否在视口中，主要用于懒加载和动画触发
+gray-matter: 用于解析前端文件的元数据
+
+rimraf: 用于删除文件和目录
+考虑使用更轻量级的替代方案，例如用 del 替代 rimraf
+使用更轻量级的替代方案，例如用 del 或 Node.js 的 fs.rm 替代 rimraf
+
+考虑使用浏览器原生的 Intersection Observer API 替代 react-intersection-observer
+
+## 待办事项
+
+### 功能
+
+首页界面：类似 ChatGPT ，主体是搜索框，通过 API 接入各大模型，多模型、多模态
+搜索框，提供AI大模型、本地知识库搜索，也可直接看文档、博客和网址导航
+
+添加国际化支持 - 实现完整的国际化解决方案
+
+### 体验
+
+美化和动画效果 - 包括各种过渡动画、交互效果和视觉增强
+添加动画开关 - 添加一个全局设置，允许用户关闭动画效果，提高可访问性
+延迟加载非关键组件，提高首屏加载速度
+提升可访问性标准 - 确保网站可访问，包括键盘导航和屏幕阅读器支持
+网址导航基于 docs 模板，mdx + 卡片，便于管理维护
+移动端优化
+
+## 依赖简介
+
+### 1. 客户端渲染库和框架
+
+1. **React 和 React DOM (react, react-dom)**
+   - 这是基础框架，但 React 19 已经进行了性能优化
+   - 影响程度：中等（基础框架必需）
+
+2. **Next.js (next)**
+   - 服务器组件和流式渲染可以提高性能
+   - 影响程度：中等（框架必需）
+
+3. **Framer Motion (framer-motion)**
+   - 动画库，体积较大，会增加初始加载时间
+   - 影响程度：高（可能导致明显的性能下降）
+
+### 2. UI 组件库
+
+1. **Radix UI 组件 (@radix-ui/***)**
+   - 多个 Radix UI 组件会增加 JavaScript 体积
+   - 影响程度：中等（可以通过代码分割优化）
+
+2. **Lucide React (lucide-react)**
+   - 图标库，如果导入全部图标会增加包体积
+   - 影响程度：中等（可以通过按需导入优化）
+
+### 3. 样式和主题
+
+1. **Tailwind CSS (tailwindcss)**
+   - 如果未优化，可能生成大量 CSS
+   - 影响程度：低（v4 已有优化）
+
+2. **Next Themes (next-themes)**
+   - 主题切换库，影响较小
+   - 影响程度：低
+
+### 4. MDX 相关
+
+1. **MDX 相关库 (@mdx-js/loader, @mdx-js/react, next-mdx-remote)**
+   - 处理 MDX 内容的库，会增加 JavaScript 体积
+   - 影响程度：中等（仅在文档页面需要）
+
+2. **Rehype 和 Remark 插件 (rehype-*, remark-*)**
+   - Markdown 处理插件，会增加 JavaScript 体积
+   - 影响程度：中等（仅在文档页面需要）
+
+### 5. 工具库
+
+1. **React Intersection Observer (react-intersection-observer)**
+   - 用于检测元素可见性，会增加一些 JavaScript 体积
+   - 影响程度：低
+
+2. **Class Variance Authority 和 Tailwind Merge (class-variance-authority, tailwind-merge)**
+   - 用于处理类名，影响较小
+   - 影响程度：低

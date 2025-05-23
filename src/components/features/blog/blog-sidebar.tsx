@@ -1,6 +1,16 @@
 import React from 'react';
-import { AdaptiveSidebar } from '@/components/features/content/toc/adaptive-sidebar';
-import { BlogSidebarProps } from './blog-sidebar.types';
+import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { Heading } from '@/components/ui/table-of-contents';
+
+/**
+ * 博客侧边栏组件属性
+ */
+export interface BlogSidebarProps {
+  /**
+   * 文章标题列表，用于生成目录
+   */
+  headings: Heading[];
+}
 
 /**
  * 博客侧边栏组件

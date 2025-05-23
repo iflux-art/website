@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
+import { Navbar } from '@/components/layout/navbar/navbar';
+import { Footer } from '@/components/layout/footer/footer';
 import { ThemeProvider } from 'next-themes';
 import { SITE_METADATA } from '@/lib/constants';
-import { ThemeTransition } from '@/components/layout/transitions/theme-transition';
-import { PageTransitionWrapper } from '@/components/ui/page-transition-wrapper';
 import { StyleManager } from '@/components/ui/style-manager';
 import React from 'react';
 
@@ -32,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-Hans" suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         {/* 添加 mermaid 脚本，用于流程图渲染 */}
         <script async src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" />
@@ -46,18 +44,14 @@ export default function RootLayout({
           enableSystem
           storageKey="iflux-theme-preference"
         >
-          <ThemeTransition>
-            <StyleManager />
-            <div className="flex flex-col min-h-screen">
-              <Navbar className="flex-shrink-0" />
-              <div className="flex-1 flex-grow overflow-auto">
-                <PageTransitionWrapper>
-                  <main className="flex-1 flex-grow">{children}</main>
-                </PageTransitionWrapper>
-              </div>
-              <Footer />
+          <StyleManager />
+          <div className="flex flex-col min-h-screen">
+            <Navbar className="flex-shrink-0" />
+            <div className="flex-1 flex-grow overflow-auto">
+              <main className="flex-1 flex-grow">{children}</main>
             </div>
-          </ThemeTransition>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

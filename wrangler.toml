@@ -1,0 +1,28 @@
+# Cloudflare Pages 配置文件
+name = "iflux-art"
+compatibility_date = "2023-12-01"
+
+# 构建配置
+[build]
+command = "pnpm build"
+output_directory = ".next"
+
+# 环境变量
+[vars]
+NODE_VERSION = "20.11.1"
+
+# 路由配置
+[[routes]]
+pattern = "/*"
+script = ""
+
+# 缓存配置
+[cache]
+caching = true
+preview_cache_revalidate = "manual"
+production_cache_revalidate = "manual"
+
+# 自定义域名配置
+[site]
+bucket = ".next"
+entry-point = "."

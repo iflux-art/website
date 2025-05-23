@@ -1,11 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { slideUp, hoverScale } from "@/lib/animations";
-import { NAV_ITEMS } from "@/lib/constants";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import { NAV_ITEMS } from '@/lib/constants';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 /**
  * 导航项组件
@@ -28,32 +26,24 @@ export function NavItems() {
 
   return (
     <ul className="flex lg:items-center lg:flex-row flex-col items-start gap-6 lg:text-sm text-base font-medium text-muted-foreground">
-      {NAV_ITEMS.map((item) => (
-        <motion.li
+      {NAV_ITEMS.map(item => (
+        <li
           key={item.key}
-          variants={slideUp}
-          whileHover={hoverScale}
-          whileTap={{ scale: 0.95 }}
-          className="w-full lg:w-auto"
+          className="w-full lg:w-auto transition-all duration-300 hover:scale-105 active:scale-95"
         >
           <Link
             href={`/${item.key}`}
             className={cn(
-              "transition-colors relative group block py-2 lg:py-0",
+              'block py-2 lg:py-0 px-1 rounded-md hover:bg-accent/20 transition-colors duration-300',
               isActiveSection(item.key)
-                ? "text-primary"
-                : "text-muted-foreground hover:text-primary"
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-primary'
             )}
           >
             {item.label}
-            <span className={cn(
-              "absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300",
-              isActiveSection(item.key) ? "w-full" : "w-0 group-hover:w-full"
-            )}></span>
           </Link>
-        </motion.li>
+        </li>
       ))}
     </ul>
   );
-
 }

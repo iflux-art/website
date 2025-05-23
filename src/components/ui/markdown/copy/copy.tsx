@@ -1,48 +1,55 @@
-"use client";
+'use client';
 
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { CopyProps } from "./copy.types";
+import React, { useState } from 'react';
+import { Check, Copy as CopyIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+interface CopyProps {
+  text: string;
+  className?: string;
+  iconClassName?: string;
+  children?: React.ReactNode;
+}
 
 /**
  * 复制按钮组件
- * 用于将指定内容复制到剪贴板
+ * 用于复制文本内容到剪贴板
  */
-export default function Copy({ content }: CopyProps) {
-  // 定义状态变量 isCopied，用于记录内容是否已复制
-  const [isCopied, setIsCopied] = useState(false);
+export default function Copy({ text, className, iconClassName, children }: CopyProps) {
+  const [copied, setCopied] = useState(false);
 
-  /**
-   * 处理复制操作的函数
-   */
-  async function handleCopy() {
-    // 将内容写入剪贴板
-    await navigator.clipboard.writeText(content);
-    // 设置复制状态为 true
-    setIsCopied(true);
-
-    // 2 秒后将复制状态重置为 false
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
-  }
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy text:', error);
+    }
+  };
 
   return (
-    // 渲染按钮组件，点击时触发 handleCopy 函数
-    <Button
-      variant="ghost"
-      className="h-6 w-6 p-0 rounded-md hover:bg-background/30 dark:hover:text-gray-300 hover:text-gray-700"
-      size="icon"
+    <button
+      type="button"
       onClick={handleCopy}
-      title="复制代码"
-    >
-      {/* 根据复制状态显示不同的图标 */}
-      {isCopied ? (
-        <CheckIcon className="w-3.5 h-3.5" />
-      ) : (
-        <CopyIcon className="w-3.5 h-3.5" />
+      className={cn(
+        'inline-flex items-center justify-center rounded-md p-1 transition-colors',
+        'text-muted-foreground hover:text-foreground',
+        'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        className
       )}
-    </Button>
+      title={copied ? '已复制!' : '复制到剪贴板'}
+    >
+      {children || (
+        <>
+          {copied ? (
+            <Check className={cn('h-4 w-4', iconClassName)} />
+          ) : (
+            <CopyIcon className={cn('h-4 w-4', iconClassName)} />
+          )}
+          <span className="sr-only">{copied ? '已复制' : '复制'}</span>
+        </>
+      )}
+    </button>
   );
 }
