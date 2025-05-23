@@ -14,7 +14,8 @@
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
-    "deploy": "pnpm build && npx wrangler deploy"
+    "deploy": "pnpm install --no-frozen-lockfile && pnpm build && npx wrangler deploy",
+    "update-deps": "pnpm install --no-frozen-lockfile"
   },
   "repository": {
     "type": "git",
