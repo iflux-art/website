@@ -10,12 +10,12 @@
   "scripts": {
     "dev": "next dev",
     "clean": "rm -rf .next",
-    "build": "pnpm clean && next build",
+    "build": "npm run clean && next build",
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
-    "deploy": "pnpm install --no-frozen-lockfile && pnpm build && npx wrangler deploy",
-    "update-deps": "pnpm install --no-frozen-lockfile"
+    "deploy": "npm install && npm run build && npx wrangler deploy",
+    "update-deps": "npm install"
   },
   "repository": {
     "type": "git",
@@ -50,11 +50,8 @@
     "web-vitals": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/plugin-transform-runtime": "^7.24.0",
-    "@babel/preset-env": "^7.24.0",
-    "@babel/preset-react": "^7.24.0",
-    "@babel/runtime": "^7.24.0",
+    "@babel/core": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.17.48",

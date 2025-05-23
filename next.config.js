@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // 确保使用 SWC 而不是 Babel
-  swcMinify: true, // 显式启用 SWC 压缩
-
   // 配置输出选项，优化 Cloudflare Pages 部署
   output: 'standalone',
 
@@ -49,11 +46,6 @@ const nextConfig = {
   // 禁用类型检查以避免构建失败
   typescript: {
     ignoreBuildErrors: true,
-  },
-
-  // 禁用 Babel，确保使用 SWC
-  experimental: {
-    forceSwcTransforms: true,
   },
 
   // 更新 Cloudflare 兼容性配置
