@@ -14,7 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
-    "deploy": "npm install && npm run build && npx wrangler deploy",
+    "deploy": "npm install --legacy-peer-deps && npm run build && npx wrangler deploy",
     "update-deps": "npm install"
   },
   "repository": {
