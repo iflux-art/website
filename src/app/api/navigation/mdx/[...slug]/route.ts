@@ -10,7 +10,7 @@ import matter from 'gray-matter';
  * @param params 路由参数，包含 slug
  * @returns MDX 内容
  */
-export async function GET(request: Request, { params }: { params: { slug: string[] } }) {
+export async function GET(_request: Request, { params }: { params: { slug: string[] } }) {
   try {
     // 确保 slug 是数组
     const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
@@ -68,30 +68,11 @@ export async function GET(request: Request, { params }: { params: { slug: string
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
 
+    // 导入处理函数
+    const { processMdxContent } = await import('@/components/ui/markdown-renderer');
+
     // 处理内容中的 ResourceCard 和 ResourceGrid 组件
-    // 将 <ResourceCard ... /> 转换为 <div data-resource-card ... />
-    // 处理布尔属性，将 featured 转换为 data-featured="true"
-    let processedContent = content
-      // 处理 ResourceGrid 组件
-      .replace(/<ResourceGrid([^>]*)>/g, '<div data-resource-grid$1>')
-      .replace(/<\/ResourceGrid>/g, '</div>')
-
-      // 处理 ResourceCard 组件的自闭合标签
-      .replace(
-        /<ResourceCard([^>]*)\s+featured(\s+[^>]*)?\/>/g,
-        '<div data-resource-card$1 data-featured="true"$2></div>'
-      )
-      .replace(/<ResourceCard([^>]*)\/>/g, '<div data-resource-card$1></div>')
-
-      // 处理 ResourceCard 组件的开始标签
-      .replace(
-        /<ResourceCard([^>]*)\s+featured(\s+[^>]*)?>/g,
-        '<div data-resource-card$1 data-featured="true"$2>'
-      )
-      .replace(/<ResourceCard([^>]*)>/g, '<div data-resource-card$1>')
-
-      // 处理 ResourceCard 组件的结束标签
-      .replace(/<\/ResourceCard>/g, '</div>');
+    let processedContent = processMdxContent(content);
 
     console.log('API 路由: 成功处理 MDX 内容', {
       contentLength: processedContent.length,

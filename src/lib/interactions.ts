@@ -27,7 +27,7 @@ export const easings = {
 export const buttonInteractions = {
   // 基础交互效果
   base: 'transition-all duration-300',
-  
+
   // 悬停效果
   hover: {
     // 主要按钮悬停效果
@@ -45,7 +45,7 @@ export const buttonInteractions = {
     // 成功按钮悬停效果
     success: 'hover:bg-success/90 hover:shadow-md',
   },
-  
+
   // 激活效果
   active: {
     // 缩放效果
@@ -59,7 +59,7 @@ export const buttonInteractions = {
 export const cardInteractions = {
   // 基础交互效果
   base: 'transition-all duration-200',
-  
+
   // 悬停效果
   hover: {
     // 默认悬停效果
@@ -75,6 +75,32 @@ export const cardInteractions = {
     // 组合效果
     combined: 'hover:shadow-lg hover:border-primary/20',
   },
+
+  // 激活效果
+  active: {
+    // 缩放效果
+    scale: 'active:scale-[0.98]',
+    // 阴影效果
+    shadow: 'active:shadow-sm',
+  },
+
+  // 聚焦效果
+  focus: {
+    // 轮廓效果
+    outline: 'focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2',
+  },
+
+  // 统一卡片效果
+  unified: {
+    // 基础效果
+    base: 'transition-all duration-300 ease-in-out rounded-xl overflow-hidden',
+    // 悬停效果
+    hover: 'hover:shadow-lg hover:scale-[1.02] hover:border-primary/30',
+    // 激活效果
+    active: 'active:scale-[0.98] active:shadow-sm',
+    // 聚焦效果
+    focus: 'focus:outline-none focus:ring-2 focus:ring-primary/50',
+  },
 };
 
 /**
@@ -83,7 +109,7 @@ export const cardInteractions = {
 export const linkInteractions = {
   // 基础交互效果
   base: 'transition-colors duration-300',
-  
+
   // 悬停效果
   hover: {
     // 颜色变化效果
@@ -93,7 +119,7 @@ export const linkInteractions = {
     // 背景高亮效果
     background: 'hover:bg-accent/50',
   },
-  
+
   // 下划线动画效果 - 从中心向两侧扩散
   underlineAnimation: {
     container: 'relative group',
@@ -103,7 +129,7 @@ export const linkInteractions = {
 
 /**
  * 获取交互效果类名
- * 
+ *
  * @param baseClasses 基础类名
  * @param hoverClasses 悬停类名
  * @param activeClasses 激活类名
@@ -116,10 +142,5 @@ export function getInteractionClasses(
   activeClasses?: string,
   focusClasses?: string
 ): string {
-  return [
-    baseClasses,
-    hoverClasses,
-    activeClasses,
-    focusClasses,
-  ].filter(Boolean).join(' ');
+  return [baseClasses, hoverClasses, activeClasses, focusClasses].filter(Boolean).join(' ');
 }

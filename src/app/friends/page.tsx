@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown/markdown-renderer';
+import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
 
 export default async function FriendsPage() {
   // 读取友情链接 MDX 文件

@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import Image, { ImageProps } from 'next/image';
-import { CodeBlock, InlineCode } from '@/components/ui/markdown';
-import { H1, H2, H3, H4 } from '@/components/ui/markdown/heading-with-anchor';
-import { MarkdownLink } from '@/components/ui/markdown/link';
-import { MDXResourceCard } from '@/components/mdx/mdx-resource-card';
-import { MDXResourceGrid } from '@/components/mdx/mdx-resource-grid';
-import { MDXFriendLinkCard } from '@/components/mdx/mdx-friend-link-card';
-import { MDXFriendLinkGrid } from '@/components/mdx/mdx-friend-link-grid';
+import { ImageProps } from 'next/image';
+import { ResponsiveImage } from '@/components/ui/responsive-image';
+import { LazyCodeBlock } from '@/components/lazy-components';
+import { InlineCode } from '@/components/ui/inline-code';
+import { H1, H2, H3, H4 } from '@/components/ui/heading-with-anchor';
+import { MarkdownLink } from '@/components/ui/markdown-link';
+import { UnifiedCard } from '@/components/ui/unified-card';
+import { UnifiedGrid } from '@/components/ui/unified-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -30,17 +30,32 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     h3: H3,
     h4: H4,
 
-    // 图片组件 - New York 风格更圆润的边角
+    // 图片组件 - 使用响应式图片组件
     img: (props: ImageProps) => {
       return (
-        <Image
+        <ResponsiveImage
           {...(props as ImageProps)}
           width={props.width || 1080}
           height={props.height || 500}
-          sizes="100vw"
+          imageSizes={{
+            mobile: 640,
+            tablet: 1024,
+            desktop: 1920,
+          }}
+          formats={{
+            webp: true,
+            avif: true,
+            original: true,
+          }}
           style={{ width: '100%', height: 'auto' }}
           className="rounded-lg border border-border my-8 shadow-sm"
           alt={props.alt || ''}
+          lazy={true}
+          containerClassName="my-8"
+          quality={85}
+          placeholder={
+            <div className="w-full h-full bg-muted/30 rounded-lg border border-border animate-pulse" />
+          }
         />
       );
     },
@@ -62,12 +77,12 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
       );
     },
 
-    // 使用自定义代码块组件
+    // 使用自定义代码块组件 - 懒加载
     pre: ({ children, className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
       return (
-        <CodeBlock className={className} {...props}>
+        <LazyCodeBlock className={className} {...props}>
           {children}
-        </CodeBlock>
+        </LazyCodeBlock>
       );
     },
 
@@ -82,13 +97,17 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
       return <InlineCode className={className}>{children}</InlineCode>;
     },
 
-    // 资源导航组件
-    ResourceCard: MDXResourceCard,
-    ResourceGrid: MDXResourceGrid,
+    // 统一卡片组件
+    ResourceCard: (props: any) => <UnifiedCard type="resource" {...props} />,
+    ResourceGrid: (props: any) => <UnifiedGrid {...props} type="resource" />,
 
     // 友情链接组件
-    FriendLinkCard: MDXFriendLinkCard,
-    FriendLinkGrid: MDXFriendLinkGrid,
+    FriendLinkCard: (props: any) => <UnifiedCard type="friend" {...props} />,
+    FriendLinkGrid: (props: any) => <UnifiedGrid {...props} type="friend" />,
+
+    // 直接使用统一组件
+    UnifiedCard,
+    UnifiedGrid,
 
     // 使用传入的组件
     ...components,

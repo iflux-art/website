@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Hash } from 'lucide-react';
+// 我们将在未来的优化中使用 useIntersectionObserver
 
 /**
  * 标题项类型
@@ -12,12 +13,12 @@ export interface Heading {
    * 标题ID
    */
   id: string;
-  
+
   /**
    * 标题文本
    */
   text: string;
-  
+
   /**
    * 标题级别（1-6）
    */
@@ -32,12 +33,12 @@ export interface TableOfContentsProps {
    * 标题项数组
    */
   headings: Heading[];
-  
+
   /**
    * 自定义类名
    */
   className?: string;
-  
+
   /**
    * 自定义标题
    * @default "目录"
@@ -47,16 +48,16 @@ export interface TableOfContentsProps {
 
 /**
  * 目录组件
- * 
+ *
  * 显示文档的目录结构，支持点击导航和滚动高亮
- * 
+ *
  * @example
- * <TableOfContents 
+ * <TableOfContents
  *   headings={[
  *     { id: 'intro', text: '介绍', level: 2 },
  *     { id: 'usage', text: '使用方法', level: 2 },
  *     { id: 'examples', text: '示例', level: 3 }
- *   ]} 
+ *   ]}
  * />
  */
 export function TableOfContents({ headings, className, title = '目录' }: TableOfContentsProps) {
@@ -123,23 +124,29 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
     // 延迟再次检查，以防DOM还未完全加载
     setTimeout(checkAndFixHeadingIds, 500);
 
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-100px 0px -80% 0px', threshold: 0.1 }
-    );
+    // 创建一个映射，用于存储每个标题ID对应的观察器
+    const observers: Record<string, IntersectionObserver> = {};
 
     // 观察所有标题元素
     const observeHeadings = () => {
       headings.forEach(heading => {
         const element = document.getElementById(heading.id);
+
         if (element) {
+          // 为每个标题创建一个单独的观察器
+          const observer = new IntersectionObserver(
+            entries => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  setActiveId(entry.target.id);
+                }
+              });
+            },
+            { rootMargin: '-100px 0px -80% 0px', threshold: 0.1 }
+          );
+
           observer.observe(element);
+          observers[heading.id] = observer;
         } else {
           // 尝试通过文本内容查找
           const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
@@ -148,7 +155,21 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
               if (!el.id) {
                 el.id = heading.id;
               }
+
+              // 为找到的标题创建观察器
+              const observer = new IntersectionObserver(
+                entries => {
+                  entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                      setActiveId(entry.target.id);
+                    }
+                  });
+                },
+                { rootMargin: '-100px 0px -80% 0px', threshold: 0.1 }
+              );
+
               observer.observe(el);
+              observers[heading.id] = observer;
             }
           });
         }
@@ -159,11 +180,9 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
     setTimeout(observeHeadings, 1000);
 
     return () => {
-      headings.forEach(heading => {
-        const element = document.getElementById(heading.id);
-        if (element) {
-          observer.unobserve(element);
-        }
+      // 清理所有观察器
+      Object.values(observers).forEach(observer => {
+        observer.disconnect();
       });
     };
   }, [headings]);
@@ -204,7 +223,7 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
   const organizedHeadings = organizeHeadings(filteredHeadings);
 
   return (
-    <div className={cn("pl-0", className)}>
+    <div className={cn('pl-0', className)}>
       <div
         ref={tocRef}
         className="py-4 pl-0 pr-2 rounded-lg bg-card dark:bg-card border border-border shadow-sm"

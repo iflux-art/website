@@ -3,7 +3,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-export interface FriendLinkGridProps {
+export interface ResourceGridProps {
   /**
    * 子元素
    */
@@ -22,15 +22,23 @@ export interface FriendLinkGridProps {
 }
 
 /**
- * 友情链接网格组件
+ * 资源网格组件
  * 
- * 用于在 MDX 文件中显示友情链接卡片网格
+ * 用于在 MDX 文件中显示资源卡片网格
+ * 
+ * @example
+ * ```tsx
+ * <ResourceGrid columns={3}>
+ *   <ResourceCard title="资源1" ... />
+ *   <ResourceCard title="资源2" ... />
+ * </ResourceGrid>
+ * ```
  */
-export function FriendLinkGrid({
+export function ResourceGrid({
   children,
   className,
   columns = 3,
-}: FriendLinkGridProps) {
+}: ResourceGridProps) {
   const gridCols = {
     1: 'grid-cols-1',
     2: 'grid-cols-1 md:grid-cols-2',
@@ -50,3 +58,8 @@ export function FriendLinkGrid({
     </div>
   );
 }
+
+/**
+ * @deprecated 使用 ResourceGrid 替代，MDXResourceGrid 将在未来版本中移除
+ */
+export const MDXResourceGrid = ResourceGrid;

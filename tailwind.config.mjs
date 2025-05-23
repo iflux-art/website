@@ -5,7 +5,15 @@ const config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/mdx-components.tsx",
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+    respectDefaultRingColorOpacity: true,
+    disableColorOpacityUtilitiesByDefault: true,
+    removeDeprecatedGapUtilities: true,
+  },
   theme: {
     extend: {
       fontFamily: {
@@ -64,6 +72,26 @@ const config = {
   // 这是必要的：此处导入用于配置插件，globals.css 中导入确保样式在正确位置加载
   plugins: [
     require('@tailwindcss/typography'),
+  ],
+
+  // 确保关键的 CSS 类不会被 PurgeCSS 删除
+  safelist: [
+    // 主题相关
+    'dark',
+    'light',
+    // 动画相关
+    'animate-pulse',
+    'animate-spin',
+    'animate-bounce',
+    // 交互相关
+    'hover:scale-[1.02]',
+    'hover:shadow-md',
+    'hover:border-primary/30',
+    // 布局相关
+    'grid-cols-1',
+    'md:grid-cols-2',
+    'lg:grid-cols-3',
+    'lg:grid-cols-4',
   ],
 };
 

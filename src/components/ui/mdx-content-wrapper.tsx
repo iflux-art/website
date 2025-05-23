@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { ResourceMdxWrapper } from '@/components/ui/resource/resource-mdx-wrapper';
 
 interface MdxContentWrapperProps {
   html: string;
@@ -115,8 +114,6 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
   }, []);
 
   return (
-    <ResourceMdxWrapper>
-      <div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} className="mdx-content" />
-    </ResourceMdxWrapper>
+    <div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} className="mdx-content" />
   );
 }

@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { DocSidebarItem } from '@/components/features/docs/sidebar/doc-sidebar';
+import { getApiCache, setApiCache, generateApiCacheKey } from '@/lib/api-cache';
 
 /**
  * 获取指定分类的侧边栏结构的 API 路由
@@ -11,10 +12,19 @@ import { DocSidebarItem } from '@/components/features/docs/sidebar/doc-sidebar';
  * @param params 路由参数，包含分类名称
  * @returns 指定分类的侧边栏结构
  */
-export async function GET(request: Request, { params }: { params: { category: string } }) {
+export async function GET(_request: Request, { params }: { params: { category: string } }) {
   try {
-    const { category } = params;
+    const category = await Promise.resolve(params.category);
     const decodedCategory = decodeURIComponent(category);
+
+    // 生成缓存键
+    const cacheKey = generateApiCacheKey(`/api/docs/sidebar/${decodedCategory}`, {});
+
+    // 尝试从缓存中获取响应
+    const cachedData = getApiCache<DocSidebarItem[]>(cacheKey);
+    if (cachedData) {
+      return NextResponse.json(cachedData);
+    }
 
     // 根据分类选择不同的内容目录
     let contentDir;
@@ -25,10 +35,7 @@ export async function GET(request: Request, { params }: { params: { category: st
     }
 
     if (!fs.existsSync(contentDir) || !fs.statSync(contentDir).isDirectory()) {
-      return NextResponse.json(
-        { error: `分类 ${decodedCategory} 不存在` },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: `分类 ${decodedCategory} 不存在` }, { status: 404 });
     }
 
     // 读取 _meta.json 文件
@@ -47,7 +54,17 @@ export async function GET(request: Request, { params }: { params: { category: st
     // 获取目录结构
     const items = getDirectoryStructure(contentDir, '', meta, decodedCategory);
 
-    return NextResponse.json(items);
+    // 将响应数据存入缓存
+    setApiCache(cacheKey, items);
+
+    // 设置缓存头
+    const headers = new Headers();
+    headers.set(
+      'Cache-Control',
+      'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
+    );
+
+    return NextResponse.json(items, { headers });
   } catch (error) {
     console.error(`获取分类 ${params.category} 的侧边栏结构失败:`, error);
     return NextResponse.json(

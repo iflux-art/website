@@ -46,47 +46,19 @@ export interface FriendLinkCardProps {
 }
 
 /**
- * 友情链接网格组件属性
- */
-export interface FriendLinkGridProps {
-  /**
-   * 友情链接列表（可选）
-   */
-  links?: FriendLinkCardProps[];
-
-  /**
-   * 子组件
-   */
-  children?: React.ReactNode;
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-}
-
-/**
- * 友情链接网格组件
- *
- * 用于在 MDX 文件中显示友情链接网格
- * 支持两种使用方式：
- * 1. 通过 links 属性传递友情链接列表
- * 2. 通过子组件方式传递 FriendLinkCard 组件
- */
-export function FriendLinkGrid({ links, children, className }: FriendLinkGridProps) {
-  return (
-    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8', className)}>
-      {links &&
-        links.map((link, index) => <FriendLinkCard key={link.url} {...link} index={index} />)}
-      {children}
-    </div>
-  );
-}
-
-/**
  * 友情链接卡片组件
  *
  * 用于在 MDX 文件中显示友情链接卡片
+ * 
+ * @example
+ * ```tsx
+ * <FriendLinkCard
+ *   name="示例博客"
+ *   description="一个示例博客网站"
+ *   url="https://example.com"
+ *   avatar="🌟"
+ * />
+ * ```
  */
 export function FriendLinkCard({
   name,
@@ -131,3 +103,8 @@ export function FriendLinkCard({
     </a>
   );
 }
+
+/**
+ * @deprecated 使用 FriendLinkCard 替代，MDXFriendLinkCard 将在未来版本中移除
+ */
+export const MDXFriendLinkCard = FriendLinkCard;

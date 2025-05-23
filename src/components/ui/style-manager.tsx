@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { scrollbarStyles } from './scrollable';
-import { inlineCodeStyles } from './markdown/inline-code';
-import { markdownLinkStyles } from './markdown/link';
-import { headingStyles } from './markdown/heading';
+import { inlineCodeStyles } from './inline-code';
+import { markdownLinkStyles } from './markdown-link';
+import { headingStyles } from './heading';
 
 /**
  * 样式管理器组件

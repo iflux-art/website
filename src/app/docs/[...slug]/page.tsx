@@ -9,14 +9,16 @@ import { Suspense } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
 import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
-import { MarkdownContent as MDXContent } from '@/components/ui/markdown/markdown-content';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown/markdown-renderer';
+import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
+import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 
-export default function DocPage({ params }: { params: { slug: string[] } }) {
+export default async function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
-  // 使用解构赋值来避免直接访问 params.slug
-  const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
+  // 使用 await 确保 params.slug 是可用的
+  const slug = Array.isArray(await Promise.resolve(params.slug))
+    ? await Promise.resolve(params.slug)
+    : [await Promise.resolve(params.slug)];
   const category = slug[0];
   const docName = slug.length > 1 ? slug.slice(1).join('/') : slug[0];
 

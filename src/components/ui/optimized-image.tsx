@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image, { ImageProps } from 'next/image';
 import { cn } from '@/lib/utils';
+import { useLazyLoad } from '@/hooks/use-intersection-observer';
 
 /**
  * 优化图片组件属性
@@ -108,6 +109,14 @@ export function OptimizedImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  // 使用自定义的懒加载 Hook
+  const [ref, isVisible] = useLazyLoad<HTMLDivElement>({
+    triggerOnce: true,
+    threshold: 0.1,
+    // 如果是关键图片或已设置优先级，则跳过懒加载
+    skip: isHero || !!propPriority,
+  });
+
   // 计算属性
   const priority = propPriority || isHero;
   const loading = propLoading || (lazy && !priority ? 'lazy' : 'eager');
@@ -149,9 +158,18 @@ export function OptimizedImage({
     setHasError(false);
   }, [src]);
 
+  // 如果启用了懒加载且图片不在视口内，只显示占位符
+  if (lazy && !priority && !isVisible) {
+    return (
+      <div ref={ref} className={cn('relative', containerClassName)}>
+        <div className="absolute inset-0 z-10">{placeholder || defaultPlaceholder}</div>
+      </div>
+    );
+  }
+
   // 渲染
   return (
-    <div className={cn('relative', containerClassName)}>
+    <div className={cn('relative', containerClassName)} ref={lazy && !priority ? ref : undefined}>
       {/* 加载中占位符 */}
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 z-10">{placeholder || defaultPlaceholder}</div>
@@ -166,7 +184,12 @@ export function OptimizedImage({
         alt={alt}
         width={width}
         height={height}
-        className={cn(isLoaded ? 'opacity-100' : 'opacity-0', hasError && 'hidden', className)}
+        className={cn(
+          'transition-opacity duration-300',
+          isLoaded ? 'opacity-100' : 'opacity-0',
+          hasError && 'hidden',
+          className
+        )}
         sizes={sizes}
         priority={priority}
         loading={loading}

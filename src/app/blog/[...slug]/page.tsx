@@ -6,7 +6,7 @@ import matter from 'gray-matter';
 import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown/markdown-renderer';
+import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
 
 export default async function BlogPost({
   params,
@@ -15,8 +15,8 @@ export default async function BlogPost({
   params: { slug: string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // 使用解构赋值来避免直接访问 params.slug
-  const { slug } = params;
+  // 使用 await 确保 params.slug 是可用的
+  const slug = await Promise.resolve(params.slug);
   // 不需要额外的变量来存储 searchParams
   const fullSlug = slug.join('/');
   let filePath: string | undefined;
