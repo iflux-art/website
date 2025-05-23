@@ -1,7 +1,7 @@
 # Cloudflare Pages 配置文件
-name = "iflux-art"
+name = "web"  # 修改为与 CI 系统期望的名称一致
 compatibility_date = "2025-05-24"
-main = "index.js"  # 替换 site.entry-point
+main = "index.js"  # 入口点文件
 
 # 构建配置
 [build]
@@ -11,18 +11,15 @@ command = "pnpm build"
 [vars]
 NODE_VERSION = "20.11.1"
 
-# 路由配置 - 修复为正确的格式
-[[routes]]
-pattern = "/*"
-zone_name = "web.zx-14f.workers.dev"  # 替换为您的实际域名
-
 # 自定义域名配置
 [site]
 bucket = ".next"
-# entry-point 字段已移除，改用顶级 main 字段
 
-# 缓存配置 - 移至 [site.cache]
-[site.cache]
-caching = true
-preview_cache_revalidate = "manual"
-production_cache_revalidate = "manual"
+# 排除大文件，解决文件大小限制问题
+[site.include]
+"*" = true
+
+[site.exclude]
+"cache/**" = true  # 排除所有缓存文件
+"server/**/*.pack" = true
+"webpack/**/*.pack" = true
