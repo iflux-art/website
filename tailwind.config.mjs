@@ -79,14 +79,6 @@ const config = {
     // 主题相关
     'dark',
     'light',
-    // 动画相关
-    'animate-pulse',
-    'animate-spin',
-    'animate-bounce',
-    // 交互相关
-    'hover:scale-[1.02]',
-    'hover:shadow-md',
-    'hover:border-primary/30',
     // 布局相关
     'grid-cols-1',
     'md:grid-cols-2',

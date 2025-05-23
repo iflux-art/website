@@ -12,15 +12,14 @@ import { cn } from '@/lib/utils';
  * 已更新为 Tailwind CSS v4 兼容版本
  */
 const alertVariants = cva(
-  'relative w-full rounded-xl border p-5 [&>svg~*]:pl-8 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-5 [&>svg]:top-5 [&>svg]:text-foreground shadow-sm',
+  'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground hover:shadow-md transition-all',
+        default: 'bg-background text-foreground',
         destructive:
-          'border-destructive/50 text-destructive [&>svg]:text-destructive hover:shadow-md transition-all',
-        success:
-          'border-success/50 text-success [&>svg]:text-success hover:shadow-md transition-all',
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
+        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
       },
     },
     defaultVariants: {

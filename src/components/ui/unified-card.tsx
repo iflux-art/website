@@ -7,7 +7,6 @@ import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { cardInteractions } from '@/lib/interactions';
 
 /**
  * 卡片类型
@@ -152,6 +151,28 @@ export interface UnifiedCardProps {
  * />
  * ```
  */
+/**
+ * 卡片交互效果
+ */
+const cardInteractions = {
+  // 基础交互效果
+  base: '',
+
+  // 悬停效果
+  hover: {
+    // 默认悬停效果
+    default: 'hover:shadow-lg',
+    // 边框高亮效果
+    border: 'hover:border-primary/20',
+    // 背景高亮效果
+    background: 'hover:bg-accent/50',
+    // 阴影效果
+    shadow: 'hover:shadow-lg',
+    // 缩放效果
+    scale: 'hover:scale-[1.02]',
+  },
+};
+
 export function UnifiedCard({
   type = 'link',
   title,
@@ -189,13 +210,7 @@ export function UnifiedCard({
     if (iconType === 'image') {
       return (
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <Image
-            src={icon as string}
-            alt={title}
-            width={40}
-            height={40}
-            className="object-cover"
-          />
+          <Image src={icon as string} alt={title} width={40} height={40} className="object-cover" />
         </div>
       );
     } else if (iconType === 'emoji') {
@@ -215,7 +230,8 @@ export function UnifiedCard({
         cardInteractions.hover.shadow,
         cardInteractions.hover.scale,
         type === 'category' && 'bg-gradient-to-br',
-        color && `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
+        color &&
+          `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
         className
       )}
       style={{
@@ -275,9 +291,13 @@ export function UnifiedCard({
             <div className="flex-grow min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <h3 className="text-lg font-semibold truncate">{title}</h3>
-                {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />}
+                {isExternal && (
+                  <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+                )}
               </div>
-              {description && <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>}
+              {description && (
+                <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
+              )}
             </div>
           </div>
 
@@ -299,12 +319,7 @@ export function UnifiedCard({
         <div className="flex h-full">
           {image && (
             <div className="w-1/3 relative">
-              <Image
-                src={image}
-                alt={title}
-                fill
-                className="object-cover"
-              />
+              <Image src={image} alt={title} fill className="object-cover" />
             </div>
           )}
           <div className={cn('flex flex-col', image ? 'w-2/3' : 'w-full')}>
@@ -315,7 +330,9 @@ export function UnifiedCard({
               </div>
             </CardHeader>
             <CardContent className="p-4 pt-0 flex-grow">
-              {description && <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>}
+              {description && (
+                <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
+              )}
             </CardContent>
             {(tagArray.length > 0 || date) && (
               <CardFooter className="p-4 pt-0 flex items-center justify-between">

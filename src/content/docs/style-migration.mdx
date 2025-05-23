@@ -1,0 +1,198 @@
+---
+title: 样式迁移指南
+excerpt: 将现有组件迁移到新的样式系统
+date: 2023-06-01
+---
+
+# 样式迁移指南
+
+本指南将帮助你将现有组件迁移到新的样式系统，确保整个项目的样式一致性。
+
+## 迁移目标
+
+1. 统一组件风格，使所有组件符合 shadcn/ui 的设计风格
+2. 简化组件结构，减少重复代码
+3. 优化样式定义，使用 `class-variance-authority` 定义样式变体
+4. 减少不必要的动画和过渡效果，提高性能
+
+## 迁移步骤
+
+### 1. 使用样式指南
+
+所有组件都应该使用 `src/lib/style-guide.ts` 中定义的样式变量，确保样式一致性。
+
+```tsx
+import { radius, shadow, transition } from '@/lib/style-guide';
+
+// 使用样式变量
+<div className={`rounded-${radius.lg} ${shadow.sm} ${transition.colors}`}>
+  ...
+</div>
+```
+
+### 2. 使用 class-variance-authority
+
+对于有多种变体的组件，应该使用 `class-variance-authority` 定义样式变体。
+
+```tsx
+import { cva, type VariantProps } from 'class-variance-authority';
+
+const cardVariants = cva(
+  "rounded-xl border bg-card text-card-foreground",
+  {
+    variants: {
+      variant: {
+        default: "shadow-sm",
+        interactive: "shadow-sm hover:shadow-md transition-shadow duration-200",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+);
+
+interface CardProps extends VariantProps<typeof cardVariants> {
+  // ...
+}
+```
+
+### 3. 使用 cn 函数合并类名
+
+使用 `cn` 函数合并类名，确保类名的优先级正确。
+
+```tsx
+import { cn } from '@/lib/utils';
+
+<div className={cn(
+  "base-class",
+  variant === "primary" && "primary-class",
+  className
+)}>
+  ...
+</div>
+```
+
+### 4. 减少动画和过渡效果
+
+只在必要时使用动画和过渡效果，避免过度使用。
+
+```tsx
+// 不推荐
+<div className="transition-all duration-300 hover:scale-105 hover:shadow-lg">
+  ...
+</div>
+
+// 推荐
+<div className="transition-colors hover:bg-accent">
+  ...
+</div>
+```
+
+### 5. 使用标准组件
+
+尽量使用标准组件，避免创建自定义组件。
+
+```tsx
+// 不推荐
+<CustomCard>
+  ...
+</CustomCard>
+
+// 推荐
+<Card>
+  <CardHeader>
+    <CardTitle>标题</CardTitle>
+    <CardDescription>描述</CardDescription>
+  </CardHeader>
+  <CardContent>内容</CardContent>
+  <CardFooter>底部</CardFooter>
+</Card>
+```
+
+## 组件迁移指南
+
+### 按钮组件
+
+按钮组件应该使用 `buttonVariants` 定义样式变体。
+
+```tsx
+import { Button } from '@/components/ui/button';
+
+// 默认按钮
+<Button>默认按钮</Button>
+
+// 次要按钮
+<Button variant="secondary">次要按钮</Button>
+
+// 轮廓按钮
+<Button variant="outline">轮廓按钮</Button>
+
+// 幽灵按钮
+<Button variant="ghost">幽灵按钮</Button>
+
+// 链接按钮
+<Button variant="link">链接按钮</Button>
+
+// 危险按钮
+<Button variant="destructive">危险按钮</Button>
+
+// 成功按钮
+<Button variant="success">成功按钮</Button>
+```
+
+### 卡片组件
+
+卡片组件应该使用 `Card` 组件及其子组件。
+
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+
+<Card>
+  <CardHeader>
+    <CardTitle>标题</CardTitle>
+    <CardDescription>描述</CardDescription>
+  </CardHeader>
+  <CardContent>内容</CardContent>
+  <CardFooter>底部</CardFooter>
+</Card>
+```
+
+### 链接卡片组件
+
+链接卡片组件应该使用 `LinkCard` 组件。
+
+```tsx
+import { LinkCard } from '@/components/ui/link-card';
+
+<LinkCard
+  link={{
+    name: "示例网站",
+    url: "https://example.com",
+    desc: "示例网站描述",
+    icon: {
+      type: "emoji",
+      value: "🌟"
+    }
+  }}
+  variant="interactive"
+/>
+```
+
+## 常见问题
+
+### 1. 如何处理现有的自定义组件？
+
+对于现有的自定义组件，应该评估是否可以使用标准组件替代。如果不能，应该重构组件，使其符合新的样式系统。
+
+### 2. 如何处理现有的动画和过渡效果？
+
+对于现有的动画和过渡效果，应该评估是否必要。如果不必要，应该移除；如果必要，应该使用标准的动画和过渡效果。
+
+### 3. 如何处理现有的样式定义？
+
+对于现有的样式定义，应该评估是否可以使用 `class-variance-authority` 重构。如果可以，应该重构；如果不能，应该使用 `cn` 函数合并类名。
+
+## 结论
+
+通过遵循本指南，你可以将现有组件迁移到新的样式系统，确保整个项目的样式一致性。如果你有任何问题，请参考 `src/lib/style-guide.ts` 或咨询团队成员。

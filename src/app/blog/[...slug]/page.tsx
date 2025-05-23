@@ -8,13 +8,7 @@ import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
 import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
 
-export default async function BlogPost({
-  params,
-  searchParams,
-}: {
-  params: { slug: string[] };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function BlogPost({ params }: { params: { slug: string[] } }) {
   // 使用 await 确保 params.slug 是可用的
   const slug = await Promise.resolve(params.slug);
   // 不需要额外的变量来存储 searchParams
@@ -33,16 +27,140 @@ export default async function BlogPost({
       filePath = mdxPath;
     } else if (fs.existsSync(mdPath)) {
       filePath = mdPath;
+    } else {
+      // 尝试查找子目录中的 index 文件
+      const indexMdxPath = path.join(
+        process.cwd(),
+        'src',
+        'content',
+        'blog',
+        category,
+        postName,
+        'index.mdx'
+      );
+      const indexMdPath = path.join(
+        process.cwd(),
+        'src',
+        'content',
+        'blog',
+        category,
+        postName,
+        'index.md'
+      );
+
+      if (fs.existsSync(indexMdxPath)) {
+        filePath = indexMdxPath;
+        console.log(`找到博客子目录索引文件: ${filePath}`);
+      } else if (fs.existsSync(indexMdPath)) {
+        filePath = indexMdPath;
+        console.log(`找到博客子目录索引文件: ${filePath}`);
+      }
     }
   } else {
-    // 尝试不同的文件扩展名
-    const mdxPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.mdx`);
-    const mdPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.md`);
+    // 单段路径，首先检查是否存在该目录
+    const categoryDir = path.join(process.cwd(), 'src', 'content', 'blog', fullSlug);
 
-    if (fs.existsSync(mdxPath)) {
-      filePath = mdxPath;
-    } else if (fs.existsSync(mdPath)) {
-      filePath = mdPath;
+    if (fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()) {
+      // 首先检查是否存在 index.mdx 或 index.md 文件（最高优先级）
+      const indexMdxPath = path.join(categoryDir, 'index.mdx');
+      const indexMdPath = path.join(categoryDir, 'index.md');
+
+      if (fs.existsSync(indexMdxPath)) {
+        filePath = indexMdxPath;
+        console.log(`找到博客目录索引文件(最高优先级): ${filePath}`);
+      } else if (fs.existsSync(indexMdPath)) {
+        filePath = indexMdPath;
+        console.log(`找到博客目录索引文件(最高优先级): ${filePath}`);
+      } else {
+        // 如果没有 index 文件，检查是否存在 _meta.json 文件
+        const metaPath = path.join(categoryDir, '_meta.json');
+        let meta: Record<string, { order?: number; title?: string }> = {};
+
+        if (fs.existsSync(metaPath)) {
+          try {
+            // 读取 _meta.json 文件
+            const metaContent = fs.readFileSync(metaPath, 'utf8');
+            meta = JSON.parse(metaContent);
+            console.log(`找到博客目录 _meta.json 文件: ${metaPath}`);
+
+            // 根据 meta 配置排序文件
+            const files = fs
+              .readdirSync(categoryDir)
+              .filter(
+                file => (file.endsWith('.mdx') || file.endsWith('.md')) && !file.startsWith('_')
+              );
+
+            // 如果有文件，根据 meta 配置排序
+            if (files.length > 0) {
+              // 根据 meta 配置排序
+              const sortedFiles = files.sort((a, b) => {
+                const aSlug = a.replace(/\.(mdx|md)$/, '');
+                const bSlug = b.replace(/\.(mdx|md)$/, '');
+
+                // 处理两种可能的 _meta.json 格式
+                // 1. { "file-name": { order: 1, title: "Title" } }
+                // 2. { "file-name": "Title" }
+                const aConfig = meta[aSlug];
+                const bConfig = meta[bSlug];
+
+                // 如果 meta 中有该文件的配置
+                if (aConfig !== undefined && bConfig !== undefined) {
+                  // 如果两个文件都在 meta 中有配置
+                  if (typeof aConfig === 'object' && typeof bConfig === 'object') {
+                    // 如果配置是对象，使用 order 属性
+                    const aOrder = aConfig.order || 999;
+                    const bOrder = bConfig.order || 999;
+                    return aOrder - bOrder;
+                  } else {
+                    // 如果配置不是对象（可能是字符串），按照在 meta 中的顺序排序
+                    // 这里我们使用 Object.keys 获取所有键，然后比较它们的索引
+                    const keys = Object.keys(meta);
+                    return keys.indexOf(aSlug) - keys.indexOf(bSlug);
+                  }
+                } else if (aConfig !== undefined) {
+                  // 如果只有 a 在 meta 中有配置，a 排在前面
+                  return -1;
+                } else if (bConfig !== undefined) {
+                  // 如果只有 b 在 meta 中有配置，b 排在前面
+                  return 1;
+                } else {
+                  // 如果都没有配置，按字母顺序排序
+                  return aSlug.localeCompare(bSlug);
+                }
+              });
+
+              // 使用排序后的第一个文件
+              filePath = path.join(categoryDir, sortedFiles[0]);
+              console.log(`根据 _meta.json 排序后的第一个文件: ${filePath}`);
+            }
+          } catch (error) {
+            console.error(`解析 ${fullSlug} 的 _meta.json 文件失败:`, error);
+          }
+        }
+
+        // 如果没有找到文件或没有 _meta.json，尝试查找该目录下的第一个文件
+        if (!filePath) {
+          const files = fs
+            .readdirSync(categoryDir)
+            .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
+            .sort();
+
+          if (files.length > 0) {
+            filePath = path.join(categoryDir, files[0]);
+            console.log(`找到博客目录下的第一个文件: ${filePath}`);
+          }
+        }
+      }
+    } else {
+      // 尝试不同的文件扩展名
+      const mdxPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.mdx`);
+      const mdPath = path.join(process.cwd(), 'src', 'content', 'blog', `${fullSlug}.md`);
+
+      if (fs.existsSync(mdxPath)) {
+        filePath = mdxPath;
+      } else if (fs.existsSync(mdPath)) {
+        filePath = mdPath;
+      }
     }
   }
 

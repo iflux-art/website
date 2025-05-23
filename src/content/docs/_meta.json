@@ -6,5 +6,9 @@
   "update": {
     "title": "更新日志",
     "description": "每一次更新的详细记录说明"
+  },
+  "drama": {
+    "title": "编剧指南",
+    "description": "剧本创作规范"
   }
 }

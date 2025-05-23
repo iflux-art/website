@@ -45,18 +45,9 @@ interface BlogListProps {
 export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: BlogListProps) {
   const { posts, loading, error } = useBlogPosts();
 
-  // 加载状态
+  // 不显示加载状态，直接返回空内容
   if (loading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[...Array(6)].map((_, index) => (
-          <div
-            key={index}
-            className="h-[300px] bg-muted/30 animate-pulse rounded-xl shadow-sm"
-          ></div>
-        ))}
-      </div>
-    );
+    return null;
   }
 
   // 错误状态

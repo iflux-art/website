@@ -237,20 +237,9 @@
   }
 }
 
-/* 添加全局平滑滚动效果 */
-html {
-  scroll-behavior: smooth;
-}
-
 /* 首页特殊处理 - 隐藏滚动条 */
 body.home-page {
   overflow: hidden;
-}
-
-/* 禁用侧边栏动画 */
-.no-animation * {
-  transition: none !important;
-  animation: none !important;
 }
 
 /*

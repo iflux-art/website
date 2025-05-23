@@ -52,7 +52,14 @@ export async function GET(_request: Request, { params }: { params: { category: s
     }
 
     // 获取目录结构
-    const items = getDirectoryStructure(contentDir, '', meta, decodedCategory);
+    // 传递额外的参数，指示这是否是文档分类
+    const isDocsCategory = decodedCategory !== 'navigation';
+    const items = getDirectoryStructure(contentDir, '', meta, decodedCategory, isDocsCategory);
+
+    // 添加调试日志
+    console.log(
+      `生成侧边栏结构: 分类=${decodedCategory}, 是否为文档分类=${isDocsCategory}, 项目数量=${items.length}`
+    );
 
     // 将响应数据存入缓存
     setApiCache(cacheKey, items);
@@ -61,8 +68,10 @@ export async function GET(_request: Request, { params }: { params: { category: s
     const headers = new Headers();
     headers.set(
       'Cache-Control',
-      'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
+      'public, max-age=7200, s-maxage=7200, stale-while-revalidate=86400'
     );
+    headers.set('Surrogate-Control', 'max-age=86400'); // CDN 缓存 24 小时
+    headers.set('Vary', 'Accept-Encoding'); // 根据压缩方式缓存不同版本
 
     return NextResponse.json(items, { headers });
   } catch (error) {
@@ -87,7 +96,8 @@ function getDirectoryStructure(
   rootDir: string,
   relativePath: string = '',
   meta: Record<string, any> = {},
-  category: string
+  category: string,
+  isDocsCategory: boolean = false
 ): DocSidebarItem[] {
   const fullPath = path.join(rootDir, relativePath);
 
@@ -120,9 +130,36 @@ function getDirectoryStructure(
 
   // 根据 meta 配置排序
   const sortedItems = validItems.sort((a, b) => {
-    const aOrder = meta[a]?.order || 0;
-    const bOrder = meta[b]?.order || 0;
-    return aOrder - bOrder;
+    const aConfig = meta[a];
+    const bConfig = meta[b];
+
+    // 处理两种可能的 _meta.json 格式
+    // 1. { "file-name": { order: 1, title: "Title" } }
+    // 2. { "file-name": "Title" }
+
+    // 如果 meta 中有该文件的配置
+    if (aConfig !== undefined && bConfig !== undefined) {
+      // 如果两个文件都在 meta 中有配置
+      if (typeof aConfig === 'object' && typeof bConfig === 'object') {
+        // 如果配置是对象，使用 order 属性
+        const aOrder = aConfig.order || 0;
+        const bOrder = bConfig.order || 0;
+        return aOrder - bOrder;
+      } else {
+        // 如果配置不是对象（可能是字符串），按照在 meta 中的顺序排序
+        const keys = Object.keys(meta);
+        return keys.indexOf(a) - keys.indexOf(b);
+      }
+    } else if (aConfig !== undefined) {
+      // 如果只有 a 在 meta 中有配置，a 排在前面
+      return -1;
+    } else if (bConfig !== undefined) {
+      // 如果只有 b 在 meta 中有配置，b 排在前面
+      return 1;
+    } else {
+      // 如果都没有配置，按字母顺序排序
+      return a.localeCompare(b);
+    }
   });
 
   // 构建侧边栏项目
@@ -147,39 +184,135 @@ function getDirectoryStructure(
         }
       }
 
-      const subItems = getDirectoryStructure(rootDir, itemRelativePath, subMeta, category);
-      const title = metaConfig.title || item;
+      // 检查目录中是否有 index.mdx 或 index.md 文件，并获取其标题
+      const indexMdxPath = path.join(subDirPath, 'index.mdx');
+      const indexMdPath = path.join(subDirPath, 'index.md');
+      let indexTitle = null;
+
+      if (fs.existsSync(indexMdxPath)) {
+        try {
+          const indexContent = fs.readFileSync(indexMdxPath, 'utf8');
+          const { data } = matter(indexContent);
+          if (data.title) {
+            indexTitle = data.title;
+          }
+        } catch (error) {
+          console.error(`读取 ${itemRelativePath}/index.mdx 的内容失败:`, error);
+        }
+      } else if (fs.existsSync(indexMdPath)) {
+        try {
+          const indexContent = fs.readFileSync(indexMdPath, 'utf8');
+          const { data } = matter(indexContent);
+          if (data.title) {
+            indexTitle = data.title;
+          }
+        } catch (error) {
+          console.error(`读取 ${itemRelativePath}/index.md 的内容失败:`, error);
+        }
+      }
+
+      const subItems = getDirectoryStructure(
+        rootDir,
+        itemRelativePath,
+        subMeta,
+        category,
+        isDocsCategory
+      );
+
+      // 标题优先级：_meta.json 中的 title > index.mdx 中的 title > 目录名
+      let title;
+      if (typeof metaConfig === 'string') {
+        // 如果 metaConfig 是字符串，直接使用
+        title = metaConfig;
+      } else if (metaConfig && metaConfig.title) {
+        // 如果 metaConfig 是对象且有 title 属性
+        title = metaConfig.title;
+      } else {
+        // 否则使用 index 文件的标题或目录名
+        title = indexTitle || item;
+      }
+
+      // 确定是否折叠
+      let collapsed = true; // 默认折叠
+
+      if (typeof metaConfig === 'object' && metaConfig.collapsed !== undefined) {
+        collapsed = metaConfig.collapsed;
+      }
 
       return {
         title,
         items: subItems,
         type: 'menu',
-        collapsed: metaConfig.collapsed !== false, // 默认折叠
+        collapsed,
       };
     }
 
     // 如果是文件，创建页面项目
     const slug = item.replace(/\.(mdx|md)$/, '');
-    let title = metaConfig.title || slug;
+    let title;
 
-    // 如果没有配置标题，尝试从文件内容中获取
-    if (!metaConfig.title) {
+    // 处理不同格式的 metaConfig
+    if (typeof metaConfig === 'string') {
+      // 如果 metaConfig 是字符串，直接使用
+      title = metaConfig;
+    } else if (metaConfig && metaConfig.title) {
+      // 如果 metaConfig 是对象且有 title 属性
+      title = metaConfig.title;
+    } else {
+      // 如果没有配置标题，尝试从文件内容中获取
       try {
         const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
         if (data.title) {
           title = data.title;
+        } else {
+          // 如果文件内容中也没有标题，使用文件名
+          title = slug;
         }
       } catch (error) {
         console.error(`读取 ${itemRelativePath} 的内容失败:`, error);
+        title = slug;
       }
+    }
+
+    // 构建正确的链接路径
+    let href;
+    if (typeof metaConfig === 'object' && metaConfig.href) {
+      href = metaConfig.href;
+    } else {
+      // 确保链接格式正确，对于 docs 和 navigation 分类使用不同的前缀
+      const linkPath = itemRelativePath.replace(/\.(mdx|md)$/, '');
+
+      // 根据分类类型生成不同的链接前缀
+      if (category === 'navigation') {
+        href = `/navigation/${linkPath}`;
+      } else if (isDocsCategory) {
+        // 对于文档分类，始终添加 /docs 前缀
+        href = `/docs/${category}/${linkPath}`;
+      } else {
+        // 其他情况
+        href = `/${category}/${linkPath}`;
+      }
+    }
+
+    // 确定是否是外部链接
+    let isExternal = false;
+    let type = 'page';
+
+    if (typeof metaConfig === 'object') {
+      // 如果 metaConfig 是对象
+      type = metaConfig.type || 'page';
+      isExternal = !!metaConfig.href && metaConfig.href.startsWith('http');
+    } else {
+      // 如果 metaConfig 不是对象，使用默认值
+      isExternal = href.startsWith('http');
     }
 
     return {
       title,
-      href: metaConfig.href || `/${category}/${itemRelativePath.replace(/\.(mdx|md)$/, '')}`,
-      type: metaConfig.type || 'page',
-      isExternal: !!metaConfig.href && metaConfig.href.startsWith('http'),
+      href,
+      type,
+      isExternal,
       filePath: itemRelativePath.replace(/\.(mdx|md)$/, ''),
     };
   });

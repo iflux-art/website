@@ -16,7 +16,7 @@ export interface AdaptiveSidebarProps {
     text: string;
     level: number;
   }>;
-  
+
   /**
    * 自定义类名
    */

@@ -94,7 +94,7 @@ export function Navbar({ className = '' }: { className?: string }) {
 
   return (
     <nav
-      className={`w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/90 shadow-md border-b border-border transition-all duration-300 ${className}`}
+      className={`w-full h-14 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className}`}
       onDoubleClick={scrollToTop}
       title={showTitle ? '双击返回顶部' : ''}
     >
@@ -108,7 +108,7 @@ export function Navbar({ className = '' }: { className?: string }) {
         <div className="hidden lg:flex items-center justify-center overflow-hidden opacity-100">
           {showTitle ? (
             <h2
-              className="text-xl font-semibold tracking-tight truncate max-w-md cursor-pointer transition-all duration-300 hover:text-primary"
+              className="text-lg font-medium tracking-tight truncate max-w-md cursor-pointer transition-colors hover:text-primary"
               onClick={scrollToTop}
               title="点击返回顶部"
             >

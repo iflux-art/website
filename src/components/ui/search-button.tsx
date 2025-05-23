@@ -10,12 +10,7 @@ import { Button } from '@/components/ui/button';
  */
 export function SearchButton() {
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      title="搜索"
-      className="rounded-lg transition-all hover:bg-accent/50"
-    >
+    <Button variant="ghost" size="icon" title="搜索">
       <Search className="h-5 w-5" />
       <span className="sr-only">搜索</span>
     </Button>

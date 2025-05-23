@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Hash } from 'lucide-react';
+import { Hash, Text } from 'lucide-react';
 // 我们将在未来的优化中使用 useIntersectionObserver
 
 /**
@@ -224,11 +224,11 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
 
   return (
     <div className={cn('pl-0', className)}>
-      <div
-        ref={tocRef}
-        className="py-4 pl-0 pr-2 rounded-lg bg-card dark:bg-card border border-border shadow-sm"
-      >
-        <h3 className="text-sm font-medium px-4 mb-2 text-foreground">{title}</h3>
+      <div ref={tocRef} className="pb-4 pr-2">
+        <h3 className="text-sm font-medium pl-0.5 mb-2 text-foreground flex items-center">
+          <Text className="h-4 w-4 mr-1.5 text-primary/80" />
+          <span>{title}</span>
+        </h3>
         <div className="space-y-1">
           {organizedHeadings.map((heading, index) => {
             // 计算缩进，根据标题级别
@@ -247,12 +247,12 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
                 key={index}
                 href={`#${heading.id}`}
                 className={cn(
-                  'flex items-center py-2 px-3 text-sm transition-all hover:text-primary group rounded-lg hover:bg-muted dark:hover:bg-muted',
+                  'flex items-center py-1.5 text-sm transition-colors group',
                   headingSize,
                   {
-                    'text-primary bg-primary/20 dark:bg-primary/30 rounded-lg font-medium':
-                      activeId === heading.id,
-                    'text-foreground dark:text-foreground': activeId !== heading.id,
+                    'text-primary font-medium bg-accent/50 rounded-md': activeId === heading.id,
+                    'text-muted-foreground hover:text-primary/80 hover:bg-accent/20 rounded-md':
+                      activeId !== heading.id,
                   }
                 )}
                 style={{
@@ -282,8 +282,8 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
               >
                 <Hash
                   className={cn(
-                    'h-4 w-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity ml-0 text-primary',
-                    activeId === heading.id ? 'opacity-100' : ''
+                    'h-3.5 w-3.5 mr-1.5 ml-0.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary/70',
+                    activeId === heading.id ? 'opacity-100 text-primary' : ''
                   )}
                 />
                 <span className="truncate">{heading.text}</span>

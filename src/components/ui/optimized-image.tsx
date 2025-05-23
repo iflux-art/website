@@ -184,12 +184,7 @@ export function OptimizedImage({
         alt={alt}
         width={width}
         height={height}
-        className={cn(
-          'transition-opacity duration-300',
-          isLoaded ? 'opacity-100' : 'opacity-0',
-          hasError && 'hidden',
-          className
-        )}
+        className={cn(hasError && 'hidden', className)}
         sizes={sizes}
         priority={priority}
         loading={loading}

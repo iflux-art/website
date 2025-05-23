@@ -4,7 +4,6 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { cardInteractions } from '@/lib/interactions';
 
 export interface FriendLinkCardProps {
   /**
@@ -49,7 +48,7 @@ export interface FriendLinkCardProps {
  * 友情链接卡片组件
  *
  * 用于在 MDX 文件中显示友情链接卡片
- * 
+ *
  * @example
  * ```tsx
  * <FriendLinkCard
@@ -73,10 +72,7 @@ export function FriendLinkCard({
     <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
       <Card
         className={cn(
-          'h-full overflow-hidden hover:shadow-lg transition-all border border-border',
-          cardInteractions.base,
-          cardInteractions.hover.shadow,
-          cardInteractions.hover.scale,
+          'h-full overflow-hidden hover:shadow-lg border border-border hover:scale-[1.02]',
           className
         )}
       >

@@ -166,27 +166,21 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
                     return (
                       <div
                         key={post.slug}
-                        className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2 transition-all duration-300 opacity-0 translate-y-2 animate-in"
-                        style={{
-                          animationDelay: `${postIndex * 30}ms`,
-                          animationDuration: '300ms',
-                          animationFillMode: 'forwards',
-                          animationTimingFunction: 'ease-out',
-                        }}
+                        className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2"
                       >
                         {/* 日期 */}
-                        <div className="w-[100px] text-right mr-10 relative group-hover:text-primary transition-colors">
-                          <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                        <div className="w-[100px] text-right mr-10 relative group-hover:text-primary">
+                          <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary">
                             {date}
                           </span>
-                          <div className="absolute left-[120px] -translate-x-1/2 top-[10px] w-1.5 h-1.5 rounded-full border border-primary bg-background group-hover:scale-125 transition-transform"></div>
+                          <div className="absolute left-[120px] -translate-x-1/2 top-[10px] w-1.5 h-1.5 rounded-full border border-primary bg-background"></div>
                         </div>
 
                         {/* 文章标题 */}
                         <div className="flex-1">
                           <Link
                             href={`/blog/${post.slug}`}
-                            className="text-sm sm:text-base font-medium hover:text-primary transition-colors"
+                            className="text-sm sm:text-base font-medium hover:text-primary"
                           >
                             {post.title}
                           </Link>

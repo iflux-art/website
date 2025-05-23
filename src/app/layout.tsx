@@ -7,11 +7,11 @@ import { SITE_METADATA } from '@/lib/constants';
 import { StyleManager } from '@/components/ui/style-manager';
 import React from 'react';
 import { getFontClassName } from '@/lib/fonts';
-import { AppStateProvider } from '@/lib/state-manager';
 import { CssOptimizer } from '@/components/ui/css-optimizer';
 import { FontLoader } from '@/components/ui/font-loader';
 import { ServiceWorkerUpdater } from '@/components/ui/service-worker-updater';
 import { WebVitalsMonitor } from '@/components/ui/web-vitals-monitor';
+import { Preloader } from '@/components/ui/preloader';
 import { generateMetadata, generateViewport } from '@/lib/metadata';
 
 export const metadata: Metadata = generateMetadata();
@@ -32,24 +32,23 @@ export default function RootLayout({
         <WebVitalsMonitor>
           <CssOptimizer>
             <FontLoader />
-            <AppStateProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                storageKey="iflux-theme-preference"
-              >
-                <StyleManager />
-                <div className="flex flex-col min-h-screen">
-                  <Navbar className="flex-shrink-0" />
-                  <div className="flex-1 flex-grow overflow-auto">
-                    <main className="flex-1 flex-grow">{children}</main>
-                  </div>
-                  <Footer />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              storageKey="iflux-theme-preference"
+            >
+              <StyleManager />
+              <div className="flex flex-col min-h-screen">
+                <Navbar className="flex-shrink-0" />
+                <div className="flex-1 flex-grow overflow-auto">
+                  <main className="flex-1 flex-grow">{children}</main>
                 </div>
-                <ServiceWorkerUpdater />
-              </ThemeProvider>
-            </AppStateProvider>
+                <Footer />
+              </div>
+              <ServiceWorkerUpdater />
+              <Preloader />
+            </ThemeProvider>
           </CssOptimizer>
         </WebVitalsMonitor>
       </body>

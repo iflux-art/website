@@ -5,7 +5,6 @@ import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { cardInteractions } from '@/lib/interactions';
 
 export interface ResourceCardProps {
   /**
@@ -62,7 +61,7 @@ export interface ResourceCardProps {
  * 资源卡片组件
  *
  * 用于在 MDX 文件中显示资源卡片
- * 
+ *
  * @example
  * ```tsx
  * <ResourceCard
@@ -103,11 +102,8 @@ export function ResourceCard({
       <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
         <Card
           className={cn(
-            'h-full overflow-hidden hover:shadow-lg transition-all border border-border',
+            'h-full overflow-hidden hover:shadow-lg border border-border hover:scale-[1.02]',
             featured && 'border-primary/30',
-            cardInteractions.base,
-            cardInteractions.hover.shadow,
-            cardInteractions.hover.scale,
             className
           )}
         >

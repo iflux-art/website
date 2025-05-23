@@ -32,13 +32,13 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
-      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+      <div>
         <SearchButton />
       </div>
-      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+      <div>
         <ThemeToggle />
       </div>
-      <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+      <div>
         <TravelButton />
       </div>
 
@@ -49,7 +49,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-accent/50"
+              className="lg:hidden"
               aria-label={isOpen ? '关闭菜单' : '打开菜单'}
               title={isOpen ? '关闭菜单' : '打开菜单'}
             >
@@ -61,7 +61,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <SheetTitle className="sr-only">导航菜单</SheetTitle>
 
             {/* 复刻导航栏样式 */}
-            <div className="w-full h-16 sticky top-0 z-50 backdrop-blur-md bg-background/90 shadow-md border-b border-border transition-all duration-300">
+            <div className="w-full h-14 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="container mx-auto px-4 h-full flex items-center justify-between">
                 {/* 左侧部分 - Logo */}
                 <div className="flex items-center">
@@ -74,13 +74,13 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 {/* 右侧部分 - 功能按钮和关闭按钮 */}
                 <div className="flex items-center gap-1 sm:gap-2">
                   {/* 功能按钮 */}
-                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+                  <div>
                     <SearchButton />
                   </div>
-                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+                  <div>
                     <ThemeToggle />
                   </div>
-                  <div className="transition-all duration-300 hover:scale-105 active:scale-95">
+                  <div>
                     <TravelButton />
                   </div>
 
@@ -88,7 +88,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="lg:hidden rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-accent/50"
+                    className="lg:hidden"
                     onClick={() => setIsOpen(false)}
                     aria-label="关闭菜单"
                     title="关闭菜单"

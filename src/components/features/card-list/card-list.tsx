@@ -7,7 +7,6 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Card } from '@/components/ui/card/card';
-import { cardInteractions } from '@/lib/interactions';
 
 // 从集中管理的类型定义中导入类型
 import { CardProps } from '@/types';
@@ -43,7 +42,7 @@ const CardItem = React.memo(({ id, title, description, onClick, className }: Car
     >
       {inView && (
         <Card
-          className={`p-6 h-full rounded-xl shadow-sm ${cardInteractions.base} ${cardInteractions.hover.default}`}
+          className="p-6 h-full rounded-xl shadow-sm hover:shadow-lg"
           onClick={handleClick}
           // 添加可访问性属性
           tabIndex={0}

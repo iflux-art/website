@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
@@ -68,6 +67,13 @@ interface DocSidebarProps {
    * 当前文档
    */
   currentDoc?: string;
+
+  /**
+   * 是否为导航类型
+   * 如果为 true，则不会自动添加 /docs 前缀
+   * @default false
+   */
+  isNavigation?: boolean;
 }
 
 /**
@@ -86,7 +92,7 @@ interface DocSidebarProps {
  * />
  * ```
  */
-export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
+export function DocSidebar({ category, currentDoc, isNavigation = false }: DocSidebarProps) {
   const pathname = usePathname();
   const { items, loading, error } = useDocSidebar(category);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
@@ -97,19 +103,18 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
   // 用于存储折叠状态的本地存储键
   const localStorageKey = `docs-sidebar-${category}-open-categories`;
 
-  // 添加调试日志
-  useEffect(() => {
-    console.log('DocSidebar 渲染:', {
-      category,
-      currentDoc,
-      itemsCount: items.length,
-      loading,
-      error,
-      windowHeight: typeof window !== 'undefined' ? window.innerHeight : 'unknown',
-      documentHeight:
-        typeof document !== 'undefined' ? document.documentElement.clientHeight : 'unknown',
-    });
-  }, [category, currentDoc, items, loading, error]);
+  // 仅在开发环境下添加调试日志
+  if (process.env.NODE_ENV === 'development') {
+    useEffect(() => {
+      console.log('DocSidebar 渲染:', {
+        category,
+        currentDoc,
+        itemsCount: items.length,
+        loading,
+        error,
+      });
+    }, [category, currentDoc, items, loading, error]);
+  }
 
   // 检测内容高度是否超过视口
   useEffect(() => {
@@ -129,14 +134,14 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
         const shouldAllowScroll = contentHeight > viewportHeight;
         setShouldScroll(shouldAllowScroll);
 
-        // 调试信息
-        console.log('DocSidebar 滚动计算:', {
-          contentHeight,
-          viewportHeight,
-          shouldScroll: shouldAllowScroll,
-          elementHeight: sidebarRef.current.offsetHeight,
-          windowHeight: window.innerHeight,
-        });
+        // 仅在开发环境下输出调试信息
+        if (process.env.NODE_ENV === 'development') {
+          console.log('DocSidebar 滚动计算:', {
+            contentHeight,
+            viewportHeight,
+            shouldScroll: shouldAllowScroll,
+          });
+        }
       }
     };
 
@@ -232,7 +237,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                   onOpenChange={open => handleOpenChange(itemId, open)}
                 >
                   <div className="flex items-center">
-                    <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-3 rounded-lg text-sm group hover:bg-accent/50 transition-colors shadow-sm hover:shadow-md">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-3 rounded-md text-sm group hover:bg-accent/50 transition-colors">
                       <span
                         className={cn(
                           'font-medium',
@@ -263,6 +268,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 onMouseEnter={() => handleMouseEnter(itemId)}
                 onMouseLeave={handleMouseLeave}
+                isNavigation={isNavigation}
               >
                 <span>{item.title}</span>
                 {isExternal && (
@@ -289,7 +295,15 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
         );
       });
     },
-    [pathname, openCategories, isHovering, handleOpenChange, handleMouseEnter, handleMouseLeave]
+    [
+      pathname,
+      openCategories,
+      isHovering,
+      handleOpenChange,
+      handleMouseEnter,
+      handleMouseLeave,
+      isNavigation,
+    ]
   );
 
   // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
@@ -375,7 +389,9 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
         const savedStateStr = localStorage.getItem(localStorageKey);
         if (savedStateStr) {
           savedState = JSON.parse(savedStateStr);
-          console.log('从 localStorage 读取折叠状态:', savedState);
+          if (process.env.NODE_ENV === 'development') {
+            console.log('从 localStorage 读取折叠状态');
+          }
         }
       } catch (e) {
         console.error('读取折叠状态失败:', e);
@@ -398,16 +414,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
 
   // 加载状态
   if (loading) {
-    return (
-      <div>
-        <div className="h-6 bg-muted rounded w-3/4 mb-4"></div>
-        <div className="space-y-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-10 bg-muted rounded"></div>
-          ))}
-        </div>
-      </div>
-    );
+    return null; // 不显示加载状态
   }
 
   // 错误状态
@@ -418,7 +425,7 @@ export function DocSidebar({ category, currentDoc }: DocSidebarProps) {
         加载文档导航失败
         <button
           onClick={() => window.location.reload()}
-          className="mt-3 px-3 py-1.5 bg-muted rounded-md text-xs font-medium hover:bg-primary/10 hover:text-primary transition-colors shadow-sm"
+          className="mt-3 px-3 py-1.5 bg-muted rounded-md text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
         >
           点击重试
         </button>

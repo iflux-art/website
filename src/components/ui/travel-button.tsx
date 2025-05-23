@@ -25,15 +25,7 @@ export function TravelButton({}: TravelButtonProps = {}) {
       title="开往"
       onClick={() => window.open('https://www.travellings.cn/go.html', '_blank')}
     >
-      <div
-        className="transition-all duration-300 hover:scale-105 active:scale-90"
-        style={{
-          transformOrigin: 'center',
-          transform: 'scale(1)',
-        }}
-      >
-        <TramFront className="h-[1.1rem] w-[1.1rem]" />
-      </div>
+      <TramFront className="h-[1.2rem] w-[1.2rem]" />
       <span className="sr-only">开往</span>
     </Button>
   );

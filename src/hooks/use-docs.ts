@@ -235,7 +235,9 @@ export function useDocMeta(category: string) {
 // 创建一个全局缓存对象，用于存储侧边栏数据
 const sidebarCache: Record<string, { items: DocSidebarItem[]; timestamp: number }> = {};
 // 缓存过期时间（毫秒）
-const CACHE_EXPIRY = 5 * 60 * 1000; // 5分钟
+const CACHE_EXPIRY = 30 * 60 * 1000; // 30分钟
+// localStorage 缓存键前缀
+const LS_CACHE_PREFIX = 'docs-sidebar-';
 
 /**
  * 使用文档侧边栏结构
@@ -253,27 +255,64 @@ export function useDocSidebar(category: string) {
 
   // 使用 useCallback 包装 fetchSidebar 函数，避免在每次渲染时重新创建
   const fetchSidebar = useCallback(async (category: string, force: boolean = false) => {
-    // 检查缓存
+    // 检查内存缓存
     const now = Date.now();
     const cachedData = sidebarCache[category];
 
-    // 如果有缓存且未过期且不强制刷新，直接使用缓存
+    // 如果有内存缓存且未过期且不强制刷新，直接使用缓存
     if (!force && cachedData && now - cachedData.timestamp < CACHE_EXPIRY) {
-      console.log(`使用缓存的分类 ${category} 的侧边栏结构`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`使用内存缓存的分类 ${category} 的侧边栏结构`);
+      }
       setItems(cachedData.items);
       setLoading(false);
       return;
     }
 
+    // 尝试从 localStorage 获取缓存
+    if (typeof window !== 'undefined' && !force) {
+      try {
+        const lsCacheKey = `${LS_CACHE_PREFIX}${category}`;
+        const lsCachedData = localStorage.getItem(lsCacheKey);
+
+        if (lsCachedData) {
+          const parsedData = JSON.parse(lsCachedData);
+
+          if (now - parsedData.timestamp < CACHE_EXPIRY) {
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`使用 localStorage 缓存的分类 ${category} 的侧边栏结构`);
+            }
+
+            // 更新内存缓存
+            sidebarCache[category] = {
+              items: parsedData.items,
+              timestamp: parsedData.timestamp,
+            };
+
+            setItems(parsedData.items);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('读取 localStorage 缓存失败:', error);
+      }
+    }
+
     try {
       setLoading(true);
-      console.log(`开始获取分类 ${category} 的侧边栏结构`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`开始获取分类 ${category} 的侧边栏结构`);
+      }
 
       const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`, {
         // 添加缓存控制头
         headers: {
-          'Cache-Control': 'max-age=300', // 5分钟
+          'Cache-Control': 'max-age=1800', // 30分钟
+          Pragma: 'no-cache', // 确保不使用过期缓存
         },
+        // 添加时间戳避免浏览器缓存
+        cache: 'no-store',
       });
       const data = await response.json();
 
@@ -283,13 +322,35 @@ export function useDocSidebar(category: string) {
         throw new Error(errorMessage);
       }
 
-      console.log(`成功获取分类 ${category} 的侧边栏结构:`, data);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`成功获取分类 ${category} 的侧边栏结构`);
+      }
 
-      // 更新缓存
+      // 更新内存缓存
       sidebarCache[category] = {
         items: data,
         timestamp: now,
       };
+
+      // 更新 localStorage 缓存
+      if (typeof window !== 'undefined') {
+        try {
+          const lsCacheKey = `${LS_CACHE_PREFIX}${category}`;
+          localStorage.setItem(
+            lsCacheKey,
+            JSON.stringify({
+              items: data,
+              timestamp: now,
+            })
+          );
+
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`已将分类 ${category} 的侧边栏结构保存到 localStorage`);
+          }
+        } catch (error) {
+          console.error('保存到 localStorage 失败:', error);
+        }
+      }
 
       setItems(data);
     } catch (err) {

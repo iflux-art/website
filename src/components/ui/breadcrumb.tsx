@@ -12,7 +12,7 @@ export interface BreadcrumbItem {
    * 显示的标签文本
    */
   label: string;
-  
+
   /**
    * 链接地址，如果不提供则显示为纯文本
    */
@@ -27,12 +27,12 @@ export interface BreadcrumbProps {
    * 面包屑项目数组
    */
   items: BreadcrumbItem[];
-  
+
   /**
    * 分隔符，默认为 '/'
    */
   separator?: React.ReactNode;
-  
+
   /**
    * 自定义类名
    */
@@ -41,21 +41,21 @@ export interface BreadcrumbProps {
 
 /**
  * 面包屑导航组件
- * 
+ *
  * 用于显示当前页面在网站层级结构中的位置
- * 
+ *
  * @example
- * <Breadcrumb 
+ * <Breadcrumb
  *   items={[
  *     { label: '首页', href: '/' },
  *     { label: '文档', href: '/docs' },
  *     { label: '组件' }
- *   ]} 
+ *   ]}
  * />
  */
 export function Breadcrumb({ items, separator = '/', className }: BreadcrumbProps) {
   return (
-    <nav className={cn('text-sm text-muted-foreground mb-6 font-medium', className)}>
+    <nav className={cn('text-sm text-muted-foreground font-medium', className)}>
       <ol className="flex flex-wrap items-center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -67,10 +67,7 @@ export function Breadcrumb({ items, separator = '/', className }: BreadcrumbProp
               {isLast || !item.href ? (
                 <span className="text-foreground">{item.label}</span>
               ) : (
-                <Link
-                  href={item.href}
-                  className="hover:text-primary transition-colors hover:underline"
-                >
+                <Link href={item.href} className="text-muted-foreground hover:text-foreground">
                   {item.label}
                 </Link>
               )}

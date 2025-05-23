@@ -74,7 +74,6 @@ export function NavItem({
 }: NavItemProps) {
   // 基础类名
   const baseClasses = cn(
-    'transition-all duration-300',
     'py-2 px-3 rounded-lg',
     isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary',
     underline && 'hover:underline',
@@ -90,20 +89,11 @@ export function NavItem({
     );
   }
 
-  // 使用动画的组件
+  // 不使用动画，直接返回静态组件
   return (
-    <div
-      className="opacity-0 translate-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300 hover:scale-105 active:scale-95 transition-transform"
-      style={{
-        animationDelay: `${animationDelay * 1000}ms`,
-        animationDuration: '300ms',
-        animationFillMode: 'forwards',
-      }}
-    >
-      <Link href={href} className={baseClasses} onClick={onClick}>
-        {label}
-      </Link>
-    </div>
+    <Link href={href} className={baseClasses} onClick={onClick}>
+      {label}
+    </Link>
   );
 }
 
