@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // 移除 swcMinify 选项，因为它在 Next.js 15 中已经默认启用
+
+  // 确保使用 SWC 而不是 Babel
+  swcMinify: true, // 显式启用 SWC 压缩
 
   // 配置输出选项，优化 Cloudflare Pages 部署
   output: 'standalone',
@@ -40,16 +42,18 @@ const nextConfig = {
   },
 
   // 禁用 ESLint 以避免构建失败
-  // 在生产环境中，我们可以暂时禁用 ESLint 检查
   eslint: {
-    // 仅在开发环境中启用 ESLint
     ignoreDuringBuilds: true,
   },
 
   // 禁用类型检查以避免构建失败
   typescript: {
-    // 仅在开发环境中启用类型检查
     ignoreBuildErrors: true,
+  },
+
+  // 禁用 Babel，确保使用 SWC
+  experimental: {
+    forceSwcTransforms: true,
   },
 
   // 更新 Cloudflare 兼容性配置
