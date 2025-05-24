@@ -40,11 +40,16 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
 
   // 处理主题切换
   const toggleTheme = React.useCallback(() => {
-    if (!setTheme || !resolvedTheme) return;
+    if (!setTheme) return;
 
     // 简单地在亮色和暗色主题之间切换
     const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
+
+    // 强制重新渲染以确保主题切换生效
+    setTimeout(() => {
+      document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    }, 0);
   }, [resolvedTheme, setTheme]);
 
   // 获取当前主题图标和标签

@@ -314,16 +314,14 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 文档列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
-            <div className="pt-6">
-              <Suspense>
-                <div className="no-animation">
-                  <SidebarErrorWrapper>
-                    <DocSidebar category={category} currentDoc={docName as string} />
-                  </SidebarErrorWrapper>
-                </div>
-              </Suspense>
-            </div>
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
+            <Suspense>
+              <div className="no-animation">
+                <SidebarErrorWrapper>
+                  <DocSidebar category={category} currentDoc={docName as string} />
+                </SidebarErrorWrapper>
+              </div>
+            </Suspense>
           </div>
         </div>
 
@@ -382,13 +380,11 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
         {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
-            <div className="pt-6">
-              <Suspense>
-                {/* 使用自适应侧边栏组件显示文档目录 */}
-                <AdaptiveSidebar headings={headings} />
-              </Suspense>
-            </div>
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
+            <Suspense>
+              {/* 使用自适应侧边栏组件显示文档目录 */}
+              <AdaptiveSidebar headings={headings} />
+            </Suspense>
           </div>
         </div>
       </div>

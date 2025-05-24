@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Tag, X } from 'lucide-react';
+import { Tag, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface BlogTagFilterProps {
@@ -15,6 +15,9 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
   // 获取URL参数
   const searchParams = useSearchParams();
   const tagParam = searchParams.get('tag');
+
+  // 展开状态
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // 从URL参数中获取标签
   useEffect(() => {
@@ -48,6 +51,11 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
     return null;
   }
 
+  // 计算显示的标签数量
+  const maxVisibleTags = 8; // 第一行最多显示8个标签
+  const visibleTags = isExpanded ? allTags : allTags.slice(0, maxVisibleTags - 1);
+  const hasMoreTags = allTags.length > maxVisibleTags;
+
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-3">
@@ -67,7 +75,7 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
         )}
       </div>
       <div className="flex flex-wrap gap-3">
-        {allTags.map((tag, index) => (
+        {visibleTags.map((tag, index) => (
           <button
             key={index}
             onClick={() => handleTagClick(tag)}
@@ -80,6 +88,22 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
             {tag}
           </button>
         ))}
+        {hasMoreTags && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-sm bg-muted hover:bg-primary/10 hover:text-primary hover:shadow-md flex items-center gap-1"
+          >
+            {isExpanded ? (
+              <>
+                收起 <ChevronUp className="h-3 w-3" />
+              </>
+            ) : (
+              <>
+                更多 <ChevronDown className="h-3 w-3" />
+              </>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

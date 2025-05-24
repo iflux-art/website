@@ -190,7 +190,7 @@ export function ResponsiveImage({
   // 状态
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  
+
   // 使用自定义的懒加载 Hook
   const [ref, isVisible] = useLazyLoad<HTMLDivElement>({
     triggerOnce: true,
@@ -211,13 +211,33 @@ export function ResponsiveImage({
     33vw
   `;
 
+  // 检查是否为外部图片
+  const isExternalImage = (url: string): boolean => {
+    return url.startsWith('http://') || url.startsWith('https://');
+  };
+
   // 获取图片源
   const getImageSrc = (size: 'default' | 'mobile' | 'tablet' | 'desktop'): string => {
     if (typeof src === 'string') {
       return src;
     }
-    
+
     return src[size] || src.default || Object.values(src)[0];
+  };
+
+  // 构建图片URL（外部图片不添加查询参数）
+  const buildImageUrl = (baseSrc: string, width?: number, format?: string): string => {
+    if (isExternalImage(baseSrc)) {
+      return baseSrc; // 外部图片直接返回原始URL
+    }
+
+    // 内部图片添加优化参数
+    const params = new URLSearchParams();
+    if (width) params.set('w', width.toString());
+    if (quality) params.set('q', quality.toString());
+    if (format) params.set('format', format);
+
+    return `${baseSrc}?${params.toString()}`;
   };
 
   // 默认占位符
@@ -244,7 +264,9 @@ export function ResponsiveImage({
   // 处理加载失败
   const handleError = () => {
     setHasError(true);
-    onLoadError?.(new Error(`Failed to load image: ${typeof src === 'string' ? src : JSON.stringify(src)}`));
+    onLoadError?.(
+      new Error(`Failed to load image: ${typeof src === 'string' ? src : JSON.stringify(src)}`)
+    );
   };
 
   // 重置状态
@@ -252,7 +274,7 @@ export function ResponsiveImage({
     setIsLoaded(false);
     setHasError(false);
   }, [src]);
-  
+
   // 如果启用了懒加载且图片不在视口内，只显示占位符
   if (lazy && !priority && !isVisible) {
     return (
@@ -275,30 +297,30 @@ export function ResponsiveImage({
 
       {/* 图片 */}
       <picture>
-        {/* AVIF 格式 */}
-        {formats.avif && (
+        {/* AVIF 格式 - 仅对内部图片启用 */}
+        {formats.avif && !isExternalImage(getImageSrc('default')) && (
           <>
             <source
               type="image/avif"
               srcSet={`
-                ${getImageSrc('mobile')}?w=${mobile}&q=${quality}&format=avif ${mobile}w,
-                ${getImageSrc('tablet')}?w=${tablet}&q=${quality}&format=avif ${tablet}w,
-                ${getImageSrc('desktop')}?w=${desktop}&q=${quality}&format=avif ${desktop}w
+                ${buildImageUrl(getImageSrc('mobile'), mobile, 'avif')} ${mobile}w,
+                ${buildImageUrl(getImageSrc('tablet'), tablet, 'avif')} ${tablet}w,
+                ${buildImageUrl(getImageSrc('desktop'), desktop, 'avif')} ${desktop}w
               `}
               sizes={sizesAttr}
             />
           </>
         )}
 
-        {/* WebP 格式 */}
-        {formats.webp && (
+        {/* WebP 格式 - 仅对内部图片启用 */}
+        {formats.webp && !isExternalImage(getImageSrc('default')) && (
           <>
             <source
               type="image/webp"
               srcSet={`
-                ${getImageSrc('mobile')}?w=${mobile}&q=${quality}&format=webp ${mobile}w,
-                ${getImageSrc('tablet')}?w=${tablet}&q=${quality}&format=webp ${tablet}w,
-                ${getImageSrc('desktop')}?w=${desktop}&q=${quality}&format=webp ${desktop}w
+                ${buildImageUrl(getImageSrc('mobile'), mobile, 'webp')} ${mobile}w,
+                ${buildImageUrl(getImageSrc('tablet'), tablet, 'webp')} ${tablet}w,
+                ${buildImageUrl(getImageSrc('desktop'), desktop, 'webp')} ${desktop}w
               `}
               sizes={sizesAttr}
             />

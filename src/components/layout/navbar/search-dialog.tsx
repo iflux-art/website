@@ -147,16 +147,16 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         <DialogTitle className="sr-only">站内搜索</DialogTitle>
         <div className="flex items-center border-b p-4">
           <Search className="h-4 w-4 mr-2 text-muted-foreground" />
-          <Input
+          <input
             ref={inputRef}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="搜索文档、博客和导航..."
-            className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+            className="flex-1 bg-transparent outline-none text-sm placeholder:text-muted-foreground"
           />
           {searchQuery && (
-            <Button variant="ghost" size="icon" onClick={clearSearch} className="h-6 w-6">
+            <Button variant="ghost" size="icon" onClick={clearSearch} className="h-6 w-6 ml-2">
               <X className="h-4 w-4" />
             </Button>
           )}

@@ -304,7 +304,7 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
 
         {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
             <BlogSidebar headings={headings} />
           </div>
         </div>

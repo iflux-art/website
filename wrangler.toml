@@ -1,9 +1,9 @@
 # Cloudflare Pages 配置文件
 name = "web"  # 修改为与 CI 系统期望的名称一致
-compatibility_date = "2023-05-23"  # 使用当前日期
+compatibility_date = "2024-05-23"  # 使用较新的日期
 main = "index.js"  # 入口点文件
 workers_dev = true  # 允许在 workers.dev 域名上运行
-node_compat = true  # 启用 Node.js 兼容性
+compatibility_flags = ["nodejs_compat"]  # 启用 Node.js 兼容性
 
 # 构建配置
 [build]

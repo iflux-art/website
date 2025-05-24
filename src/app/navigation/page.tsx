@@ -88,7 +88,7 @@ export default async function NavigationPage() {
       <div className="flex flex-col lg:flex-row gap-8 px-4">
         {/* 左侧边栏 - 导航列表 */}
         <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
             <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
               <div className="no-animation">
                 <SidebarErrorWrapper>
@@ -116,7 +116,7 @@ export default async function NavigationPage() {
 
         {/* 右侧边栏 - 目录 */}
         <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
+          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
             <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
               {/* 使用自适应侧边栏组件显示文档目录 */}
               <AdaptiveSidebar headings={headings} />
