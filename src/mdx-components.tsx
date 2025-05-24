@@ -3,12 +3,14 @@
 import React from 'react';
 import { ImageProps } from 'next/image';
 import { ResponsiveImage } from '@/components/ui/responsive-image';
-import { LazyCodeBlock } from '@/components/lazy-components';
-import { InlineCode } from '@/components/ui/inline-code';
+import { CodeBlock } from '@/components/ui/code-block';
+import { InlineCode } from '@/styles/inline-code';
 import { H1, H2, H3, H4 } from '@/components/ui/heading-with-anchor';
-import { MarkdownLink } from '@/components/ui/markdown-link';
+import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
+import { FriendLinkGrid, FriendLinkItem } from '@/components/mdx/friend-link-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -80,9 +82,9 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     // 使用自定义代码块组件 - 懒加载
     pre: ({ children, className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
       return (
-        <LazyCodeBlock className={className} {...props}>
+        <CodeBlock className={className} {...props}>
           {children}
-        </LazyCodeBlock>
+        </CodeBlock>
       );
     },
 
@@ -98,16 +100,45 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     },
 
     // 统一卡片组件
-    ResourceCard: (props: any) => <UnifiedCard type="resource" {...props} />,
+    ResourceCard: (props: any) => (
+      <UnifiedCard
+        type="resource"
+        title={props.title}
+        description={props.description}
+        href={props.url || props.href}
+        icon={props.icon}
+        iconType={props.iconType || 'emoji'}
+        featured={props.featured}
+        isExternal={true}
+        {...props}
+      />
+    ),
     ResourceGrid: (props: any) => <UnifiedGrid {...props} type="resource" />,
 
     // 友情链接组件
-    FriendLinkCard: (props: any) => <UnifiedCard type="friend" {...props} />,
+    FriendLinkCard: (props: any) => (
+      <UnifiedCard
+        type="friend"
+        title={props.name || props.title}
+        description={props.description}
+        href={props.url || props.href}
+        icon={props.avatar || props.icon}
+        iconType={props.iconType || 'emoji'}
+        isExternal={true}
+        {...props}
+      />
+    ),
     FriendLinkGrid: (props: any) => <UnifiedGrid {...props} type="friend" />,
 
     // 直接使用统一组件
     UnifiedCard,
     UnifiedGrid,
+
+    // 新的模块化组件
+    NavigationGrid,
+    NavigationItem,
+    FriendLinkGrid,
+    FriendLinkItem,
 
     // 使用传入的组件
     ...components,

@@ -48,7 +48,7 @@ export interface BlogCardProps {
  * />
  * ```
  */
-export function BlogCard({ post, index, onTagClick }: BlogCardProps) {
+export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
   // 处理标签点击
   const handleTagClick = (e: React.MouseEvent, tag: string) => {
     if (onTagClick) {
@@ -58,9 +58,9 @@ export function BlogCard({ post, index, onTagClick }: BlogCardProps) {
   };
 
   return (
-    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all h-full max-h-[500px] bg-card">
-      <div className="p-8 h-full flex flex-col">
-        <h2 className="text-xl font-bold tracking-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6">
+      <div className="p-6">
+        <h2 className="text-xl font-bold tracking-tight mb-3 line-clamp-1 group-hover:text-primary transition-colors">
           {post.title}
         </h2>
         {post.date && (
@@ -68,31 +68,24 @@ export function BlogCard({ post, index, onTagClick }: BlogCardProps) {
             {new Date(post.date).toLocaleDateString('zh-CN')}
           </p>
         )}
-        <p className="text-muted-foreground mb-4 flex-grow line-clamp-3 leading-relaxed">
-          {post.excerpt}
-        </p>
+        <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">{post.excerpt}</p>
         {post.tags && post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4 max-h-[40px] overflow-hidden">
-            {post.tags.slice(0, 5).map((tag, tagIndex) => (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {post.tags.map((tag, tagIndex) => (
               <Link
                 key={tagIndex}
                 href={`/blog/tags/${encodeURIComponent(tag)}`}
-                className="px-3 py-1.5 bg-muted rounded-lg text-xs hover:bg-primary/10 hover:text-primary transition-all shadow-sm hover:shadow-md"
+                className="px-3 py-1.5 bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-accent/30 hover:border-primary/20 text-muted-foreground hover:text-foreground rounded-md text-xs transition-all"
                 onClick={e => handleTagClick(e, tag)}
               >
                 {tag}
               </Link>
             ))}
-            {post.tags.length > 5 && (
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs shadow-sm">
-                +{post.tags.length - 5}
-              </span>
-            )}
           </div>
         )}
         <Link
           href={`/blog/${post.slug}`}
-          className="text-primary hover:underline mt-auto font-semibold transition-all hover:text-primary/80 flex items-center"
+          className="text-primary hover:underline font-semibold transition-all hover:text-primary/80 flex items-center"
         >
           阅读全文 →
         </Link>

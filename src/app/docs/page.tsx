@@ -3,8 +3,8 @@
 import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-import { CategoryGrid as DocsList } from '@/components/ui/category-grid';
-import { PageLayout } from '@/components/layout/page-layout/page-layout';
+import { BlogLayout } from '@/components/layouts';
+import { DocsCard } from '@/components/cards';
 import { useDocCategories } from '@/hooks/use-docs';
 
 export default function DocsPage() {
@@ -26,8 +26,18 @@ export default function DocsPage() {
   }
 
   return (
-    <PageLayout pageTitle="文档中心" className="py-10">
-      <DocsList categories={categories} />
-    </PageLayout>
+    <BlogLayout title="文档中心" description="探索我们的技术文档和指南">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {categories.map(category => (
+          <DocsCard
+            key={category.id}
+            title={category.title}
+            description={category.description}
+            articleCount={category.count}
+            href={`/docs/${category.id}`}
+          />
+        ))}
+      </div>
+    </BlogLayout>
   );
 }

@@ -14,7 +14,7 @@ interface BlogTagFilterProps {
 export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagFilterProps) {
   // 获取URL参数
   const searchParams = useSearchParams();
-  const tagParam = searchParams.get('tag');
+  const tagParam = searchParams?.get('tag');
 
   // 展开状态
   const [isExpanded, setIsExpanded] = useState(false);
@@ -74,15 +74,15 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
           </Button>
         )}
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2.5">
         {visibleTags.map((tag, index) => (
           <button
             key={index}
             onClick={() => handleTagClick(tag)}
-            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-sm ${
+            className={`px-3 py-1.5 rounded-md text-sm border transition-all ${
               selectedTag === tag
-                ? 'bg-primary text-primary-foreground shadow-md'
-                : 'bg-muted hover:bg-primary/10 hover:text-primary hover:shadow-md'
+                ? 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80'
+                : 'bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/30 hover:border-primary/20 text-muted-foreground hover:text-foreground'
             }`}
           >
             {tag}
@@ -91,7 +91,7 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
         {hasMoreTags && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-sm bg-muted hover:bg-primary/10 hover:text-primary hover:shadow-md flex items-center gap-1"
+            className="px-3 py-1.5 rounded-md text-sm border bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/30 hover:border-primary/20 text-muted-foreground hover:text-foreground transition-all flex items-center gap-1"
           >
             {isExpanded ? (
               <>

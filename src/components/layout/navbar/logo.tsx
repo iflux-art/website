@@ -20,7 +20,7 @@ export function Logo() {
   return (
     <Link href="/" className="inline-block" onClick={handleClick}>
       <h2
-        className="text-sm sm:text-md md:text-lg font-bold font-code hover:text-primary transition-all duration-400 animate-in fade-in zoom-in-90 hover:scale-105"
+        className="text-sm sm:text-md md:text-lg font-bold tracking--wide hover:text-primary transition-all duration-400 animate-in fade-in zoom-in-90 hover:scale-105"
         style={{
           transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
         }}

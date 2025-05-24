@@ -1,11 +1,12 @@
 'use client';
 
+import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { TravelButton } from '@/components/ui/travel-button';
-import { Logo } from '@/components/logo';
+import { ThemeToggle } from '@/components/layout/navbar/theme-toggle';
+import { TravelButton } from '@/components/layout/navbar/travel-button';
+import { Logo } from '@/components/layout/navbar/logo';
 import { NavCards } from './nav-cards';
 import { SearchIcon } from './search-icon';
 
@@ -21,18 +22,18 @@ export interface MobileMenuProps {
   /**
    * 设置菜单打开状态的函数
    */
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpenAction: (isOpen: boolean) => void;
 }
 
 /**
  * 移动端菜单组件
  * 负责移动端导航和功能按钮的展示
  */
-export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
+export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}
-      <div className="md:hidden">
+      <div>
         <SearchIcon />
       </div>
       <div>
@@ -44,7 +45,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
 
       {/* 移动端菜单 */}
       <div className="lg:hidden">
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <Sheet open={isOpen} onOpenChange={setIsOpenAction}>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
@@ -89,7 +90,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     variant="ghost"
                     size="icon"
                     className="lg:hidden"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsOpenAction(false)}
                     aria-label="关闭菜单"
                     title="关闭菜单"
                   >
@@ -102,7 +103,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             {/* 菜单内容 */}
             <div className="flex-1 overflow-auto p-8">
               <div className="container mx-auto flex flex-col gap-8">
-                <NavCards onClose={() => setIsOpen(false)} />
+                <NavCards onClose={() => setIsOpenAction(false)} />
               </div>
             </div>
           </SheetContent>

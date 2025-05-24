@@ -3,11 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
+import { ArticleLayout } from '@/components/layouts';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
 import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
 
-export default async function FriendsPage() {
+export default async function BlogPost() {
   // 读取友情链接 MDX 文件
   const filePath = path.join(process.cwd(), 'src', 'content', 'friends', 'all.mdx');
 
@@ -49,40 +49,24 @@ export default async function FriendsPage() {
       }
     }
 
+    // 构建面包屑导航
+    const breadcrumbItems = [{ label: '首页', href: '/' }, { label: '友情链接' }];
+
     return (
-      <div className="container mx-auto py-10">
-        <div className="flex flex-col lg:flex-row gap-8 px-4">
-          {/* 左侧空白区域，用于保持与文档页面布局一致 */}
-          <div className="lg:w-64 shrink-0 order-2 lg:order-1 hidden lg:block">
-            {/* 这里可以添加友情链接分类或其他导航 */}
-          </div>
-
-          {/* 中间内容区 */}
-          <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
-            <div className="max-w-4xl mx-auto">
-              <BlogContent
-                title={title}
-                date={date}
-                tags={data.tags || []}
-                content={content}
-                mdxContent={<ServerMDX content={content} />}
-              />
-            </div>
-          </div>
-
-          {/* 右侧边栏 - 目录 */}
-          <div className="lg:w-64 shrink-0 order-3">
-            <div className="lg:sticky lg:top-24">
-              <BlogSidebar headings={headings} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <ArticleLayout headings={headings} breadcrumbItems={breadcrumbItems}>
+        <BlogContent
+          title={title}
+          date={date}
+          tags={data.tags || []}
+          content={content}
+          mdxContent={<ServerMDX content={content} />}
+        />
+      </ArticleLayout>
     );
   } catch (error) {
     console.error('Error loading friend links:', error);
     return (
-      <div className="container mx-auto py-10 px-4">
+      <div className="container mx-auto py-10">
         <h1 className="text-3xl font-bold mb-6">友情链接</h1>
         <p className="text-muted-foreground">加载友情链接时出错，请稍后再试。</p>
       </div>

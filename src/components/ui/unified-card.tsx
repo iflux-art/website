@@ -193,7 +193,14 @@ export function UnifiedCard({
   children,
 }: UnifiedCardProps) {
   // 处理标签，可以是字符串数组或逗号分隔的字符串
-  const tagArray = [];
+  const tagArray = Array.isArray(tags)
+    ? tags
+    : typeof tags === 'string'
+    ? tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean)
+    : [];
 
   // 处理图标
   const renderIcon = () => {

@@ -9,11 +9,12 @@
   },
   "scripts": {
     "dev": "next dev",
-    "clean": "rm -rf .next out",
-    "build": "next build",
+    "clean": "rm -rf .next",
+    "build": "pnpm run clean && next build",
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
+    "deploy": "pnpm install && pnpm run build && npx wrangler deploy",
     "update-deps": "pnpm update"
   },
   "repository": {

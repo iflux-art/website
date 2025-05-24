@@ -1,56 +1,30 @@
-'use client';
-
-import React, { ReactNode, Suspense } from 'react';
-import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
-import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
+import { Suspense } from 'react';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
 
-/**
- * 文档布局组件属性
- */
-export interface DocumentLayoutProps {
-  /**
-   * 面包屑导航项
-   */
-  breadcrumbItems: BreadcrumbItem[];
-
-  /**
-   * 文档分类（用于左侧边栏）
-   */
+interface DocsLayoutProps {
+  children: React.ReactNode;
   category: string;
-
-  /**
-   * 当前文档名称（用于左侧边栏高亮）
-   */
-  currentDoc?: string;
-
-  /**
-   * 标题项（用于右侧目录）
-   */
+  currentDoc: string;
   headings: Array<{
     id: string;
     text: string;
     level: number;
   }>;
-
-  /**
-   * 主要内容
-   */
-  children: ReactNode;
+  breadcrumbItems: Array<{
+    label: string;
+    href?: string;
+  }>;
 }
 
-/**
- * 文档布局组件
- *
- * 提供统一的文档页面布局，包括面包屑、左侧导航和右侧目录
- */
-export function DocumentLayout({
-  breadcrumbItems,
+export function DocsLayout({
+  children,
   category,
   currentDoc,
   headings,
-  children,
-}: DocumentLayoutProps) {
+  breadcrumbItems,
+}: DocsLayoutProps) {
   return (
     <div className="container mx-auto py-10">
       <div className="flex flex-col lg:flex-row gap-8 px-4">
@@ -72,7 +46,7 @@ export function DocumentLayout({
             <div className="mb-6">
               <Breadcrumb items={breadcrumbItems} />
             </div>
-
+            
             {/* 主要内容 */}
             {children}
           </div>

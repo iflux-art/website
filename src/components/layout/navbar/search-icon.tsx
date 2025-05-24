@@ -33,7 +33,7 @@ export function SearchIcon() {
         className="h-9 w-9 text-muted-foreground hover:text-foreground"
         onClick={() => setOpen(true)}
         aria-label="搜索"
-        title="搜索 (⌘K)"
+        title="搜索（Ctrl + K）"
       >
         <Search className="h-5 w-5" />
       </Button>

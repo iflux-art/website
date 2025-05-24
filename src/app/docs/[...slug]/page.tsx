@@ -7,11 +7,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Suspense } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { DocsLayout } from '@/components/layouts';
 import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
-import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
 
 export default async function DocPage({ params }: { params: { slug: string[] } }) {
@@ -309,85 +307,57 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
   const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
 
+  // 构建面包屑导航
+  const breadcrumbItems = [
+    { label: '文档', href: '/docs' },
+    {
+      label: rootMeta && rootMeta[category] ? rootMeta[category].title : category,
+      href: `/docs/${category}`,
+    },
+    ...(slug.length > 1 ? [{ label: data.title }] : []),
+  ];
+
   return (
-    <div className="container mx-auto py-10">
-      <div className="flex flex-col lg:flex-row gap-8 px-4">
-        {/* 左侧边栏 - 文档列表 */}
-        <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
-            <Suspense>
-              <div className="no-animation">
-                <SidebarErrorWrapper>
-                  <DocSidebar category={category} currentDoc={docName as string} />
-                </SidebarErrorWrapper>
-              </div>
-            </Suspense>
-          </div>
-        </div>
+    <DocsLayout
+      category={category}
+      currentDoc={docName as string}
+      headings={headings}
+      breadcrumbItems={breadcrumbItems}
+    >
+      <h1 className="text-4xl font-bold mb-8 tracking-tight">{data.title}</h1>
+      <MDXContent>
+        <ServerMDX content={content} />
+      </MDXContent>
 
-        {/* 中间内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
-          <div className="max-w-4xl mx-auto">
-            {/* 面包屑导航 */}
-            <div className="mb-6">
-              <Breadcrumb
-                items={[
-                  { label: '文档', href: '/docs' },
-                  {
-                    label: rootMeta && rootMeta[category] ? rootMeta[category].title : category,
-                    href: `/docs/${category}`,
-                  },
-                  ...(slug.length > 1 ? [{ label: data.title }] : []),
-                ]}
-              />
-            </div>
-            <h1 className="text-4xl font-bold mb-8 tracking-tight">{data.title}</h1>
-            <MDXContent>
-              <ServerMDX content={content} />
-            </MDXContent>
-
-            {/* 上一页/下一页导航 */}
-            <div className="mt-12 grid grid-cols-2 gap-4">
-              {prevDoc && (
-                <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
-                  <CardContent className="p-5">
-                    <Link href={prevDoc.path} className="flex flex-col">
-                      <span className="text-sm text-muted-foreground flex items-center">
-                        <ChevronLeft className="h-4 w-4 mr-1" />
-                        上一页
-                      </span>
-                      <span className="font-semibold tracking-tight">{prevDoc.title}</span>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )}
-              {nextDoc && (
-                <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
-                  <CardContent className="p-5">
-                    <Link href={nextDoc.path} className="flex flex-col items-end text-right">
-                      <span className="text-sm text-muted-foreground flex items-center">
-                        下一页
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </span>
-                      <span className="font-semibold tracking-tight">{nextDoc.title}</span>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* 右侧边栏 - 目录 */}
-        <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
-            <Suspense>
-              {/* 使用自适应侧边栏组件显示文档目录 */}
-              <AdaptiveSidebar headings={headings} />
-            </Suspense>
-          </div>
-        </div>
+      {/* 上一页/下一页导航 */}
+      <div className="mt-12 grid grid-cols-2 gap-4">
+        {prevDoc && (
+          <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
+            <CardContent className="p-5">
+              <Link href={prevDoc.path} className="flex flex-col">
+                <span className="text-sm text-muted-foreground flex items-center">
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  上一页
+                </span>
+                <span className="font-semibold tracking-tight">{prevDoc.title}</span>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+        {nextDoc && (
+          <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
+            <CardContent className="p-5">
+              <Link href={nextDoc.path} className="flex flex-col items-end text-right">
+                <span className="text-sm text-muted-foreground flex items-center">
+                  下一页
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </span>
+                <span className="font-semibold tracking-tight">{nextDoc.title}</span>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
       </div>
-    </div>
+    </DocsLayout>
   );
 }

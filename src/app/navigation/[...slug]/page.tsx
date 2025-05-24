@@ -12,9 +12,10 @@ import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
 import { MdxContentWrapper } from '@/components/ui/mdx-content-wrapper';
 import { MdxServerRenderer } from '@/components/ui/mdx-server-renderer';
 
-export default async function NavigationPage({ params }: { params: { slug: string[] } }) {
+export default async function NavigationPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 来确保 params 是可用的
-  let slug = await Promise.resolve(params.slug);
+  const { slug: rawSlug } = await params;
+  let slug = rawSlug;
 
   if (!slug || slug.length === 0) {
     // 获取导航目录中的第一个 MDX 文件

@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/layout/navbar/logo';
 import { MobileMenu } from './mobile-menu';
 import { NavItems } from './nav-items';
-import { SearchIcon } from './search-icon';
 
 /**
  * 主导航栏组件
@@ -122,10 +121,7 @@ export function Navbar({ className = '' }: { className?: string }) {
 
         {/* 右侧部分 - 搜索图标和移动菜单 */}
         <div className="flex items-center gap-2">
-          <div className="hidden md:flex">
-            <SearchIcon />
-          </div>
-          <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+          <MobileMenu isOpen={isOpen} setIsOpenAction={setIsOpen} />
         </div>
       </div>
     </nav>

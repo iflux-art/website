@@ -2,8 +2,8 @@ import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image, { ImageProps } from 'next/image';
 import { CodeBlock } from '@/components/ui/code-block';
-import { InlineCode } from '@/components/ui/inline-code';
-import { MarkdownLink } from '@/components/ui/markdown-link';
+import { InlineCode } from '@/styles/inline-code';
+import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
 
@@ -77,11 +77,34 @@ const components = {
   },
 
   // 统一卡片组件
-  ResourceCard: (props: any) => <UnifiedCard type="resource" {...props} />,
+  ResourceCard: (props: any) => (
+    <UnifiedCard
+      type="resource"
+      title={props.title}
+      description={props.description}
+      href={props.url || props.href}
+      icon={props.icon}
+      iconType={props.iconType || 'emoji'}
+      featured={props.featured}
+      isExternal={true}
+      {...props}
+    />
+  ),
   ResourceGrid: (props: any) => <UnifiedGrid {...props} type="resource" />,
 
   // 友情链接组件
-  FriendLinkCard: (props: any) => <UnifiedCard type="friend" {...props} />,
+  FriendLinkCard: (props: any) => (
+    <UnifiedCard
+      type="friend"
+      title={props.name || props.title}
+      description={props.description}
+      href={props.url || props.href}
+      icon={props.avatar || props.icon}
+      iconType={props.iconType || 'emoji'}
+      isExternal={true}
+      {...props}
+    />
+  ),
   FriendLinkGrid: (props: any) => <UnifiedGrid {...props} type="friend" />,
 
   // 直接使用统一组件
