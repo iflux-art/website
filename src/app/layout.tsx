@@ -29,28 +29,21 @@ export default function RootLayout({
         <script async src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" />
       </head>
       <body className={`${getFontClassName()} antialiased flex flex-col min-h-screen`}>
-        <WebVitalsMonitor>
-          <CssOptimizer>
-            <FontLoader />
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              storageKey="iflux-theme-preference"
-            >
-              <StyleManager />
-              <div className="flex flex-col min-h-screen bg-background dark:bg-[#0a0a0a]">
-                <Navbar className="flex-shrink-0" />
-                <div className="flex-1 flex-grow overflow-auto">
-                  <main className="flex-1 flex-grow">{children}</main>
-                </div>
-                <Footer />
-              </div>
-              <ServiceWorkerUpdater />
-              <Preloader />
-            </ThemeProvider>
-          </CssOptimizer>
-        </WebVitalsMonitor>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="iflux-theme-preference"
+        >
+          <StyleManager />
+          <div className="flex flex-col min-h-screen bg-background dark:bg-[#0a0a0a]">
+            <Navbar className="flex-shrink-0" />
+            <div className="flex-1 flex-grow overflow-auto">
+              <main className="flex-1 flex-grow">{children}</main>
+            </div>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
