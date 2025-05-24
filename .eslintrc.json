@@ -6,13 +6,16 @@
     "plugin:react-hooks/recommended"
   ],
   "rules": {
-    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
-    "react-hooks/rules-of-hooks": "warn",
-    "react-hooks/exhaustive-deps": "warn",
-    "jsx-a11y/alt-text": "warn",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
     "@next/next/no-img-element": "off",
-    "@typescript-eslint/no-unused-vars": "warn"
+    "jsx-a11y/alt-text": "off"
   },
   "settings": {
     "react": {

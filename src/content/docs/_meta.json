@@ -10,5 +10,9 @@
   "drama": {
     "title": "编剧指南",
     "description": "剧本创作规范"
+  },
+  "ad": {
+    "title": "广告",
+    "description": "广告相关规范"
   }
 }

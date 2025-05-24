@@ -32,7 +32,6 @@ const nextConfig = {
       '@radix-ui/react-collapsible',
       '@radix-ui/react-label',
       '@radix-ui/react-slot',
-      '@radix-ui/react-visually-hidden',
     ],
     // 优化页面加载
     optimisticClientCache: true,
