@@ -5,15 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { 
-  Globe, 
-  Mail, 
-  Settings, 
-  LogOut, 
-  Menu, 
-  X,
-  Home
-} from 'lucide-react';
+import { Globe, Mail, Settings, LogOut, Menu, X, Home } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -57,13 +49,13 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     const checkAuth = () => {
       const loggedIn = localStorage.getItem('isLoggedIn');
       const loginTime = localStorage.getItem('loginTime');
-      
+
       if (loggedIn === 'true' && loginTime) {
         // 检查登录是否过期（24小时）
         const now = Date.now();
         const loginTimestamp = parseInt(loginTime);
         const isExpired = now - loginTimestamp > 24 * 60 * 60 * 1000;
-        
+
         if (isExpired) {
           handleLogout();
         } else {
@@ -104,18 +96,6 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* 移动端顶部栏 */}
-      <div className="lg:hidden bg-background border-b px-4 py-3 flex items-center justify-between">
-        <h1 className="text-lg font-semibold">管理后台</h1>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
-      </div>
-
       <div className="flex">
         {/* 侧边栏 */}
         <aside
@@ -133,10 +113,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
             {/* 导航菜单 */}
             <nav className="flex-1 p-4 space-y-2">
-              {adminMenuItems.map((item) => {
+              {adminMenuItems.map(item => {
                 const Icon = item.icon;
                 const isActive = isActiveRoute(item.href);
-                
+
                 return (
                   <Link
                     key={item.key}
@@ -180,9 +160,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
         {/* 主内容区 */}
         <main className="flex-1 lg:ml-0">
-          <div className="p-6">
-            {children}
-          </div>
+          <div className="container mx-auto px-4 py-6">{children}</div>
         </main>
       </div>
     </div>

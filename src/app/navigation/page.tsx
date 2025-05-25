@@ -13,6 +13,7 @@ export default function NavigationPage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAllTags, setShowAllTags] = useState(false);
 
   // 加载数据
   useEffect(() => {
@@ -68,6 +69,17 @@ export default function NavigationPage() {
     return category?.name || categoryId;
   };
 
+  // 按使用数量排序标签并限制显示数量
+  const sortedTags = allTags
+    .map(tag => ({
+      name: tag,
+      count: items.filter(item => item.tags.includes(tag)).length,
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  const visibleTags = showAllTags ? sortedTags : sortedTags.slice(0, 6);
+  const hasMoreTags = sortedTags.length > 6;
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -119,16 +131,25 @@ export default function NavigationPage() {
             <span className="text-sm font-medium text-muted-foreground">按标签筛选</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {allTags.map(tag => (
+            {visibleTags.map(tagInfo => (
               <Badge
-                key={tag}
-                variant={selectedTag === tag ? 'default' : 'outline'}
+                key={tagInfo.name}
+                variant={selectedTag === tagInfo.name ? 'default' : 'outline'}
                 className="cursor-pointer hover:bg-accent transition-colors"
-                onClick={() => handleTagClick(tag)}
+                onClick={() => handleTagClick(tagInfo.name)}
               >
-                {tag}
+                {tagInfo.name} ({tagInfo.count})
               </Badge>
             ))}
+            {hasMoreTags && (
+              <Badge
+                variant="outline"
+                className="cursor-pointer hover:bg-accent transition-colors text-muted-foreground"
+                onClick={() => setShowAllTags(!showAllTags)}
+              >
+                {showAllTags ? '收起' : `更多 (+${sortedTags.length - 6})`}
+              </Badge>
+            )}
           </div>
         </div>
       )}

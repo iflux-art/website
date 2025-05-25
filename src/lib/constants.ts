@@ -8,7 +8,6 @@ export const NAV_ITEMS = [
   { key: 'docs', label: '文档' },
   { key: 'blog', label: '博客' },
   { key: 'navigation', label: '导航' },
-  { key: 'friends', label: '友链' },
 ];
 
 // 网站元数据

@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { countWords } from '@/lib/utils';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
+import { TwikooComments } from '@/components/comments/twikoo-comments';
 
 /**
  * 博客内容组件属性
@@ -33,6 +34,11 @@ export interface BlogContentProps {
    * 文章标签
    */
   tags?: string[];
+
+  /**
+   * 文章路径，用于评论系统区分不同文章
+   */
+  path?: string;
 }
 
 /**
@@ -52,7 +58,14 @@ export interface BlogContentProps {
  * />
  * ```
  */
-export function BlogContent({ title, date, content, mdxContent, tags = [] }: BlogContentProps) {
+export function BlogContent({
+  title,
+  date,
+  content,
+  mdxContent,
+  tags = [],
+  path,
+}: BlogContentProps) {
   return (
     <article>
       <header className="mb-8">
@@ -98,6 +111,12 @@ export function BlogContent({ title, date, content, mdxContent, tags = [] }: Blo
       </header>
 
       <MDXContent>{mdxContent}</MDXContent>
+
+      {/* 评论区 */}
+      <section className="mt-16 pt-8 border-t">
+        <h2 className="text-2xl font-bold mb-6">评论</h2>
+        <TwikooComments envId={process.env.NEXT_PUBLIC_TWIKOO_ENV_ID || 'demo'} path={path} />
+      </section>
     </article>
   );
 }

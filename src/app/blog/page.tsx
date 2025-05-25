@@ -19,11 +19,23 @@ export default function BlogPage() {
 
   // 当前选中的标签
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [showAllTags, setShowAllTags] = useState(false);
 
   // 处理标签点击
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag);
   };
+
+  // 按使用数量排序标签并限制显示数量
+  const sortedTags = allTags
+    .map(tag => ({
+      name: tag,
+      count: posts.filter(post => post.tags.includes(tag)).length,
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  const visibleTags = showAllTags ? sortedTags : sortedTags.slice(0, 6);
+  const hasMoreTags = sortedTags.length > 6;
 
   // 调试信息
   useEffect(() => {
@@ -74,19 +86,28 @@ export default function BlogPage() {
               >
                 全部
               </button>
-              {allTags.map(tag => (
+              {visibleTags.map(tagInfo => (
                 <button
-                  key={tag}
-                  onClick={() => handleTagClick(tag)}
-                  className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
-                    selectedTag === tag
+                  key={tagInfo.name}
+                  onClick={() => handleTagClick(tagInfo.name)}
+                  className={`px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-1 ${
+                    selectedTag === tagInfo.name
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted hover:bg-muted/80'
                   }`}
                 >
-                  {tag}
+                  {tagInfo.name}
+                  <span className="text-xs opacity-70">({tagInfo.count})</span>
                 </button>
               ))}
+              {hasMoreTags && (
+                <button
+                  onClick={() => setShowAllTags(!showAllTags)}
+                  className="px-3 py-1.5 rounded-lg text-sm transition-all bg-muted hover:bg-muted/80 text-muted-foreground"
+                >
+                  {showAllTags ? '收起' : `更多 (+${sortedTags.length - 6})`}
+                </button>
+              )}
             </div>
             {selectedTag && (
               <div className="mt-4 flex items-center gap-2">

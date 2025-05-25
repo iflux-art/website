@@ -300,6 +300,7 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
                 tags={data.tags || []}
                 content={finalContent}
                 mdxContent={<ServerMDX content={finalContent} />}
+                path={`/blog/${fullSlug}`}
               />
             </div>
           </main>

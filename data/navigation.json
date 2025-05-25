@@ -29,6 +29,12 @@
       "name": "娱乐休闲",
       "description": "娱乐和休闲网站",
       "order": 5
+    },
+    {
+      "id": "friends",
+      "name": "友情链接",
+      "description": "合作伙伴和友情链接",
+      "order": 6
     }
   ],
   "items": [
@@ -57,6 +63,45 @@
       "category": "development",
       "createdAt": "2024-01-01T00:00:00.000Z",
       "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "friend1",
+      "title": "阮一峰的网络日志",
+      "description": "技术博客，分享前端开发和技术思考",
+      "url": "https://www.ruanyifeng.com/blog/",
+      "icon": "📝",
+      "iconType": "emoji",
+      "tags": ["技术博客", "前端", "JavaScript"],
+      "featured": true,
+      "category": "friends",
+      "createdAt": "2024-01-15T00:00:00.000Z",
+      "updatedAt": "2024-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "friend2",
+      "title": "少数派",
+      "description": "高效工具和优质应用推荐",
+      "url": "https://sspai.com/",
+      "icon": "⚡",
+      "iconType": "emoji",
+      "tags": ["效率工具", "应用推荐", "数字生活"],
+      "featured": true,
+      "category": "friends",
+      "createdAt": "2024-01-15T00:00:00.000Z",
+      "updatedAt": "2024-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "friend3",
+      "title": "V2EX",
+      "description": "创意工作者们的社区",
+      "url": "https://www.v2ex.com/",
+      "icon": "🌐",
+      "iconType": "emoji",
+      "tags": ["社区", "技术讨论", "创意"],
+      "featured": false,
+      "category": "friends",
+      "createdAt": "2024-01-15T00:00:00.000Z",
+      "updatedAt": "2024-01-15T00:00:00.000Z"
     }
   ]
 }
