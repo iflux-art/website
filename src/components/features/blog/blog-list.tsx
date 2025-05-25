@@ -106,7 +106,9 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
 
   // 预先创建博客卡片列表
   const blogCards = displayPosts.map(post => (
-    <BlogCard key={post.slug} post={post} onTagClick={handleTagClick} />
+    <div key={post.slug}>
+      <BlogCard post={post} onTagClick={handleTagClick} />
+    </div>
   ));
 
   return <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-0">{blogCards}</div>;

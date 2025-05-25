@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { DocSidebarItem } from '@/components/features/sidebar/doc-sidebar';
+import { SidebarItem } from '@/components/ui/sidebar';
 import { docsSidebarCache } from '@/lib/local-storage-cache';
 
 /**
@@ -234,7 +234,7 @@ export function useDocMeta(category: string) {
 }
 
 // 创建一个全局内存缓存对象，用于存储侧边栏数据
-const sidebarCache: Record<string, { items: DocSidebarItem[]; timestamp: number }> = {};
+const sidebarMemoryCache: Record<string, { items: SidebarItem[]; timestamp: number }> = {};
 // 缓存过期时间（毫秒）
 const CACHE_EXPIRY = 30 * 60 * 1000; // 30分钟
 
@@ -245,7 +245,7 @@ const CACHE_EXPIRY = 30 * 60 * 1000; // 30分钟
  * @returns 侧边栏结构和加载状态
  */
 export function useDocSidebar(category: string) {
-  const [items, setItems] = useState<DocSidebarItem[]>([]);
+  const [items, setItems] = useState<SidebarItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -256,7 +256,7 @@ export function useDocSidebar(category: string) {
   const fetchSidebar = useCallback(async (category: string, force: boolean = false) => {
     // 检查内存缓存
     const now = Date.now();
-    const cachedData = sidebarCache[category];
+    const cachedData = sidebarMemoryCache[category];
 
     // 如果有内存缓存且未过期且不强制刷新，直接使用缓存
     if (!force && cachedData && now - cachedData.timestamp < CACHE_EXPIRY) {
@@ -270,7 +270,7 @@ export function useDocSidebar(category: string) {
 
     // 尝试从 localStorage 获取缓存
     if (!force) {
-      const lsCachedData = docsSidebarCache.get<DocSidebarItem[]>(category);
+      const lsCachedData = docsSidebarCache.get<SidebarItem[]>(category);
 
       if (lsCachedData) {
         if (process.env.NODE_ENV === 'development') {
@@ -278,7 +278,7 @@ export function useDocSidebar(category: string) {
         }
 
         // 更新内存缓存
-        sidebarCache[category] = {
+        sidebarMemoryCache[category] = {
           items: lsCachedData,
           timestamp: now,
         };
@@ -317,7 +317,7 @@ export function useDocSidebar(category: string) {
       }
 
       // 更新内存缓存
-      sidebarCache[category] = {
+      sidebarMemoryCache[category] = {
         items: data,
         timestamp: now,
       };
@@ -350,7 +350,7 @@ export function useDocSidebar(category: string) {
           }));
 
           // 更新缓存
-          sidebarCache[category] = {
+          sidebarMemoryCache[category] = {
             items: mappedItems,
             timestamp: now,
           };
@@ -382,7 +382,7 @@ export function useDocSidebar(category: string) {
     }
 
     // 如果缓存中有数据，先使用缓存数据
-    const cachedData = sidebarCache[category];
+    const cachedData = sidebarMemoryCache[category];
     if (cachedData) {
       setItems(cachedData.items);
       setLoading(false);

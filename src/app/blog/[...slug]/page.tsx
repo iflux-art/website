@@ -3,10 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/features/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
+import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
+import { StickyLayout } from '@/components/layout/sticky-layout';
 
 export default async function BlogPost({ params }: { params: { slug: string[] } }) {
   // 使用 await 确保 params.slug 是可用的
@@ -277,36 +278,38 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
   ];
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="flex flex-col lg:flex-row gap-8 px-4">
-        {/* 左侧空白区域，用于保持与文档页面布局一致 */}
-        <div className="lg:w-64 shrink-0 order-2 lg:order-1 hidden lg:block">
-          {/* 这里可以添加博客分类或其他导航 */}
-        </div>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex gap-8">
+          {/* 左侧空白区域，用于保持与文档页面布局一致 */}
+          <aside className="hidden lg:block w-64 shrink-0">
+            {/* 这里可以添加博客分类或其他导航 */}
+          </aside>
 
-        {/* 中间内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
-          <div className="max-w-4xl mx-auto">
-            {/* 面包屑导航 */}
-            <div className="mb-6">
-              <Breadcrumb items={breadcrumbItems} />
+          {/* 主内容区 */}
+          <main className="flex-1 min-w-0">
+            <div className="max-w-4xl">
+              {/* 面包屑导航 */}
+              <div className="mb-6">
+                <Breadcrumb items={breadcrumbItems} />
+              </div>
+
+              <BlogContent
+                title={title}
+                date={date}
+                tags={data.tags || []}
+                content={finalContent}
+                mdxContent={<ServerMDX content={finalContent} />}
+              />
             </div>
+          </main>
 
-            <BlogContent
-              title={title}
-              date={date}
-              tags={data.tags || []}
-              content={finalContent}
-              mdxContent={<ServerMDX content={finalContent} />}
-            />
-          </div>
-        </div>
-
-        {/* 右侧边栏 - 目录 */}
-        <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
-            <BlogSidebar headings={headings} />
-          </div>
+          {/* 右侧目录 */}
+          <aside className="hidden xl:block w-64 shrink-0">
+            <StickyLayout>
+              <TocContainer headings={headings} />
+            </StickyLayout>
+          </aside>
         </div>
       </div>
     </div>

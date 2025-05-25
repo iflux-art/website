@@ -26,11 +26,7 @@ const nextConfig = {
     optimizePackageImports: [
       'lucide-react',
       '@radix-ui/react-dialog',
-      '@radix-ui/react-tabs',
-      '@radix-ui/react-toggle',
-      '@radix-ui/react-checkbox',
       '@radix-ui/react-collapsible',
-      '@radix-ui/react-label',
       '@radix-ui/react-slot',
     ],
     // 优化页面加载

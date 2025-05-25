@@ -4,13 +4,18 @@ import React from 'react';
 import { ImageProps } from 'next/image';
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { ResponsiveImage } from '@/components/ui/responsive-image';
-import { CodeBlock } from '@/components/ui/code-block';
+import { CodeBlock } from '@/components/mdx/code-block';
 import { InlineCode } from '@/styles/inline-code';
 import { MarkdownLink } from '@/styles/markdown-link';
-import { UnifiedCard } from '@/components/ui/unified-card';
-import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { UnifiedCard } from '@/components/cards/unified-card';
+import { UnifiedGrid } from '@/components/cards/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
 import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
+import {
+  AnimatedGrid,
+  FriendLinkGrid as AnimatedFriendLinkGrid,
+  ResourceGrid as AnimatedResourceGrid,
+} from '@/components/mdx/animated-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -107,7 +112,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
         {...props}
       />
     ),
-    ResourceGrid: (props: any) => <UnifiedGrid {...props} type="resource" />,
+    ResourceGrid: (props: any) => <AnimatedResourceGrid {...props} />,
 
     // 友情链接组件
     FriendLinkCard: (props: any) => (
@@ -122,7 +127,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
         {...props}
       />
     ),
-    FriendLinkGrid: (props: any) => <UnifiedGrid {...props} type="friend" />,
+    FriendLinkGrid: (props: any) => <AnimatedFriendLinkGrid {...props} />,
 
     // 直接使用统一组件
     UnifiedCard,
@@ -131,6 +136,6 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     // 新的模块化组件
     NavigationGrid,
     NavigationItem,
-    FriendLinkItem
+    FriendLinkItem,
   };
 }

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTimelinePosts } from '@/hooks/use-blog';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
  * 博客时间轴列表组件属性
@@ -160,7 +159,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
 
               {isExpanded && (
                 <div className="space-y-5">
-                  {postsByYear[year].map((post, postIndex) => {
+                  {postsByYear[year].map(post => {
                     const date = formatDate(post.date);
 
                     return (

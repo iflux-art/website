@@ -7,7 +7,6 @@ import {
   SendHorizontal,
   Image,
   Paperclip,
-  Settings,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Search, File, FileText, BookOpen, Compass, X, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
@@ -163,7 +162,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
         {/* 搜索结果区域 */}
         <div className="max-h-[50vh]">
-          <ScrollArea className="max-h-[50vh]">
+          <div className="max-h-[50vh]">
             {isLoading ? (
               <div className="flex items-center justify-center p-8">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -199,7 +198,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 <p className="text-muted-foreground">输入关键词开始搜索</p>
               </div>
             )}
-          </ScrollArea>
+          </div>
         </div>
 
         {/* 快捷键提示 */}

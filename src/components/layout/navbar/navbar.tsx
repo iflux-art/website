@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Logo } from '@/components/layout/navbar/logo';
 import { MobileMenu } from './mobile-menu';
-import { NavItems } from './nav-items';
+import { NavMenu } from './nav-menu';
+import { useNavbarScroll } from '@/hooks/use-navbar-scroll';
 
 /**
  * 主导航栏组件
@@ -14,83 +14,7 @@ import { NavItems } from './nav-items';
  */
 export function Navbar({ className = '' }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [pageTitle, setPageTitle] = useState('');
-  const pathname = usePathname();
-
-  // 检测滚动方向和位置
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollThreshold = 100; // 滚动阈值，超过此值显示标题
-
-      // 判断滚动方向
-      if (currentScrollY > lastScrollY) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
-
-      // 更新最后滚动位置
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-
-  // 获取页面标题
-  useEffect(() => {
-    // 仅在博客和文档页面显示标题
-    if (pathname.startsWith('/blog/') || pathname.startsWith('/docs/')) {
-      // 延迟获取标题，确保页面已渲染
-      const getTitle = () => {
-        const h1Element = document.querySelector('h1');
-        if (h1Element) {
-          setPageTitle(h1Element.textContent || '');
-        }
-      };
-
-      // 初始获取标题
-      setTimeout(getTitle, 100);
-
-      // 监听DOM变化，以便在动态加载内容后更新标题
-      const observer = new MutationObserver(mutations => {
-        mutations.forEach(() => {
-          const h1Element = document.querySelector('h1');
-          if (h1Element && h1Element.textContent !== pageTitle && pageTitle === '') {
-            setPageTitle(h1Element.textContent || '');
-          }
-        });
-      });
-
-      // 开始观察文档变化
-      observer.observe(document.body, { childList: true, subtree: true });
-
-      // 清理观察器
-      return () => {
-        observer.disconnect();
-      };
-    } else {
-      setPageTitle('');
-    }
-  }, [pathname, pageTitle]);
-
-  // 判断是否显示标题 - 在向下滚动且滚动超过阈值时显示标题，向上滚动时显示导航
-  const showTitle =
-    scrollDirection === 'down' &&
-    lastScrollY > 100 &&
-    pageTitle &&
-    (pathname.startsWith('/blog/') || pathname.startsWith('/docs/'));
-
-  // 滚动到页面顶部的函数
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+  const { scrollDirection, pageTitle, showTitle, scrollToTop } = useNavbarScroll();
 
   return (
     <nav
@@ -115,7 +39,7 @@ export function Navbar({ className = '' }: { className?: string }) {
               {pageTitle}
             </h2>
           ) : (
-            <NavItems />
+            <NavMenu mode="links" />
           )}
         </div>
 

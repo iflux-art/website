@@ -4,12 +4,13 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Suspense } from 'react';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/features/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { Sidebar } from '@/components/ui/sidebar';
+import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
-import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
-import { DocSidebar } from '@/components/features/sidebar/doc-sidebar';
 import { MdxContentWrapper } from '@/components/mdx/mdx-content-wrapper';
 import { MdxServerRenderer } from '@/components/mdx/mdx-server-renderer';
+import { StickyLayout } from '@/components/layout/sticky-layout';
 
 export default async function NavigationPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 来确保 params 是可用的
@@ -234,7 +235,8 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
 
   // 读取文件内容
   const fileContent = fs.readFileSync(filePath, 'utf8');
-  const { data: frontmatter, content: mdxContent } = matter(fileContent);
+  const { data: frontmatter, content: originalContent } = matter(fileContent);
+  let mdxContent = originalContent;
 
   console.log(`成功读取导航页面: ${fullSlug}`, {
     contentLength: mdxContent.length,
@@ -269,7 +271,6 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
   }
 
   // 确保所有标题都有唯一ID
-  let processedContent = mdxContent;
   headings.forEach(heading => {
     // 替换标题行，添加ID
     const headingRegex = new RegExp(
@@ -279,7 +280,7 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
       )})(?:\\s*{#[\\w-]+})?$`,
       'gm'
     );
-    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
+    mdxContent = mdxContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
   });
 
   // 读取根目录的 _meta.json 文件，获取分类的中文名称
@@ -309,46 +310,48 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
   ];
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="flex flex-col lg:flex-row gap-8 px-4">
-        {/* 左侧边栏 - 导航列表 */}
-        <div className="lg:w-64 shrink-0 order-2 lg:order-1">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
-            <Suspense>
-              <div className="no-animation">
-                <DocSidebar
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex gap-8">
+          {/* 左侧边栏 */}
+          <aside className="hidden lg:block w-64 shrink-0">
+            <StickyLayout>
+              <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
+                <Sidebar
                   category="navigation"
                   currentDoc={slug.length > 1 ? slug.slice(1).join('/') : slug[0]}
                   isNavigation={true}
                 />
+              </Suspense>
+            </StickyLayout>
+          </aside>
+
+          {/* 主内容区 */}
+          <main className="flex-1 min-w-0">
+            <div className="max-w-4xl">
+              {/* 面包屑导航 */}
+              <div className="mb-6">
+                <Breadcrumb items={breadcrumbItems} />
               </div>
-            </Suspense>
-          </div>
-        </div>
 
-        {/* 中间内容区 */}
-        <div className="lg:flex-1 min-w-0 order-1 lg:order-2 overflow-auto">
-          <div className="max-w-4xl mx-auto">
-            {/* 面包屑导航 */}
-            <div className="mb-6">
-              <Breadcrumb items={breadcrumbItems} />
+              {/* 文章内容 */}
+              <article className="prose prose-slate dark:prose-invert max-w-none">
+                <h1 className="text-4xl font-bold mb-8 tracking-tight">{title}</h1>
+                <MDXContent>
+                  <MdxContentWrapper html={await MdxServerRenderer({ content: mdxContent })} />
+                </MDXContent>
+              </article>
             </div>
+          </main>
 
-            <h1 className="text-4xl font-bold mb-8 tracking-tight">{title}</h1>
-            <MDXContent>
-              <MdxContentWrapper html={await MdxServerRenderer({ content: mdxContent })} />
-            </MDXContent>
-          </div>
-        </div>
-
-        {/* 右侧边栏 - 目录 */}
-        <div className="lg:w-64 shrink-0 order-3">
-          <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
-            <Suspense>
-              {/* 使用自适应侧边栏组件显示文档目录 */}
-              <AdaptiveSidebar headings={headings} />
-            </Suspense>
-          </div>
+          {/* 右侧目录 */}
+          <aside className="hidden xl:block w-64 shrink-0">
+            <StickyLayout>
+              <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
+                <TocContainer headings={headings} />
+              </Suspense>
+            </StickyLayout>
+          </aside>
         </div>
       </div>
     </div>

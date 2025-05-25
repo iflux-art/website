@@ -3,16 +3,28 @@
     "title": "入门指南",
     "description": "简单好上手的官方使用手册"
   },
-  "update": {
-    "title": "更新日志",
-    "description": "每一次更新的详细记录说明"
+  "ad": {
+    "title": "广告",
+    "description": "广告创意与文案相关文档"
+  },
+  "ai": {
+    "title": "Ai",
+    "description": "人工智能相关文档和教程"
+  },
+  "film": {
+    "title": "Film",
+    "description": "电影制作与分析相关文档"
   },
   "drama": {
     "title": "编剧指南",
     "description": "剧本创作规范"
   },
-  "ad": {
-    "title": "广告",
-    "description": "广告相关规范"
+  "edit": {
+    "title": "Edit",
+    "description": "视频剪辑软件使用指南"
+  },
+  "update": {
+    "title": "更新日志",
+    "description": "每一次更新的详细记录说明"
   }
 }

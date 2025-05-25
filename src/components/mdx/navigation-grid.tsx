@@ -1,4 +1,4 @@
-import { NavigationCard } from '@/components/cards';
+import { UnifiedCard } from '@/components/cards/unified-card';
 
 interface NavigationGridProps {
   children: React.ReactNode;
@@ -14,9 +14,7 @@ interface NavigationItemProps {
 
 export function NavigationGrid({ children }: NavigationGridProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-      {children}
-    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">{children}</div>
   );
 }
 
@@ -28,12 +26,14 @@ export function NavigationItem({
   featured = false,
 }: NavigationItemProps) {
   return (
-    <NavigationCard
+    <UnifiedCard
+      type="navigation"
       title={title}
       description={description}
-      url={url}
+      href={url}
       icon={icon}
-      isRecommended={featured}
+      featured={featured}
+      isExternal={true}
     />
   );
 }

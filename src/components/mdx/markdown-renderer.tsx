@@ -1,11 +1,11 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image, { ImageProps } from 'next/image';
-import { CodeBlock } from '@/components/ui/code-block';
+import { CodeBlock } from '@/components/mdx/code-block';
 import { InlineCode } from '@/styles/inline-code';
 import { MarkdownLink } from '@/styles/markdown-link';
-import { UnifiedCard } from '@/components/ui/unified-card';
-import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { UnifiedCard } from '@/components/cards/unified-card';
+import { UnifiedGrid } from '@/components/cards/unified-grid';
 
 /**
  * Markdown 渲染器组件属性

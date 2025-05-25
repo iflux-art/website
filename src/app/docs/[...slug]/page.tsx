@@ -6,9 +6,12 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { DocsLayout } from '@/components/layout/docs-layout';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { Sidebar } from '@/components/ui/sidebar';
+import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
+import { StickyLayout } from '@/components/layout/sticky-layout';
 
 export default async function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径
@@ -57,7 +60,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
 
             // 如果有文件，根据 meta 配置排序
             if (files.length > 0) {
-              // 根据 meta 配置排序
+              // 根据 meta 配置排序 - 与侧边栏保持一致
               const sortedFiles = files.sort((a, b) => {
                 const aSlug = a.replace(/\.(mdx|md)$/, '');
                 const bSlug = b.replace(/\.(mdx|md)$/, '');
@@ -73,8 +76,8 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
                   // 如果两个文件都在 meta 中有配置
                   if (typeof aConfig === 'object' && typeof bConfig === 'object') {
                     // 如果配置是对象，使用 order 属性
-                    const aOrder = aConfig.order || 999;
-                    const bOrder = bConfig.order || 999;
+                    const aOrder = aConfig.order || 0; // 改为0，与侧边栏API保持一致
+                    const bOrder = bConfig.order || 0;
                     return aOrder - bOrder;
                   } else {
                     // 如果配置不是对象（可能是字符串），按照在 meta 中的顺序排序
@@ -316,46 +319,72 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   ];
 
   return (
-    <DocsLayout
-      category={category}
-      currentDoc={docName as string}
-      headings={headings}
-      breadcrumbItems={breadcrumbItems}
-    >
-      <h1 className="text-4xl font-bold mb-8 tracking-tight">{data.title}</h1>
-      <MDXContent>
-        <ServerMDX content={content} />
-      </MDXContent>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex gap-8">
+          {/* 左侧边栏 */}
+          <aside className="hidden lg:block w-64 shrink-0">
+            <StickyLayout>
+              <Sidebar category={category} currentDoc={docName as string} />
+            </StickyLayout>
+          </aside>
 
-      {/* 上一页/下一页导航 */}
-      <div className="mt-12 grid grid-cols-2 gap-4">
-        {prevDoc && (
-          <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
-            <CardContent className="p-5">
-              <Link href={prevDoc.path} className="flex flex-col">
-                <span className="text-sm text-muted-foreground flex items-center">
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                  上一页
-                </span>
-                <span className="font-semibold tracking-tight">{prevDoc.title}</span>
-              </Link>
-            </CardContent>
-          </Card>
-        )}
-        {nextDoc && (
-          <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
-            <CardContent className="p-5">
-              <Link href={nextDoc.path} className="flex flex-col items-end text-right">
-                <span className="text-sm text-muted-foreground flex items-center">
-                  下一页
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </span>
-                <span className="font-semibold tracking-tight">{nextDoc.title}</span>
-              </Link>
-            </CardContent>
-          </Card>
-        )}
+          {/* 主内容区 */}
+          <main className="flex-1 min-w-0">
+            <div className="max-w-4xl">
+              {/* 面包屑导航 */}
+              <div className="mb-6">
+                <Breadcrumb items={breadcrumbItems} />
+              </div>
+
+              {/* 文章内容 */}
+              <article className="prose prose-slate dark:prose-invert max-w-none">
+                <h1 className="text-4xl font-bold mb-8 tracking-tight">{data.title}</h1>
+                <MDXContent>
+                  <ServerMDX content={content} />
+                </MDXContent>
+              </article>
+
+              {/* 上一页/下一页导航 */}
+              <div className="mt-12 grid grid-cols-2 gap-4">
+                {prevDoc && (
+                  <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
+                    <CardContent className="p-5">
+                      <Link href={prevDoc.path} className="flex flex-col">
+                        <span className="text-sm text-muted-foreground flex items-center">
+                          <ChevronLeft className="h-4 w-4 mr-1" />
+                          上一页
+                        </span>
+                        <span className="font-semibold tracking-tight">{prevDoc.title}</span>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                )}
+                {nextDoc && (
+                  <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
+                    <CardContent className="p-5">
+                      <Link href={nextDoc.path} className="flex flex-col items-end text-right">
+                        <span className="text-sm text-muted-foreground flex items-center">
+                          下一页
+                          <ChevronRight className="h-4 w-4 ml-1" />
+                        </span>
+                        <span className="font-semibold tracking-tight">{nextDoc.title}</span>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
+          </main>
+
+          {/* 右侧目录 */}
+          <aside className="hidden xl:block w-64 shrink-0">
+            <StickyLayout>
+              <TocContainer headings={headings} />
+            </StickyLayout>
+          </aside>
+        </div>
       </div>
-    </DocsLayout>
+    </div>
   );
 }

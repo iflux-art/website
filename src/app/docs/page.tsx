@@ -2,9 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-import { BlogLayout } from '@/components/layout/blog-layout';
-import { DocsCard } from '@/components/cards';
 import { useDocCategories } from '@/hooks/use-docs';
 
 export default function DocsPage() {
@@ -26,18 +25,63 @@ export default function DocsPage() {
   }
 
   return (
-    <BlogLayout title="文档中心" description="探索我们的技术文档和指南">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map(category => (
-          <DocsCard
-            key={category.id}
-            title={category.title}
-            description={category.description}
-            articleCount={category.count}
-            href={`/docs/${category.id}`}
-          />
-        ))}
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        <div className="max-w-6xl mx-auto">
+          {/* 页面标题 */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">文档中心</h1>
+            <p className="text-muted-foreground">探索我们的技术文档和指南</p>
+          </div>
+
+          {/* 文档分类瀑布流 */}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-0">
+            {categories.map(category => (
+              <div key={category.id}>
+                <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6">
+                  <Link href={`/docs/${category.id}`} className="block">
+                    <div className="p-6">
+                      <h2 className="text-xl font-bold tracking-tight mb-3 line-clamp-1 group-hover:text-primary transition-colors">
+                        {category.title}
+                      </h2>
+                      <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
+                        {category.description}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">
+                          {category.count} 篇文档
+                        </span>
+                        <span className="text-sm text-primary font-medium">浏览文档 →</span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              </div>
+            ))}
+          </div>
+
+          {/* 加载状态 */}
+          {loading && (
+            <div className="flex justify-center items-center py-12">
+              <div className="text-muted-foreground">加载中...</div>
+            </div>
+          )}
+
+          {/* 错误状态 */}
+          {error && (
+            <div className="flex justify-center items-center py-12">
+              <div className="text-destructive">加载失败，请稍后重试</div>
+            </div>
+          )}
+
+          {/* 空状态 */}
+          {!loading && !error && categories.length === 0 && (
+            <div className="flex justify-center items-center py-12">
+              <div className="text-muted-foreground">暂无文档分类</div>
+            </div>
+          )}
+        </div>
       </div>
-    </BlogLayout>
+    </div>
   );
 }

@@ -3,9 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { ArticleLayout } from '@/components/layout/article-layout';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { TocContainer } from '@/components/ui/toc-container';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
+import { StickyLayout } from '@/components/layout/sticky-layout';
 
 export default async function BlogPost() {
   // 读取友情链接 MDX 文件
@@ -50,18 +52,42 @@ export default async function BlogPost() {
     }
 
     // 构建面包屑导航
-    const breadcrumbItems = [{ label: '首页', href: '/' }, { label: '友情链接' }];
+    const breadcrumbItems: BreadcrumbItem[] = [{ label: '首页', href: '/' }, { label: '友情链接' }];
 
     return (
-      <ArticleLayout headings={headings} breadcrumbItems={breadcrumbItems}>
-        <BlogContent
-          title={title}
-          date={date}
-          tags={data.tags || []}
-          content={content}
-          mdxContent={<ServerMDX content={content} />}
-        />
-      </ArticleLayout>
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex gap-8">
+            {/* 左侧空白区域，用于保持与其他页面布局一致 */}
+            <aside className="hidden lg:block w-64 shrink-0">{/* 空白区域 */}</aside>
+
+            {/* 主内容区 */}
+            <main className="flex-1 min-w-0">
+              <div className="max-w-4xl">
+                {/* 面包屑导航 */}
+                <div className="mb-6">
+                  <Breadcrumb items={breadcrumbItems} />
+                </div>
+
+                <BlogContent
+                  title={title}
+                  date={date}
+                  tags={data.tags || []}
+                  content={content}
+                  mdxContent={<ServerMDX content={content} />}
+                />
+              </div>
+            </main>
+
+            {/* 右侧目录 */}
+            <aside className="hidden xl:block w-64 shrink-0">
+              <StickyLayout>
+                <TocContainer headings={headings} />
+              </StickyLayout>
+            </aside>
+          </div>
+        </div>
+      </div>
     );
   } catch (error) {
     console.error('Error loading friend links:', error);

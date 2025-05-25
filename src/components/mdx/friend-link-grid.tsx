@@ -1,4 +1,4 @@
-import { FriendLinkCard } from '@/components/cards';
+import { UnifiedCard } from '@/components/cards/unified-card';
 
 interface FriendLinkGridProps {
   children: React.ReactNode;
@@ -13,24 +13,20 @@ interface FriendLinkItemProps {
 
 export function FriendLinkGrid({ children }: FriendLinkGridProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-      {children}
-    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">{children}</div>
   );
 }
 
-export function FriendLinkItem({
-  title,
-  description,
-  url,
-  avatar,
-}: FriendLinkItemProps) {
+export function FriendLinkItem({ title, description, url, avatar }: FriendLinkItemProps) {
   return (
-    <FriendLinkCard
+    <UnifiedCard
+      type="friend"
       title={title}
       description={description}
-      url={url}
-      avatar={avatar}
+      href={url}
+      icon={avatar}
+      iconType="image"
+      isExternal={true}
     />
   );
 }

@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { ThemeToggle } from '@/components/layout/navbar/theme-toggle';
 import { TravelButton } from '@/components/layout/navbar/travel-button';
 import { Logo } from '@/components/layout/navbar/logo';
-import { NavCards } from './nav-cards';
+import { NavMenu } from './nav-menu';
 import { SearchIcon } from './search-icon';
 
 /**
@@ -103,7 +103,7 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
             {/* 菜单内容 */}
             <div className="flex-1 overflow-auto p-8">
               <div className="container mx-auto flex flex-col gap-8">
-                <NavCards onClose={() => setIsOpenAction(false)} />
+                <NavMenu mode="cards" onClose={() => setIsOpenAction(false)} />
               </div>
             </div>
           </SheetContent>
