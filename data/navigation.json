@@ -1,0 +1,62 @@
+{
+  "categories": [
+    {
+      "id": "development",
+      "name": "开发工具",
+      "description": "编程开发相关工具和资源",
+      "order": 1
+    },
+    {
+      "id": "design",
+      "name": "设计资源",
+      "description": "设计工具和素材资源",
+      "order": 2
+    },
+    {
+      "id": "productivity",
+      "name": "效率工具",
+      "description": "提升工作效率的工具",
+      "order": 3
+    },
+    {
+      "id": "learning",
+      "name": "学习资源",
+      "description": "在线学习和教育资源",
+      "order": 4
+    },
+    {
+      "id": "entertainment",
+      "name": "娱乐休闲",
+      "description": "娱乐和休闲网站",
+      "order": 5
+    }
+  ],
+  "items": [
+    {
+      "id": "example1",
+      "title": "React",
+      "description": "用于构建用户界面的 JavaScript 库",
+      "url": "https://react.dev",
+      "icon": "⚛️",
+      "iconType": "emoji",
+      "tags": ["前端", "框架", "JavaScript"],
+      "featured": true,
+      "category": "development",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "example2",
+      "title": "Next.js",
+      "description": "React 框架，用于生产环境的应用",
+      "url": "https://nextjs.org",
+      "icon": "▲",
+      "iconType": "emoji",
+      "tags": ["前端", "框架", "React"],
+      "featured": true,
+      "category": "development",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}

@@ -9,6 +9,8 @@ import { TravelButton } from '@/components/layout/navbar/travel-button';
 import { Logo } from '@/components/layout/navbar/logo';
 import { NavMenu } from './nav-menu';
 import { SearchIcon } from './search-icon';
+import { LoginDialog } from '@/components/auth/login-dialog';
+import { User } from 'lucide-react';
 
 /**
  * 移动端菜单组件属性接口
@@ -41,6 +43,13 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
       </div>
       <div>
         <TravelButton />
+      </div>
+      <div>
+        <LoginDialog>
+          <Button variant="ghost" size="icon" aria-label="管理员登录" title="管理员登录">
+            <User className="h-5 w-5" />
+          </Button>
+        </LoginDialog>
       </div>
 
       {/* 移动端菜单 */}
@@ -83,6 +92,18 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
                   </div>
                   <div>
                     <TravelButton />
+                  </div>
+                  <div>
+                    <LoginDialog>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="管理员登录"
+                        title="管理员登录"
+                      >
+                        <User className="h-5 w-5" />
+                      </Button>
+                    </LoginDialog>
                   </div>
 
                   {/* X按钮 - 与汉堡菜单位置完全一致 */}
