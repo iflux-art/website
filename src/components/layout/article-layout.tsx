@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { Breadcrumb } from '@/components/features/breadcrumb';
+import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
 
 interface ArticleLayoutProps {
   children: React.ReactNode;
@@ -15,11 +15,7 @@ interface ArticleLayoutProps {
   }>;
 }
 
-export function ArticleLayout({
-  children,
-  headings,
-  breadcrumbItems,
-}: ArticleLayoutProps) {
+export function ArticleLayout({ children, headings, breadcrumbItems }: ArticleLayoutProps) {
   return (
     <div className="container mx-auto py-10">
       <div className="flex flex-col lg:flex-row gap-8 px-4">
@@ -30,7 +26,7 @@ export function ArticleLayout({
             <div className="mb-6">
               <Breadcrumb items={breadcrumbItems} />
             </div>
-            
+
             {/* 主要内容 */}
             {children}
           </div>

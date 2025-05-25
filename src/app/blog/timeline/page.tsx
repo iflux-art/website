@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 import { BlogTimelineList } from '@/components/features/blog/blog-timeline-list';
-import { BlogLayout } from '@/components/layouts';
+import { BlogLayout } from '@/components/layout/blog-layout';
 
 export default async function TimelinePage() {
   return (

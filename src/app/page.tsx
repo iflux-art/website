@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 
 // 导入 ChatGPT 风格的首页组件
-import { ChatStyleHero } from '@/components/layout/home/chat-style-hero';
+import { HomeHero } from '@/components/layout/home/home-hero';
 
 export default function Home() {
   // 添加首页特殊类名，用于隐藏滚动条
@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <main className="relative flex flex-col min-h-[calc(100vh-4rem-4rem)] h-[calc(100vh-4rem-4rem)] overflow-hidden">
-      <ChatStyleHero />
+      <HomeHero />
     </main>
   );
 }

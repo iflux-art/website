@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Tag, Clock, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 import { BlogList } from '@/components/features/blog/blog-list';
-import { BlogLayout } from '@/components/layouts';
+import { BlogLayout } from '@/components/layout/blog-layout';
 import { useTags, useBlogPosts } from '@/hooks/use-blog';
 
 export default function BlogPage() {

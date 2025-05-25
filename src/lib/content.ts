@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost } from '@/hooks/use-blog';
-import { DocSidebarItem } from '@/components/features/docs/sidebar/doc-sidebar';
+import { DocSidebarItem } from '@/components/features/sidebar/doc-sidebar';
 
 // ==================== 博客相关函数 ====================
 

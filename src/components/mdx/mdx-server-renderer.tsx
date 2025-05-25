@@ -1,4 +1,4 @@
-import { processMdxContent } from '@/components/ui/markdown-renderer';
+import { processMdxContent } from '@/components/mdx/markdown-renderer';
 import { getMdxCache, setMdxCache, generateMdxCacheKey } from '@/lib/mdx-cache';
 
 interface MdxServerRendererProps {

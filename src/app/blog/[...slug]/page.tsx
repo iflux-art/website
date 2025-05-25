@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { Breadcrumb, BreadcrumbItem } from '@/components/features/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { BlogSidebar } from '@/components/features/blog/blog-sidebar';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
+import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
 
 export default async function BlogPost({ params }: { params: { slug: string[] } }) {
   // 使用 await 确保 params.slug 是可用的

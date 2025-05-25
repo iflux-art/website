@@ -14,7 +14,7 @@ interface DocsCardProps {
 export function DocsCard({ title, description, articleCount, href, className }: DocsCardProps) {
   return (
     <BaseCard title={title} description={description} className={className} href={href}>
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between">
         <Button variant="ghost" size="sm" className="group-hover:text-primary">
           浏览文档
           <ArrowRight className="ml-1 h-3 w-3" />

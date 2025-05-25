@@ -69,7 +69,7 @@ export async function GET(_request: Request, { params }: { params: { slug: strin
     const { data, content } = matter(fileContent);
 
     // 导入处理函数
-    const { processMdxContent } = await import('@/components/ui/markdown-renderer');
+    const { processMdxContent } = await import('@/components/mdx/markdown-renderer');
 
     // 处理内容中的 ResourceCard 和 ResourceGrid 组件
     let processedContent = processMdxContent(content);

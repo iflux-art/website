@@ -4,13 +4,12 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Suspense } from 'react';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
-import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
-import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
-import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
-import { MdxContentWrapper } from '@/components/ui/mdx-content-wrapper';
-import { MdxServerRenderer } from '@/components/ui/mdx-server-renderer';
+import { Breadcrumb, BreadcrumbItem } from '@/components/features/breadcrumb';
+import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
+import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
+import { DocSidebar } from '@/components/features/sidebar/doc-sidebar';
+import { MdxContentWrapper } from '@/components/mdx/mdx-content-wrapper';
+import { MdxServerRenderer } from '@/components/mdx/mdx-server-renderer';
 
 export default async function NavigationPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 来确保 params 是可用的
@@ -317,13 +316,11 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
           <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)]">
             <Suspense>
               <div className="no-animation">
-                <SidebarErrorWrapper>
-                  <DocSidebar
-                    category="navigation"
-                    currentDoc={slug.length > 1 ? slug.slice(1).join('/') : slug[0]}
-                    isNavigation={true}
-                  />
-                </SidebarErrorWrapper>
+                <DocSidebar
+                  category="navigation"
+                  currentDoc={slug.length > 1 ? slug.slice(1).join('/') : slug[0]}
+                  isNavigation={true}
+                />
               </div>
             </Suspense>
           </div>

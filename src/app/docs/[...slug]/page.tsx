@@ -4,13 +4,11 @@ import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Suspense } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { DocsLayout } from '@/components/layouts';
-import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
-import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
+import { DocsLayout } from '@/components/layout/docs-layout';
+import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
+import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
 
 export default async function DocPage({ params }: { params: { slug: string[] } }) {
   // 构建文件路径

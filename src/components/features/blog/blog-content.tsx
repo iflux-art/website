@@ -3,7 +3,7 @@ import { Calendar, Calculator } from 'lucide-react';
 import Link from 'next/link';
 
 import { countWords } from '@/lib/utils';
-import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
+import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 
 /**
  * 博客内容组件属性

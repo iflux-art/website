@@ -10,7 +10,7 @@ import { RecommendationTags } from './recommendation-tags';
  * ChatGPT 风格的首页英雄区组件
  * 模块化设计，将各功能拆分为独立组件
  */
-export function ChatStyleHero() {
+export function HomeHero() {
   return (
     <div className="relative w-full h-full flex flex-col justify-center overflow-y-auto overflow-x-hidden pb-8">
       {/* 增强型背景效果 - 可以选择不同的背景样式 */}

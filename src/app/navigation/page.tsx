@@ -4,13 +4,12 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Suspense } from 'react';
 
-import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
-import { MarkdownContent as MDXContent } from '@/components/ui/markdown-content';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
-import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
-import { SidebarErrorWrapper } from '@/components/ui/sidebar-error-wrapper';
-import { MdxContentWrapper } from '@/components/ui/mdx-content-wrapper';
-import { MdxServerRenderer } from '@/components/ui/mdx-server-renderer';
+import { Breadcrumb, BreadcrumbItem } from '@/components/features/breadcrumb';
+import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
+import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
+import { DocSidebar } from '@/components/features/sidebar/doc-sidebar';
+import { MdxContentWrapper } from '@/components/mdx/mdx-content-wrapper';
+import { MdxServerRenderer } from '@/components/mdx/mdx-server-renderer';
 
 export default async function NavigationPage() {
   // 默认显示 development 页面内容
@@ -91,9 +90,7 @@ export default async function NavigationPage() {
           <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
             <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
               <div className="no-animation">
-                <SidebarErrorWrapper>
-                  <DocSidebar category="navigation" currentDoc="development" />
-                </SidebarErrorWrapper>
+                <DocSidebar category="navigation" currentDoc="development" />
               </div>
             </Suspense>
           </div>

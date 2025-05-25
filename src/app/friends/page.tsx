@@ -3,9 +3,9 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { ArticleLayout } from '@/components/layouts';
+import { ArticleLayout } from '@/components/layout/article-layout';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { MarkdownRenderer as ServerMDX } from '@/components/ui/markdown-renderer';
+import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
 
 export default async function BlogPost() {
   // 读取友情链接 MDX 文件

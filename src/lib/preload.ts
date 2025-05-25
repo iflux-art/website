@@ -4,33 +4,22 @@
  * 用于在页面加载时预加载数据，提高用户体验
  */
 
+import { docsSidebarCache, docsCategoriesCache } from './local-storage-cache';
+
 /**
- * 预加载文档侧边栏数据
+ * 预加载文档侧边栏结构
  *
- * @param category 文档分类
+ * @param category 分类名称
  * @returns 预加载的 Promise
  */
 export async function preloadDocSidebar(category: string): Promise<void> {
   try {
     // 检查是否已经有缓存
-    const cacheKey = `docs-sidebar-${category}`;
-    const cachedData = localStorage.getItem(cacheKey);
+    const cachedData = docsSidebarCache.get(category);
 
     // 如果有缓存且未过期，不需要预加载
     if (cachedData) {
-      try {
-        const { timestamp } = JSON.parse(cachedData);
-        const now = Date.now();
-        const CACHE_EXPIRY = 30 * 60 * 1000; // 30分钟
-
-        if (now - timestamp < CACHE_EXPIRY) {
-          // 缓存未过期，不需要预加载
-          return;
-        }
-      } catch (e) {
-        // 解析缓存失败，继续预加载
-        console.error('解析缓存失败:', e);
-      }
+      return;
     }
 
     // 预加载数据
@@ -59,14 +48,8 @@ export async function preloadDocSidebar(category: string): Promise<void> {
         return;
       }
 
-      // 将数据存入 localStorage
-      localStorage.setItem(
-        cacheKey,
-        JSON.stringify({
-          data,
-          timestamp: Date.now(),
-        })
-      );
+      // 将数据存入缓存
+      docsSidebarCache.set(category, data);
 
       if (process.env.NODE_ENV === 'development') {
         console.log(`预加载分类 ${category} 的侧边栏结构成功`);
@@ -89,53 +72,48 @@ export async function preloadDocSidebar(category: string): Promise<void> {
 export async function preloadDocCategories(): Promise<void> {
   try {
     // 检查是否已经有缓存
-    const cacheKey = 'docs-categories';
-    const cachedData = localStorage.getItem(cacheKey);
+    const cachedData = docsCategoriesCache.get('categories');
 
     // 如果有缓存且未过期，不需要预加载
     if (cachedData) {
-      try {
-        const { timestamp } = JSON.parse(cachedData);
-        const now = Date.now();
-        const CACHE_EXPIRY = 30 * 60 * 1000; // 30分钟
-
-        if (now - timestamp < CACHE_EXPIRY) {
-          // 缓存未过期，不需要预加载
-          return;
-        }
-      } catch (e) {
-        // 解析缓存失败，继续预加载
-        console.error('解析缓存失败:', e);
-      }
+      return;
     }
 
     // 预加载数据
-    const response = await fetch('/api/docs/categories', {
-      headers: {
-        'Cache-Control': 'max-age=1800', // 30分钟
-        Pragma: 'no-cache',
-      },
-      cache: 'no-store',
-      priority: 'low', // 低优先级，不阻塞主要内容加载
-    });
+    try {
+      const response = await fetch('/api/docs/categories', {
+        headers: {
+          'Cache-Control': 'max-age=1800', // 30分钟
+          Pragma: 'no-cache',
+        },
+        cache: 'no-store',
+        priority: 'low', // 低优先级，不阻塞主要内容加载
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to preload document categories');
-    }
+      // 检查响应状态
+      if (!response.ok) {
+        // 如果响应不成功，记录错误但不抛出异常
+        console.warn(`预加载文档分类列表返回状态码 ${response.status}`);
+        return;
+      }
 
-    const data = await response.json();
+      const data = await response.json();
 
-    // 将数据存入 localStorage
-    localStorage.setItem(
-      cacheKey,
-      JSON.stringify({
-        data,
-        timestamp: Date.now(),
-      })
-    );
+      // 检查数据是否有效
+      if (!data || (Array.isArray(data) && data.length === 0)) {
+        console.warn('预加载文档分类列表返回空数据');
+        return;
+      }
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log('预加载文档分类列表成功');
+      // 将数据存入缓存
+      docsCategoriesCache.set('categories', data);
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('预加载文档分类列表成功');
+      }
+    } catch (fetchError) {
+      // 捕获网络错误，但不重新抛出
+      console.warn('预加载文档分类列表网络错误:', fetchError);
     }
   } catch (error) {
     // 预加载失败不影响用户体验，只记录错误
@@ -154,15 +132,13 @@ export async function preloadAll(): Promise<void> {
     await preloadDocCategories();
 
     // 获取文档分类列表
-    const categoriesCache = localStorage.getItem('docs-categories');
-    if (categoriesCache) {
+    const categoriesData = docsCategoriesCache.get('categories');
+    if (categoriesData) {
       try {
-        const { data } = JSON.parse(categoriesCache);
-
         // 如果有分类数据，预加载第一个分类的侧边栏
-        if (data && Array.isArray(data) && data.length > 0) {
+        if (categoriesData && Array.isArray(categoriesData) && categoriesData.length > 0) {
           // 找到第一个有效的分类
-          const firstCategory = data.find(cat => cat && cat.slug);
+          const firstCategory = categoriesData.find(cat => cat && cat.slug);
 
           if (firstCategory) {
             // 预加载该分类的侧边栏

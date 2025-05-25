@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-import { BlogLayout } from '@/components/layouts';
+import { BlogLayout } from '@/components/layout/blog-layout';
 import { DocsCard } from '@/components/cards';
 import { useDocCategories } from '@/hooks/use-docs';
 

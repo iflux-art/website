@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
-import { DocSidebar } from '@/components/features/docs/sidebar/doc-sidebar';
+import { Breadcrumb } from '@/components/features/breadcrumb';
+import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
+import { DocSidebar } from '@/components/features/sidebar/doc-sidebar';
 
 interface DocsLayoutProps {
   children: React.ReactNode;
@@ -46,7 +46,7 @@ export function DocsLayout({
             <div className="mb-6">
               <Breadcrumb items={breadcrumbItems} />
             </div>
-            
+
             {/* 主要内容 */}
             {children}
           </div>

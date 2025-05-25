@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdaptiveSidebar } from '@/components/ui/adaptive-sidebar';
+import { AdaptiveSidebar } from '@/components/features/sidebar/adaptive-sidebar';
 import { Heading } from '@/components/ui/table-of-contents';
 
 /**

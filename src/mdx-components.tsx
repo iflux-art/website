@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { ImageProps } from 'next/image';
+import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { ResponsiveImage } from '@/components/ui/responsive-image';
 import { CodeBlock } from '@/components/ui/code-block';
 import { InlineCode } from '@/styles/inline-code';
-import { H1, H2, H3, H4 } from '@/components/ui/heading-with-anchor';
 import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
-import { FriendLinkGrid, FriendLinkItem } from '@/components/mdx/friend-link-grid';
+import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -26,17 +26,11 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
       </article>
     ),
 
-    // 标题组件
-    h1: H1,
-    h2: H2,
-    h3: H3,
-    h4: H4,
-
     // 图片组件 - 使用响应式图片组件
-    img: (props: ImageProps) => {
+    img: (props: ImageProps & { src: string | { [key: string]: string } | StaticImport }) => {
       return (
         <ResponsiveImage
-          {...(props as ImageProps)}
+          {...(props as any)}
           width={props.width || 1080}
           height={props.height || 500}
           imageSizes={{
@@ -137,10 +131,6 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     // 新的模块化组件
     NavigationGrid,
     NavigationItem,
-    FriendLinkGrid,
-    FriendLinkItem,
-
-    // 使用传入的组件
-    ...components,
+    FriendLinkItem
   };
 }

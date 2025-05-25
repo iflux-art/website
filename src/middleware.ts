@@ -58,16 +58,6 @@ export function middleware(request: NextRequest) {
       `public, max-age=${CACHE_CONFIG.staticAssets}, immutable`
     );
   } else if (pathname.match(/\.(woff|woff2|ttf|otf)$/)) {
-    // 字体
-    response.headers.set(
-      'Cache-Control',
-      `public, max-age=${CACHE_CONFIG.fonts}, immutable`
-    );
-  } else if (
-    pathname.startsWith('/api/') &&
-    !pathname.includes('revalidate') &&
-    !pathname.includes('webhook')
-  ) {
     // API 路由
     response.headers.set(
       'Cache-Control',
