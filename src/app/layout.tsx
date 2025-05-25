@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="light" style={{ colorScheme: 'light' }}>
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         {/* 添加 mermaid 脚本，用于流程图渲染 */}
         <script async src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" />
@@ -27,6 +27,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           storageKey="iflux-theme-preference"
+          disableTransitionOnChange
         >
           <StyleManager />
           <div className="flex flex-col min-h-screen">

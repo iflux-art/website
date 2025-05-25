@@ -9,8 +9,10 @@ import { Home, Globe, Mail, Settings } from 'lucide-react';
 
 // 导航项描述
 const NAV_DESCRIPTIONS = {
+  news: '获取各大平台的热搜榜单和实时资讯，掌握最新动态',
   docs: '查看详细的文档和指南，了解如何使用我们的产品和服务',
   blog: '阅读最新的博客文章，了解行业动态和技术趋势',
+  tools: '发现实用的在线工具，提升工作和学习效率',
   navigation: '发现精选的网站和工具，提高您的工作效率',
   friends: '查看我们的合作伙伴和友情链接',
 };
