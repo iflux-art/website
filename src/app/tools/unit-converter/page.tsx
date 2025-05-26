@@ -26,7 +26,7 @@ export default function UnitConverterPage() {
         ft: { name: '英尺', factor: 0.3048 },
         yard: { name: '码', factor: 0.9144 },
         mile: { name: '英里', factor: 1609.344 },
-      }
+      },
     },
     weight: {
       name: '重量',
@@ -38,7 +38,7 @@ export default function UnitConverterPage() {
         oz: { name: '盎司', factor: 0.0283495 },
         lb: { name: '磅', factor: 0.453592 },
         stone: { name: '英石', factor: 6.35029 },
-      }
+      },
     },
     temperature: {
       name: '温度',
@@ -46,7 +46,7 @@ export default function UnitConverterPage() {
         celsius: { name: '摄氏度 (°C)', factor: 1 },
         fahrenheit: { name: '华氏度 (°F)', factor: 1 },
         kelvin: { name: '开尔文 (K)', factor: 1 },
-      }
+      },
     },
     area: {
       name: '面积',
@@ -58,7 +58,7 @@ export default function UnitConverterPage() {
         inch2: { name: '平方英寸', factor: 0.00064516 },
         ft2: { name: '平方英尺', factor: 0.092903 },
         acre: { name: '英亩', factor: 4046.86 },
-      }
+      },
     },
     volume: {
       name: '体积',
@@ -70,7 +70,7 @@ export default function UnitConverterPage() {
         ft3: { name: '立方英尺', factor: 28.3168 },
         gallon: { name: '加仑', factor: 3.78541 },
         cup: { name: '杯', factor: 0.236588 },
-      }
+      },
     },
     speed: {
       name: '速度',
@@ -80,8 +80,17 @@ export default function UnitConverterPage() {
         mph: { name: '英里/小时', factor: 0.44704 },
         knot: { name: '节', factor: 0.514444 },
         fps: { name: '英尺/秒', factor: 0.3048 },
-      }
-    }
+      },
+    },
+    number: {
+      name: '进制',
+      units: {
+        binary: { name: '二进制', base: 2 },
+        octal: { name: '八进制', base: 8 },
+        decimal: { name: '十进制', base: 10 },
+        hexadecimal: { name: '十六进制', base: 16 },
+      },
+    },
   };
 
   // 温度转换特殊处理
@@ -91,18 +100,38 @@ export default function UnitConverterPage() {
     // 先转换为摄氏度
     let celsius = value;
     if (from === 'fahrenheit') {
-      celsius = (value - 32) * 5 / 9;
+      celsius = ((value - 32) * 5) / 9;
     } else if (from === 'kelvin') {
       celsius = value - 273.15;
     }
 
     // 再转换为目标单位
     if (to === 'fahrenheit') {
-      return celsius * 9 / 5 + 32;
+      return (celsius * 9) / 5 + 32;
     } else if (to === 'kelvin') {
       return celsius + 273.15;
     }
     return celsius;
+  };
+
+  // 进制转换
+  const convertNumber = (value: string, from: string, to: string): string => {
+    if (from === to) return value;
+
+    const units = unitCategories.number.units;
+    const fromBase = units[from as keyof typeof units]?.base || 10;
+    const toBase = units[to as keyof typeof units]?.base || 10;
+
+    try {
+      // 先转换为十进制
+      const decimalValue = parseInt(value, fromBase);
+      if (isNaN(decimalValue)) return '';
+
+      // 再转换为目标进制
+      return decimalValue.toString(toBase).toUpperCase();
+    } catch {
+      return '';
+    }
   };
 
   // 通用单位转换
@@ -124,12 +153,17 @@ export default function UnitConverterPage() {
   const handleFromValueChange = (value: string) => {
     setFromValue(value);
     if (value && fromUnit && toUnit) {
-      const numValue = parseFloat(value);
-      if (!isNaN(numValue)) {
-        const converted = convertUnit(numValue, fromUnit, toUnit);
-        setToValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+      if (category === 'number') {
+        const converted = convertNumber(value, fromUnit, toUnit);
+        setToValue(converted);
       } else {
-        setToValue('');
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue)) {
+          const converted = convertUnit(numValue, fromUnit, toUnit);
+          setToValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+        } else {
+          setToValue('');
+        }
       }
     } else {
       setToValue('');
@@ -139,12 +173,17 @@ export default function UnitConverterPage() {
   const handleToValueChange = (value: string) => {
     setToValue(value);
     if (value && fromUnit && toUnit) {
-      const numValue = parseFloat(value);
-      if (!isNaN(numValue)) {
-        const converted = convertUnit(numValue, toUnit, fromUnit);
-        setFromValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+      if (category === 'number') {
+        const converted = convertNumber(value, toUnit, fromUnit);
+        setFromValue(converted);
       } else {
-        setFromValue('');
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue)) {
+          const converted = convertUnit(numValue, toUnit, fromUnit);
+          setFromValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+        } else {
+          setFromValue('');
+        }
       }
     } else {
       setFromValue('');
@@ -196,9 +235,7 @@ export default function UnitConverterPage() {
           <Ruler className="h-8 w-8" />
           单位转换器
         </h1>
-        <p className="text-muted-foreground mt-2">
-          长度、重量、温度、面积、体积、速度等单位转换
-        </p>
+        <p className="text-muted-foreground mt-2">长度、重量、温度、面积、体积、速度等单位转换</p>
       </div>
 
       {/* 分类选择 */}
@@ -230,7 +267,7 @@ export default function UnitConverterPage() {
                 <label className="block text-sm font-medium mb-2">从</label>
                 <select
                   value={fromUnit}
-                  onChange={(e) => setFromUnit(e.target.value)}
+                  onChange={e => setFromUnit(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   {Object.entries(currentUnits).map(([key, unit]) => (
@@ -242,10 +279,10 @@ export default function UnitConverterPage() {
               </div>
               <div>
                 <input
-                  type="number"
+                  type={category === 'number' ? 'text' : 'number'}
                   value={fromValue}
-                  onChange={(e) => handleFromValueChange(e.target.value)}
-                  placeholder="输入数值"
+                  onChange={e => handleFromValueChange(e.target.value)}
+                  placeholder={category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'}
                   className="w-full p-3 border border-border rounded-lg bg-background text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
@@ -270,7 +307,7 @@ export default function UnitConverterPage() {
                 <label className="block text-sm font-medium mb-2">到</label>
                 <select
                   value={toUnit}
-                  onChange={(e) => setToUnit(e.target.value)}
+                  onChange={e => setToUnit(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   {Object.entries(currentUnits).map(([key, unit]) => (
@@ -282,9 +319,9 @@ export default function UnitConverterPage() {
               </div>
               <div>
                 <input
-                  type="number"
+                  type={category === 'number' ? 'text' : 'number'}
                   value={toValue}
-                  onChange={(e) => handleToValueChange(e.target.value)}
+                  onChange={e => handleToValueChange(e.target.value)}
                   placeholder="转换结果"
                   className="w-full p-3 border border-border rounded-lg bg-muted/50 text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
@@ -333,6 +370,16 @@ export default function UnitConverterPage() {
                 <div className="p-3 bg-muted/50 rounded">100°C = 212°F = 373.15K</div>
                 <div className="p-3 bg-muted/50 rounded">37°C = 98.6°F (体温)</div>
                 <div className="p-3 bg-muted/50 rounded">-40°C = -40°F</div>
+              </>
+            )}
+            {category === 'number' && (
+              <>
+                <div className="p-3 bg-muted/50 rounded">255 = FF = 377 = 11111111</div>
+                <div className="p-3 bg-muted/50 rounded">16 = 10 = 20 = 10000</div>
+                <div className="p-3 bg-muted/50 rounded">8 = 8 = 10 = 1000</div>
+                <div className="p-3 bg-muted/50 rounded">1 = 1 = 1 = 1</div>
+                <div className="p-3 bg-muted/50 rounded">0 = 0 = 0 = 0</div>
+                <div className="p-3 bg-muted/50 rounded">十进制 = 十六进制 = 八进制 = 二进制</div>
               </>
             )}
           </div>

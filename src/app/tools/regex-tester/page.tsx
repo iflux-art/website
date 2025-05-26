@@ -94,38 +94,40 @@ export default function RegexTesterPage() {
       name: '邮箱地址',
       pattern: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
       flags: 'gi',
-      example: 'user@example.com, admin@test.org'
+      example: 'user@example.com, admin@test.org',
     },
     {
       name: '手机号码',
       pattern: '1[3-9]\\d{9}',
       flags: 'g',
-      example: '13812345678, 15987654321'
+      example: '13812345678, 15987654321',
     },
     {
       name: 'URL 链接',
-      pattern: 'https?://[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?',
+      pattern:
+        'https?://[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?',
       flags: 'gi',
-      example: 'https://www.example.com, http://test.org/path'
+      example: 'https://www.example.com, http://test.org/path',
     },
     {
       name: 'IPv4 地址',
-      pattern: '\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b',
+      pattern:
+        '\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b',
       flags: 'g',
-      example: '192.168.1.1, 10.0.0.1, 255.255.255.255'
+      example: '192.168.1.1, 10.0.0.1, 255.255.255.255',
     },
     {
       name: '中文字符',
       pattern: '[\\u4e00-\\u9fa5]+',
       flags: 'g',
-      example: '这是中文字符，包含汉字'
+      example: '这是中文字符，包含汉字',
     },
     {
       name: '日期格式',
       pattern: '\\d{4}-\\d{2}-\\d{2}',
       flags: 'g',
-      example: '2024-01-15, 2023-12-31'
-    }
+      example: '2024-01-15, 2023-12-31',
+    },
   ];
 
   const highlightMatches = (text: string, matches: RegExpMatchArray[]) => {
@@ -163,10 +165,10 @@ export default function RegexTesterPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
           <Search className="h-8 w-8" />
-          正则表达式测试工具
+          正则表达式工具集
         </h1>
         <p className="text-muted-foreground mt-2">
-          测试和验证正则表达式，实时显示匹配结果
+          正则表达式工具，包括测试验证、生成器、模式构建、匹配分析
         </p>
       </div>
 
@@ -188,13 +190,12 @@ export default function RegexTesterPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 正则表达式
-                {pattern && (
-                  isValid ? (
+                {pattern &&
+                  (isValid ? (
                     <CheckCircle className="h-5 w-5 text-green-600" />
                   ) : (
                     <AlertCircle className="h-5 w-5 text-red-600" />
-                  )
-                )}
+                  ))}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -202,14 +203,12 @@ export default function RegexTesterPage() {
                 <input
                   type="text"
                   value={pattern}
-                  onChange={(e) => setPattern(e.target.value)}
+                  onChange={e => setPattern(e.target.value)}
                   placeholder="输入正则表达式..."
                   className="w-full p-3 border border-border rounded-lg bg-background font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
                 {error && (
-                  <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">
-                    {error}
-                  </div>
+                  <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
                 )}
               </div>
 
@@ -227,7 +226,7 @@ export default function RegexTesterPage() {
                       <input
                         type="checkbox"
                         checked={flags.includes(flag)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setFlags(flags + flag);
                           } else {
@@ -236,7 +235,9 @@ export default function RegexTesterPage() {
                         }}
                         className="rounded"
                       />
-                      <span title={desc}>{name} ({flag})</span>
+                      <span title={desc}>
+                        {name} ({flag})
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -252,7 +253,7 @@ export default function RegexTesterPage() {
             <CardContent>
               <textarea
                 value={testString}
-                onChange={(e) => setTestString(e.target.value)}
+                onChange={e => setTestString(e.target.value)}
                 placeholder="输入要测试的字符串..."
                 className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               />
@@ -296,10 +297,10 @@ export default function RegexTesterPage() {
                   {/* 高亮显示 */}
                   <div>
                     <h4 className="text-sm font-medium mb-2">高亮显示</h4>
-                    <div 
+                    <div
                       className="p-3 border border-border rounded-lg bg-muted/50 text-sm whitespace-pre-wrap"
-                      dangerouslySetInnerHTML={{ 
-                        __html: highlightMatches(testString, matches) 
+                      dangerouslySetInnerHTML={{
+                        __html: highlightMatches(testString, matches),
                       }}
                     />
                   </div>
@@ -315,7 +316,11 @@ export default function RegexTesterPage() {
                             位置: {match.index} - {(match.index || 0) + match[0].length - 1}
                             {match.length > 1 && (
                               <span className="ml-2">
-                                分组: {match.slice(1).map((group, i) => `$${i + 1}="${group}"`).join(', ')}
+                                分组:{' '}
+                                {match
+                                  .slice(1)
+                                  .map((group, i) => `$${i + 1}="${group}"`)
+                                  .join(', ')}
                               </span>
                             )}
                           </div>
@@ -338,7 +343,9 @@ export default function RegexTesterPage() {
             <CardContent>
               <div className="space-y-3">
                 {commonPatterns.map((item, index) => (
-                  <div key={index} className="p-3 border border-border rounded-lg hover:bg-muted/50 cursor-pointer"
+                  <div
+                    key={index}
+                    className="p-3 border border-border rounded-lg hover:bg-muted/50 cursor-pointer"
                     onClick={() => {
                       setPattern(item.pattern);
                       setFlags(item.flags);
@@ -349,9 +356,7 @@ export default function RegexTesterPage() {
                     <div className="font-mono text-xs text-muted-foreground mt-1 break-all">
                       {item.pattern}
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      示例: {item.example}
-                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">示例: {item.example}</div>
                   </div>
                 ))}
               </div>

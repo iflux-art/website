@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { User, Lock, Eye, EyeOff } from 'lucide-react';
+import { Ghost, Lock, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface LoginDialogProps {
@@ -76,7 +76,7 @@ export function LoginDialog({ children }: LoginDialogProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
+            <Ghost className="h-5 w-5" />
             管理员登录
           </DialogTitle>
           <DialogDescription>

@@ -7,9 +7,12 @@ import { ArrowLeft, Copy, Check, Code, Download, Upload } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CodeFormatterPage() {
+  const [activeTab, setActiveTab] = useState<'format' | 'minify' | 'convert' | 'encode'>('format');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [language, setLanguage] = useState<'javascript' | 'html' | 'css' | 'json' | 'xml' | 'sql'>('javascript');
+  const [language, setLanguage] = useState<'javascript' | 'html' | 'css' | 'json' | 'xml' | 'sql'>(
+    'javascript'
+  );
   const [indentSize, setIndentSize] = useState(2);
   const [indentType, setIndentType] = useState<'spaces' | 'tabs'>('spaces');
   const [error, setError] = useState('');
@@ -41,9 +44,7 @@ export default function CodeFormatterPage() {
   // 格式化HTML
   const formatHTML = (code: string): string => {
     try {
-      let formatted = code
-        .replace(/></g, '>\n<')
-        .replace(/^\s+|\s+$/g, '');
+      let formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
 
       return addIndentation(formatted);
     } catch (err) {
@@ -80,9 +81,7 @@ export default function CodeFormatterPage() {
   // 格式化XML
   const formatXML = (code: string): string => {
     try {
-      let formatted = code
-        .replace(/></g, '>\n<')
-        .replace(/^\s+|\s+$/g, '');
+      let formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
 
       return addIndentation(formatted);
     } catch (err) {
@@ -93,11 +92,27 @@ export default function CodeFormatterPage() {
   // 格式化SQL
   const formatSQL = (code: string): string => {
     try {
-      const keywords = ['SELECT', 'FROM', 'WHERE', 'JOIN', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 
-                       'ORDER BY', 'GROUP BY', 'HAVING', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP'];
-      
+      const keywords = [
+        'SELECT',
+        'FROM',
+        'WHERE',
+        'JOIN',
+        'INNER JOIN',
+        'LEFT JOIN',
+        'RIGHT JOIN',
+        'ORDER BY',
+        'GROUP BY',
+        'HAVING',
+        'INSERT',
+        'UPDATE',
+        'DELETE',
+        'CREATE',
+        'ALTER',
+        'DROP',
+      ];
+
       let formatted = code.toUpperCase();
-      
+
       keywords.forEach(keyword => {
         const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
         formatted = formatted.replace(regex, `\n${keyword}`);
@@ -121,24 +136,30 @@ export default function CodeFormatterPage() {
     let indentLevel = 0;
     const indent = indentType === 'spaces' ? ' '.repeat(indentSize) : '\t';
 
-    return lines.map(line => {
-      const trimmed = line.trim();
-      if (!trimmed) return '';
+    return lines
+      .map(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return '';
 
-      // 减少缩进
-      if (trimmed.includes('}') || trimmed.includes('</') || trimmed.includes(')')) {
-        indentLevel = Math.max(0, indentLevel - 1);
-      }
+        // 减少缩进
+        if (trimmed.includes('}') || trimmed.includes('</') || trimmed.includes(')')) {
+          indentLevel = Math.max(0, indentLevel - 1);
+        }
 
-      const indentedLine = indent.repeat(indentLevel) + trimmed;
+        const indentedLine = indent.repeat(indentLevel) + trimmed;
 
-      // 增加缩进
-      if (trimmed.includes('{') || trimmed.includes('<') && !trimmed.includes('</') || trimmed.includes('(')) {
-        indentLevel++;
-      }
+        // 增加缩进
+        if (
+          trimmed.includes('{') ||
+          (trimmed.includes('<') && !trimmed.includes('</')) ||
+          trimmed.includes('(')
+        ) {
+          indentLevel++;
+        }
 
-      return indentedLine;
-    }).join('\n');
+        return indentedLine;
+      })
+      .join('\n');
   };
 
   // 执行格式化
@@ -151,7 +172,7 @@ export default function CodeFormatterPage() {
 
     try {
       let formatted = '';
-      
+
       switch (language) {
         case 'javascript':
           formatted = formatJavaScript(input);
@@ -189,7 +210,7 @@ export default function CodeFormatterPage() {
 
     try {
       let minified = '';
-      
+
       switch (language) {
         case 'javascript':
           minified = input
@@ -214,10 +235,7 @@ export default function CodeFormatterPage() {
           break;
         case 'html':
         case 'xml':
-          minified = input
-            .replace(/>\s+</g, '><')
-            .replace(/\s+/g, ' ')
-            .trim();
+          minified = input.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
           break;
         default:
           minified = input.replace(/\s+/g, ' ').trim();
@@ -251,7 +269,7 @@ export default function CodeFormatterPage() {
       css: 'css',
       json: 'json',
       xml: 'xml',
-      sql: 'sql'
+      sql: 'sql',
     };
 
     const blob = new Blob([output], { type: 'text/plain' });
@@ -269,7 +287,7 @@ export default function CodeFormatterPage() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       setInput(e.target?.result as string);
     };
     reader.readAsText(file);
@@ -291,7 +309,7 @@ export default function CodeFormatterPage() {
       css: `.container{display:flex;justify-content:center;align-items:center;}.button{background-color:#007bff;color:white;padding:10px 20px;border:none;border-radius:4px;}`,
       json: `{"name":"John","age":30,"city":"New York","hobbies":["reading","swimming","coding"]}`,
       xml: `<root><person><name>John</name><age>30</age><city>New York</city></person></root>`,
-      sql: `select u.name,u.email,p.title from users u inner join posts p on u.id=p.user_id where u.active=1 order by p.created_at desc`
+      sql: `select u.name,u.email,p.title from users u inner join posts p on u.id=p.user_id where u.active=1 order by p.created_at desc`,
     };
 
     setInput(examples[language] || '');
@@ -329,93 +347,229 @@ export default function CodeFormatterPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
           <Code className="h-8 w-8" />
-          代码格式化工具
+          代码处理工具集
         </h1>
         <p className="text-muted-foreground mt-2">
-          格式化和压缩多种编程语言的代码
+          全面的代码处理工具，包括格式化、压缩、JSON/CSV转换、HTML编解码
         </p>
       </div>
 
-      {/* 设置面板 */}
+      {/* 标签页 */}
       <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>格式化设置</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">语言</label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value as any)}
-                className="w-full p-2 border border-border rounded-lg bg-background"
-              >
-                {languages.map((lang) => (
-                  <option key={lang.value} value={lang.value}>
-                    {lang.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">缩进类型</label>
-              <select
-                value={indentType}
-                onChange={(e) => setIndentType(e.target.value as any)}
-                className="w-full p-2 border border-border rounded-lg bg-background"
-              >
-                <option value="spaces">空格</option>
-                <option value="tabs">制表符</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">缩进大小</label>
-              <select
-                value={indentSize}
-                onChange={(e) => setIndentSize(Number(e.target.value))}
-                className="w-full p-2 border border-border rounded-lg bg-background"
-                disabled={indentType === 'tabs'}
-              >
-                <option value={2}>2</option>
-                <option value={4}>4</option>
-                <option value={8}>8</option>
-              </select>
-            </div>
-
-            <div className="flex items-end">
-              <label className="cursor-pointer w-full">
-                <Button variant="outline" className="w-full flex items-center gap-2" asChild>
-                  <span>
-                    <Upload className="h-4 w-4" />
-                    上传文件
-                  </span>
-                </Button>
-                <input
-                  type="file"
-                  accept=".js,.ts,.html,.css,.json,.xml,.sql,.txt"
-                  onChange={uploadFile}
-                  className="hidden"
-                />
-              </label>
-            </div>
+        <CardContent className="p-0">
+          <div className="flex border-b">
+            {[
+              { key: 'format', name: '代码格式化', icon: Code },
+              { key: 'minify', name: '代码压缩', icon: Code },
+              { key: 'convert', name: 'JSON/CSV转换', icon: Code },
+              { key: 'encode', name: 'HTML编解码', icon: Code },
+            ].map(tab => {
+              const IconComponent = tab.icon;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key as any)}
+                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                    activeTab === tab.key
+                      ? 'border-primary text-primary bg-primary/5'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <IconComponent className="h-4 w-4" />
+                  {tab.name}
+                </button>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
+      {/* 设置面板 */}
+      {(activeTab === 'format' || activeTab === 'minify') && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>{activeTab === 'format' ? '格式化设置' : '压缩设置'}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">语言</label>
+                <select
+                  value={language}
+                  onChange={e => setLanguage(e.target.value as any)}
+                  className="w-full p-2 border border-border rounded-lg bg-background"
+                >
+                  {languages.map(lang => (
+                    <option key={lang.value} value={lang.value}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {activeTab === 'format' && (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">缩进类型</label>
+                    <select
+                      value={indentType}
+                      onChange={e => setIndentType(e.target.value as any)}
+                      className="w-full p-2 border border-border rounded-lg bg-background"
+                    >
+                      <option value="spaces">空格</option>
+                      <option value="tabs">制表符</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">缩进大小</label>
+                    <select
+                      value={indentSize}
+                      onChange={e => setIndentSize(Number(e.target.value))}
+                      className="w-full p-2 border border-border rounded-lg bg-background"
+                      disabled={indentType === 'tabs'}
+                    >
+                      <option value={2}>2</option>
+                      <option value={4}>4</option>
+                      <option value={8}>8</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
+              <div className="flex items-end">
+                <label className="cursor-pointer w-full">
+                  <Button variant="outline" className="w-full flex items-center gap-2" asChild>
+                    <span>
+                      <Upload className="h-4 w-4" />
+                      上传文件
+                    </span>
+                  </Button>
+                  <input
+                    type="file"
+                    accept=".js,.ts,.html,.css,.json,.xml,.sql,.txt"
+                    onChange={uploadFile}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* 操作按钮 */}
       <div className="mb-6 flex flex-wrap gap-2">
-        <Button onClick={formatCode} className="flex items-center gap-2">
-          <Code className="h-4 w-4" />
-          格式化
-        </Button>
-        <Button onClick={minifyCode} variant="outline">
-          压缩代码
-        </Button>
-        <Button onClick={loadExample} variant="outline">
-          加载示例
-        </Button>
+        {activeTab === 'format' && (
+          <>
+            <Button onClick={formatCode} className="flex items-center gap-2">
+              <Code className="h-4 w-4" />
+              格式化
+            </Button>
+            <Button onClick={loadExample} variant="outline">
+              加载示例
+            </Button>
+          </>
+        )}
+        {activeTab === 'minify' && (
+          <Button onClick={minifyCode} className="flex items-center gap-2">
+            <Code className="h-4 w-4" />
+            压缩代码
+          </Button>
+        )}
+        {activeTab === 'convert' && (
+          <Button
+            onClick={() => {
+              if (!input.trim()) {
+                setError('请输入数据');
+                return;
+              }
+              setError('');
+              try {
+                if (input.trim().startsWith('[') || input.trim().startsWith('{')) {
+                  // JSON to CSV
+                  const data = JSON.parse(input);
+                  if (Array.isArray(data) && data.length > 0) {
+                    const headers = Object.keys(data[0]);
+                    const csvRows = [headers.join(',')];
+                    data.forEach(row => {
+                      const values = headers.map(header => {
+                        const value = row[header];
+                        return typeof value === 'string' && value.includes(',')
+                          ? `"${value}"`
+                          : value;
+                      });
+                      csvRows.push(values.join(','));
+                    });
+                    setOutput(csvRows.join('\n'));
+                  } else {
+                    setError('JSON数据格式不正确');
+                  }
+                } else {
+                  // CSV to JSON
+                  const lines = input.trim().split('\n');
+                  const headers = lines[0].split(',').map(h => h.trim());
+                  const result = [];
+                  for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                    const obj: any = {};
+                    headers.forEach((header, index) => {
+                      obj[header] = values[index] || '';
+                    });
+                    result.push(obj);
+                  }
+                  setOutput(JSON.stringify(result, null, 2));
+                }
+              } catch (err) {
+                setError('数据转换失败，请检查格式');
+              }
+            }}
+            className="flex items-center gap-2"
+          >
+            <Code className="h-4 w-4" />
+            转换数据
+          </Button>
+        )}
+        {activeTab === 'encode' && (
+          <Button
+            onClick={() => {
+              if (!input.trim()) {
+                setError('请输入内容');
+                return;
+              }
+              setError('');
+              try {
+                if (input.includes('&lt;') || input.includes('&gt;') || input.includes('&amp;')) {
+                  // HTML解码
+                  const decoded = input
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&#39;/g, "'")
+                    .replace(/&nbsp;/g, ' ');
+                  setOutput(decoded);
+                } else {
+                  // HTML编码
+                  const encoded = input
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;')
+                    .replace(/ /g, '&nbsp;');
+                  setOutput(encoded);
+                }
+              } catch (err) {
+                setError('编解码失败');
+              }
+            }}
+            className="flex items-center gap-2"
+          >
+            <Code className="h-4 w-4" />
+            编解码
+          </Button>
+        )}
         <Button onClick={clearAll} variant="outline">
           清空
         </Button>
@@ -426,13 +580,28 @@ export default function CodeFormatterPage() {
         {/* 输入区域 */}
         <Card>
           <CardHeader>
-            <CardTitle>输入代码</CardTitle>
+            <CardTitle>
+              {activeTab === 'format' && '输入代码'}
+              {activeTab === 'minify' && '输入代码'}
+              {activeTab === 'convert' && '输入数据 (JSON/CSV)'}
+              {activeTab === 'encode' && '输入HTML内容'}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <textarea
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={`输入${languages.find(l => l.value === language)?.name}代码...`}
+              onChange={e => setInput(e.target.value)}
+              placeholder={
+                activeTab === 'format'
+                  ? `输入${languages.find(l => l.value === language)?.name}代码...`
+                  : activeTab === 'minify'
+                  ? `输入${languages.find(l => l.value === language)?.name}代码...`
+                  : activeTab === 'convert'
+                  ? 'JSON格式: [{"name":"张三","age":25}]\nCSV格式: name,age\n张三,25'
+                  : activeTab === 'encode'
+                  ? '输入HTML内容进行编码或解码...'
+                  : '输入内容...'
+              }
               className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </CardContent>
@@ -442,7 +611,10 @@ export default function CodeFormatterPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              格式化结果
+              {activeTab === 'format' && '格式化结果'}
+              {activeTab === 'minify' && '压缩结果'}
+              {activeTab === 'convert' && '转换结果'}
+              {activeTab === 'encode' && '编解码结果'}
               <div className="flex gap-2">
                 {output && (
                   <>
@@ -485,11 +657,9 @@ export default function CodeFormatterPage() {
               placeholder="格式化后的代码将显示在这里..."
               className="w-full h-96 p-3 border border-border rounded-lg bg-muted/50 font-mono text-sm resize-none"
             />
-            
+
             {error && (
-              <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">
-                {error}
-              </div>
+              <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
             )}
 
             {output && !error && (
@@ -510,30 +680,56 @@ export default function CodeFormatterPage() {
           <div>
             <h4 className="font-medium mb-2">支持的语言</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• <strong>JavaScript/TypeScript</strong>：格式化JS/TS代码</li>
-              <li>• <strong>HTML</strong>：格式化HTML标记</li>
-              <li>• <strong>CSS</strong>：格式化样式表</li>
-              <li>• <strong>JSON</strong>：格式化和验证JSON数据</li>
-              <li>• <strong>XML</strong>：格式化XML文档</li>
-              <li>• <strong>SQL</strong>：格式化数据库查询语句</li>
+              <li>
+                • <strong>JavaScript/TypeScript</strong>：格式化JS/TS代码
+              </li>
+              <li>
+                • <strong>HTML</strong>：格式化HTML标记
+              </li>
+              <li>
+                • <strong>CSS</strong>：格式化样式表
+              </li>
+              <li>
+                • <strong>JSON</strong>：格式化和验证JSON数据
+              </li>
+              <li>
+                • <strong>XML</strong>：格式化XML文档
+              </li>
+              <li>
+                • <strong>SQL</strong>：格式化数据库查询语句
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="font-medium mb-2">功能特点</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• 自动格式化：统一代码风格和缩进</li>
-              <li>• 代码压缩：移除空白和注释，减小文件大小</li>
-              <li>• 语法验证：检查JSON等格式的语法错误</li>
-              <li>• 文件上传：支持从本地文件导入代码</li>
-              <li>• 实时预览：输入时自动格式化</li>
+              <li>
+                • <strong>代码格式化</strong>：统一代码风格和缩进，支持多种编程语言
+              </li>
+              <li>
+                • <strong>代码压缩</strong>：移除空白和注释，减小文件大小
+              </li>
+              <li>
+                • <strong>JSON/CSV转换</strong>：JSON数组与CSV格式互相转换
+              </li>
+              <li>
+                • <strong>HTML编解码</strong>：HTML特殊字符的编码和解码
+              </li>
+              <li>
+                • <strong>文件上传</strong>：支持从本地文件导入代码
+              </li>
+              <li>
+                • <strong>实时预览</strong>：输入时自动处理（格式化模式）
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="font-medium mb-2">注意事项</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• 这是简化版的格式化工具，复杂代码可能需要专业工具</li>
-              <li>• 压缩功能会移除注释，请注意备份</li>
-              <li>• JSON格式化会验证语法，错误时会显示提示</li>
+              <li>• 这是简化版的代码处理工具，复杂代码可能需要专业工具</li>
+              <li>• 压缩功能会移除注释，请注意备份原始代码</li>
+              <li>• JSON/CSV转换要求数据格式正确，错误时会显示提示</li>
+              <li>• HTML编解码支持常见的HTML实体字符</li>
               <li>• 大文件处理可能较慢，建议分段处理</li>
             </ul>
           </div>

@@ -76,3 +76,17 @@ docker run -d -p 3000:8080 --gpus all -v open-webui:/app/backend/data --name ope
 - 删除模型前建议备份 `.bin` 文件
 - 量化会轻微降低模型精度
 - 多卡部署需设置 `CUDA_VISIBLE_DEVICES` 环境变量
+
+## Ollama 常用命令
+
+### 列出本地可用的模型
+
+```bash
+ollama list
+```
+
+### 删除模型
+
+```bash
+ollama rm 'model_name'
+```

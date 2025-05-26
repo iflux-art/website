@@ -58,7 +58,7 @@ export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
   };
 
   return (
-    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6">
+    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card h-full">
       <div className="p-6">
         <h2 className="text-xl font-bold tracking-tight mb-3 line-clamp-1 group-hover:text-primary transition-colors">
           {post.title}

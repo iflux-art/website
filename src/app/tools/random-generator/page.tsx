@@ -119,7 +119,9 @@ export default function RandomGeneratorPage() {
       let color: string;
       switch (colorFormat) {
         case 'hex':
-          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b
+            .toString(16)
+            .padStart(2, '0')}`;
           break;
         case 'rgb':
           color = `rgb(${r}, ${g}, ${b})`;
@@ -131,7 +133,9 @@ export default function RandomGeneratorPage() {
           color = `hsl(${h}, ${s}%, ${l}%)`;
           break;
         default:
-          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b
+            .toString(16)
+            .padStart(2, '0')}`;
       }
 
       colors.push(color);
@@ -203,9 +207,7 @@ export default function RandomGeneratorPage() {
           <Dices className="h-8 w-8" />
           随机生成器
         </h1>
-        <p className="text-muted-foreground mt-2">
-          生成随机数字、字符串、列表选择和颜色
-        </p>
+        <p className="text-muted-foreground mt-2">生成随机数字、字符串、列表选择和颜色</p>
       </div>
 
       {/* 类型选择 */}
@@ -216,7 +218,7 @@ export default function RandomGeneratorPage() {
             { key: 'string', name: '随机字符串', icon: '🔤' },
             { key: 'list', name: '列表选择', icon: '📝' },
             { key: 'color', name: '随机颜色', icon: '🎨' },
-          ].map((item) => (
+          ].map(item => (
             <Button
               key={item.key}
               variant={type === item.key ? 'default' : 'outline'}
@@ -247,7 +249,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="number"
                         value={numberMin}
-                        onChange={(e) => setNumberMin(Number(e.target.value))}
+                        onChange={e => setNumberMin(Number(e.target.value))}
                         className="w-full p-2 border border-border rounded-lg bg-background"
                       />
                     </div>
@@ -256,7 +258,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="number"
                         value={numberMax}
-                        onChange={(e) => setNumberMax(Number(e.target.value))}
+                        onChange={e => setNumberMax(Number(e.target.value))}
                         className="w-full p-2 border border-border rounded-lg bg-background"
                       />
                     </div>
@@ -268,7 +270,7 @@ export default function RandomGeneratorPage() {
                       min="1"
                       max="100"
                       value={numberCount}
-                      onChange={(e) => setNumberCount(Number(e.target.value))}
+                      onChange={e => setNumberCount(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     />
                   </div>
@@ -277,7 +279,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="checkbox"
                         checked={allowDuplicates}
-                        onChange={(e) => setAllowDuplicates(e.target.checked)}
+                        onChange={e => setAllowDuplicates(e.target.checked)}
                         className="rounded"
                       />
                       <span className="text-sm">允许重复</span>
@@ -296,7 +298,7 @@ export default function RandomGeneratorPage() {
                       min="1"
                       max="100"
                       value={stringLength}
-                      onChange={(e) => setStringLength(Number(e.target.value))}
+                      onChange={e => setStringLength(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     />
                   </div>
@@ -307,7 +309,7 @@ export default function RandomGeneratorPage() {
                       min="1"
                       max="50"
                       value={stringCount}
-                      onChange={(e) => setStringCount(Number(e.target.value))}
+                      onChange={e => setStringCount(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     />
                   </div>
@@ -317,7 +319,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="checkbox"
                         checked={includeUppercase}
-                        onChange={(e) => setIncludeUppercase(e.target.checked)}
+                        onChange={e => setIncludeUppercase(e.target.checked)}
                         className="rounded"
                       />
                       <span className="text-sm">大写字母 (A-Z)</span>
@@ -326,7 +328,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="checkbox"
                         checked={includeLowercase}
-                        onChange={(e) => setIncludeLowercase(e.target.checked)}
+                        onChange={e => setIncludeLowercase(e.target.checked)}
                         className="rounded"
                       />
                       <span className="text-sm">小写字母 (a-z)</span>
@@ -335,7 +337,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="checkbox"
                         checked={includeNumbers}
-                        onChange={(e) => setIncludeNumbers(e.target.checked)}
+                        onChange={e => setIncludeNumbers(e.target.checked)}
                         className="rounded"
                       />
                       <span className="text-sm">数字 (0-9)</span>
@@ -344,7 +346,7 @@ export default function RandomGeneratorPage() {
                       <input
                         type="checkbox"
                         checked={includeSymbols}
-                        onChange={(e) => setIncludeSymbols(e.target.checked)}
+                        onChange={e => setIncludeSymbols(e.target.checked)}
                         className="rounded"
                       />
                       <span className="text-sm">特殊符号</span>
@@ -360,7 +362,7 @@ export default function RandomGeneratorPage() {
                     <label className="block text-sm font-medium mb-2">列表项（每行一个）</label>
                     <textarea
                       value={listItems}
-                      onChange={(e) => setListItems(e.target.value)}
+                      onChange={e => setListItems(e.target.value)}
                       placeholder="选项1&#10;选项2&#10;选项3"
                       className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
@@ -372,7 +374,7 @@ export default function RandomGeneratorPage() {
                       min="1"
                       max="20"
                       value={listCount}
-                      onChange={(e) => setListCount(Number(e.target.value))}
+                      onChange={e => setListCount(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     />
                   </div>
@@ -386,7 +388,7 @@ export default function RandomGeneratorPage() {
                     <label className="block text-sm font-medium mb-2">颜色格式</label>
                     <select
                       value={colorFormat}
-                      onChange={(e) => setColorFormat(e.target.value as any)}
+                      onChange={e => setColorFormat(e.target.value as any)}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     >
                       <option value="hex">HEX (#RRGGBB)</option>
@@ -401,7 +403,7 @@ export default function RandomGeneratorPage() {
                       min="1"
                       max="20"
                       value={colorCount}
-                      onChange={(e) => setColorCount(Number(e.target.value))}
+                      onChange={e => setColorCount(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     />
                   </div>

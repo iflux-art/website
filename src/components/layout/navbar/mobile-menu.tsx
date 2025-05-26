@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
@@ -32,36 +32,6 @@ export interface MobileMenuProps {
  * 负责移动端导航和功能按钮的展示
  */
 export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // 检查登录状态
-  useEffect(() => {
-    const checkAuth = () => {
-      const loggedIn = localStorage.getItem('isLoggedIn');
-      const loginTime = localStorage.getItem('loginTime');
-
-      if (loggedIn === 'true' && loginTime) {
-        // 检查登录是否过期（24小时）
-        const now = Date.now();
-        const loginTimestamp = parseInt(loginTime);
-        const isExpired = now - loginTimestamp > 24 * 60 * 60 * 1000;
-
-        if (!isExpired) {
-          setIsLoggedIn(true);
-        }
-      }
-    };
-
-    checkAuth();
-
-    // 监听存储变化
-    const handleStorageChange = () => {
-      checkAuth();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       {/* 功能按钮 */}

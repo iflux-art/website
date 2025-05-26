@@ -7,6 +7,7 @@ import { ArrowLeft, Copy, Check, Lock, Unlock, ArrowUpDown } from 'lucide-react'
 import Link from 'next/link';
 
 export default function Base64EncoderPage() {
+  const [activeTab, setActiveTab] = useState('base64');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -67,10 +68,130 @@ export default function Base64EncoderPage() {
   };
 
   const loadExample = () => {
-    if (mode === 'encode') {
-      setInput('Hello, World! 你好，世界！');
-    } else {
-      setInput('SGVsbG8sIFdvcmxkISDkvaDlpb3vvIzkuJbnlYzvvIE=');
+    if (activeTab === 'base64') {
+      if (mode === 'encode') {
+        setInput('Hello, World! 你好，世界！');
+      } else {
+        setInput('SGVsbG8sIFdvcmxkISDkvaDlpb3vvIzkuJbnlYzvvIE=');
+      }
+    } else if (activeTab === 'url') {
+      if (mode === 'encode') {
+        setInput('https://example.com/search?q=你好世界&type=text');
+      } else {
+        setInput(
+          'https%3A//example.com/search%3Fq%3D%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C%26type%3Dtext'
+        );
+      }
+    } else if (activeTab === 'html') {
+      if (mode === 'encode') {
+        setInput('<div class="example">Hello & "World"</div>');
+      } else {
+        setInput('&lt;div class=&quot;example&quot;&gt;Hello &amp; &quot;World&quot;&lt;/div&gt;');
+      }
+    }
+  };
+
+  // URL编码/解码
+  const urlEncode = () => {
+    try {
+      const encoded = encodeURIComponent(input);
+      setOutput(encoded);
+      setError('');
+    } catch (err) {
+      setError('URL编码失败');
+      setOutput('');
+    }
+  };
+
+  const urlDecode = () => {
+    try {
+      const decoded = decodeURIComponent(input);
+      setOutput(decoded);
+      setError('');
+    } catch (err) {
+      setError('URL解码失败，请检查格式是否正确');
+      setOutput('');
+    }
+  };
+
+  // HTML编码/解码
+  const htmlEncode = () => {
+    try {
+      const encoded = input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+      setOutput(encoded);
+      setError('');
+    } catch (err) {
+      setError('HTML编码失败');
+      setOutput('');
+    }
+  };
+
+  const htmlDecode = () => {
+    try {
+      const decoded = input
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
+      setOutput(decoded);
+      setError('');
+    } catch (err) {
+      setError('HTML解码失败');
+      setOutput('');
+    }
+  };
+
+  // 字符编码转换
+  const charsetConvert = () => {
+    try {
+      if (mode === 'encode') {
+        // 转换为Unicode编码
+        const unicode = input
+          .split('')
+          .map(char => {
+            const code = char.charCodeAt(0);
+            return `\\u${code.toString(16).padStart(4, '0')}`;
+          })
+          .join('');
+        setOutput(unicode);
+      } else {
+        // 从Unicode解码
+        const decoded = input.replace(/\\u([0-9a-fA-F]{4})/g, (match, code) => {
+          return String.fromCharCode(parseInt(code, 16));
+        });
+        setOutput(decoded);
+      }
+      setError('');
+    } catch (err) {
+      setError('字符编码转换失败');
+      setOutput('');
+    }
+  };
+
+  // 统一处理函数
+  const processText = () => {
+    if (activeTab === 'base64') {
+      process();
+    } else if (activeTab === 'url') {
+      if (mode === 'encode') {
+        urlEncode();
+      } else {
+        urlDecode();
+      }
+    } else if (activeTab === 'html') {
+      if (mode === 'encode') {
+        htmlEncode();
+      } else {
+        htmlDecode();
+      }
+    } else if (activeTab === 'charset') {
+      charsetConvert();
     }
   };
 
@@ -90,12 +211,47 @@ export default function Base64EncoderPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
           {mode === 'encode' ? <Lock className="h-8 w-8" /> : <Unlock className="h-8 w-8" />}
-          Base64 {mode === 'encode' ? '编码' : '解码'}工具
+          编码工具集
         </h1>
         <p className="text-muted-foreground mt-2">
-          Base64 编码和解码工具，支持中文字符
+          编码转换工具，包括Base64、URL、HTML编解码、字符编码转换
         </p>
       </div>
+
+      {/* 标签页 */}
+      <Card className="mb-6">
+        <CardContent className="p-0">
+          <div className="flex border-b">
+            {[
+              { key: 'base64', name: 'Base64', icon: Lock },
+              { key: 'url', name: 'URL编码', icon: ArrowUpDown },
+              { key: 'html', name: 'HTML编码', icon: Check },
+              { key: 'charset', name: '字符编码', icon: ArrowUpDown },
+            ].map(tab => {
+              const IconComponent = tab.icon;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => {
+                    setActiveTab(tab.key);
+                    setInput('');
+                    setOutput('');
+                    setError('');
+                  }}
+                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                    activeTab === tab.key
+                      ? 'border-primary text-primary bg-primary/5'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <IconComponent className="h-4 w-4" />
+                  {tab.name}
+                </button>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* 模式切换 */}
       <div className="mb-6 flex items-center gap-4">
@@ -125,9 +281,7 @@ export default function Base64EncoderPage() {
 
       {/* 操作按钮 */}
       <div className="mb-6 flex flex-wrap gap-2">
-        <Button onClick={process}>
-          {mode === 'encode' ? '编码' : '解码'}
-        </Button>
+        <Button onClick={processText}>{mode === 'encode' ? '编码' : '解码'}</Button>
         <Button onClick={loadExample} variant="outline">
           加载示例
         </Button>
@@ -142,24 +296,36 @@ export default function Base64EncoderPage() {
         <Card>
           <CardHeader>
             <CardTitle>
-              {mode === 'encode' ? '原始文本' : 'Base64 编码'}
+              {mode === 'encode'
+                ? '原始文本'
+                : activeTab === 'base64'
+                ? 'Base64 编码'
+                : activeTab === 'url'
+                ? 'URL 编码'
+                : activeTab === 'html'
+                ? 'HTML 编码'
+                : 'Unicode 编码'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <textarea
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={e => setInput(e.target.value)}
               placeholder={
-                mode === 'encode' 
-                  ? '在此输入要编码的文本...' 
-                  : '在此输入要解码的 Base64 字符串...'
+                mode === 'encode'
+                  ? '在此输入要编码的文本...'
+                  : activeTab === 'base64'
+                  ? '在此输入要解码的 Base64 字符串...'
+                  : activeTab === 'url'
+                  ? '在此输入要解码的 URL 编码字符串...'
+                  : activeTab === 'html'
+                  ? '在此输入要解码的 HTML 编码字符串...'
+                  : '在此输入要解码的 Unicode 编码字符串...'
               }
               className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             {error && (
-              <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">
-                {error}
-              </div>
+              <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
             )}
           </CardContent>
         </Card>
@@ -168,7 +334,15 @@ export default function Base64EncoderPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              {mode === 'encode' ? 'Base64 编码' : '解码结果'}
+              {mode === 'encode'
+                ? activeTab === 'base64'
+                  ? 'Base64 编码'
+                  : activeTab === 'url'
+                  ? 'URL 编码'
+                  : activeTab === 'html'
+                  ? 'HTML 编码'
+                  : 'Unicode 编码'
+                : '解码结果'}
               {output && (
                 <Button
                   onClick={copyToClipboard}
@@ -196,8 +370,14 @@ export default function Base64EncoderPage() {
               value={output}
               readOnly
               placeholder={
-                mode === 'encode' 
-                  ? '编码后的 Base64 字符串将显示在这里...' 
+                mode === 'encode'
+                  ? activeTab === 'base64'
+                    ? '编码后的 Base64 字符串将显示在这里...'
+                    : activeTab === 'url'
+                    ? '编码后的 URL 字符串将显示在这里...'
+                    : activeTab === 'html'
+                    ? '编码后的 HTML 字符串将显示在这里...'
+                    : '编码后的 Unicode 字符串将显示在这里...'
                   : '解码后的原始文本将显示在这里...'
               }
               className="w-full h-96 p-3 border border-border rounded-lg bg-muted/50 font-mono text-sm resize-none"
@@ -215,7 +395,8 @@ export default function Base64EncoderPage() {
           <div>
             <h4 className="font-medium mb-2">什么是 Base64？</h4>
             <p className="text-sm text-muted-foreground">
-              Base64 是一种基于64个可打印字符来表示二进制数据的表示方法。常用于在HTTP环境下传递较长的标识信息，或者在需要将二进制数据存储在文本格式中的场景。
+              Base64
+              是一种基于64个可打印字符来表示二进制数据的表示方法。常用于在HTTP环境下传递较长的标识信息，或者在需要将二进制数据存储在文本格式中的场景。
             </p>
           </div>
           <div>

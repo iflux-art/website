@@ -19,67 +19,79 @@ export default function PasswordGeneratorPage() {
 
   const generatePassword = () => {
     let charset = '';
-    
+
     if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
     if (includeNumbers) charset += '0123456789';
     if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
-    
+
     if (excludeSimilar) {
       charset = charset.replace(/[0O1lI]/g, '');
     }
-    
+
     if (charset === '') {
       alert('请至少选择一种字符类型');
       return;
     }
-    
+
     let result = '';
     for (let i = 0; i < length; i++) {
       result += charset.charAt(Math.floor(Math.random() * charset.length));
     }
-    
+
     setPassword(result);
   };
 
   const calculateStrength = (pwd: string) => {
     let score = 0;
-    
+
     // 长度评分
     if (pwd.length >= 8) score += 1;
     if (pwd.length >= 12) score += 1;
     if (pwd.length >= 16) score += 1;
-    
+
     // 字符类型评分
     if (/[a-z]/.test(pwd)) score += 1;
     if (/[A-Z]/.test(pwd)) score += 1;
     if (/[0-9]/.test(pwd)) score += 1;
     if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
-    
+
     return Math.min(score, 5);
   };
 
   const getStrengthText = (score: number) => {
     switch (score) {
       case 0:
-      case 1: return '很弱';
-      case 2: return '弱';
-      case 3: return '中等';
-      case 4: return '强';
-      case 5: return '很强';
-      default: return '未知';
+      case 1:
+        return '很弱';
+      case 2:
+        return '弱';
+      case 3:
+        return '中等';
+      case 4:
+        return '强';
+      case 5:
+        return '很强';
+      default:
+        return '未知';
     }
   };
 
   const getStrengthColor = (score: number) => {
     switch (score) {
       case 0:
-      case 1: return 'text-red-600';
-      case 2: return 'text-orange-600';
-      case 3: return 'text-yellow-600';
-      case 4: return 'text-blue-600';
-      case 5: return 'text-green-600';
-      default: return 'text-gray-600';
+      case 1:
+        return 'text-red-600';
+      case 2:
+        return 'text-orange-600';
+      case 3:
+        return 'text-yellow-600';
+      case 4:
+        return 'text-blue-600';
+      case 5:
+        return 'text-green-600';
+      default:
+        return 'text-gray-600';
     }
   };
 
@@ -121,9 +133,7 @@ export default function PasswordGeneratorPage() {
           <Shield className="h-8 w-8" />
           密码生成器
         </h1>
-        <p className="text-muted-foreground mt-2">
-          生成安全的随机密码，保护您的账户安全
-        </p>
+        <p className="text-muted-foreground mt-2">生成安全的随机密码，保护您的账户安全</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -136,15 +146,13 @@ export default function PasswordGeneratorPage() {
             <CardContent className="space-y-6">
               {/* 密码长度 */}
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  密码长度: {length}
-                </label>
+                <label className="block text-sm font-medium mb-2">密码长度: {length}</label>
                 <input
                   type="range"
                   min="4"
                   max="50"
                   value={length}
-                  onChange={(e) => setLength(Number(e.target.value))}
+                  onChange={e => setLength(Number(e.target.value))}
                   className="w-full"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground mt-1">
@@ -156,42 +164,42 @@ export default function PasswordGeneratorPage() {
               {/* 字符类型 */}
               <div className="space-y-3">
                 <h4 className="text-sm font-medium">包含字符类型</h4>
-                
+
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={includeUppercase}
-                    onChange={(e) => setIncludeUppercase(e.target.checked)}
+                    onChange={e => setIncludeUppercase(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">大写字母 (A-Z)</span>
                 </label>
-                
+
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={includeLowercase}
-                    onChange={(e) => setIncludeLowercase(e.target.checked)}
+                    onChange={e => setIncludeLowercase(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">小写字母 (a-z)</span>
                 </label>
-                
+
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={includeNumbers}
-                    onChange={(e) => setIncludeNumbers(e.target.checked)}
+                    onChange={e => setIncludeNumbers(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">数字 (0-9)</span>
                 </label>
-                
+
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={includeSymbols}
-                    onChange={(e) => setIncludeSymbols(e.target.checked)}
+                    onChange={e => setIncludeSymbols(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">特殊符号 (!@#$%^&*)</span>
@@ -201,12 +209,12 @@ export default function PasswordGeneratorPage() {
               {/* 高级选项 */}
               <div className="space-y-3">
                 <h4 className="text-sm font-medium">高级选项</h4>
-                
+
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={excludeSimilar}
-                    onChange={(e) => setExcludeSimilar(e.target.checked)}
+                    onChange={e => setExcludeSimilar(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">排除相似字符 (0, O, 1, l, I)</span>
@@ -271,11 +279,15 @@ export default function PasswordGeneratorPage() {
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        strength <= 1 ? 'bg-red-500' :
-                        strength === 2 ? 'bg-orange-500' :
-                        strength === 3 ? 'bg-yellow-500' :
-                        strength === 4 ? 'bg-blue-500' :
-                        'bg-green-500'
+                        strength <= 1
+                          ? 'bg-red-500'
+                          : strength === 2
+                          ? 'bg-orange-500'
+                          : strength === 3
+                          ? 'bg-yellow-500'
+                          : strength === 4
+                          ? 'bg-blue-500'
+                          : 'bg-green-500'
                       }`}
                       style={{ width: `${(strength / 5) * 100}%` }}
                     />
@@ -297,8 +309,10 @@ export default function PasswordGeneratorPage() {
                         /[A-Z]/.test(password) && '大写',
                         /[a-z]/.test(password) && '小写',
                         /[0-9]/.test(password) && '数字',
-                        /[^A-Za-z0-9]/.test(password) && '符号'
-                      ].filter(Boolean).join(', ')}
+                        /[^A-Za-z0-9]/.test(password) && '符号',
+                      ]
+                        .filter(Boolean)
+                        .join(', ')}
                     </span>
                   </div>
                 </div>

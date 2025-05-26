@@ -5,16 +5,25 @@ import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Search, File, FileText, BookOpen, Compass, X, ArrowRight, Loader2 } from 'lucide-react';
-import Link from 'next/link';
+import {
+  Search,
+  FileText,
+  BookOpen,
+  X,
+  ArrowRight,
+  Loader2,
+  Wrench,
+  ExternalLink,
+} from 'lucide-react';
 
 // 搜索结果类型
 interface SearchResult {
   title: string;
   path: string;
   excerpt: string;
-  type: 'doc' | 'blog' | 'navigation';
+  type: 'doc' | 'blog' | 'navigation' | 'tool';
   icon: React.ReactNode;
+  isExternal?: boolean;
 }
 
 // 搜索对话框属性
@@ -35,41 +44,197 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // 模拟搜索结果数据 - 实际项目中应该从API获取
-  const mockSearch = (query: string): SearchResult[] => {
+  // 工具数据 - 实际项目中应该从API获取
+  const TOOLS = [
+    {
+      id: 'json-formatter',
+      name: 'JSON 格式化',
+      description: '格式化和验证JSON数据',
+      path: '/tools/json-formatter',
+      tags: ['JSON', '格式化', '验证'],
+    },
+    {
+      id: 'base64-encoder',
+      name: 'Base64 编解码',
+      description: 'Base64编码和解码工具',
+      path: '/tools/base64-encoder',
+      tags: ['Base64', '编码', '解码'],
+    },
+    {
+      id: 'url-encoder',
+      name: 'URL 编解码',
+      description: 'URL编码和解码工具',
+      path: '/tools/url-encoder',
+      tags: ['URL', '编码', '解码'],
+    },
+    {
+      id: 'password-generator',
+      name: '密码生成器',
+      description: '生成安全的随机密码',
+      path: '/tools/password-generator',
+      tags: ['密码', '生成器', '安全'],
+    },
+    {
+      id: 'uuid-generator',
+      name: 'UUID 生成器',
+      description: '生成各种版本的UUID',
+      path: '/tools/uuid-generator',
+      tags: ['UUID', '生成器', '唯一标识'],
+    },
+    {
+      id: 'hash-generator',
+      name: '哈希生成器',
+      description: '生成MD5、SHA等哈希值',
+      path: '/tools/hash-generator',
+      tags: ['哈希', 'MD5', 'SHA'],
+    },
+    {
+      id: 'regex-tester',
+      name: '正则表达式测试',
+      description: '测试和验证正则表达式',
+      path: '/tools/regex-tester',
+      tags: ['正则', '测试', '验证'],
+    },
+    {
+      id: 'timestamp-converter',
+      name: '时间戳转换',
+      description: '时间戳与日期时间相互转换',
+      path: '/tools/timestamp-converter',
+      tags: ['时间戳', '转换', '日期'],
+    },
+    {
+      id: 'qr-generator',
+      name: '二维码生成器',
+      description: '生成各种类型的二维码',
+      path: '/tools/qr-generator',
+      tags: ['二维码', '生成器', 'QR'],
+    },
+    {
+      id: 'color-picker',
+      name: '颜色选择器',
+      description: '选择和转换颜色格式',
+      path: '/tools/color-picker',
+      tags: ['颜色', '选择器', '转换'],
+    },
+  ];
+
+  // 网址导航数据 - 实际项目中应该从API获取
+  const NAVIGATION_SITES = [
+    {
+      name: 'GitHub',
+      description: '全球最大的代码托管平台',
+      url: 'https://github.com',
+      category: '开发工具',
+    },
+    {
+      name: 'Stack Overflow',
+      description: '程序员问答社区',
+      url: 'https://stackoverflow.com',
+      category: '开发工具',
+    },
+    {
+      name: 'MDN Web Docs',
+      description: 'Web开发文档和教程',
+      url: 'https://developer.mozilla.org',
+      category: '文档',
+    },
+    {
+      name: 'Can I Use',
+      description: '浏览器兼容性查询',
+      url: 'https://caniuse.com',
+      category: '开发工具',
+    },
+    {
+      name: 'CodePen',
+      description: '在线代码编辑器',
+      url: 'https://codepen.io',
+      category: '开发工具',
+    },
+    {
+      name: 'Figma',
+      description: '在线设计协作工具',
+      url: 'https://figma.com',
+      category: '设计工具',
+    },
+    {
+      name: 'Dribbble',
+      description: '设计师作品展示平台',
+      url: 'https://dribbble.com',
+      category: '设计工具',
+    },
+    {
+      name: 'Unsplash',
+      description: '免费高质量图片库',
+      url: 'https://unsplash.com',
+      category: '素材',
+    },
+  ];
+
+  // 搜索函数
+  const performSearch = (query: string): SearchResult[] => {
     if (!query.trim()) return [];
 
-    // 模拟搜索延迟
-    return [
-      {
-        title: '快速开始指南',
-        path: '/docs/getting-started',
-        excerpt: `包含了${query}相关的入门指南和基础概念介绍...`,
-        type: 'doc',
-        icon: <BookOpen className="h-4 w-4" />,
-      },
-      {
-        title: '如何使用组件库',
-        path: '/docs/components',
-        excerpt: `详细介绍了组件库的使用方法，包括${query}的示例代码...`,
-        type: 'doc',
-        icon: <File className="h-4 w-4" />,
-      },
-      {
-        title: `关于${query}的最新博客`,
-        path: '/blog/latest-updates',
-        excerpt: `探讨了${query}的最新发展和应用场景...`,
-        type: 'blog',
-        icon: <FileText className="h-4 w-4" />,
-      },
-      {
-        title: '常用网站导航',
-        path: '/navigation',
-        excerpt: `收集了与${query}相关的优质网站和工具资源...`,
-        type: 'navigation',
-        icon: <Compass className="h-4 w-4" />,
-      },
-    ];
+    const results: SearchResult[] = [];
+    const lowerQuery = query.toLowerCase();
+
+    // 搜索工具
+    TOOLS.forEach(tool => {
+      if (
+        tool.name.toLowerCase().includes(lowerQuery) ||
+        tool.description.toLowerCase().includes(lowerQuery) ||
+        tool.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+      ) {
+        results.push({
+          title: tool.name,
+          path: tool.path,
+          excerpt: tool.description,
+          type: 'tool',
+          icon: <Wrench className="h-4 w-4" />,
+        });
+      }
+    });
+
+    // 搜索网址导航
+    NAVIGATION_SITES.forEach(site => {
+      if (
+        site.name.toLowerCase().includes(lowerQuery) ||
+        site.description.toLowerCase().includes(lowerQuery) ||
+        site.category.toLowerCase().includes(lowerQuery)
+      ) {
+        results.push({
+          title: site.name,
+          path: site.url,
+          excerpt: `${site.description} - ${site.category}`,
+          type: 'navigation',
+          icon: <ExternalLink className="h-4 w-4" />,
+          isExternal: true,
+        });
+      }
+    });
+
+    // 添加一些模拟的文档和博客结果
+    if (results.length < 8) {
+      const mockResults = [
+        {
+          title: '快速开始指南',
+          path: '/docs/getting-started',
+          excerpt: `包含了${query}相关的入门指南和基础概念介绍...`,
+          type: 'doc' as const,
+          icon: <BookOpen className="h-4 w-4" />,
+        },
+        {
+          title: `关于${query}的最新博客`,
+          path: '/blog/latest-updates',
+          excerpt: `探讨了${query}的最新发展和应用场景...`,
+          type: 'blog' as const,
+          icon: <FileText className="h-4 w-4" />,
+        },
+      ];
+
+      results.push(...mockResults.slice(0, 8 - results.length));
+    }
+
+    return results.slice(0, 8); // 限制结果数量
   };
 
   // 处理搜索
@@ -83,11 +248,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
     // 模拟API请求延迟
     setTimeout(() => {
-      const searchResults = mockSearch(searchQuery);
+      const searchResults = performSearch(searchQuery);
       setResults(searchResults);
       setSelectedIndex(0);
       setIsLoading(false);
-    }, 500);
+    }, 300);
   };
 
   // 当搜索框打开时自动聚焦
@@ -122,7 +287,12 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       case 'Enter':
         e.preventDefault();
         if (results[selectedIndex]) {
-          router.push(results[selectedIndex].path);
+          const result = results[selectedIndex];
+          if (result.isExternal) {
+            window.open(result.path, '_blank');
+          } else {
+            router.push(result.path);
+          }
           onOpenChange(false);
         }
         break;
@@ -150,7 +320,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="搜索文档、博客和导航..."
+            placeholder="搜索工具、网址导航、文档..."
             className="flex-1 bg-transparent outline-none text-sm placeholder:text-muted-foreground"
           />
           {searchQuery && (
@@ -169,25 +339,46 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               </div>
             ) : results.length > 0 ? (
               <div className="py-2">
-                {results.map((result, index) => (
-                  <Link
-                    href={result.path}
-                    key={index}
-                    onClick={() => onOpenChange(false)}
-                    className={cn(
-                      'flex items-start gap-2 px-4 py-3 hover:bg-accent/50 transition-colors',
-                      selectedIndex === index && 'bg-accent'
-                    )}
-                    onMouseEnter={() => setSelectedIndex(index)}
-                  >
-                    <div className="flex-shrink-0 mt-1 text-muted-foreground">{result.icon}</div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium mb-1 truncate">{result.title}</h4>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{result.excerpt}</p>
+                {results.map((result, index) => {
+                  const handleClick = () => {
+                    if (result.isExternal) {
+                      window.open(result.path, '_blank');
+                    } else {
+                      router.push(result.path);
+                    }
+                    onOpenChange(false);
+                  };
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={handleClick}
+                      className={cn(
+                        'flex items-start gap-2 px-4 py-3 hover:bg-accent/50 transition-colors cursor-pointer',
+                        selectedIndex === index && 'bg-accent'
+                      )}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                    >
+                      <div className="flex-shrink-0 mt-1 text-muted-foreground">{result.icon}</div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium mb-1 truncate flex items-center gap-1">
+                          {result.title}
+                          {result.isExternal && <ExternalLink className="h-3 w-3" />}
+                        </h4>
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {result.excerpt}
+                        </p>
+                        <div className="text-xs text-muted-foreground mt-1 capitalize">
+                          {result.type === 'tool' && '工具'}
+                          {result.type === 'navigation' && '网址导航'}
+                          {result.type === 'doc' && '文档'}
+                          {result.type === 'blog' && '博客'}
+                        </div>
+                      </div>
+                      <ArrowRight className="h-4 w-4 flex-shrink-0 text-muted-foreground mt-1" />
                     </div>
-                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-muted-foreground mt-1" />
-                  </Link>
-                ))}
+                  );
+                })}
               </div>
             ) : searchQuery.trim() ? (
               <div className="p-8 text-center">

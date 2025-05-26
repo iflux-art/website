@@ -111,5 +111,5 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
     </div>
   ));
 
-  return <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-0">{blogCards}</div>;
+  return <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">{blogCards}</div>;
 }
