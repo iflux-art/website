@@ -82,6 +82,7 @@ export function TwikooComments({ envId, path, className = '' }: TwikooCommentsPr
     const twikooEnvId = envId || process.env.NEXT_PUBLIC_TWIKOO_ENV_ID;
     if (!twikooEnvId) {
       setError('评论系统未配置，请联系管理员');
+      console.warn('Twikoo 环境 ID 未配置');
       setIsLoading(false);
       return;
     }
