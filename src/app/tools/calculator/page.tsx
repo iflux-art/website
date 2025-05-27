@@ -15,6 +15,36 @@ export default function CalculatorPage() {
   const [error, setError] = useState('');
   const [mode, setMode] = useState<'simple' | 'scientific'>('simple');
 
+  const clearEntry = () => {
+    setDisplay('0');
+    setError('');
+  };
+
+  const performOperation = (op: string) => {
+    if (expression && !expression.endsWith(' ')) {
+      setExpression(expression + ' ' + op + ' ');
+    } else {
+      setExpression(display + ' ' + op + ' ');
+    }
+    setDisplay('0');
+    setError('');
+  };
+
+  const performEquals = () => {
+    const fullExpression = expression + display;
+    const result = calculatorUtils.evaluate(fullExpression);
+
+    if (result.success) {
+      const calculation = `${fullExpression} = ${result.data}`;
+      setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+      setDisplay(result.data!);
+      setExpression('');
+      setError('');
+    } else {
+      setError(result.error!);
+    }
+  };
+
   const performFunction = (func: string) => {
     const inputValue = parseFloat(display);
     let result: number;
@@ -144,12 +174,14 @@ export default function CalculatorPage() {
     {
       label: '简单模式',
       onClick: () => setMode('simple'),
-      variant: mode === 'simple' ? 'default' : ('outline' as const),
+      variant: 'default' as const,
+      active: mode === 'simple',
     },
     {
       label: '科学模式',
       onClick: () => setMode('scientific'),
-      variant: mode === 'scientific' ? 'default' : ('outline' as const),
+      variant: 'outline' as const,
+      active: mode === 'scientific',
     },
     {
       label: '清空历史',
@@ -248,7 +280,7 @@ export default function CalculatorPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    onClick={() => performOperation('×')}
+                    onClick={() => inputOperator('×')}
                     className="col-span-1"
                   >
                     ×
@@ -265,7 +297,7 @@ export default function CalculatorPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    onClick={() => performOperation('-')}
+                    onClick={() => inputOperator('-')}
                     className="col-span-1"
                   >
                     -
@@ -282,7 +314,7 @@ export default function CalculatorPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    onClick={() => performOperation('+')}
+                    onClick={() => inputOperator('+')}
                     className="col-span-1 row-span-2"
                   >
                     +
@@ -454,7 +486,7 @@ export default function CalculatorPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    onClick={() => performOperation('%')}
+                    onClick={() => inputOperator('%')}
                     className="col-span-1"
                   >
                     %

@@ -307,10 +307,10 @@ export default function NetworkDiagnosticsPage() {
           <div className="p-3 bg-muted rounded-lg">
             <h4 className="font-medium mb-2">网速等级参考</h4>
             <div className="text-sm space-y-1">
-              <div>• 优秀: 下载 > 100 Mbps, 延迟 < 20ms</div>
+              <div>• 优秀: 下载 &gt; 100 Mbps, 延迟 &lt; 20ms</div>
               <div>• 良好: 下载 50-100 Mbps, 延迟 20-50ms</div>
               <div>• 一般: 下载 10-50 Mbps, 延迟 50-100ms</div>
-              <div>• 较差: 下载 < 10 Mbps, 延迟 > 100ms</div>
+              <div>• 较差: 下载 &lt; 10 Mbps, 延迟 &gt; 100ms</div>
             </div>
           </div>
         </CardContent>

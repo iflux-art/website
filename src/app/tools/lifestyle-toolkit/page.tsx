@@ -68,9 +68,9 @@ export default function LifestyleToolkitPage() {
                 </div>
               </div>
               <div className="mt-4 text-sm space-y-1">
-                <div>• 偏瘦: BMI < 18.5</div>
-                <div>• 正常: 18.5 ≤ BMI < 24</div>
-                <div>• 超重: 24 ≤ BMI < 28</div>
+                <div>• 偏瘦: BMI &lt; 18.5</div>
+                <div>• 正常: 18.5 ≤ BMI &lt; 24</div>
+                <div>• 超重: 24 ≤ BMI &lt; 28</div>
                 <div>• 肥胖: BMI ≥ 28</div>
               </div>
             </div>
