@@ -7,11 +7,11 @@ import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
-import { StickyLayout } from '@/components/layout/sticky-layout';
 
-export default async function BlogPost({ params }: { params: { slug: string[] } }) {
+export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 确保 params.slug 是可用的
-  const slug = await Promise.resolve(params.slug);
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   // 不需要额外的变量来存储 searchParams
   const fullSlug = slug.join('/');
   let filePath: string | undefined;
@@ -307,9 +307,7 @@ export default async function BlogPost({ params }: { params: { slug: string[] } 
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <StickyLayout>
-              <TocContainer headings={headings} />
-            </StickyLayout>
+            <TocContainer headings={headings} />
           </aside>
         </div>
       </div>

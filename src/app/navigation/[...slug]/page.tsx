@@ -10,7 +10,6 @@ import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 import { MdxContentWrapper } from '@/components/mdx/mdx-content-wrapper';
 import { MdxServerRenderer } from '@/components/mdx/mdx-server-renderer';
-import { StickyLayout } from '@/components/layout/sticky-layout';
 
 export default async function NavigationPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 来确保 params 是可用的
@@ -315,15 +314,13 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
         <div className="flex gap-8">
           {/* 左侧边栏 */}
           <aside className="hidden lg:block w-64 shrink-0">
-            <StickyLayout>
-              <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
-                <Sidebar
-                  category="navigation"
-                  currentDoc={slug.length > 1 ? slug.slice(1).join('/') : slug[0]}
-                  isNavigation={true}
-                />
-              </Suspense>
-            </StickyLayout>
+            <Suspense fallback={<div className="h-[500px] bg-muted rounded-xl shadow-sm"></div>}>
+              <Sidebar
+                category="navigation"
+                currentDoc={slug.length > 1 ? slug.slice(1).join('/') : slug[0]}
+                isNavigation={true}
+              />
+            </Suspense>
           </aside>
 
           {/* 主内容区 */}
@@ -346,11 +343,9 @@ export default async function NavigationPage({ params }: { params: Promise<{ slu
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <StickyLayout>
-              <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
-                <TocContainer headings={headings} />
-              </Suspense>
-            </StickyLayout>
+            <Suspense fallback={<div className="h-[300px] bg-muted rounded-xl shadow-sm"></div>}>
+              <TocContainer headings={headings} />
+            </Suspense>
           </aside>
         </div>
       </div>

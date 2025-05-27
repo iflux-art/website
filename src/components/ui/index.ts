@@ -10,3 +10,4 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 export { UnifiedCard, type UnifiedCardProps } from './unified-card';
 export { UnifiedGrid, type UnifiedGridProps } from './unified-grid';
 export { MarkdownRenderer } from './markdown-renderer';
+export * from './separator';

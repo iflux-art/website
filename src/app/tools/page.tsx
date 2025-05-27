@@ -54,16 +54,6 @@ const TOOLS = [
     isInternal: true,
   },
 
-  {
-    id: 'devops-toolkit',
-    name: 'DevOps工具集',
-    description: 'DevOps工具，包括CI/CD、容器部署、监控运维、自动化流程',
-    category: 'development',
-    path: '/tools/devops-toolkit',
-    tags: ['DevOps', 'CI/CD', '容器', '部署', '自动化'],
-    isInternal: true,
-  },
-
   // 设计工具
   {
     id: 'photography-toolkit',
@@ -134,8 +124,8 @@ const TOOLS = [
   },
   {
     id: 'unit-toolkit',
-    name: '单位转换工具集',
-    description: '单位转换工具，包括长度、重量、温度、面积、体积、进制转换',
+    name: '单位转换工具',
+    description: '全面的单位转换工具，支持长度、重量、温度、面积、体积、进制等多种单位转换',
     category: 'conversion',
     path: '/tools/unit-converter',
     tags: ['单位', '转换', '进制', '长度', '重量', '温度'],
@@ -145,122 +135,115 @@ const TOOLS = [
   {
     id: 'data-toolkit',
     name: 'JSON格式化工具',
-    description: 'JSON数据格式化和验证工具，支持JSON美化、压缩、验证等功能',
+    description: '专业JSON数据处理工具，支持JSON美化、压缩、验证、格式化等功能',
     category: 'conversion',
     path: '/tools/json-formatter',
-    tags: ['数据', 'JSON', '格式化', '验证'],
+    tags: ['数据', 'JSON', '格式化', '验证', '美化'],
+    isInternal: true,
+  },
+  {
+    id: 'base64-simple',
+    name: 'Base64编码工具',
+    description: '简洁的Base64编码解码工具，支持中文字符和一键复制',
+    category: 'conversion',
+    path: '/tools/base64-simple',
+    tags: ['Base64', '编码', '解码', '转换'],
+    isInternal: true,
+  },
+  {
+    id: 'url-encoder',
+    name: 'URL编码工具',
+    description: 'URL编码解码工具，处理特殊字符和中文，支持一键复制',
+    category: 'conversion',
+    path: '/tools/url-encoder',
+    tags: ['URL', '编码', '解码', '特殊字符'],
+    isInternal: true,
+  },
+  {
+    id: 'text-processor',
+    name: '文本处理工具',
+    description: '文本格式转换和统计工具，支持大小写转换、字符统计等',
+    category: 'text',
+    path: '/tools/text-processor',
+    tags: ['文本', '转换', '统计', '格式化'],
+    isInternal: true,
+  },
+  {
+    id: 'timestamp-simple',
+    name: '时间戳转换工具',
+    description: '时间戳与日期时间相互转换，支持多种格式',
+    category: 'conversion',
+    path: '/tools/timestamp-simple',
+    tags: ['时间戳', '日期', '转换', '格式化'],
+    isInternal: true,
+  },
+  {
+    id: 'hash-generator',
+    name: '哈希生成器',
+    description: '生成文本的 MD5、SHA-256 等哈希值',
+    category: 'security',
+    path: '/tools/hash-generator',
+    tags: ['哈希', 'MD5', 'SHA256', '加密'],
+    isInternal: true,
+  },
+  {
+    id: 'color-simple',
+    name: '颜色工具',
+    description: '颜色选择、格式转换和随机生成工具',
+    category: 'design',
+    path: '/tools/color-simple',
+    tags: ['颜色', '设计', '转换', 'HEX', 'RGB'],
     isInternal: true,
   },
 
   // 实用工具
   {
     id: 'calculator-toolkit',
-    name: '科学计算器',
-    description: '功能完整的科学计算器，支持基础运算、三角函数、对数等数学计算',
+    name: '计算器',
+    description: '多功能计算器，包括简单计算器和科学计算器，支持基础运算和高级数学函数',
     category: 'utility',
     path: '/tools/calculator',
-    tags: ['计算器', '数学', '科学', '运算'],
+    tags: ['计算器', '数学', '科学', '运算', '简单'],
     isInternal: true,
   },
   {
     id: 'network-toolkit',
-    name: '网络诊断工具集',
-    description: '网络工具，包括Ping测试、端口扫描、DNS查询、IP查询、网速测试',
+    name: '网络诊断工具',
+    description: '专业网络诊断测试工具，包括Ping连通性测试、DNS解析查询、端口扫描、网速测试',
     category: 'utility',
     path: '/tools/network-diagnostics',
-    tags: ['网络', '诊断', '测试', 'IP', '域名', '网速'],
-    isInternal: true,
-  },
-  {
-    id: 'system-toolkit',
-    name: '系统工具集',
-    description: '系统工具，包括系统信息检测、性能监控、硬件信息、浏览器检测',
-    category: 'utility',
-    path: '/tools/system-info',
-    tags: ['系统', '监控', '性能', '硬件', '浏览器'],
-    isInternal: true,
-  },
-  {
-    id: 'file-toolkit',
-    name: '文件工具集',
-    description: '文件处理工具，包括文件管理、压缩解压、PDF处理、批量操作',
-    category: 'utility',
-    path: '/tools/file-manager',
-    tags: ['文件', '管理', '压缩', 'PDF', '批量'],
-    isInternal: true,
-  },
-  {
-    id: 'password-toolkit',
-    name: '密码工具集',
-    description: '密码安全工具，包括密码生成器、强度检测、安全建议、加密解密',
-    category: 'utility',
-    path: '/tools/password-generator',
-    tags: ['密码', '安全', '生成器', '检测', '加密'],
-    isInternal: true,
-  },
-  {
-    id: 'generator-toolkit',
-    name: '生成器工具集',
-    description: '各种生成器，包括随机生成器、UUID生成器、二维码生成器、哈希生成器',
-    category: 'utility',
-    path: '/tools/random-generator',
-    tags: ['生成器', '随机', 'UUID', '二维码', '哈希'],
+    tags: ['网络', '诊断', 'Ping', 'DNS', '端口', '网速'],
     isInternal: true,
   },
 
-  // 生活工具
   {
-    id: 'health-toolkit',
-    name: '健康工具集',
-    description: '健康管理工具，包括BMI计算、卡路里计算、运动记录、健康提醒',
-    category: 'life',
-    path: '/tools/health-toolkit',
-    tags: ['健康', 'BMI', '运动', '卡路里'],
+    id: 'generator-toolkit',
+    name: '生成器工具集',
+    description: '全能生成器工具，包括随机生成器、UUID生成器、二维码生成器、哈希生成器、密码生成器',
+    category: 'utility',
+    path: '/tools/random-generator',
+    tags: ['生成器', '随机', 'UUID', '二维码', '哈希', '密码'],
     isInternal: true,
   },
   {
-    id: 'travel-toolkit',
-    name: '旅行工具集',
-    description: '旅行助手工具，包括行程规划、费用计算、天气查询、汇率转换',
-    category: 'life',
-    path: '/tools/travel-toolkit',
-    tags: ['旅行', '规划', '天气', '汇率'],
+    id: 'symbol-collection',
+    name: '符号大全',
+    description: '完整的符号集合，包括Emoji、颜文字、特殊符号、数学符号，点击即可复制',
+    category: 'utility',
+    path: '/tools/symbol-collection',
+    tags: ['符号', 'Emoji', '颜文字', '特殊符号', '数学'],
     isInternal: true,
   },
+
+  // 生活服务
   {
-    id: 'cooking-toolkit',
-    name: '烹饪工具集',
-    description: '烹饪助手工具，包括菜谱搜索、营养计算、购物清单、定时提醒',
+    id: 'lifestyle-toolkit',
+    name: '生活服务工具集',
+    description:
+      '综合生活服务工具，包括健康管理、旅行助手、烹饪工具、购物助手、宠物护理、天气查询、时间管理',
     category: 'life',
-    path: '/tools/cooking-toolkit',
-    tags: ['烹饪', '菜谱', '营养', '购物'],
-    isInternal: true,
-  },
-  {
-    id: 'shopping-toolkit',
-    name: '购物工具集',
-    description: '购物助手工具，包括价格比较、优惠券查找、购物清单、预算管理',
-    category: 'life',
-    path: '/tools/shopping-toolkit',
-    tags: ['购物', '比价', '优惠', '预算'],
-    isInternal: true,
-  },
-  {
-    id: 'pet-toolkit',
-    name: '宠物工具集',
-    description: '宠物护理工具，包括喂养计划、健康记录、疫苗提醒、用品购买',
-    category: 'life',
-    path: '/tools/pet-toolkit',
-    tags: ['宠物', '护理', '健康', '疫苗'],
-    isInternal: true,
-  },
-  {
-    id: 'weather-toolkit',
-    name: '天气工具集',
-    description: '天气预报工具，包括实时天气、预报查询、气象分析、灾害预警',
-    category: 'life',
-    path: '/tools/weather-toolkit',
-    tags: ['天气', '预报', '气象', '预警'],
+    path: '/tools/lifestyle-toolkit',
+    tags: ['生活', '健康', '旅行', '烹饪', '购物', '宠物', '天气', '时间'],
     isInternal: true,
   },
 
@@ -297,19 +280,19 @@ const TOOLS = [
   {
     id: 'design-css-toolkit',
     name: '设计工具集',
-    description: '综合设计工具，包括颜色选择器、CSS生成器、阴影效果、动画预览、格式转换',
+    description: '前端设计必备工具，包括颜色选择器、CSS生成器、阴影效果、动画预览、布局工具',
     category: 'creative',
     path: '/tools/css-toolkit',
-    tags: ['设计', '颜色', 'CSS', '动画', '布局'],
+    tags: ['设计', '颜色', 'CSS', '动画', '布局', '前端'],
     isInternal: true,
   },
   {
     id: 'content-creator',
-    name: '内容创作工具集',
-    description: '内容创作工具，包括标题生成、创意灵感、内容大纲、开头钩子、占位文本生成',
+    name: '内容创作工具',
+    description: 'AI驱动的内容创作工具，包括标题生成、创意灵感、内容大纲、开头钩子、占位文本生成',
     category: 'creative',
     path: '/tools/content-creator',
-    tags: ['内容', '创作', '文案', 'SEO', '标题', '占位文本'],
+    tags: ['内容', '创作', '文案', 'SEO', '标题', 'AI'],
     isInternal: true,
   },
   {
@@ -436,7 +419,15 @@ export default function ToolsPage() {
                   className="text-xs h-8"
                 >
                   {tag}
-                  <span className="ml-1 text-xs bg-muted px-1.5 py-0.5 rounded-full">{count}</span>
+                  <span
+                    className={`ml-1 text-xs px-1.5 py-0.5 rounded-full ${
+                      selectedTag === tag
+                        ? 'bg-primary-foreground/20 text-primary-foreground'
+                        : 'bg-muted text-muted-foreground'
+                    }`}
+                  >
+                    {count}
+                  </span>
                 </Button>
               ))}
 

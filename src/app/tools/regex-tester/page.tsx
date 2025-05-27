@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Search, Copy, Check, AlertCircle, CheckCircle, RotateCcw, FileDown } from 'lucide-react';
+import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Search, AlertCircle, CheckCircle } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function RegexTesterPage() {
   const [pattern, setPattern] = useState('');
@@ -149,39 +150,87 @@ export default function RegexTesterPage() {
     return result;
   };
 
+  const actions = [
+    {
+      label: '加载示例',
+      onClick: loadExample,
+      icon: FileDown,
+      variant: 'outline' as const,
+    },
+    {
+      label: '复制匹配项',
+      onClick: () => copyToClipboard(matches.map(m => m[0]).join('\n')),
+      icon: copied ? Check : Copy,
+      variant: 'outline' as const,
+      disabled: matches.length === 0,
+    },
+    {
+      label: '清空',
+      onClick: clearAll,
+      icon: RotateCcw,
+      variant: 'outline' as const,
+    },
+  ];
+
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">正则表达式语法</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>
+            • <strong>.</strong> - 匹配任意字符（除换行符）
+          </li>
+          <li>
+            • <strong>*</strong> - 匹配前面的字符0次或多次
+          </li>
+          <li>
+            • <strong>+</strong> - 匹配前面的字符1次或多次
+          </li>
+          <li>
+            • <strong>?</strong> - 匹配前面的字符0次或1次
+          </li>
+          <li>
+            • <strong>^</strong> - 匹配字符串开始
+          </li>
+          <li>
+            • <strong>$</strong> - 匹配字符串结束
+          </li>
+          <li>
+            • <strong>[]</strong> - 字符类，匹配方括号内的任意字符
+          </li>
+          <li>
+            • <strong>()</strong> - 分组，用于捕获匹配的子字符串
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-medium mb-2">标志位说明</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>
+            • <strong>g</strong> - 全局匹配，查找所有匹配项
+          </li>
+          <li>
+            • <strong>i</strong> - 忽略大小写
+          </li>
+          <li>
+            • <strong>m</strong> - 多行模式，^和$匹配每行的开始和结束
+          </li>
+          <li>
+            • <strong>s</strong> - 单行模式，.匹配换行符
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Search className="h-8 w-8" />
-          正则表达式工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          正则表达式工具，包括测试验证、生成器、模式构建、匹配分析
-        </p>
-      </div>
-
-      {/* 操作按钮 */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <Button onClick={loadExample} variant="outline">
-          加载示例
-        </Button>
-        <Button onClick={clearAll} variant="outline">
-          清空
-        </Button>
-      </div>
-
+    <ToolLayout
+      title="正则表达式测试器"
+      description="测试和验证正则表达式，查看匹配结果和分组信息"
+      icon={Search}
+      actions={<ToolActions actions={actions} />}
+      helpContent={helpContent}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* 正则表达式输入 */}
         <div className="lg:col-span-2 space-y-6">
@@ -364,6 +413,6 @@ export default function RegexTesterPage() {
           </Card>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }

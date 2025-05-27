@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Palette, Type, Layout, Ruler, Copy, Check } from 'lucide-react';
-import Link from 'next/link';
+import { Palette, Type, Layout, Ruler, Copy, Check } from 'lucide-react';
+import { ToolLayout } from '@/components/layouts/tool-layout';
 
 export default function DesignHelperPage() {
-  const [activeTab, setActiveTab] = useState<'palette' | 'typography' | 'layout' | 'spacing'>('palette');
+  const [activeTab, setActiveTab] = useState<'palette' | 'typography' | 'layout' | 'spacing'>(
+    'palette'
+  );
   const [copied, setCopied] = useState<string | null>(null);
 
   // 复制内容
@@ -24,7 +26,9 @@ export default function DesignHelperPage() {
   // 调色板生成器
   const PaletteGenerator = () => {
     const [baseColor, setBaseColor] = useState('#3B82F6');
-    const [paletteType, setPaletteType] = useState<'monochromatic' | 'analogous' | 'complementary' | 'triadic'>('monochromatic');
+    const [paletteType, setPaletteType] = useState<
+      'monochromatic' | 'analogous' | 'complementary' | 'triadic'
+    >('monochromatic');
 
     // 颜色转换函数
     const hexToHsl = (hex: string) => {
@@ -34,15 +38,23 @@ export default function DesignHelperPage() {
 
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
-      let h = 0, s = 0, l = (max + min) / 2;
+      let h = 0,
+        s = 0,
+        l = (max + min) / 2;
 
       if (max !== min) {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch (max) {
-          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-          case g: h = (b - r) / d + 2; break;
-          case b: h = (r - g) / d + 4; break;
+          case r:
+            h = (g - b) / d + (g < b ? 6 : 0);
+            break;
+          case g:
+            h = (b - r) / d + 2;
+            break;
+          case b:
+            h = (r - g) / d + 4;
+            break;
         }
         h /= 6;
       }
@@ -51,12 +63,16 @@ export default function DesignHelperPage() {
     };
 
     const hslToHex = (h: number, s: number, l: number) => {
-      h /= 360; s /= 100; l /= 100;
+      h /= 360;
+      s /= 100;
+      l /= 100;
       const a = s * Math.min(l, 1 - l);
       const f = (n: number) => {
         const k = (n + h * 12) % 12;
         const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-        return Math.round(255 * color).toString(16).padStart(2, '0');
+        return Math.round(255 * color)
+          .toString(16)
+          .padStart(2, '0');
       };
       return `#${f(0)}${f(8)}${f(4)}`;
     };
@@ -122,13 +138,13 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
                   <input
                     type="color"
                     value={baseColor}
-                    onChange={(e) => setBaseColor(e.target.value)}
+                    onChange={e => setBaseColor(e.target.value)}
                     className="w-16 h-10 border border-border rounded"
                   />
                   <input
                     type="text"
                     value={baseColor}
-                    onChange={(e) => setBaseColor(e.target.value)}
+                    onChange={e => setBaseColor(e.target.value)}
                     className="flex-1 p-2 border border-border rounded-lg bg-background font-mono"
                   />
                 </div>
@@ -138,7 +154,7 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
                 <label className="block text-sm font-medium mb-2">调色板类型</label>
                 <select
                   value={paletteType}
-                  onChange={(e) => setPaletteType(e.target.value as any)}
+                  onChange={e => setPaletteType(e.target.value as any)}
                   className="w-full p-2 border border-border rounded-lg bg-background"
                 >
                   <option value="monochromatic">单色调</option>
@@ -161,7 +177,11 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
                 size="sm"
                 className="flex items-center gap-2"
               >
-                {copied === 'palette' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                {copied === 'palette' ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
                 复制CSS
               </Button>
             </CardTitle>
@@ -185,9 +205,7 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
 
             <div className="bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2">CSS 变量</h4>
-              <pre className="text-sm font-mono overflow-x-auto">
-                {generateCSS()}
-              </pre>
+              <pre className="text-sm font-mono overflow-x-auto">{generateCSS()}</pre>
             </div>
           </CardContent>
         </Card>
@@ -202,8 +220,16 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
     const [fontFamily, setFontFamily] = useState('Inter');
 
     const fontFamilies = [
-      'Inter', 'Roboto', 'Open Sans', 'Lato', 'Montserrat',
-      'Source Sans Pro', 'Poppins', 'Nunito', 'Raleway', 'Ubuntu'
+      'Inter',
+      'Roboto',
+      'Open Sans',
+      'Lato',
+      'Montserrat',
+      'Source Sans Pro',
+      'Poppins',
+      'Nunito',
+      'Raleway',
+      'Ubuntu',
     ];
 
     const generateTypographyScale = () => {
@@ -257,11 +283,13 @@ small { font-size: var(--font-size-sm); }`;
                 <label className="block text-sm font-medium mb-2">字体族</label>
                 <select
                   value={fontFamily}
-                  onChange={(e) => setFontFamily(e.target.value)}
+                  onChange={e => setFontFamily(e.target.value)}
                   className="w-full p-2 border border-border rounded-lg bg-background"
                 >
                   {fontFamilies.map(font => (
-                    <option key={font} value={font}>{font}</option>
+                    <option key={font} value={font}>
+                      {font}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -273,7 +301,7 @@ small { font-size: var(--font-size-sm); }`;
                   min="12"
                   max="24"
                   value={fontSize}
-                  onChange={(e) => setFontSize(Number(e.target.value))}
+                  onChange={e => setFontSize(Number(e.target.value))}
                   className="w-full"
                 />
               </div>
@@ -286,7 +314,7 @@ small { font-size: var(--font-size-sm); }`;
                   max="2"
                   step="0.1"
                   value={lineHeight}
-                  onChange={(e) => setLineHeight(Number(e.target.value))}
+                  onChange={e => setLineHeight(Number(e.target.value))}
                   className="w-full"
                 />
               </div>
@@ -304,7 +332,11 @@ small { font-size: var(--font-size-sm); }`;
                 size="sm"
                 className="flex items-center gap-2"
               >
-                {copied === 'typography' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                {copied === 'typography' ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
                 复制CSS
               </Button>
             </CardTitle>
@@ -325,7 +357,7 @@ small { font-size: var(--font-size-sm); }`;
                     style={{
                       fontSize: `${item.size}px`,
                       lineHeight: lineHeight,
-                      fontWeight: item.tag.startsWith('h') ? '600' : '400'
+                      fontWeight: item.tag.startsWith('h') ? '600' : '400',
                     }}
                   >
                     {item.label} - The quick brown fox jumps over the lazy dog
@@ -336,9 +368,7 @@ small { font-size: var(--font-size-sm); }`;
 
             <div className="mt-6 bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2">CSS 代码</h4>
-              <pre className="text-sm font-mono overflow-x-auto">
-                {generateCSS()}
-              </pre>
+              <pre className="text-sm font-mono overflow-x-auto">{generateCSS()}</pre>
             </div>
           </CardContent>
         </Card>
@@ -366,9 +396,9 @@ small { font-size: var(--font-size-sm); }`;
 }
 
 /* 响应式列 */
-${Array.from({ length: columns }, (_, i) => i + 1).map(col => 
-  `.col-${col} { grid-column: span ${col}; }`
-).join('\n')}
+${Array.from({ length: columns }, (_, i) => i + 1)
+  .map(col => `.col-${col} { grid-column: span ${col}; }`)
+  .join('\n')}
 
 /* 响应式断点 */
 @media (max-width: 768px) {
@@ -392,7 +422,7 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
                   min="6"
                   max="24"
                   value={columns}
-                  onChange={(e) => setColumns(Number(e.target.value))}
+                  onChange={e => setColumns(Number(e.target.value))}
                   className="w-full"
                 />
               </div>
@@ -405,7 +435,7 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
                   max="48"
                   step="4"
                   value={gap}
-                  onChange={(e) => setGap(Number(e.target.value))}
+                  onChange={e => setGap(Number(e.target.value))}
                   className="w-full"
                 />
               </div>
@@ -418,7 +448,7 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
                   max="1440"
                   step="60"
                   value={maxWidth}
-                  onChange={(e) => setMaxWidth(Number(e.target.value))}
+                  onChange={e => setMaxWidth(Number(e.target.value))}
                   className="w-full"
                 />
               </div>
@@ -442,11 +472,11 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div 
+            <div
               className="grid border border-border rounded-lg p-4"
               style={{
                 gridTemplateColumns: `repeat(${columns}, 1fr)`,
-                gap: `${gap}px`
+                gap: `${gap}px`,
               }}
             >
               {Array.from({ length: columns }, (_, i) => (
@@ -461,9 +491,7 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
 
             <div className="mt-6 bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2">CSS 代码</h4>
-              <pre className="text-sm font-mono overflow-x-auto">
-                {generateGridCSS()}
-              </pre>
+              <pre className="text-sm font-mono overflow-x-auto">{generateGridCSS()}</pre>
             </div>
           </CardContent>
         </Card>
@@ -478,15 +506,14 @@ ${Array.from({ length: columns }, (_, i) => i + 1).map(col =>
 
     const generateSpacingCSS = () => {
       return `:root {
-${scale.map((multiplier, index) => 
-  `  --spacing-${index}: ${baseUnit * multiplier}px;`
-).join('\n')}
+${scale.map((multiplier, index) => `  --spacing-${index}: ${baseUnit * multiplier}px;`).join('\n')}
 }
 
 /* 间距工具类 */
-${scale.map((multiplier, index) => {
-  const value = baseUnit * multiplier;
-  return `.m-${index} { margin: ${value}px; }
+${scale
+  .map((multiplier, index) => {
+    const value = baseUnit * multiplier;
+    return `.m-${index} { margin: ${value}px; }
 .mt-${index} { margin-top: ${value}px; }
 .mr-${index} { margin-right: ${value}px; }
 .mb-${index} { margin-bottom: ${value}px; }
@@ -496,7 +523,8 @@ ${scale.map((multiplier, index) => {
 .pr-${index} { padding-right: ${value}px; }
 .pb-${index} { padding-bottom: ${value}px; }
 .pl-${index} { padding-left: ${value}px; }`;
-}).join('\n')}`;
+  })
+  .join('\n')}`;
     };
 
     return (
@@ -523,7 +551,7 @@ ${scale.map((multiplier, index) => {
               min="4"
               max="16"
               value={baseUnit}
-              onChange={(e) => setBaseUnit(Number(e.target.value))}
+              onChange={e => setBaseUnit(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -536,10 +564,7 @@ ${scale.map((multiplier, index) => {
                 <div key={index} className="flex items-center gap-4">
                   <div className="w-12 text-sm font-mono">--{index}</div>
                   <div className="w-16 text-sm">{value}px</div>
-                  <div
-                    className="bg-primary h-4 rounded"
-                    style={{ width: `${value}px` }}
-                  />
+                  <div className="bg-primary h-4 rounded" style={{ width: `${value}px` }} />
                 </div>
               );
             })}
@@ -547,9 +572,7 @@ ${scale.map((multiplier, index) => {
 
           <div className="bg-muted/50 p-4 rounded-lg">
             <h4 className="font-medium mb-2">CSS 代码</h4>
-            <pre className="text-sm font-mono overflow-x-auto max-h-64">
-              {generateSpacingCSS()}
-            </pre>
+            <pre className="text-sm font-mono overflow-x-auto max-h-64">{generateSpacingCSS()}</pre>
           </div>
         </CardContent>
       </Card>
@@ -563,34 +586,50 @@ ${scale.map((multiplier, index) => {
     { key: 'spacing', name: '间距系统', icon: Ruler },
   ];
 
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">功能介绍</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>
+            • <strong>调色板</strong>：基于色彩理论生成和谐的配色方案
+          </li>
+          <li>
+            • <strong>字体排版</strong>：创建一致的字体比例系统
+          </li>
+          <li>
+            • <strong>布局网格</strong>：生成响应式网格布局系统
+          </li>
+          <li>
+            • <strong>间距系统</strong>：建立统一的间距规范
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-medium mb-2">设计建议</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• 使用一致的设计系统提高用户体验</li>
+          <li>• 调色板应考虑可访问性和对比度</li>
+          <li>• 字体比例遵循数学规律，保持视觉和谐</li>
+          <li>• 间距系统基于基础单位，便于维护</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Palette className="h-8 w-8" />
-          设计辅助工具
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          设计系统构建工具，包括调色板、字体、布局和间距系统
-        </p>
-      </div>
-
+    <ToolLayout
+      title="设计辅助工具"
+      description="设计系统构建工具，包括调色板、字体、布局和间距系统"
+      icon={Palette}
+      path="/tools/design-helper"
+      helpContent={helpContent}
+    >
       {/* 功能标签页 */}
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabs.map((tab) => {
+            {tabs.map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -616,33 +655,6 @@ ${scale.map((multiplier, index) => {
       {activeTab === 'typography' && <TypographyTool />}
       {activeTab === 'layout' && <LayoutTool />}
       {activeTab === 'spacing' && <SpacingTool />}
-
-      {/* 使用说明 */}
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle>使用说明</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <h4 className="font-medium mb-2">功能介绍</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• <strong>调色板</strong>：基于色彩理论生成和谐的配色方案</li>
-              <li>• <strong>字体排版</strong>：创建一致的字体比例系统</li>
-              <li>• <strong>布局网格</strong>：生成响应式网格布局系统</li>
-              <li>• <strong>间距系统</strong>：建立统一的间距规范</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">设计建议</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• 使用一致的设计系统提高用户体验</li>
-              <li>• 调色板应考虑可访问性和对比度</li>
-              <li>• 字体比例遵循数学规律，保持视觉和谐</li>
-              <li>• 间距系统基于基础单位，便于维护</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    </ToolLayout>
   );
 }

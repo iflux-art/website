@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  ArrowLeft,
   FileText,
   Clock,
   Hash,
@@ -13,8 +10,13 @@ import {
   Check,
   ArrowUpDown,
   Shuffle,
+  RotateCcw,
+  FileDown,
 } from 'lucide-react';
-import Link from 'next/link';
+import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolActions } from '@/components/ui/tool-actions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function TextCounterPage() {
   const [activeTab, setActiveTab] = useState('counter');
@@ -193,29 +195,78 @@ The tool can count:
     return differences;
   };
 
+  const actions = [
+    {
+      label: '文字统计',
+      onClick: () => setActiveTab('counter'),
+      icon: Type,
+      variant: activeTab === 'counter' ? 'default' : ('outline' as const),
+    },
+    {
+      label: '文本转换',
+      onClick: () => setActiveTab('transform'),
+      icon: ArrowUpDown,
+      variant: activeTab === 'transform' ? 'default' : ('outline' as const),
+    },
+    {
+      label: '文本比较',
+      onClick: () => setActiveTab('compare'),
+      icon: FileText,
+      variant: activeTab === 'compare' ? 'default' : ('outline' as const),
+    },
+    {
+      label: '加载示例',
+      onClick: loadExample,
+      icon: FileDown,
+      variant: 'outline' as const,
+    },
+    {
+      label: '清空',
+      onClick: clearText,
+      icon: RotateCcw,
+      variant: 'outline' as const,
+    },
+  ];
+
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">功能介绍</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>
+            • <strong>文字统计</strong>：统计字符数、单词数、句子数、段落数
+          </li>
+          <li>
+            • <strong>时间估算</strong>：预估阅读时间和演讲时间
+          </li>
+          <li>
+            • <strong>文本转换</strong>：大小写转换、排序、去重等
+          </li>
+          <li>
+            • <strong>文本比较</strong>：逐行比较两个文本的差异
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-medium mb-2">统计说明</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• 阅读时间：中文200字符/分钟，英文250词/分钟</li>
+          <li>• 演讲时间：中文150字符/分钟，英文180词/分钟</li>
+          <li>• 支持中英文混合文本统计</li>
+          <li>• 自动识别句子和段落分隔符</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <FileText className="h-8 w-8" />
-          文本处理工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          全面的文本处理工具，包括文字统计、文本比较、排序、大小写转换、格式化
-        </p>
-      </div>
-
+    <ToolLayout
+      title="文本处理工具集"
+      description="全面的文本处理工具，包括文字统计、文本比较、排序、大小写转换、格式化"
+      icon={FileText}
+      actions={<ToolActions actions={actions} />}
+      helpContent={helpContent}
+    >
       {/* 标签页 */}
       <Card className="mb-6">
         <CardContent className="p-0">
@@ -640,6 +691,6 @@ The tool can count:
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ToolLayout>
   );
 }

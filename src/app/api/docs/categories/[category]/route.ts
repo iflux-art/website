@@ -12,9 +12,10 @@ import { DocListItem } from '@/hooks/use-docs';
  * @param params 路由参数，包含分类名称
  * @returns 指定分类的文档列表
  */
-export async function GET(request: Request, { params }: { params: { category: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ category: string }> }) {
   try {
-    const { category } = params;
+    const resolvedParams = await params;
+    const { category } = resolvedParams;
     const decodedCategory = decodeURIComponent(category);
 
     // 获取目录中的所有文档
@@ -77,7 +78,7 @@ export async function GET(request: Request, { params }: { params: { category: st
 
     return NextResponse.json(docs);
   } catch (error) {
-    console.error(`获取分类 ${params.category} 的文档列表失败:`, error);
+    console.error(`获取分类 ${category} 的文档列表失败:`, error);
 
     // 出错时返回空数组而不是错误，允许客户端降级
     return NextResponse.json([]);

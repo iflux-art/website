@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Copy, Check, Download, Eye, Edit, FileText, RotateCcw, FileDown } from 'lucide-react';
+import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Download, Eye, Edit, FileText } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function MarkdownEditorPage() {
   const [markdown, setMarkdown] = useState('');
@@ -93,7 +94,7 @@ export default function MarkdownEditorPage() {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = markdown.substring(start, end);
-    
+
     let newText = '';
     switch (syntax) {
       case 'bold':
@@ -209,28 +210,74 @@ function greet(name) {
 
   const htmlContent = markdownToHtml(markdown);
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
+  const actions = [
+    {
+      label: '编辑模式',
+      onClick: () => setViewMode('edit'),
+      icon: Edit,
+      variant: viewMode === 'edit' ? 'default' : 'outline' as const,
+    },
+    {
+      label: '预览模式',
+      onClick: () => setViewMode('preview'),
+      icon: Eye,
+      variant: viewMode === 'preview' ? 'default' : 'outline' as const,
+    },
+    {
+      label: '分屏模式',
+      onClick: () => setViewMode('split'),
+      variant: viewMode === 'split' ? 'default' : 'outline' as const,
+    },
+    {
+      label: '加载示例',
+      onClick: loadExample,
+      icon: FileDown,
+      variant: 'outline' as const,
+    },
+    {
+      label: '清空',
+      onClick: clearContent,
+      icon: RotateCcw,
+      variant: 'outline' as const,
+    },
+  ];
 
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <FileText className="h-8 w-8" />
-          Markdown 编辑器
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          在线 Markdown 编辑器，支持实时预览和语法高亮
-        </p>
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">基础语法</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• <code># 标题</code> - 一级标题</li>
+          <li>• <code>## 标题</code> - 二级标题</li>
+          <li>• <code>**粗体**</code> - 粗体文本</li>
+          <li>• <code>*斜体*</code> - 斜体文本</li>
+          <li>• <code>`代码`</code> - 行内代码</li>
+          <li>• <code>[链接](URL)</code> - 链接</li>
+          <li>• <code>![图片](URL)</code> - 图片</li>
+        </ul>
       </div>
+      <div>
+        <h4 className="font-medium mb-2">高级语法</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• <code>* 列表项</code> - 无序列表</li>
+          <li>• <code>1. 列表项</code> - 有序列表</li>
+          <li>• <code>> 引用</code> - 引用文本</li>
+          <li>• <code>---</code> - 分隔线</li>
+          <li>• <code>```代码块```</code> - 代码块</li>
+          <li>• <code>| 表格 | 语法 |</code> - 表格</li>
+        </ul>
+      </div>
+    </div>
+  );
+
+  return (
+    <ToolLayout
+      title="Markdown 编辑器"
+      description="在线 Markdown 编辑器，支持实时预览和语法高亮"
+      icon={FileText}
+      actions={<ToolActions actions={actions} />}
+      helpContent={helpContent}
+    >
 
       {/* 工具栏 */}
       <Card className="mb-6">
@@ -381,39 +428,6 @@ function greet(name) {
         )}
       </div>
 
-      {/* 语法说明 */}
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle>Markdown 语法说明</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <div>
-              <h4 className="font-medium mb-2">基础语法</h4>
-              <ul className="space-y-1 text-muted-foreground">
-                <li><code># 标题</code> - 一级标题</li>
-                <li><code>## 标题</code> - 二级标题</li>
-                <li><code>**粗体**</code> - 粗体文本</li>
-                <li><code>*斜体*</code> - 斜体文本</li>
-                <li><code>`代码`</code> - 行内代码</li>
-                <li><code>[链接](URL)</code> - 链接</li>
-                <li><code>![图片](URL)</code> - 图片</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-2">高级语法</h4>
-              <ul className="space-y-1 text-muted-foreground">
-                <li><code>* 列表项</code> - 无序列表</li>
-                <li><code>1. 列表项</code> - 有序列表</li>
-                <li><code>> 引用</code> - 引用文本</li>
-                <li><code>---</code> - 分隔线</li>
-                <li><code>```代码块```</code> - 代码块</li>
-                <li><code>| 表格 | 语法 |</code> - 表格</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    </ToolLayout>
   );
 }

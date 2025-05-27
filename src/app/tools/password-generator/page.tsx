@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Shield, RefreshCw, Copy, Check, RotateCcw } from 'lucide-react';
+import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Shield, RefreshCw } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function PasswordGeneratorPage() {
   const [password, setPassword] = useState('');
@@ -105,6 +106,11 @@ export default function PasswordGeneratorPage() {
     }
   };
 
+  const clearPassword = () => {
+    setPassword('');
+    setStrength(0);
+  };
+
   useEffect(() => {
     if (password) {
       setStrength(calculateStrength(password));
@@ -115,27 +121,51 @@ export default function PasswordGeneratorPage() {
     generatePassword();
   }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols, excludeSimilar]);
 
+  const actions = [
+    {
+      label: '生成密码',
+      onClick: generatePassword,
+      icon: RefreshCw,
+    },
+    {
+      label: '复制密码',
+      onClick: copyToClipboard,
+      icon: copied ? Check : Copy,
+      variant: 'outline' as const,
+      disabled: !password,
+    },
+    {
+      label: '清空',
+      onClick: clearPassword,
+      icon: RotateCcw,
+      variant: 'outline' as const,
+    },
+  ];
+
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">安全建议</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• 建议密码长度至少 12 位字符</li>
+          <li>• 包含大小写字母、数字和特殊符号</li>
+          <li>• 不要在多个账户使用相同密码</li>
+          <li>• 定期更换重要账户的密码</li>
+          <li>• 使用密码管理器保存密码</li>
+          <li>• 启用双因素认证增强安全性</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Shield className="h-8 w-8" />
-          密码生成器
-        </h1>
-        <p className="text-muted-foreground mt-2">生成安全的随机密码，保护您的账户安全</p>
-      </div>
-
+    <ToolLayout
+      title="密码生成器"
+      description="生成安全的随机密码，保护您的账户安全"
+      icon={Shield}
+      actions={<ToolActions actions={actions} />}
+      helpContent={helpContent}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* 设置面板 */}
         <div className="lg:col-span-1">
@@ -319,25 +349,8 @@ export default function PasswordGeneratorPage() {
               )}
             </CardContent>
           </Card>
-
-          {/* 安全提示 */}
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>安全提示</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• 建议密码长度至少 12 位字符</li>
-                <li>• 包含大小写字母、数字和特殊符号</li>
-                <li>• 不要在多个账户使用相同密码</li>
-                <li>• 定期更换重要账户的密码</li>
-                <li>• 使用密码管理器保存密码</li>
-                <li>• 启用双因素认证增强安全性</li>
-              </ul>
-            </CardContent>
-          </Card>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }

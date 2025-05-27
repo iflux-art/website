@@ -1,0 +1,22 @@
+{
+  "celebrity-ad-copy": {
+    "title": "CELEBRITY 广告文案",
+    "order": 1
+  },
+  "k-baby-campaigns": {
+    "title": "OK baby 系列广告文案",
+    "order": 2
+  },
+  "keep-moving-brand-copy": {
+    "title": "Keep Moving 品牌文案",
+    "order": 3
+  },
+  "missose-campaigns": {
+    "title": "Missose 系列广告文案",
+    "order": 4
+  },
+  "payeasy-campaigns": {
+    "title": "PayEasy 系列广告文案",
+    "order": 5
+  }
+}

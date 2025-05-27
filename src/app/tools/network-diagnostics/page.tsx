@@ -268,7 +268,9 @@ export default function NetworkDiagnosticsPage() {
 
     return (
       <Card>
-        <CardHeader><CardTitle>网速测试</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>网速测试</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-4">
           <Button onClick={performSpeedTest} disabled={testing} className="w-full">
             {testing ? '测试中...' : '开始测速'}

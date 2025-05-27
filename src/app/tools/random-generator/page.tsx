@@ -3,63 +3,137 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Shuffle, Dices } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Shuffle, Dices, Hash, QrCode, Key, Shield } from 'lucide-react';
 import Link from 'next/link';
 
-export default function RandomGeneratorPage() {
-  const [type, setType] = useState<'number' | 'string' | 'list' | 'color'>('number');
-  const [results, setResults] = useState<string[]>([]);
+export default function GeneratorToolkitPage() {
+  const [activeTab, setActiveTab] = useState<'random' | 'uuid' | 'qrcode' | 'hash' | 'password'>(
+    'random'
+  );
   const [copied, setCopied] = useState<string | null>(null);
 
-  // 数字生成设置
+  // 随机生成器状态
+  const [type, setType] = useState<'number' | 'string' | 'list' | 'color'>('number');
+  const [results, setResults] = useState<string[]>([]);
   const [numberMin, setNumberMin] = useState(1);
   const [numberMax, setNumberMax] = useState(100);
   const [numberCount, setNumberCount] = useState(1);
-  const [allowDuplicates, setAllowDuplicates] = useState(true);
 
-  // 字符串生成设置
-  const [stringLength, setStringLength] = useState(8);
-  const [stringCount, setStringCount] = useState(1);
+  // UUID生成器状态
+  const [uuidVersion, setUuidVersion] = useState<'v1' | 'v4'>('v4');
+  const [uuidCount, setUuidCount] = useState(1);
+  const [uuidResults, setUuidResults] = useState<string[]>([]);
+
+  // 二维码生成器状态
+  const [qrText, setQrText] = useState('');
+  const [qrSize, setQrSize] = useState(200);
+  const [qrResult, setQrResult] = useState('');
+
+  // 哈希生成器状态
+  const [hashText, setHashText] = useState('');
+  const [hashAlgorithm, setHashAlgorithm] = useState<'SHA1' | 'SHA256' | 'SHA512'>('SHA256');
+  const [hashResult, setHashResult] = useState('');
+
+  // 密码生成器状态
+  const [password, setPassword] = useState('');
+  const [passwordLength, setPasswordLength] = useState(12);
   const [includeUppercase, setIncludeUppercase] = useState(true);
   const [includeLowercase, setIncludeLowercase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(true);
-  const [includeSymbols, setIncludeSymbols] = useState(false);
+  const [includeSymbols, setIncludeSymbols] = useState(true);
 
-  // 列表设置
-  const [listItems, setListItems] = useState('');
-  const [listCount, setListCount] = useState(1);
-
-  // 颜色设置
-  const [colorFormat, setColorFormat] = useState<'hex' | 'rgb' | 'hsl'>('hex');
-  const [colorCount, setColorCount] = useState(1);
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(text);
+      setTimeout(() => setCopied(null), 2000);
+    } catch (err) {
+      console.error('复制失败:', err);
+    }
+  };
 
   // 生成随机数字
   const generateNumbers = () => {
     const numbers: number[] = [];
-    const range = numberMax - numberMin + 1;
-
-    if (!allowDuplicates && numberCount > range) {
-      alert('不允许重复时，生成数量不能超过数字范围');
-      return;
-    }
-
-    const used = new Set<number>();
-
     for (let i = 0; i < numberCount; i++) {
-      let num: number;
-      do {
-        num = Math.floor(Math.random() * range) + numberMin;
-      } while (!allowDuplicates && used.has(num));
-
+      const num = Math.floor(Math.random() * (numberMax - numberMin + 1)) + numberMin;
       numbers.push(num);
-      if (!allowDuplicates) used.add(num);
     }
-
     setResults(numbers.map(n => n.toString()));
   };
 
-  // 生成随机字符串
-  const generateStrings = () => {
+  // UUID生成器
+  const generateUUID = () => {
+    const uuids: string[] = [];
+    for (let i = 0; i < uuidCount; i++) {
+      let uuid: string;
+      if (uuidVersion === 'v4') {
+        uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          const r = (Math.random() * 16) | 0;
+          const v = c === 'x' ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        });
+      } else {
+        const timestamp = Date.now().toString(16);
+        const random = Math.random().toString(16).substring(2, 8);
+        uuid = `${timestamp.substring(0, 8)}-${timestamp.substring(8, 12)}-1${timestamp.substring(
+          12,
+          15
+        )}-${random.substring(0, 4)}-${random.substring(4, 16)}`;
+      }
+      uuids.push(uuid);
+    }
+    setUuidResults(uuids);
+  };
+
+  // 二维码生成器
+  const generateQRCode = () => {
+    if (!qrText.trim()) {
+      alert('请输入要生成二维码的文本');
+      return;
+    }
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(
+      qrText
+    )}`;
+    setQrResult(qrUrl);
+  };
+
+  // 哈希生成器
+  const generateHash = async () => {
+    if (!hashText.trim()) {
+      alert('请输入要生成哈希的文本');
+      return;
+    }
+
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(hashText);
+
+      let hashBuffer: ArrayBuffer;
+      switch (hashAlgorithm) {
+        case 'SHA1':
+          hashBuffer = await crypto.subtle.digest('SHA-1', data);
+          break;
+        case 'SHA256':
+          hashBuffer = await crypto.subtle.digest('SHA-256', data);
+          break;
+        case 'SHA512':
+          hashBuffer = await crypto.subtle.digest('SHA-512', data);
+          break;
+        default:
+          hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      }
+
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      setHashResult(hashHex);
+    } catch (error) {
+      setHashResult('生成哈希时出错');
+    }
+  };
+
+  // 密码生成器
+  const generatePassword = () => {
     let charset = '';
     if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
@@ -71,122 +145,11 @@ export default function RandomGeneratorPage() {
       return;
     }
 
-    const strings: string[] = [];
-    for (let i = 0; i < stringCount; i++) {
-      let result = '';
-      for (let j = 0; j < stringLength; j++) {
-        result += charset.charAt(Math.floor(Math.random() * charset.length));
-      }
-      strings.push(result);
+    let result = '';
+    for (let i = 0; i < passwordLength; i++) {
+      result += charset.charAt(Math.floor(Math.random() * charset.length));
     }
-
-    setResults(strings);
-  };
-
-  // 随机选择列表项
-  const generateFromList = () => {
-    const items = listItems.split('\n').filter(item => item.trim() !== '');
-    if (items.length === 0) {
-      alert('请输入列表项');
-      return;
-    }
-
-    const selected: string[] = [];
-    const used = new Set<number>();
-
-    for (let i = 0; i < Math.min(listCount, items.length); i++) {
-      let index: number;
-      do {
-        index = Math.floor(Math.random() * items.length);
-      } while (used.has(index) && used.size < items.length);
-
-      selected.push(items[index]);
-      used.add(index);
-    }
-
-    setResults(selected);
-  };
-
-  // 生成随机颜色
-  const generateColors = () => {
-    const colors: string[] = [];
-
-    for (let i = 0; i < colorCount; i++) {
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-
-      let color: string;
-      switch (colorFormat) {
-        case 'hex':
-          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b
-            .toString(16)
-            .padStart(2, '0')}`;
-          break;
-        case 'rgb':
-          color = `rgb(${r}, ${g}, ${b})`;
-          break;
-        case 'hsl':
-          const h = Math.floor(Math.random() * 360);
-          const s = Math.floor(Math.random() * 101);
-          const l = Math.floor(Math.random() * 101);
-          color = `hsl(${h}, ${s}%, ${l}%)`;
-          break;
-        default:
-          color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b
-            .toString(16)
-            .padStart(2, '0')}`;
-      }
-
-      colors.push(color);
-    }
-
-    setResults(colors);
-  };
-
-  // 生成随机内容
-  const generate = () => {
-    switch (type) {
-      case 'number':
-        generateNumbers();
-        break;
-      case 'string':
-        generateStrings();
-        break;
-      case 'list':
-        generateFromList();
-        break;
-      case 'color':
-        generateColors();
-        break;
-    }
-  };
-
-  // 复制结果
-  const copyResult = async (result: string) => {
-    try {
-      await navigator.clipboard.writeText(result);
-      setCopied(result);
-      setTimeout(() => setCopied(null), 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-    }
-  };
-
-  // 复制所有结果
-  const copyAllResults = async () => {
-    try {
-      await navigator.clipboard.writeText(results.join('\n'));
-      setCopied('all');
-      setTimeout(() => setCopied(null), 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-    }
-  };
-
-  // 清空结果
-  const clearResults = () => {
-    setResults([]);
+    setPassword(result);
   };
 
   return (
@@ -205,300 +168,418 @@ export default function RandomGeneratorPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
           <Dices className="h-8 w-8" />
-          随机生成器
+          生成器工具集
         </h1>
-        <p className="text-muted-foreground mt-2">生成随机数字、字符串、列表选择和颜色</p>
+        <p className="text-muted-foreground mt-2">
+          全能生成器工具，包括随机生成器、UUID生成器、二维码生成器、哈希生成器、密码生成器
+        </p>
       </div>
 
-      {/* 类型选择 */}
-      <div className="mb-6">
-        <div className="flex flex-wrap gap-2">
-          {[
-            { key: 'number', name: '随机数字', icon: '🔢' },
-            { key: 'string', name: '随机字符串', icon: '🔤' },
-            { key: 'list', name: '列表选择', icon: '📝' },
-            { key: 'color', name: '随机颜色', icon: '🎨' },
-          ].map(item => (
-            <Button
-              key={item.key}
-              variant={type === item.key ? 'default' : 'outline'}
-              onClick={() => setType(item.key as any)}
-              className="rounded-full flex items-center gap-2"
-            >
-              <span>{item.icon}</span>
-              {item.name}
-            </Button>
-          ))}
-        </div>
-      </div>
+      {/* 标签页导航 */}
+      <Card className="mb-6">
+        <CardContent className="p-0">
+          <div className="flex border-b overflow-x-auto">
+            {[
+              { key: 'random', name: '随机生成', icon: Dices },
+              { key: 'uuid', name: 'UUID生成', icon: Key },
+              { key: 'qrcode', name: '二维码生成', icon: QrCode },
+              { key: 'hash', name: '哈希生成', icon: Hash },
+              { key: 'password', name: '密码生成', icon: Shield },
+            ].map(tab => {
+              const IconComponent = tab.icon;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key as any)}
+                  className={`flex-1 min-w-[120px] p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                    activeTab === tab.key
+                      ? 'border-primary text-primary bg-primary/5'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <IconComponent className="h-4 w-4" />
+                  {tab.name}
+                </button>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 设置面板 */}
-        <div className="lg:col-span-1">
+      {/* 随机生成器标签页 */}
+      {activeTab === 'random' && (
+        <div className="max-w-2xl mx-auto space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>生成设置</CardTitle>
+              <CardTitle>随机数字生成器</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              {/* 数字设置 */}
-              {type === 'number' && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">最小值</label>
-                      <input
-                        type="number"
-                        value={numberMin}
-                        onChange={e => setNumberMin(Number(e.target.value))}
-                        className="w-full p-2 border border-border rounded-lg bg-background"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">最大值</label>
-                      <input
-                        type="number"
-                        value={numberMax}
-                        onChange={e => setNumberMax(Number(e.target.value))}
-                        className="w-full p-2 border border-border rounded-lg bg-background"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">生成数量</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="100"
-                      value={numberCount}
-                      onChange={e => setNumberCount(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    />
-                  </div>
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={allowDuplicates}
-                        onChange={e => setAllowDuplicates(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-sm">允许重复</span>
-                    </label>
-                  </div>
-                </>
-              )}
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">最小值</label>
+                  <input
+                    type="number"
+                    value={numberMin}
+                    onChange={e => setNumberMin(Number(e.target.value))}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">最大值</label>
+                  <input
+                    type="number"
+                    value={numberMax}
+                    onChange={e => setNumberMax(Number(e.target.value))}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">数量</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={numberCount}
+                    onChange={e => setNumberCount(Number(e.target.value))}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  />
+                </div>
+              </div>
 
-              {/* 字符串设置 */}
-              {type === 'string' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">字符串长度</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="100"
-                      value={stringLength}
-                      onChange={e => setStringLength(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">生成数量</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="50"
-                      value={stringCount}
-                      onChange={e => setStringCount(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium">包含字符类型</h4>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={includeUppercase}
-                        onChange={e => setIncludeUppercase(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-sm">大写字母 (A-Z)</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={includeLowercase}
-                        onChange={e => setIncludeLowercase(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-sm">小写字母 (a-z)</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={includeNumbers}
-                        onChange={e => setIncludeNumbers(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-sm">数字 (0-9)</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={includeSymbols}
-                        onChange={e => setIncludeSymbols(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-sm">特殊符号</span>
-                    </label>
-                  </div>
-                </>
-              )}
-
-              {/* 列表设置 */}
-              {type === 'list' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">列表项（每行一个）</label>
-                    <textarea
-                      value={listItems}
-                      onChange={e => setListItems(e.target.value)}
-                      placeholder="选项1&#10;选项2&#10;选项3"
-                      className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">选择数量</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={listCount}
-                      onChange={e => setListCount(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* 颜色设置 */}
-              {type === 'color' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">颜色格式</label>
-                    <select
-                      value={colorFormat}
-                      onChange={e => setColorFormat(e.target.value as any)}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    >
-                      <option value="hex">HEX (#RRGGBB)</option>
-                      <option value="rgb">RGB (r, g, b)</option>
-                      <option value="hsl">HSL (h, s%, l%)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">生成数量</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={colorCount}
-                      onChange={e => setColorCount(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* 生成按钮 */}
-              <Button onClick={generate} className="w-full flex items-center gap-2">
-                <Shuffle className="h-4 w-4" />
-                生成
+              <Button onClick={generateNumbers} className="w-full">
+                生成随机数字
               </Button>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* 结果面板 */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                生成结果
-                {results.length > 0 && (
-                  <div className="flex gap-2">
+              {results.length > 0 && (
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium">生成结果</label>
                     <Button
-                      onClick={copyAllResults}
+                      onClick={() => copyToClipboard(results.join(', '))}
                       variant="outline"
                       size="sm"
                       className="flex items-center gap-2"
                     >
-                      {copied === 'all' ? (
-                        <>
-                          <Check className="h-4 w-4" />
-                          已复制
-                        </>
+                      {copied === results.join(', ') ? (
+                        <Check className="h-4 w-4" />
                       ) : (
-                        <>
-                          <Copy className="h-4 w-4" />
-                          复制全部
-                        </>
+                        <Copy className="h-4 w-4" />
                       )}
-                    </Button>
-                    <Button onClick={clearResults} variant="outline" size="sm">
-                      清空
+                      复制
                     </Button>
                   </div>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {results.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
-                  点击"生成"按钮开始生成随机内容
-                </div>
-              ) : (
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {results.map((result, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-3 border border-border rounded-lg bg-muted/50 hover:bg-muted"
-                    >
-                      <div className="flex items-center gap-3 flex-1">
-                        {type === 'color' && (
-                          <div
-                            className="w-6 h-6 rounded border border-border"
-                            style={{ backgroundColor: result }}
-                          />
-                        )}
-                        <span className="font-mono text-sm flex-1">{result}</span>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyResult(result)}
-                        className="flex items-center gap-2"
-                      >
-                        {copied === result ? (
-                          <>
-                            <Check className="h-4 w-4" />
-                            已复制
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="h-4 w-4" />
-                            复制
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  ))}
+                  <div className="p-3 bg-muted/50 rounded-lg font-mono text-sm">
+                    {results.join(', ')}
+                  </div>
                 </div>
               )}
             </CardContent>
           </Card>
         </div>
-      </div>
+      )}
+
+      {/* UUID生成器标签页 */}
+      {activeTab === 'uuid' && (
+        <div className="max-w-2xl mx-auto space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>UUID生成器</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">UUID版本</label>
+                  <select
+                    value={uuidVersion}
+                    onChange={e => setUuidVersion(e.target.value as any)}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  >
+                    <option value="v4">UUID v4 (随机)</option>
+                    <option value="v1">UUID v1 (时间戳)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">生成数量</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="50"
+                    value={uuidCount}
+                    onChange={e => setUuidCount(Number(e.target.value))}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  />
+                </div>
+              </div>
+
+              <Button onClick={generateUUID} className="w-full">
+                生成UUID
+              </Button>
+
+              {uuidResults.length > 0 && (
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium">生成结果</label>
+                    <Button
+                      onClick={() => copyToClipboard(uuidResults.join('\n'))}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      {copied === uuidResults.join('\n') ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                      复制全部
+                    </Button>
+                  </div>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {uuidResults.map((uuid, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+                      >
+                        <span className="font-mono text-sm flex-1">{uuid}</span>
+                        <Button
+                          onClick={() => copyToClipboard(uuid)}
+                          variant="ghost"
+                          size="sm"
+                          className="ml-2"
+                        >
+                          {copied === uuid ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* 二维码生成器标签页 */}
+      {activeTab === 'qrcode' && (
+        <div className="max-w-2xl mx-auto space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>二维码生成器</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">输入文本或URL</label>
+                <textarea
+                  value={qrText}
+                  onChange={e => setQrText(e.target.value)}
+                  placeholder="输入要生成二维码的文本或URL..."
+                  className="w-full h-32 p-3 border border-border rounded-lg bg-background resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">二维码尺寸</label>
+                <select
+                  value={qrSize}
+                  onChange={e => setQrSize(Number(e.target.value))}
+                  className="w-full p-3 border border-border rounded-lg bg-background"
+                >
+                  <option value={150}>150x150</option>
+                  <option value={200}>200x200</option>
+                  <option value={300}>300x300</option>
+                  <option value={400}>400x400</option>
+                </select>
+              </div>
+
+              <Button onClick={generateQRCode} className="w-full">
+                生成二维码
+              </Button>
+
+              {qrResult && (
+                <div className="text-center">
+                  <div className="mb-4">
+                    <img
+                      src={qrResult}
+                      alt="Generated QR Code"
+                      className="mx-auto border rounded-lg"
+                    />
+                  </div>
+                  <Button
+                    onClick={() => copyToClipboard(qrResult)}
+                    variant="outline"
+                    className="flex items-center gap-2 mx-auto"
+                  >
+                    {copied === qrResult ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                    复制图片链接
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* 哈希生成器标签页 */}
+      {activeTab === 'hash' && (
+        <div className="max-w-2xl mx-auto space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>哈希生成器</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">输入文本</label>
+                <textarea
+                  value={hashText}
+                  onChange={e => setHashText(e.target.value)}
+                  placeholder="输入要生成哈希的文本..."
+                  className="w-full h-32 p-3 border border-border rounded-lg bg-background resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">哈希算法</label>
+                <select
+                  value={hashAlgorithm}
+                  onChange={e => setHashAlgorithm(e.target.value as any)}
+                  className="w-full p-3 border border-border rounded-lg bg-background"
+                >
+                  <option value="SHA1">SHA-1</option>
+                  <option value="SHA256">SHA-256</option>
+                  <option value="SHA512">SHA-512</option>
+                </select>
+              </div>
+
+              <Button onClick={generateHash} className="w-full">
+                生成哈希
+              </Button>
+
+              {hashResult && (
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium">哈希结果</label>
+                    <Button
+                      onClick={() => copyToClipboard(hashResult)}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      {copied === hashResult ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                      复制
+                    </Button>
+                  </div>
+                  <div className="p-3 bg-muted/50 rounded-lg font-mono text-sm break-all">
+                    {hashResult}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* 密码生成器标签页 */}
+      {activeTab === 'password' && (
+        <div className="max-w-2xl mx-auto space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>密码生成器</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">密码长度</label>
+                <input
+                  type="number"
+                  min="4"
+                  max="128"
+                  value={passwordLength}
+                  onChange={e => setPasswordLength(Number(e.target.value))}
+                  className="w-full p-3 border border-border rounded-lg bg-background"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-sm font-medium">包含字符类型</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={includeUppercase}
+                      onChange={e => setIncludeUppercase(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span className="text-sm">大写字母 (A-Z)</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={includeLowercase}
+                      onChange={e => setIncludeLowercase(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span className="text-sm">小写字母 (a-z)</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={includeNumbers}
+                      onChange={e => setIncludeNumbers(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span className="text-sm">数字 (0-9)</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={includeSymbols}
+                      onChange={e => setIncludeSymbols(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span className="text-sm">特殊符号</span>
+                  </label>
+                </div>
+              </div>
+
+              <Button onClick={generatePassword} className="w-full">
+                生成密码
+              </Button>
+
+              {password && (
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium">生成的密码</label>
+                    <Button
+                      onClick={() => copyToClipboard(password)}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      {copied === password ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                      复制
+                    </Button>
+                  </div>
+                  <div className="p-3 bg-muted/50 rounded-lg font-mono text-lg">{password}</div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

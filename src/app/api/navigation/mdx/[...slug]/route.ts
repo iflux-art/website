@@ -10,10 +10,11 @@ import matter from 'gray-matter';
  * @param params 路由参数，包含 slug
  * @returns MDX 内容
  */
-export async function GET(_request: Request, { params }: { params: { slug: string[] } }) {
+export async function GET(_request: Request, { params }: { params: Promise<{ slug: string[] }> }) {
   try {
+    const resolvedParams = await params;
     // 确保 slug 是数组
-    const slug = Array.isArray(params.slug) ? params.slug : [params.slug];
+    const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
     const fullSlug = slug.join('/');
 
     console.log('API 路由: 处理导航 MDX 请求', { slug, fullSlug });
@@ -91,7 +92,7 @@ export async function GET(_request: Request, { params }: { params: { slug: strin
       {
         error: `获取导航 MDX 内容失败: ${(error as Error).message}`,
         stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined,
-        path: fullSlug,
+        path: slug.join('/'),
       },
       { status: 500 }
     );

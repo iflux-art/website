@@ -311,7 +311,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px] p-0 gap-0 overflow-hidden border dark:border-gray-700 shadow-lg">
+      <DialogContent className="sm:max-w-[550px] p-0 gap-0 overflow-hidden border dark:border-gray-700 shadow-lg [&>button]:hidden">
         <DialogTitle className="sr-only">站内搜索</DialogTitle>
         <div className="flex items-center border-b p-4">
           <Search className="h-4 w-4 mr-2 text-muted-foreground" />

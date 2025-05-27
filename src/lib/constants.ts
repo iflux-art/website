@@ -5,9 +5,8 @@
 
 // 导航菜单项配置
 export const NAV_ITEMS = [
-  { key: 'news', label: '资讯' },
-  { key: 'docs', label: '文档' },
   { key: 'blog', label: '博客' },
+  { key: 'docs', label: '文档' },
   { key: 'tools', label: '工具' },
   { key: 'navigation', label: '导航' },
 ];

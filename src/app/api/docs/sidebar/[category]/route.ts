@@ -12,9 +12,13 @@ import { getApiCache, setApiCache, generateApiCacheKey } from '@/lib/api-cache';
  * @param params 路由参数，包含分类名称
  * @returns 指定分类的侧边栏结构
  */
-export async function GET(_request: Request, { params }: { params: { category: string } }) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ category: string }> }
+) {
   try {
-    const category = await Promise.resolve(params.category);
+    const resolvedParams = await params;
+    const category = resolvedParams.category;
     const decodedCategory = decodeURIComponent(category);
 
     // 生成缓存键

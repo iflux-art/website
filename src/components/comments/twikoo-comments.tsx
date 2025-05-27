@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TwikooCommentsProps {
-  envId: string;
+  envId?: string;
   path?: string;
   className?: string;
 }
 
 export function TwikooComments({ envId, path, className = '' }: TwikooCommentsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // 动态加载 Twikoo CDN
@@ -40,38 +42,47 @@ export function TwikooComments({ envId, path, className = '' }: TwikooCommentsPr
 
     const initTwikoo = () => {
       if (containerRef.current && (window as any).twikoo) {
-        (window as any).twikoo.init({
-          envId, // 腾讯云环境 ID
-          el: containerRef.current, // 容器元素
-          path: path || (typeof window !== 'undefined' ? window.location.pathname : '/'), // 用于区分不同页面的评论
-          lang: 'zh-CN', // 语言
-          region: 'ap-shanghai', // 环境地域，默认为 ap-shanghai
-        });
+        const twikooEnvId = envId || process.env.NEXT_PUBLIC_TWIKOO_ENV_ID;
+        if (!twikooEnvId) {
+          setError('评论系统未配置环境 ID');
+          setIsLoading(false);
+          return;
+        }
+
+        try {
+          (window as any).twikoo.init({
+            envId: twikooEnvId, // 腾讯云环境 ID
+            el: containerRef.current, // 容器元素
+            path: path || (typeof window !== 'undefined' ? window.location.pathname : '/'), // 用于区分不同页面的评论
+            lang: 'zh-CN', // 语言
+            region: 'ap-shanghai', // 环境地域，默认为 ap-shanghai
+            onCommentLoaded: () => {
+              setIsLoading(false);
+            },
+          });
+
+          // 设置一个超时，如果5秒后还没有加载完成，就隐藏加载状态
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 5000);
+        } catch (error) {
+          console.error('Twikoo init error:', error);
+          setError('评论系统初始化失败');
+          setIsLoading(false);
+        }
       }
     };
 
     const showError = (message: string) => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = `
-          <div class="p-6 text-center border rounded-lg bg-muted/50">
-            <p class="text-muted-foreground">${message}</p>
-            <button onclick="window.location.reload()" class="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90">
-              刷新页面
-            </button>
-          </div>
-        `;
-      }
+      setError(message);
+      setIsLoading(false);
     };
 
     // 检查是否有环境 ID
-    if (!envId) {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = `
-          <div class="p-6 text-center border rounded-lg bg-muted/50">
-            <p class="text-muted-foreground">评论系统未配置，请联系管理员</p>
-          </div>
-        `;
-      }
+    const twikooEnvId = envId || process.env.NEXT_PUBLIC_TWIKOO_ENV_ID;
+    if (!twikooEnvId) {
+      setError('评论系统未配置，请联系管理员');
+      setIsLoading(false);
       return;
     }
 
@@ -80,23 +91,33 @@ export function TwikooComments({ envId, path, className = '' }: TwikooCommentsPr
 
   return (
     <div className={`twikoo-container ${className}`}>
-      <div ref={containerRef} />
+      {/* 错误状态 */}
+      {error && (
+        <div className="p-6 text-center border rounded-lg bg-muted/50">
+          <p className="text-muted-foreground">{error}</p>
+          {error.includes('加载失败') && (
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+            >
+              刷新页面
+            </button>
+          )}
+        </div>
+      )}
 
       {/* 加载中状态 */}
-      <div className="twikoo-loading p-6 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-        <p className="text-muted-foreground">评论系统加载中...</p>
-      </div>
+      {isLoading && !error && (
+        <div className="p-6 text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">评论系统加载中...</p>
+        </div>
+      )}
+
+      {/* Twikoo 容器 */}
+      {!error && <div ref={containerRef} />}
 
       <style jsx>{`
-        .twikoo-container .twikoo-loading {
-          display: block;
-        }
-
-        .twikoo-container:has(.tk-comments) .twikoo-loading {
-          display: none;
-        }
-
         /* Twikoo 自定义样式 */
         .twikoo-container :global(.tk-comments) {
           margin-top: 0;

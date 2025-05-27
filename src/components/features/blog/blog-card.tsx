@@ -58,9 +58,9 @@ export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
   };
 
   return (
-    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card h-full">
+    <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card">
       <div className="p-6">
-        <h2 className="text-xl font-bold tracking-tight mb-3 line-clamp-1 group-hover:text-primary transition-colors">
+        <h2 className="text-xl font-bold tracking-tight mb-3 group-hover:text-primary transition-colors">
           {post.title}
         </h2>
         {post.date && (
@@ -68,7 +68,7 @@ export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
             {new Date(post.date).toLocaleDateString('zh-CN')}
           </p>
         )}
-        <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">{post.excerpt}</p>
+        <p className="text-muted-foreground mb-4 leading-relaxed">{post.excerpt}</p>
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {post.tags.map((tag, tagIndex) => (

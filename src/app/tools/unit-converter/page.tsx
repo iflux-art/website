@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { ArrowUpDown, Ruler, RotateCcw, RefreshCw } from 'lucide-react';
+import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, ArrowUpDown, Ruler } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { unitUtils } from '@/lib/tool-utils';
 
 export default function UnitConverterPage() {
   const [category, setCategory] = useState('length');
@@ -217,27 +219,69 @@ export default function UnitConverterPage() {
 
   const currentUnits = unitCategories[category as keyof typeof unitCategories].units;
 
+  const actions = [
+    {
+      label: '交换单位',
+      onClick: swapUnits,
+      icon: ArrowUpDown,
+      variant: 'outline' as const,
+    },
+    {
+      label: '清空',
+      onClick: clearAll,
+      icon: RotateCcw,
+      variant: 'outline' as const,
+    },
+  ];
+
+  const helpContent = (
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">支持的转换类型</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>
+            • <strong>长度</strong>：毫米、厘米、米、千米、英寸、英尺、码、英里
+          </li>
+          <li>
+            • <strong>重量</strong>：毫克、克、千克、吨、盎司、磅、英石
+          </li>
+          <li>
+            • <strong>温度</strong>：摄氏度、华氏度、开尔文
+          </li>
+          <li>
+            • <strong>面积</strong>：平方毫米、平方厘米、平方米、平方千米、英亩
+          </li>
+          <li>
+            • <strong>体积</strong>：毫升、升、立方米、立方英寸、立方英尺、加仑
+          </li>
+          <li>
+            • <strong>速度</strong>：米/秒、千米/小时、英里/小时、节
+          </li>
+          <li>
+            • <strong>进制</strong>：二进制、八进制、十进制、十六进制
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-medium mb-2">使用说明</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• 选择转换类型，然后选择源单位和目标单位</li>
+          <li>• 在任一输入框中输入数值，另一个会自动计算</li>
+          <li>• 点击交换按钮可以快速交换源单位和目标单位</li>
+          <li>• 支持双向转换，可以在任意输入框中输入</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Ruler className="h-8 w-8" />
-          单位转换器
-        </h1>
-        <p className="text-muted-foreground mt-2">长度、重量、温度、面积、体积、速度等单位转换</p>
-      </div>
-
+    <ToolLayout
+      title="单位转换器"
+      description="长度、重量、温度、面积、体积、速度等单位转换"
+      icon={Ruler}
+      actions={<ToolActions actions={actions} />}
+      helpContent={helpContent}
+    >
       {/* 分类选择 */}
       <div className="mb-6">
         <div className="flex flex-wrap gap-2">
@@ -385,6 +429,6 @@ export default function UnitConverterPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ToolLayout>
   );
 }

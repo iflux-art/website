@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/layout/admin-layout';
+import { AdminActions } from '@/components/ui/admin-actions';
+import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -201,204 +203,218 @@ export default function NavigationAdminPage() {
     );
   }
 
-  return (
-    <AdminLayout>
-      <div className="space-y-6">
-        {/* 页面标题 */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Globe className="h-8 w-8" />
-              网址管理系统
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              管理网站导航中的所有网址，当前共有 {items.length} 个网址
-            </p>
-          </div>
+  const actions = [
+    {
+      label: '添加网址',
+      onClick: () => setShowAddDialog(true),
+      icon: Plus,
+    },
+    {
+      label: '刷新数据',
+      onClick: loadData,
+      icon: Search,
+      variant: 'outline' as const,
+    },
+  ];
 
-          <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                添加网址
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>添加新网址</DialogTitle>
-              </DialogHeader>
-              <NavigationForm
-                onSubmit={handleAddItem}
-                onCancel={() => setShowAddDialog(false)}
-                isLoading={isSubmitting}
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        {/* 提示信息 */}
-        {alert && (
-          <Alert
-            className={`mb-6 ${alert.type === 'error' ? 'border-destructive' : 'border-green-500'}`}
-          >
-            {alert.type === 'error' ? (
-              <AlertCircle className="h-4 w-4" />
-            ) : (
-              <CheckCircle className="h-4 w-4" />
-            )}
-            <AlertDescription>{alert.message}</AlertDescription>
-          </Alert>
-        )}
-
-        {/* 搜索和过滤 */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="搜索网址、标题、描述或标签..."
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <div className="w-48">
-                <select
-                  value={selectedCategory}
-                  onChange={e => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
-                >
-                  <option value="">所有分类</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 网址列表 */}
-        <div className="grid gap-4">
-          {filteredItems.length === 0 ? (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center py-8">
-                  <Globe className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    {searchTerm || selectedCategory ? '没有找到匹配的网址' : '还没有添加任何网址'}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+  const tableColumns = [
+    {
+      key: 'icon',
+      title: '图标',
+      width: '60px',
+      render: (value: any, record: NavigationItem) => (
+        <div className="text-lg">
+          {record.iconType === 'emoji' ? (
+            record.icon
+          ) : record.iconType === 'image' ? (
+            <img src={record.icon} alt="" className="w-6 h-6" />
           ) : (
-            filteredItems.map(item => (
-              <Card key={item.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="text-2xl">
-                          {item.iconType === 'emoji' ? (
-                            item.icon
-                          ) : item.iconType === 'image' ? (
-                            <img src={item.icon} alt="" className="w-6 h-6" />
-                          ) : (
-                            <span className="text-sm font-bold">{item.icon}</span>
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold">{item.title}</h3>
-                          <p className="text-sm text-muted-foreground">{item.url}</p>
-                        </div>
-                        {item.featured && (
-                          <Badge variant="default" className="ml-2">
-                            精选
-                          </Badge>
-                        )}
-                      </div>
-
-                      {item.description && (
-                        <p className="text-muted-foreground mb-3">{item.description}</p>
-                      )}
-
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span>分类: {getCategoryName(item.category)}</span>
-                        {item.tags.length > 0 && (
-                          <div className="flex items-center gap-1">
-                            <span>标签:</span>
-                            <div className="flex gap-1">
-                              {item.tags.map(tag => (
-                                <Badge key={tag} variant="outline" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 ml-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.open(item.url, '_blank')}
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => setEditingItem(item)}>
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => setDeletingItem(item)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
+            <span className="text-sm font-bold">{record.icon}</span>
           )}
         </div>
+      ),
+    },
+    {
+      key: 'title',
+      title: '标题',
+      render: (value: string, record: NavigationItem) => (
+        <div>
+          <div className="font-medium">{value}</div>
+          <div className="text-sm text-muted-foreground">{record.url}</div>
+        </div>
+      ),
+    },
+    {
+      key: 'category',
+      title: '分类',
+      render: (value: string) => getCategoryName(value),
+    },
+    {
+      key: 'tags',
+      title: '标签',
+      render: (tags: string[]) => (
+        <div className="flex gap-1 flex-wrap">
+          {tags.slice(0, 3).map(tag => (
+            <Badge key={tag} variant="outline" className="text-xs">
+              {tag}
+            </Badge>
+          ))}
+          {tags.length > 3 && (
+            <Badge variant="outline" className="text-xs">
+              +{tags.length - 3}
+            </Badge>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: 'featured',
+      title: '状态',
+      render: (featured: boolean) =>
+        featured ? <Badge variant="default">精选</Badge> : <Badge variant="outline">普通</Badge>,
+    },
+  ];
 
-        {/* 编辑对话框 */}
-        <Dialog open={!!editingItem} onOpenChange={() => setEditingItem(null)}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>编辑网址</DialogTitle>
-            </DialogHeader>
-            {editingItem && (
-              <NavigationForm
-                onSubmit={handleEditItem}
-                onCancel={() => setEditingItem(null)}
-                initialData={editingItem}
-                isLoading={isSubmitting}
-              />
-            )}
-          </DialogContent>
-        </Dialog>
+  const tableActions = [
+    {
+      label: '访问',
+      onClick: (record: NavigationItem) => window.open(record.url, '_blank'),
+      icon: ExternalLink,
+      variant: 'outline' as const,
+    },
+    {
+      label: '编辑',
+      onClick: (record: NavigationItem) => setEditingItem(record),
+      icon: Edit,
+      variant: 'outline' as const,
+    },
+    {
+      label: '删除',
+      onClick: (record: NavigationItem) => setDeletingItem(record),
+      icon: Trash2,
+      variant: 'destructive' as const,
+    },
+  ];
 
-        {/* 删除确认对话框 */}
-        <AlertDialog open={!!deletingItem} onOpenChange={() => setDeletingItem(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>确认删除</AlertDialogTitle>
-              <AlertDialogDescription>
-                确定要删除网址 "{deletingItem?.title}" 吗？此操作无法撤销。
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>取消</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDeleteItem}>删除</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+  return (
+    <AdminLayout>
+      {/* 页面标题 */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+          <Globe className="h-8 w-8" />
+          网址管理
+        </h1>
+        <p className="text-muted-foreground mt-2">
+          管理网站导航中的所有网址，当前共有 {items.length} 个网址
+        </p>
       </div>
+
+      {/* 操作按钮 */}
+      <div className="mb-6">
+        <AdminActions actions={actions} />
+      </div>
+      {/* 提示信息 */}
+      {alert && (
+        <Alert
+          className={`mb-6 ${alert.type === 'error' ? 'border-destructive' : 'border-green-500'}`}
+        >
+          {alert.type === 'error' ? (
+            <AlertCircle className="h-4 w-4" />
+          ) : (
+            <CheckCircle className="h-4 w-4" />
+          )}
+          <AlertDescription>{alert.message}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* 搜索和过滤 */}
+      <Card className="mb-6">
+        <CardContent className="pt-6">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="搜索网址、标题、描述或标签..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            <div className="w-48">
+              <select
+                value={selectedCategory}
+                onChange={e => setSelectedCategory(e.target.value)}
+                className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
+              >
+                <option value="">所有分类</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 网址表格 */}
+      <DataTable
+        data={filteredItems}
+        columns={tableColumns}
+        actions={tableActions}
+        loading={isLoading}
+        emptyText={searchTerm || selectedCategory ? '没有找到匹配的网址' : '还没有添加任何网址'}
+      />
+
+      {/* 添加对话框 */}
+      <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>添加新网址</DialogTitle>
+          </DialogHeader>
+          <NavigationForm
+            onSubmit={handleAddItem}
+            onCancel={() => setShowAddDialog(false)}
+            isLoading={isSubmitting}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* 编辑对话框 */}
+      <Dialog open={!!editingItem} onOpenChange={() => setEditingItem(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>编辑网址</DialogTitle>
+          </DialogHeader>
+          {editingItem && (
+            <NavigationForm
+              onSubmit={handleEditItem}
+              onCancel={() => setEditingItem(null)}
+              initialData={editingItem}
+              isLoading={isSubmitting}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* 删除确认对话框 */}
+      <AlertDialog open={!!deletingItem} onOpenChange={() => setDeletingItem(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>确认删除</AlertDialogTitle>
+            <AlertDialogDescription>
+              确定要删除网址 "{deletingItem?.title}" 吗？此操作无法撤销。
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>取消</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteItem}>删除</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 }

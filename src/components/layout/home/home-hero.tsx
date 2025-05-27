@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { EnhancedBackground } from './enhanced-background';
 import { Greeting } from './greeting';
 import { SearchBox } from './search-box';
@@ -11,6 +11,8 @@ import { RecommendationTags } from './recommendation-tags';
  * 模块化设计，将各功能拆分为独立组件
  */
 export function HomeHero() {
+  const [isSearchMode, setIsSearchMode] = useState(false);
+
   return (
     <div className="relative w-full h-full flex flex-col justify-center overflow-y-auto overflow-x-hidden pb-8">
       {/* 增强型背景效果 - 可以选择不同的背景样式 */}
@@ -18,14 +20,14 @@ export function HomeHero() {
 
       {/* 中央内容区域 */}
       <div className="flex flex-col items-center justify-center px-4 w-full mx-auto py-4 md:py-8">
-        {/* 欢迎标题 - 随机问候语 */}
-        <Greeting />
+        {/* 欢迎标题 - 随机问候语 - 搜索模式时隐藏 */}
+        {!isSearchMode && <Greeting />}
 
         {/* 搜索框 */}
-        <SearchBox />
+        <SearchBox onSearchModeChange={setIsSearchMode} />
 
-        {/* 推荐标签 */}
-        <RecommendationTags />
+        {/* 推荐标签 - 搜索模式时隐藏 */}
+        {!isSearchMode && <RecommendationTags />}
       </div>
     </div>
   );

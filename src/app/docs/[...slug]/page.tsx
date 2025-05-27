@@ -11,14 +11,14 @@ import { Sidebar } from '@/components/ui/sidebar';
 import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
-import { StickyLayout } from '@/components/layout/sticky-layout';
 
-export default async function DocPage({ params }: { params: { slug: string[] } }) {
+import { TwikooComments } from '@/components/comments/twikoo-comments';
+
+export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 构建文件路径
   // 使用 await 确保 params.slug 是可用的
-  const slug = Array.isArray(await Promise.resolve(params.slug))
-    ? await Promise.resolve(params.slug)
-    : [await Promise.resolve(params.slug)];
+  const resolvedParams = await params;
+  const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
   const category = slug[0] as string;
   const docName = slug.length > 1 ? (slug.slice(1).join('/') as string) : (slug[0] as string);
 
@@ -192,38 +192,44 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   const { content: originalContent, data } = matter(fileContent);
   let content = originalContent;
 
-  // 获取目录中的所有文档
-  const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', category);
-  const allDocs =
-    fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()
-      ? fs
-          .readdirSync(categoryDir)
-          .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
-          .map(file => {
-            const docPath = path.join(categoryDir, file);
-            const docContent = fs.readFileSync(docPath, 'utf8');
-            const { data } = matter(docContent);
-            const fileSlug = file.replace(/\.(mdx|md)$/, '');
-            return {
-              slug: fileSlug,
-              title: data.title || fileSlug,
-              path: `/docs/${category}/${fileSlug}`,
-            };
-          })
-      : [];
+  // 获取当前分类的所有文档，按照侧边栏的顺序排序
+  function getCategoryDocsInOrder(
+    categoryName: string
+  ): Array<{ slug: string; title: string; path: string }> {
+    // 使用侧边栏API获取正确的文档结构
+    const { getDocSidebar } = require('@/lib/content');
+    const sidebarItems = getDocSidebar(categoryName);
 
-  // 检查是否存在_meta.json文件（替代_meta.tsx）
-  const metaFilePath = path.join(categoryDir, '_meta.json');
-  let metaData = null;
-  if (fs.existsSync(metaFilePath)) {
-    try {
-      // 读取_meta.json文件
-      const metaContent = fs.readFileSync(metaFilePath, 'utf8');
-      metaData = JSON.parse(metaContent);
-    } catch (error) {
-      console.error('Error loading _meta.json file:', error);
+    const docs: Array<{ slug: string; title: string; path: string }> = [];
+
+    // 递归遍历侧边栏项目，按照侧边栏的顺序收集文档
+    function collectDocsFromSidebar(items: any[]) {
+      for (const item of items) {
+        if (item.type !== 'separator' && item.href && !item.isExternal) {
+          // 确保路径以 /docs/ 开头，并且使用正斜杠
+          let docPath = item.href.startsWith('/docs/') ? item.href : `/docs/${item.href}`;
+          // 将反斜杠替换为正斜杠
+          docPath = docPath.replace(/\\/g, '/');
+
+          docs.push({
+            slug: item.filePath || item.title,
+            title: item.title,
+            path: docPath,
+          });
+        }
+
+        // 如果有子项目，递归处理
+        if (item.items && item.items.length > 0) {
+          collectDocsFromSidebar(item.items);
+        }
+      }
     }
+
+    collectDocsFromSidebar(sidebarItems);
+    return docs;
   }
+
+  const allDocs = getCategoryDocsInOrder(category);
 
   // 读取根目录的 _meta.json 文件，获取分类的中文名称
   const rootMetaFilePath = path.join(process.cwd(), 'src', 'content', 'docs', '_meta.json');
@@ -303,10 +309,24 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   // 使用处理后的内容
   content = processedContent;
 
+  // 确定当前文档的完整路径用于匹配
+  const currentDocPath = `/docs/${slug.join('/')}`.replace(/\\/g, '/');
+
+  console.log('当前文档路径:', currentDocPath);
+  console.log(
+    '所有文档:',
+    allDocs.map(d => ({ slug: d.slug, path: d.path }))
+  );
+
   // 确定上一篇和下一篇文档
-  const currentIndex = allDocs.findIndex(doc => doc.slug === docName);
+  const currentIndex = allDocs.findIndex(doc => doc.path.replace(/\\/g, '/') === currentDocPath);
+  console.log('当前文档索引:', currentIndex);
+
   const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
   const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
+
+  console.log('上一篇文档:', prevDoc?.title);
+  console.log('下一篇文档:', nextDoc?.title);
 
   // 构建面包屑导航
   const breadcrumbItems = [
@@ -324,9 +344,7 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
         <div className="flex gap-8">
           {/* 左侧边栏 */}
           <aside className="hidden lg:block w-64 shrink-0">
-            <StickyLayout>
-              <Sidebar category={category} currentDoc={docName as string} />
-            </StickyLayout>
+            <Sidebar category={category} currentDoc={docName as string} />
           </aside>
 
           {/* 主内容区 */}
@@ -346,42 +364,52 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
               </article>
 
               {/* 上一页/下一页导航 */}
-              <div className="mt-12 grid grid-cols-2 gap-4">
-                {prevDoc && (
-                  <Card className="col-start-1 shadow-sm rounded-xl hover:shadow-md transition-all">
-                    <CardContent className="p-5">
-                      <Link href={prevDoc.path} className="flex flex-col">
-                        <span className="text-sm text-muted-foreground flex items-center">
-                          <ChevronLeft className="h-4 w-4 mr-1" />
-                          上一页
-                        </span>
-                        <span className="font-semibold tracking-tight">{prevDoc.title}</span>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                )}
-                {nextDoc && (
-                  <Card className="col-start-2 shadow-sm rounded-xl hover:shadow-md transition-all">
-                    <CardContent className="p-5">
-                      <Link href={nextDoc.path} className="flex flex-col items-end text-right">
-                        <span className="text-sm text-muted-foreground flex items-center">
-                          下一页
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </span>
-                        <span className="font-semibold tracking-tight">{nextDoc.title}</span>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                )}
+              {(prevDoc || nextDoc) && (
+                <div className="mt-12 flex justify-between gap-4">
+                  {prevDoc ? (
+                    <Card className="flex-1 max-w-[48%] shadow-sm rounded-xl hover:shadow-md transition-all">
+                      <CardContent className="p-5">
+                        <Link href={prevDoc.path} className="flex flex-col">
+                          <span className="text-sm text-muted-foreground flex items-center">
+                            <ChevronLeft className="h-4 w-4 mr-1" />
+                            上一页
+                          </span>
+                          <span className="font-semibold tracking-tight">{prevDoc.title}</span>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="flex-1 max-w-[48%]"></div>
+                  )}
+
+                  {nextDoc ? (
+                    <Card className="flex-1 max-w-[48%] shadow-sm rounded-xl hover:shadow-md transition-all">
+                      <CardContent className="p-5">
+                        <Link href={nextDoc.path} className="flex flex-col items-end text-right">
+                          <span className="text-sm text-muted-foreground flex items-center">
+                            下一页
+                            <ChevronRight className="h-4 w-4 ml-1" />
+                          </span>
+                          <span className="font-semibold tracking-tight">{nextDoc.title}</span>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="flex-1 max-w-[48%]"></div>
+                  )}
+                </div>
+              )}
+
+              {/* 评论区 */}
+              <div className="mt-16 pt-8 border-t">
+                <TwikooComments path={`/docs/${slug.join('/')}`} />
               </div>
             </div>
           </main>
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <StickyLayout>
-              <TocContainer headings={headings} />
-            </StickyLayout>
+            <TocContainer headings={headings} />
           </aside>
         </div>
       </div>
