@@ -307,7 +307,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <TocContainer headings={headings} />
+            <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto">
+              <TocContainer headings={headings} />
+            </div>
           </aside>
         </div>
       </div>

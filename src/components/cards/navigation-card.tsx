@@ -79,8 +79,7 @@ export function NavigationCard({
       rel="noopener noreferrer"
       className={cn(
         'group block p-4 rounded-xl border bg-card hover:bg-accent/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md',
-        featured && 'ring-2 ring-primary/20 bg-primary/5',
-        className
+        featured, className
       )}
     >
       <div className="flex items-start gap-3">
@@ -100,7 +99,7 @@ export function NavigationCard({
 
       {/* 特色标识 */}
       {featured && (
-        <div className="mt-3 flex justify-end">
+        <div className="flex justify-end">
           <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
             推荐
           </span>
