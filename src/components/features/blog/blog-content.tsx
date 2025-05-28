@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { countWords } from '@/lib/utils';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
-import { TwikooComments } from '@/components/comments/twikoo-comments';
 
 /**
  * 博客内容组件属性
@@ -111,12 +110,6 @@ export function BlogContent({
       </header>
 
       <MDXContent>{mdxContent}</MDXContent>
-
-      {/* 评论区 */}
-      <section className="mt-16 pt-8 border-t">
-        <h2 className="text-2xl font-bold mb-6">评论</h2>
-        <TwikooComments envId={process.env.NEXT_PUBLIC_TWIKOO_ENV_ID || 'demo'} path={path} />
-      </section>
     </article>
   );
 }

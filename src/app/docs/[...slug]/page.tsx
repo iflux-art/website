@@ -12,8 +12,6 @@ import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
 
-import { TwikooComments } from '@/components/comments/twikoo-comments';
-
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   // 构建文件路径
   // 使用 await 确保 params.slug 是可用的
@@ -401,11 +399,6 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                   )}
                 </div>
               )}
-
-              {/* 评论区 */}
-              <div className="mt-16 pt-8 border-t">
-                <TwikooComments path={`/docs/${slug.join('/')}`} />
-              </div>
             </div>
           </main>
 
