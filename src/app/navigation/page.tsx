@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { NavigationCard } from '@/components/cards/navigation-card';
 import { NavigationItem, NavigationCategory } from '@/types/navigation';
-import { Search } from 'lucide-react';
 
 export default function NavigationPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);
@@ -14,7 +13,6 @@ export default function NavigationPage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [showAllTags, setShowAllTags] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   // 加载数据
   useEffect(() => {
@@ -28,7 +26,8 @@ export default function NavigationPage() {
         fetch('/api/navigation?type=categories').then(res => res.json()),
       ]);
 
-      // 获取标签数据
+      // 根据分类获取标签
+      // 根据当前分类获取标签
       const tagsResponse = await fetch(
         `/api/navigation?type=tags${categoryId ? `&category=${categoryId}` : ''}`
       );
@@ -36,21 +35,12 @@ export default function NavigationPage() {
 
       setItems(navigationData.items || []);
       setCategories(categoriesData || []);
-
-      // 当选择全部分类时，显示所有标签；否则只显示当前分类的标签
-      if (!categoryId) {
-        // 全部分类：获取所有标签
-        setAllTags(tagsData || []);
-      } else {
-        // 特定分类：只获取该分类下的标签
-        setAllTags(
-          tagsData.filter((tag: string) =>
-            navigationData.items.some(
-              (item: NavigationItem) => item.category === categoryId && item.tags.includes(tag)
-            )
-          ) || []
-        );
-      }
+      setAllTags(
+        tagsData.filter((tag: string) =>
+          // 确保标签属于当前分类的项目
+          navigationData.items.some(item => item.category === categoryId && item.tags.includes(tag))
+        ) || []
+      );
 
       // 移除默认选择第一个分类的逻辑
       // if (categoriesData.length > 0) {
@@ -65,12 +55,7 @@ export default function NavigationPage() {
   const filteredItems = items.filter(item => {
     const categoryMatch = !selectedCategory || item.category === selectedCategory;
     const tagMatch = !selectedTag || item.tags.includes(selectedTag);
-    const searchMatch =
-      !searchQuery ||
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return categoryMatch && tagMatch && searchMatch;
+    return categoryMatch && tagMatch;
   });
 
   const handleCategoryClick = async (categoryId: string) => {
@@ -115,18 +100,6 @@ export default function NavigationPage() {
         <p className="text-muted-foreground">精选的网站和工具集合，帮助你提高效率</p>
       </div>
 
-      {/* 搜索框 */}
-      <div className="relative mb-6">
-        <input
-          type="text"
-          placeholder="搜索网站..."
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-        />
-        <Search className="absolute right-3 top-2.5 text-muted-foreground" />
-      </div>
-
       {/* 分类选择 */}
       <div className="mb-6">
         <div className="flex flex-wrap gap-2">
@@ -151,38 +124,34 @@ export default function NavigationPage() {
       </div>
 
       {/* 标签筛选 */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-sm font-medium text-muted-foreground">按标签筛选</span>
+      {allTags.length > 0 && (
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-sm font-medium text-muted-foreground">按标签筛选</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {visibleTags.map(tagInfo => (
+              <Badge
+                key={tagInfo.name}
+                variant={selectedTag === tagInfo.name ? 'default' : 'outline'}
+                className="cursor-pointer hover:bg-accent transition-colors"
+                onClick={() => handleTagClick(tagInfo.name)}
+              >
+                {tagInfo.name} ({tagInfo.count})
+              </Badge>
+            ))}
+            {hasMoreTags && (
+              <Badge
+                variant="outline"
+                className="cursor-pointer hover:bg-accent transition-colors text-muted-foreground"
+                onClick={() => setShowAllTags(!showAllTags)}
+              >
+                {showAllTags ? '收起' : `更多 (+${sortedTags.length - 6})`}
+              </Badge>
+            )}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {visibleTags.length > 0 ? (
-            <>
-              {visibleTags.map(tagInfo => (
-                <Badge
-                  key={tagInfo.name}
-                  variant={selectedTag === tagInfo.name ? 'default' : 'outline'}
-                  className="cursor-pointer hover:bg-accent transition-colors"
-                  onClick={() => handleTagClick(tagInfo.name)}
-                >
-                  {tagInfo.name} ({tagInfo.count})
-                </Badge>
-              ))}
-              {hasMoreTags && (
-                <Badge
-                  variant="outline"
-                  className="cursor-pointer hover:bg-accent transition-colors text-muted-foreground"
-                  onClick={() => setShowAllTags(!showAllTags)}
-                >
-                  {showAllTags ? '收起' : `更多 (+${sortedTags.length - 6})`}
-                </Badge>
-              )}
-            </>
-          ) : (
-            <span className="text-sm text-muted-foreground">暂无可用标签</span>
-          )}
-        </div>
-      </div>
+      )}
 
       {/* 网址卡片网格 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

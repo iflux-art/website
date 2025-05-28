@@ -668,12 +668,14 @@
       "url": "https://platform.deepseek.com/",
       "icon": "https://platform.deepseek.com/favicon.svg",
       "iconType": "image",
-      "tags": [],
+      "tags": [
+        "开发平台"
+      ],
       "featured": false,
       "category": "ai",
       "id": "mb7n5vaz8bcqm7lgdks",
       "createdAt": "2025-05-28T07:46:24.059Z",
-      "updatedAt": "2025-05-28T07:46:24.059Z"
+      "updatedAt": "2025-05-28T11:19:53.913Z"
     },
     {
       "title": "DeepSeek 实用集成",
@@ -689,6 +691,395 @@
       "id": "mb7noduslylj5pfk57j",
       "createdAt": "2025-05-28T08:00:47.908Z",
       "updatedAt": "2025-05-28T08:00:47.908Z"
+    },
+    {
+      "title": "腾讯混元",
+      "description": "腾讯研发的大语言模型",
+      "url": "https://hunyuan.tencent.com/",
+      "icon": "https://cdn-portal.hunyuan.tencent.com/public/static/logo/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uu72dwe23m9qq90h",
+      "createdAt": "2025-05-28T11:21:16.357Z",
+      "updatedAt": "2025-05-28T11:21:16.357Z"
+    },
+    {
+      "title": "腾讯混元AIGC视频生成模型",
+      "description": "可一键快速生成电影画质视频。动作自然、表达精准、无缝对接工业级商业应用，满足广告、影视等场景内容生产。",
+      "url": "https://aivideo.hunyuan.tencent.com/",
+      "icon": "https://aivideo.hunyuan.tencent.com/public/static/logo/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "视频生成"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uv6iuifka1ax0w4p",
+      "createdAt": "2025-05-28T11:22:02.310Z",
+      "updatedAt": "2025-05-28T11:22:02.310Z"
+    },
+    {
+      "title": "腾讯元宝",
+      "description": "基于腾讯混元大模型的AI应用，可以帮你写作绘画文案翻译编程搜索阅读总结的全能助手",
+      "url": "https://yuanbao.tencent.com/",
+      "icon": "https://cdn-bot.hunyuan.tencent.com/logo-v2.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uvoim6ji4w2s7dhx",
+      "createdAt": "2025-05-28T11:22:25.630Z",
+      "updatedAt": "2025-05-28T11:22:25.630Z"
+    },
+    {
+      "title": "Kimi",
+      "description": "Moonshot AI 出品的智能助手",
+      "url": "https://kimi.moonshot.cn/",
+      "icon": "https://statics.moonshot.cn/kimi-web-seo/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uw9e5ktcln08jmpo",
+      "createdAt": "2025-05-28T11:22:52.685Z",
+      "updatedAt": "2025-05-28T11:22:52.685Z"
+    },
+    {
+      "title": "豆包",
+      "description": "你的 AI 聊天智能对话问答助手",
+      "url": "https://www.doubao.com/chat/",
+      "icon": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/logo-icon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uwspefovyi4x3xyu",
+      "createdAt": "2025-05-28T11:23:17.714Z",
+      "updatedAt": "2025-05-28T11:23:17.714Z"
+    },
+    {
+      "title": "讯飞星火",
+      "description": "科大讯飞推出的新一代认知智能大模型",
+      "url": "https://xinghuo.xfyun.cn/desk",
+      "icon": "https://xinghuo.xfyun.cn/spark-icon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uxdh27gtux69e5w9",
+      "createdAt": "2025-05-28T11:23:44.630Z",
+      "updatedAt": "2025-05-28T11:23:44.630Z"
+    },
+    {
+      "title": "Z",
+      "description": "基于开源GLM模型，支持文本生成、推理和深入研究",
+      "url": "https://chat.z.ai/",
+      "icon": "https://z-cdn.chatglm.cn/z-ai/frontend/static/logo.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uymlhnczlrlu9ar",
+      "createdAt": "2025-05-28T11:24:43.109Z",
+      "updatedAt": "2025-05-28T11:24:43.109Z"
+    },
+    {
+      "title": "智谱清言",
+      "description": "中国版对话语言模型，与GLM大模型进行对话。",
+      "url": "https://chatglm.cn/",
+      "icon": "https://chatglm.cn/img/icons/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7uyzv41hu97a0nc7s",
+      "createdAt": "2025-05-28T11:25:00.304Z",
+      "updatedAt": "2025-05-28T11:25:00.304Z"
+    },
+    {
+      "title": "天工（Skywork）超级智能体",
+      "description": "具备超强DeepResearch能力的全新AI Office智能体",
+      "url": "https://www.tiangong.cn/",
+      "icon": "https://static.tiangong.cn/prod-skywork-web-bundle/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "AI办公"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v00kbjnhebw3j3xb",
+      "createdAt": "2025-05-28T11:25:47.867Z",
+      "updatedAt": "2025-05-28T11:25:47.867Z"
+    },
+    {
+      "title": "MiniMax - 你的AI智能助手",
+      "description": "基于多模态大语言模型为用户打造的AI伙伴",
+      "url": "https://chat.minimaxi.com/",
+      "icon": "https://chat.minimaxi.com/assets/logo/favicon.png?v=4",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v1c02edu541s6aaq",
+      "createdAt": "2025-05-28T11:26:49.346Z",
+      "updatedAt": "2025-05-28T11:26:49.346Z"
+    },
+    {
+      "title": "零一万物",
+      "description": "权威盲测国产最有，全系平替GPT系列。",
+      "url": "https://platform.lingyiwanwu.com/",
+      "icon": "https://platform.lingyiwanwu.com/icon.png?f17992d0c17501d7",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v1xp5qml4lwxkdxo",
+      "createdAt": "2025-05-28T11:27:17.465Z",
+      "updatedAt": "2025-05-28T11:27:17.465Z"
+    },
+    {
+      "title": "盘古大模型",
+      "description": "以 “AI for insdustries”为核心理念，包含NLP大模型、CV大模型、多模态大模型、预测大模型、科学计算大模型5类大模型",
+      "url": "https://www.huaweicloud.com/product/pangu.html",
+      "icon": "https://www.huaweicloud.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v2ixe754su0apf7w",
+      "createdAt": "2025-05-28T11:27:44.978Z",
+      "updatedAt": "2025-05-28T11:27:44.978Z"
+    },
+    {
+      "title": "百小应",
+      "description": "懂搜索的AI助手",
+      "url": "https://ying.baichuan-ai.com/",
+      "icon": "https://ying.baichuan-ai.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v3kgr5oi4bg8tpx3",
+      "createdAt": "2025-05-28T11:28:33.627Z",
+      "updatedAt": "2025-05-28T11:28:33.627Z"
+    },
+    {
+      "title": "360智脑",
+      "description": "千亿参数大模型，涵盖十大能力数百项细分功能",
+      "url": "https://ai.360.com/",
+      "icon": "https://p1.ssl.qhimg.com/t0180f58567ac1a6ba5.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v4o70x36qpw9cpml",
+      "createdAt": "2025-05-28T11:29:25.116Z",
+      "updatedAt": "2025-05-28T11:29:25.116Z"
+    },
+    {
+      "title": "GhatGPT",
+      "description": "OpenAI 出品",
+      "url": "https://chatgpt.com/",
+      "icon": "https://chatgpt.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb7v6fjkzmuzhksm8wa",
+      "createdAt": "2025-05-28T11:30:47.216Z",
+      "updatedAt": "2025-05-28T11:35:38.231Z"
+    },
+    {
+      "title": "GhatGPT 教程",
+      "description": "GhatGPT 教程 基础篇",
+      "url": "https://u17zrio8c7n.feishu.cn/file/IjBNbVkBdok5F7xjx9scxEkxn7c",
+      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAQnSURBVHgB7ZpbaBRnFMf/s5uYbMnUZJOm2U01K1kThBUSg4VSvKTQG1ja9E2FolLsU1Ha0pdSTJ7ah5Sq4IMK3l58ULzgHRE3iCCKJKAi3sjES6LRjdlsTLK6Zj1nZ9fbZrPzfd9GM+IPzs7sXM//fN+ZM/PNaEgSj8eLabKKbGHSJiMdZGs1TdueWqDxDznvo8lJMh/sgUHWSEKMlIBO2Mf5FAZZvZOcX0Yzy2A/uMtHNRLQTjN1sCdBFhCHjXHA5theQJ7IxvsivdhPpkpdoY5V7irkAiEBP+jl6IhG0HL/BpQIU0UaiWCrNwBVhLtQc1k1/q+oRbFDSHsa28LdWNfXBVWkr0Icwabb7TCejECWYmceOv3zlYIhncTcj09WzYUvvxCy9D+NoaX3OlRQrgPGk2E0dp1TaolO/zwKhAsyKF9G+cSqLaGSCzmpA6oiOKH7R2OQIWeFjEXs/aReKiE5FzqGByDDmDlwnvKqwQ8ptoXvYHn3JYjS5CzDz/fcON3eg4HBKG7eHUwsD/hLMd2j4/M6DwIzS9P2G1PALxtMASu/hhTND25YLnZ5V0bgOjGA/KtRaEOj4247rULHjn++xGz/CyEZ23vTUXMqI4KLXdujPgSHHmbchp11HQgnnLfK1KL8V5xnxs0BFrHpGKTg24RM+eAIxTC19Z6Q89Mqiij6X6UfK9uOLOKPLUBkGEJwUq8pr04/YdJ55+3HEOHPFQ2YTl0o7XhWdg5eAJa2Aj19EGJ1SRUWflDy4mRJ53kqAkd/8bc1Y66zfBnt7jOT++BZCJHqSrLOMxz9TAjVARbRvBP4b5/1LsVd6bd4pbTz40WfkSpkO9vMLmWlNS5cD2HP3+1SzjPjRZ+RrsSp1mDLlBsbd13E978ewq27EciQLfqM2lMJzFZgW/Qp5QjVDI8bVEUj+Gv9GRw5ZUCFbNFnlAWkSAmZNyuKw4ePIxQKQYXaWYGs0WdyPipx6nIB9Bk/osy3AIW6BzKUe3zY/e9nlrbNWQu8TlFZTcJiNAigDV3DUL+RtVUcziko9jZg9U+BRFe0woQJeH6CAqqeBXOgl8zBR9UR9PZ0IT/WjYfhQYw+NavxFJebWsuLotKZWPpFAVZ+I3B8vEFGRnV8+DEPpQTgqkxf/91c4PcmCDFpRubY+TVLIMyYLaDLPV9Lw7fsIt3mZfIyHfDqHbNYTSQcqNYV8k9/TMZhFXZ+M91KHziHCWHxfDPqqq2ddVwol0LY2UXU15csgOXLZDYsD2yxEH7Y52p7XmBsl52u8dJrz9nm7Uau80t6ZI7FcJ7wbfXrueJ1mxGurTSnE3lReP+K6W3zTggIwr50sIA22Je1WvIjD37Z7YO9MDRNm+Ggn3760wjz2wO7YMD02UzixFcfpIZml8P8pGWyEiRrIatnn3nBM86xc8I2LjziAAAAAElFTkSuQmCC",
+      "iconType": "image",
+      "tags": [
+        "教程"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v7ghfhf55la703i9",
+      "createdAt": "2025-05-28T11:31:35.091Z",
+      "updatedAt": "2025-05-28T11:31:35.091Z"
+    },
+    {
+      "title": "OpenAI 文档介绍",
+      "description": "OpenAI 官方帮助文档中文版",
+      "url": "https://openai.xiniushu.com/",
+      "icon": "https://openai.xiniushu.com/img/logo.png",
+      "iconType": "image",
+      "tags": [
+        "官方文档"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v7xy7k2ni8hspym",
+      "createdAt": "2025-05-28T11:31:57.727Z",
+      "updatedAt": "2025-05-28T11:31:57.728Z"
+    },
+    {
+      "title": "OpenAI Academy",
+      "description": "通过掌握有效利用人工智能的知识和技能，解锁人工智能时代的新机遇",
+      "url": "https://academy.openai.com/",
+      "icon": "https://d2xo500swnpgl1.cloudfront.net/uploads/oaiacademy/Blossom-Mono-d9cf53d1-f65c-4a19-b220-f2ec1b3bd64a-1739890309686.png",
+      "iconType": "image",
+      "tags": [
+        "社区"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7v9sjdyw0syobhk1r",
+      "createdAt": "2025-05-28T11:33:24.025Z",
+      "updatedAt": "2025-05-28T11:33:24.025Z"
+    },
+    {
+      "title": "Google Gemini",
+      "description": "谷歌出品",
+      "url": "https://gemini.google.com/",
+      "icon": "https://gemini.google.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb7vc3xay9yvm6od67q",
+      "createdAt": "2025-05-28T11:35:12.094Z",
+      "updatedAt": "2025-05-28T11:35:12.094Z"
+    },
+    {
+      "title": "紫东太初",
+      "description": "中国科学院自动化研究所和武汉人工智能研究院推出新一代多模态大模型",
+      "url": "https://taichu-web.ia.ac.cn/",
+      "icon": "https://taichu-public.wair.ac.cn/chatweb/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7vdahcmjde0g84tfh",
+      "createdAt": "2025-05-28T11:36:07.249Z",
+      "updatedAt": "2025-05-28T11:36:07.249Z"
+    },
+    {
+      "title": "Qwen Chat",
+      "description": "涵盖聊天机器人、图像和视频理解、图像生成、文档处理、网络搜索集成等",
+      "url": "https://chat.qwen.ai/",
+      "icon": "https://assets.alicdn.com/g/qwenweb/qwen-webui-fe/0.0.104/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态",
+        "图像生成",
+        "视频生成",
+        "文档处理"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mb7vfblbfpykq699f1f",
+      "createdAt": "2025-05-28T11:37:41.999Z",
+      "updatedAt": "2025-05-28T11:37:41.999Z"
+    },
+    {
+      "title": "通义",
+      "description": "一个通情、达义的国产AI模型，你的全能AI助手",
+      "url": "https://tongyi.aliyun.com/",
+      "icon": "https://img.alicdn.com/imgextra/i4/O1CN01EfJVFQ1uZPd7W4W6i_!!6000000006051-2-tps-112-112.png",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7vg1ve39zzaswujqg",
+      "createdAt": "2025-05-28T11:38:16.058Z",
+      "updatedAt": "2025-05-28T11:38:16.058Z"
+    },
+    {
+      "title": "文心一言",
+      "description": "你的智能伙伴，帮你高效完成工作和学习任务。",
+      "url": "https://yiyan.baidu.com/",
+      "icon": "https://nlp-eb.cdn.bcebos.com/logo/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型",
+        "多模态",
+        "图像生成",
+        "AI办公"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7vh1z3figx7g4dcc6",
+      "createdAt": "2025-05-28T11:39:02.847Z",
+      "updatedAt": "2025-05-28T11:39:02.847Z"
+    },
+    {
+      "title": "llmstxt",
+      "description": "dotenv 开发的开源命令行工具，可以基于网站的 sitemap.xml 文件生成 llms.txt",
+      "url": "https://llmstxt.org/",
+      "icon": "https://llmstxt.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "行业标准"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7vj6xzyvxnxcze0b8",
+      "createdAt": "2025-05-28T11:40:42.599Z",
+      "updatedAt": "2025-05-28T11:40:42.599Z"
+    },
+    {
+      "title": "NextChat",
+      "description": "一个透明的开源人工智能聊天平台",
+      "url": "https://nextchat.club/",
+      "icon": "https://nextchat.club/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7vm476lxl2y7tiot",
+      "createdAt": "2025-05-28T11:42:59.010Z",
+      "updatedAt": "2025-05-28T11:42:59.010Z"
     }
   ]
 }

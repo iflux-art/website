@@ -7,6 +7,9 @@ import { StyleManager } from '@/styles/style-manager';
 import React from 'react';
 import { generateMetadata, generateViewport } from '@/lib/metadata';
 
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 export const metadata: Metadata = generateMetadata();
 export const viewport = generateViewport();
 
@@ -38,6 +41,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <Analytics/>
+        <SpeedInsights/>
       </body>
     </html>
   );
