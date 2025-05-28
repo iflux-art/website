@@ -1,6 +1,12 @@
 {
   "categories": [
     {
+      "id": "ai",
+      "name": "人工智能",
+      "description": "分享AIGC与实用技巧",
+      "order": 1
+    },
+    {
       "id": "development",
       "name": "开发工具",
       "description": "编程开发相关工具和资源",
@@ -580,6 +586,109 @@
       "id": "mb6tp902fx84zarx41f",
       "createdAt": "2025-05-27T18:01:39.794Z",
       "updatedAt": "2025-05-27T18:37:49.923Z"
+    },
+    {
+      "title": "Anthropic | Claude",
+      "description": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems.",
+      "url": "https://claude.ai/",
+      "icon": "https://claude.ai/images/icons/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb7ms6mxlqnxpvw3ipb",
+      "createdAt": "2025-05-28T07:35:45.561Z",
+      "updatedAt": "2025-05-28T07:36:57.182Z"
+    },
+    {
+      "title": "Claude 指南",
+      "description": "了解如何开始使用Anthropic API和Claude",
+      "url": "https://docs.anthropic.com/zh-CN/home",
+      "icon": "https://mintlify.s3-us-west-1.amazonaws.com/anthropic/_generated/favicon/favicon-32x32.png?v=3",
+      "iconType": "image",
+      "tags": [
+        "官方文档"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7mw66yb2x6xgs6wlj",
+      "createdAt": "2025-05-28T07:38:51.610Z",
+      "updatedAt": "2025-05-28T07:45:42.484Z"
+    },
+    {
+      "title": "Grok",
+      "description": "AI for all humanity",
+      "url": "https://x.ai/",
+      "icon": "https://x.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7mxrlmvfynsfr99i",
+      "createdAt": "2025-05-28T07:40:06.010Z",
+      "updatedAt": "2025-05-28T07:42:12.864Z"
+    },
+    {
+      "title": "Grok / X",
+      "description": "在 X 中使用 Grok",
+      "url": "https://x.com/i/grok",
+      "icon": "https://x.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7mzp5tcjtwth8u1c6",
+      "createdAt": "2025-05-28T07:41:36.161Z",
+      "updatedAt": "2025-05-28T07:41:36.161Z"
+    },
+    {
+      "title": "DeepSeek",
+      "description": "Chat with DeepSeek AI.",
+      "url": "https://chat.deepseek.com/",
+      "icon": "https://chat.deepseek.com/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb7n4dlznm5ceb79da",
+      "createdAt": "2025-05-28T07:45:14.471Z",
+      "updatedAt": "2025-05-28T07:45:14.471Z"
+    },
+    {
+      "title": "DeepSeek Platform",
+      "description": "Join DeepSeek API platform to access our AI models, developer resources and API documentation.",
+      "url": "https://platform.deepseek.com/",
+      "icon": "https://platform.deepseek.com/favicon.svg",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7n5vaz8bcqm7lgdks",
+      "createdAt": "2025-05-28T07:46:24.059Z",
+      "updatedAt": "2025-05-28T07:46:24.059Z"
+    },
+    {
+      "title": "DeepSeek 实用集成",
+      "description": "学习资料",
+      "url": "https://github.com/deepseek-ai/awesome-deepseek-integration",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "开发工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7noduslylj5pfk57j",
+      "createdAt": "2025-05-28T08:00:47.908Z",
+      "updatedAt": "2025-05-28T08:00:47.908Z"
     }
   ]
 }

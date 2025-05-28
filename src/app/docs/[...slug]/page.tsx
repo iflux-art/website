@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
@@ -297,7 +299,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         `(^|\n)(#{${heading.level}})\s+(${heading.text.replace(
           /[-/\\^$*+?.()|[\]{}]/g,
           '\\$&'
-        )})(?!\s*{#)`,
+        )})(?!\s*{)`,
         'g'
       ),
       `$1$2 $3 {#${heading.id}}`
@@ -342,9 +344,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         <div className="flex gap-8">
           {/* 左侧边栏 */}
           <aside className="hidden lg:block w-64 relative">
-            <div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
-              <Sidebar category={category} currentDoc={docName as string} />
-            </div>
+            <Sidebar category={category} currentDoc={docName as string} />
           </aside>
 
           {/* 主内容区 */}
@@ -404,9 +404,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto">
-              <TocContainer headings={headings} />
-            </div>
+            <TocContainer headings={headings} />
           </aside>
         </div>
       </div>

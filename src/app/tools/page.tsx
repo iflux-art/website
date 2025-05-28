@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -328,11 +328,11 @@ const TOOLS = [
   },
   {
     id: 'payment-voice',
-    name: '支付到账语音生成器',
-    description: '生成支付宝、微信等平台的到账语音提示，支持自定义金额和平台类型',
+    name: '支付语音生成器',
+    description: '生成支付成功、收款到账等提示音效，支持多种语音风格和音效',
     category: 'entertainment',
     path: '/tools/payment-voice',
-    tags: ['语音', '支付', '到账', '提示音'],
+    tags: ['娱乐', '支付', '语音', '音效'],
     isInternal: true,
   },
 
@@ -340,10 +340,10 @@ const TOOLS = [
   {
     id: 'ai-toolkit',
     name: 'AI工具集',
-    description: 'AI辅助工具，包括文本生成、图像识别、语音转换、智能分析',
+    description: 'AI辅助工具，包括AI写作、AI绘画、AI代码生成、AI翻译、AI摘要',
     category: 'ai',
     path: '/tools/ai-toolkit',
-    tags: ['AI', '智能', '生成', '识别'],
+    tags: ['AI', '写作', '绘画', '代码', '翻译'],
     isInternal: true,
   },
 ];
@@ -351,7 +351,10 @@ const TOOLS = [
 export default function ToolsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [showAllTags, setShowAllTags] = useState(false);
+  const [visibleTagCount, setVisibleTagCount] = useState(10); // 默认显示10个标签
+  const tagsContainerRef = useRef<HTMLDivElement>(null);
 
   // 获取所有标签并按使用数量排序
   const getTagsWithCount = () => {
@@ -368,163 +371,186 @@ export default function ToolsPage() {
   };
 
   const tagsWithCount = getTagsWithCount();
-  const displayTags = showAllTags ? tagsWithCount : tagsWithCount.slice(0, 10);
 
-  // 过滤工具
-  const filteredTools = TOOLS.filter(tool => {
-    const tagMatch = selectedTag === '' || tool.tags.includes(selectedTag);
-    const searchMatch =
-      searchQuery === '' ||
-      tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+  // 计算可见标签数量
+  useEffect(() => {
+    if (!tagsContainerRef.current) return;
 
-    return tagMatch && searchMatch;
-  });
+    // 重置为显示所有标签
+    if (showAllTags) {
+      setVisibleTagCount(tagsWithCount.length);
+      return;
+    }
 
-  // 处理标签点击
-  const handleTagClick = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? '' : tag);
-    setSearchQuery('');
-  };
+    const calculateVisibleTags = () => {
+      const containerWidth = tagsContainerRef.current?.clientWidth || 0;
+      const tagElements = tagsContainerRef.current?.querySelectorAll('.tag-item');
 
-  // 清除所有筛选
-  const clearFilters = () => {
-    setSelectedTag('');
-    setSearchQuery('');
-  };
+      if (!tagElements || tagElements.length === 0) {
+        setVisibleTagCount(tagsWithCount.length); // 默认显示所有标签
+        return;
+      }
+
+      let totalWidth = 0;
+      let visibleCount = 0;
+
+      // 计算"更多"按钮的宽度 (大约100px)
+      const moreButtonWidth = 100;
+      const maxWidth = containerWidth - moreButtonWidth;
+
+      // 计算每个标签的宽度并确定可见数量
+      for (let i = 0; i < tagElements.length; i++) {
+        const tagWidth = tagElements[i].getBoundingClientRect().width + 8; // 加上间距
+        if (totalWidth + tagWidth <= maxWidth) {
+          totalWidth += tagWidth;
+          visibleCount++;
+        } else {
+          break;
+        }
+      }
+
+      // 至少显示1个标签
+      setVisibleTagCount(Math.max(1, visibleCount));
+    };
+
+    calculateVisibleTags();
+
+    // 添加窗口大小变化监听
+    window.addEventListener('resize', calculateVisibleTags);
+    return () => window.removeEventListener('resize', calculateVisibleTags);
+  }, [tagsWithCount, showAllTags]);
+
+  const displayTags = showAllTags ? tagsWithCount : tagsWithCount.slice(0, visibleTagCount);
+
+  // 检查是否需要显示"更多"按钮
+  const shouldShowMoreButton = !showAllTags && tagsWithCount.length > visibleTagCount;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Wrench className="h-8 w-8" />
-          在线工具
-        </h1>
-        <p className="text-muted-foreground mt-2">实用的在线工具集合，提升工作和学习效率</p>
+      <h1 className="text-3xl font-bold mb-6">工具箱</h1>
+
+      {/* 搜索框 */}
+      <div className="relative mb-6">
+        <input
+          type="text"
+          placeholder="搜索工具..."
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />
+        <Search className="absolute right-3 top-2.5 text-muted-foreground" />
       </div>
 
-      {/* 标签筛选 */}
-      <Card className="mb-6">
-        <CardContent className="p-4">
-          <div className="space-y-3">
-            <div className="flex flex-wrap gap-2">
-              {displayTags.map(({ tag, count }) => (
-                <Button
-                  key={tag}
-                  variant={selectedTag === tag ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => handleTagClick(tag)}
-                  className="text-xs h-8"
-                >
-                  {tag}
-                  <span
-                    className={`ml-1 text-xs px-1.5 py-0.5 rounded-full ${
-                      selectedTag === tag
-                        ? 'bg-primary-foreground/20 text-primary-foreground'
-                        : 'bg-muted text-muted-foreground'
-                    }`}
-                  >
-                    {count}
-                  </span>
-                </Button>
-              ))}
+      {/* 分类导航 */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-3">分类</h2>
+        <div className="flex flex-wrap gap-2">
+          {TOOL_CATEGORIES.map(category => {
+            const CategoryIcon = category.icon;
+            return (
+              <Button
+                key={category.id}
+                variant={category.id === selectedCategory ? 'default' : 'outline'}
+                className="flex items-center gap-2"
+                onClick={() => {
+                  setSelectedCategory(category.id);
+                  setSelectedTag('');
+                }}
+              >
+                <CategoryIcon className="w-4 h-4" />
+                {category.name}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
 
-              {!showAllTags && tagsWithCount.length > 10 && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowAllTags(true)}
-                  className="text-xs h-8"
-                >
-                  更多 ({tagsWithCount.length - 10})
-                </Button>
-              )}
-
-              {showAllTags && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowAllTags(false)}
-                  className="text-xs h-8"
-                >
-                  收起
-                </Button>
-              )}
-            </div>
-
-            {/* 当前筛选状态 */}
-            {selectedTag && (
-              <div className="flex items-center gap-2 pt-2 border-t">
-                <span className="text-sm text-muted-foreground">当前筛选:</span>
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                  标签: {selectedTag}
-                </span>
-                <Button onClick={clearFilters} variant="ghost" size="sm" className="text-xs">
-                  清除筛选
-                </Button>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* 工具网格 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredTools.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground">没有找到匹配的工具</p>
-          </div>
-        ) : (
-          filteredTools.map(tool => (
-            <Card
-              key={tool.id}
-              className="hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer"
-              onClick={() => {
-                if (tool.isInternal) {
-                  window.location.href = tool.path;
-                } else {
-                  window.open(tool.path, '_blank');
-                }
-              }}
+      {/* 标签过滤 */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-3">按标签筛选</h2>
+        <div ref={tagsContainerRef} className="flex flex-wrap gap-2">
+          {displayTags.map(({ tag, count }) => (
+            <Badge
+              key={tag}
+              variant={selectedTag === tag ? 'primary' : 'default'}
+              className={`cursor-pointer tag-item ${
+                selectedTag === tag ? 'bg-primary text-primary-foreground' : ''
+              }`}
+              onClick={() => setSelectedTag(selectedTag === tag ? '' : tag)}
             >
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">{tool.name}</CardTitle>
+              {tag} ({count})
+            </Badge>
+          ))}
+          {shouldShowMoreButton && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllTags(true)}
+              className="ml-1"
+            >
+              更多
+            </Button>
+          )}
+          {showAllTags && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllTags(false)}
+              className="ml-1"
+            >
+              收起
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* 工具列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {TOOLS.filter(tool => {
+          // 搜索过滤
+          const matchesSearch = searchQuery
+            ? tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+            : true;
+
+          // 标签过滤
+          const matchesTag = selectedTag ? tool.tags.includes(selectedTag) : true;
+
+          // 分类过滤
+          const matchesCategory =
+            selectedCategory === 'all' ? true : tool.category === selectedCategory;
+
+          return matchesSearch && matchesTag && matchesCategory;
+        }).map(tool => (
+          <Link href={tool.path} key={tool.id}>
+            <Card className="h-full hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl flex justify-between items-center">
+                  <span>{tool.name}</span>
+                  {tool.isInternal ? null : (
+                    <ExternalLink className="w-4 h-4 text-muted-foreground" />
+                  )}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-3 text-sm leading-relaxed">
-                  {tool.description}
-                </p>
+                <p className="text-muted-foreground mb-4">{tool.description}</p>
                 <div className="flex flex-wrap gap-1">
-                  {tool.tags.map(tag => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                      onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleTagClick(tag);
-                      }}
-                    >
+                  {tool.tags.slice(0, 3).map(tag => (
+                    <Badge key={`${tool.id}-${tag}`} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
+                  {tool.tags.length > 3 && (
+                    <Badge variant="outline" className="text-xs">
+                      +{tool.tags.length - 3}
+                    </Badge>
+                  )}
                 </div>
               </CardContent>
             </Card>
-          ))
-        )}
-      </div>
-
-      {/* 统计信息 */}
-      <div className="mt-8 text-center text-sm text-muted-foreground">
-        {searchQuery || selectedTag ? (
-          <p>显示 {filteredTools.length} 个工具</p>
-        ) : (
-          <p>共收录 {TOOLS.length} 个实用工具</p>
-        )}
+          </Link>
+        ))}
       </div>
     </div>
   );
