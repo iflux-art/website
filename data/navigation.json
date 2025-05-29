@@ -25,18 +25,6 @@
       "order": 3
     },
     {
-      "id": "learning",
-      "name": "学习资源",
-      "description": "在线学习和教育资源",
-      "order": 4
-    },
-    {
-      "id": "entertainment",
-      "name": "娱乐休闲",
-      "description": "娱乐和休闲网站",
-      "order": 5
-    },
-    {
       "id": "friends",
       "name": "友情链接",
       "description": "合作伙伴和友情链接",
@@ -1080,6 +1068,919 @@
       "id": "mb7vm476lxl2y7tiot",
       "createdAt": "2025-05-28T11:42:59.010Z",
       "updatedAt": "2025-05-28T11:42:59.010Z"
+    },
+    {
+      "title": "SCNet人工智能助手",
+      "description": "超算互联网出品",
+      "url": "https://www.scnet.cn/ui/chatbot/",
+      "icon": "https://www.scnet.cn/acx/resource/sites/isclogo?logoType=ico",
+      "iconType": "image",
+      "tags": [
+        "套盒应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wlphszm7n3fwia1",
+      "createdAt": "2025-05-28T12:10:39.568Z",
+      "updatedAt": "2025-05-28T12:10:39.568Z"
+    },
+    {
+      "title": "摩尔线程",
+      "description": "为各行各业的数智化转型提供强大的AI计算支持",
+      "url": "https://playground.mthreads.com/",
+      "icon": "https://playground.mthreads.com/favicon/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wo2bpidv54acd8aa",
+      "createdAt": "2025-05-28T12:12:29.509Z",
+      "updatedAt": "2025-05-28T12:12:29.509Z"
+    },
+    {
+      "title": "天启",
+      "description": "面向全球开发者的开源社区",
+      "url": "https://tianqi.gitcode.com/",
+      "icon": "https://cdn-static.gitcode.com/static/images/logo-favicon.png",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wpb1lzw224xxvh0f",
+      "createdAt": "2025-05-28T12:13:27.465Z",
+      "updatedAt": "2025-05-28T12:14:27.817Z"
+    },
+    {
+      "title": "小艺",
+      "description": "华为公司自主研发的AI智慧助手",
+      "url": "https://xiaoyi.huawei.com/chat/",
+      "icon": "https://search-render-drcn.dbankcdn.com/celia/v2/favicon-transparent.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wrgadd0s092ikzkc",
+      "createdAt": "2025-05-28T12:15:07.573Z",
+      "updatedAt": "2025-05-28T12:15:07.573Z"
+    },
+    {
+      "title": "小布助手",
+      "description": "由OPPO推出的，融合了DeepSeek，支持智能搜索与分析，写作翻译文案编程情感陪伴阅读总结的全能助手",
+      "url": "https://xiaobu.coloros.com/chat",
+      "icon": "https://xiaobu.coloros.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wrydh0thnmxnnf9w",
+      "createdAt": "2025-05-28T12:15:31.013Z",
+      "updatedAt": "2025-05-28T12:15:31.013Z"
+    },
+    {
+      "title": "理想同学",
+      "description": "你的智能对话问答AI伙伴",
+      "url": "https://chat.livis.com/",
+      "icon": "https://p.ampmake.com/liid/20240305/static/livis_web/app_icon.png",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wsshzy67zs7hi0t",
+      "createdAt": "2025-05-28T12:16:10.055Z",
+      "updatedAt": "2025-05-28T12:16:10.055Z"
+    },
+    {
+      "title": "Monica",
+      "description": "你的 ChatGPT AI 助手",
+      "url": "https://monica.im/",
+      "icon": "https://monica.im/favicon.ico",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wwtze12czq60wt4u",
+      "createdAt": "2025-05-28T12:19:18.602Z",
+      "updatedAt": "2025-05-28T12:19:18.602Z"
+    },
+    {
+      "title": "Poe",
+      "description": "最好的人工智能，尽在一处",
+      "url": "https://poe.com/",
+      "icon": "https://poe.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wy1eyg3z2tzhtfnw",
+      "createdAt": "2025-05-28T12:20:14.890Z",
+      "updatedAt": "2025-05-28T12:20:14.890Z"
+    },
+    {
+      "title": "AskManyAI",
+      "description": "免费的AI超级生产力平台",
+      "url": "https://askmany.cn/",
+      "icon": "https://ama-static.floatai.cn/askmanyai/prod/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb7wyy37db4d2v8am5e",
+      "createdAt": "2025-05-28T12:20:57.235Z",
+      "updatedAt": "2025-05-28T12:20:57.235Z"
+    },
+    {
+      "title": "边界AI",
+      "description": "聚合了多种AI生成模型，旨在优化和创新您的内容创作流程",
+      "url": "https://www.yyai8.com/",
+      "icon": "https://file.1foo.com/2023/10/20/17dcd076f1d9bf17dbb371d0f4d61a59.png",
+      "iconType": "image",
+      "tags": [
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7wzqbc1eypxc2npk5",
+      "createdAt": "2025-05-28T12:21:33.816Z",
+      "updatedAt": "2025-05-28T12:21:33.816Z"
+    },
+    {
+      "title": "ChatHub",
+      "description": "從 ChatGPT、Claude、Gemini 等多個來源獲取洞察，一次完成",
+      "url": "https://chathub.gg/zh",
+      "icon": "https://chathub.gg/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "套壳应用",
+        "浏览器插件"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x3x92vnn6ezmqn1",
+      "createdAt": "2025-05-28T12:24:49.430Z",
+      "updatedAt": "2025-05-28T12:30:04.354Z"
+    },
+    {
+      "title": "Ace Data Cloud",
+      "description": "供一系列API，代理，与人工智能聊天相关的数据集",
+      "url": "https://platform.acedata.cloud/",
+      "icon": "https://platform.acedata.cloud/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "开发平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x58anbpr676cz5o4",
+      "createdAt": "2025-05-28T12:25:50.399Z",
+      "updatedAt": "2025-05-28T12:25:50.399Z"
+    },
+    {
+      "title": "WildCard",
+      "description": "一分钟注册，轻松订阅海外线上服务",
+      "url": "https://yeka.ai/",
+      "icon": "https://cdn.wildcard.com.cn/logo.png",
+      "iconType": "image",
+      "tags": [
+        "订阅平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x6358jl4nco1gstd",
+      "createdAt": "2025-05-28T12:26:30.380Z",
+      "updatedAt": "2025-05-28T12:26:30.380Z"
+    },
+    {
+      "title": "2233.ai",
+      "description": "ChatGPT Plus / Claude 无需账号 即买即用",
+      "url": "https://2233.ai/",
+      "icon": "https://2233.ai/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "订阅平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x6he5fbc68xebnys",
+      "createdAt": "2025-05-28T12:26:48.845Z",
+      "updatedAt": "2025-05-28T12:26:48.845Z"
+    },
+    {
+      "title": "API易",
+      "description": "专业可靠的 OpenAI API 中转站",
+      "url": "https://www.apiyi.com/",
+      "icon": "https://one.apiyi.com/apiyi-logo.png",
+      "iconType": "image",
+      "tags": [
+        "订阅平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x6xq59tdi9k1pumv",
+      "createdAt": "2025-05-28T12:27:10.013Z",
+      "updatedAt": "2025-05-28T12:27:10.013Z"
+    },
+    {
+      "title": "DeepSider",
+      "description": "一款集成于浏览器侧边栏的AI对话工具",
+      "url": "https://deepsider.ai/zh",
+      "icon": "https://deepsider.ai/logo1895@1x.png",
+      "iconType": "image",
+      "tags": [
+        "浏览器插件",
+        "套壳应用"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x8fazfm77u7nc4cu",
+      "createdAt": "2025-05-28T12:28:19.451Z",
+      "updatedAt": "2025-05-28T12:30:14.299Z"
+    },
+    {
+      "title": "律己AI",
+      "description": "TensorBounce旗下的通用大模型x领域法务模型",
+      "url": "https://www.tensorbounce.com/",
+      "icon": "https://www.tensorbounce.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "垂直模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb7x9lfv1lc3u3vao8",
+      "createdAt": "2025-05-28T12:29:14.059Z",
+      "updatedAt": "2025-05-28T12:29:14.059Z"
+    },
+    {
+      "title": "Ollama",
+      "description": "Get up and running with large language models.",
+      "url": "https://ollama.com/",
+      "icon": "https://ollama.com/public/icon-16x16.png",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8rgsgu1ax9590rx2k",
+      "createdAt": "2025-05-29T02:34:38.238Z",
+      "updatedAt": "2025-05-29T02:34:38.238Z"
+    },
+    {
+      "title": "动手学 Ollama",
+      "description": "关于 Ollama 实用教程",
+      "url": "https://github.com/datawhalechina/handy-ollama",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "教程"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rhxt8vh1qzcma4wm",
+      "createdAt": "2025-05-29T02:35:31.820Z",
+      "updatedAt": "2025-05-29T02:35:31.820Z"
+    },
+    {
+      "title": "Pinokio",
+      "description": "AI Browser",
+      "url": "https://pinokio.computer/",
+      "icon": "https://pinokio.computer/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rk6b3ksbj1kfxvz",
+      "createdAt": "2025-05-29T02:37:16.143Z",
+      "updatedAt": "2025-05-29T02:37:16.143Z"
+    },
+    {
+      "title": "Cherry Studio",
+      "description": "快速切换多个先进的 LLM 模型，提升工作学习效率",
+      "url": "https://cherry-ai.com/",
+      "icon": "https://cherry-ai.com/assets/favicon-BmbgeFTf.png",
+      "iconType": "image",
+      "tags": [],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8rkz3kniamb61xrd",
+      "createdAt": "2025-05-29T02:37:53.456Z",
+      "updatedAt": "2025-05-29T02:37:53.456Z"
+    },
+    {
+      "title": "Chatbox AI",
+      "description": "AI 客户端应用和智能助手，支持众多先进的 AI 模型和 API",
+      "url": "https://chatboxai.app/",
+      "icon": "https://chatboxai.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rlwubj5o2p4ofcw",
+      "createdAt": "2025-05-29T02:38:37.187Z",
+      "updatedAt": "2025-05-29T02:38:37.187Z"
+    },
+    {
+      "title": "LM Studio",
+      "description": "Run Llama, Gemma 3, DeepSeek locally on your computer.",
+      "url": "https://lmstudio.ai/",
+      "icon": "https://lmstudio.ai/_next/static/media/android-chrome-192x192.3a60873f.png",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rmdaembg9a00p7qk",
+      "createdAt": "2025-05-29T02:38:58.502Z",
+      "updatedAt": "2025-05-29T02:38:58.502Z"
+    },
+    {
+      "title": "AnythingLLM",
+      "description": "The all-in-one AI application for everyone",
+      "url": "https://anythingllm.com/",
+      "icon": "https://framerusercontent.com/images/EIbT8RYrTi16Lw425LfvWGrnqg.svg",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rn26xayotasaxymi",
+      "createdAt": "2025-05-29T02:39:30.777Z",
+      "updatedAt": "2025-05-29T02:39:30.777Z"
+    },
+    {
+      "title": "eechat",
+      "description": "🚀 Powerful Local AI Chat Application - Secure, Efficient, Personalized 本地化部署的大模型客户端",
+      "url": "https://www.ee.chat",
+      "icon": "https://www.ee.chat/icon.svg",
+      "iconType": "image",
+      "tags": [
+        "部署工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rnvzwq9cs98ei3s",
+      "createdAt": "2025-05-29T02:40:09.404Z",
+      "updatedAt": "2025-05-29T02:40:09.404Z"
+    },
+    {
+      "title": "OpenRouter",
+      "description": "The unified interface for LLMs. Find the best models & prices for your prompts",
+      "url": "https://openrouter.ai/",
+      "icon": "https://openrouter.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rotimtar1oslhgo",
+      "createdAt": "2025-05-29T02:40:52.846Z",
+      "updatedAt": "2025-05-29T02:40:52.846Z"
+    },
+    {
+      "title": "AiHubMix",
+      "description": "OpenAI API 模型接口聚合管理,一键集成",
+      "url": "https://aihubmix.com/",
+      "icon": "https://www.resource.nestsound.cn/one-api-web/favicon.ico?v=2",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rplg45w40vvajk3s",
+      "createdAt": "2025-05-29T02:41:29.044Z",
+      "updatedAt": "2025-05-29T02:41:29.044Z"
+    },
+    {
+      "title": "Together AI",
+      "description": "Run and fine-tune generative AI models with easy-to-use APIs and highly scalable infrastructure",
+      "url": "https://www.together.ai/",
+      "icon": "https://cdn.prod.website-files.com/64f6f2c0e3f4c5a91c1e823a/654693d569494912cfc0c0d4_favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rqu3dndeu7t4sbh",
+      "createdAt": "2025-05-29T02:42:26.905Z",
+      "updatedAt": "2025-05-29T02:42:26.905Z"
+    },
+    {
+      "title": "HiFox AI",
+      "description": "一站式 AI 应用平台，人人都能定制自己的 AI 应用",
+      "url": "https://hifox.cn/",
+      "icon": "https://hifox.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rrt4a4tq1i4lpss6",
+      "createdAt": "2025-05-29T02:43:12.298Z",
+      "updatedAt": "2025-05-29T02:43:12.298Z"
+    },
+    {
+      "title": "Replicate",
+      "description": "Run open-source machine learning models with a cloud API",
+      "url": "https://replicate.com/",
+      "icon": "https://replicate.com/assets/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rsatonuc2umt1bqp",
+      "createdAt": "2025-05-29T02:43:35.244Z",
+      "updatedAt": "2025-05-29T02:43:35.244Z"
+    },
+    {
+      "title": "Fireworks",
+      "description": "Fastest Inference for Generative AI",
+      "url": "https://fireworks.ai/",
+      "icon": "https://fireworks.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rswf7rq4ummkdsc",
+      "createdAt": "2025-05-29T02:44:03.235Z",
+      "updatedAt": "2025-05-29T02:44:03.235Z"
+    },
+    {
+      "title": "Hyperbolic",
+      "description": "Access open-source inference and compute at a fraction of the cost. Build with us.",
+      "url": "https://hyperbolic.xyz/",
+      "icon": "https://hyperbolic.xyz/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rtchd8m3hwjzgj49",
+      "createdAt": "2025-05-29T02:44:24.049Z",
+      "updatedAt": "2025-05-29T02:44:24.049Z"
+    },
+    {
+      "title": "Requesty",
+      "description": "Route requests to the best LLM for your task. Logging, cost management and analytics out-of-the-box.",
+      "url": "https://www.requesty.ai/",
+      "icon": "https://www.requesty.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rtsjkm0ln7c7b6a",
+      "createdAt": "2025-05-29T02:44:44.864Z",
+      "updatedAt": "2025-05-29T02:44:44.864Z"
+    },
+    {
+      "title": "simple-one-api",
+      "description": "OpenAI 接口接入适配，配置超级简单，一键部署，开箱即用",
+      "url": "https://github.com/fruitbars/simple-one-api",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8rv71q1g5by8h63t8",
+      "createdAt": "2025-05-29T02:45:50.318Z",
+      "updatedAt": "2025-05-29T02:45:50.318Z"
+    },
+    {
+      "title": "SiliconFlow",
+      "description": "提供全面的生成式 AI 解决方案，支持语言、语音、图像和视频模型的快速集成与应用",
+      "url": "https://siliconflow.cn/zh-cn/",
+      "icon": "https://siliconflow.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8rvvrwircdr4zpwb",
+      "createdAt": "2025-05-29T02:46:22.364Z",
+      "updatedAt": "2025-05-29T02:46:22.364Z"
+    },
+    {
+      "title": "O3 AI",
+      "description": "多服务商模型集成系统，跟众多服务商深度合作，无需每家一个账户，O3一站式集成管理",
+      "url": "https://o3.fan/",
+      "icon": "https://o3.fan/assets/img/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rwsajqqu2r9gyyj",
+      "createdAt": "2025-05-29T02:47:04.507Z",
+      "updatedAt": "2025-05-29T02:47:04.507Z"
+    },
+    {
+      "title": "火山引擎",
+      "description": "火山引擎是字节跳动旗下的云服务平台，将字节跳动快速发展过程中积累的增长方法、技术能力和应用工具开放给外部企业，提供云基础、视频与内容分发、数智平台VeDI、人工智能、开发与运维等服务，帮助企业在数字化升级中实现持续增长。",
+      "url": "https://www.volcengine.com/",
+      "icon": "https://portal.volccdn.com/obj/volcfe/misc/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mb8rxkyzemcosxg7oro",
+      "createdAt": "2025-05-29T02:47:41.675Z",
+      "updatedAt": "2025-05-29T02:47:41.675Z"
+    },
+    {
+      "title": "阿里云百炼",
+      "description": "全链路大模型服务与应用开发平台",
+      "url": "https://bailian.console.aliyun.com/",
+      "icon": "https://gw.alicdn.com/imgextra/i4/O1CN01vVn7g32134zNZEeAR_!!6000000006928-55-tps-24-24.svg",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8ryqzsevzvclttamv",
+      "createdAt": "2025-05-29T02:48:36.136Z",
+      "updatedAt": "2025-05-29T02:48:36.136Z"
+    },
+    {
+      "title": "模力方舟（Gitee AI）",
+      "description": "汇聚最新最热 AI 模型，提供模型体验、推理、训练、部署和应用的一站式服务",
+      "url": "https://ai.gitee.com/",
+      "icon": "https://ai-assets.gitee.com/_next/static/media/gitee-ai.622edfb0.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8rzivsuc0j8nfj4w",
+      "createdAt": "2025-05-29T02:49:12.280Z",
+      "updatedAt": "2025-05-29T02:49:12.280Z"
+    },
+    {
+      "title": "PPIO派欧云",
+      "description": "提供全面的 AI 云端平台解决方案,包括模型 API、Serverless 和高性能 GPU 实例等",
+      "url": "https://ppinfra.com/",
+      "icon": "https://ppinfra.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8s0z7mnh2xdgyy8t",
+      "createdAt": "2025-05-29T02:50:20.098Z",
+      "updatedAt": "2025-05-29T02:50:20.098Z"
+    },
+    {
+      "title": "无问芯穹",
+      "description": "实现多种大模型算法在多元芯片上的高效、统一部署",
+      "url": "https://cloud.infini-ai.com/",
+      "icon": "https://content.cloud.infini-ai.com/platform-web-dev/infini.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8s1z6e1mcyxzn1f8l",
+      "createdAt": "2025-05-29T02:51:06.710Z",
+      "updatedAt": "2025-05-29T02:51:06.710Z"
+    },
+    {
+      "title": "ocoolAI",
+      "description": "全球AI一站集成",
+      "url": "https://one.ocoolai.com/",
+      "icon": "https://vip.123pan.cn/1821083851/ocoolai/web/ocool5.0-1/assets/imgs/template/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8s8brxkxne3x6df7",
+      "createdAt": "2025-05-29T02:56:02.973Z",
+      "updatedAt": "2025-05-29T02:56:02.973Z"
+    },
+    {
+      "title": "HenAPI",
+      "description": "全球AI大模型API聚合平台",
+      "url": "https://a.henhuoai.com/",
+      "icon": "https://mj.hdgsb.com/henapi.png",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8s8rp14l9kty8cj3n",
+      "createdAt": "2025-05-29T02:56:23.605Z",
+      "updatedAt": "2025-05-29T02:56:23.605Z"
+    },
+    {
+      "title": "DMXAPI",
+      "description": "OpenAI 接口聚合管理，支持多种渠道",
+      "url": "https://www.dmxapi.cn/",
+      "icon": "https://www.dmxapi.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8s99nlhwr8wguugw",
+      "createdAt": "2025-05-29T02:56:46.881Z",
+      "updatedAt": "2025-05-29T02:56:46.881Z"
+    },
+    {
+      "title": "Microsoft Azure",
+      "description": "Azure 云服务",
+      "url": "https://portal.azure.com/",
+      "icon": "https://portal.azure.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mb8sb3n6hgogb03bi16",
+      "createdAt": "2025-05-29T02:58:12.402Z",
+      "updatedAt": "2025-05-29T02:58:12.402Z"
+    },
+    {
+      "title": "百宝箱",
+      "description": "一款可以提供一站式 AI 原生应用的开发平台",
+      "url": "https://tbox.alipay.com/",
+      "icon": "https://mdn.alipayobjects.com/huamei_1tq0sk/afts/img/6Zq-QIERz-EAAAAAAAAAAAAADhYMAQFr/original",
+      "iconType": "image",
+      "tags": [
+        "API"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8sca09p5wnctnm2t8",
+      "createdAt": "2025-05-29T02:59:07.305Z",
+      "updatedAt": "2025-05-29T02:59:07.305Z"
+    },
+    {
+      "title": "优设读报",
+      "description": "AIGC趋势和设计行业资讯一站知晓",
+      "url": "https://www.uisdc.com/news",
+      "icon": "https://www.uisdc.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "资讯"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8se6wsv7640i9d08d",
+      "createdAt": "2025-05-29T03:00:36.604Z",
+      "updatedAt": "2025-05-29T03:00:36.604Z"
+    },
+    {
+      "title": "AIbase基地",
+      "description": "提供包括最新的AI新闻资讯、全面的AI赚钱指南、详尽的AI教程、多样化的AI产品库以及强大的AI应用开发平台等",
+      "url": "https://www.aibase.com/zh",
+      "icon": "https://www.aibase.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "资讯"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8si5d0zlsebqaw7sa",
+      "createdAt": "2025-05-29T03:03:41.220Z",
+      "updatedAt": "2025-05-29T03:03:41.220Z"
+    },
+    {
+      "title": "每日AI资讯 | AI工具集",
+      "description": "每日更新AI行业的最新资讯、新闻、热点、融资、产品动态，让你随时了解人工智能领域的最新趋势、更新突破和热门大事件",
+      "url": "https://ai-bot.cn/daily-ai-news/",
+      "icon": "https://ai-bot.cn/wp-content/uploads/2023/07/ai-bot-favicon.png",
+      "iconType": "image",
+      "tags": [
+        "资讯"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8siyiwqu47gkl61qd",
+      "createdAt": "2025-05-29T03:04:19.016Z",
+      "updatedAt": "2025-05-29T03:04:19.016Z"
+    },
+    {
+      "title": "The Daily Bite",
+      "description": "provides tools, news, and insights on how AI can improve your life. Read by industry leaders!",
+      "url": "https://thedailybite.co/",
+      "icon": "https://thedailybite.co/wp-content/uploads/2023/10/cropped-Logo-Arrow-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "资讯"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8sjo4gweep8s84k8",
+      "createdAt": "2025-05-29T03:04:52.192Z",
+      "updatedAt": "2025-05-29T03:04:52.192Z"
+    },
+    {
+      "title": "WaytoAGI-通往AGI之路",
+      "description": "最大最全面的 AI 知识库，汇聚上千个人工智能网站和工具，汇集最新的 AI 工具、GPT 应用、AI 智能体和行业资讯",
+      "url": "https://www.waytoagi.com/zh",
+      "icon": "https://www.waytoagi.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "资讯"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8sl7rtl7u1mxuhf0n",
+      "createdAt": "2025-05-29T03:06:04.313Z",
+      "updatedAt": "2025-05-29T03:06:04.313Z"
+    },
+    {
+      "title": "LiblibAI-哩布哩布AI",
+      "description": "AI绘画原创模型分享社区，10万+模型免费下载;原汁原味的webUI、comfyUI，在线AI绘图工具免费使用;还可在线进行模型训练",
+      "url": "https://www.liblib.art/",
+      "icon": "https://liblibai-web-static.liblib.cloud/favicon_v2.png",
+      "iconType": "image",
+      "tags": [
+        "创作平台"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8sqb5q7b5djuex4q3",
+      "createdAt": "2025-05-29T03:10:01.982Z",
+      "updatedAt": "2025-05-29T03:10:01.982Z"
+    },
+    {
+      "title": "Tensor.Art",
+      "description": "AI model sharing platform, online run models to generate image and traning model for free",
+      "url": "https://tusiart.com/",
+      "icon": "https://tusiart.com/tensorart.ico",
+      "iconType": "image",
+      "tags": [
+        "创作平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8sr2o7hopnuwf4oes",
+      "createdAt": "2025-05-29T03:10:37.639Z",
+      "updatedAt": "2025-05-29T03:10:37.639Z"
+    },
+    {
+      "title": "堆友",
+      "description": "多风格AI绘画神器免费生成；3D素材在线渲染，免费商用；各类创意设计大赛，等你来战！",
+      "url": "https://d.design/",
+      "icon": "https://img.alicdn.com/imgextra/i2/O1CN01chTRfM1RHRCkxMMSn_!!6000000002086-0-tps-200-200.jpg",
+      "iconType": "image",
+      "tags": [
+        "创作平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8sryc4nd6ol3kt6ii",
+      "createdAt": "2025-05-29T03:11:18.676Z",
+      "updatedAt": "2025-05-29T03:11:18.676Z"
+    },
+    {
+      "title": "Cephalon Cloud 端脑云",
+      "description": "分布式 AIGC 算力网络，无需部署，在线使用。一键部署 AI 绘图 SD 环境，为您提供更流畅的 AI 创作体验。",
+      "url": "https://cephalon.cloud/aigc",
+      "icon": "https://cephalon.cloud/favorite.ico",
+      "iconType": "image",
+      "tags": [
+        "创作平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8st0nmhojmmmme7y6",
+      "createdAt": "2025-05-29T03:12:08.338Z",
+      "updatedAt": "2025-05-29T03:12:08.338Z"
+    },
+    {
+      "title": "SeaArt AI",
+      "description": "集AI艺术创作、视频生成、音频制作和智能聊天于一体的综合性创意社区",
+      "url": "https://www.seaart.me/zhCN",
+      "icon": "https://www.seaart.me/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "创作工具"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8stokqzyvnu7b2lnf",
+      "createdAt": "2025-05-29T03:12:39.338Z",
+      "updatedAt": "2025-05-29T03:12:39.338Z"
+    },
+    {
+      "title": "Civitai",
+      "description": "AI 绘图分享社区",
+      "url": "https://civitai.com/",
+      "icon": "https://civitai.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "创作平台"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8sv97m7ti1u06rvd4",
+      "createdAt": "2025-05-29T03:13:52.738Z",
+      "updatedAt": "2025-05-29T03:14:18.240Z"
+    },
+    {
+      "title": "Pixiv",
+      "description": "插畫藝術社交網站",
+      "url": "https://www.pixiv.net/",
+      "icon": "https://www.pixiv.net/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "社区"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mb8ta5fxo8yaacdo6c",
+      "createdAt": "2025-05-29T03:25:27.693Z",
+      "updatedAt": "2025-05-29T03:25:27.693Z"
+    },
+    {
+      "title": "Model Context Protocol",
+      "description": "Get started with the Model Context Protocol (MCP)",
+      "url": "https://modelcontextprotocol.io/",
+      "icon": "https://mintlify.s3-us-west-1.amazonaws.com/mcp/_generated/favicon/favicon-32x32.png?v=3",
+      "iconType": "image",
+      "tags": [
+        "MCP"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mb8tbif7ojichefk3v9",
+      "createdAt": "2025-05-29T03:26:31.171Z",
+      "updatedAt": "2025-05-29T03:26:31.171Z"
+    },
+    {
+      "title": "Roo Code",
+      "description": "AI 驱动的开发团队，就在您的编辑器中",
+      "url": "https://roocode.com/",
+      "icon": "https://roocode.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI编程"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8tequi7ct4jqj5y9x",
+      "createdAt": "2025-05-29T03:29:02.058Z",
+      "updatedAt": "2025-05-29T03:29:02.058Z"
+    },
+    {
+      "title": "Cline",
+      "description": "The Collaborative AI Coder",
+      "url": "https://cline.bot/",
+      "icon": "https://cline.bot/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI编程"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mb8tj9z4i3d52z4uujq",
+      "createdAt": "2025-05-29T03:32:33.472Z",
+      "updatedAt": "2025-05-29T03:32:33.472Z"
     }
   ]
 }
