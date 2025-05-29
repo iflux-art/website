@@ -285,7 +285,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       `^(#{${heading.level}})\s+(${heading.text.replace(
         /[-/\\^$*+?.()|[\]{}]/g,
         '\\$&'
-      )})(?:\s*{#[\w-]+})?$`,
+      )})(?:\\s*{#[\\w-]+})?$`,
       'gm'
     );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
@@ -299,7 +299,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         `(^|\n)(#{${heading.level}})\s+(${heading.text.replace(
           /[-/\\^$*+?.()|[\]{}]/g,
           '\\$&'
-        )})(?!\s*{)`,
+        )})(?!\\s*{)`,
         'g'
       ),
       `$1$2 $3 {#${heading.id}}`

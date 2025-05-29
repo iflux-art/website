@@ -17,7 +17,8 @@ export interface TravelButtonProps {}
  * @example
  * <TravelButton />
  */
-export function TravelButton({}: TravelButtonProps = {}) {
+export function TravelButton(props: TravelButtonProps) {
+  // 当前props暂未使用，保留参数为未来扩展准备
   return (
     <Button
       variant="ghost"

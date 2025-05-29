@@ -134,44 +134,32 @@ The tool can count:
     }
   };
 
+  // 文本转换策略对象
+  const textTransforms = {
+    uppercase: (text: string) => text.toUpperCase(),
+    lowercase: (text: string) => text.toLowerCase(),
+    capitalize: (text: string) => text.replace(/\b\w/g, l => l.toUpperCase()),
+    reverse: (text: string) => text.split('').reverse().join(''),
+    removeSpaces: (text: string) => text.replace(/\s+/g, ''),
+    removeLineBreaks: (text: string) => text.replace(/\n/g, ' ').replace(/\s+/g, ' '),
+    sortLines: (text: string) => text.split('\n').sort().join('\n'),
+    shuffleLines: (text: string) => {
+      const lines = text.split('\n');
+      for (let i = lines.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [lines[i], lines[j]] = [lines[j], lines[i]];
+      }
+      return lines.join('\n');
+    },
+    removeDuplicateLines: (text: string) => [...new Set(text.split('\n'))].join('\n'),
+  };
+
   // 文本转换功能
-  const transformText = (type: string) => {
-    let result = text;
-    switch (type) {
-      case 'uppercase':
-        result = text.toUpperCase();
-        break;
-      case 'lowercase':
-        result = text.toLowerCase();
-        break;
-      case 'capitalize':
-        result = text.replace(/\b\w/g, l => l.toUpperCase());
-        break;
-      case 'reverse':
-        result = text.split('').reverse().join('');
-        break;
-      case 'removeSpaces':
-        result = text.replace(/\s+/g, '');
-        break;
-      case 'removeLineBreaks':
-        result = text.replace(/\n/g, ' ').replace(/\s+/g, ' ');
-        break;
-      case 'sortLines':
-        result = text.split('\n').sort().join('\n');
-        break;
-      case 'shuffleLines':
-        const lines = text.split('\n');
-        for (let i = lines.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [lines[i], lines[j]] = [lines[j], lines[i]];
-        }
-        result = lines.join('\n');
-        break;
-      case 'removeDuplicateLines':
-        result = [...new Set(text.split('\n'))].join('\n');
-        break;
+  const transformText = (type: keyof typeof textTransforms) => {
+    const transformFn = textTransforms[type];
+    if (transformFn) {
+      setText(transformFn(text));
     }
-    setText(result);
   };
 
   // 文本比较
@@ -196,24 +184,6 @@ The tool can count:
   };
 
   const actions = [
-    {
-      label: '文字统计',
-      onClick: () => setActiveTab('counter'),
-      icon: Type,
-      variant: activeTab === 'counter' ? 'default' : ('outline' as const),
-    },
-    {
-      label: '文本转换',
-      onClick: () => setActiveTab('transform'),
-      icon: ArrowUpDown,
-      variant: activeTab === 'transform' ? 'default' : ('outline' as const),
-    },
-    {
-      label: '文本比较',
-      onClick: () => setActiveTab('compare'),
-      icon: FileText,
-      variant: activeTab === 'compare' ? 'default' : ('outline' as const),
-    },
     {
       label: '加载示例',
       onClick: loadExample,
@@ -248,10 +218,20 @@ The tool can count:
         </ul>
       </div>
       <div>
+        <h4 className="font-medium mb-2">适用场景</h4>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li>• 写作时控制文章长度</li>
+          <li>• 准备演讲稿时估算时间</li>
+          <li>• 社交媒体发布时控制字数</li>
+          <li>• 学术论文字数统计</li>
+        </ul>
+      </div>
+      <div>
         <h4 className="font-medium mb-2">统计说明</h4>
         <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• 阅读时间：中文200字符/分钟，英文250词/分钟</li>
-          <li>• 演讲时间：中文150字符/分钟，英文180词/分钟</li>
+          <li>• 阅读时间：基于平均阅读速度（中文200字/分钟，英文250词/分钟）</li>
+          <li>• 演讲时间：基于平均演讲速度（中文150字/分钟，英文180词/分钟）</li>
+          <li>• 实际时间可能因个人习惯和文本复杂度而有所差异</li>
           <li>• 支持中英文混合文本统计</li>
           <li>• 自动识别句子和段落分隔符</li>
         </ul>
@@ -300,16 +280,6 @@ The tool can count:
       {/* 文字统计标签页 */}
       {activeTab === 'counter' && (
         <>
-          {/* 操作按钮 */}
-          <div className="mb-6 flex flex-wrap gap-2">
-            <Button onClick={loadExample} variant="outline">
-              加载示例
-            </Button>
-            <Button onClick={clearText} variant="outline">
-              清空文本
-            </Button>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* 文本输入区域 */}
             <div className="lg:col-span-2">
@@ -644,53 +614,6 @@ The tool can count:
           </Card>
         </div>
       )}
-
-      {/* 使用说明 */}
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle>使用说明</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <h4 className="font-medium mb-2">统计说明</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>
-                • <strong>字符数</strong>：包含所有字符，包括空格、标点符号等
-              </li>
-              <li>
-                • <strong>单词数</strong>：按空格分割的词语数量，支持中英文混合
-              </li>
-              <li>
-                • <strong>句子数</strong>：按句号、问号、感叹号等标点符号分割
-              </li>
-              <li>
-                • <strong>段落数</strong>：按空行分割的段落数量
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">时间估算</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>
-                • <strong>阅读时间</strong>：基于平均阅读速度（中文200字/分钟，英文250词/分钟）
-              </li>
-              <li>
-                • <strong>演讲时间</strong>：基于平均演讲速度（中文150字/分钟，英文180词/分钟）
-              </li>
-              <li>• 实际时间可能因个人习惯和文本复杂度而有所差异</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">适用场景</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• 写作时控制文章长度</li>
-              <li>• 准备演讲稿时估算时间</li>
-              <li>• 社交媒体发布时控制字数</li>
-              <li>• 学术论文字数统计</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
     </ToolLayout>
   );
 }

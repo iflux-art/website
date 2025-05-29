@@ -174,26 +174,33 @@ export default function CodeFormatterPage() {
       let formatted = '';
 
       switch (language) {
-        case 'javascript':
+        case 'javascript': {
           formatted = formatJavaScript(input);
           break;
-        case 'html':
+        }
+        case 'html': {
           formatted = formatHTML(input);
           break;
-        case 'css':
+        }
+        case 'css': {
           formatted = formatCSS(input);
           break;
-        case 'json':
+        }
+        case 'json': {
           formatted = formatJSON(input);
           break;
-        case 'xml':
+        }
+        case 'xml': {
           formatted = formatXML(input);
           break;
-        case 'sql':
+        }
+        case 'sql': {
           formatted = formatSQL(input);
           break;
-        default:
+        }
+        default: {
           formatted = input;
+        }
       }
 
       setOutput(formatted);
@@ -212,7 +219,7 @@ export default function CodeFormatterPage() {
       let minified = '';
 
       switch (language) {
-        case 'javascript':
+        case 'javascript': {
           minified = input
             .replace(/\/\*[\s\S]*?\*\//g, '')
             .replace(/\/\/.*$/gm, '')
@@ -220,7 +227,8 @@ export default function CodeFormatterPage() {
             .replace(/;\s*}/g, '}')
             .trim();
           break;
-        case 'css':
+        }
+        case 'css': {
           minified = input
             .replace(/\/\*[\s\S]*?\*\//g, '')
             .replace(/\s+/g, ' ')
@@ -229,16 +237,20 @@ export default function CodeFormatterPage() {
             .replace(/}\s*/g, '}')
             .trim();
           break;
-        case 'json':
+        }
+        case 'json': {
           const parsed = JSON.parse(input);
           minified = JSON.stringify(parsed);
           break;
+        }
         case 'html':
-        case 'xml':
+        case 'xml': {
           minified = input.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
           break;
-        default:
+        }
+        default: {
           minified = input.replace(/\s+/g, ' ').trim();
+        }
       }
 
       setOutput(minified);

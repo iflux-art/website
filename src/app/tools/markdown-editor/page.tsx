@@ -14,12 +14,17 @@ export default function MarkdownEditorPage() {
 
   // 简单的 Markdown 转 HTML 函数
   const markdownToHtml = (md: string): string => {
-    let html = md;
+    let html = md
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
 
     // 标题
-    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    html = html.replace(/^### (.*)$/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*)$/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*)$/gim, '<h1>$1</h1>');
 
     // 粗体和斜体
     html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
@@ -31,35 +36,38 @@ export default function MarkdownEditorPage() {
     html = html.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>');
 
     // 链接
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
     // 图片
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%;" />');
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;height:auto;" loading="lazy"/>');
 
     // 列表
     html = html.replace(/^\* (.+)$/gim, '<li>$1</li>');
     html = html.replace(/^\d+\. (.+)$/gim, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    html = html.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
 
     // 引用
     html = html.replace(/^> (.+)$/gim, '<blockquote>$1</blockquote>');
 
     // 水平线
-    html = html.replace(/^---$/gim, '<hr>');
+    html = html.replace(/^---$/gim, '<hr/>');
 
-    // 段落
-    html = html.replace(/\n\n/g, '</p><p>');
-    html = '<p>' + html + '</p>';
+    // 段落处理（优化版）
+    html = html
+      .split('\n\n')
+      .map(p => p.trim() ? `<p>${p}</p>` : '')
+      .join('');
 
-    // 清理空段落
-    html = html.replace(/<p><\/p>/g, '');
-    html = html.replace(/<p>(<h[1-6]>)/g, '$1');
-    html = html.replace(/(<\/h[1-6]>)<\/p>/g, '$1');
-    html = html.replace(/<p>(<ul>)/g, '$1');
-    html = html.replace(/(<\/ul>)<\/p>/g, '$1');
-    html = html.replace(/<p>(<blockquote>)/g, '$1');
-    html = html.replace(/(<\/blockquote>)<\/p>/g, '$1');
-    html = html.replace(/<p>(<hr>)<\/p>/g, '$1');
+    // 清理空标签
+    const cleanupPatterns = [
+      /<p><\/p>/g,
+      /<p>(<(h[1-6]|ul|blockquote|hr))/g,
+      /(<\/(h[1-6]|ul|blockquote)>)\<\/p>/g
+    ];
+
+    cleanupPatterns.forEach(pattern => {
+      html = html.replace(pattern, (_, g) => g || '');
+    });
 
     return html;
   };
@@ -283,33 +291,6 @@ function greet(name) {
       <Card className="mb-6">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-2 mb-4">
-            {/* 视图模式 */}
-            <div className="flex gap-1 mr-4">
-              <Button
-                variant={viewMode === 'edit' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('edit')}
-              >
-                <Edit className="h-4 w-4 mr-1" />
-                编辑
-              </Button>
-              <Button
-                variant={viewMode === 'preview' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('preview')}
-              >
-                <Eye className="h-4 w-4 mr-1" />
-                预览
-              </Button>
-              <Button
-                variant={viewMode === 'split' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('split')}
-              >
-                分屏
-              </Button>
-            </div>
-
             {/* Markdown 语法按钮 */}
             <Button variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
               <strong>B</strong>
@@ -344,12 +325,6 @@ function greet(name) {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Button onClick={loadExample} variant="outline" size="sm">
-              加载示例
-            </Button>
-            <Button onClick={clearContent} variant="outline" size="sm">
-              清空
-            </Button>
             <Button
               onClick={() => copyContent(markdown, 'markdown')}
               variant="outline"
@@ -418,7 +393,7 @@ function greet(name) {
             <CardContent>
               <div
                 className="prose prose-sm max-w-none h-96 overflow-y-auto p-3 border border-border rounded-lg bg-muted/50"
-                dangerouslySetInnerHTML={{ __html: htmlContent || '<p class="text-muted-foreground">预览内容将显示在这里...</p>' }}
+                dangerouslySetInnerHTML={{ __html: htmlContent || '\u003cp class="text-muted-foreground"\u003e预览内容将显示在这里...\u003c/p\u003e' }}
                 style={{
                   lineHeight: '1.6',
                 }}

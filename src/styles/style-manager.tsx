@@ -1,10 +1,21 @@
 'use client';
 
 import React from 'react';
-import { scrollbarStyles } from './scrollable';
-import { inlineCodeStyles } from './inline-code';
-import { markdownLinkStyles } from './markdown-link';
-import { headingStyles } from './heading';
+// 样式配置对象
+const styleConfig = {
+  scrollbar: import('./scrollable').then(m => m.scrollbarStyles),
+  inlineCode: import('./inline-code').then(m => m.inlineCodeStyles),
+  markdownLink: import('./markdown-link').then(m => m.markdownLinkStyles),
+  heading: import('./heading').then(m => m.headingStyles),
+};
+
+// 样式块模板
+const styleBlocks = {
+  scrollbar: '/* 滚动条样式 */\n',
+  inlineCode: '/* 内联代码样式 */\n',
+  markdownLink: '/* 超链接样式 */\n',
+  heading: '/* 标题样式 */\n',
+};
 
 /**
  * 样式管理器组件
@@ -16,16 +27,10 @@ export function StyleManager() {
   return (
     <style jsx global>{`
       /* 滚动条样式 */
-      ${scrollbarStyles}
-
-      /* 内联代码样式 */
-      ${inlineCodeStyles}
-
-      /* 超链接样式 */
-      ${markdownLinkStyles}
-
-      /* 标题样式 */
-      ${headingStyles}
+      ${styleBlocks.scrollbar}${styleConfig.scrollbar}
+      ${styleBlocks.inlineCode}${styleConfig.inlineCode}
+      ${styleBlocks.markdownLink}${styleConfig.markdownLink}
+      ${styleBlocks.heading}${styleConfig.heading}
     `}</style>
   );
 }
@@ -40,15 +45,9 @@ export function StyleManager() {
 export function getAllComponentStyles(): string {
   return `
     /* 滚动条样式 */
-    ${scrollbarStyles}
-
-    /* 内联代码样式 */
-    ${inlineCodeStyles}
-
-    /* 超链接样式 */
-    ${markdownLinkStyles}
-
-    /* 标题样式 */
-    ${headingStyles}
+    ${styleBlocks.scrollbar}${styleConfig.scrollbar}
+    ${styleBlocks.inlineCode}${styleConfig.inlineCode}
+    ${styleBlocks.markdownLink}${styleConfig.markdownLink}
+    ${styleBlocks.heading}${styleConfig.heading}
   `;
 }
