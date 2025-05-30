@@ -11,11 +11,6 @@ import { UnifiedCard } from '@/components/cards/unified-card';
 import { UnifiedGrid } from '@/components/cards/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
 import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
-import {
-  AnimatedGrid,
-  FriendLinkGrid as AnimatedFriendLinkGrid,
-  ResourceGrid as AnimatedResourceGrid,
-} from '@/components/mdx/animated-grid';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -112,7 +107,6 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
         {...props}
       />
     ),
-    ResourceGrid: (props: any) => <AnimatedResourceGrid {...props} />,
 
     // 友情链接组件
     FriendLinkCard: (props: any) => (
@@ -127,7 +121,6 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
         {...props}
       />
     ),
-    FriendLinkGrid: (props: any) => <AnimatedFriendLinkGrid {...props} />,
 
     // 直接使用统一组件
     UnifiedCard,
