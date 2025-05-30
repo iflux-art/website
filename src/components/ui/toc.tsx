@@ -215,7 +215,7 @@ export function Toc({ headings, className, title = '目录' }: TocProps) {
   return (
     <div className={cn('pl-0', className)}>
       <div ref={tocRef} className="pb-4 pr-2 scrollbar-hide">
-        <h3 className="ml-7 text-sm font-medium mb-2 text-foreground flex items-center">
+        <h3 className="ml-2 text-sm font-medium mb-2 text-foreground flex items-center">
           <Text className="h-4 w-4 mr-1.5 text-primary/80" />
           <span>{title}</span>
         </h3>

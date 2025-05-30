@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { EnhancedBackground } from './enhanced-background';
+import dynamic from 'next/dynamic';
 import { Greeting } from './greeting';
 import { SearchBox } from './search-box';
 import { RecommendationTags } from './recommendation-tags';
+
+const DynamicEnhancedBackground = dynamic(() =>
+  import('./enhanced-background').then((mod) => mod.EnhancedBackground)
+);
 
 /**
  * ChatGPT 风格的首页英雄区组件
@@ -16,7 +20,7 @@ export function HomeHero() {
   return (
     <div className="relative w-full h-full flex flex-col justify-center overflow-y-auto overflow-x-hidden pb-8">
       {/* 增强型背景效果 - 可以选择不同的背景样式 */}
-      <EnhancedBackground style="gradient-mesh" />
+      <DynamicEnhancedBackground style="gradient-mesh" />
 
       {/* 中央内容区域 */}
       <div className="flex flex-col items-center justify-center px-4 w-full mx-auto py-4 md:py-8">

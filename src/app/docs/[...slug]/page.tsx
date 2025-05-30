@@ -343,7 +343,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       <div className="container mx-auto px-4 py-6">
         <div className="flex gap-8">
           {/* 左侧边栏 */}
-          <aside className="hidden lg:block w-64 relative">
+          <aside className="hidden lg:block w-64 relative self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
             <Sidebar category={category} currentDoc={docName as string} />
           </aside>
 
@@ -403,7 +403,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
           </main>
 
           {/* 右侧目录 */}
-          <aside className="hidden xl:block w-64 shrink-0">
+          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
             <TocContainer headings={headings} />
           </aside>
         </div>

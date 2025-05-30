@@ -35,7 +35,8 @@ export default function RootLayout({
           <StyleManager />
           <div className="flex flex-col min-h-screen">
             <Navbar className="flex-shrink-0" />
-            <div className="flex-1 flex-grow overflow-auto">
+            {/* 移除了 overflow-auto 以允许 sticky 定位正常工作 */}
+            <div className="flex-1 flex-grow">
               <main className="flex-1 flex-grow">{children}</main>
             </div>
             <Footer />
