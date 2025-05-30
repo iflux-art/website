@@ -742,21 +742,6 @@
       "updatedAt": "2025-05-28T11:22:52.685Z"
     },
     {
-      "title": "豆包",
-      "description": "你的 AI 聊天智能对话问答助手",
-      "url": "https://www.doubao.com/chat/",
-      "icon": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/logo-icon.png",
-      "iconType": "image",
-      "tags": [
-        "大模型"
-      ],
-      "featured": false,
-      "category": "ai",
-      "id": "mb7uwspefovyi4x3xyu",
-      "createdAt": "2025-05-28T11:23:17.714Z",
-      "updatedAt": "2025-05-28T11:23:17.714Z"
-    },
-    {
       "title": "讯飞星火",
       "description": "科大讯飞推出的新一代认知智能大模型",
       "url": "https://xinghuo.xfyun.cn/desk",
@@ -1981,6 +1966,763 @@
       "id": "mb8tj9z4i3d52z4uujq",
       "createdAt": "2025-05-29T03:32:33.472Z",
       "updatedAt": "2025-05-29T03:32:33.472Z"
+    },
+    {
+      "title": "Agent TARS",
+      "description": "An open-source multimodal AI agent designed to revolutionize GUI interaction by visually interpreting web pages and seamlessly integrating with command lines and file systems.",
+      "url": "https://agent-tars.com/",
+      "icon": "https://github.com/bytedance/UI-TARS-desktop/blob/main/apps/ui-tars/resources/favicon-32x32.png?raw=true",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2g53j2sy7kumxo55",
+      "createdAt": "2025-05-30T17:17:36.079Z",
+      "updatedAt": "2025-05-30T17:17:36.079Z"
+    },
+    {
+      "title": "UI-TARS",
+      "description": "Next-generation native GUI agent model designed to interact seamlessly with GUIs using human-like perception",
+      "url": "https://seed-tars.com/",
+      "icon": "https://seed-tars.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2gphicfu864t1ne",
+      "createdAt": "2025-05-30T17:18:02.502Z",
+      "updatedAt": "2025-05-30T17:18:02.502Z"
+    },
+    {
+      "title": "Genspark",
+      "description": "智能体",
+      "url": "https://www.genspark.ai/",
+      "icon": "https://www.genspark.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2hd1n7m7x9vduyh4",
+      "createdAt": "2025-05-30T17:18:33.035Z",
+      "updatedAt": "2025-05-30T17:18:33.035Z"
+    },
+    {
+      "title": "AutoGLM 沉思",
+      "description": "一个能探究开放式问题，并根据结果执行操作的自主智能体（AI Agent）",
+      "url": "https://autoglm-research.zhipuai.cn/",
+      "icon": "https://autoglm-research.zhipuai.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2hudpa3v5ma09wbk",
+      "createdAt": "2025-05-30T17:18:55.501Z",
+      "updatedAt": "2025-05-30T17:18:55.501Z"
+    },
+    {
+      "title": "GLM-PC",
+      "description": "LLM for Computer Use",
+      "url": "https://cogagent.aminer.cn/",
+      "icon": "https://cogagent.aminer.cn/static/assets/home.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2iaobc9j5mow8e8v",
+      "createdAt": "2025-05-30T17:19:16.619Z",
+      "updatedAt": "2025-05-30T17:19:16.619Z"
+    },
+    {
+      "title": "Suna",
+      "description": "",
+      "url": "https://github.com/kortix-ai/suna",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2islyfzu83tcppge",
+      "createdAt": "2025-05-30T17:19:39.862Z",
+      "updatedAt": "2025-05-30T17:19:39.862Z"
+    },
+    {
+      "title": "扣子-AI 智能体开发平台",
+      "description": "新一代 AI 大模型智能体开发平台。整合了插件、长短期记忆、工作流、卡片等丰富能力，扣子能帮你低门槛、快速搭建个性化或具备商业价值的智能体，并发布到豆包、飞书等各个平台。",
+      "url": "https://www.coze.cn/",
+      "icon": "https://lf-coze-web-cdn.coze.cn/obj/coze-web-cn/obric/coze/favicon.1970.png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbb2jukknitej8s2gr",
+      "createdAt": "2025-05-30T17:20:29.060Z",
+      "updatedAt": "2025-05-30T17:20:29.060Z"
+    },
+    {
+      "title": "Manus",
+      "description": "a general AI agent that turns your thoughts into actions. It excels at various tasks in work and life, getting everything done while you rest.",
+      "url": "https://manus.im/",
+      "icon": "https://manus.im/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2kaykpua33cdsenm",
+      "createdAt": "2025-05-30T17:20:50.300Z",
+      "updatedAt": "2025-05-30T17:20:50.300Z"
+    },
+    {
+      "title": "rabbit",
+      "description": "shop rabbit r1, best of AI, all in one. teenage engineering co-designed. $199, no subscription. best gift to indulge your curiosity. try LAM playground, unlock the potential of rabbit r1.",
+      "url": "https://www.rabbit.tech/",
+      "icon": "https://www.rabbit.tech/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2ktev7vlj6awwbj8",
+      "createdAt": "2025-05-30T17:21:14.215Z",
+      "updatedAt": "2025-05-30T17:21:14.215Z"
+    },
+    {
+      "title": "Athena",
+      "description": "The world's first autonomous general AI with advanced cognitive architecture and human-like reasoning capabilities, designed to tackle complex real-world challenges.",
+      "url": "https://athenalab.ai/",
+      "icon": "https://athenalab.ai/assets/favicon/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2mavgb3d8ksb425p",
+      "createdAt": "2025-05-30T17:22:23.500Z",
+      "updatedAt": "2025-05-30T17:22:23.500Z"
+    },
+    {
+      "title": "OWL",
+      "description": "",
+      "url": "https://github.com/camel-ai/owl",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2mpr130tja2yw4y4",
+      "createdAt": "2025-05-30T17:22:42.781Z",
+      "updatedAt": "2025-05-30T17:22:42.781Z"
+    },
+    {
+      "title": "OpenManus",
+      "description": "",
+      "url": "https://github.com/mannaandpoem/OpenManus",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2nast3fm7p0tandj",
+      "createdAt": "2025-05-30T17:23:10.061Z",
+      "updatedAt": "2025-05-30T17:23:10.061Z"
+    },
+    {
+      "title": "AutoGen",
+      "description": "",
+      "url": "https://microsoft.github.io/autogen/stable/",
+      "icon": "https://microsoft.github.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2nr8p8phrzk4zza",
+      "createdAt": "2025-05-30T17:23:31.369Z",
+      "updatedAt": "2025-05-30T17:23:31.369Z"
+    },
+    {
+      "title": "EnConvo",
+      "description": "AI Agent Launcher for macOS",
+      "url": "https://www.enconvo.com/",
+      "icon": "https://www.enconvo.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2ogf7u69bz15aho",
+      "createdAt": "2025-05-30T17:24:04.003Z",
+      "updatedAt": "2025-05-30T17:24:04.003Z"
+    },
+    {
+      "title": "copy.ai",
+      "description": "Future proof your business with GTM AI",
+      "url": "https://www.copy.ai/",
+      "icon": "https://cdn.prod.website-files.com/628288c5cd3e8411b90a36a4/6793eea386b5ac27242bb8eb_favicon_32x32px%20(1).png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2p8aoxvf6vvdm2xp",
+      "createdAt": "2025-05-30T17:24:40.128Z",
+      "updatedAt": "2025-05-30T17:24:40.128Z"
+    },
+    {
+      "title": "Taskade",
+      "description": "Autonomous AI Agents & Workflow Automation",
+      "url": "https://www.taskade.com/",
+      "icon": "https://www.taskade.com/favicon.ico",
+      "iconType": "emoji",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2pt03uk9xwjueyup",
+      "createdAt": "2025-05-30T17:25:06.963Z",
+      "updatedAt": "2025-05-30T17:25:06.963Z"
+    },
+    {
+      "title": "HaiSnap",
+      "description": "",
+      "url": "https://www.haisnap.com/",
+      "icon": "https://www.haisnap.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2qa4apam973h1irb",
+      "createdAt": "2025-05-30T17:25:29.146Z",
+      "updatedAt": "2025-05-30T17:25:29.146Z"
+    },
+    {
+      "title": "Browser Use",
+      "description": "Repetitive work is dead. Browser Use empowers anyone to automate repetitive online tasks, no code required.",
+      "url": "https://browser-use.com/",
+      "icon": "https://browser-use.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb2qyumez0qi2rdo54",
+      "createdAt": "2025-05-30T17:26:01.198Z",
+      "updatedAt": "2025-05-30T17:26:01.198Z"
+    },
+    {
+      "title": "Google",
+      "description": "",
+      "url": "https://www.google.com/",
+      "icon": "https://www.google.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "搜索引擎"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2tsj9hjgxf51m0wl",
+      "createdAt": "2025-05-30T17:28:12.981Z",
+      "updatedAt": "2025-05-30T17:28:12.981Z"
+    },
+    {
+      "title": "百度",
+      "description": "全球领先的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。",
+      "url": "https://www.baidu.com/",
+      "icon": "https://www.baidu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "搜索引擎"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2ud4uy14i78v5s0c",
+      "createdAt": "2025-05-30T17:28:39.678Z",
+      "updatedAt": "2025-05-30T17:28:39.678Z"
+    },
+    {
+      "title": "必应搜索",
+      "description": "",
+      "url": "https://www.bing.com/",
+      "icon": "https://www.bing.com/sa/simg/favicon-trans-bg-blue-mg-png.png",
+      "iconType": "image",
+      "tags": [
+        "搜索引擎"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2v1bal3pmb7jyhz",
+      "createdAt": "2025-05-30T17:29:11.014Z",
+      "updatedAt": "2025-05-30T17:29:11.014Z"
+    },
+    {
+      "title": "Archive",
+      "description": "",
+      "url": "https://archive.org/",
+      "icon": "https://archive.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "搜索引擎"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2vhzmnnpgbnx2r4q",
+      "createdAt": "2025-05-30T17:29:32.626Z",
+      "updatedAt": "2025-05-30T17:29:32.626Z"
+    },
+    {
+      "title": "学术搜索",
+      "description": "虫部落出品!为广大科研工作者,高校学生,以及学术爱好者提供方便、权威的学术搜索入口,是你的学术搜索第一站!",
+      "url": "https://scholar.chongbuluo.com/",
+      "icon": "https://scholar.chongbuluo.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "学术搜索"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2wxtpk9d5xudfs0h",
+      "createdAt": "2025-05-30T17:30:39.805Z",
+      "updatedAt": "2025-05-30T17:30:39.805Z"
+    },
+    {
+      "title": "谷歌学术",
+      "description": "",
+      "url": "https://scholar.google.com/",
+      "icon": "https://scholar.google.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "学术搜索"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2xf9xaejc0745wf8",
+      "createdAt": "2025-05-30T17:31:02.421Z",
+      "updatedAt": "2025-05-30T17:31:02.421Z"
+    },
+    {
+      "title": "百度学术",
+      "description": "保持学习的态度",
+      "url": "https://xueshu.baidu.com/",
+      "icon": "https://xueshu.baidu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "学术搜索"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2xx4y829duudk8be",
+      "createdAt": "2025-05-30T17:31:25.570Z",
+      "updatedAt": "2025-05-30T17:31:25.570Z"
+    },
+    {
+      "title": "微软学术",
+      "description": "",
+      "url": "https://academic.microsoft.com/",
+      "icon": "https://academic.microsoft.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "学术搜索"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbb2ye9cyypchd2novj",
+      "createdAt": "2025-05-30T17:31:47.760Z",
+      "updatedAt": "2025-05-30T17:31:47.760Z"
+    },
+    {
+      "title": "Dify",
+      "description": "Unlock Agentic AI with Dify. Develop, deploy, and manage autonomous agents, RAG pipelines, and more for teams at any scale, effortlessly.",
+      "url": "https://dify.ai/",
+      "icon": "https://framerusercontent.com/images/5DjvEqzd8wAijK6D0yeFokYMteE.svg",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbb32baot0ccmxhcp0r",
+      "createdAt": "2025-05-30T17:34:50.544Z",
+      "updatedAt": "2025-05-30T17:35:48.344Z"
+    },
+    {
+      "title": "n8n.io",
+      "description": "n8n is a free and source-available workflow automation tool",
+      "url": "https://n8n.io/",
+      "icon": "https://n8n.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb335y8td9777ndnj",
+      "createdAt": "2025-05-30T17:35:30.272Z",
+      "updatedAt": "2025-05-30T17:35:30.272Z"
+    },
+    {
+      "title": "Make",
+      "description": "",
+      "url": "https://www.make.com/",
+      "icon": "https://www.make.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3431hyqwt3awg3te",
+      "createdAt": "2025-05-30T17:36:13.157Z",
+      "updatedAt": "2025-05-30T17:36:13.157Z"
+    },
+    {
+      "title": "GPTBots",
+      "description": "提供端到端 AI 解决方案，应用于客服、企业搜索、数据洞察等场景，助力企业高效增长，把握 AI 时代机遇。",
+      "url": "https://www.gptbots.ai/zh_CN",
+      "icon": "https://res.gptbots.ai/aigc/image/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb34nhkjtkij6vab8j",
+      "createdAt": "2025-05-30T17:36:39.656Z",
+      "updatedAt": "2025-05-30T17:36:39.656Z"
+    },
+    {
+      "title": "ARGO",
+      "description": "",
+      "url": "https://www.xark-argo.com/",
+      "icon": "https://www.xark-argo.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb353355ylnybff3bj",
+      "createdAt": "2025-05-30T17:36:59.873Z",
+      "updatedAt": "2025-05-30T17:36:59.873Z"
+    },
+    {
+      "title": "Zapier",
+      "description": "Build and scale AI workflows and agents across 8,000+ apps with Zapier—the most connected AI orchestration platform. Trusted by 3 million+ businesses.",
+      "url": "https://zapier.com/",
+      "icon": "https://zapier.com/l/favicon-16.png?v=1",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb35id9cjjetsblea",
+      "createdAt": "2025-05-30T17:37:19.677Z",
+      "updatedAt": "2025-05-30T17:37:19.677Z"
+    },
+    {
+      "title": "ComfyUI-Copilot",
+      "description": "",
+      "url": "https://github.com/AIDC-AI/ComfyUI-Copilot",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "工作流"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3637ekprnhs4wdln",
+      "createdAt": "2025-05-30T17:37:46.682Z",
+      "updatedAt": "2025-05-30T17:37:46.683Z"
+    },
+    {
+      "title": "影刀RPA",
+      "description": "",
+      "url": "https://www.yingdao.com/",
+      "icon": "https://winrobot-pub-a-oss.winrobot360.com/static/home/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "RPA"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb36v7hfr1oszpylah",
+      "createdAt": "2025-05-30T17:38:22.973Z",
+      "updatedAt": "2025-05-30T17:38:22.973Z"
+    },
+    {
+      "title": "实在智能AI+RPA ",
+      "description": "实在智能是AI准独角兽科技公司，中国AI+RPA行业引领者.实在RPA是领先的机器人流程自动化软件,模拟人工零代码完美,自动化操作各类PC及手机软件,实现跨平台跨系统数据同步,支持信创国产操作系统,助力政企降本增效",
+      "url": "https://www.ai-indeed.com/",
+      "icon": "https://www.ai-indeed.com/favicon.ico",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb37gf5ceyroslifbm",
+      "createdAt": "2025-05-30T17:38:50.465Z",
+      "updatedAt": "2025-05-30T17:38:50.465Z"
+    },
+    {
+      "title": "八爪鱼RPA官网",
+      "description": "八爪鱼RPA是一款免费流程自动化机器人，可以模拟人在电脑上的各种操作，结合AI打造人人可用的小白神器，解放重复性工作，提升组织人效。",
+      "url": "https://rpa.bazhuayu.com/",
+      "icon": "https://rpa.bazhuayu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb37vxka268opl2seu",
+      "createdAt": "2025-05-30T17:39:10.568Z",
+      "updatedAt": "2025-05-30T17:39:10.568Z"
+    },
+    {
+      "title": "Microsoft Power Automate",
+      "description": "使用 Power Automate 工具通过 AI、数字和机器人流程自动化技术，在几乎无限的系统、桌面应用和网站之间实现自动化流程。",
+      "url": "https://www.microsoft.com/zh-cn/power-platform/products/power-automate",
+      "icon": "https://www.microsoft.com/favicon.ico?v2",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb38k2eypcfl2zthg",
+      "createdAt": "2025-05-30T17:39:41.846Z",
+      "updatedAt": "2025-05-30T17:39:41.846Z"
+    },
+    {
+      "title": "UiPath 自动化平台",
+      "description": "借助 UiPath 自动化平台为业务赋能。利用智能体自动化推动 AI 转型、精简工作流并提高生产力。",
+      "url": "https://www.uipath.com.cn/",
+      "icon": "https://images.ctfassets.net/5965pury2lcm/1tnmFcdDiCxf9zC14g97ri/19aa59ad1ac0f7bab14838fae98fd99c/favicon-icon.png",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb390rpo4b8ggpt0eb",
+      "createdAt": "2025-05-30T17:40:03.493Z",
+      "updatedAt": "2025-05-30T17:40:03.493Z"
+    },
+    {
+      "title": "HuggingFace",
+      "description": "",
+      "url": "https://huggingface.co/",
+      "icon": "https://huggingface.co/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "开发社区"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbb3aief1vgzz61lru8",
+      "createdAt": "2025-05-30T17:41:12.999Z",
+      "updatedAt": "2025-05-30T17:41:12.999Z"
+    },
+    {
+      "title": "飞桨AI Studio星河社区",
+      "description": "集成了丰富的免费AI课程，大模型社区及模型应用，深度学习样例项目，各领域经典数据集，云端超强GPU算力及存储资源，更有新手练习赛、精英算法大赛等你参与。",
+      "url": "https://aistudio.baidu.com/overview",
+      "icon": "https://paddlepaddle-org-cn.cdn.bcebos.com/paddle-site-front/favicon-48.png",
+      "iconType": "image",
+      "tags": [
+        "开发社区"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3b3xxebwkh6scj87",
+      "createdAt": "2025-05-30T17:41:40.917Z",
+      "updatedAt": "2025-05-30T17:41:40.917Z"
+    },
+    {
+      "title": "ModelScope魔搭社区",
+      "description": "旨在打造下一代开源的模型即服务共享平台，为泛AI开发者提供灵活、易用、低成本的一站式模型服务产品，让模型应用更简单。",
+      "url": "https://community.modelscope.cn/",
+      "icon": "https://devpress.csdnimg.cn/c7f15ac0ac264401abcedf7aedff9c13.png",
+      "iconType": "image",
+      "tags": [
+        "开发社区"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3bp240x2k86e28dc",
+      "createdAt": "2025-05-30T17:42:08.284Z",
+      "updatedAt": "2025-05-30T17:42:08.284Z"
+    },
+    {
+      "title": "OpenDataLab",
+      "description": "引领AI大模型时代的开放数据平台",
+      "url": "https://opendatalab.org.cn/",
+      "icon": "https://webpub.shlab.tech/dps/opendatalab-web/xlab_v5.2010/xlab.svg",
+      "iconType": "image",
+      "tags": [
+        "开发平台"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3c6sap0wznqumer",
+      "createdAt": "2025-05-30T17:42:31.258Z",
+      "updatedAt": "2025-05-30T17:42:31.258Z"
+    },
+    {
+      "title": "GitCode",
+      "description": "面向全球开发者的开源社区,包括原创博客,开源代码托管,代码协作,项目管理等。与开发者社区互动,提升您的研发效率和质量。",
+      "url": "https://gitcode.com/",
+      "icon": "https://cdn-static.gitcode.com/static/images/logo-favicon.png",
+      "iconType": "image",
+      "tags": [
+        "开发平台"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbb3cw5udi85aroetsm",
+      "createdAt": "2025-05-30T17:43:04.146Z",
+      "updatedAt": "2025-05-30T17:43:04.146Z"
+    },
+    {
+      "title": "Perplexity",
+      "description": "",
+      "url": "https://www.perplexity.ai/",
+      "icon": "https://www.perplexity.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbb3dsij1qm67avjeh6",
+      "createdAt": "2025-05-30T17:43:46.075Z",
+      "updatedAt": "2025-05-30T17:43:46.075Z"
+    },
+    {
+      "title": "秘塔AI搜索",
+      "description": "秘塔AI搜索，没有广告，直达结果",
+      "url": "https://metaso.cn/",
+      "icon": "https://metaso.cn/apple-touch-icon.png",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3e4ifl13igeezgna",
+      "createdAt": "2025-05-30T17:44:01.623Z",
+      "updatedAt": "2025-05-30T17:44:01.623Z"
+    },
+    {
+      "title": "纳米AI搜索",
+      "description": "智能搜索、答案引擎，AI分析视频、PDF、网页等、自动生成思维导图...",
+      "url": "https://www.n.cn/",
+      "icon": "https://www.n.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3ezilk074jvo0s8",
+      "createdAt": "2025-05-30T17:44:41.805Z",
+      "updatedAt": "2025-05-30T17:45:20.188Z"
+    },
+    {
+      "title": "豆包",
+      "description": "你的 AI 聊天智能对话问答助手，写作文案翻译编程全能工具。豆包为你答疑解惑，提供灵感，辅助创作，也可以和你畅聊任何你感兴趣的话题。",
+      "url": "https://www.doubao.com/",
+      "icon": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/logo-icon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3gn8gkioukulw47",
+      "createdAt": "2025-05-30T17:45:59.200Z",
+      "updatedAt": "2025-05-30T17:45:59.200Z"
+    },
+    {
+      "title": "知乎直答",
+      "description": "知乎推出的一款使用 AI 大模型等先进技术的产品，以知乎社区的优质内容为核心，多种数据源为辅助，为人们提供一种全新的获取可靠信息的途径。知乎直答是多智能体系统，能够满足用户多维度的需求；同时对生成结果进行溯源，以确保内容的可信、可控以及对知识产权和版权的尊重。知乎直答致力于为用户提供卓越的使用体验，用技术拉近创作者和用户之间的距离。有问题，就会有答案。",
+      "url": "https://zhida.zhihu.com/",
+      "icon": "https://pic1.zhimg.com/v2-7e3856b1a6d415224ca95814132a3612.png",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3hrhcgkym877yh1s",
+      "createdAt": "2025-05-30T17:46:51.360Z",
+      "updatedAt": "2025-05-30T17:46:51.360Z"
+    },
+    {
+      "title": "C知道",
+      "description": "由CSDN和外部合作伙伴联合研发的领先AI产品，能高效完成AI问答、AI对话、文件分析、代码生成以及开发相关的问题，帮您提高工作和学习效率。",
+      "url": "https://chat.csdn.net/",
+      "icon": "https://csdnimg.cn/release/aisearch/web/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3i75tktqnlrdrovr",
+      "createdAt": "2025-05-30T17:47:11.681Z",
+      "updatedAt": "2025-05-30T17:47:11.681Z"
+    },
+    {
+      "title": "博查AI搜索",
+      "description": "给AI用的搜索引擎，它可以让你的AI应用连接世界知识，获得干净、准确、高质量的搜索结果。",
+      "url": "https://bochaai.com/",
+      "icon": "https://bochaai.com/icon.ico?d10c63b34b618305",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3ipzur0ya7v2t47b",
+      "createdAt": "2025-05-30T17:47:36.090Z",
+      "updatedAt": "2025-05-30T17:47:36.090Z"
+    },
+    {
+      "title": "Open Operator",
+      "description": "Watch AI browse the web, for free",
+      "url": "https://operator.browserbase.com/",
+      "icon": "https://operator.browserbase.com/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "AI搜索"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbb3j7qc8fewso87x3m",
+      "createdAt": "2025-05-30T17:47:59.077Z",
+      "updatedAt": "2025-05-30T17:47:59.077Z"
     }
   ]
 }
