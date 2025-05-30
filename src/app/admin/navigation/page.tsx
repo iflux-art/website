@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/layout/admin-layout';
 import { AdminActions } from '@/components/ui/admin-actions';
 import { DataTable } from '@/components/ui/data-table';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -14,7 +13,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   AlertDialog,

@@ -12,7 +12,7 @@ import { Sidebar } from '@/components/ui/sidebar';
 import { TocContainer } from '@/components/ui/toc-container';
 import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
 import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
-import { getFlattenedDocsOrder, NavDocItem, getDocSidebar, DocMetaItem } from '@/lib/content';
+import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;

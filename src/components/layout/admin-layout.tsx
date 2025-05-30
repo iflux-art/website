@@ -24,18 +24,6 @@ const adminMenuItems = [
     icon: Globe,
     href: '/admin/navigation',
   },
-  {
-    key: 'email',
-    label: '邮箱管理',
-    icon: Mail,
-    href: '/admin/email',
-  },
-  {
-    key: 'settings',
-    label: '系统设置',
-    icon: Settings,
-    href: '/admin/settings',
-  },
 ];
 
 export function AdminLayout({ children }: AdminLayoutProps) {
