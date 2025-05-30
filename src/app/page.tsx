@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 
 // 导入 ChatGPT 风格的首页组件
-import { HomeHero } from '@/components/layout/home';
+import { HomeHero } from '@/components/layout/home/home-hero';
 
 export default function Home() {
   // 添加首页特殊类名，用于隐藏滚动条

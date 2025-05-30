@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChefHat, Calculator, ShoppingCart, Timer } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolLayout } from '@/components/layout/ToolLayout';
 
 export default function CookingToolkitPage() {
   const [activeTab, setActiveTab] = useState<'recipes' | 'nutrition' | 'shopping' | 'timer'>(
@@ -590,7 +590,6 @@ export default function CookingToolkitPage() {
       title="烹饪工具集"
       description="烹饪助手工具，包括菜谱搜索、营养计算、购物清单、定时提醒"
       icon={ChefHat}
-      path="/tools/cooking-toolkit"
       helpContent={helpContent}
     >
       <Card className="mb-6">

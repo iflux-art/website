@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
-interface AdminLayoutProps {
+interface AdminPageContentLayoutProps {
   title: string;
   description: string;
   icon: LucideIcon;
@@ -14,7 +14,7 @@ interface AdminLayoutProps {
   backLabel?: string;
 }
 
-export function AdminLayout({
+export function AdminPageContentLayout({
   title,
   description,
   icon: Icon,
@@ -22,7 +22,7 @@ export function AdminLayout({
   actions,
   backUrl = '/admin',
   backLabel = '返回管理后台',
-}: AdminLayoutProps) {
+}: AdminPageContentLayoutProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* 返回按钮 */}

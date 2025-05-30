@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Palette, Type, Layout, Ruler, Copy, Check } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolLayout } from '@/components/layout/ToolLayout';
 
 export default function DesignHelperPage() {
   const [activeTab, setActiveTab] = useState<'palette' | 'typography' | 'layout' | 'spacing'>(
@@ -622,7 +622,6 @@ ${scale
       title="设计辅助工具"
       description="设计系统构建工具，包括调色板、字体、布局和间距系统"
       icon={Palette}
-      path="/tools/design-helper"
       helpContent={helpContent}
     >
       {/* 功能标签页 */}

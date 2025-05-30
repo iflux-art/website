@@ -37,3 +37,4 @@ export async function MdxServerRenderer({ content }: MdxServerRendererProps) {
     </div>`;
   }
 }
+

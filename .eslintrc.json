@@ -1,18 +1,25 @@
 {
+  "parser": "@typescript-eslint/parser", // Explicitly set parser
+  "plugins": [
+    "@typescript-eslint" // Explicitly add plugin
+  ],
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended" // Add recommended TS rules
   ],
   "rules": {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
     "react/no-unescaped-entities": "off",
+    "react/no-unknown-property": [2, { "ignore": ["jsx", "global"] }],
     "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "off",
-    "no-unused-vars": "off",
+    "no-unused-vars": "off", // Keep JS version off if TS version is used
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Enable TS version, warn for unused vars except those starting with _
     "no-undef": "off",
     "@next/next/no-img-element": "off",
     "jsx-a11y/alt-text": "off"

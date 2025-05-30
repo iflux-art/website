@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Lock, Unlock, RotateCcw, FileDown, ArrowUpDown } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolLayout } from '@/components/layout/ToolLayout';
 import { DualTextarea } from '@/components/ui/dual-textarea';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { useToolState } from '@/hooks/use-tool-state';

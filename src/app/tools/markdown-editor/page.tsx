@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, Check, Download, Eye, Edit, FileText, RotateCcw, FileDown } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { Copy, Check, Download, Eye, Edit, FileText, RotateCcw, FileDown, Columns } from 'lucide-react'; // Added Columns as a placeholder for split view
+import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -62,7 +62,8 @@ export default function MarkdownEditorPage() {
     const cleanupPatterns = [
       /<p><\/p>/g,
       /<p>(<(h[1-6]|ul|blockquote|hr))/g,
-      /(<\/(h[1-6]|ul|blockquote)>)\<\/p>/g
+      // eslint-disable-next-line no-useless-escape
+      /(<\/(h[1-6]|ul|blockquote)>)<\/p>/g
     ];
 
     cleanupPatterns.forEach(pattern => {
@@ -223,18 +224,19 @@ function greet(name) {
       label: '编辑模式',
       onClick: () => setViewMode('edit'),
       icon: Edit,
-      variant: viewMode === 'edit' ? 'default' : 'outline' as const,
+      variant: viewMode === 'edit' ? ('default' as const) : ('outline' as const),
     },
     {
       label: '预览模式',
       onClick: () => setViewMode('preview'),
       icon: Eye,
-      variant: viewMode === 'preview' ? 'default' : 'outline' as const,
+      variant: viewMode === 'preview' ? ('default' as const) : ('outline' as const),
     },
     {
       label: '分屏模式',
       onClick: () => setViewMode('split'),
-      variant: viewMode === 'split' ? 'default' : 'outline' as const,
+      icon: Columns, // Added icon
+      variant: viewMode === 'split' ? ('default' as const) : ('outline' as const),
     },
     {
       label: '加载示例',
@@ -269,7 +271,7 @@ function greet(name) {
         <ul className="text-sm text-muted-foreground space-y-1">
           <li>• <code>* 列表项</code> - 无序列表</li>
           <li>• <code>1. 列表项</code> - 有序列表</li>
-          <li>• <code>> 引用</code> - 引用文本</li>
+          <li>• <code>{'>'} 引用</code> - 引用文本</li>
           <li>• <code>---</code> - 分隔线</li>
           <li>• <code>```代码块```</code> - 代码块</li>
           <li>• <code>| 表格 | 语法 |</code> - 表格</li>

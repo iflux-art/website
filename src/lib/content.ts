@@ -6,8 +6,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { BlogPost } from '@/hooks/use-blog';
-import { DocSidebarItem } from '@/components/features/sidebar/doc-sidebar';
+import { BlogPost } from '@/hooks/use-blog'; // 假设 BlogPost 类型定义在 use-blog.ts
+import { SidebarItem } from '@/components/ui/sidebar';
 
 // ==================== 博客相关函数 ====================
 
@@ -164,7 +164,7 @@ export interface DocCategory {
 }
 
 /**
- * 文档项目接口
+ * 文档项目接口 (用于 getRecentDocs 等)
  */
 export interface DocItem {
   slug: string;
@@ -175,51 +175,21 @@ export interface DocItem {
 }
 
 /**
- * 文档元数据项接口
+ * 文档元数据项接口 (_meta.json)
  */
 export interface DocMetaItem {
-  /**
-   * 自定义标题
-   */
   title?: string;
-
-  /**
-   * 外部链接
-   */
-  href?: string;
-
-  /**
-   * 是否默认折叠
-   */
-  collapsed?: boolean;
-
-  /**
-   * 子项目
-   * 可以是字符串数组（文件名列表）或嵌套对象（子文件夹）
-   */
-  items?: string[] | Record<string, DocMetaItem | string>;
-
-  /**
-   * 项目类型
-   * - separator: 分隔符
-   * - page: 页面
-   * - menu: 菜单
-   */
+  href?: string; // For external links or custom internal paths
+  collapsed?: boolean; // For categories/menus
+  items?: string[] | Record<string, DocMetaItem | string>; // For nested structure
   type?: 'separator' | 'page' | 'menu';
-
-  /**
-   * 显示模式
-   * - hidden: 隐藏
-   * - normal: 正常显示
-   */
   display?: 'hidden' | 'normal';
+  order?: number; // For explicit sorting
+  description?: string; // For category descriptions in _meta.json
 }
 
 /**
- * 递归计算目录中的文档数量
- *
- * @param dir 目录路径
- * @returns 文档数量
+ * 递归计算目录中的文档数量 (不含 index.mdx 和 _ 开头的)
  */
 function countDocsRecursively(dir: string): number {
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
@@ -232,152 +202,125 @@ function countDocsRecursively(dir: string): number {
   for (const item of items) {
     const itemPath = path.join(dir, item.name);
 
+    if (item.name.startsWith('_') || item.name.startsWith('.') || item.name === 'index.mdx' || item.name === 'index.md') {
+      continue;
+    }
+
     if (item.isDirectory()) {
-      // 递归计算子目录中的文档数量
       count += countDocsRecursively(itemPath);
-    } else if (
-      item.isFile() &&
-      (item.name.endsWith('.mdx') || item.name.endsWith('.md')) &&
-      !item.name.startsWith('_')
-    ) {
-      // 计算当前目录中的文档数量
+    } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
       count += 1;
     }
   }
-
   return count;
 }
 
 /**
  * 获取文档分类
- *
- * @returns 文档分类数组
  */
 export function getDocCategories(): DocCategory[] {
   const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
   if (!fs.existsSync(docsDir)) return [];
 
   const categories: DocCategory[] = [];
-
-  // 读取根目录的 _meta.json 文件
   const rootMetaPath = path.join(docsDir, '_meta.json');
-  let rootMeta: Record<string, any> = {};
+  let rootMeta: Record<string, DocMetaItem | string> = {};
 
   if (fs.existsSync(rootMetaPath)) {
     try {
-      const rootMetaContent = fs.readFileSync(rootMetaPath, 'utf8');
-      rootMeta = JSON.parse(rootMetaContent);
+      rootMeta = JSON.parse(fs.readFileSync(rootMetaPath, 'utf8'));
     } catch (error) {
       console.error('解析根目录 _meta.json 文件失败:', error);
     }
   }
 
-  // 读取目录内容
   const dirs = fs.readdirSync(docsDir, { withFileTypes: true });
+  const orderedCategoryNames: string[] = [];
 
-  // 创建一个有序的目录列表，根据 rootMeta 中的顺序
-  const orderedDirs: { name: string; isDirectory: boolean }[] = [];
-
-  // 首先添加 rootMeta 中定义的目录
+  // Add categories from rootMeta first, in their defined order
   Object.keys(rootMeta).forEach(key => {
-    const found = dirs.find(dir => dir.name === key && dir.isDirectory());
-    if (found) {
-      orderedDirs.push({ name: found.name, isDirectory: true });
+    if (dirs.some(dir => dir.name === key && dir.isDirectory())) {
+      orderedCategoryNames.push(key);
     }
   });
 
-  // 然后添加其余的目录
+  // Add remaining directories not in rootMeta, sorted alphabetically
   dirs.forEach(dir => {
-    if (
-      dir.isDirectory() &&
-      !orderedDirs.some(ordered => ordered.name === dir.name) &&
-      !dir.name.startsWith('_')
-    ) {
-      orderedDirs.push({ name: dir.name, isDirectory: true });
+    if (dir.isDirectory() && !dir.name.startsWith('_') && !dir.name.startsWith('.') && !orderedCategoryNames.includes(dir.name)) {
+      orderedCategoryNames.push(dir.name);
     }
   });
+   // Sort the ones not in meta alphabetically if needed, but they are added after meta ones
+   const nonMetaDirs = orderedCategoryNames.slice(Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)).length);
+   nonMetaDirs.sort((a,b) => a.localeCompare(b));
+   const finalOrderedCategoryNames = [
+    ...Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)),
+    ...nonMetaDirs
+   ];
 
-  // 处理每个目录
-  orderedDirs.forEach(dir => {
-    if (dir.isDirectory) {
-      const categoryId = dir.name;
-      const categoryDir = path.join(docsDir, categoryId);
 
-      // 递归计算文档数量，包括子目录中的文档
-      const docCount = countDocsRecursively(categoryDir);
+  finalOrderedCategoryNames.forEach(categoryId => {
+    const categoryDir = path.join(docsDir, categoryId);
+    const docCount = countDocsRecursively(categoryDir);
+    let title = categoryId;
+    let description = '';
 
-      // 尝试从根目录的 _meta.json 获取元数据
-      let title = categoryId;
-      let description = '';
-
-      // 首先检查根目录的 _meta.json
-      if (rootMeta[categoryId]) {
-        const meta = rootMeta[categoryId];
-        if (typeof meta === 'string') {
-          title = meta;
-        } else if (typeof meta === 'object') {
-          title = meta.title || categoryId;
-          description = meta.description || '';
-        }
+    const rootMetaEntry = rootMeta[categoryId];
+    if (rootMetaEntry) {
+      if (typeof rootMetaEntry === 'string') {
+        title = rootMetaEntry;
+      } else {
+        title = rootMetaEntry.title || categoryId;
+        description = (rootMetaEntry as DocMetaItem).description || '';
       }
-
-      // 然后检查分类目录下的 _meta.json（优先级更高）
-      const metaPath = path.join(categoryDir, '_meta.json');
-      if (fs.existsSync(metaPath)) {
-        try {
-          const metaContent = fs.readFileSync(metaPath, 'utf8');
-          const meta = JSON.parse(metaContent);
-          // 只有当分类目录下的 _meta.json 中有 title 或 description 时才覆盖
-          if (meta.title) title = meta.title;
-          if (meta.description) description = meta.description;
-        } catch (error) {
-          console.error(`解析 ${categoryId} 的 _meta.json 文件失败:`, error);
-        }
-      }
-
-      categories.push({
-        id: categoryId,
-        title: title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, ' '),
-        description: description || `${title}相关文档和教程`,
-        count: docCount,
-      });
     }
+    
+    // Category-level _meta.json can override title/description
+    const categoryMetaPath = path.join(categoryDir, '_meta.json');
+    if (fs.existsSync(categoryMetaPath)) {
+        try {
+            const catMetaContent = fs.readFileSync(categoryMetaPath, 'utf8');
+            const catMeta = JSON.parse(catMetaContent) as DocMetaItem;
+            if (catMeta.title) title = catMeta.title;
+            if (catMeta.description) description = catMeta.description;
+        } catch (e) { console.error(`Error parsing _meta.json for ${categoryId}`, e); }
+    }
+
+
+    categories.push({
+      id: categoryId,
+      title: title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, ' '),
+      description: description || `${title} 相关文档和教程`,
+      count: docCount,
+    });
   });
 
   return categories;
 }
 
+
 /**
  * 获取最新文档
- *
- * @param limit 限制数量，默认为 4
- * @returns 最新文档数组
  */
 export function getRecentDocs(limit: number = 4): DocItem[] {
   const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
   if (!fs.existsSync(docsDir)) return [];
 
   const allDocs: DocItem[] = [];
-
-  // 读取所有分类目录
   const categories = fs.readdirSync(docsDir, { withFileTypes: true });
 
   categories.forEach(category => {
-    if (category.isDirectory()) {
+    if (category.isDirectory() && !category.name.startsWith('_') && !category.name.startsWith('.')) {
       const categoryId = category.name;
       const categoryDir = path.join(docsDir, categoryId);
-      const files = fs.readdirSync(categoryDir, { withFileTypes: true });
+      const items = fs.readdirSync(categoryDir, { withFileTypes: true });
 
-      files.forEach(file => {
-        if (
-          file.isFile() &&
-          (file.name.endsWith('.mdx') || file.name.endsWith('.md')) &&
-          !file.name.startsWith('_')
-        ) {
-          const filePath = path.join(categoryDir, file.name);
+      items.forEach(item => {
+        if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md')) && !item.name.startsWith('_') && item.name !== 'index.mdx' && item.name !== 'index.md') {
+          const filePath = path.join(categoryDir, item.name);
           const fileContent = fs.readFileSync(filePath, 'utf8');
           const { data } = matter(fileContent);
-          const slug = file.name.replace(/\.(mdx|md)$/, '');
+          const slug = item.name.replace(/\.(mdx|md)$/, '');
 
           if (data.published !== false) {
             allDocs.push({
@@ -393,167 +336,202 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
     }
   });
 
-  // 按日期排序
-  const sortedDocs = allDocs.sort((a, b) => {
+  return allDocs.sort((a, b) => {
     if (a.date && b.date) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     }
     return 0;
-  });
-
-  return sortedDocs.slice(0, limit);
+  }).slice(0, limit);
 }
 
+
 /**
- * 获取文档目录结构
- *
- * @param rootDir 根目录路径
- * @param relativePath 相对路径
- * @param meta 元数据配置
- * @returns 文档目录结构
+ * 获取文档目录结构 (核心函数，用于 Sidebar 和上下翻页)
+ * @param rootDocsDir - e.g., path.join(process.cwd(), 'src', 'content', 'docs')
+ * @param currentRelativePath - e.g., 'category' or 'category/subcategory'
+ * @returns Array of SidebarItem, sorted according to rules.
  */
 export function getDocDirectoryStructure(
-  rootDir: string,
-  relativePath: string = '',
-  meta: Record<string, DocMetaItem | string> = {}
-): DocSidebarItem[] {
-  const fullPath = path.join(rootDir, relativePath);
+  rootDocsDir: string,
+  currentRelativePath: string = ''
+): SidebarItem[] {
+  const currentAbsolutePath = path.join(rootDocsDir, currentRelativePath);
 
-  // 检查目录是否存在
-  if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
-    console.error(`目录不存在: ${fullPath}`);
+  if (!fs.existsSync(currentAbsolutePath) || !fs.statSync(currentAbsolutePath).isDirectory()) {
     return [];
   }
 
-  // 读取目录内容
-  const items = fs.readdirSync(fullPath, { withFileTypes: true });
+  const itemsInDir = fs.readdirSync(currentAbsolutePath, { withFileTypes: true });
+  const metaFilePath = path.join(currentAbsolutePath, '_meta.json');
+  let metaConfig: Record<string, DocMetaItem | string> = {};
+  const metaExists = fs.existsSync(metaFilePath);
 
-  // 检查是否存在 _meta.json 文件
-  const metaFilePath = path.join(fullPath, '_meta.json');
-  let localMeta: Record<string, DocMetaItem | string> = {};
-
-  if (fs.existsSync(metaFilePath)) {
+  if (metaExists) {
     try {
-      const metaContent = fs.readFileSync(metaFilePath, 'utf8');
-      localMeta = JSON.parse(metaContent);
+      metaConfig = JSON.parse(fs.readFileSync(metaFilePath, 'utf8'));
     } catch (error) {
-      console.error(`解析 _meta.json 文件失败: ${metaFilePath}`, error);
+      console.error(`Error parsing _meta.json in ${currentAbsolutePath}:`, error);
     }
   }
 
-  // 合并元数据
-  const combinedMeta = { ...meta, ...localMeta };
-
-  // 获取所有文件和目录
-  const files: string[] = [];
-  const directories: string[] = [];
-
-  items.forEach(item => {
-    // 忽略以 _ 或 . 开头的文件和目录
-    if (item.name.startsWith('_') || item.name.startsWith('.')) {
+  const collectedItems: { name: string; isDir: boolean }[] = [];
+  itemsInDir.forEach(dirItem => {
+    // Skip system files/dirs and index files (Requirement 4 for sidebar)
+    if (dirItem.name.startsWith('_') || dirItem.name.startsWith('.') || dirItem.name === 'index.mdx' || dirItem.name === 'index.md') {
       return;
     }
 
-    if (item.isDirectory()) {
-      directories.push(item.name);
-    } else if (item.isFile() && (item.name.endsWith('.md') || item.name.endsWith('.mdx'))) {
-      files.push(item.name.replace(/\.(md|mdx)$/, ''));
+    if (dirItem.isDirectory()) {
+      collectedItems.push({ name: dirItem.name, isDir: true });
+    } else if (dirItem.isFile() && (dirItem.name.endsWith('.md') || dirItem.name.endsWith('.mdx'))) {
+      collectedItems.push({ name: dirItem.name.replace(/\.(md|mdx)$/, ''), isDir: false });
     }
   });
 
-  // 如果有元数据配置，按照元数据配置的顺序排序
-  const orderedItems: string[] = [];
-  const metaKeys = Object.keys(combinedMeta);
+  let sortedItemNames: string[];
 
-  // 首先添加元数据中定义的项目
-  metaKeys.forEach(key => {
-    // 检查是否是文件或目录
-    if (files.includes(key) || directories.includes(key)) {
-      orderedItems.push(key);
-    }
-  });
-
-  // 然后添加未在元数据中定义的项目
-  [...directories, ...files].forEach(item => {
-    if (!orderedItems.includes(item)) {
-      orderedItems.push(item);
-    }
-  });
-
-  // 构建侧边栏项目
-  return orderedItems.map(item => {
-    const itemRelativePath = path.join(relativePath, item);
-    const itemFullPath = path.join(rootDir, itemRelativePath);
-    const isDirectory = fs.existsSync(itemFullPath) && fs.statSync(itemFullPath).isDirectory();
-
-    // 获取元数据配置
-    const itemMeta = combinedMeta[item];
-    const metaConfig = typeof itemMeta === 'string' ? { title: itemMeta } : itemMeta || {};
-
-    // 如果是目录，递归获取子项目
-    if (isDirectory) {
-      const children = getDocDirectoryStructure(rootDir, itemRelativePath, {});
-
-      return {
-        title: metaConfig.title || item,
-        href: metaConfig.href,
-        items: children,
-        collapsed: metaConfig.collapsed,
-        type: metaConfig.type,
-        isExternal: !!metaConfig.href && metaConfig.href.startsWith('http'),
-        filePath: itemRelativePath,
-      };
-    }
-
-    // 如果是文件，读取文件内容获取标题
-    let title = metaConfig.title || item;
-
-    try {
-      const filePath = path.join(itemFullPath + '.mdx');
-      if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, 'utf8');
-        const { data } = matter(content);
-        if (data.title) {
-          title = data.title;
+  if (metaExists) {
+    // Requirement 3: Strict order by _meta.json if it exists.
+    // Filter collectedItems to only those present in metaConfig keys.
+    sortedItemNames = Object.keys(metaConfig)
+      .filter(key => {
+        const metaEntry = metaConfig[key];
+        // Exclude items marked as hidden in meta
+        if (typeof metaEntry === 'object' && metaEntry.display === 'hidden') {
+          return false;
         }
-      } else {
-        const mdFilePath = path.join(itemFullPath + '.md');
+        return collectedItems.some(ci => ci.name === key);
+      });
+    // Requirement 1: Sidebar 顺序严格按 _meta.json 内容的先后排序.
+    // The .sort() based on 'order' property is removed.
+    // The order from Object.keys(metaConfig) (after filtering) is preserved.
+  } else {
+    // Requirement 3: Filename ascending order if no _meta.json
+    sortedItemNames = collectedItems.map(ci => ci.name).sort((a, b) => a.localeCompare(b));
+  }
+  
+  return sortedItemNames.map(itemName => {
+    const itemMetaEntry = metaConfig[itemName];
+    const itemSpecificConfig = typeof itemMetaEntry === 'string' ? { title: itemMetaEntry } : (itemMetaEntry as DocMetaItem) || {};
+    
+    const actualItem = collectedItems.find(ci => ci.name === itemName);
+    if (!actualItem) return null; // Should not happen
+
+    const itemFsRelativePath = path.join(currentRelativePath, itemName); // Relative to rootDocsDir
+    const isDirectory = actualItem.isDir;
+
+    let title = itemSpecificConfig.title || itemName;
+    const defaultHref = `/docs/${currentRelativePath ? currentRelativePath + '/' : ''}${itemName}`;
+
+    if (isDirectory) {
+      const children = getDocDirectoryStructure(rootDocsDir, itemFsRelativePath);
+      return {
+        title,
+        href: itemSpecificConfig.href, // Use href from meta if present (could be external or custom internal for a category link)
+        items: children,
+        collapsed: itemSpecificConfig.collapsed,
+        type: itemSpecificConfig.type || 'menu',
+        isExternal: !!itemSpecificConfig.href && (itemSpecificConfig.href.startsWith('http://') || itemSpecificConfig.href.startsWith('https://')),
+        filePath: itemFsRelativePath,
+      };
+    } else { // It's a file
+      if (!itemSpecificConfig.title) { // Only read frontmatter if title not in meta
+        let mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.mdx`);
+        if (!fs.existsSync(mdFilePath)) {
+          mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.md`);
+        }
         if (fs.existsSync(mdFilePath)) {
-          const content = fs.readFileSync(mdFilePath, 'utf8');
-          const { data } = matter(content);
-          if (data.title) {
-            title = data.title;
+          try {
+            const fileContent = fs.readFileSync(mdFilePath, 'utf8');
+            const { data: frontmatter } = matter(fileContent);
+            if (frontmatter.title) {
+              title = frontmatter.title;
+            }
+          } catch (e) {
+            console.error(`Error reading frontmatter for ${mdFilePath}:`, e);
           }
         }
       }
-    } catch (error) {
-      console.error(`读取文件内容失败: ${itemFullPath}`, error);
+      return {
+        title,
+        href: itemSpecificConfig.href || defaultHref,
+        type: itemSpecificConfig.type || 'page',
+        isExternal: !!itemSpecificConfig.href && (itemSpecificConfig.href.startsWith('http://') || itemSpecificConfig.href.startsWith('https://')),
+        filePath: itemFsRelativePath,
+      };
     }
-
-    return {
-      title,
-      href: metaConfig.href || `/docs/${itemRelativePath}`,
-      type: metaConfig.type || 'page',
-      isExternal: !!metaConfig.href && metaConfig.href.startsWith('http'),
-      filePath: itemRelativePath,
-    };
-  });
+  }).filter(Boolean) as SidebarItem[];
 }
 
 /**
  * 获取文档分类的侧边栏结构
- *
- * @param category 分类名称
- * @returns 侧边栏结构
+ * This function serves as the main entry point for generating sidebar data for a given category.
+ * @param category The name of the category directory (e.g., "guides", "api")
+ * @returns An array of SidebarItem objects for the specified category.
  */
-export function getDocSidebar(category: string): DocSidebarItem[] {
-  const rootDir = path.join(process.cwd(), 'src', 'content', 'docs');
-  const categoryPath = path.join(rootDir, category);
+export function getDocSidebar(category: string): SidebarItem[] {
+  const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  // The initial call to getDocDirectoryStructure uses the category name as the currentRelativePath
+  return getDocDirectoryStructure(docsContentDir, category);
+}
 
-  if (!fs.existsSync(categoryPath) || !fs.statSync(categoryPath).isDirectory()) {
-    console.error(`分类不存在: ${category}`);
-    return [];
+/**
+ * Represents a document item for navigation (prev/next links).
+ */
+export interface NavDocItem {
+  title: string;
+  path: string; // Full path, e.g., /docs/category/doc-name
+}
+
+/**
+ * Flattens the sidebar structure for a category into a list of navigable documents,
+ * respecting the order defined by getDocDirectoryStructure.
+ * index.mdx files are NOT included as they are not in the sidebar.
+ * @param category The category name.
+ * @returns A flat list of NavDocItem.
+ */
+export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
+  // Get the complete sidebar structure for the top-level category
+  const sidebarItems = getDocSidebar(topLevelCategory);
+  const flatList: NavDocItem[] = [];
+
+  function recurse(items: SidebarItem[]) {
+    for (const item of items) {
+      if (item.type === 'separator' || item.isExternal || !item.href) {
+        // Skip separators, external links, or items without href for navigation list
+        // However, if a menu item (category) has an href, it might be a link to its own overview page (not index.mdx)
+        // and its children should still be processed.
+        if (item.items && item.items.length > 0) {
+            recurse(item.items);
+        }
+        continue;
+      }
+
+      // Process page items and menu items that are also pages
+      if (item.type === 'page' || (item.type === 'menu' && item.href)) {
+         // Ensure path starts with /docs/ and normalize
+        let itemPath = item.href;
+        if (!itemPath.startsWith('/docs/')) {
+            // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
+            itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
+        }
+        itemPath = itemPath.replace(/\\/g, '/');
+        
+        // Ensure it's not an accidental link to an index page that should be hidden from prev/next
+        // (getDocDirectoryStructure already filters index.mdx from items for sidebar)
+        // This check might be redundant if getDocDirectoryStructure is perfect.
+        if (!itemPath.endsWith('/index')) { // A simple check, might need refinement
+            flatList.push({ title: item.title, path: itemPath });
+        }
+      }
+      
+      // Recursively process children of a menu
+      if (item.items && item.items.length > 0 && item.type === 'menu') {
+        recurse(item.items);
+      }
+    }
   }
 
-  return getDocDirectoryStructure(rootDir, category);
+  recurse(sidebarItems);
+  return flatList;
 }

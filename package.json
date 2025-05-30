@@ -59,6 +59,8 @@
     "@types/node": "^20.17.51",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
     "eslint": "^9.27.0",
     "eslint-config-next": "15.3.2",
     "eslint-plugin-react": "^7.37.5",
@@ -71,3 +73,4 @@
     "overrides": {}
   }
 }
+

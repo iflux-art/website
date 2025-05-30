@@ -1,18 +1,22 @@
 {
   "guides": {
     "title": "入门指南",
-    "description": "简单好上手的官方使用手册"
+    "description": "轻松上手的官方手册"
   },
   "update": {
     "title": "更新日志",
-    "description": "每一次更新的详细记录说明"
+    "description": "每次更新的简要记录"
   },
   "ai": {
     "title": "Ai",
-    "description": "人工智能相关文档和教程"
+    "description": "探索人工智能的文档与教程"
   },
-  "media": {
-    "title": "影视传媒",
-    "description": "广告创意与文案相关文档"
+  "film": {
+    "title": "电影",
+    "description": "电影相关的文档与资源"
+  },
+  "ad": {
+    "title": "广告",
+    "description": "广告创意与策略分享"
   }
 }

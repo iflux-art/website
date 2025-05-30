@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AdminLayout } from '@/components/layouts/admin-layout';
+import { AdminPageContentLayout } from '@/components/layout/AdminPageContentLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Globe, Mail, Settings, Activity, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
@@ -39,7 +39,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <AdminLayout
+    <AdminPageContentLayout
       title="管理仪表板"
       description="欢迎回来！这里是系统管理概览"
       icon={BarChart3}
@@ -151,6 +151,6 @@ export default function AdminDashboard() {
           </div>
         </CardContent>
       </Card>
-    </AdminLayout>
+    </AdminPageContentLayout>
   );
 }

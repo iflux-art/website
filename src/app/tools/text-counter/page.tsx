@@ -13,7 +13,7 @@ import {
   RotateCcw,
   FileDown,
 } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

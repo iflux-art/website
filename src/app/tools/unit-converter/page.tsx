@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowUpDown, Ruler, RotateCcw, RefreshCw } from 'lucide-react';
-import { ToolLayout } from '@/components/layouts/tool-layout';
+import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -141,10 +141,24 @@ export default function UnitConverterPage() {
     if (category === 'temperature') {
       return convertTemperature(value, from, to);
     }
+    // When convertUnit is called, category is not 'number' or 'temperature'.
+    // These categories in unitCategories all have units with a 'factor' property.
 
-    const units = unitCategories[category as keyof typeof unitCategories].units;
-    const fromFactor = units[from as keyof typeof units]?.factor || 1;
-    const toFactor = units[to as keyof typeof units]?.factor || 1;
+    const currentCategoryData = unitCategories[category as keyof Omit<typeof unitCategories, 'number' | 'temperature'>];
+    const units = currentCategoryData.units;
+
+    // Assert that 'from' and 'to' are valid keys and their values have 'factor'.
+    // This relies on the structure of unitCategories for non-number/non-temperature types.
+    const fromUnit = units[from as keyof typeof units] as { name: string; factor: number };
+    const toUnit = units[to as keyof typeof units] as { name: string; factor: number };
+
+    if (!fromUnit || typeof fromUnit.factor !== 'number' || !toUnit || typeof toUnit.factor !== 'number') {
+      console.error(`Unit or factor not found for category '${category}': from='${from}', to='${to}'`);
+      return NaN;
+    }
+
+    const fromFactor = fromUnit.factor;
+    const toFactor = toUnit.factor;
 
     // 转换为基准单位，再转换为目标单位
     const baseValue = value * fromFactor;
