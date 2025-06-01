@@ -97,7 +97,7 @@ export default function NavigationPage() {
       {/* 页面标题 */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
-        <p className="text-muted-foreground">精选的网站和工具集合，帮助你提高效率</p>
+        <p className="text-muted-foreground">精选网站集合，欢迎<a href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb" target="_blank">“申请友链”</a></p>
       </div>
 
       {/* 分类选择 */}

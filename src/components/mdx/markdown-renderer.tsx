@@ -24,6 +24,30 @@ const components = {
     <div className="prose dark:prose-invert prose-neutral max-w-none">{children}</div>
   ),
 
+  // 表格组件
+  table: ({ children }: { children: React.ReactNode }) => (
+    <div className="my-8 overflow-x-auto">
+      <table className="w-full border-collapse text-sm">{children}</table>
+    </div>
+  ),
+  thead: ({ children }: { children: React.ReactNode }) => (
+    <thead className="bg-muted/50">{children}</thead>
+  ),
+  tbody: ({ children }: { children: React.ReactNode }) => (
+    <tbody className="divide-y divide-border">{children}</tbody>
+  ),
+  tr: ({ children }: { children: React.ReactNode }) => (
+    <tr className="hover:bg-muted/50 transition-colors">{children}</tr>
+  ),
+  th: ({ children }: { children: React.ReactNode }) => (
+    <th className="border border-border px-4 py-2 text-left font-medium text-foreground">
+      {children}
+    </th>
+  ),
+  td: ({ children }: { children: React.ReactNode }) => (
+    <td className="border border-border px-4 py-2 text-muted-foreground">{children}</td>
+  ),
+
   // 图片组件
   img: (props: ImageProps) => {
     return (
@@ -182,4 +206,3 @@ export function processMdxContent(content: string): string {
  * @deprecated 请使用 MarkdownRenderer 替代 ServerMDX，ServerMDX 将在未来版本中移除
  */
 export { MarkdownRenderer as ServerMDX };
-

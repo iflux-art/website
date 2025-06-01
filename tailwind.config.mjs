@@ -64,6 +64,58 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            // 表格样式
+            'table': {
+              width: '100%',
+              borderCollapse: 'collapse',
+              marginTop: '1.5em',
+              marginBottom: '1.5em',
+            },
+            'thead': {
+              borderBottom: '2px solid var(--tw-prose-th-borders)',
+            },
+            'tbody tr': {
+              borderBottom: '1px solid var(--tw-prose-td-borders)',
+            },
+            'th': {
+              padding: '0.75em 1em',
+              fontWeight: '600',
+              textAlign: 'left',
+              backgroundColor: 'var(--tw-prose-th-bg)',
+              color: 'var(--tw-prose-th)',
+            },
+            'td': {
+              padding: '0.75em 1em',
+              verticalAlign: 'top',
+              color: 'var(--tw-prose-td)',
+            },
+            'thead th:first-child': {
+              paddingLeft: '1em',
+            },
+            'thead th:last-child': {
+              paddingRight: '1em',
+            },
+            'tbody td:first-child': {
+              paddingLeft: '1em',
+            },
+            'tbody td:last-child': {
+              paddingRight: '1em',
+            },
+            'tbody tr:last-child': {
+              borderBottom: 'none',
+            },
+            // 暗色模式
+            '--tw-prose-th-bg': 'var(--tw-prose-bg)',
+            '--tw-prose-th-borders': 'var(--tw-prose-borders)',
+            '--tw-prose-td-borders': 'var(--tw-prose-borders)',
+            '--tw-prose-th': 'var(--tw-prose-headings)',
+            '--tw-prose-td': 'var(--tw-prose-body)',
+          },
+        },
+      },
     },
   },
   // 在 Tailwind CSS v4 中，插件的使用方式有所变化

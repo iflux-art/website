@@ -11,6 +11,26 @@
     "title": "Ai",
     "description": "探索人工智能的文档与教程"
   },
+  "live": {
+    "title": "直播运营指南",
+    "description": "直播运营的详细指南"
+  },
+  "douyin": {
+    "title": "抖音运营指南",
+    "description": "抖音运营的详细指南"
+  },
+  "channels": {
+    "title": "视频号运营指南",
+    "description": "视频号运营的详细指南"
+  },
+  "mp": {
+    "title": "公众号号运营指南",
+    "description": "公众号运营的详细指南"
+  },
+  "private": {
+    "title": "私域运营指南",
+    "description": "私域运营的详细指南"
+  },
   "film": {
     "title": "电影",
     "description": "电影相关的文档与资源"
