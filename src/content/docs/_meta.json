@@ -11,6 +11,10 @@
     "title": "Ai",
     "description": "探索人工智能的文档与教程"
   },
+  "dev": {
+    "title": "开发指南",
+    "description": "探索全栈开发的文档与教程"
+  },
   "live": {
     "title": "直播运营指南",
     "description": "直播运营的详细指南"

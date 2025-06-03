@@ -1,0 +1,131 @@
+---
+title: 包管理器
+---
+
+## 简介
+
+包管理器是用于管理项目依赖的工具。它们提供了一种统一的方式来安装、更新和管理项目所需的各种包。
+
+主流的包管理器有 `npm`、`yarn` 和 `pnpm`。
+
+- NPM (Node Package Manager) 是 Node.js 的默认包管理器，也是目前最流行的 JavaScript 包管理工具。它随 Node.js 一起安装，提供了丰富的包管理功能。
+
+- Yarn 是由 Facebook 开发的替代 NPM 的包管理器。它通过并行下载、缓存机制和确定性安装等特性，显著提升了包安装的速度和可靠性。
+
+- PNPM (Performant NPM) 是一个现代化的包管理器，它使用硬链接和内容寻址存储来优化磁盘空间使用，同时保持了依赖的严格隔离，是目前最先进的包管理解决方案。
+
+本站目前使用 `pnpm` 作为包管理器，强烈推荐大家使用 。
+
+## 命令
+
+以下是 `pnpm` 的常用命令。
+
+### 安装
+
+```bash
+# 全局安装最新版 `pnpm`
+npm install -g pnpm@latest
+```
+
+```bash
+# 初始化项目
+pnpm init
+```
+
+```bash
+# 安装所有依赖
+pnpm install
+```
+
+```bash
+# 安装特定依赖
+pnpm install <package_name>
+```
+
+### 开发
+
+```bash
+# 构建项目
+pnpm build
+```
+
+```bash
+# 启动开发服务器
+pnpm dev
+```
+
+### 更新
+
+```bash
+# 验证 `pnpm` 版本
+pnpm -v
+```
+
+```bash
+# 列出已安装的依赖
+pnpm list
+```
+
+```bash
+# 检查哪些包可更新
+pnpm outdated
+```
+
+```bash
+# 更新所有依赖
+pnpm update --latest
+```
+
+```bash
+# 更新所有依赖到兼容版本
+pnpm update
+```
+
+```bash
+# 升级特定包
+pnpm update <package_name>
+```
+
+### 清理缓存
+
+```bash
+# 清理 `next` 文件夹
+rm -rf .next
+```
+
+```bash
+# 清理 `node_modules` 文件夹
+rm -rf node_modules
+```
+
+```bash
+# 强制清除缓存
+pnpm store prune
+```
+
+```bash
+# 移除一个包
+pnpm remove <package_name>
+```
+
+```bash
+# 运行 package.json 中定义的脚本
+pnpm run <script_name>
+```
+
+### 错误排查
+
+```bash
+# 检查类型错误
+pnpm exec tsc --noEmit
+```
+
+```bash
+# 运行 ESLint 检查
+pnpm exec eslint. --ext.ts,.tsx,.mdx
+```
+
+```bash
+# 检查依赖问题
+pnpm audit
+```
