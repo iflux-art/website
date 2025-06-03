@@ -1737,7 +1737,7 @@
       "updatedAt": "2025-05-29T02:56:46.881Z"
     },
     {
-      "title": "Microsoft Azure",
+      "title": "Azure portal",
       "description": "Azure 云服务",
       "url": "https://portal.azure.com/",
       "icon": "https://portal.azure.com/favicon.ico",
@@ -1749,7 +1749,7 @@
       "category": "development",
       "id": "mb8sb3n6hgogb03bi16",
       "createdAt": "2025-05-29T02:58:12.402Z",
-      "updatedAt": "2025-05-29T02:58:12.402Z"
+      "updatedAt": "2025-06-03T17:58:20.904Z"
     },
     {
       "title": "百宝箱",
@@ -8861,6 +8861,2154 @@
       "id": "mbgi1dca1udjks8mo0p",
       "createdAt": "2025-06-03T12:32:51.658Z",
       "updatedAt": "2025-06-03T12:32:51.658Z"
+    },
+    {
+      "title": "SM.MS",
+      "description": "",
+      "url": "https://smms.app/",
+      "icon": "https://smms.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "免费图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgsnw3ejuijthum2hl",
+      "createdAt": "2025-06-03T17:30:18.554Z",
+      "updatedAt": "2025-06-03T17:30:18.554Z"
+    },
+    {
+      "title": "ImgURL免费图床",
+      "description": "ImgURL免费图床上线于2017年12月，累积托管图片超过100万。ImgURL可以快速将图片转换为URL链接，为您提供简单、稳定、可信赖的图片上传于外链分享服务。",
+      "url": "https://www.imgurl.org/",
+      "icon": "https://www.imgurl.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "免费图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgso943ixs7msv38u",
+      "createdAt": "2025-06-03T17:30:35.427Z",
+      "updatedAt": "2025-06-03T17:30:35.427Z"
+    },
+    {
+      "title": "聚合图床 - 免费无限图片上传",
+      "description": "聚合图床是一个提供高速外链的免费图床，无限流量，无限外链，全球网络加速，提供API和客户端上传图片，专业的跨境电商图片上传和托管，适合亚马逊, wish, ebay, shopify, 速卖通等电商批量上传图片",
+      "url": "https://www.superbed.cn/",
+      "icon": "https://www.superbed.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "免费图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgsor4bn2lq9597zs",
+      "createdAt": "2025-06-03T17:30:58.763Z",
+      "updatedAt": "2025-06-03T17:30:58.763Z"
+    },
+    {
+      "title": "Z4A图床",
+      "description": "",
+      "url": "https://www.z4a.net/",
+      "icon": "https://www.z4a.net/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "免费图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgsp6v8hgco1k1b7yv",
+      "createdAt": "2025-06-03T17:31:19.172Z",
+      "updatedAt": "2025-06-03T17:31:19.172Z"
+    },
+    {
+      "title": "PicList",
+      "description": "All in one cloud storage client",
+      "url": "https://piclist.cn/",
+      "icon": "https://piclist.cn/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "自建图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgsr7qvj392k3at1d",
+      "createdAt": "2025-06-03T17:32:53.623Z",
+      "updatedAt": "2025-06-03T17:32:53.623Z"
+    },
+    {
+      "title": "PicGo",
+      "description": "",
+      "url": "https://picgo.github.io/PicGo-Doc/",
+      "icon": "https://picgo.github.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "自建图床"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgsrlkbl9xzzelqoqb",
+      "createdAt": "2025-06-03T17:33:11.531Z",
+      "updatedAt": "2025-06-03T17:33:11.531Z"
+    },
+    {
+      "title": "Upstash",
+      "description": "Upstash is a serverless data platform providing low latency and high scalability for real-time applications.",
+      "url": "https://upstash.com/",
+      "icon": "https://upstash.com/icons/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtgvs1lu7gufy0yo",
+      "createdAt": "2025-06-03T17:52:51.169Z",
+      "updatedAt": "2025-06-03T17:52:51.169Z"
+    },
+    {
+      "title": "Convex",
+      "description": "Convex is the reactive database for app developers. Everything you need to build your full-stack project.",
+      "url": "https://www.convex.dev/",
+      "icon": "https://www.convex.dev/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgthcj4bq2006m3a6",
+      "createdAt": "2025-06-03T17:53:12.880Z",
+      "updatedAt": "2025-06-03T17:53:12.880Z"
+    },
+    {
+      "title": "Supabase",
+      "description": "Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free.",
+      "url": "https://supabase.com/",
+      "icon": "https://supabase.com/favicon/favicon-16x16.png",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtht2vqh105ptvlbj",
+      "createdAt": "2025-06-03T17:53:34.327Z",
+      "updatedAt": "2025-06-03T17:53:34.327Z"
+    },
+    {
+      "title": "Turso",
+      "description": "Sign up to start building your next application with Turso. Get the simple developer experience of SQLite in production, and scale your multi-tenant backend with unlimited databases.",
+      "url": "https://turso.tech/",
+      "icon": "https://turso.tech/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgti6ywqjoufapd3rs",
+      "createdAt": "2025-06-03T17:53:52.328Z",
+      "updatedAt": "2025-06-03T17:53:52.328Z"
+    },
+    {
+      "title": "MySQL",
+      "description": "",
+      "url": "https://www.mysql.com/cn/",
+      "icon": "https://labs.mysql.com/common/themes/sakila/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtiqhl35tezk0zlf5",
+      "createdAt": "2025-06-03T17:54:17.625Z",
+      "updatedAt": "2025-06-03T17:54:17.625Z"
+    },
+    {
+      "title": "PostgreSQL",
+      "description": "The world's most advanced open source database.",
+      "url": "https://www.postgresql.org/",
+      "icon": "https://www.postgresql.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtj0ue7el3ee3cbtq",
+      "createdAt": "2025-06-03T17:54:31.046Z",
+      "updatedAt": "2025-06-03T17:54:31.046Z"
+    },
+    {
+      "title": "Prisma",
+      "description": "简化数据库操作和交互",
+      "url": "https://prisma.org.cn/",
+      "icon": "https://prisma.org.cn/images/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtjkqeuhukr3rbw4d",
+      "createdAt": "2025-06-03T17:54:56.822Z",
+      "updatedAt": "2025-06-03T17:54:56.822Z"
+    },
+    {
+      "title": "Amazon RDS 云数据库",
+      "description": "Amazon RDS一种可让用户在云中轻松设置、操作和扩展关系数据库的 Web 服务, 对在云中设置关系数据库的过程进行了简化，从而节省了时间、开支和人力。",
+      "url": "https://aws.amazon.com/cn/rds/",
+      "icon": "https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtjya37l2lq6u4x63",
+      "createdAt": "2025-06-03T17:55:14.379Z",
+      "updatedAt": "2025-06-03T17:55:14.379Z"
+    },
+    {
+      "title": "MongoDB",
+      "description": "使用灵活的 AI 就绪数据库，助力您的想法更快推向市场。MongoDB 可简化数据处理。",
+      "url": "https://www.mongodb.com/zh-cn",
+      "icon": "https://www.mongodb.com/assets/images/global/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtkazl41qwfjoq71g",
+      "createdAt": "2025-06-03T17:55:30.849Z",
+      "updatedAt": "2025-06-03T17:55:30.849Z"
+    },
+    {
+      "title": "Redis",
+      "description": "Developers love Redis. Unlock the full potential of the Redis database with Redis Enterprise and start building blazing fast apps.",
+      "url": "https://redis.io/",
+      "icon": "https://redis.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtknhb4lky8rdnxcx",
+      "createdAt": "2025-06-03T17:55:47.039Z",
+      "updatedAt": "2025-06-03T17:55:47.039Z"
+    },
+    {
+      "title": "PlanetScale",
+      "description": "PlanetScale is the world’s fastest and most reliable relational database.",
+      "url": "https://planetscale.com/",
+      "icon": "https://planetscale.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "数据库"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtl0tcw1pplakftpa",
+      "createdAt": "2025-06-03T17:56:04.320Z",
+      "updatedAt": "2025-06-03T17:56:04.320Z"
+    },
+    {
+      "title": "AWS 云服务",
+      "description": "Amazon Web Services 提供的云计算服务可靠、可扩展且费用合理。免费加入，只需按使用量付费。",
+      "url": "https://aws.amazon.com/cn/",
+      "icon": "https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "IaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtofyvgm143mbnnkp",
+      "createdAt": "2025-06-03T17:58:43.927Z",
+      "updatedAt": "2025-06-03T18:17:13.579Z"
+    },
+    {
+      "title": "Microsoft Azure",
+      "description": "有目的地发明，节约成本，让你的组织能够更高效地利用 Microsoft Azure 灵活的开放式云计算平台。",
+      "url": "https://azure.microsoft.com/zh-cn/",
+      "icon": "https://azure.microsoft.com/favicon.ico?v2",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "IaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtotc0y51jenowtk",
+      "createdAt": "2025-06-03T17:59:01.248Z",
+      "updatedAt": "2025-06-03T18:17:21.590Z"
+    },
+    {
+      "title": "阿里云",
+      "description": "阿里云——阿里巴巴集团旗下公司，是全球领先的云计算及人工智能科技公司之一。",
+      "url": "https://cn.aliyun.com/",
+      "icon": "https://img.alicdn.com/tfs/TB1_ZXuNcfpK1RjSZFOXXa6nFXa-32-32.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "IaaS"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbgtplkx3klahlh3c2s",
+      "createdAt": "2025-06-03T17:59:37.857Z",
+      "updatedAt": "2025-06-03T18:17:26.261Z"
+    },
+    {
+      "title": "腾讯云",
+      "description": "腾讯云(tencent cloud)为数百万的企业和开发者提供安全稳定的云计算服务，涵盖云服务器、云数据库、云存储、视频与CDN、域名注册等全方位云服务和各行业解决方案。",
+      "url": "https://cloud.tencent.com/",
+      "icon": "https://cloudcache.tencent-cloud.com/qcloud/favicon.ico?t=201902181234",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "IaaS"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbgtpzcs38tcy78h7iu",
+      "createdAt": "2025-06-03T17:59:55.708Z",
+      "updatedAt": "2025-06-03T18:17:31.645Z"
+    },
+    {
+      "title": "华为云",
+      "description": "华为云提供稳定可靠、安全可信、可持续发展的云服务，致力于让云无处不在，让智能无所不及，共建智能世界云底座。",
+      "url": "https://www.huaweicloud.com/",
+      "icon": "https://www.huaweicloud.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "IaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtqjs80v1se4yyokah",
+      "createdAt": "2025-06-03T18:00:22.184Z",
+      "updatedAt": "2025-06-03T18:17:36.579Z"
+    },
+    {
+      "title": "百度智能云",
+      "description": "百度智能云致力于为企业和开发者提供全球领先的人工智能、大数据和云计算服务，加速产业智能化转型升级",
+      "url": "https://cloud.baidu.com/",
+      "icon": "https://bce.bdstatic.com/img/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtqyz0akeu4nyo9yw",
+      "createdAt": "2025-06-03T18:00:41.868Z",
+      "updatedAt": "2025-06-03T18:00:41.868Z"
+    },
+    {
+      "title": "LeanCloud（美味书签）",
+      "description": "领先的 BaaS 提供商，提供数据存储、文件存储、云引擎、容器、即时通讯、消息推送、短信、游戏云等多项服务，为移动开发提供强有力的后端支持。",
+      "url": "https://www.leancloud.cn/",
+      "icon": "https://www.leancloud.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtr8p0nnr07flbrdc",
+      "createdAt": "2025-06-03T18:00:54.468Z",
+      "updatedAt": "2025-06-03T18:00:54.468Z"
+    },
+    {
+      "title": "LeanCloud",
+      "description": "LeanCloud is the leading backend-as-a-service provider that offers a complete set of cloud services including object storage, file storage, web hosting, container, instant messaging, push notification, SMS, and game backend.",
+      "url": "https://leancloud.app/",
+      "icon": "https://leancloud.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtrm07upyh964i7at",
+      "createdAt": "2025-06-03T18:01:11.719Z",
+      "updatedAt": "2025-06-03T18:01:11.719Z"
+    },
+    {
+      "title": "七牛云",
+      "description": "七牛云致力于成为全球领先的一站式中立音视频云 + AI 服务商",
+      "url": "https://www.qiniu.com/",
+      "icon": "https://static.qiniu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtse2kifhu8lgrky",
+      "createdAt": "2025-06-03T18:01:48.092Z",
+      "updatedAt": "2025-06-03T18:01:48.092Z"
+    },
+    {
+      "title": "又拍云",
+      "description": "国内知名企业级云服务商,全球1100多个自建CDN节点,10TB保有带宽,为25万用户提供CDN加速,数据云存储,HTTPS／SSL证书,WebP,云处理,视频图片存储,短视频开发SDK,直播开发SDK,DDos高防等一站式加速解决方案!",
+      "url": "https://www.upyun.com/",
+      "icon": "https://www.upyun.com/static/favicon-16x16.png",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtsw66ngxm9hhfita",
+      "createdAt": "2025-06-03T18:02:11.550Z",
+      "updatedAt": "2025-06-03T18:02:11.550Z"
+    },
+    {
+      "title": "欧畅云",
+      "description": "欧畅云-以音视频互动技术为核心驱动，大数据与人工智能为支撑，帮助企业快速部署直播系统，加速完成数字化、智能化转型。多年行业积累,值得信赖。",
+      "url": "https://www.occloud.net/",
+      "icon": "https://www.occloud.net/images/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgtt8prypcs6kts6w9",
+      "createdAt": "2025-06-03T18:02:27.807Z",
+      "updatedAt": "2025-06-03T18:02:27.808Z"
+    },
+    {
+      "title": "Cloudflare",
+      "description": "使员工、应用程序和网络在任何地方都更快、更安全，同时降低复杂性和成本。",
+      "url": "https://www.cloudflare.com/zh-cn/",
+      "icon": "https://www.cloudflare.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbgtu0rszrnmjfweotn",
+      "createdAt": "2025-06-03T18:03:04.168Z",
+      "updatedAt": "2025-06-03T18:22:05.630Z"
+    },
+    {
+      "title": "Vercel",
+      "description": "Vercel's Frontend Cloud gives developers the frameworks, workflows, and infrastructure to build a faster, more personalized web.",
+      "url": "https://vercel.com/",
+      "icon": "https://assets.vercel.com/image/upload/q_auto/front/favicon/vercel/apple-touch-icon-57x57.png",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgubinvsw0bd52mtn",
+      "createdAt": "2025-06-03T18:16:40.507Z",
+      "updatedAt": "2025-06-03T18:16:40.507Z"
+    },
+    {
+      "title": "Zeabur",
+      "description": "",
+      "url": "https://zeabur.com/zh-CN",
+      "icon": "https://zeabur.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbguj9sr9e8af0xs3fw",
+      "createdAt": "2025-06-03T18:22:42.267Z",
+      "updatedAt": "2025-06-03T18:22:42.267Z"
+    },
+    {
+      "title": "Netlify",
+      "description": "Realize the speed, agility and performance of a scalable, composable web architecture with Netlify. Explore the composable web platform now!",
+      "url": "https://www.netlify.com/",
+      "icon": "https://www.netlify.com/favicon/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbgujv1hkz9ufctpva9",
+      "createdAt": "2025-06-03T18:23:09.797Z",
+      "updatedAt": "2025-06-03T18:23:09.797Z"
+    },
+    {
+      "title": "Railway",
+      "description": "Railway is an infrastructure platform where you can provision infrastructure, develop with that infrastructure locally, and then deploy to the cloud.",
+      "url": "https://railway.com/",
+      "icon": "https://railway.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgukchxx2v8denld2",
+      "createdAt": "2025-06-03T18:23:32.421Z",
+      "updatedAt": "2025-06-03T18:23:32.421Z"
+    },
+    {
+      "title": "Render",
+      "description": "On Render, you can build, deploy, and scale your apps with unparalleled ease – from your first user to your billionth.",
+      "url": "https://render.com/",
+      "icon": "https://render.com/icon.svg?e6fbdd2e217c0064",
+      "iconType": "image",
+      "tags": [
+        "云服务",
+        "PaaS"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbgukykqp06mzjsfvd",
+      "createdAt": "2025-06-03T18:24:01.034Z",
+      "updatedAt": "2025-06-03T18:24:01.034Z"
+    },
+    {
+      "title": "AnyDesk",
+      "description": "探索AnyDesk，安全直观的远程桌面软件，并充分使用该应用程序的创新功能！",
+      "url": "https://anydesk.com.cn/zhs",
+      "icon": "https://anydesk.com.cn/_static/img/favicon/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "远程桌面"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguota8mxcxn9nr399",
+      "createdAt": "2025-06-03T18:27:00.800Z",
+      "updatedAt": "2025-06-03T18:27:00.800Z"
+    },
+    {
+      "title": "TeamViewer",
+      "description": "TeamViewer 远程桌面访问解决方案：连接远程计算机，提供远程支持和在线协作 ➤ 个人非商业用途免费！",
+      "url": "https://www.teamviewer.cn/cn/",
+      "icon": "https://www.teamviewer.cn/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "远程桌面"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgup8o2pkjqq012e8",
+      "createdAt": "2025-06-03T18:27:20.738Z",
+      "updatedAt": "2025-06-03T18:27:20.738Z"
+    },
+    {
+      "title": "向日葵远程控制软件",
+      "description": "向日葵远程控制软件是一款拥有多年远控技术经验的远程控制软件，可远程控制手机，远程桌面连接，远程开机，远程管理等",
+      "url": "https://sunlogin.oray.com/",
+      "icon": "https://sunlogin.oray.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "远程桌面"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgups0jpcb59xwszd",
+      "createdAt": "2025-06-03T18:27:45.811Z",
+      "updatedAt": "2025-06-03T18:27:45.811Z"
+    },
+    {
+      "title": "Parallels RAS",
+      "description": "Download Parallels to run Windows on Mac, Chrome, gain access to virtual desktop infrastructure (VDI) with DaaS, & Toolbox to secure private files, & more.",
+      "url": "https://www.parallels.cn/",
+      "icon": "https://www.parallels.cn/static/pl/typo3conf/ext/prls_theme/Resources/Public/theme/res/img/favicon/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "虚拟机"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguqh1yp60y3r641y",
+      "createdAt": "2025-06-03T18:28:18.262Z",
+      "updatedAt": "2025-06-03T18:28:18.262Z"
+    },
+    {
+      "title": "VMware",
+      "description": "Optimize cloud infrastructure with VMware for app platforms, private cloud, edge, networking, and security.",
+      "url": "https://www.vmware.com/",
+      "icon": "https://www.vmware.com/vm-favicon.png",
+      "iconType": "image",
+      "tags": [
+        "虚拟机"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguqymafjgmv2j3snr",
+      "createdAt": "2025-06-03T18:28:41.026Z",
+      "updatedAt": "2025-06-03T18:28:41.026Z"
+    },
+    {
+      "title": "白描App",
+      "description": "白描，像猫一样灵动的扫描识别神器。简洁高效的ocr文字识别应用与文件扫描软件，拍照取字高效确度，高清晰的文件扫描，可生成PDF，包含iOS版，安卓版，小程序版，网页版（免费在线OCR文字识别）",
+      "url": "https://baimiao.uzero.cn/",
+      "icon": "https://baimiao.uzero.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "OCR"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgutz2xsft0jkmjf7e",
+      "createdAt": "2025-06-03T18:31:01.593Z",
+      "updatedAt": "2025-06-03T18:31:01.593Z"
+    },
+    {
+      "title": "PearOCR",
+      "description": "完全免费无限制的文字识别网站",
+      "url": "https://pearocr.com/",
+      "icon": "https://pearocr.com/icons/favicon-128x128.png",
+      "iconType": "image",
+      "tags": [
+        "OCR"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbguuben68e13qk2a2e",
+      "createdAt": "2025-06-03T18:31:17.567Z",
+      "updatedAt": "2025-06-03T18:31:17.567Z"
+    },
+    {
+      "title": "扫描全能王",
+      "description": "扫描全能王提供最智能的文档管理方案;手机、平板、电脑变身随身携带的扫描仪,文件库,随时随心编辑文档,文字识别,文档识别,图片扫描,在线PDF转器;pdf转word,word转pdf转,图片转pdf等服务,扫描,编辑,管理,快速同步,时时分享,有效沟通。",
+      "url": "https://www.camscanner.com/",
+      "icon": "https://www.camscanner.com/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "OCR"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbguuq4unx2jlcq1j0r",
+      "createdAt": "2025-06-03T18:31:36.654Z",
+      "updatedAt": "2025-06-03T18:31:36.654Z"
+    },
+    {
+      "title": "OCR.space",
+      "description": "Free OCR API, Online OCR and Searchable PDF (Sandwich PDF) Service. Try instantly, no registration required. REST-based Web API to extract text from images and convert scans to searchable PDF. Free OCR software as a hosted service and as download.",
+      "url": "https://ocr.space/",
+      "icon": "https://ocr.space/content/images/favicon2020.png",
+      "iconType": "image",
+      "tags": [
+        "OCR"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbguv8nqdqly9rwa6ab",
+      "createdAt": "2025-06-03T18:32:00.662Z",
+      "updatedAt": "2025-06-03T18:32:00.662Z"
+    },
+    {
+      "title": "Dropbox",
+      "description": "",
+      "url": "https://www.dropbox.com/",
+      "icon": "https://www.dropbox.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguwaxnv0djzouc8y",
+      "createdAt": "2025-06-03T18:32:50.267Z",
+      "updatedAt": "2025-06-03T18:32:50.267Z"
+    },
+    {
+      "title": "百度网盘",
+      "description": "百度网盘是一款国民级产品，已连续9年为超过7亿用户提供稳定、安全的个人云存储服务，已实现电脑、手机、电视等多种终端场景的覆盖和互联，并支持多类型文件的备份、分享、查看和处理",
+      "url": "https://pan.baidu.com/",
+      "icon": "https://nd-static.bdstatic.com/m-static/wp-brand/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguwnuttdimfu3qty",
+      "createdAt": "2025-06-03T18:33:07.013Z",
+      "updatedAt": "2025-06-03T18:33:07.013Z"
+    },
+    {
+      "title": "阿里云盘",
+      "description": "阿里云盘是一款速度快、不打扰、够安全、易于分享的个人网盘，欢迎你来体验。",
+      "url": "https://www.alipan.com/",
+      "icon": "https://img.alicdn.com/imgextra/i1/O1CN01JDQCi21Dc8EfbRwvF_!!6000000000236-73-tps-64-64.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgux1jrvh9ihn02vz",
+      "createdAt": "2025-06-03T18:33:24.759Z",
+      "updatedAt": "2025-06-03T18:33:24.759Z"
+    },
+    {
+      "title": "夸克网盘",
+      "description": "夸克网盘是夸克推出的一款云服务产品，功能包括云存储、高清看剧、文件在线解压、PDF一键转换等。",
+      "url": "https://pan.quark.cn/",
+      "icon": "https://image.quark.cn/s/uae/g/3o/broccoli/resource/202404/d94d93e0-03a2-11ef-be4c-79ebae2e18ac.vnd.microsoft.icon",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguxphcq4huw4zp3v",
+      "createdAt": "2025-06-03T18:33:55.776Z",
+      "updatedAt": "2025-06-03T18:33:55.776Z"
+    },
+    {
+      "title": "腾讯微云",
+      "description": "微云是腾讯公司为用户精心打造的一项智能云服务, 您可以通过微云方便地在手机和电脑之间同步文件、推送照片和传输数据。",
+      "url": "https://www.weiyun.com/",
+      "icon": "https://img.weiyun.com/vipstyle/nr/box/img/favicon.ico?max_age=31536000",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguy2tbywhgka58e8l",
+      "createdAt": "2025-06-03T18:34:13.055Z",
+      "updatedAt": "2025-06-03T18:34:13.055Z"
+    },
+    {
+      "title": "115生活",
+      "description": "是一款面向个人用户的云服务产品，连续15年为上亿用户提供海量信息化数据的安全存储服务，可实现多端同步与文件快速存取。",
+      "url": "https://115.com/",
+      "icon": "https://115.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguyshmjekl2tsnx1m",
+      "createdAt": "2025-06-03T18:34:46.330Z",
+      "updatedAt": "2025-06-03T18:34:46.330Z"
+    },
+    {
+      "title": "坚果云",
+      "description": "坚果云是一款提供网盘|云盘|云服务的团队协助软件,可随时随地实现共享文件夹。坚果云网盘支持移动办公,协同办公,文件同步,数据备份,智能管理,在线编辑等功能。",
+      "url": "https://www.jianguoyun.com/",
+      "icon": "https://www.jianguoyun.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguz4ezcen6wlad1ug",
+      "createdAt": "2025-06-03T18:35:01.787Z",
+      "updatedAt": "2025-06-03T18:35:01.787Z"
+    },
+    {
+      "title": "蓝奏·云存储",
+      "description": "",
+      "url": "https://up.woozooo.com/",
+      "icon": "https://up.woozooo.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguzghhvoo6l8yht8j",
+      "createdAt": "2025-06-03T18:35:17.429Z",
+      "updatedAt": "2025-06-03T18:35:17.429Z"
+    },
+    {
+      "title": "DROP",
+      "description": "DROP is your premium file sharing and hosting platform. Share files up to 10GB for free, showcase your work professionally, and enjoy secure, fast transfers. Better than WeTransfer with more features.",
+      "url": "https://drop.space/",
+      "icon": "https://static-fe-os.woc.space/prod/icons/favicon-144x144.png",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbguzx0yjfep6nvk9re",
+      "createdAt": "2025-06-03T18:35:38.866Z",
+      "updatedAt": "2025-06-03T18:35:38.866Z"
+    },
+    {
+      "title": "奶牛快传",
+      "description": "奶牛快传 (CowTransfer) 无需注册即可传输文件，上传下载不限速。传视频、传音频、传图片、跨国传、传大文件。10GB 免费云盘、会员 3TB 超大云盘。最受创意人、广告人及创作者喜爱的效率工具之一，快来体验吧！",
+      "url": "https://cowtransfer.com/",
+      "icon": "https://background.c-t.work/android-icon-192x192.png",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv0akvfi643hek7xv",
+      "createdAt": "2025-06-03T18:35:56.431Z",
+      "updatedAt": "2025-06-03T18:35:56.431Z"
+    },
+    {
+      "title": "AirPortal 空投快传",
+      "description": "AirPortal（空投快传）是一个可以跨设备传输文件的网站。只要您的设备联网，您就可以通过它在任意系统、任意设备间传输文件。无需登录或注册，只需打开空投快传、直接上传文件、记住所给的取件码或直接扫描二维码即可在另一台设备上下载文件。",
+      "url": "https://www.airportal.cn/",
+      "icon": "https://assets.retiehe.com/ap-icon-192-3.png",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv0osb9s5ih8gg0zm",
+      "createdAt": "2025-06-03T18:36:14.843Z",
+      "updatedAt": "2025-06-03T18:36:14.843Z"
+    },
+    {
+      "title": "iCloud",
+      "description": "登录 iCloud 访问照片、邮件、备忘录、文稿等。通过 Apple 账户登录，或者创建新账户以开始使用 Apple 服务。",
+      "url": "https://www.icloud.com.cn/",
+      "icon": "https://www.icloud.com.cn/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv0zi9mbnph0215ih",
+      "createdAt": "2025-06-03T18:36:28.737Z",
+      "updatedAt": "2025-06-03T18:36:28.737Z"
+    },
+    {
+      "title": "小米云服务",
+      "description": "在线管理和存储您的联系人、短信、照片、笔记等各种数据，并同步到您的各个手机设备之上，还可以查找您的手机位置并锁定内容。",
+      "url": "https://i.mi.com/",
+      "icon": "https://cdn.web-global.fds.api.mi-img.com/mcfe--fds-static-files/micloud-images/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网盘"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv1otxl2e913hspcq",
+      "createdAt": "2025-06-03T18:37:01.557Z",
+      "updatedAt": "2025-06-03T18:37:01.557Z"
+    },
+    {
+      "title": "Gmail · 谷歌邮箱",
+      "description": "",
+      "url": "https://mail.google.com/",
+      "icon": "https://mail.google.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "个人邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv3s5rvl9kgvncsm",
+      "createdAt": "2025-06-03T18:38:39.183Z",
+      "updatedAt": "2025-06-03T18:38:39.183Z"
+    },
+    {
+      "title": "QQ邮箱",
+      "description": "安全、稳定、快速、便捷的免费电子邮箱。强大的反垃圾邮件过滤，10G超大附件发送，轻松管理所有电子发票，尽在QQ邮箱。",
+      "url": "https://mail.qq.com/",
+      "icon": "https://mail.qq.com/zh_CN/htmledition/images/favicon/qqmail_favicon_16h.png",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "个人邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv47usgf2968tb8fr",
+      "createdAt": "2025-06-03T18:38:59.524Z",
+      "updatedAt": "2025-06-03T18:38:59.524Z"
+    },
+    {
+      "title": "网易免费邮箱",
+      "description": "网易免费邮箱，你的专业电子邮局，提供以@163.com、@126.com和@yeah.net为后缀的免费邮箱。",
+      "url": "https://email.163.com/",
+      "icon": "https://email.163.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "个人邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv4scszv190xqkk4b",
+      "createdAt": "2025-06-03T18:39:26.092Z",
+      "updatedAt": "2025-06-03T18:39:26.092Z"
+    },
+    {
+      "title": "腾讯企业邮",
+      "description": "",
+      "url": "https://exmail.qq.com/",
+      "icon": "https://exmail.qq.com/exmail_logo.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "企业邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv5j6i2qvd1i4cfci",
+      "createdAt": "2025-06-03T18:40:00.858Z",
+      "updatedAt": "2025-06-03T18:40:00.858Z"
+    },
+    {
+      "title": "网易企业邮箱",
+      "description": "网易企业邮箱,是网易推出的获得国际化标准安全证书的企业电子邮箱系统,拥有专业反垃圾技术,极速稳定收发,全球畅邮。",
+      "url": "https://qiye.163.com/",
+      "icon": "https://qiye.163.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "企业邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv60o32bywjcqzpgk",
+      "createdAt": "2025-06-03T18:40:23.523Z",
+      "updatedAt": "2025-06-03T18:40:23.523Z"
+    },
+    {
+      "title": "飞书邮箱",
+      "description": "更智能安全的公司/企业邮箱每天邮件处理耗费大量时间？飞书邮箱与即时沟通、日历深度整合，邮件可以一键分享至沟通群组，信息同步更及时、邮件准备更高效。",
+      "url": "https://www.feishu.cn/product/email",
+      "icon": "https://p1-hera.feishucdn.com/tos-cn-i-jbbdkfciu3/84a9f036fe2b44f99b899fff4beeb963~tplv-jbbdkfciu3-image:0:0.image",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "企业邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv6scsiy2jb0syuts",
+      "createdAt": "2025-06-03T18:40:59.404Z",
+      "updatedAt": "2025-06-03T18:40:59.404Z"
+    },
+    {
+      "title": "2925邮箱-海量邮",
+      "description": "2925邮箱支持多种客户端收发邮件且数据安全加密多端同步。只需要注册一个账号，就能生成海量多个2925子邮箱账号，同时利用一邮多用功能对多个子邮箱邮件进行集中管理。",
+      "url": "https://www.2925.com/",
+      "icon": "https://www.2925.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "临时邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv77n64e7q69r6zt1",
+      "createdAt": "2025-06-03T18:41:19.218Z",
+      "updatedAt": "2025-06-03T18:41:19.218Z"
+    },
+    {
+      "title": "Temp Email",
+      "description": "",
+      "url": "https://mail.awsl.uk/",
+      "icon": "https://mail.awsl.uk/logo.png",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "临时邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv7plfm9zowdu2e2e",
+      "createdAt": "2025-06-03T18:41:42.483Z",
+      "updatedAt": "2025-06-03T18:41:42.483Z"
+    },
+    {
+      "title": "Moakt Email",
+      "description": "",
+      "url": "https://www.moakt.com/",
+      "icon": "https://www.moakt.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "邮箱",
+        "临时邮箱"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv89gpvie09a88wde",
+      "createdAt": "2025-06-03T18:42:08.233Z",
+      "updatedAt": "2025-06-03T18:42:08.233Z"
+    },
+    {
+      "title": "接码号",
+      "description": "免费在线短信接收平台，可以在线接收短信，接收短信验证码，显示迅速，定时更新号码库，验证码接收平台，最新国外接码平台，海量临时虚拟手机号云短信接码，拥有中国香港/美国/英国/德国/加拿大/马来西亚/菲律宾/印度尼西亚/泰国等电话号码",
+      "url": "https://jiemahao.com/",
+      "icon": "https://jiemahao.com/wp-content/uploads/2023/07/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "短信接收"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgv9m0pco54roslhvf",
+      "createdAt": "2025-06-03T18:43:11.161Z",
+      "updatedAt": "2025-06-03T18:43:11.161Z"
+    },
+    {
+      "title": "Free Online Phone",
+      "description": "Receive SMS Online",
+      "url": "https://www.freeonlinephone.org/",
+      "icon": "https://www.freeonlinephone.org/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "短信接收"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgvadukfeteykmise",
+      "createdAt": "2025-06-03T18:43:47.228Z",
+      "updatedAt": "2025-06-03T18:43:47.228Z"
+    },
+    {
+      "title": "在线接收短信验证码",
+      "description": "",
+      "url": "https://yunduanxin.net/",
+      "icon": "https://yunduanxin.net/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "短信接收"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgvasmmyj9ucielo3b",
+      "createdAt": "2025-06-03T18:44:06.382Z",
+      "updatedAt": "2025-06-03T18:44:06.382Z"
+    },
+    {
+      "title": "滴答清单",
+      "description": "滴答清单，一个帮你高效完成任务和规划时间的应用，是一款拥有跨设备云同步、周期提醒、清单管理、清晰分类、协作和集成日历的应用，你可以在Web、Android、iPhone等设备上使用它。",
+      "url": "https://www.dida365.com/",
+      "icon": "https://cncdn.dida365.com/static/img/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "待办"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgvd1j6czo00ula9om",
+      "createdAt": "2025-06-03T18:45:51.234Z",
+      "updatedAt": "2025-06-03T18:45:51.234Z"
+    },
+    {
+      "title": "Todoist",
+      "description": "深受三千万个用户和团队的信任。Todoist是全球最受欢迎的任务管理器和待办清单应用。忠于专注、有序和理性。",
+      "url": "https://todoist.com/",
+      "icon": "https://todoist.com/static/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "待办"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgvdiwhckd5f8i6ig",
+      "createdAt": "2025-06-03T18:46:13.745Z",
+      "updatedAt": "2025-06-03T18:46:13.745Z"
+    },
+    {
+      "title": "Microsoft To Do",
+      "description": "",
+      "url": "https://to-do.office.com/tasks/",
+      "icon": "https://to-do.office.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "待办"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgveblft2z9cx5tizf",
+      "createdAt": "2025-06-03T18:46:50.931Z",
+      "updatedAt": "2025-06-03T18:46:50.931Z"
+    },
+    {
+      "title": "微软officePLUS",
+      "description": "微软officePLUS是微软官方在线ppt模板、插件网站，提供各类PPT模板、PPT模板免费下载、PPT素材、求职简历PPT、教学课件PPT、营销策划PPT、PPT模板页、PPT关系图、PPT图表",
+      "url": "https://www.officeplus.cn/",
+      "icon": "https://www.officeplus.cn/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "PPT模板"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvfi3ij0rvrmor4ds",
+      "createdAt": "2025-06-03T18:47:46.014Z",
+      "updatedAt": "2025-06-03T18:47:46.014Z"
+    },
+    {
+      "title": "SIMPLE P.",
+      "description": "심플한 PPT 템플릿",
+      "url": "https://simplep.net/",
+      "icon": "https://simplep.net/wp-content/uploads/2018/12/cropped-SimpleP_pavicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "PPT模板"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvftr9ni9rszvjcr",
+      "createdAt": "2025-06-03T18:48:01.125Z",
+      "updatedAt": "2025-06-03T18:48:01.125Z"
+    },
+    {
+      "title": "优品PPT",
+      "description": "优品PPT模板网是一家专注于分享高质量的免费PPT模板下载网站，包括图表、背景图片、素材、教程等各类PPT模板相关资源。致力于打造国内最大最权威的PPT下载一站式服务平台。",
+      "url": "https://www.ypppt.com/",
+      "icon": "https://www.ypppt.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PPT模板"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvg8zyrgd9i4xy28l",
+      "createdAt": "2025-06-03T18:48:20.878Z",
+      "updatedAt": "2025-06-03T18:48:20.878Z"
+    },
+    {
+      "title": "逼格PPT",
+      "description": "逼格PPT模板网，是一个提供免费ppt模板下载的个人博客网站。除了PPT模板以外，博主李益达还会分享一些免费ppt模板制作教程和素材下载。",
+      "url": "http://www.tretars.com/",
+      "icon": "http://www.tretars.com/wp-content/uploads/2018/03/logo-fav.png",
+      "iconType": "image",
+      "tags": [
+        "PPT模板"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvgn6y4ucupu103rj",
+      "createdAt": "2025-06-03T18:48:39.274Z",
+      "updatedAt": "2025-06-03T18:48:39.274Z"
+    },
+    {
+      "title": "吾道幻灯片",
+      "description": "一款全新的office生产力工具，支持演示文稿、PPT模板、协同办公，可以帮助用户轻松创建具有视觉吸引力的幻灯片",
+      "url": "https://www.woodo.cn/design/template/",
+      "icon": "https://www.woodo.cn/public/logo-48.png",
+      "iconType": "image",
+      "tags": [
+        "演示工具"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvidx1bd0f0396vmm",
+      "createdAt": "2025-06-03T18:50:00.565Z",
+      "updatedAt": "2025-06-03T18:50:00.565Z"
+    },
+    {
+      "title": "Prezi",
+      "description": "Welcome to Prezi, the presentation software that helps you stand out, bring your ideas to life, and create interactive presentations easier than ever.",
+      "url": "https://prezi.com/",
+      "icon": "https://assets.prezicdn.net/assets-versioned/staticpages-versioned/5917-8b46d6d/common/img/favicon.ico?v=2",
+      "iconType": "image",
+      "tags": [
+        "演示工具"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvizx4dhof5y796f",
+      "createdAt": "2025-06-03T18:50:29.080Z",
+      "updatedAt": "2025-06-03T18:50:29.080Z"
+    },
+    {
+      "title": "演界网",
+      "description": "专注于设计交易，专业PPT模板，PPT图表，动态PPT，PPT动画，keynote，prezi，商业图片，正版图片，矢量图片，演示定制综合平台，提供PPT发布，PPT挣钱，PPT设计，PPT定制，keynote定制，prezi定制等服务",
+      "url": "http://www.yanj.cn/",
+      "icon": "http://www.yanj.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PPT模板"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvjhwv7dt6e0kjb4v",
+      "createdAt": "2025-06-03T18:50:52.399Z",
+      "updatedAt": "2025-06-03T18:50:52.399Z"
+    },
+    {
+      "title": "iSlide",
+      "description": "拥有10万+ 原创可商用PPT模板，PPT主题素材，PPT案例，PPT图表，PPT图示，PPT图标，PPT插图和800万+正版图片。工具提供86个设计辅助实用功能，一键解决PPT设计制作中的难题。",
+      "url": "https://www.islide.cc/",
+      "icon": "https://www.islide.cc/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PPT插件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvk6tux3pa8trwez",
+      "createdAt": "2025-06-03T18:51:24.690Z",
+      "updatedAt": "2025-06-03T18:51:24.690Z"
+    },
+    {
+      "title": "OneKeyTools",
+      "description": "提供OK插件免费下载、教程、交流",
+      "url": "http://oktools.xyz/",
+      "icon": "http://oktools.xyz/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PPT插件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvklfxdq6v4da9m3",
+      "createdAt": "2025-06-03T18:51:43.629Z",
+      "updatedAt": "2025-06-03T18:51:43.629Z"
+    },
+    {
+      "title": "MotionGo",
+      "description": "MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。原创商用PPT动画,数据看板,智能数据可视化,PPT动态图标、3D词云图,一键修改让设计、数据简单起来！",
+      "url": "https://motion.yoo-ai.com/",
+      "icon": "https://motion.yoo-ai.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PPT插件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvkze7gae1jcuv59i",
+      "createdAt": "2025-06-03T18:52:01.711Z",
+      "updatedAt": "2025-06-03T18:52:01.711Z"
+    },
+    {
+      "title": "AiPPT",
+      "description": "AiPPT结合最新AI技术，为用户提供一键生成高质量PPT的解决方案。无论是职场展示、教育课件还是销售报告，AiPPT均能快速生成符合需求的专业PPT，简化设计流程，提升工作效率。",
+      "url": "https://www.aippt.cn/",
+      "icon": "https://www.aippt.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvm1xhih9pk1wu0nk",
+      "createdAt": "2025-06-03T18:52:51.653Z",
+      "updatedAt": "2025-06-03T18:52:51.653Z"
+    },
+    {
+      "title": "WPS灵犀",
+      "description": "",
+      "url": "https://lingxi.wps.cn/",
+      "icon": "https://lingxi.wps.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvmg7awvhzdhom0nr",
+      "createdAt": "2025-06-03T18:53:10.150Z",
+      "updatedAt": "2025-06-03T18:53:10.150Z"
+    },
+    {
+      "title": "轻竹PPT",
+      "description": "AI一键生成PPT - 海量PPT模版 - 智能PPT制作网站",
+      "url": "https://www.qzoffice.com/",
+      "icon": "https://static.qzoffice.com/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvn0l9jv6msb23tjb",
+      "createdAt": "2025-06-03T18:53:36.573Z",
+      "updatedAt": "2025-06-03T18:53:36.573Z"
+    },
+    {
+      "title": "讯飞智文",
+      "description": "讯飞智文，由科大讯飞推出的一键生成ppt/word产品。根据一句话、长文本、音视频等指令智能生成文档，同时支持在线编辑、美化、排版、导出、一键动效、自动生成演讲稿等功能，让AI全流程服务到底。",
+      "url": "https://zhiwen.xfyun.cn/",
+      "icon": "https://zhiwen.xfyun.cn/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvngxi1bmkpc1gm3y",
+      "createdAt": "2025-06-03T18:53:57.750Z",
+      "updatedAt": "2025-06-03T18:53:57.750Z"
+    },
+    {
+      "title": "美图 LivePPT",
+      "description": "",
+      "url": "https://www.designkit.com/ppt/",
+      "icon": "https://www.designkit.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvntut1zmn0coy6ih",
+      "createdAt": "2025-06-03T18:54:14.501Z",
+      "updatedAt": "2025-06-03T18:54:14.501Z"
+    },
+    {
+      "title": "迅捷AiPPT",
+      "description": "迅捷AiPPT是一款主打PPT制作的AI工具,借助智能AI生成PPT文件内容,用户只需提供主题、关键词或内容描述,AI即可自动生成包含标题、大纲、内容和配图的完整PPT内容,AI智能PPT制作工具帮助您提高制作PPT的效率和便利性.",
+      "url": "https://www.xunjieppt.com/",
+      "icon": "https://www.xunjieppt.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvojik0qqrajpznjgr",
+      "createdAt": "2025-06-03T18:54:47.756Z",
+      "updatedAt": "2025-06-03T18:54:47.756Z"
+    },
+    {
+      "title": "MindShow",
+      "description": "AI生成PPT，快速演示你的想法",
+      "url": "https://www.mindshow.fun/",
+      "icon": "https://www.mindshow.fun/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvozgm18gazbbcgy3",
+      "createdAt": "2025-06-03T18:55:08.422Z",
+      "updatedAt": "2025-06-03T18:55:08.422Z"
+    },
+    {
+      "title": "博思AIPPT - PPTGO",
+      "description": "博思AIPPT来了，让繁琐的PPT GO吧，海量PPT模板任选，布局灵活切换，在线编辑PPT内容，零基础也能快速用ai制作PPT。",
+      "url": "https://pptgo.cn/",
+      "icon": "https://cms.pptgo.cn/images/fav.ico",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvpijomh2uro0pdis",
+      "createdAt": "2025-06-03T18:55:33.156Z",
+      "updatedAt": "2025-06-03T18:55:33.156Z"
+    },
+    {
+      "title": "Beautiful.ai",
+      "description": "Beautiful.ai is the best AI-powered presentation software for teams. Stay on brand, level up and automate presentation design, and collaborate from anywhere.",
+      "url": "https://www.beautiful.ai/",
+      "icon": "https://cdn.prod.website-files.com/59deb588800ae30001ec19c9/5d4891e0e260e3c1bc37b100_beautiful%20ai%20favicon%20%20blue%20square.png",
+      "iconType": "image",
+      "tags": [
+        "AIPPT"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvq7kyjxq0xqb3nyi",
+      "createdAt": "2025-06-03T18:56:05.602Z",
+      "updatedAt": "2025-06-03T18:56:05.602Z"
+    },
+    {
+      "title": "Powtoon",
+      "description": "Make videos in minutes with Powtoon. Use our library of styles, characters, backgrounds and video, or upload your own! Free. Easy. Awesome. Sign up today!",
+      "url": "https://www.powtoon.com/",
+      "icon": "https://www.powtoon.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "演示工具"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvs46u90029lmcan9",
+      "createdAt": "2025-06-03T18:57:34.518Z",
+      "updatedAt": "2025-06-03T18:57:34.518Z"
+    },
+    {
+      "title": "Smallpdf",
+      "description": "让您轻松转换和编辑所有PDF文件的平台。一个网站就能解决您所有的PDF问题 – 是的，免费！",
+      "url": "https://smallpdf.com/cn",
+      "icon": "https://smallpdf.com/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvtnumwnrnvswijzd",
+      "createdAt": "2025-06-03T18:58:46.654Z",
+      "updatedAt": "2025-06-03T18:58:46.654Z"
+    },
+    {
+      "title": "嗨格式PDF在线",
+      "description": "PDF.cn免费提供PDF转换成Word、图片、Excel、PPT等多种文件格式互转及PDF压缩、PDF合并和拆分等功能,无需下载,简单便捷.PDF.cn解决您所有的PDF问题。",
+      "url": "https://www.pdf.cn/",
+      "icon": "https://www.pdf.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvu25tf8zjtnssjpm",
+      "createdAt": "2025-06-03T18:59:05.201Z",
+      "updatedAt": "2025-06-03T18:59:05.201Z"
+    },
+    {
+      "title": "轻闪PDF",
+      "description": "轻闪PDF（LightPDF）是一个完全免费的在线编辑器，无需下载安装，无需登录即可使用。提供最佳的PDF在线编辑体验，您可以修改文本内容，添加图片等。除了基本的编辑功能外，还有注释功能，您可以对PDF文本进行高亮/划线等注释，并利用AI语义解析模型能快速获取和整理信息，与文档交流，能够提高人们获取有效信息的效率、优化工作质量，完全满足您对于PDF编辑的需求。",
+      "url": "https://lightpdf.cn/",
+      "icon": "https://qncdn.aoscdn.com/astro/lightpdf/_astro/favicon@48w.1f86f507.png",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvuh8wjslgmn8hnm",
+      "createdAt": "2025-06-03T18:59:24.752Z",
+      "updatedAt": "2025-06-03T18:59:24.752Z"
+    },
+    {
+      "title": "PDF派",
+      "description": "pdf转word_pdf转换成excel_pdf转换成ppt _纬来PDF转换器",
+      "url": "https://www.pdfpai.com/",
+      "icon": "https://www.pdfpai.com/statics/images/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvv6pbrawjd5mo0a",
+      "createdAt": "2025-06-03T18:59:57.743Z",
+      "updatedAt": "2025-06-03T18:59:57.744Z"
+    },
+    {
+      "title": "Office Converter",
+      "description": "",
+      "url": "https://cn.office-converter.com/",
+      "icon": "https://cn.office-converter.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvvkdkpppvfzwvt2d",
+      "createdAt": "2025-06-03T19:00:15.464Z",
+      "updatedAt": "2025-06-03T19:00:15.464Z"
+    },
+    {
+      "title": "docsmall",
+      "description": "docsmall 提供免费的在线图片、GIF、PDF处理，包括图片压缩、裁剪、改尺寸，PDF合并、分割、压缩、页面调整等功能。",
+      "url": "https://docsmall.com/",
+      "icon": "https://docsmall.com/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvvx8qppcwqzqvfl8",
+      "createdAt": "2025-06-03T19:00:32.138Z",
+      "updatedAt": "2025-06-03T19:00:32.138Z"
+    },
+    {
+      "title": "Aconvert",
+      "description": "Aconvert.com converts all kinds of document, ebook, image, icon, video, audio and archive files online for free.",
+      "url": "https://www.aconvert.com/",
+      "icon": "https://www.aconvert.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvwesf5ov4orubhp",
+      "createdAt": "2025-06-03T19:00:54.879Z",
+      "updatedAt": "2025-06-03T19:00:54.879Z"
+    },
+    {
+      "title": "Convertio — 文件转换器",
+      "description": "Convertio - 在线转换文件的简单工具。支持超过309种不同的文档、图像、电子表格、电子书、文档、演示文稿、音频和视频格式。",
+      "url": "https://convertio.co/zh/",
+      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpFNDY1NDg3RDc3N0JFODExODNENjlCOEE4NDIwQ0ZCMyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNzIyRUYxOUU2OEMxMUU5OENDMkRGRDY2MUEyMUNEMCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNzIyRUYxOEU2OEMxMUU5OENDMkRGRDY2MUEyMUNEMCIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBBQzRBRDc4OEJFNkU5MTE5RDNFOEE4MDBCRkY0NDZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU0NjU0ODdENzc3QkU4MTE4M0Q2OUI4QTg0MjBDRkIzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+6G+jpQAAA/9JREFUeNq0V1lIlFEU/kZbjPYkEysospJGbBW1KAgX2qCHFIpepOVBBFHBpiQiIjIXFIveUiIhCcqXVoPqoZ0CM1qgtB5EsEItNR2TtHO8d3Lm/8//z6/pgY9h/nvvOd+992zXNbR+PRzKDMJOwlbCGsJSwmw99pPwhfCa8JBwi9DjRKnLAYFogoewjzDdIdlfhFpCMaHJbmKIzVgY4SzhHeHQKIxDzz2k1xZrXaMisIzwTO98CsYuvPaI1hVtT+DVKwVgHeGJvufxEtb1eFj3iB3hBDZsYJZ3CQsw/rJgWLeyITrhNH1Uq23VREQACQnA8uVAeDjw5w/Q0QG8eaN21tUVjAhNRCKhj/9M8hs4aWvc5QJSU4H0dMDtBqZONc/p7QWuXQOqqykILaMwTtvy+J8AO90HwmRnGYFSQloacOAAEBlpHm9tBXJzKTN8sdIwQFjFIerzgaOWxtlYUlLgN95dXR2QkQHU15vXLFwIXLigrkuWydrmsBPO1ElGmEbzSkuB8nIgPt483kfXePw4cOWK7CsVFUBoqBWJvWybCewQkwzf+YkTyrCPSEyMWc3QkDJ05455bOVK2to+u2S1gwkki8PZ2cD27YFXcf48sHixTKKoCPj2zTx2+DDtc6YVieQQ7ZWBwp6emWmePncucO6c+pUioLZW2CdtNCXFMiJCdASMCO/a47GOAD4BPvIwIb03NMhrOG9YpHwmMOvfX75vvne+fzuJjQXOnCEXNpSSzk55flSUlaZZnAf6xYJz+TJF6irzkt27VZz/S+ZEoqwM2LIleP4YoPDPyQFevvR9+c1bkHOnvxF/mTcv8P/gIFBYCLx9a2+c55065W+cpYsJNIsLHj2SFa1da/7m9QJ5eUBLizWBkhIpVJtDdHEwy4MHQHe3+fv+/cqzjcL3z8cr+cGlS6pGCIWJCdwXCfCuamrM37kCHjsmOyqfQFZWYCHiXXNaluU+E7itezizMIGPH83ft20D8vNlEk3UAhYUKIfj++Z750QlZA627auGFwkHRRKLFgFVVWrnRrl3Dzh9WiUho3ABa2yUx5RUcd/oI8BdynvLirhkCVBZqaqcUdraVP1nMj2OOnFfOaamAp9CT6ok0aH7/k3i9B8/gBs3VMyvWKGKk3+N2LxZFZ1EanT6Ka18/hyMAJVXXJVasudibTDmdk6tcXEqJzCp9nZ19y9eyAXJ3JIlaR/wI8D9nGoYnxLmY2LkO2Ej2WoiW0JXzAPk44SvE2D867BuZSPo04xP4nrQ63AufOx7pGea1cuIJ3INLdEeO1YZ0DoSrN6Idm9Dr26d3TpP9I7CcJ+Oc7fW4f2f17H/83yX4Xk+xxeohuf5TafP878CDADrJR+o7JYu7QAAAABJRU5ErkJggg==",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvwqtz5cfmmpghw7b",
+      "createdAt": "2025-06-03T19:01:10.487Z",
+      "updatedAt": "2025-06-03T19:01:10.487Z"
+    },
+    {
+      "title": "PDF Candy",
+      "description": "",
+      "url": "https://pdfcandy.com/zh/",
+      "icon": "https://pdfcandy.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvx6ewmo3khktf3z",
+      "createdAt": "2025-06-03T19:01:30.680Z",
+      "updatedAt": "2025-06-03T19:01:30.680Z"
+    },
+    {
+      "title": "iLovePDF",
+      "description": "iLovePDF网站提供PDF文件在线转换服务。它完全免费，而且使用方便。无论是合并PDF文件、拆分PDF文件、压缩PDF文件、Office文件转换为PDF文件，还是PDF转换为JPG图片等，iLovePDF都能满足您的需求！",
+      "url": "https://www.ilovepdf.com/zh-cn",
+      "icon": "https://www.ilovepdf.com/img/favicons-pdf/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvxlm69v020ugyz7s",
+      "createdAt": "2025-06-03T19:01:50.382Z",
+      "updatedAt": "2025-06-03T19:01:50.382Z"
+    },
+    {
+      "title": "Sejda.com",
+      "description": "Easy, pleasant and productive PDF editor. Split, merge or convert PDF to images, extract pages, alternate scans and many more.",
+      "url": "https://www.sejda.com/zh",
+      "icon": "https://www.sejda.com/images/icon_128.png",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvy1et1w3rxmdfd7c",
+      "createdAt": "2025-06-03T19:02:10.853Z",
+      "updatedAt": "2025-06-03T19:02:10.853Z"
+    },
+    {
+      "title": "万兴PDF编辑器",
+      "description": "万兴PDF编辑器是A股上市公司万兴科技旗下产品，它的前身是PDFelement，是一款专业的PDF编辑器。万兴PDF拥有PDF文字编辑、PDF格式转换、PDF文档注释和阅读等多种功能，让PDF编辑像Word一样简单。",
+      "url": "https://pdf.wondershare.cn/",
+      "icon": "https://pdf.wondershare.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvyj8htpgw6xhlqy",
+      "createdAt": "2025-06-03T19:02:33.953Z",
+      "updatedAt": "2025-06-03T19:02:33.953Z"
+    },
+    {
+      "title": "Soda PDF",
+      "description": "",
+      "url": "https://www.sodapdf.com/zh/",
+      "icon": "https://www.sodapdf.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvyzbwrn9u9owxie",
+      "createdAt": "2025-06-03T19:02:54.812Z",
+      "updatedAt": "2025-06-03T19:02:54.812Z"
+    },
+    {
+      "title": "PDFMathTranslate",
+      "description": "PDF翻译",
+      "url": "https://pdf2zh.com/",
+      "icon": "https://pdf2zh.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "PDF"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgvzlzxsg6sdlyzrxs",
+      "createdAt": "2025-06-03T19:03:24.189Z",
+      "updatedAt": "2025-06-03T19:03:24.189Z"
+    },
+    {
+      "title": "小恐龙公文排版助手",
+      "description": "for Word/WPS",
+      "url": "https://gw.xkonglong.com/",
+      "icon": "https://gw.xkonglong.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Word插件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw11pjavdlyrbtca5",
+      "createdAt": "2025-06-03T19:04:31.207Z",
+      "updatedAt": "2025-06-03T19:04:31.207Z"
+    },
+    {
+      "title": "Zoom",
+      "description": "Modernize workflows with Zoom's trusted collaboration tools: including video meetings, team chat, VoIP phone, webinars, whiteboard, contact center, and events.",
+      "url": "https://zoom.us/",
+      "icon": "https://st1.zoom.us/homepage/publish/zoom.ico",
+      "iconType": "image",
+      "tags": [
+        "视频会议"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw2vr14gi4qcq9imb",
+      "createdAt": "2025-06-03T19:05:56.797Z",
+      "updatedAt": "2025-06-03T19:05:56.797Z"
+    },
+    {
+      "title": "腾讯会议",
+      "description": "基于腾讯20多年音视频通讯经验，腾讯会议提供一站式音视频会议解决方案，让您能随时随地体验高清流畅的会议以及会议协作。",
+      "url": "https://meeting.tencent.com/",
+      "icon": "https://meeting.tencent.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "视频会议"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw39fsvnej1epeo6",
+      "createdAt": "2025-06-03T19:06:14.536Z",
+      "updatedAt": "2025-06-03T19:06:14.536Z"
+    },
+    {
+      "title": "Google Meet",
+      "description": "",
+      "url": "https://meet.google.com/",
+      "icon": "https://meet.google.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "视频会议"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw3pn5c4l7tq4szgi",
+      "createdAt": "2025-06-03T19:06:35.537Z",
+      "updatedAt": "2025-06-03T19:06:35.537Z"
+    },
+    {
+      "title": "Microsoft Teams",
+      "description": "Working together is easier with Microsoft Teams. Tools and files are always available in one place that's designed to help you connect naturally, stay organized, and bring ideas to life.",
+      "url": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
+      "icon": "https://www.microsoft.com/favicon.ico?v2",
+      "iconType": "image",
+      "tags": [
+        "视频会议"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw4abg1dw63q0l3g7",
+      "createdAt": "2025-06-03T19:07:02.332Z",
+      "updatedAt": "2025-06-03T19:07:02.332Z"
+    },
+    {
+      "title": "Microsoft 365",
+      "description": "使用 Microsoft Word、PowerPoint、Excel 和 OneNote 的在线版本免费进行协作。在 OneDrive 中在线保存文档、工作簿和演示文稿。与他人共享和同时协同工作。",
+      "url": "https://www.office.com/",
+      "icon": "https://res.cdn.office.net/officehub/images/content/images/favicon_copilot-4370172aa6.ico",
+      "iconType": "image",
+      "tags": [
+        "办公软件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw55kgvmf6m27rqi8",
+      "createdAt": "2025-06-03T19:07:42.832Z",
+      "updatedAt": "2025-06-03T19:07:42.832Z"
+    },
+    {
+      "title": "WPS",
+      "description": "金山文档,全新一代云Office办公软件,支持多人在线协同办公,实时协作，并设置文档访问、编辑权限。独有内容级安全，全程留痕可追溯.PC/移动双端覆盖,随时随地在线协同办公,在线文档即写即存统一管理,高效共享文档、表格。",
+      "url": "https://www.wps.cn/",
+      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAQ2SURBVHgB7Va9biRFEK7qWa9XAuSByMEhr0FIzvARkEBgEUHEPQG79wKcTyL3Li/gnxdgl5TgTAQSQmeJxEJCIoIjOc/JyemSW4tbe70z28XX1T0z+zO2U6RzWe3unq6un6+/rl6iW7mV111Y7tzZImMekVAcvkm+NqUnxZy1S0jsQz49PdTF3Q82ych3WNzM1dM/Msp+S4UviQ32RHDlBm5MIgJrz9Bvs6y9e4Ida3MOvRXGnxRTyb2HgM6I/13nZDCQb98/IcNNtQC19J8JXf46InWM5npjfM/qnJ1dtVGjSOLgKkQWnMz4y+clcmgx2TiWb955QENpFsBhT/r7SDhymZMwEnfKOjbiFcSSRuO+k7F7FFk4xsdIECZ6xtxg7HqeuHFYQ583lh59Dgvn0qZXmL/CviGy/3tM9gJOoYPmehcMcaR7vE03Vj9yyNJsxlQf4xgkLrNFUCnvEzUwGZUoRDjjiB7peCzr9Gm9hflOgRokfZHdnfw1HPi9+X/IMu8CpHsznIIN3SgbqzvoOiXAMgBgd/nJ84TmibGx+pgcCTeoS9HSY5hpFnwh6vEPp/cr9jidE3/M+Vfb4ycv7hsf5mifzOQlYPFwM87X2B2qlq62kWnRhW3SOaC8sExDHFUadSt3OFsecg+9csGorgbAfw4GVOMDPef8fCJpy0bcnLcFVI5oFYORbcMpaQBD6/o+HybJYvawAVs4Kgq2Hd96ObqmjHK8h8gGgYw+yuWoGoXzrEXnE2SfCQ0zN3dUqc7e2VAyB0LjdtBSWugWASgK7G7EFNONtGRzFgWdp7JNKYxlCBYd+h4fP0+wFi/oGmp7ZK1WI/jowleyEIAXCy7Yl8UxGGyIzCwKjvXGxj5AZxAR2ElXPorbVDPbs7qmExKRcLUTR75plZkAFIVIDvQY3CYlpW3nKBQZ6VqoGUb6oOwgBPa1bHkUVJcnXwUd9hwAUlPZVyAAGZPnQl6UXBDLsqtrDdvReV6UHFKRuxH2AeZwCGTc2MkymO9JnSfyDN768+4WAggo7IWKxeH8vpRP3mo5TpQVUYPrBSttrabujI1sy8dvfIixZ76x3gajRhzPZq/+qEIUxjR9igr3NlVKqChZtk6NxgC9e9A8AUWL0hn+r+QvDPQTytLP+HiU3IiAmj8KXCh5IEWR8mN9C5xB1a3RfnFz/NGtTL0d7v39vsr5lQH4lTq4YM+U6aVxCuQD3JOpe19zuoNQwALp8qtsE6plvSvdXLWgmRnZL1isJXoSXjLu81GZUaGrL14otVrQ0Eg607oLfugakS2c61L9qf5a8i+e6O+CzLw3b1R1a3XHhZWp1zHhXy7Xr/NhrlvkI73fB2Vh0vvcr8pIdR0Xpisp49reILWbFPjncUe+qK0g83vK5tGbD12xqJQR3pPG0hrq8xZQ+JF/yvp0K7fyf5f/AKzIO6StcaNfAAAAAElFTkSuQmCC",
+      "iconType": "image",
+      "tags": [
+        "办公软件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw5keqngicwmwdx2k",
+      "createdAt": "2025-06-03T19:08:02.066Z",
+      "updatedAt": "2025-06-03T19:08:02.066Z"
+    },
+    {
+      "title": "LibreOffice",
+      "description": "Free office suite – the evolution of OpenOffice. Compatible with Microsoft .doc, .docx, .xls, .xlsx, .ppt, .pptx. Updated regularly, community powered.",
+      "url": "https://www.libreoffice.org/",
+      "icon": "https://www.libreoffice.org/themes/libreofficenew/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "办公软件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbgw5zp7w8sjahbudn",
+      "createdAt": "2025-06-03T19:08:21.883Z",
+      "updatedAt": "2025-06-03T19:08:21.883Z"
+    },
+    {
+      "title": "DeepL翻译",
+      "description": "即时翻译文本&完整的文档文件。为个人和团队提供准确的翻译。每天有数百万人使用DeepL进行翻译。",
+      "url": "https://www.deepl.com/zh/translator",
+      "icon": "https://www.deepl.com/img/favicon/favicon_16.png",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw6x6fro27odijll",
+      "createdAt": "2025-06-03T19:09:05.271Z",
+      "updatedAt": "2025-06-03T19:09:05.271Z"
+    },
+    {
+      "title": "百度翻译",
+      "description": "百度翻译打造的新一代AI大模型翻译平台，为用户提供翻译和阅读外文场景的一站式智能解决方案，支持中文、英文、日语、韩语、德语、法语等203种语言",
+      "url": "https://fanyi.baidu.com/",
+      "icon": "https://fanyi.baidu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw7e9lhji7d1y07o",
+      "createdAt": "2025-06-03T19:09:27.417Z",
+      "updatedAt": "2025-06-03T19:09:27.417Z"
+    },
+    {
+      "title": "STranslate",
+      "description": "WPF 开发的一款即开即用、即用即走的翻译(OCR)工具",
+      "url": "https://stranslate.zggsong.com/",
+      "icon": "https://stranslate.zggsong.com/logo/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw7qdqwaudfnosawr",
+      "createdAt": "2025-06-03T19:09:43.118Z",
+      "updatedAt": "2025-06-03T19:09:43.118Z"
+    },
+    {
+      "title": "Pot",
+      "description": "Pot是一款强大的跨平台划词翻译和OCR软件，支持DeepL、OpenAI、谷歌翻译等多个翻译引擎，具备划词翻译、截图翻译、文字识别、语音合成朗读等功能。简洁的界面设计，快捷的操作方式，是您的最后一款翻译软件。支持离线翻译，确保隐私安全，让跨语言交流更加便捷。",
+      "url": "https://pot-app.com/",
+      "icon": "https://pot-app.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw81tvq3f5sy1rhu",
+      "createdAt": "2025-06-03T19:09:57.955Z",
+      "updatedAt": "2025-06-03T19:09:57.955Z"
+    },
+    {
+      "title": "谷歌翻译",
+      "description": "",
+      "url": "https://translate.google.cn/",
+      "icon": "https://translate.google.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw8cz2jamawte5io",
+      "createdAt": "2025-06-03T19:10:12.398Z",
+      "updatedAt": "2025-06-03T19:10:12.398Z"
+    },
+    {
+      "title": "有道翻译",
+      "description": "有道翻译提供即时免费的中文、英语、日语、韩语、法语、德语、俄语、西班牙语、葡萄牙语、越南语、印尼语、意大利语、荷兰语、泰语全文翻译、网页翻译、文档翻译、PDF翻译、DOC翻译、PPT翻译、人工翻译、同传等服务。",
+      "url": "https://fanyi.youdao.com/",
+      "icon": "https://ydlunacommon-cdn.nosdn.127.net/31cf4b56e6c0b3af668aa079de1a898c.png",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw8ov9hakd2vniwn8",
+      "createdAt": "2025-06-03T19:10:27.813Z",
+      "updatedAt": "2025-06-03T19:10:27.813Z"
+    },
+    {
+      "title": "腾讯翻译君",
+      "description": "翻译君是腾讯出品的跨语言交流软件，支持中、英、日、韩等多门语言，具有翻译准确、高效，稳定的特点，非常适用于境外旅游、对外交流、国际办公等情境，给你带来流畅的翻译体验。",
+      "url": "https://fanyi.qq.com/",
+      "icon": "https://fanyi.qq.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "翻译"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgw8xsz058eu8gzd9ib",
+      "createdAt": "2025-06-03T19:10:39.395Z",
+      "updatedAt": "2025-06-03T19:10:39.395Z"
+    },
+    {
+      "title": "Folo",
+      "description": "Next-Gen Information Browser",
+      "url": "https://follow.is/",
+      "icon": "https://follow.is/icon.ico?052f04d9a4005c83",
+      "iconType": "image",
+      "tags": [
+        "RSS"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwbfchffaopkvjs5u",
+      "createdAt": "2025-06-03T19:12:35.441Z",
+      "updatedAt": "2025-06-03T19:12:35.441Z"
+    },
+    {
+      "title": "Feedly",
+      "description": "",
+      "url": "https://feedly.com/",
+      "icon": "https://feedly.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "RSS"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwc50jdtlsslrug6",
+      "createdAt": "2025-06-03T19:13:08.707Z",
+      "updatedAt": "2025-06-03T19:13:08.707Z"
+    },
+    {
+      "title": "Inoreader",
+      "description": "",
+      "url": "https://www.inoreader.com/",
+      "icon": "https://www.inoreader.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "RSS"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwck2z7329zkw8ndo",
+      "createdAt": "2025-06-03T19:13:28.235Z",
+      "updatedAt": "2025-06-03T19:13:28.235Z"
+    },
+    {
+      "title": "RSSHub",
+      "description": "",
+      "url": "https://docs.rsshub.app/zh/",
+      "icon": "https://docs.rsshub.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "RSS"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwcz0dibuy3nnf8hq",
+      "createdAt": "2025-06-03T19:13:47.581Z",
+      "updatedAt": "2025-06-03T19:13:47.581Z"
+    },
+    {
+      "title": "Windows 帮助和学习",
+      "description": "查找有关 Windows 操作系统的帮助和操作方法文章。 获取对 Windows 的支持，并了解安装、更新、隐私、安全等方面的信息。",
+      "url": "https://support.microsoft.com/zh-cn/windows",
+      "icon": "https://support.microsoft.com/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "操作系统"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgweaej11495598903f",
+      "createdAt": "2025-06-03T19:14:49.003Z",
+      "updatedAt": "2025-06-03T19:14:49.003Z"
+    },
+    {
+      "title": "Mac 使用手册",
+      "description": "了解 macOS 的新功能，如何开始使用 Mac 和与 Apple 设备搭配使用，以及如何控制 macOS 中的隐私和安全性。",
+      "url": "https://support.apple.com/zh-cn/guide/mac-help/welcome/mac",
+      "icon": "https://support.apple.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "操作系统"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwem3otn3tacrj48",
+      "createdAt": "2025-06-03T19:15:04.164Z",
+      "updatedAt": "2025-06-03T19:15:04.164Z"
+    },
+    {
+      "title": "Official Ubuntu Documentation",
+      "description": "",
+      "url": "https://help.ubuntu.com/",
+      "icon": "https://help.ubuntu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "操作系统"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwf1nj7my0h0imghd",
+      "createdAt": "2025-06-03T19:15:24.319Z",
+      "updatedAt": "2025-06-03T19:15:24.319Z"
+    },
+    {
+      "title": "MSDN, 我告诉你",
+      "description": "做一个安静的工具站",
+      "url": "https://msdn.itellyou.cn/",
+      "icon": "https://msdn.itellyou.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "操作系统"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwfiapotl3n92b6ea",
+      "createdAt": "2025-06-03T19:15:45.889Z",
+      "updatedAt": "2025-06-03T19:15:45.889Z"
+    },
+    {
+      "title": "NTFSTool",
+      "description": "",
+      "url": "https://www.ntfstool.com/",
+      "icon": "https://www.ntfstool.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "磁盘管理"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwg9e1gq6wfg0y8lj",
+      "createdAt": "2025-06-03T19:16:21.001Z",
+      "updatedAt": "2025-06-03T19:16:21.001Z"
+    },
+    {
+      "title": "Rufus",
+      "description": "轻松创建 USB 启动盘",
+      "url": "https://rufus.ie/zh/",
+      "icon": "https://rufus.ie/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "磁盘管理"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwgp4kdv9boxo24zw",
+      "createdAt": "2025-06-03T19:16:41.396Z",
+      "updatedAt": "2025-06-03T19:16:41.396Z"
+    },
+    {
+      "title": "MacPaw",
+      "description": "",
+      "url": "https://macpaw.com/",
+      "icon": "https://macpaw.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwhmmdp6p02jlys8",
+      "createdAt": "2025-06-03T19:17:24.805Z",
+      "updatedAt": "2025-06-03T19:17:24.805Z"
+    },
+    {
+      "title": "Quicker",
+      "description": "Windows效率工具。快速触发 + 自动化。",
+      "url": "https://getquicker.net/",
+      "icon": "https://getquicker.net/quicker_round.png",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwigu33lw5o02m4hn",
+      "createdAt": "2025-06-03T19:18:03.963Z",
+      "updatedAt": "2025-06-03T19:18:03.963Z"
+    },
+    {
+      "title": "uTools",
+      "description": "uTools 是 AI 加持的超级助手，一个入口，无限能力",
+      "url": "https://www.u-tools.cn/index.html",
+      "icon": "https://res.u-tools.cn/website5/static/assets/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwizntdmu8ms30qyv",
+      "createdAt": "2025-06-03T19:18:28.361Z",
+      "updatedAt": "2025-06-03T19:18:28.361Z"
+    },
+    {
+      "title": "PowerToys",
+      "description": "使用可执行文件或包管理器（WinGet、PowerToys、Windows）安装 Chocolatey，这是一组用于自定义 Scoop 的实用程序。",
+      "url": "https://learn.microsoft.com/zh-cn/windows/powertoys/install",
+      "icon": "https://learn.microsoft.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwje5rmmmlc1b5o0j",
+      "createdAt": "2025-06-03T19:18:47.151Z",
+      "updatedAt": "2025-06-03T19:18:47.151Z"
+    },
+    {
+      "title": "QuickLook",
+      "description": "QuickLook 允许您在不运行关联程序的情况下，通过敲击空格键来快速预览文件内容。",
+      "url": "https://apps.microsoft.com/detail/9nv4bs3l1h4s",
+      "icon": "https://apps.microsoft.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwjx2j9pp0gnqxhk",
+      "createdAt": "2025-06-03T19:19:11.659Z",
+      "updatedAt": "2025-06-03T19:19:11.659Z"
+    },
+    {
+      "title": "Raycast",
+      "description": "A collection of powerful productivity tools all within an extendable launcher.",
+      "url": "https://www.raycast.com/",
+      "icon": "https://www.raycast.com/favicon-production.png",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwk9f58bm7byu30dv",
+      "createdAt": "2025-06-03T19:19:27.665Z",
+      "updatedAt": "2025-06-03T19:19:27.665Z"
+    },
+    {
+      "title": "Xiaomi HyperConnect 跨端智联",
+      "description": "融合设备中心，实时查看状态并操控，实现跨系统设备协同与服务流转",
+      "url": "https://hyperos.mi.com/continuity",
+      "icon": "https://cia.hyperos.mi.com/connect/fav_dark.png",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwklrpxyfa5x9w9zl",
+      "createdAt": "2025-06-03T19:19:43.669Z",
+      "updatedAt": "2025-06-03T19:19:43.669Z"
+    },
+    {
+      "title": "Bandizip",
+      "description": "Home of Bandisoft",
+      "url": "https://www.bandisoft.com/bandizip/dl/",
+      "icon": "https://www.bandisoft.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "压缩软件"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwlr69udirug2vk1k",
+      "createdAt": "2025-06-03T19:20:37.329Z",
+      "updatedAt": "2025-06-03T19:23:24.934Z"
+    },
+    {
+      "title": "7-Zip",
+      "description": "",
+      "url": "https://www.7-zip.org/",
+      "icon": "https://www.7-zip.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "压缩软件"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwnin0w2emdzukids",
+      "createdAt": "2025-06-03T19:21:59.580Z",
+      "updatedAt": "2025-06-03T19:23:17.384Z"
+    },
+    {
+      "title": "PeaZip",
+      "description": "",
+      "url": "https://peazip.github.io/",
+      "icon": "https://peazip.github.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "压缩软件"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwu2rx98wy3a60vnn",
+      "createdAt": "2025-06-03T19:27:05.613Z",
+      "updatedAt": "2025-06-03T19:27:05.613Z"
+    },
+    {
+      "title": "WinRAR",
+      "description": "",
+      "url": "https://www.winrar.com.cn/",
+      "icon": "https://www.winrar.com.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "压缩软件"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwupc5aofe78h5dul",
+      "createdAt": "2025-06-03T19:27:34.853Z",
+      "updatedAt": "2025-06-03T19:27:34.854Z"
+    },
+    {
+      "title": "CUDA Toolkit",
+      "description": "Get the latest feature updates to NVIDIA's proprietary compute stack.",
+      "url": "https://developer.nvidia.com/cuda-downloads",
+      "icon": "https://dirms4qsy6412.cloudfront.net/assets/favicon-81bff16cada05fcff11e5711f7e6212bdc2e0a32ee57cd640a8cf66c87a6cbe6.ico",
+      "iconType": "image",
+      "tags": [
+        "系统优化"
+      ],
+      "featured": false,
+      "category": "productivity",
+      "id": "mbgwv6hrw3ylvym4pa",
+      "createdAt": "2025-06-03T19:27:57.087Z",
+      "updatedAt": "2025-06-03T19:27:57.087Z"
     }
   ]
 }

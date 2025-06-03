@@ -1,0 +1,527 @@
+---
+title: React DOM
+---
+
+`react-dom` 作为 React 的 DOM 和服务器渲染器的入口点。它旨在与通用的 React 包配对，该包以 `react` 的形式发布到 `npm` 。
+
+## 安装
+
+```sh
+npm install react react-dom
+```
+
+## 用法
+
+### 在浏览器中
+
+```js
+import { createRoot } from 'react-dom/client';
+
+function App() {
+  return <div>Hello World</div>;
+}
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
+```
+
+### 在服务器中
+
+```js
+import { renderToPipeableStream } from 'react-dom/server';
+
+function App() {
+  return <div>Hello World</div>;
+}
+
+function handleRequest(res) {
+  // ... 在你的服务器处理程序中 ...
+  const stream = renderToPipeableStream(<App />, {
+    onShellReady() {
+      res.statusCode = 200;
+      res.setHeader('Content-type', 'text/html');
+      stream.pipe(res);
+    },
+    // ...
+  });
+}
+```
+
+## API
+
+- `react-dom` 参考 https://react.dev/reference/react-dom
+
+- `react-dom/client` 参考 https://react.dev/reference/react-dom/client
+
+- `react-dom/server` 参考 https://react.dev/reference/react-dom/server
+
+## 源码
+
+### `client.js`
+
+`client.js` 是 React DOM 的客户端入口文件。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React DOM 客户端。
+
+```js
+'use strict';
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // 这个分支是不可达的，因为这个函数只在生产环境中调用，但条件在开发环境中为真。
+    // 因此，如果这个分支仍然存在，死代码消除没有正确应用。
+    // 不要更改此消息。React DevTools 依赖于它。还要确保此消息不会在此函数的其他地方出现，否则会导致假阳性。
+    throw new Error('^_^');
+  }
+  try {
+    // 验证上面的代码是否已被死代码消除 (DCE)。
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools 不应该崩溃 React，无论如何。
+    // 我们仍然应该报告，以防我们破坏了这段代码。
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE 检查应该在 ReactDOM 包执行之前进行，以便 DevTools 可以在注入期间报告错误的压缩。
+  checkDCE();
+  module.exports = require('./cjs/react-dom-client.production.js');
+} else {
+  module.exports = require('./cjs/react-dom-client.development.js');
+}
+```
+
+### `client.react-server.js`
+
+`client.react-server.js` 是 React DOM 的一个模块，它在 React 服务器组件中不被支持。当尝试导入该模块时，它会抛出一个错误，提示用户该功能在服务器组件中不可用。
+
+```js
+'use strict';
+
+throw new Error(
+  'react-dom/client is not supported in React Server Components.'
+);
+```
+
+### `index.js`
+
+`index.js` 是 React DOM 的入口文件。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React DOM。
+
+```js
+'use strict';
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // 这个分支是不可达的，因为这个函数只在生产环境中调用，但条件在开发环境中为真。
+    // 因此，如果这个分支仍然存在，死代码消除没有正确应用。
+    // 不要更改此消息。React DevTools 依赖于它。还要确保这个消息不会在此函数的其他地方出现，否则会导致假阳性。
+    throw new Error('^_^');
+  }
+  try {
+    // 验证上面的代码是否已被死代码消除 (DCE)。
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools 不应该崩溃 React，无论如何。我们仍然应该报告，以防我们破坏了这段代码。
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE 检查应该在 ReactDOM 包执行之前进行，以便 DevTools 可以在注入期间报告错误的压缩。
+  checkDCE();
+  module.exports = require('./cjs/react-dom.production.js');
+} else {
+  module.exports = require('./cjs/react-dom.development.js');
+}
+```
+
+### `profiling.js`
+
+`profiling.js` 是 React DOM 的一个模块，主要用于性能分析。
+
+它提供了一些工具和功能，帮助开发者在生产环境中监控和优化 React 应用的性能。
+
+该模块在 React Server 组件中不被支持，因此在使用时需要注意环境的兼容性。
+
+```js
+'use strict';
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // 这个分支是不可达的，因为这个函数只在生产环境中调用，但条件在开发环境中为真。
+    // 因此，如果这个分支仍然存在，死代码消除没有正确应用。
+    // 不要更改此消息。React DevTools 依赖于它。还要确保这个消息不会在此函数的其他地方出现，否则会导致假阳性。
+    throw new Error('^_^');
+  }
+  try {
+    // 验证上面的代码是否已被死代码消除 (DCE)。
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools 不应该崩溃 React，无论如何。
+    // 我们仍然应该报告，以防我们破坏了这段代码。
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE 检查应该在 ReactDOM 包执行之前进行，以便 DevTools 可以在注入期间报告错误的压缩。
+  checkDCE();
+  module.exports = require('./cjs/react-dom-profiling.profiling.js');
+} else {
+  module.exports = require('./cjs/react-dom-profiling.development.js');
+}
+```
+
+### `profiling.react-server.js`
+
+该模块主要功能是提供工具，帮助开发者在生产环境中监控和优化 React 应用的性能。
+
+然而，在 React Server 组件中不支持此模块，因此在使用时需要注意。
+
+如果尝试在 React Server 组件中使用此模块，将会抛出一个错误，提示该功能不被支持。
+
+```js
+'use strict';
+
+throw new Error(
+  'react-dom/profiling is not supported in React Server Components.'
+);
+```
+
+### `react-dom.react-server.js`
+
+`react-dom.react-server.js` 是 React DOM 的一个模块，专门用于在服务器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在服务器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/react-server` 模块在 React Server 组件中不被支持。
+
+如果尝试在 React Server 组件中使用此模块，将会抛出一个错误，提示该功能不被支持。
+
+```js
+'use strict';
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/react-dom.react-server.production.js');
+} else {
+  module.exports = require('./cjs/react-dom.react-server.development.js');
+}
+```
+
+### `server.browser.js`
+
+`server.browser.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/server` 模块在 React Server 组件中不被支持。
+
+如果尝试在 React Server 组件中使用此模块，将会抛出一个错误，提示该功能不被支持。
+
+```js
+'use strict';
+
+var l, s;
+if (process.env.NODE_ENV === 'production') {
+  l = require('./cjs/react-dom-server-legacy.browser.production.js');
+  s = require('./cjs/react-dom-server.browser.production.js');
+} else {
+  l = require('./cjs/react-dom-server-legacy.browser.development.js');
+  s = require('./cjs/react-dom-server.browser.development.js');
+}
+
+exports.version = l.version;
+exports.renderToString = l.renderToString;
+exports.renderToStaticMarkup = l.renderToStaticMarkup;
+exports.renderToReadableStream = s.renderToReadableStream;
+if (s.resume) {
+  exports.resume = s.resume;
+}
+```
+
+### `server.bun.js`
+
+`server.bun.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/server` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var b;
+var l;
+if (process.env.NODE_ENV === 'production') {
+  b = require('./cjs/react-dom-server.bun.production.js');
+  l = require('./cjs/react-dom-server-legacy.browser.production.js');
+} else {
+  b = require('./cjs/react-dom-server.bun.development.js');
+  l = require('./cjs/react-dom-server-legacy.browser.development.js');
+}
+
+exports.version = b.version;
+exports.renderToReadableStream = b.renderToReadableStream;
+if (b.resume) {
+  exports.resume = b.resume;
+}
+exports.renderToString = l.renderToString;
+exports.renderToStaticMarkup = l.renderToStaticMarkup;
+```
+
+### `server.edge.js`
+
+`server.edge.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/server` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var b;
+var l;
+if (process.env.NODE_ENV === 'production') {
+  b = require('./cjs/react-dom-server.edge.production.js');
+  l = require('./cjs/react-dom-server-legacy.browser.production.js');
+} else {
+  b = require('./cjs/react-dom-server.edge.development.js');
+  l = require('./cjs/react-dom-server-legacy.browser.development.js');
+}
+
+exports.version = b.version;
+exports.renderToReadableStream = b.renderToReadableStream;
+exports.renderToString = l.renderToString;
+exports.renderToStaticMarkup = l.renderToStaticMarkup;
+if (b.resume) {
+  exports.resume = b.resume;
+}
+```
+
+### `server.js`
+
+`server.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/server` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+module.exports = require('./server.node');
+```
+
+### `server.node.js`
+
+`server.node.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器端生成 HTML 内容，并将其发送到客户端。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的服务器渲染支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/server` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var l, s;
+if (process.env.NODE_ENV === 'production') {
+  l = require('./cjs/react-dom-server-legacy.node.production.js');
+  s = require('./cjs/react-dom-server.node.production.js');
+} else {
+  l = require('./cjs/react-dom-server-legacy.node.development.js');
+  s = require('./cjs/react-dom-server.node.development.js');
+}
+
+exports.version = l.version;
+exports.renderToString = l.renderToString;
+exports.renderToStaticMarkup = l.renderToStaticMarkup;
+exports.renderToPipeableStream = s.renderToPipeableStream;
+if (s.resumeToPipeableStream) {
+  exports.resumeToPipeableStream = s.resumeToPipeableStream;
+}
+```
+
+### `server.react-server.js`
+
+`server.react-server.js` 是 React DOM 的一个模块，用于在浏览器环境中渲染 React 组件。
+
+```js
+'use strict';
+
+throw new Error(
+  'react-dom/server is not supported in React Server Components.'
+);
+```
+
+### `static.browser.js`
+
+`static.browser.js` 是一个空的 JavaScript 文件，用于在浏览器环境中导入 React DOM 的静态资源。
+
+该文件的主要作用是为了在浏览器环境中导入 React DOM 的静态资源，以便在浏览器环境中使用 React DOM 的静态资源。
+
+需要注意的是，`react-dom/static` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var s;
+if (process.env.NODE_ENV === 'production') {
+  s = require('./cjs/react-dom-server.browser.production.js');
+} else {
+  s = require('./cjs/react-dom-server.browser.development.js');
+}
+
+exports.version = s.version;
+exports.prerender = s.prerender;
+exports.resumeAndPrerender = s.resumeAndPrerender;
+```
+
+### `static.edge.js`
+
+`static.edge.js` 是一个空的 JavaScript 文件，用于在浏览器环境中导入 React DOM 的静态资源。
+
+该文件的主要作用是为了在浏览器环境中导入 React DOM 的静态资源，以便在浏览器环境中使用 React DOM 的静态资源。
+
+需要注意的是，`react-dom/static` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var s;
+if (process.env.NODE_ENV === 'production') {
+  s = require('./cjs/react-dom-server.edge.production.js');
+} else {
+  s = require('./cjs/react-dom-server.edge.development.js');
+}
+
+exports.version = s.version;
+exports.prerender = s.prerender;
+exports.resumeAndPrerender = s.resumeAndPrerender;
+```
+
+### `static.js`
+
+`static.js` 是一个空的 JavaScript 文件，用于在浏览器环境中导入 React DOM 的静态资源。
+
+该文件的主要作用是为了在浏览器环境中导入 React DOM 的静态资源，以便在浏览器环境中使用 React DOM 的静态资源。
+
+需要注意的是，`react-dom/static` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+module.exports = require('./static.node');
+```
+
+### `static.node.js`
+
+`static.node.js` 是一个空的 JavaScript 文件，用于在浏览器环境中导入 React DOM 的静态资源。
+
+该文件的主要作用是为了在浏览器环境中导入 React DOM 的静态资源，以便在浏览器环境中使用 React DOM 的静态资源。
+
+需要注意的是，`react-dom/static` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+var s;
+if (process.env.NODE_ENV === 'production') {
+  s = require('./cjs/react-dom-server.node.production.js');
+} else {
+  s = require('./cjs/react-dom-server.node.development.js');
+}
+
+exports.version = s.version;
+exports.prerenderToNodeStream = s.prerenderToNodeStream;
+exports.resumeAndPrerenderToNodeStream = s.resumeAndPrerenderToNodeStream;
+```
+
+### `static.react-server.js`
+
+`static.react-server.js` 是一个空的 JavaScript 文件，用于在浏览器环境中导入 React DOM 的静态资源。
+
+该文件的主要作用是为了在浏览器环境中导入 React DOM 的静态资源，以便在浏览器环境中使用 React DOM 的静态资源。
+
+需要注意的是，`react-dom/static` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+throw new Error(
+  'react-dom/static is not supported in React Server Components.'
+);
+```
+
+### `test-utils.js`
+
+`test-utils.js` 是 React DOM 的一个模块，用于在浏览器环境中测试 React 组件。
+
+该模块提供了一些功能，使得开发者能够在浏览器环境中测试 React 组件。
+
+该模块的主要功能包括：
+
+- 在生产环境中，提供高效的测试支持。
+- 在开发环境中，提供调试信息和开发工具支持。
+
+需要注意的是，`react-dom/test-utils` 模块在 React Server 组件中不被支持。
+
+```js
+'use strict';
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/react-dom-test-utils.production.js');
+} else {
+  module.exports = require('./cjs/react-dom-test-utils.development.js');
+}
+```

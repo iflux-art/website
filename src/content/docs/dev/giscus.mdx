@@ -1,0 +1,41 @@
+---
+title: 配置 giscus 评论系统
+---
+
+## Giscus 配置指南
+
+```bash:/terminal
+# 安装 giscus-react 包
+pnpm add giscus-react
+```
+
+```jsx:/src/components/Comment.jsx
+'use client';
+
+import { Giscus } from 'giscus-react';
+
+export default function Comment() {
+  return (
+    <div className="mt-12">
+      <Giscus
+        repo="your-username/your-repo"
+        repoId="R_kgDOJqXvFQ"
+        category="Announcements"
+        categoryId="DIC_kwDOJqXvFc4CbA9U"
+        mapping="pathname"
+        reactionsEnabled="1"
+        emitMetadata="0"
+        theme="light"
+        lang="zh-CN"
+      />
+    </div>
+  );
+}
+```
+
+配置步骤：
+
+1. 访问 [giscus 官网](https://giscus.app/zh-CN) 获取配置参数
+2. 替换 repo 和 repoId 为您的 GitHub 仓库信息
+3. 在需要评论区的 MDX 文件中引入 Comment 组件
+4. 确保 GitHub 仓库已启用 Discussions 功能（Settings → Features → Discussions）
