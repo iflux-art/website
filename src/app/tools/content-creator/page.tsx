@@ -6,6 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, PenTool, Lightbulb, Target, Zap, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 
+interface Idea {
+  angle: string;
+  content: string;
+}
+
+interface Outline {
+  structure: string[];
+  details: Record<string, string>;
+}
+
 export default function ContentCreatorPage() {
   const [activeTab, setActiveTab] = useState<'title' | 'idea' | 'outline' | 'hook' | 'placeholder'>(
     'title'
@@ -179,7 +189,7 @@ export default function ContentCreatorPage() {
   const IdeaGenerator = () => {
     const [topic, setTopic] = useState('');
     const [contentType, setContentType] = useState('article');
-    const [ideas, setIdeas] = useState<any[]>([]);
+    const [ideas, setIdeas] = useState<Idea[]>([]);
 
     const generateIdeas = () => {
       if (!topic.trim()) return;
@@ -287,7 +297,7 @@ export default function ContentCreatorPage() {
   const OutlineGenerator = () => {
     const [title, setTitle] = useState('');
     const [articleType, setArticleType] = useState('tutorial');
-    const [outline, setOutline] = useState<any>(null);
+    const [outline, setOutline] = useState<Outline | null>(null);
 
     const generateOutline = () => {
       if (!title.trim()) return;
@@ -713,7 +723,7 @@ export default function ContentCreatorPage() {
     { key: 'outline', name: '内容大纲', icon: Target },
     { key: 'hook', name: '开头钩子', icon: Zap },
     { key: 'placeholder', name: '占位文本', icon: PenTool },
-  ];
+  ] as const;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -744,7 +754,7 @@ export default function ContentCreatorPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

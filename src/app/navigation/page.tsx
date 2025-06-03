@@ -38,7 +38,7 @@ export default function NavigationPage() {
       setAllTags(
         tagsData.filter((tag: string) =>
           // 确保标签属于当前分类的项目
-          navigationData.items.some(item => item.category === categoryId && item.tags.includes(tag))
+          navigationData.items.some((item: NavigationItem) => item.category === categoryId && item.tags.includes(tag))
         ) || []
       );
 
@@ -97,7 +97,7 @@ export default function NavigationPage() {
       {/* 页面标题 */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
-        <p className="text-muted-foreground">精选网站集合，欢迎<a href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb" target="_blank">“申请友链”</a></p>
+        <p className="text-muted-foreground">精选网站集合，欢迎<a href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb" target="_blank" rel="noreferrer">“申请友链”</a></p>
       </div>
 
       {/* 分类选择 */}

@@ -11,21 +11,23 @@ import matter from 'gray-matter';
  * @returns MDX 内容
  */
 export async function GET(_request: Request, { params }: { params: Promise<{ slug: string[] }> }) {
+  let slugForErrorLogging: string[] | undefined;
   try {
     const resolvedParams = await params;
     // 确保 slug 是数组
-    const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
-    const fullSlug = slug.join('/');
+    const slugArray = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
+    slugForErrorLogging = slugArray; // 在 catch 中使用
+    const fullSlug = slugArray.join('/');
 
-    console.log('API 路由: 处理导航 MDX 请求', { slug, fullSlug });
+    console.log('API 路由: 处理导航 MDX 请求', { slug: slugArray, fullSlug });
 
     // 查找文件路径
     let filePath = '';
 
     // 处理可能的子目录结构
-    if (slug.length > 1) {
-      const category = slug[0];
-      const pageName = slug.slice(1).join('/');
+    if (slugArray.length > 1) {
+      const category = slugArray[0];
+      const pageName = slugArray.slice(1).join('/');
       // 尝试不同的文件扩展名
       const mdxPath = path.join(
         process.cwd(),
@@ -73,7 +75,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
     const { processMdxContent } = await import('@/components/mdx/markdown-renderer');
 
     // 处理内容中的 ResourceCard 和 ResourceGrid 组件
-    let processedContent = processMdxContent(content);
+    const processedContent = processMdxContent(content);
 
     console.log('API 路由: 成功处理 MDX 内容', {
       contentLength: processedContent.length,
@@ -92,7 +94,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
       {
         error: `获取导航 MDX 内容失败: ${(error as Error).message}`,
         stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined,
-        path: slug.join('/'),
+        path: slugForErrorLogging ? slugForErrorLogging.join('/') : '未知路径',
       },
       { status: 500 }
     );

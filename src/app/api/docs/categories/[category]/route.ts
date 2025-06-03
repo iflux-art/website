@@ -5,6 +5,20 @@ import matter from 'gray-matter';
 import { getDocSidebar } from '@/lib/content';
 import { DocListItem } from '@/hooks/use-docs';
 
+// 如果 SidebarNavItem 没有从 '@/lib/content' 导出，则在此定义
+interface SidebarNavItem {
+  type?: 'menu' | 'separator' | 'page' | 'item' | 'category'; // 扩展类型以匹配实际用法
+  title: string;
+  href?: string;
+  isExternal?: boolean;
+  filePath?: string; // 改为可选
+  items?: SidebarNavItem[];
+  label?: string;
+  // icon?: React.ReactNode; // ReactNode 可能不适用于此上下文
+  open?: boolean;
+}
+
+
 /**
  * 获取指定分类的文档列表的 API 路由
  *
@@ -15,8 +29,8 @@ import { DocListItem } from '@/hooks/use-docs';
 export async function GET(request: Request, { params }: { params: Promise<{ category: string }> }) {
   try {
     const resolvedParams = await params;
-    const { category } = resolvedParams;
-    const decodedCategory = decodeURIComponent(category);
+    const categoryParam = resolvedParams.category; // 重命名以避免与解构的 category 冲突
+    const decodedCategory = decodeURIComponent(categoryParam);
 
     // 获取目录中的所有文档
     const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', decodedCategory);
@@ -32,9 +46,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     const docs: DocListItem[] = [];
 
     // 递归函数，用于扁平化侧边栏结构
-    const flattenSidebarItems = (items: any[], parentPath: string = '') => {
+    const flattenSidebarItems = (items: SidebarNavItem[], parentPath: string = '') => {
       items.forEach(item => {
-        if (item.type !== 'separator' && item.href && !item.isExternal) {
+        if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) { // 确保 filePath 存在
           // 提取 slug
           const slug = item.filePath.split('/').pop() || '';
 
@@ -78,7 +92,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
 
     return NextResponse.json(docs);
   } catch (error) {
-    console.error(`获取分类 ${category} 的文档列表失败:`, error);
+    // resolvedParams 可能在 await params 失败时未定义
+    const categoryName = typeof params === 'object' && params !== null && 'category' in params ? decodeURIComponent((await params).category) : '未知分类';
+    console.error(`获取分类 ${categoryName} 的文档列表失败:`, error);
 
     // 出错时返回空数组而不是错误，允许客户端降级
     return NextResponse.json([]);

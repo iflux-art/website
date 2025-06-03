@@ -19,7 +19,7 @@ export default function Base64EncoderPage() {
       const encoded = btoa(unescape(encodeURIComponent(input)));
       setOutput(encoded);
       setError('');
-    } catch (err) {
+    } catch {
       setError('编码失败，请检查输入内容');
       setOutput('');
     }
@@ -30,7 +30,7 @@ export default function Base64EncoderPage() {
       const decoded = decodeURIComponent(escape(atob(input)));
       setOutput(decoded);
       setError('');
-    } catch (err) {
+    } catch {
       setError('解码失败，请检查 Base64 格式是否正确');
       setOutput('');
     }
@@ -97,7 +97,7 @@ export default function Base64EncoderPage() {
       const encoded = encodeURIComponent(input);
       setOutput(encoded);
       setError('');
-    } catch (err) {
+    } catch {
       setError('URL编码失败');
       setOutput('');
     }
@@ -108,7 +108,7 @@ export default function Base64EncoderPage() {
       const decoded = decodeURIComponent(input);
       setOutput(decoded);
       setError('');
-    } catch (err) {
+    } catch {
       setError('URL解码失败，请检查格式是否正确');
       setOutput('');
     }
@@ -168,7 +168,7 @@ export default function Base64EncoderPage() {
         setOutput(decoded);
       }
       setError('');
-    } catch (err) {
+    } catch {
       setError('字符编码转换失败');
       setOutput('');
     }

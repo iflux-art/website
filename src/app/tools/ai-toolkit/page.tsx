@@ -625,7 +625,7 @@ print(processed_data)`,
     { key: 'image', name: '图像生成', icon: Image },
     { key: 'text', name: '文本生成', icon: FileText },
     { key: 'code', name: '代码生成', icon: Brain },
-  ];
+  ] as const;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -656,7 +656,7 @@ print(processed_data)`,
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

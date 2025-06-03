@@ -6,6 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChefHat, Calculator, ShoppingCart, Timer } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 
+interface FoodItem {
+  name: string;
+  amount: number;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
+
 export default function CookingToolkitPage() {
   const [activeTab, setActiveTab] = useState<'recipes' | 'nutrition' | 'shopping' | 'timer'>(
     'recipes'
@@ -139,7 +148,7 @@ export default function CookingToolkitPage() {
 
   // 营养计算
   const NutritionCalculator = () => {
-    const [foods, setFoods] = useState([
+    const [foods, setFoods] = useState<FoodItem[]>([
       { name: '米饭', amount: 100, calories: 116, protein: 2.6, carbs: 25.9, fat: 0.3 },
     ]);
 
@@ -147,9 +156,10 @@ export default function CookingToolkitPage() {
       setFoods([...foods, { name: '', amount: 100, calories: 0, protein: 0, carbs: 0, fat: 0 }]);
     };
 
-    const updateFood = (index: number, field: string, value: any) => {
+    const updateFood = (index: number, field: keyof FoodItem, value: string | number) => {
       const newFoods = [...foods];
-      newFoods[index] = { ...newFoods[index], [field]: value };
+      // 类型断言确保字段和值的类型匹配
+      (newFoods[index] as any)[field] = field === 'name' ? String(value) : Number(value);
       setFoods(newFoods);
     };
 
@@ -347,7 +357,7 @@ export default function CookingToolkitPage() {
                 <div key={category}>
                   <h4 className="font-medium mb-2 text-sm text-muted-foreground">{category}</h4>
                   <div className="space-y-2">
-                    {categoryItems.map((item, index) => {
+                    {categoryItems.map((item, _index) => { // index 重命名为 _index
                       const globalIndex = items.findIndex(i => i === item);
                       return (
                         <div
@@ -552,7 +562,7 @@ export default function CookingToolkitPage() {
     { key: 'nutrition', name: '营养计算', icon: Calculator },
     { key: 'shopping', name: '购物清单', icon: ShoppingCart },
     { key: 'timer', name: '定时提醒', icon: Timer },
-  ];
+  ] as const;
 
   const helpContent = (
     <div className="space-y-4">
@@ -600,7 +610,7 @@ export default function CookingToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

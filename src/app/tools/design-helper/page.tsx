@@ -39,8 +39,8 @@ export default function DesignHelperPage() {
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
       let h = 0,
-        s = 0,
-        l = (max + min) / 2;
+        s = 0;
+      const l = (max + min) / 2;
 
       if (max !== min) {
         const d = max - min;
@@ -154,7 +154,7 @@ ${palette.map((color, index) => `  --color-${index + 1}: ${color};`).join('\n')}
                 <label className="block text-sm font-medium mb-2">调色板类型</label>
                 <select
                   value={paletteType}
-                  onChange={e => setPaletteType(e.target.value as any)}
+                  onChange={e => setPaletteType(e.target.value as typeof paletteType)}
                   className="w-full p-2 border border-border rounded-lg bg-background"
                 >
                   <option value="monochromatic">单色调</option>

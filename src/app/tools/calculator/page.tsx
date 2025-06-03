@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Calculator, Delete, RotateCcw, Equal } from 'lucide-react';
+import { Calculator, Delete, RotateCcw } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,12 +12,12 @@ export default function CalculatorPage() {
   const [display, setDisplay] = useState('0');
   const [expression, setExpression] = useState('');
   const [history, setHistory] = useState<string[]>([]);
-  const [error, setError] = useState('');
+  // const [error, setError] = useState(''); // Unused variable
   const [mode, setMode] = useState<'simple' | 'scientific'>('simple');
 
   const clearEntry = () => {
     setDisplay('0');
-    setError('');
+    // setError('');
   };
 
   const performOperation = (op: string) => {
@@ -27,7 +27,7 @@ export default function CalculatorPage() {
       setExpression(display + ' ' + op + ' ');
     }
     setDisplay('0');
-    setError('');
+    // setError('');
   };
 
   const performEquals = () => {
@@ -39,9 +39,11 @@ export default function CalculatorPage() {
       setHistory(prev => [calculation, ...prev.slice(0, 9)]);
       setDisplay(result.data!);
       setExpression('');
-      setError('');
+      // setError('');
     } else {
-      setError(result.error!);
+      // setError(result.error!);
+      // 如果需要显示错误，可以在这里处理，例如 setDisplay(result.error!) 或其他方式
+      setDisplay(result.error || 'Error'); // 临时处理，实际应有更好的错误显示
     }
   };
 
@@ -90,7 +92,7 @@ export default function CalculatorPage() {
     setDisplay(String(result));
     const calculation = `${func}(${inputValue}) = ${result}`;
     setHistory(prev => [calculation, ...prev.slice(0, 9)]);
-    setError('');
+    // setError('');
   };
 
   const factorial = (n: number): number => {
@@ -107,7 +109,7 @@ export default function CalculatorPage() {
     if (display !== '0') {
       setDisplay(display.charAt(0) === '-' ? display.slice(1) : '-' + display);
     }
-    setError('');
+    // setError('');
   };
 
   const clearHistory = () => {
@@ -120,7 +122,7 @@ export default function CalculatorPage() {
     } else {
       setDisplay(display + num);
     }
-    setError('');
+    // setError('');
   };
 
   const inputOperator = (op: string) => {
@@ -130,7 +132,7 @@ export default function CalculatorPage() {
       setExpression(display + ' ' + op + ' ');
     }
     setDisplay('0');
-    setError('');
+    // setError('');
   };
 
   const calculate = () => {
@@ -142,16 +144,17 @@ export default function CalculatorPage() {
       setHistory(prev => [calculation, ...prev.slice(0, 9)]);
       setDisplay(result.data!);
       setExpression('');
-      setError('');
+      // setError('');
     } else {
-      setError(result.error!);
+      // setError(result.error!);
+      setDisplay(result.error || 'Error'); // 临时处理
     }
   };
 
   const clear = () => {
     setDisplay('0');
     setExpression('');
-    setError('');
+    // setError('');
   };
 
   const backspace = () => {
@@ -160,14 +163,14 @@ export default function CalculatorPage() {
     } else {
       setDisplay('0');
     }
-    setError('');
+    // setError('');
   };
 
   const inputDecimal = () => {
     if (display.indexOf('.') === -1) {
       setDisplay(display + '.');
     }
-    setError('');
+    // setError('');
   };
 
   const actions = [

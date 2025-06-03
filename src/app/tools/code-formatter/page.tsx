@@ -22,7 +22,7 @@ export default function CodeFormatterPage() {
   const formatJavaScript = (code: string): string => {
     try {
       // 简化的JavaScript格式化
-      let formatted = code
+      const formatted = code
         .replace(/\s*{\s*/g, ' {\n')
         .replace(/\s*}\s*/g, '\n}\n')
         .replace(/;\s*/g, ';\n')
@@ -36,7 +36,7 @@ export default function CodeFormatterPage() {
         .replace(/\s*\/\s*/g, ' / ');
 
       return addIndentation(formatted);
-    } catch (err) {
+    } catch {
       throw new Error('JavaScript格式化失败');
     }
   };
@@ -44,10 +44,10 @@ export default function CodeFormatterPage() {
   // 格式化HTML
   const formatHTML = (code: string): string => {
     try {
-      let formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
+      const formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
 
       return addIndentation(formatted);
-    } catch (err) {
+    } catch {
       throw new Error('HTML格式化失败');
     }
   };
@@ -55,7 +55,7 @@ export default function CodeFormatterPage() {
   // 格式化CSS
   const formatCSS = (code: string): string => {
     try {
-      let formatted = code
+      const formatted = code
         .replace(/\s*{\s*/g, ' {\n')
         .replace(/\s*}\s*/g, '\n}\n')
         .replace(/;\s*/g, ';\n')
@@ -63,7 +63,7 @@ export default function CodeFormatterPage() {
         .replace(/,\s*/g, ',\n');
 
       return addIndentation(formatted);
-    } catch (err) {
+    } catch {
       throw new Error('CSS格式化失败');
     }
   };
@@ -73,7 +73,7 @@ export default function CodeFormatterPage() {
     try {
       const parsed = JSON.parse(code);
       return JSON.stringify(parsed, null, indentType === 'spaces' ? indentSize : '\t');
-    } catch (err) {
+    } catch {
       throw new Error('JSON格式错误，请检查语法');
     }
   };
@@ -81,10 +81,10 @@ export default function CodeFormatterPage() {
   // 格式化XML
   const formatXML = (code: string): string => {
     try {
-      let formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
+      const formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
 
       return addIndentation(formatted);
-    } catch (err) {
+    } catch {
       throw new Error('XML格式化失败');
     }
   };
@@ -125,7 +125,7 @@ export default function CodeFormatterPage() {
         .replace(/^\s+|\s+$/g, '');
 
       return addIndentation(formatted);
-    } catch (err) {
+    } catch {
       throw new Error('SQL格式化失败');
     }
   };
@@ -334,6 +334,13 @@ export default function CodeFormatterPage() {
     }
   }, [input, language, indentSize, indentType]);
 
+  const tabsData = [
+    { key: 'format', name: '代码格式化', icon: Code },
+    { key: 'minify', name: '代码压缩', icon: Code },
+    { key: 'convert', name: 'JSON/CSV转换', icon: Code },
+    { key: 'encode', name: 'HTML编解码', icon: Code },
+  ] as const;
+
   const languages = [
     { value: 'javascript', name: 'JavaScript/TypeScript' },
     { value: 'html', name: 'HTML' },
@@ -370,17 +377,12 @@ export default function CodeFormatterPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {[
-              { key: 'format', name: '代码格式化', icon: Code },
-              { key: 'minify', name: '代码压缩', icon: Code },
-              { key: 'convert', name: 'JSON/CSV转换', icon: Code },
-              { key: 'encode', name: 'HTML编解码', icon: Code },
-            ].map(tab => {
+            {tabsData.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'
@@ -408,7 +410,7 @@ export default function CodeFormatterPage() {
                 <label className="block text-sm font-medium mb-2">语言</label>
                 <select
                   value={language}
-                  onChange={e => setLanguage(e.target.value as any)}
+                  onChange={e => setLanguage(e.target.value as typeof language)}
                   className="w-full p-2 border border-border rounded-lg bg-background"
                 >
                   {languages.map(lang => (
@@ -425,7 +427,7 @@ export default function CodeFormatterPage() {
                     <label className="block text-sm font-medium mb-2">缩进类型</label>
                     <select
                       value={indentType}
-                      onChange={e => setIndentType(e.target.value as any)}
+                      onChange={e => setIndentType(e.target.value as typeof indentType)}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     >
                       <option value="spaces">空格</option>
@@ -524,7 +526,7 @@ export default function CodeFormatterPage() {
                   const result = [];
                   for (let i = 1; i < lines.length; i++) {
                     const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-                    const obj: any = {};
+                    const obj: Record<string, string> = {};
                     headers.forEach((header, index) => {
                       obj[header] = values[index] || '';
                     });
@@ -532,7 +534,7 @@ export default function CodeFormatterPage() {
                   }
                   setOutput(JSON.stringify(result, null, 2));
                 }
-              } catch (err) {
+              } catch {
                 setError('数据转换失败，请检查格式');
               }
             }}
@@ -572,7 +574,7 @@ export default function CodeFormatterPage() {
                     .replace(/ /g, '&nbsp;');
                   setOutput(encoded);
                 }
-              } catch (err) {
+              } catch {
                 setError('编解码失败');
               }
             }}

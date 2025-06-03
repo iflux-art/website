@@ -25,10 +25,10 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   let filePath: string | undefined;
   let actualSlugForNav = slug.join('/'); // Represents the logical path for navigation and breadcrumbs
   let isIndexPage = false;
-  let isDirectoryRequest = false;
+  // let isDirectoryRequest = false; // Unused variable
 
   if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
-    isDirectoryRequest = true;
+    // isDirectoryRequest = true; // Unused variable
     const indexMdxPath = path.join(absoluteRequestedPath, 'index.mdx');
     const indexMdPath = path.join(absoluteRequestedPath, 'index.md');
 
@@ -62,11 +62,11 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   } 
   
   if (!filePath) { // If it wasn't a directory or directory processing didn't set filePath
-    let possiblePathMdx = `${absoluteRequestedPath}.mdx`;
+    const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
     if (fs.existsSync(possiblePathMdx)) {
       filePath = possiblePathMdx;
     } else {
-      let possiblePathMd = `${absoluteRequestedPath}.md`;
+      const possiblePathMd = `${absoluteRequestedPath}.md`;
       if (fs.existsSync(possiblePathMd)) {
         filePath = possiblePathMd;
       }

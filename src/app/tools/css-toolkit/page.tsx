@@ -305,10 +305,10 @@ export default function CSSToolkitPage() {
 
   // Flexbox生成器
   const FlexboxGenerator = () => {
-    const [direction, setDirection] = useState('row');
-    const [justify, setJustify] = useState('center');
-    const [align, setAlign] = useState('center');
-    const [wrap, setWrap] = useState('nowrap');
+    const [direction, setDirection] = useState<'row' | 'row-reverse' | 'column' | 'column-reverse'>('row');
+    const [justify, setJustify] = useState<'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'>('center');
+    const [align, setAlign] = useState<'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'>('center');
+    const [wrap, setWrap] = useState<'nowrap' | 'wrap' | 'wrap-reverse'>('nowrap');
 
     const cssCode = `display: flex;
 flex-direction: ${direction};
@@ -328,7 +328,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">方向 (flex-direction)</label>
                 <select
                   value={direction}
-                  onChange={e => setDirection(e.target.value)}
+                  onChange={e => setDirection(e.target.value as typeof direction)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="row">row</option>
@@ -342,7 +342,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">主轴对齐 (justify-content)</label>
                 <select
                   value={justify}
-                  onChange={e => setJustify(e.target.value)}
+                  onChange={e => setJustify(e.target.value as typeof justify)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="flex-start">flex-start</option>
@@ -358,7 +358,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">交叉轴对齐 (align-items)</label>
                 <select
                   value={align}
-                  onChange={e => setAlign(e.target.value)}
+                  onChange={e => setAlign(e.target.value as typeof align)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="stretch">stretch</option>
@@ -373,7 +373,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">换行 (flex-wrap)</label>
                 <select
                   value={wrap}
-                  onChange={e => setWrap(e.target.value)}
+                  onChange={e => setWrap(e.target.value as typeof wrap)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="nowrap">nowrap</option>
@@ -390,10 +390,10 @@ flex-wrap: ${wrap};`;
                   className="h-48 bg-muted/50 rounded-lg border-2 border-dashed border-border"
                   style={{
                     display: 'flex',
-                    flexDirection: direction as any,
-                    justifyContent: justify as any,
-                    alignItems: align as any,
-                    flexWrap: wrap as any,
+                    flexDirection: direction,
+                    justifyContent: justify,
+                    alignItems: align,
+                    flexWrap: wrap,
                   }}
                 >
                   <div className="w-8 h-8 bg-red-400 rounded m-1"></div>
@@ -806,7 +806,7 @@ gap: ${gap};`;
     { key: 'animation', name: '动画', icon: Zap },
     { key: 'flexbox', name: 'Flexbox', icon: Grid3X3 },
     { key: 'grid', name: 'Grid', icon: Grid3X3 },
-  ];
+  ] as const;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -837,7 +837,7 @@ gap: ${gap};`;
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

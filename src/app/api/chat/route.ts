@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getModelById, generateDemoResponse } from '@/lib/ai-models';
 
+interface SearchResult {
+  title: string;
+  description: string;
+  url?: string;
+}
+
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
+interface ApiRequestBody {
+  messages: ChatMessage[];
+  temperature: number;
+  max_tokens: number;
+  stream: boolean;
+  model?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const {
@@ -9,6 +28,12 @@ export async function POST(request: NextRequest) {
       searchResults,
       modelId = 'deepseek-chat',
       messages: conversationHistory,
+    }: {
+      message: string;
+      searchMode: 'ai' | 'local' | 'web';
+      searchResults?: SearchResult[];
+      modelId?: string;
+      messages?: ChatMessage[];
     } = await request.json();
 
     // 获取模型配置
@@ -33,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     // 根据搜索模式构建不同的提示词
     let systemPrompt = '';
-    let userMessage = message;
+    const userMessage = message;
 
     if (searchMode === 'ai') {
       // 纯AI对话模式
@@ -52,7 +77,7 @@ export async function POST(request: NextRequest) {
 搜索结果：
 ${
   searchResults
-    ?.map((result: any, index: number) => `${index + 1}. ${result.title}: ${result.description}`)
+    ?.map((result: SearchResult, index: number) => `${index + 1}. ${result.title}: ${result.description}`)
     .join('\n') || '暂无搜索结果'
 }
 
@@ -71,7 +96,7 @@ ${
 ${
   searchResults
     ?.map(
-      (result: any, index: number) =>
+      (result: SearchResult, index: number) =>
         `${index + 1}. ${result.title}: ${result.description} (来源: ${result.url})`
     )
     .join('\n') || '暂无搜索结果'
@@ -87,7 +112,7 @@ ${
     }
 
     // 构建消息历史，包含系统提示和对话历史
-    const messages = [
+    const messages: ChatMessage[] = [
       {
         role: 'system',
         content: systemPrompt,
@@ -96,7 +121,9 @@ ${
 
     // 如果有对话历史，添加到消息中（排除系统消息）
     if (conversationHistory && Array.isArray(conversationHistory)) {
-      const userMessages = conversationHistory.filter((msg: any) => msg.role !== 'system');
+      const userMessages: ChatMessage[] = conversationHistory.filter(
+        (msg): msg is ChatMessage => msg.role !== 'system'
+      );
       messages.push(...userMessages);
     } else {
       // 如果没有对话历史，只添加当前消息
@@ -107,7 +134,7 @@ ${
     }
 
     // 构建请求体
-    const requestBody: any = {
+    const requestBody: ApiRequestBody = {
       messages,
       temperature: model.temperature,
       max_tokens: model.maxTokens,
@@ -202,7 +229,7 @@ ${
             });
           }
         }
-      } catch (e) {
+      } catch {
         // 忽略JSON解析错误，使用默认错误信息
       }
 

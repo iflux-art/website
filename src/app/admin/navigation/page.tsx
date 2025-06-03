@@ -30,7 +30,6 @@ import {
   Trash2,
   ExternalLink,
   Search,
-  Filter,
   AlertCircle,
   CheckCircle,
   Globe,
@@ -220,7 +219,7 @@ export default function NavigationAdminPage() {
       key: 'icon',
       title: '图标',
       width: '60px',
-      render: (value: any, record: NavigationItem) => (
+      render: (value: unknown, record: NavigationItem) => (
         <div className="text-lg">
           {record.iconType === 'emoji' ? (
             record.icon

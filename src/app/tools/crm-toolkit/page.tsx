@@ -323,7 +323,7 @@ export default function CRMToolkitPage() {
     { key: 'follow', name: '跟进提醒', icon: Calendar },
     { key: 'template', name: '沟通模板', icon: Mail },
     { key: 'analysis', name: '客户分析', icon: Phone },
-  ];
+  ] as const;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -354,7 +354,7 @@ export default function CRMToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

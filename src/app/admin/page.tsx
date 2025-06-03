@@ -28,8 +28,8 @@ export default function AdminDashboard() {
         {stats.map(stat => {
           const Icon = stat.icon;
           return (
-            <a href="/admin/navigation">
-              <Card key={stat.title}>
+            <a href="/admin/navigation" key={stat.title}>
+              <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                   <Icon className={`h-4 w-4 ${stat.color}`} />
