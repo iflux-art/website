@@ -6,7 +6,7 @@ import { ToolLayout } from '@/components/layout/ToolLayout';
 import { DualTextarea } from '@/components/ui/dual-textarea';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { useToolState } from '@/hooks/use-tool-state';
-import { timeUtils, exampleData } from '@/lib/tool-utils';
+import { timeUtils } from '@/lib/tool-utils';
 
 export default function TimestampSimplePage() {
   const [{ input, output, error }, { setInput, setOutput, setError, clearAll }] = useToolState();

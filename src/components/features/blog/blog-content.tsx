@@ -63,7 +63,7 @@ export function BlogContent({
   content,
   mdxContent,
   tags = [],
-  path,
+  _path,
 }: BlogContentProps) {
   return (
     <article>

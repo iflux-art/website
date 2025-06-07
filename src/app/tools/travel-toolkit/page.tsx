@@ -6,8 +6,36 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Calculator, Cloud, DollarSign } from 'lucide-react';
 import Link from 'next/link';
 
+interface WeatherCurrent {
+  temp: number;
+  condition: string;
+  humidity: number;
+  wind: number;
+}
+
+interface ForecastDay {
+  date: string;
+  high: number;
+  low: number;
+  condition: string;
+}
+
+interface WeatherData {
+  city: string;
+  current: WeatherCurrent;
+  forecast: ForecastDay[];
+}
+
+type TabKey = 'planner' | 'budget' | 'weather' | 'currency';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
 export default function TravelToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'planner' | 'budget' | 'weather' | 'currency'>('planner');
+  const [activeTab, setActiveTab] = useState<TabKey>('planner');
 
   // 行程规划器
   const TripPlanner = () => {
@@ -226,7 +254,7 @@ export default function TravelToolkitPage() {
   // 天气查询
   const WeatherChecker = () => {
     const [city, setCity] = useState('北京');
-    const [weatherData, setWeatherData] = useState<any>(null);
+    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
     const checkWeather = () => {
       // 模拟天气数据
@@ -285,7 +313,7 @@ export default function TravelToolkitPage() {
               <div>
                 <h4 className="font-medium mb-3">7天预报</h4>
                 <div className="space-y-2">
-                  {weatherData.forecast.map((day: any, index: number) => (
+                  {weatherData.forecast.map((day: ForecastDay, index: number) => (
                     <div key={index} className="flex justify-between items-center p-2 border rounded">
                       <span className="text-sm">{day.date}</span>
                       <span className="text-sm">{day.condition}</span>
@@ -430,7 +458,7 @@ export default function TravelToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'planner', name: '行程规划', icon: MapPin },
     { key: 'budget', name: '费用计算', icon: Calculator },
     { key: 'weather', name: '天气查询', icon: Cloud },
@@ -466,7 +494,7 @@ export default function TravelToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

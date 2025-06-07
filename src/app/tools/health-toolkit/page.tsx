@@ -1,8 +1,34 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, Heart, Activity, Scale, Droplets } from 'lucide-react';
+import Link from 'next/link';
 
 type HealthTabKey = 'bmi' | 'bmr' | 'water' | 'heart';
+
+interface HeartRateZone {
+  name: string;
+  min: number;
+  max: number;
+  description: string;
+}
+
+interface HeartRateResult {
+  maxHR: number;
+  zones: HeartRateZone[];
+  recommendation: string;
+}
+
+interface WaterResult {
+  baseAmount: number;
+  adjustedAmount: number;
+  activityFactor: number;
+  climateFactor: number;
+  recommendation: string;
+  cups: number;
+}
 
 interface HealthTab {
   key: HealthTabKey;
@@ -19,16 +45,15 @@ interface BMIResult {
   idealWeightMax: string;
 }
 
-type CategoryColor = 'text-blue-600' | 'text-green-600' | 'text-orange-600' | 'text-red-600';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Heart, Activity, Scale, Droplets } from 'lucide-react';
-import Link from 'next/link';
+interface BMRResult {
+  baseBMR: number;
+  dailyCalories: number;
+  activityMultiplier: number;
+  recommendation: string;
+}
 
 export default function HealthToolkitPage() {
   const [activeTab, setActiveTab] = useState<HealthTabKey>('bmi');
-
-  // BMI计算器
   const BMICalculator = () => {
     const [height, setHeight] = useState(170);
     const [weight, setWeight] = useState(65);
@@ -68,7 +93,8 @@ export default function HealthToolkitPage() {
         category,
         color,
         advice,
-        idealWeightRange: `${idealWeightMin.toFixed(1)} - ${idealWeightMax.toFixed(1)} kg`
+        idealWeightMin: idealWeightMin.toFixed(1),
+        idealWeightMax: idealWeightMax.toFixed(1)
       });
     };
 
@@ -164,7 +190,7 @@ export default function HealthToolkitPage() {
     const [height, setHeight] = useState(170);
     const [weight, setWeight] = useState(65);
     const [activityLevel, setActivityLevel] = useState('moderate');
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<BMRResult | null>(null);
 
     const calculateBMR = () => {
       let bmr = 0;
@@ -322,21 +348,21 @@ export default function HealthToolkitPage() {
     const [weight, setWeight] = useState(65);
     const [activityLevel, setActivityLevel] = useState('moderate');
     const [climate, setClimate] = useState('normal');
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<WaterResult | null>(null);
 
     const calculateWater = () => {
       // 基础饮水量：体重 × 35ml
-      let baseWater = weight * 35;
+      const baseWater = weight * 35;
 
       // 活动调整
-      const activityMultipliers: { [key: string]: number } = {
+      const activityMultipliers: Record<'low' | 'moderate' | 'high', number> = {
         low: 1,
         moderate: 1.2,
         high: 1.5
       };
 
       // 气候调整
-      const climateMultipliers: { [key: string]: number } = {
+      const climateMultipliers: Record<'cold' | 'normal' | 'hot', number> = {
         cold: 0.9,
         normal: 1,
         hot: 1.3
@@ -448,7 +474,7 @@ export default function HealthToolkitPage() {
   const HeartRateCalculator = () => {
     const [age, setAge] = useState(25);
     const [restingHR, setRestingHR] = useState(60);
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<HeartRateResult | null>(null);
 
     const calculateHeartRate = () => {
       const maxHR = 220 - age;
@@ -517,7 +543,7 @@ export default function HealthToolkitPage() {
               <input
                 type="number"
                 value={restingHR}
-                onChange={(e) => setRestingHR(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRestingHR(Number(e.target.value))}
                 className="w-full p-3 border border-border rounded-lg bg-background"
                 min="40"
                 max="100"
@@ -545,7 +571,7 @@ export default function HealthToolkitPage() {
               </div>
 
               <div className="space-y-3">
-                {Object.entries(result.zones).map(([key, zone]: [string, any]) => (
+                {Object.entries(result.zones).map(([key, zone]: [string, HeartRateZone]) => (
                   <div key={key} className="border border-border rounded-lg p-4">
                     <div className="flex justify-between items-center mb-2">
                       <div className="font-medium">{zone.name}</div>
@@ -564,7 +590,7 @@ export default function HealthToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: HealthTab[] = [
     { key: 'bmi', name: 'BMI计算', icon: Scale },
     { key: 'bmr', name: '代谢率', icon: Activity },
     { key: 'water', name: '饮水量', icon: Droplets },
@@ -603,7 +629,7 @@ export default function HealthToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key as HealthTabKey)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

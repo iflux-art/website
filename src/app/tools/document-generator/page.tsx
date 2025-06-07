@@ -5,13 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, FileText, Book, Code, Clipboard, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
-type TabKey = 'readme' | 'api' | 'changelog' | 'license';
 
-interface Tab {
-  key: TabKey;
-  name: string;
-  icon: React.ElementType;
-}
+type TabKey = 'readme' | 'api' | 'changelog' | 'license';
 
 export default function DocumentGeneratorPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('readme');

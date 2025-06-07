@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import {
   PlusCircle,
   SendHorizontal,
-  Bot,
   BotMessageSquare,
   Sparkles,
   FileText,
@@ -15,8 +14,6 @@ import {
   Globe,
   HardDrive,
   ChevronDown,
-  ExternalLink,
-  BookOpen,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

@@ -508,7 +508,7 @@ export default function NonsenseGeneratorPage() {
                   return (
                     <button
                       key={tab.key}
-                      onClick={() => setActiveTab(tab.key as any)}
+                      onClick={() => setActiveTab(tab.key as 'poetry' | 'prose' | 'novel' | 'speech')}
                       className={`flex-1 p-3 text-center border-b-2 transition-colors flex items-center justify-center gap-2 text-sm ${
                         activeTab === tab.key
                           ? 'border-primary text-primary bg-primary/5'

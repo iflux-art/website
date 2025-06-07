@@ -1,5 +1,14 @@
 'use client';
 
+type CurrencyPair = 'CNY-USD' | 'USD-CNY' | 'CNY-EUR' | 'EUR-CNY' | 'CNY-JPY' | 'JPY-CNY';
+
+type TabKey = 'health' | 'travel' | 'cooking' | 'shopping' | 'pets' | 'weather' | 'time';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: React.ElementType;
+}
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +16,7 @@ import { ArrowLeft, Heart, Plane, ChefHat, ShoppingCart, PawPrint, Cloud, Clock 
 import Link from 'next/link';
 
 export default function LifestyleToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'health' | 'travel' | 'cooking' | 'shopping' | 'pet' | 'weather' | 'time'>('health');
+  const [activeTab, setActiveTab] = useState<TabKey>('health');
 
   // 健康管理
   const HealthTools = () => {
@@ -87,7 +96,7 @@ export default function LifestyleToolkitPage() {
     const [amount, setAmount] = useState(100);
     const [convertedAmount, setConvertedAmount] = useState<number | null>(null);
 
-    const exchangeRates: any = {
+    const exchangeRates: Record<CurrencyPair, number> = {
       'CNY-USD': 0.14,
       'USD-CNY': 7.2,
       'CNY-EUR': 0.13,
@@ -217,7 +226,7 @@ export default function LifestyleToolkitPage() {
                 min="0"
                 max="60"
                 value={minutes}
-                onChange={(e) => setMinutes(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMinutes(Number(e.target.value))}
                 className="w-full p-3 border border-border rounded-lg bg-background"
                 disabled={isRunning}
               />
@@ -229,7 +238,7 @@ export default function LifestyleToolkitPage() {
                 min="0"
                 max="59"
                 value={seconds}
-                onChange={(e) => setSeconds(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSeconds(Number(e.target.value))}
                 className="w-full p-3 border border-border rounded-lg bg-background"
                 disabled={isRunning}
               />
@@ -257,12 +266,12 @@ export default function LifestyleToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'health', name: '健康管理', icon: Heart },
     { key: 'travel', name: '旅行助手', icon: Plane },
     { key: 'cooking', name: '烹饪工具', icon: ChefHat },
     { key: 'shopping', name: '购物助手', icon: ShoppingCart },
-    { key: 'pet', name: '宠物护理', icon: PawPrint },
+    { key: 'pets', name: '宠物护理', icon: PawPrint },
     { key: 'weather', name: '天气查询', icon: Cloud },
     { key: 'time', name: '时间管理', icon: Clock },
   ];
@@ -299,7 +308,7 @@ export default function LifestyleToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 min-w-[120px] p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'
@@ -325,7 +334,7 @@ export default function LifestyleToolkitPage() {
             <CardContent className="p-8 text-center">
               <div className="text-muted-foreground">
                 {activeTab === 'shopping' && '购物助手功能开发中...'}
-                {activeTab === 'pet' && '宠物护理功能开发中...'}
+                {activeTab === 'pets' && '宠物护理功能开发中...'}
                 {activeTab === 'weather' && '天气查询功能开发中...'}
                 {activeTab === 'time' && '时间管理功能开发中...'}
               </div>

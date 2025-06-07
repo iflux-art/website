@@ -137,7 +137,7 @@ export default function RegexTesterPage() {
     let result = text;
     let offset = 0;
 
-    matches.forEach((match, index) => {
+    matches.forEach((match, _index) => {
       if (match.index !== undefined) {
         const start = match.index + offset;
         const end = start + match[0].length;

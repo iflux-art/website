@@ -6,8 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Heart, Calendar, Stethoscope, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 
+type TabKey = 'feeding' | 'health' | 'schedule' | 'supplies';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
 export default function PetToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'feeding' | 'health' | 'schedule' | 'supplies'>('feeding');
+  const [activeTab, setActiveTab] = useState<TabKey>('feeding');
 
   // 喂养计划
   const FeedingPlan = () => {
@@ -375,6 +383,8 @@ export default function PetToolkitPage() {
   // 用品购买
   const PetSupplies = () => {
     const [category, setCategory] = useState('food');
+    // TODO: setSupplies 将用于实现添加/编辑宠物用品功能
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [supplies, setSupplies] = useState([
       { name: '狗粮', category: 'food', price: 150, brand: '皇家', rating: 4.8 },
       { name: '猫砂', category: 'hygiene', price: 80, brand: '蓝钻', rating: 4.6 },
@@ -440,7 +450,7 @@ export default function PetToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'feeding', name: '喂养计划', icon: Heart },
     { key: 'health', name: '健康记录', icon: Stethoscope },
     { key: 'schedule', name: '日程安排', icon: Calendar },
@@ -476,7 +486,7 @@ export default function PetToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

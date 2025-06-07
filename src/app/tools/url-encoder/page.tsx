@@ -8,27 +8,27 @@ import { ToolActions } from '@/components/ui/tool-actions';
 import { useToolState } from '@/hooks/use-tool-state';
 import { urlUtils, exampleData } from '@/lib/tool-utils';
 
-export default function UrlEncoderPage() {
+function UrlEncoderPage() {
   const [{ input, output, error }, { setInput, setOutput, setError, clearAll }] = useToolState();
 
   const encodeUrl = () => {
     const result = urlUtils.encode(input);
-    if (result.success) {
-      setOutput(result.data!);
+    if (result.success && result.data) {
+      setOutput(result.data);
       setError('');
     } else {
-      setError(result.error!);
+      setError(result.error || '编码失败');
       setOutput('');
     }
   };
 
   const decodeUrl = () => {
     const result = urlUtils.decode(input);
-    if (result.success) {
-      setOutput(result.data!);
+    if (result.success && result.data) {
+      setOutput(result.data);
       setError('');
     } else {
-      setError(result.error!);
+      setError(result.error || '解码失败');
       setOutput('');
     }
   };
@@ -128,3 +128,7 @@ export default function UrlEncoderPage() {
     </ToolLayout>
   );
 }
+
+UrlEncoderPage.displayName = 'UrlEncoderPage';
+
+export default UrlEncoderPage;

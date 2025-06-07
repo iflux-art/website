@@ -8,8 +8,6 @@ import { Button } from '@/components/ui/button';
  * 开往按钮组件属性
  * 目前不需要任何属性，但保留此接口以便将来扩展
  */
-export interface TravelButtonProps {}
-
 /**
  * 开往按钮组件
  * 点击跳转到开往友链接力网站，实现网站之间的随机跳转
@@ -17,8 +15,7 @@ export interface TravelButtonProps {}
  * @example
  * <TravelButton />
  */
-export function TravelButton(props: TravelButtonProps) {
-  // 当前props暂未使用，保留参数为未来扩展准备
+export function TravelButton() {
   return (
     <Button
       variant="ghost"

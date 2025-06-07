@@ -12,7 +12,12 @@ export default function NetworkDiagnosticsPage() {
   // Ping测试
   const PingTest = () => {
     const [host, setHost] = useState('google.com');
-    const [results, setResults] = useState<any[]>([]);
+    interface PingResult {
+      seq: number;
+      time: string;
+      status: 'success' | 'timeout';
+    }
+    const [results, setResults] = useState<PingResult[]>([]);
     const [testing, setTesting] = useState(false);
 
     const simulatePing = async () => {
@@ -88,7 +93,16 @@ export default function NetworkDiagnosticsPage() {
   // DNS查询
   const DNSLookup = () => {
     const [domain, setDomain] = useState('example.com');
-    const [dnsResults, setDnsResults] = useState<any>(null);
+    interface DNSRecord {
+      type: string;
+      value: string;
+      ttl: number;
+    }
+    interface DNSResults {
+      domain: string;
+      records: DNSRecord[];
+    }
+    const [dnsResults, setDnsResults] = useState<DNSResults | null>(null);
 
     const performDNSLookup = () => {
       // 模拟DNS查询结果
@@ -122,7 +136,7 @@ export default function NetworkDiagnosticsPage() {
           {dnsResults && (
             <div className="space-y-3">
               <h4 className="font-medium">DNS记录</h4>
-              {dnsResults.records.map((record: any, index: number) => (
+              {dnsResults.records.map((record: DNSRecord, index: number) => (
                 <div key={index} className="flex justify-between items-center p-3 border rounded-lg">
                   <div>
                     <span className="font-medium text-sm">{record.type}</span>
@@ -153,7 +167,12 @@ export default function NetworkDiagnosticsPage() {
   const PortScan = () => {
     const [target, setTarget] = useState('example.com');
     const [ports, setPorts] = useState('80,443,22,21,25');
-    const [scanResults, setScanResults] = useState<any[]>([]);
+    interface PortScanResult {
+      port: string;
+      status: 'open' | 'closed';
+      service: string;
+    }
+    const [scanResults, setScanResults] = useState<PortScanResult[]>([]);
     const [scanning, setScanning] = useState(false);
 
     const performPortScan = async () => {
@@ -177,7 +196,7 @@ export default function NetworkDiagnosticsPage() {
     };
 
     const getServiceName = (port: string) => {
-      const services: any = {
+      const services: Record<string, string> = {
         '21': 'FTP',
         '22': 'SSH',
         '25': 'SMTP',
@@ -246,7 +265,13 @@ export default function NetworkDiagnosticsPage() {
   // 网速测试
   const SpeedTest = () => {
     const [testing, setTesting] = useState(false);
-    const [results, setResults] = useState<any>(null);
+    interface SpeedTestResults {
+      download: string;
+      upload: string;
+      ping: string;
+      jitter: string;
+    }
+    const [results, setResults] = useState<SpeedTestResults | null>(null);
 
     const performSpeedTest = async () => {
       setTesting(true);
@@ -354,7 +379,7 @@ export default function NetworkDiagnosticsPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key as 'ping' | 'dns' | 'port' | 'speed')}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

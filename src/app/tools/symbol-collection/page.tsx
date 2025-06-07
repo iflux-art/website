@@ -4,10 +4,25 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Smile, Star, Hash, Type } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
+type TabKey = 'emoji' | 'emoticon' | 'special' | 'math';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: LucideIcon;
+}
+
+const tabs: Tab[] = [
+  { key: 'emoji', name: 'Emoji表情', icon: Smile },
+  { key: 'emoticon', name: '颜文字', icon: Type },
+  { key: 'special', name: '特殊符号', icon: Star },
+  { key: 'math', name: '数学符号', icon: Hash },
+];
 export default function SymbolCollectionPage() {
-  const [activeTab, setActiveTab] = useState<'emoji' | 'emoticon' | 'special' | 'math'>('emoji');
+  const [activeTab, setActiveTab] = useState<TabKey>('emoji');
   const [copied, setCopied] = useState<string | null>(null);
 
   const copySymbol = async (symbol: string) => {
@@ -565,17 +580,12 @@ export default function SymbolCollectionPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b overflow-x-auto">
-            {[
-              { key: 'emoji', name: 'Emoji表情', icon: Smile },
-              { key: 'emoticon', name: '颜文字', icon: Type },
-              { key: 'special', name: '特殊符号', icon: Star },
-              { key: 'math', name: '数学符号', icon: Hash },
-            ].map(tab => {
+            {tabs.map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 min-w-[120px] p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

@@ -4,10 +4,18 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Camera, Aperture, Timer, Palette } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
+type TabKey = 'exposure' | 'dof' | 'composition' | 'lighting';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: LucideIcon;
+}
 export default function PhotographyToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'exposure' | 'dof' | 'composition' | 'lighting'>('exposure');
+  const [activeTab, setActiveTab] = useState<TabKey>('exposure');
 
   // 曝光计算器
   const ExposureCalculator = () => {
@@ -459,7 +467,7 @@ export default function PhotographyToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'exposure', name: '曝光计算', icon: Aperture },
     { key: 'dof', name: '景深计算', icon: Camera },
     { key: 'composition', name: '构图指导', icon: Timer },
@@ -495,7 +503,7 @@ export default function PhotographyToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

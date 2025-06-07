@@ -1,5 +1,24 @@
 'use client';
 
+interface UserAgentData {
+  platform?: string;
+}
+
+interface NetworkInformation {
+  effectiveType?: string;
+  downlink?: number;
+  rtt?: number;
+  saveData?: boolean;
+}
+
+interface NavigatorExtended extends Navigator {
+  userAgentData?: UserAgentData;
+  deviceMemory?: number;
+  connection?: NetworkInformation;
+  mozConnection?: NetworkInformation;
+  webkitConnection?: NetworkInformation;
+}
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -104,7 +123,7 @@ export default function SystemInfoPage() {
 
     return {
       platform,
-      architecture: (navigator as any).userAgentData?.platform || 'Unknown',
+      architecture: (navigator as NavigatorExtended).userAgentData?.platform || 'Unknown',
       language: navigator.language,
       languages: Array.from(languages),
       timezone,
@@ -139,13 +158,13 @@ export default function SystemInfoPage() {
   // 检测硬件信息
   const detectHardware = () => {
     const cores = navigator.hardwareConcurrency || 1;
-    const memory = (navigator as any).deviceMemory || 0;
+    const memory = (navigator as NavigatorExtended).deviceMemory || 0;
 
     let connection;
     const conn =
-      (navigator as any).connection ||
-      (navigator as any).mozConnection ||
-      (navigator as any).webkitConnection;
+      (navigator as NavigatorExtended).connection ||
+      (navigator as NavigatorExtended).mozConnection ||
+      (navigator as NavigatorExtended).webkitConnection;
     if (conn) {
       connection = {
         effectiveType: conn.effectiveType || 'Unknown',
@@ -202,11 +221,10 @@ export default function SystemInfoPage() {
     }
   };
 
-  // 复制完整报告
-  const copyFullReport = async () => {
-    if (!systemInfo) return;
+const copyFullReport = async () => {
+  if (!systemInfo) return;
 
-    const report = `系统信息报告
+  const report = `系统信息报告
 ================
 检测时间: ${new Date().toISOString().replace('T', ' ').split('.')[0]}
 
@@ -237,13 +255,11 @@ export default function SystemInfoPage() {
 硬件信息:
 - CPU核心数: ${systemInfo.hardware.cores}
 - 内存: ${systemInfo.hardware.memory || '未知'} GB
-${
-  systemInfo.hardware.connection
-    ? `- 网络类型: ${systemInfo.hardware.connection.effectiveType}
+${systemInfo.hardware.connection
+  ? `- 网络类型: ${systemInfo.hardware.connection.effectiveType}
 - 下行速度: ${systemInfo.hardware.connection.downlink} Mbps
 - 延迟: ${systemInfo.hardware.connection.rtt} ms`
-    : ''
-}
+  : ''}
 
 功能支持:
 - Local Storage: ${systemInfo.features.localStorage ? '支持' : '不支持'}
@@ -256,14 +272,8 @@ ${
 - Service Worker: ${systemInfo.features.serviceWorker ? '支持' : '不支持'}
 - WebAssembly: ${systemInfo.features.webAssembly ? '支持' : '不支持'}`;
 
-    try {
-      await navigator.clipboard.writeText(report);
-      setCopied('report');
-      setTimeout(() => setCopied(null), 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-    }
-  };
+  await copyInfo(report, 'report');
+};
 
   // 下载报告
   const downloadReport = () => {

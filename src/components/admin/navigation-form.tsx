@@ -35,7 +35,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
   });
 
   const [categories, setCategories] = useState<NavigationCategory[]>([]);
-  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [_availableTags, setAvailableTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState('');
@@ -62,7 +62,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
     }
   }, [formData.url]);
 
-  const handleInputChange = (field: keyof NavigationFormData, value: any) => {
+  const handleInputChange = (field: keyof NavigationFormData, value: NavigationFormData[keyof NavigationFormData]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
     // 清除解析状态
@@ -93,7 +93,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
       }));
       
       setParseSuccess(true);
-    } catch (error) {
+    } catch (_error) {
       setParseError('解析网站信息失败，请手动填写');
     } finally {
       setIsParsing(false);

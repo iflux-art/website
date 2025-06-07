@@ -93,7 +93,7 @@ export const getRandomDuration = (min: number = 10, max: number = 30): string =>
  * @param wait 等待时间（毫秒）
  * @returns 防抖后的函数
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
@@ -111,7 +111,7 @@ export const debounce = <T extends (...args: any[]) => any>(
  * @param limit 限制时间（毫秒）
  * @returns 节流后的函数
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): ((...args: Parameters<T>) => void) => {

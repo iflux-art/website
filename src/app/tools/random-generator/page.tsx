@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Shuffle, Dices, Hash, QrCode, Key, Shield } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Dices, Hash, QrCode, Key, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 export default function GeneratorToolkitPage() {
@@ -13,7 +13,6 @@ export default function GeneratorToolkitPage() {
   const [copied, setCopied] = useState<string | null>(null);
 
   // 随机生成器状态
-  const [type, setType] = useState<'number' | 'string' | 'list' | 'color'>('number');
   const [results, setResults] = useState<string[]>([]);
   const [numberMin, setNumberMin] = useState(1);
   const [numberMax, setNumberMax] = useState(100);
@@ -127,7 +126,8 @@ export default function GeneratorToolkitPage() {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       setHashResult(hashHex);
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
       setHashResult('生成哈希时出错');
     }
   };
@@ -190,7 +190,7 @@ export default function GeneratorToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key as 'random' | 'uuid' | 'qrcode' | 'hash' | 'password')}
                   className={`flex-1 min-w-[120px] p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'
@@ -291,7 +291,7 @@ export default function GeneratorToolkitPage() {
                   <label className="block text-sm font-medium mb-2">UUID版本</label>
                   <select
                     value={uuidVersion}
-                    onChange={e => setUuidVersion(e.target.value as any)}
+                    onChange={e => setUuidVersion(e.target.value as 'v1' | 'v4')}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   >
                     <option value="v4">UUID v4 (随机)</option>
@@ -448,7 +448,7 @@ export default function GeneratorToolkitPage() {
                 <label className="block text-sm font-medium mb-2">哈希算法</label>
                 <select
                   value={hashAlgorithm}
-                  onChange={e => setHashAlgorithm(e.target.value as any)}
+                  onChange={e => setHashAlgorithm(e.target.value as 'SHA1' | 'SHA256' | 'SHA512')}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value="SHA1">SHA-1</option>

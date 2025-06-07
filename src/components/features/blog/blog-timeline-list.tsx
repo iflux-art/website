@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useTimelinePosts } from '@/hooks/use-blog';
+import { useTimelinePosts, BlogPost } from '@/hooks/use-blog';
 
 /**
  * 博客时间轴列表组件属性
@@ -21,7 +21,7 @@ export interface BlogTimelineListProps {
 export interface PostsByMonth {
   [month: string]: {
     date: Date;
-    posts: any[];
+    posts: BlogPost[];
   };
 }
 
@@ -86,7 +86,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
 
   // 按月份分组文章（暂时未使用，但保留以备将来按月份显示文章）
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const groupPostsByMonth = (posts: any[]) => {
+  const groupPostsByMonth = (posts: BlogPost[]) => {
     const postsByMonth: PostsByMonth = {};
 
     posts.forEach(post => {

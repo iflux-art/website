@@ -503,7 +503,9 @@ ${Array.from({ length: columns }, (_, i) => i + 1)
   // 间距系统
   const SpacingTool = () => {
     const [baseUnit, setBaseUnit] = useState(8);
-    const [scale, setScale] = useState([0.5, 1, 1.5, 2, 3, 4, 6, 8, 12, 16]);
+    // 比例暂时固定，但保留状态以支持未来可能的自定义功能
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [scale, _setScale] = useState([0.5, 1, 1.5, 2, 3, 4, 6, 8, 12, 16]);
 
     const generateSpacingCSS = () => {
       return `:root {

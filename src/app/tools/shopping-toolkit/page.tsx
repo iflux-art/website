@@ -1,5 +1,36 @@
 'use client';
 
+interface PriceResult {
+  store: string;
+  price: number;
+  shipping: number;
+  rating: number;
+  stock: string;
+}
+
+interface Coupon {
+  title: string;
+  code: string; 
+  expiry: string;
+  type: string;
+  condition: string;
+}
+
+interface ShoppingItem {
+  name: string;
+  price: number;
+  quantity: number;
+  category: string;
+  checked: boolean;
+}
+
+type TabKey = 'compare' | 'coupons' | 'list' | 'budget';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: LucideIcon;
+}
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,7 +43,7 @@ export default function ShoppingToolkitPage() {
   // 价格比较
   const PriceComparison = () => {
     const [product, setProduct] = useState('iPhone 15');
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<PriceResult[]>([]);
 
     const searchPrices = () => {
       // 模拟价格比较结果
@@ -88,7 +119,7 @@ export default function ShoppingToolkitPage() {
   // 优惠券查找
   const CouponFinder = () => {
     const [store, setStore] = useState('');
-    const [coupons, setCoupons] = useState<any[]>([]);
+    const [coupons, setCoupons] = useState<Coupon[]>([]);
 
     const searchCoupons = () => {
       // 模拟优惠券数据
@@ -179,11 +210,16 @@ export default function ShoppingToolkitPage() {
 
   // 购物清单
   const ShoppingList = () => {
-    const [items, setItems] = useState([
+    const [items, setItems] = useState<ShoppingItem[]>([
       { name: '苹果', price: 8, quantity: 2, category: '水果', checked: false },
       { name: '牛奶', price: 15, quantity: 1, category: '乳制品', checked: false }
     ]);
-    const [newItem, setNewItem] = useState({ name: '', price: 0, quantity: 1, category: '其他' });
+    const [newItem, setNewItem] = useState<Omit<ShoppingItem, 'checked'>>({ 
+      name: '', 
+      price: 0, 
+      quantity: 1, 
+      category: '其他' 
+    });
 
     const categories = ['水果', '蔬菜', '肉类', '乳制品', '日用品', '电子产品', '其他'];
 
@@ -200,7 +236,7 @@ export default function ShoppingToolkitPage() {
       setItems(newItems);
     };
 
-    const updateItem = (index: number, field: string, value: any) => {
+    const updateItem = (index: number, field: keyof Omit<ShoppingItem, 'checked'>, value: string | number) => {
       const newItems = [...items];
       newItems[index] = { ...newItems[index], [field]: value };
       setItems(newItems);
@@ -461,7 +497,7 @@ export default function ShoppingToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'compare', name: '价格比较', icon: Search },
     { key: 'coupons', name: '优惠券', icon: Tag },
     { key: 'list', name: '购物清单', icon: ShoppingCart },
@@ -497,7 +533,7 @@ export default function ShoppingToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

@@ -42,7 +42,7 @@ export default function OfficeToolkitPage() {
       }));
     };
 
-    const updateItem = (index: number, field: string, value: any) => {
+    const updateItem = (index: number, field: string, value: string | number) => {
       const newItems = [...invoiceData.items];
       newItems[index] = { ...newItems[index], [field]: value };
       if (field === 'quantity' || field === 'price') {
@@ -211,7 +211,7 @@ ${invoiceData.items.map((item, index) =>
       { category: '其他', amount: 0, description: '' }
     ]);
 
-    const updateExpense = (index: number, field: string, value: any) => {
+    const updateExpense = (index: number, field: string, value: string | number) => {
       const newExpenses = [...expenses];
       newExpenses[index] = { ...newExpenses[index], [field]: value };
       setExpenses(newExpenses);
@@ -440,7 +440,7 @@ ${meetingData.actionItems}
 日期: ${new Date().toISOString().split('T')[0]}
 
 时间安排:
-${tasks.map((task, index) => 
+${tasks.map((task) => 
   `${task.time} - ${task.task} [${task.priority === 'high' ? '高优先级' : task.priority === 'medium' ? '中优先级' : '低优先级'}]`
 ).join('\n')}
 
@@ -537,7 +537,7 @@ ${tasks.map((task, index) =>
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key as 'invoice' | 'expense' | 'meeting' | 'schedule')}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

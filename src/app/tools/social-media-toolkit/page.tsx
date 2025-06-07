@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Share2, Video, Mic, Users, Copy, Check, Shuffle } from 'lucide-react';
+import { ArrowLeft, Share2, Video, Mic, Users, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SocialMediaToolkitPage() {

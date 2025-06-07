@@ -5,9 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, BookOpen, Brain, Timer, Target } from 'lucide-react';
 import Link from 'next/link';
+import type { LucideIcon } from 'lucide-react';
 
+type TabKey = 'flashcard' | 'pomodoro' | 'quiz' | 'progress';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: LucideIcon;
+}
 export default function StudyToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'flashcard' | 'pomodoro' | 'quiz' | 'progress'>('flashcard');
+  const [activeTab, setActiveTab] = useState<TabKey>('flashcard');
 
   // 闪卡学习
   const FlashcardTool = () => {
@@ -507,7 +515,7 @@ export default function StudyToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'flashcard', name: '闪卡学习', icon: BookOpen },
     { key: 'pomodoro', name: '番茄钟', icon: Timer },
     { key: 'quiz', name: '小测验', icon: Brain },
@@ -546,7 +554,7 @@ export default function StudyToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

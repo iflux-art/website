@@ -4,15 +4,45 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Cloud, Sun, CloudRain, Thermometer } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
+type TabKey = 'current' | 'forecast' | 'analysis' | 'clothing';
+
+interface TabItem {
+  key: TabKey;
+  name: string;
+  icon: LucideIcon;
+}
+
+interface WeatherData {
+  city: string;
+  temperature: number;
+  condition: string;
+  humidity: number;
+  windSpeed: number;
+  pressure: number;
+  visibility: number;
+  uvIndex: number;
+  feelsLike: number;
+}
+
+interface ForecastDay {
+  date: string;
+  weekday: string;
+  condition: string;
+  high: number;
+  low: number;
+  humidity: number;
+  windSpeed: number;
+}
 export default function WeatherToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'current' | 'forecast' | 'analysis' | 'clothing'>('current');
+  const [activeTab, setActiveTab] = useState<TabKey>('current');
 
   // 当前天气
   const CurrentWeather = () => {
     const [city, setCity] = useState('北京');
-    const [weather, setWeather] = useState<any>(null);
+    const [weather, setWeather] = useState<WeatherData | null>(null);
 
     const checkWeather = () => {
       // 模拟天气数据
@@ -115,7 +145,7 @@ export default function WeatherToolkitPage() {
 
   // 天气预报
   const WeatherForecast = () => {
-    const [forecast, setForecast] = useState<any[]>([]);
+    const [forecast, setForecast] = useState<ForecastDay[]>([]);
 
     const generateForecast = () => {
       const conditions = ['晴', '多云', '阴', '小雨', '大雨'];
@@ -422,7 +452,7 @@ export default function WeatherToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: TabItem[] = [
     { key: 'current', name: '当前天气', icon: Sun },
     { key: 'forecast', name: '天气预报', icon: Cloud },
     { key: 'analysis', name: '气象分析', icon: Thermometer },
@@ -458,7 +488,7 @@ export default function WeatherToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

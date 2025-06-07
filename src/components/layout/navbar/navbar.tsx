@@ -14,7 +14,7 @@ import { useNavbarScroll } from '@/hooks/use-navbar-scroll';
  */
 export function Navbar({ className = '' }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { scrollDirection, pageTitle, showTitle, scrollToTop } = useNavbarScroll();
+  const { scrollDirection: _scrollDirection, pageTitle, showTitle, scrollToTop } = useNavbarScroll();
 
   return (
     <nav

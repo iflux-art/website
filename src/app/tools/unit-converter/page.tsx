@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ArrowUpDown, Ruler, RotateCcw, RefreshCw } from 'lucide-react';
+import { ArrowUpDown, Ruler, RotateCcw } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

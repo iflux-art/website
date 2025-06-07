@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Globe, Mail, Settings, LogOut, Home } from 'lucide-react';
+import { Globe, LogOut, Home } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
