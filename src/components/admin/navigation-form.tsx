@@ -35,7 +35,10 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
   });
 
   const [categories, setCategories] = useState<NavigationCategory[]>([]);
-  const [_availableTags, setAvailableTags] = useState<string[]>([]);
+  // TODO: availableTags 将用于实现标签建议和自动完成功能
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  /* eslint-enable @typescript-eslint/no-unused-vars */
   const [newTag, setNewTag] = useState('');
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState('');
@@ -93,7 +96,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
       }));
       
       setParseSuccess(true);
-    } catch (_error) {
+    } catch {
       setParseError('解析网站信息失败，请手动填写');
     } finally {
       setIsParsing(false);

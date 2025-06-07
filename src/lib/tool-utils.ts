@@ -347,7 +347,7 @@ export const timeUtils = {
 
       const result = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       return { success: true, data: result };
-    } catch (_error) {
+    } catch {
       return { success: false, error: '转换失败，请检查时间戳格式' };
     }
   },
@@ -366,7 +366,7 @@ export const timeUtils = {
 
       const ts = Math.floor(date.getTime() / 1000);
       return { success: true, data: ts.toString() };
-    } catch (_error) {
+    } catch {
       return { success: false, error: '转换失败，请检查日期时间格式' };
     }
   },
@@ -555,7 +555,7 @@ export const calculatorUtils = {
       }
 
       return { success: true, data: result.toString() };
-    } catch (_error) {
+    } catch {
       return { success: false, error: '表达式语法错误' };
     }
   },
@@ -573,7 +573,7 @@ export const hashUtils = {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       return { success: true, data: hashHex };
-    } catch (_error) {
+    } catch {
       // MD5 不被所有浏览器支持，使用简单的哈希算法
       let hash = 0;
       for (let i = 0; i < text.length; i++) {
@@ -593,7 +593,7 @@ export const hashUtils = {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       return { success: true, data: hashHex };
-    } catch (_error) {
+    } catch {
       return { success: false, error: '浏览器不支持 SHA-256' };
     }
   },

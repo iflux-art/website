@@ -27,9 +27,15 @@ export interface TocContainerProps {
 export function TocContainer({ headings, className }: TocContainerProps) {
   const tocRef = useRef<HTMLDivElement>(null);
   // TODO: 实现目录固定和高度自适应功能
-  const [_isFixed, setIsFixed] = useState(false);
-  const [_tocHeight, setTocHeight] = useState(0);
-  const [_viewportHeight, setViewportHeight] = useState(0);
+  // TODO: 这些状态变量将用于实现目录容器的自适应效果：
+  // - isFixed: 控制目录是否固定在视口中
+  // - tocHeight: 记录目录内容的实际高度
+  // - viewportHeight: 用于计算可视区域大小
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const [isFixed, setIsFixed] = useState(false);
+  const [tocHeight, setTocHeight] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   // 检测目录高度和视口高度
   useEffect(() => {

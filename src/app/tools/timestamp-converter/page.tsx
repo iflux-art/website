@@ -62,7 +62,7 @@ export default function TimestampConverterPage() {
       const seconds = String(date.getSeconds()).padStart(2, '0');
 
       setDatetime(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
-    } catch (_error) {
+    } catch {
       // 忽略具体错误信息，仅显示通用提示
       alert('转换失败，请检查时间戳格式');
     }
@@ -80,7 +80,7 @@ export default function TimestampConverterPage() {
 
       const ts = Math.floor(date.getTime() / 1000);
       setTimestamp(ts.toString());
-    } catch (_error) {
+    } catch {
       // 忽略具体错误信息，仅显示通用提示
       alert('转换失败，请检查日期时间格式');
     }
@@ -128,7 +128,7 @@ export default function TimestampConverterPage() {
         timestamp: Math.floor(date.getTime() / 1000),
         iso: date.toISOString(),
       };
-    } catch (_error) {
+    } catch {
       // 时区转换失败时返回 null
       return null;
     }
@@ -155,7 +155,7 @@ export default function TimestampConverterPage() {
         seconds: diffSeconds,
         milliseconds: diffMs,
       };
-    } catch (_error) {
+    } catch {
       // 日期差计算失败时返回 null
       return null;
     }
@@ -173,7 +173,7 @@ export default function TimestampConverterPage() {
         formatted: date.toLocaleDateString('zh-CN'),
         timestamp: Math.floor(date.getTime() / 1000),
       };
-    } catch (_error) {
+    } catch {
       // 日期计算失败时返回 null
       return null;
     }

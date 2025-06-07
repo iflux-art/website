@@ -65,7 +65,7 @@ export async function checkImageExists(url: string): Promise<boolean> {
   try {
     const response = await fetch(url, { method: 'HEAD' });
     return response.ok;
-  } catch (_error) {
+  } catch {
     return false;
   }
 }

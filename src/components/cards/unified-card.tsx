@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
-import { CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CardHover } from '@/components/ui/card-hover';

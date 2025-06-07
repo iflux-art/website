@@ -15,9 +15,15 @@ export interface AdaptiveSidebarProps {
 
 export function AdaptiveSidebar({ headings, className }: AdaptiveSidebarProps) {
   const tocRef = useRef<HTMLDivElement>(null);
-  const [_isFixed, setIsFixed] = useState(false);
-  const [_tocHeight, setTocHeight] = useState(0);
-  const [_viewportHeight, setViewportHeight] = useState(0);
+  // TODO: 这些状态变量将用于实现侧边栏的自适应定位功能：
+  // - isFixed: 控制侧边栏是否固定定位
+  // - tocHeight: 跟踪目录实际高度以适应内容
+  // - viewportHeight: 监控视口高度以调整显示方式
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const [isFixed, setIsFixed] = useState(false);
+  const [tocHeight, setTocHeight] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   useEffect(() => {
     if (!tocRef.current) return;
