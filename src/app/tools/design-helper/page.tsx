@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { IconType } from 'react-icons';
+
+type TabKey = 'colors' | 'typography' | 'spacing' | 'grid';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Palette, Type, Layout, Ruler, Copy, Check } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 
 export default function DesignHelperPage() {
-  const [activeTab, setActiveTab] = useState<'palette' | 'typography' | 'layout' | 'spacing'>(
-    'palette'
-  );
+  const [activeTab, setActiveTab] = useState<TabKey>('colors');
   const [copied, setCopied] = useState<string | null>(null);
 
   // 复制内容
@@ -579,11 +580,17 @@ ${scale
     );
   };
 
-  const tabs = [
-    { key: 'palette', name: '调色板', icon: Palette },
-    { key: 'typography', name: '字体排版', icon: Type },
-    { key: 'layout', name: '布局网格', icon: Layout },
-    { key: 'spacing', name: '间距系统', icon: Ruler },
+  interface Tab {
+    key: TabKey;
+    label: string;
+    icon: IconType;
+  }
+
+  const tabs: Tab[] = [
+    { key: 'colors', label: '调色板', icon: Palette },
+    { key: 'typography', label: '字体排版', icon: Type },
+    { key: 'grid', label: '布局网格', icon: Layout },
+    { key: 'spacing', label: '间距系统', icon: Ruler },
   ];
 
   const helpContent = (
@@ -633,7 +640,7 @@ ${scale
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key as TabKey)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'
@@ -641,7 +648,7 @@ ${scale
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
-                  {tab.name}
+                  {tab.label}
                 </button>
               );
             })}
@@ -650,9 +657,9 @@ ${scale
       </Card>
 
       {/* 内容区域 */}
-      {activeTab === 'palette' && <PaletteGenerator />}
+      {activeTab === 'colors' && <PaletteGenerator />}
       {activeTab === 'typography' && <TypographyTool />}
-      {activeTab === 'layout' && <LayoutTool />}
+      {activeTab === 'grid' && <LayoutTool />}
       {activeTab === 'spacing' && <SpacingTool />}
     </ToolLayout>
   );

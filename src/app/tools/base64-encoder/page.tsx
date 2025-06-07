@@ -125,7 +125,7 @@ export default function Base64EncoderPage() {
         .replace(/'/g, '&#39;');
       setOutput(encoded);
       setError('');
-    } catch (err) {
+    } catch (_) {
       setError('HTML编码失败');
       setOutput('');
     }
@@ -141,7 +141,7 @@ export default function Base64EncoderPage() {
         .replace(/&#39;/g, "'");
       setOutput(decoded);
       setError('');
-    } catch (err) {
+    } catch (_) {
       setError('HTML解码失败');
       setOutput('');
     }

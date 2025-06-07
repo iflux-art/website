@@ -1,19 +1,38 @@
 'use client';
 
 import React, { useState } from 'react';
+
+type HealthTabKey = 'bmi' | 'bmr' | 'water' | 'heart';
+
+interface HealthTab {
+  key: HealthTabKey;
+  name: string;
+  icon: React.ElementType;
+}
+
+interface BMIResult {
+  bmi: string;
+  category: string;
+  color: string;
+  advice: string;
+  idealWeightMin: string;
+  idealWeightMax: string;
+}
+
+type CategoryColor = 'text-blue-600' | 'text-green-600' | 'text-orange-600' | 'text-red-600';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Heart, Activity, Scale, Droplets } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HealthToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'bmi' | 'bmr' | 'water' | 'heart'>('bmi');
+  const [activeTab, setActiveTab] = useState<HealthTabKey>('bmi');
 
   // BMI计算器
   const BMICalculator = () => {
     const [height, setHeight] = useState(170);
     const [weight, setWeight] = useState(65);
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<BMIResult | null>(null);
 
     const calculateBMI = () => {
       const heightInMeters = height / 100;

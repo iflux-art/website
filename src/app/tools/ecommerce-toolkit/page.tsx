@@ -7,7 +7,7 @@ import { ArrowLeft, ShoppingCart, Calculator, TrendingUp, Package } from 'lucide
 import Link from 'next/link';
 
 export default function EcommerceToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'profit' | 'pricing' | 'inventory' | 'conversion'>('profit');
+  const [activeTab, setActiveTab] = useState<TabKey>('profit');
 
   // 利润计算器
   const ProfitCalculator = () => {
@@ -16,7 +16,71 @@ export default function EcommerceToolkitPage() {
     const [quantity, setQuantity] = useState(10);
     const [shippingCost, setShippingCost] = useState(10);
     const [platformFee, setPlatformFee] = useState(5);
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<ProfitResult | null>(null);
+    
+interface ProfitResult {
+  totalRevenue: string;
+  totalCost: string;
+  totalFees: string;
+  netProfit: string;
+  profitMargin: string;
+  profitPerUnit: string;
+}
+
+type TabKey = 'profit' | 'pricing' | 'inventory' | 'conversion';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: React.ElementType;
+}
+
+interface PricingStrategy {
+  price: string;
+  margin: string | number;
+  description: string;
+}
+
+interface PricingStrategies {
+  costPlus: PricingStrategy;
+  competitive: PricingStrategy;
+  premium: PricingStrategy;
+  psychological: PricingStrategy;
+}
+
+interface ConversionBenchmarks {
+  cartConversion: number;
+  purchaseConversion: number;
+  checkoutConversion: number;
+}
+
+interface ConversionImprovements {
+  cart: string;
+  purchase: string;
+  checkout: string;
+}
+
+interface ConversionResult {
+  cartConversion: string;
+  purchaseConversion: string;
+  checkoutConversion: string;
+  benchmarks: ConversionBenchmarks;
+  improvements: ConversionImprovements;
+}
+
+interface Product {
+  name: string;
+  current: number;
+  min: number;
+  max: number;
+  dailySales: number;
+}
+
+interface StockStatus {
+  status: string;
+  color: string;
+  days: number;
+}
 
     const calculateProfit = () => {
       const totalCost = (cost + shippingCost) * quantity;
@@ -149,7 +213,7 @@ export default function EcommerceToolkitPage() {
     const [cost, setCost] = useState(100);
     const [targetMargin, setTargetMargin] = useState(30);
     const [competitorPrice, setCompetitorPrice] = useState(180);
-    const [strategies, setStrategies] = useState<any>(null);
+    const [strategies, setStrategies] = useState<PricingStrategies | null>(null);
 
     const calculatePricing = () => {
       const costPlusPrice = cost / (1 - targetMargin / 100);
@@ -252,13 +316,13 @@ export default function EcommerceToolkitPage() {
 
   // 库存管理
   const InventoryManager = () => {
-    const [products, setProducts] = useState([
+    const [products, setProducts] = useState<Product[]>([
       { name: '产品A', current: 50, min: 20, max: 100, dailySales: 5 },
       { name: '产品B', current: 15, min: 10, max: 80, dailySales: 3 },
       { name: '产品C', current: 80, min: 30, max: 120, dailySales: 8 }
     ]);
 
-    const getStockStatus = (product: any) => {
+    const getStockStatus = (product: Product): StockStatus => {
       const daysLeft = Math.floor(product.current / product.dailySales);
       
       if (product.current <= product.min) {
@@ -332,7 +396,7 @@ export default function EcommerceToolkitPage() {
     const [visitors, setVisitors] = useState(1000);
     const [addToCart, setAddToCart] = useState(150);
     const [purchases, setPurchases] = useState(45);
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<ConversionResult | null>(null);
 
     const analyzeConversion = () => {
       const cartConversion = ((addToCart / visitors) * 100);
@@ -443,7 +507,7 @@ export default function EcommerceToolkitPage() {
     );
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     { key: 'profit', name: '利润计算', icon: Calculator },
     { key: 'pricing', name: '定价策略', icon: TrendingUp },
     { key: 'inventory', name: '库存管理', icon: Package },

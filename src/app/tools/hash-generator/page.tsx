@@ -29,7 +29,7 @@ export default function HashGeneratorPage() {
         md5: md5Result.success ? md5Result.data! : md5Result.error!,
         sha256: sha256Result.success ? sha256Result.data! : sha256Result.error!,
       });
-    } catch (error) {
+    } catch (_) {
       setResults({
         md5: '计算失败',
         sha256: '计算失败',

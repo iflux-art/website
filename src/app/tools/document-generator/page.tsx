@@ -14,7 +14,7 @@ interface Tab {
 }
 
 export default function DocumentGeneratorPage() {
-  const [activeTab, setActiveTab] = useState<'readme' | 'api' | 'changelog' | 'license'>('readme');
+  const [activeTab, setActiveTab] = useState<TabKey>('readme');
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyContent = async (content: string, id: string) => {
