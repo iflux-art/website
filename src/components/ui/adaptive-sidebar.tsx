@@ -37,9 +37,49 @@ export interface AdaptiveSidebarProps {
  */
 export function AdaptiveSidebar({ headings, className }: AdaptiveSidebarProps) {
   const tocRef = useRef<HTMLDivElement>(null);
-  const [isFixed, setIsFixed] = useState(false);
-  const [tocHeight, setTocHeight] = useState(0);
-  const [viewportHeight, setViewportHeight] = useState(0);
+</edit>
+
+<origin>
+  // 检测目录高度和视口高度
+  useEffect(() => {
+    if (!tocRef.current) return;
+
+    // 初始化视口高度
+    setViewportHeight(window.innerHeight);
+
+    // 计算目录高度
+    const updateTocHeight = () => {
+      if (tocRef.current) {
+        const height = tocRef.current.scrollHeight;
+        setTocHeight(height);
+
+        // 不再需要判断是否固定广告卡片，因为已经移除了广告卡片
+        setIsFixed(false);
+      }
+    };
+
+    // 监听窗口大小变化
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+      updateTocHeight();
+    };
+
+    // 初始计算
+    updateTocHeight();
+
+    // 添加窗口大小变化监听
+    window.addEventListener('resize', handleResize);
+
+    // 清理函数
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [headings]);
+</origin>
+<edit>
+  useEffect(() => {
+    // 组件更新时刷新目录
+  }, [headings]);
 
   // 检测目录高度和视口高度
   useEffect(() => {

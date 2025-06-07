@@ -98,7 +98,7 @@ export function NavLink({
   onMouseLeave,
   target,
   rel,
-  isNavigation = false,
+  _isNavigation = false,
 }: NavLinkProps) {
   const pathname = usePathname();
 
@@ -130,7 +130,7 @@ export function NavLink({
   }
 
   // 使用原始链接，不自动添加前缀
-  let finalHref = href;
+  const finalHref = href;
 
   return (
     <Link

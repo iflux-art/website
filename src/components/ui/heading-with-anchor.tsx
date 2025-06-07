@@ -8,7 +8,7 @@ interface HeadingWithAnchorProps {
   id?: string;
   children: React.ReactNode;
   className?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

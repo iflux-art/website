@@ -69,7 +69,8 @@ export function NavItem({
   className,
   onClick,
   animated = true,
-  animationDelay = 0,
+  // TODO: 实现动画延迟功能
+  _animationDelay = 0,
   underline = true,
 }: NavItemProps) {
   // 基础类名

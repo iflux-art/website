@@ -149,7 +149,7 @@ export function searchContent(query: string, limit: number = 8): ContentItem[] {
   return results
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
-    .map(({ score, ...item }) => item);
+    .map(({ score: _score, ...item }) => item);
 }
 
 // 高亮文本

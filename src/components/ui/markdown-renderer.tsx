@@ -7,6 +7,33 @@ import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
 
+interface ResourceCardProps {
+  title: string;
+  description?: string;
+  url?: string;
+  href?: string;
+  icon?: string;
+  iconType?: 'emoji' | 'image';
+  featured?: boolean;
+  [key: string]: unknown;
+}
+
+interface ResourceGridProps {
+  children?: React.ReactNode;
+  [key: string]: unknown;
+}
+
+interface FriendLinkCardProps {
+  name?: string;
+  title: string;
+  description?: string;
+  url?: string;
+  href?: string;
+  avatar?: string;
+  icon?: string;
+  iconType?: 'emoji' | 'image';
+  [key: string]: unknown;
+}
 /**
  * Markdown 渲染器组件属性
  */
@@ -77,7 +104,7 @@ const components = {
   },
 
   // 统一卡片组件
-  ResourceCard: (props: any) => (
+  ResourceCard: (props: ResourceCardProps) => (
     <UnifiedCard
       type="resource"
       title={props.title}
@@ -90,10 +117,10 @@ const components = {
       {...props}
     />
   ),
-  ResourceGrid: (props: any) => <UnifiedGrid {...props} type="resource" />,
+  ResourceGrid: (props: ResourceGridProps) => <UnifiedGrid {...props} type="resource" />,
 
   // 友情链接组件
-  FriendLinkCard: (props: any) => (
+  FriendLinkCard: (props: FriendLinkCardProps) => (
     <UnifiedCard
       type="friend"
       title={props.name || props.title}
@@ -105,7 +132,7 @@ const components = {
       {...props}
     />
   ),
-  FriendLinkGrid: (props: any) => <UnifiedGrid {...props} type="friend" />,
+  FriendLinkGrid: (props: ResourceGridProps) => <UnifiedGrid {...props} type="friend" />,
 
   // 直接使用统一组件
   UnifiedCard,

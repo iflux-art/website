@@ -8,14 +8,10 @@ import { cn } from '@/lib/utils';
 /**
  * tooltip 组件类型定义
  */
-export interface TooltipProps
-  extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root> {}
-export interface TooltipTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger> {}
-export interface TooltipContentProps
-  extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> {}
-export interface TooltipProviderProps
-  extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider> {}
+export type TooltipProps = React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>;
+export type TooltipTriggerProps = React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>;
+export type TooltipContentProps = React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>;
+export type TooltipProviderProps = React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>;
 
 /**
  * Tooltip 组件提供者

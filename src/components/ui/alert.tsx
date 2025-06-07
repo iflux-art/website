@@ -38,12 +38,12 @@ export interface AlertProps
 /**
  * 警告框标题组件属性
  */
-export interface AlertTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+export type AlertTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
 
 /**
  * 警告框描述组件属性
  */
-export interface AlertDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+export type AlertDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
 
 /**
  * Alert 组件

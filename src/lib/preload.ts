@@ -160,7 +160,7 @@ export async function preloadAll(): Promise<void> {
         await preloadDocSidebar(category);
         // 如果成功预加载了一个分类，就退出循环
         break;
-      } catch (e) {
+      } catch (_e) {
         // 忽略错误，尝试下一个分类
         console.warn(`预加载默认分类 ${category} 失败，尝试下一个`);
       }
@@ -186,7 +186,7 @@ export function setupPreloading(): void {
     localStorage.setItem(testKey, testKey);
     localStorage.removeItem(testKey);
     localStorageAvailable = true;
-  } catch (e) {
+  } catch (_e) {
     console.warn('localStorage 不可用，预加载功能将被禁用');
     return;
   }

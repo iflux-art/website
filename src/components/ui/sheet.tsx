@@ -36,31 +36,27 @@ const sheetVariants = cva(
 /**
  * Sheet 组件属性
  */
-export interface SheetProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root> {}
+export type SheetProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root>;
 
 /**
  * Sheet 触发器组件属性
  */
-export interface SheetTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger> {}
+export type SheetTriggerProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger>;
 
 /**
  * Sheet 关闭按钮组件属性
  */
-export interface SheetCloseProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close> {}
+export type SheetCloseProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close>;
 
 /**
  * Sheet 传送门组件属性
  */
-export interface SheetPortalProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal> {}
+export type SheetPortalProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal>;
 
 /**
  * Sheet 遮罩层组件属性
  */
-export interface SheetOverlayProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {}
+export type SheetOverlayProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>;
 
 /**
  * Sheet 内容组件属性
@@ -72,24 +68,22 @@ export interface SheetContentProps
 /**
  * Sheet 头部组件属性
  */
-export interface SheetHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type SheetHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Sheet 底部组件属性
  */
-export interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type SheetFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Sheet 标题组件属性
  */
-export interface SheetTitleProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title> {}
+export type SheetTitleProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>;
 
 /**
  * Sheet 描述组件属性
  */
-export interface SheetDescriptionProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description> {}
+export type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>;
 
 /**
  * Sheet 组件

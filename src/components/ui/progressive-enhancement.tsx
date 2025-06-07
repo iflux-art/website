@@ -98,16 +98,16 @@ export function ProgressiveEnhancement({
     
     // 检测网络状态
     if (checkNetwork && navigator.connection) {
-      // @ts-ignore
+      // @ts-expect-error NetworkInformation API 类型未在 TypeScript 中定义
       const connection = navigator.connection;
       
       // 如果网络状态不佳，不启用增强功能
       if (
-        // @ts-ignore
+        // @ts-expect-error NetworkInformation API 类型未在 TypeScript 中定义
         connection.saveData ||
-        // @ts-ignore
+        // @ts-expect-error NetworkInformation API 类型未在 TypeScript 中定义
         connection.effectiveType === 'slow-2g' ||
-        // @ts-ignore
+        // @ts-expect-error NetworkInformation API 类型未在 TypeScript 中定义
         connection.effectiveType === '2g'
       ) {
         setIsEnhanced(false);

@@ -1,4 +1,11 @@
 // AI模型配置
+interface SearchResult {
+  title: string;
+  content: string;
+  url?: string;
+  score?: number;
+}
+
 export interface AIModel {
   id: string;
   name: string;
@@ -155,7 +162,7 @@ export const getAvailableModels = (): AIModel[] => {
 export const generateDemoResponse = (
   message: string,
   searchMode: string,
-  searchResults?: any[],
+  searchResults?: SearchResult[],
   modelName: string = 'AI'
 ): string => {
   const responses = {

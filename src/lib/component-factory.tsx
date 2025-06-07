@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 export type ComponentFactory<
   Element extends React.ElementType,
   Variants extends Record<string, Record<string, string>>,
-  Props extends Record<string, any> = {}
+  Props extends Record<string, unknown> = Record<string, never>
 > = (
   baseClassName: string,
   variants: Variants,
@@ -54,10 +54,10 @@ export type ComponentFactory<
  */
 export function createComponentFactory<Element extends React.ElementType>(
   element: Element
-): ComponentFactory<Element, any, any> {
+): ComponentFactory<Element, Record<string, Record<string, string>>, Record<string, unknown>> {
   return <
     Variants extends Record<string, Record<string, string>>,
-    Props extends Record<string, any> = {}
+    Props extends Record<string, unknown> = Record<string, never>
   >(
     baseClassName: string,
     variants: Variants,
@@ -77,8 +77,8 @@ export function createComponentFactory<Element extends React.ElementType>(
         Omit<React.ComponentPropsWithoutRef<Element>, keyof Props | keyof VariantProps<typeof componentVariants>>
     >(({ className, ...props }, ref) => {
       // 提取变体属性
-      const variantProps: Record<string, any> = {};
-      const otherProps: Record<string, any> = {};
+      const variantProps: Record<string, unknown> = {};
+      const otherProps: Record<string, unknown> = {};
       
       // 分离变体属性和其他属性
       Object.entries(props).forEach(([key, value]) => {

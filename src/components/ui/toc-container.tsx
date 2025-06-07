@@ -26,9 +26,10 @@ export interface TocContainerProps {
  */
 export function TocContainer({ headings, className }: TocContainerProps) {
   const tocRef = useRef<HTMLDivElement>(null);
-  const [isFixed, setIsFixed] = useState(false);
-  const [tocHeight, setTocHeight] = useState(0);
-  const [viewportHeight, setViewportHeight] = useState(0);
+  // TODO: 实现目录固定和高度自适应功能
+  const [_isFixed, setIsFixed] = useState(false);
+  const [_tocHeight, setTocHeight] = useState(0);
+  const [_viewportHeight, setViewportHeight] = useState(0);
 
   // 检测目录高度和视口高度
   useEffect(() => {

@@ -9,8 +9,7 @@ import { cn } from '@/lib/utils';
 /**
  * 复选框组件属性
  */
-export interface CheckboxProps
-  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {}
+export type CheckboxProps = React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>;
 
 /**
  * Checkbox 组件

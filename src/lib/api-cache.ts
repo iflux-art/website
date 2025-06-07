@@ -43,7 +43,7 @@ export function clearApiCache(key?: string): void {
  * @param params 请求参数
  * @returns 缓存键
  */
-export function generateApiCacheKey(path: string, params?: Record<string, any>): string {
+export function generateApiCacheKey(path: string, params?: Record<string, unknown>): string {
   return apiCache.generateKey(path, params);
 }
 
@@ -57,7 +57,7 @@ export function generateApiCacheKey(path: string, params?: Record<string, any>):
  */
 export async function fetchWithCache<T>(
   path: string,
-  params?: Record<string, any>,
+  params?: Record<string, unknown>,
   options?: RequestInit & { skipCache?: boolean }
 ): Promise<T> {
   return apiCache.fetch<T>(path, params, options);

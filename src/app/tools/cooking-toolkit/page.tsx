@@ -158,8 +158,10 @@ export default function CookingToolkitPage() {
 
     const updateFood = (index: number, field: keyof FoodItem, value: string | number) => {
       const newFoods = [...foods];
-      // 类型断言确保字段和值的类型匹配
-      (newFoods[index] as any)[field] = field === 'name' ? String(value) : Number(value);
+      newFoods[index] = {
+        ...newFoods[index],
+        [field]: field === 'name' ? String(value) : Number(value)
+      };
       setFoods(newFoods);
     };
 

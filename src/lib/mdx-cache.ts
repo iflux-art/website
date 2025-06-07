@@ -43,6 +43,6 @@ export function clearMdxCache(key?: string): void {
  * @param options 处理选项
  * @returns 缓存键
  */
-export function generateMdxCacheKey(content: string, options?: Record<string, any>): string {
+export function generateMdxCacheKey(content: string, options?: Record<string, unknown>): string {
   return mdxCache.generateKey(content, options);
 }

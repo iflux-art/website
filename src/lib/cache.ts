@@ -11,7 +11,7 @@ interface CacheItem<T> {
 }
 
 // 缓存存储
-const cacheStore = new Map<string, CacheItem<any>>();
+const cacheStore = new Map<string, CacheItem<unknown>>();
 
 // 默认缓存过期时间（毫秒）
 const DEFAULT_CACHE_EXPIRY = 1000 * 60 * 30; // 30分钟
@@ -72,7 +72,7 @@ export function clearCache(key?: string): void {
  * @param params 参数
  * @returns 缓存键
  */
-export function generateCacheKey(prefix: string, params?: Record<string, any>): string {
+export function generateCacheKey(prefix: string, params?: Record<string, unknown>): string {
   let key = prefix;
 
   if (params) {
@@ -142,14 +142,14 @@ export const apiCache = {
   /**
    * 生成 API 缓存键
    */
-  generateKey: (path: string, params?: Record<string, any>) => generateCacheKey(path, params),
+  generateKey: (path: string, params?: Record<string, unknown>) => generateCacheKey(path, params),
 
   /**
    * 带缓存的 fetch 请求
    */
   fetch: async <T>(
     path: string,
-    params?: Record<string, any>,
+    params?: Record<string, unknown>,
     options?: RequestInit & { skipCache?: boolean }
   ): Promise<T> => {
     const cacheKey = generateCacheKey(path, params);
@@ -210,7 +210,7 @@ export const mdxCache = {
   /**
    * 生成 MDX 缓存键
    */
-  generateKey: (content: string, options?: Record<string, any>) => {
+  generateKey: (content: string, options?: Record<string, unknown>) => {
     // 使用内容的哈希值作为缓存键
     const contentHash = hashString(content);
 

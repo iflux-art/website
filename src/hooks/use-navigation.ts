@@ -6,6 +6,18 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Category, Resource } from '@/types/navigation';
 
+interface Subcategory {
+  title: string;
+  links?: Link[];
+}
+
+interface Link {
+  title: string;
+  description: string;
+  url: string;
+  tags?: string[];
+}
+
 /**
  * 获取所有导航分类
  *
@@ -148,9 +160,9 @@ export function useCategoryResources(categoryId: string) {
         const allResources: Resource[] = [];
 
         if (data.subcategories && Array.isArray(data.subcategories)) {
-          data.subcategories.forEach((subcategory: any) => {
+          data.subcategories.forEach((subcategory: Subcategory) => {
             if (subcategory.links && Array.isArray(subcategory.links)) {
-              subcategory.links.forEach((link: any) => {
+              subcategory.links.forEach((link: Link) => {
                 allResources.push({
                   title: link.title,
                   description: link.description,

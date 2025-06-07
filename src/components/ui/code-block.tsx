@@ -66,7 +66,7 @@ const fileExtensions: Record<string, string> = {
 interface CodeBlockProps {
   children: React.ReactNode;
   className?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
@@ -92,7 +92,7 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
         codeContent = firstChild;
       } else if (React.isValidElement(firstChild)) {
         // 使用类型断言处理 TypeScript 类型问题
-        const anyElement = firstChild as any;
+        const anyElement = firstChild as React.ReactElement;
         if (anyElement.props && typeof anyElement.props.children === 'string') {
           codeContent = anyElement.props.children;
         } else if (anyElement.props && anyElement.props.children) {

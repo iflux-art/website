@@ -4330,13 +4330,14 @@
       "icon": "https://www.notion.so/front-static/favicon.ico",
       "iconType": "image",
       "tags": [
-        "在线文档"
+        "在线文档",
+        "全能笔记"
       ],
       "featured": false,
       "category": "office",
       "id": "mbeqwsa2wnky2bmx0j",
       "createdAt": "2025-06-02T07:05:41.930Z",
-      "updatedAt": "2025-06-02T07:05:41.930Z"
+      "updatedAt": "2025-06-06T07:25:27.444Z"
     },
     {
       "title": "飞书云文档",
@@ -4480,15 +4481,15 @@
       "description": "A note-taking tool for visual learning.",
       "url": "https://heptabase.com/",
       "icon": "https://heptabase.com/assets/images/favicon.png",
-      "iconType": "emoji",
+      "iconType": "image",
       "tags": [
         "视觉笔记"
       ],
-      "featured": false,
+      "featured": true,
       "category": "office",
       "id": "mber5we50yfvrlz46afh",
       "createdAt": "2025-06-02T07:12:47.165Z",
-      "updatedAt": "2025-06-02T07:12:47.165Z"
+      "updatedAt": "2025-06-07T06:47:21.359Z"
     },
     {
       "title": "Scrintal",
@@ -4900,7 +4901,7 @@
       "description": "a non-linear personal web notebook",
       "url": "https://tiddlywiki.com/",
       "icon": "https://tiddlywiki.com/favicon.ico",
-      "iconType": "emoji",
+      "iconType": "image",
       "tags": [
         "在线文档"
       ],
@@ -4908,7 +4909,7 @@
       "category": "office",
       "id": "mbes0g5hh963v6w6ag",
       "createdAt": "2025-06-02T07:36:32.453Z",
-      "updatedAt": "2025-06-02T07:36:32.453Z"
+      "updatedAt": "2025-06-06T07:25:14.468Z"
     },
     {
       "title": "Obsidian 中文帮助",
@@ -5710,7 +5711,7 @@
       "description": "",
       "url": "https://100audio.com/",
       "icon": "https://100audio.com/favicon.ico",
-      "iconType": "text",
+      "iconType": "image",
       "tags": [
         "版权音乐"
       ],
@@ -5718,7 +5719,7 @@
       "category": "audio",
       "id": "mbeuptd7ha5kog7m43c",
       "createdAt": "2025-06-02T08:52:15.211Z",
-      "updatedAt": "2025-06-02T08:52:15.211Z"
+      "updatedAt": "2025-06-07T06:47:38.619Z"
     },
     {
       "title": "PremiumBeat",
@@ -7420,7 +7421,7 @@
       "description": "Best Free Mockups",
       "url": "https://themockup.club/",
       "icon": "https://i0.wp.com/themockup.club/wp-content/uploads/2018/01/cropped-fav-3.png?fit=32%2C32&quality=95&ssl=1",
-      "iconType": "emoji",
+      "iconType": "image",
       "tags": [
         "样机"
       ],
@@ -7428,7 +7429,7 @@
       "category": "design",
       "id": "mbgat250tt6dtgzglc",
       "createdAt": "2025-06-03T09:10:26.580Z",
-      "updatedAt": "2025-06-03T09:10:26.580Z"
+      "updatedAt": "2025-06-07T06:48:00.681Z"
     },
     {
       "title": "Mockerie.io",
@@ -17877,6 +17878,1152 @@
       "id": "mbjphwctmdeg7cqre8",
       "createdAt": "2025-06-05T18:24:58.637Z",
       "updatedAt": "2025-06-05T18:24:58.637Z"
+    },
+    {
+      "title": "腾讯云开发",
+      "description": "腾讯云开发平台提供无服务器计算和云端一体化开发解决方案，涵盖云函数服务、数据库管理、存储集成及低代码开发。支持快速部署、弹性伸缩和安全可靠的特性，适用于Web应用、移动后端和物联网等场景。官网包含详细的技术文档、社区支持和成功案例，助力开发者高效构建和管理现代应用程序。",
+      "url": "https://tcb.cloud.tencent.com/",
+      "icon": "https://tcb.cloud.tencent.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "云服务"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkh3hkjvp8ewozh5jj",
+      "createdAt": "2025-06-06T07:17:35.539Z",
+      "updatedAt": "2025-06-06T07:17:35.539Z"
+    },
+    {
+      "title": "Supernotes",
+      "description": "The fastest way to take notes and collaborate with friends. Create notecards with Markdown, LaTeX, images, emojis and more. Get started for free!",
+      "url": "https://supernotes.app/",
+      "icon": "https://supernotes.app/favicon-32x32.png?v=550124671f228f529f9a4ac5da88675b",
+      "iconType": "image",
+      "tags": [
+        "全能笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhbmj9bxabo4xrj15",
+      "createdAt": "2025-06-06T07:23:55.221Z",
+      "updatedAt": "2025-06-06T07:24:53.150Z"
+    },
+    {
+      "title": "Craft",
+      "description": "Everything you create, plan, and schedule, perfectly organized your way.",
+      "url": "https://www.craft.do/",
+      "icon": "https://www.craft.do/favicons/light/favicon-light.ico",
+      "iconType": "image",
+      "tags": [
+        "全能笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhe9353ah4i8dis2",
+      "createdAt": "2025-06-06T07:25:57.761Z",
+      "updatedAt": "2025-06-06T07:25:57.761Z"
+    },
+    {
+      "title": "Coda",
+      "description": "Coda is an all-in-one platform that blends the flexibility of docs, structure of spreadsheets, power of applications, and intelligence of AI.",
+      "url": "https://coda.io/",
+      "icon": "https://cdn.coda.io/icons/png/color/coda-32.png",
+      "iconType": "image",
+      "tags": [
+        "全能笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhesxlxlrxz1dmt4p",
+      "createdAt": "2025-06-06T07:26:23.481Z",
+      "updatedAt": "2025-06-06T07:26:23.481Z"
+    },
+    {
+      "title": "anytype",
+      "description": "for those who celebrate trust & autonomy.",
+      "url": "https://anytype.io/",
+      "icon": "https://anytype.io/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "全能笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhgb8ps0dd629fb7",
+      "createdAt": "2025-06-06T07:27:33.865Z",
+      "updatedAt": "2025-06-06T07:27:33.865Z"
+    },
+    {
+      "title": "氢刻",
+      "description": "氢刻App可以帮助您完成信息记录与学习记忆，用卡片的方式捕捉信息、知识、想法等，通过科学智能的学习与回顾，实现信息与知识的高效转化，形成智慧。氢刻还提供海量的学习资源，实现多人共享学习。",
+      "url": "https://qingk.com/",
+      "icon": "https://qingk.com/public/assets/favicon-CRXVLbBE.ico",
+      "iconType": "image",
+      "tags": [
+        "卡片笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhhck0uxf4b1o9r89",
+      "createdAt": "2025-06-06T07:28:22.224Z",
+      "updatedAt": "2025-06-06T07:28:22.224Z"
+    },
+    {
+      "title": "闪记卡",
+      "description": "惊叹·大纲闪卡是一款先进的学习效率工具，利用大纲+卡片笔记，你可以实现既颗粒化又结构化的笔记方式，相比传统的线性笔记，大纲闪卡笔记颗粒度小更灵活、可视化效果更好，更合适学习做笔记场景使用、帮你轻松建立强大的个人知识库",
+      "url": "https://amazingmemo.com/",
+      "icon": "https://amazingmemo.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "卡片笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhhukfkewa4ot3bha",
+      "createdAt": "2025-06-06T07:28:45.567Z",
+      "updatedAt": "2025-06-06T07:28:45.567Z"
+    },
+    {
+      "title": "flomo · 浮墨笔记",
+      "description": "像发微博一样记笔记，记录你想法的川流。全平台覆盖，还支持微信服务号输入。",
+      "url": "https://flomoapp.com/",
+      "icon": "https://flomoapp.com/images/logo-192x192.png",
+      "iconType": "image",
+      "tags": [
+        "卡片笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhinwgk0tge6pvgm",
+      "createdAt": "2025-06-06T07:29:23.584Z",
+      "updatedAt": "2025-06-06T07:29:23.584Z"
+    },
+    {
+      "title": "Get 笔记",
+      "description": "",
+      "url": "https://www.biji.com/",
+      "icon": "https://www.biji.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "卡片笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhk6f59k1irocs60a",
+      "createdAt": "2025-06-06T07:30:34.241Z",
+      "updatedAt": "2025-06-06T07:30:34.241Z"
+    },
+    {
+      "title": "新枝",
+      "description": "新枝, 帮你串联知识碎片, 在点滴记录中构建知识网络!",
+      "url": "https://xinzhi.zone/",
+      "icon": "https://c.xinzhi-cdn.zone/web-old/svg/common/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "卡片笔记"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhkn6tfwa52fsqby4",
+      "createdAt": "2025-06-06T07:30:55.973Z",
+      "updatedAt": "2025-06-06T07:30:55.973Z"
+    },
+    {
+      "title": "ProcessOn思维导图流程图",
+      "description": "ProcessOn是一款专业在线作图工具和知识分享社区，支持AI一键生成思维导图和流程图。可绘制甘特图、ER图、UML、网络拓扑图、电路图、平面图、鱼骨图、组织结构图、时间轴等多种图形，同时可实现人与人之间的实时协作和共享，提升团队工作效率。",
+      "url": "https://www.processon.com/",
+      "icon": "https://www.processon.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "思维导图"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkhmo9lst4zm3288jl",
+      "createdAt": "2025-06-06T07:32:30.681Z",
+      "updatedAt": "2025-06-06T07:32:30.681Z"
+    },
+    {
+      "title": "Effie",
+      "description": "Effie是思想家专用的写作软件。无论是严肃写作，随手记录，亦或是把逻辑完善成思维导图，Effie都是您明智的选择。",
+      "url": "https://www.effie.co/",
+      "icon": "https://www.effie.co/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI写作"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbki5suxerw994vey5m",
+      "createdAt": "2025-06-06T07:47:23.097Z",
+      "updatedAt": "2025-06-06T07:47:23.097Z"
+    },
+    {
+      "title": "Google NotebookLM",
+      "description": "",
+      "url": "https://notebooklm.google/",
+      "icon": "https://notebooklm.google/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI知识库"
+      ],
+      "featured": true,
+      "category": "office",
+      "id": "mbkih7mg72xghnwnfdb",
+      "createdAt": "2025-06-06T07:56:15.448Z",
+      "updatedAt": "2025-06-06T07:56:52.781Z"
+    },
+    {
+      "title": "ima.copilot-腾讯智能工作台",
+      "description": "ima.copilot（简称ima）是一款以知识库为核心的智能工作台产品，已接入腾讯混元大模型和DeepSeek R1模型满血版。ima是搜、读、写一体的效率工具，旨在帮助有较强知识获取、信息处理、内容输出需求的用户，提升学习、办公效率。",
+      "url": "https://ima.qq.com/",
+      "icon": "https://qbtool.static.qq.com/ima/assets/official-website/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI知识库"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkijg08kplmudf5jio",
+      "createdAt": "2025-06-06T07:57:59.624Z",
+      "updatedAt": "2025-06-06T07:57:59.624Z"
+    },
+    {
+      "title": "觅果·Migo AI 创新加速平台",
+      "description": "AI 学习、科研创新加速平台，集成学科专业工具与前沿 AI 技术，多终端无缝衔接，为教育场景提供高效的知识整合与创作支持。",
+      "url": "https://migo.intern-ai.org.cn/",
+      "icon": "https://migo.intern-ai.org.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI知识库"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkijw62546q4vhvoa3",
+      "createdAt": "2025-06-06T07:58:20.570Z",
+      "updatedAt": "2025-06-06T07:58:20.570Z"
+    },
+    {
+      "title": "讯飞绘文",
+      "description": "讯飞绘文，集AI写作，选题，配图，排版，润色，发布等功能为一体的智能创作平台。通用稿件30分钟生成，深度稿件效率翻番。应用于企业公众号，头条，新闻、等场景。释放创意，让内容创作更轻松！",
+      "url": "https://turbodesk.xfyun.cn/home",
+      "icon": "https://turbodesk.xfyun.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI写作"
+      ],
+      "featured": true,
+      "category": "office",
+      "id": "mbkiwiap79a1f7hlufo",
+      "createdAt": "2025-06-06T08:08:09.121Z",
+      "updatedAt": "2025-06-06T08:08:09.121Z"
+    },
+    {
+      "title": "方方格子",
+      "description": "",
+      "url": "http://www.ffcell.com/",
+      "icon": "http://www.ffcell.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Excel插件"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkj5sttovz7enbdokg",
+      "createdAt": "2025-06-06T08:15:22.673Z",
+      "updatedAt": "2025-06-06T08:15:22.673Z"
+    },
+    {
+      "title": "ChatExcel",
+      "description": "ChatExcel AI Excel处理和数据分析",
+      "url": "https://chatexcel.com/#/",
+      "icon": "https://chatexcel.com/logo.svg",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "office",
+      "id": "mbkj88jklnm4lsy7wm8",
+      "createdAt": "2025-06-06T08:17:16.352Z",
+      "updatedAt": "2025-06-06T08:17:16.353Z"
+    },
+    {
+      "title": "Napkin AI",
+      "description": "Just type, copy-paste or generate your text and Napkin will instantly transform it into insightful visuals. Make your communication more effective with Napkin.",
+      "url": "https://www.napkin.ai/",
+      "icon": "https://www.napkin.ai/favicon-32x32.png?v=2",
+      "iconType": "image",
+      "tags": [
+        "AI图表"
+      ],
+      "featured": true,
+      "category": "office",
+      "id": "mbkj94vg5wjovx6mjti",
+      "createdAt": "2025-06-06T08:17:58.252Z",
+      "updatedAt": "2025-06-06T08:17:58.252Z"
+    },
+    {
+      "title": "MetaGPT",
+      "description": "MetaGPT takes a one line requirement as input and outputs user stories / competitive analysis / requirements / data structures / APIs / documents, etc.",
+      "url": "https://www.deepwisdom.ai/",
+      "icon": "https://public-frontend-1300249583.cos-website.ap-nanjing.myqcloud.com/logo-darkbg.png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbkjfn2bp6ln0910gib",
+      "createdAt": "2025-06-06T08:23:01.763Z",
+      "updatedAt": "2025-06-06T08:23:01.763Z"
+    },
+    {
+      "title": "小浣熊家族 Raccoon",
+      "description": "Raccoon - Another Comprehensive CO-pilOt Navigator ｜ Raccoon是基于商汤自研大语言模型的智能助手，包含代码助手、办公助手，满足用户代码编写、数据分析、编程学习等各类需求。",
+      "url": "https://xiaohuanxiong.com/",
+      "icon": "https://xiaohuanxiong.com/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "AI编程",
+        "AI办公"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbkjhvunk51ffex2thq",
+      "createdAt": "2025-06-06T08:24:46.463Z",
+      "updatedAt": "2025-06-06T08:24:46.463Z"
+    },
+    {
+      "title": "SurveyGO",
+      "description": "",
+      "url": "https://surveygo.modelbest.cn/",
+      "icon": "https://modelbest-fe.oss-cn-beijing.aliyuncs.com/images/SurveyGo/surveygo1.svg",
+      "iconType": "image",
+      "tags": [
+        "AI写作"
+      ],
+      "featured": false,
+      "category": "office",
+      "id": "mbkjtgbcnpi5i9tc96l",
+      "createdAt": "2025-06-06T08:33:46.201Z",
+      "updatedAt": "2025-06-06T08:33:46.201Z"
+    },
+    {
+      "title": "八爪鱼采集器",
+      "description": "八爪鱼网页数据采集器，是一款使用简单、功能强大的网络爬虫工具，完全可视化操作，无需编写代码，内置海量模板，支持任意网络数据抓取，连续五年大数据行业数据采集领域排名领先。",
+      "url": "https://www.bazhuayu.com/",
+      "icon": "https://www.bazhuayu.com/favicon.ico?v1",
+      "iconType": "image",
+      "tags": [
+        "网页采集"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkjvln4tlev4wq3dbr",
+      "createdAt": "2025-06-06T08:35:26.416Z",
+      "updatedAt": "2025-06-06T08:35:26.416Z"
+    },
+    {
+      "title": "Browse AI",
+      "description": "Easily scrape web data, monitor webpage changes, and turn websites into APIs with Browse AI.",
+      "url": "https://www.browse.ai/",
+      "icon": "https://cdn.prod.website-files.com/628be7c04ab34bfc699e4acb/676f3131a45a5247bf49a215_avatar-without-shadow-b%20copy.png",
+      "iconType": "image",
+      "tags": [
+        "网页采集"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkjy8ug7yxmgywam15",
+      "createdAt": "2025-06-06T08:37:29.800Z",
+      "updatedAt": "2025-06-06T08:37:29.800Z"
+    },
+    {
+      "title": "Lovart",
+      "description": "Transform prompts into masterpieces with Lovart, the revolutionary AI design agent. From storyboards to brand visuals, our auto-design technology crafts compelling creative stories for designers. Try Lovart.ai today!",
+      "url": "https://www.lovart.ai/",
+      "icon": "https://www.lovart.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "智能体",
+        "图像生成"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbkk193xac4w37lhoup",
+      "createdAt": "2025-06-06T08:39:50.109Z",
+      "updatedAt": "2025-06-06T09:38:18.233Z"
+    },
+    {
+      "title": "webpack",
+      "description": "webpack 是一个模块打包器。它的主要目标是将 JavaScript 文件打包在一起，打包后的文件用于在浏览器中使用，但它也能够胜任转换、打包或包裹任何资源。",
+      "url": "https://webpack.docschina.org/",
+      "icon": "https://webpack.docschina.org/favicon.f326220248556af65f41.ico",
+      "iconType": "image",
+      "tags": [
+        "模块打包"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn4tlfabciuntpnro",
+      "createdAt": "2025-06-06T10:06:35.475Z",
+      "updatedAt": "2025-06-06T10:06:35.475Z"
+    },
+    {
+      "title": "Rollup",
+      "description": "The JavaScript module bundler",
+      "url": "https://cn.rollupjs.org/",
+      "icon": "https://cn.rollupjs.org/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "模块打包"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn54jwlaa8p4u2xln",
+      "createdAt": "2025-06-06T10:06:49.676Z",
+      "updatedAt": "2025-06-06T10:06:49.676Z"
+    },
+    {
+      "title": "Parcel",
+      "description": "Parcel combines a great out-of-the-box development experience with a scalable architecture that can take your project from just getting started to massive production application.",
+      "url": "https://parceljs.org/",
+      "icon": "https://parceljs.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "模块打包"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn5jakmui86et1yhh",
+      "createdAt": "2025-06-06T10:07:08.780Z",
+      "updatedAt": "2025-06-06T10:07:08.780Z"
+    },
+    {
+      "title": "Babel",
+      "description": "The compiler for next generation JavaScript",
+      "url": "https://babeljs.io/",
+      "icon": "https://babeljs.io/img/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "编译器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn7047r26qdzgtkp9",
+      "createdAt": "2025-06-06T10:08:17.239Z",
+      "updatedAt": "2025-06-06T10:08:17.239Z"
+    },
+    {
+      "title": "Babel 中文文档",
+      "description": "Babel - 下一代 JavaScript 语法的编译器",
+      "url": "https://www.babeljs.cn/",
+      "icon": "https://www.babeljs.cn/img/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "编译器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn7f5554bkhdrcu1l",
+      "createdAt": "2025-06-06T10:08:36.713Z",
+      "updatedAt": "2025-06-06T10:08:36.713Z"
+    },
+    {
+      "title": "SWC",
+      "description": "Rust-based platform for the Web",
+      "url": "https://swc.rs/",
+      "icon": "https://swc.rs/favicon/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "编译器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn7ws0ag6ht5fhace",
+      "createdAt": "2025-06-06T10:08:59.568Z",
+      "updatedAt": "2025-06-06T10:08:59.568Z"
+    },
+    {
+      "title": "Vite",
+      "description": "Next Generation Frontend Tooling",
+      "url": "https://cn.vitejs.dev/",
+      "icon": "https://cn.vitejs.dev/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "构建工具"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn8xhe0ns2ucovptin",
+      "createdAt": "2025-06-06T10:09:47.138Z",
+      "updatedAt": "2025-06-06T10:09:47.138Z"
+    },
+    {
+      "title": "Awesome Vite.js",
+      "description": "",
+      "url": "https://github.com/vitejs/awesome-vite",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "构建工具"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkn9cni4dg67xw1oh5",
+      "createdAt": "2025-06-06T10:10:06.798Z",
+      "updatedAt": "2025-06-06T10:10:06.798Z"
+    },
+    {
+      "title": "bolt.new",
+      "description": "Prompt, run, edit & deploy apps",
+      "url": "https://bolt.new/",
+      "icon": "https://bolt.new/static/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbknr5oy46y5g5ggkmm",
+      "createdAt": "2025-06-06T10:23:57.586Z",
+      "updatedAt": "2025-06-06T10:23:57.586Z"
+    },
+    {
+      "title": "v0 by Vercel",
+      "description": "Generate UI, build full-stack apps, ask questions, and more.",
+      "url": "https://v0.dev/",
+      "icon": "https://v0.dev/assets/icon-light-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbknrr7n8efnit3ex7e",
+      "createdAt": "2025-06-06T10:24:25.475Z",
+      "updatedAt": "2025-06-06T10:24:25.475Z"
+    },
+    {
+      "title": "Replit",
+      "description": "Replit is an AI-powered platform for building professional web apps and websites.",
+      "url": "https://replit.com/",
+      "icon": "https://cdn.replit.com/dotcom/favicon-196.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbknsdl8x64n1wazh2",
+      "createdAt": "2025-06-06T10:24:54.476Z",
+      "updatedAt": "2025-06-06T10:24:54.476Z"
+    },
+    {
+      "title": "Lovable",
+      "description": "Build software products, using only a chat interface",
+      "url": "https://lovable.dev/",
+      "icon": "https://lovable.dev/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknt6lrbn2womu3zxb",
+      "createdAt": "2025-06-06T10:25:32.079Z",
+      "updatedAt": "2025-06-06T10:25:32.079Z"
+    },
+    {
+      "title": "Trickle",
+      "description": "",
+      "url": "https://app.trickle.so/project",
+      "icon": "https://app.trickle.so/icon.svg",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkntt0xxf8bgo3tkij",
+      "createdAt": "2025-06-06T10:26:01.137Z",
+      "updatedAt": "2025-06-06T10:26:01.137Z"
+    },
+    {
+      "title": "Same",
+      "description": "",
+      "url": "https://same.new/",
+      "icon": "https://same.new/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknu8r3urcbcx0596",
+      "createdAt": "2025-06-06T10:26:21.519Z",
+      "updatedAt": "2025-06-06T10:26:21.519Z"
+    },
+    {
+      "title": "Gamma",
+      "description": "",
+      "url": "https://gamma.app/",
+      "icon": "https://gamma.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknv92p0joupz9d3msv",
+      "createdAt": "2025-06-06T10:27:08.593Z",
+      "updatedAt": "2025-06-06T10:27:08.593Z"
+    },
+    {
+      "title": "bolt.diy",
+      "description": "",
+      "url": "https://github.com/stackblitz-labs/bolt.diy",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbknwn2grumxw15v4f",
+      "createdAt": "2025-06-06T10:28:13.384Z",
+      "updatedAt": "2025-06-06T10:28:13.384Z"
+    },
+    {
+      "title": "DeepSite",
+      "description": "DeepSite Huggingface开发， Deepseek V3最新模型驱动是一款 AI 编码工具，让您无需编程即可创建网站和 Web 应用程序。获得实时预览、优化的 SEO 和快速部署——所有这些都在一个强大的平台中。",
+      "url": "https://deepsite.site/zh",
+      "icon": "https://deepsite.site/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknx5y93joyazu91tf",
+      "createdAt": "2025-06-06T10:28:37.857Z",
+      "updatedAt": "2025-06-06T10:28:37.857Z"
+    },
+    {
+      "title": "Popsy",
+      "description": "Create a beautiful no-code website in minutes. Popsy works just like Notion but is built from the ground up for building websites. Choose a free template. Edit content just like in Notion. Customize styles without code. Free Notion icons and illustrations.",
+      "url": "https://popsy.co/",
+      "icon": "https://popsy.co/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknxlaojl4arbra2tm",
+      "createdAt": "2025-06-06T10:28:57.744Z",
+      "updatedAt": "2025-06-06T10:28:57.744Z"
+    },
+    {
+      "title": "AI Website Builder",
+      "description": "",
+      "url": "https://wordpress.com/ai-website-builder/",
+      "icon": "https://wordpress.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkny23lndok3krjjb",
+      "createdAt": "2025-06-06T10:29:19.521Z",
+      "updatedAt": "2025-06-06T10:29:19.521Z"
+    },
+    {
+      "title": "Readdy",
+      "description": "Build your dream websites by talking with AI - no drag-and-drop needed. When you're happy, publish instantly, or export as clean code or Figma files. Perfect for small teams with limited design resources, or agencies looking to deliver 10x faster.",
+      "url": "https://readdy.ai/",
+      "icon": "https://framerusercontent.com/images/kCeKN2l2KX0tIQDaoTZ2CX8w5Ns.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbknymsqiutcsrsrlfc",
+      "createdAt": "2025-06-06T10:29:46.346Z",
+      "updatedAt": "2025-06-06T10:29:46.346Z"
+    },
+    {
+      "title": "Openbolt.dev",
+      "description": "Streamline web development with Openbolt.dev. Use AI, boltnew private deploy, and the bolt coding tool to build, deploy, and scale projects effortlessly.",
+      "url": "https://openbolt.dev/",
+      "icon": "https://openbolt.dev/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbko4zojzdbx8hzsj3",
+      "createdAt": "2025-06-06T10:34:42.979Z",
+      "updatedAt": "2025-06-06T10:34:42.979Z"
+    },
+    {
+      "title": "Leap",
+      "description": "Leap is a full-stack AI that works with you, not instead of you. Build full-stack applications and deploy them to your cloud on AWS or GCP.",
+      "url": "https://leap.new/",
+      "icon": "https://leap.new/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbko5nxgsdg68hlf2c",
+      "createdAt": "2025-06-06T10:35:14.404Z",
+      "updatedAt": "2025-06-06T10:35:14.404Z"
+    },
+    {
+      "title": "Logical",
+      "description": "The first AI driven visual development platform.",
+      "url": "https://logical.so/",
+      "icon": "https://logical.so/images/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbko6o23qrd96wglrhi",
+      "createdAt": "2025-06-06T10:36:01.227Z",
+      "updatedAt": "2025-06-06T10:36:01.227Z"
+    },
+    {
+      "title": "Lightning AI",
+      "description": "The all-in-one platform for AI development. Code together. Prototype. Train. Scale. Serve. From your browser - with zero setup. From the creators of PyTorch Lightning.",
+      "url": "https://lightning.ai/",
+      "icon": "https://lightning.ai/favicon/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "在线编辑器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbko8mmv9mk90r2am7",
+      "createdAt": "2025-06-06T10:37:32.695Z",
+      "updatedAt": "2025-06-06T10:37:32.695Z"
+    },
+    {
+      "title": "Discover Frontend AI",
+      "description": "Take your frontend game to the next level. Use AI-powered tools and a visual editor to create, refine, and perfect components in seconds while keeping your designs clean and consistent.",
+      "url": "https://www.webcrumbs.ai/",
+      "icon": "https://webcrumbs.cloud/logo/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "在线编辑器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkocbue4l751nhf8qd",
+      "createdAt": "2025-06-06T10:40:25.334Z",
+      "updatedAt": "2025-06-06T10:40:25.334Z"
+    },
+    {
+      "title": "Websparks AI Software Engineer Agent",
+      "description": "Talk with Websparks AI Agent, an AI assistant from Websparks Corporation",
+      "url": "https://websparks.ai/",
+      "icon": "https://websparks.ai/icons/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkoerkodidxrphk4ce",
+      "createdAt": "2025-06-06T10:42:19.032Z",
+      "updatedAt": "2025-06-06T10:42:19.032Z"
+    },
+    {
+      "title": "Jolt AI",
+      "description": "Finally, AI that understands large codebases. Jolt AI is purpose-built for 100K to multi-million line codebases.",
+      "url": "https://www.usejolt.ai/",
+      "icon": "https://www.usejolt.ai/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "AI编程助手",
+        "IDE插件"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkohwihy06rd9qomo",
+      "createdAt": "2025-06-06T10:44:45.401Z",
+      "updatedAt": "2025-06-06T10:44:45.401Z"
+    },
+    {
+      "title": "Fleek",
+      "description": "Fleek: Build next-gen apps and AI agents in minutes on an open-source, verifiable, auto-scalable cloud platform. Start for free!",
+      "url": "https://fleek.xyz/",
+      "icon": "https://fleek.xyz/favicon/favicon-96x96.png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": false,
+      "category": "ai",
+      "id": "mbkor15bqg527fx9ikf",
+      "createdAt": "2025-06-06T10:51:51.311Z",
+      "updatedAt": "2025-06-06T10:51:51.311Z"
+    },
+    {
+      "title": "vly.ai",
+      "description": "English is the new programming language",
+      "url": "https://vly.ai/",
+      "icon": "https://vly.ai/favicon_new.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbkou9cyxyfg08lgau",
+      "createdAt": "2025-06-06T10:54:21.922Z",
+      "updatedAt": "2025-06-06T10:54:21.922Z"
+    },
+    {
+      "title": "Sparkable",
+      "description": "The AI assistant built for Developers",
+      "url": "https://www.sparkableai.com/",
+      "icon": "https://www.sparkableai.com/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用生成"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkpdibz1k8ov4o9lki",
+      "createdAt": "2025-06-06T11:09:20.015Z",
+      "updatedAt": "2025-06-06T11:09:20.015Z"
+    },
+    {
+      "title": "co.dev",
+      "description": "Transform your ideas into production-ready web applications with Codev. Our AI-powered platform converts text descriptions into full-stack Next.js apps instantly.",
+      "url": "https://www.co.dev/",
+      "icon": "https://www.co.dev/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用生成"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkpeu3w71f66u2xfo",
+      "createdAt": "2025-06-06T11:10:21.932Z",
+      "updatedAt": "2025-06-06T11:10:21.932Z"
+    },
+    {
+      "title": "Builder.io",
+      "description": "Builder is the only Visual Development Platform that offers an AI-powered design-to-code tool, a visual editor, and an enterprise CMS.",
+      "url": "https://www.builder.io/",
+      "icon": "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F470aa2bd45fb4ff5b77c91a394a957e6?width=240",
+      "iconType": "image",
+      "tags": [
+        "AI应用生成"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbkpflla6bkc96wvlq3",
+      "createdAt": "2025-06-06T11:10:57.550Z",
+      "updatedAt": "2025-06-06T11:10:57.550Z"
+    },
+    {
+      "title": "BuilderKit",
+      "description": "Highly modular end to end NextJs AI Boilerplate that allows you to build any AI Apps within days",
+      "url": "https://apps.builderkit.ai/",
+      "icon": "https://apps.builderkit.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用生成"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkph0tu302crrpbpfw",
+      "createdAt": "2025-06-06T11:12:03.954Z",
+      "updatedAt": "2025-06-06T11:12:03.955Z"
+    },
+    {
+      "title": "Browseragent",
+      "description": "Create custom AI agents that run in your browser with unlimited executions for a fixed cost. No API costs, no maintenance, full privacy.",
+      "url": "https://browseragent.dev/",
+      "icon": "https://browseragent.dev/favicon-96x96.png",
+      "iconType": "image",
+      "tags": [
+        "智能体"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbkpk3ot8jivpypp2s2",
+      "createdAt": "2025-06-06T11:14:27.629Z",
+      "updatedAt": "2025-06-06T11:14:27.629Z"
+    },
+    {
+      "title": "CodeCompanion",
+      "description": "Meet CodeCompanion.AI – your personal coding assistant, available anytime, right on your desktop.",
+      "url": "https://codecompanion.ai/",
+      "icon": "https://framerusercontent.com/images/aP9gK27gXCThsTeBjjwAoLchnlA.png",
+      "iconType": "image",
+      "tags": [
+        "智能体",
+        "AI编程"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbkprmpyjaqs1w264ca",
+      "createdAt": "2025-06-06T11:20:18.886Z",
+      "updatedAt": "2025-06-06T11:20:18.886Z"
+    },
+    {
+      "title": "CodeAI ",
+      "description": "",
+      "url": "https://www.codeai.studio/",
+      "icon": "https://www.codeai.studio/assets/logo.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkpvdb8hvku3g0jili",
+      "createdAt": "2025-06-06T11:23:13.316Z",
+      "updatedAt": "2025-06-06T11:23:13.316Z"
+    },
+    {
+      "title": "Continue",
+      "description": "Amplified developers, AI-enhanced development · The leading open-source AI code assistant. You can connect any models and any context to build custom autocomplete and chat experiences inside the IDE",
+      "url": "https://www.continue.dev/",
+      "icon": "https://cdn.prod.website-files.com/663e06c56841363663ffbbcf/665253511c9fe499ba28f6c5_Logo_32x32%20(1).png",
+      "iconType": "image",
+      "tags": [
+        "AI编程助手",
+        "IDE插件"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkpyemzvbq0gf04knf",
+      "createdAt": "2025-06-06T11:25:35.003Z",
+      "updatedAt": "2025-06-06T11:25:35.004Z"
+    },
+    {
+      "title": "CodeMate",
+      "description": "Code 10x faster as CodeMate search, navigate and understand complex codebases for you.",
+      "url": "https://codemate.ai/",
+      "icon": "https://codemate.ai/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI编程助手",
+        "IDE插件"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkq72ulp3p9s5h3yvl",
+      "createdAt": "2025-06-06T11:32:19.629Z",
+      "updatedAt": "2025-06-06T11:32:19.629Z"
+    },
+    {
+      "title": "Codegen",
+      "description": "Ship with AI using Codegen, your AI developer teammate that helps you build incredible software faster. Get code reviews, bug fixes, and feature implementations through natural language.",
+      "url": "https://codegen.com/",
+      "icon": "https://codegen.com/icons/favicon-96x96.png",
+      "iconType": "image",
+      "tags": [
+        "AI应用生成"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbkqgz9mhw4x61wfk2n",
+      "createdAt": "2025-06-06T11:40:01.546Z",
+      "updatedAt": "2025-06-06T11:40:01.546Z"
+    },
+    {
+      "title": "Code Snippets AI",
+      "description": "Contextually-rich AI chats, integrated with your secure code snippets library.\nBuild new features, fix bugs, //add comments and understand your codebase.",
+      "url": "https://codesnippets.ai/",
+      "icon": "https://framerusercontent.com/images/vVC7s85O5plh6ODSQsbxkhh2Ksc.png",
+      "iconType": "image",
+      "tags": [
+        "AI编辑器",
+        "代码编辑器"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkqncim9nn5v82zzd8",
+      "createdAt": "2025-06-06T11:44:58.654Z",
+      "updatedAt": "2025-06-06T11:44:58.654Z"
+    },
+    {
+      "title": "CodeGeeX",
+      "description": "CodeGeeX is an AI-based coding assistant, which can suggest code in the current or following lines. It is powered by a large-scale multilingual code generation model with 13 billion parameters, pretrained on a large code corpus of more than 20 programming languages. CodeGeeX是一个基于AI大模型的编程辅助工具，可以实现自动代码生成、代码翻译、自动编写注释等功能，支持20多种编程语言。",
+      "url": "https://codegeex.cn/",
+      "icon": "https://codegeex.cn/assets/images/only_logo_dark.png",
+      "iconType": "image",
+      "tags": [
+        "AI编程助手"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkqshmeuah7rnfjze",
+      "createdAt": "2025-06-06T11:48:58.550Z",
+      "updatedAt": "2025-06-06T11:48:58.550Z"
+    },
+    {
+      "title": "Aitoolnet",
+      "description": "在AiToolNet是一个专注于人工智能工具导航的网站。精选10000+AI工具，最实用、最热门的AI工具帮助你在工作与学习上更轻松有效率。",
+      "url": "https://www.aitoolnet.com/zh",
+      "icon": "https://www.aitoolnet.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "网址导航",
+        "AI导航"
+      ],
+      "featured": true,
+      "category": "productivity",
+      "id": "mbkqu0omhicil0xmwp8",
+      "createdAt": "2025-06-06T11:50:09.910Z",
+      "updatedAt": "2025-06-06T11:50:09.910Z"
+    },
+    {
+      "title": "Open WebUI",
+      "description": "Open WebUI is an extensible, self-hosted interface for AI that adapts to your workflow, all while operating entirely offline; Supported LLM runners include Ollama and OpenAI-compatible APIs.",
+      "url": "https://openwebui.com/",
+      "icon": "https://openwebui.com/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "大模型部署"
+      ],
+      "featured": true,
+      "category": "ai",
+      "id": "mbkqwidjbr7v836z7p",
+      "createdAt": "2025-06-06T11:52:06.151Z",
+      "updatedAt": "2025-06-06T11:52:06.151Z"
+    },
+    {
+      "title": "Dora",
+      "description": "Publish stunning 3D animated websites without writing a line of code. Generate landing pages and design inspiration with Dora AI. Enjoy the convenience of our no-code platform, allowing you to create professional and custom websites in a completely visual canvas. Benefit from our fully responsive designs and flexible domain setups. With Dora, designers can seamlessly import from Figma to Dora and enjoy a free plan. Use our newest text-to-website feature to generate websites from natural language prompts. Start exploring the endless possibilities today and bring your creative vision to life with Dora!",
+      "url": "https://www.dora.run/",
+      "icon": "https://www.dora.run/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "AI应用开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbkqy6xn7gpissm6q0f",
+      "createdAt": "2025-06-06T11:53:24.635Z",
+      "updatedAt": "2025-06-06T11:53:24.635Z"
+    },
+    {
+      "title": "Onlook",
+      "description": "The power of Cursor for your own website. Onlook lets you edit your React website and write your changes back to code in real-time. Iterate and experiement with AI. Download the open-source, local-first desktop app today.",
+      "url": "https://onlook.com/",
+      "icon": "https://framerusercontent.com/images/lpmCNiuYoiviK2nVja6Wt64Q.png",
+      "iconType": "image",
+      "tags": [
+        "UI设计"
+      ],
+      "featured": true,
+      "category": "design",
+      "id": "mbkqzqv8stwdv09335c",
+      "createdAt": "2025-06-06T11:54:37.124Z",
+      "updatedAt": "2025-06-06T11:56:17.334Z"
+    },
+    {
+      "title": "Framer",
+      "description": "Build a free website with Framer—enjoy full design freedom, powerful CMS, built-in SEO, and real-time collaboration. Create professional, fully custom sites with the no-code builder loved by designers and high-performing teams.",
+      "url": "https://www.framer.com/",
+      "icon": "https://framerusercontent.com/images/Io89FonxEaWg4nxvQQllVLwPUUI.png",
+      "iconType": "image",
+      "tags": [
+        "UI设计"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbkr0rx00kq5ajw9ypw",
+      "createdAt": "2025-06-06T11:55:25.140Z",
+      "updatedAt": "2025-06-06T11:55:25.140Z"
+    },
+    {
+      "title": "WIX",
+      "description": "Create a website without limits",
+      "url": "https://www.wix.com/",
+      "icon": "https://www.wix.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "UI设计"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbkr3znkespsoj59gw",
+      "createdAt": "2025-06-06T11:57:55.136Z",
+      "updatedAt": "2025-06-06T11:57:55.136Z"
+    },
+    {
+      "title": "码上飞（CodeFlying）",
+      "description": "说中文，做应用。一句话自动生成小程序、APP、网页应用！",
+      "url": "https://www.codeflying.net/#/index",
+      "icon": "https://www.codeflying.net/fe-views/logo.ico",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "development",
+      "id": "mbkr4t1d0sa1mhp2v3za",
+      "createdAt": "2025-06-06T11:58:33.217Z",
+      "updatedAt": "2025-06-06T11:58:33.217Z"
+    },
+    {
+      "title": "Visual Studio Marketplace",
+      "description": "Extensions for Visual Studio family of products on Visual Studio Marketplace",
+      "url": "https://marketplace.visualstudio.com/",
+      "icon": "https://marketplace.visualstudio.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "IDE插件",
+        "VSCode市场"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkra8rz8pntr2kdwl6",
+      "createdAt": "2025-06-06T12:02:46.895Z",
+      "updatedAt": "2025-06-06T12:02:46.895Z"
+    },
+    {
+      "title": "Open VSX Registry",
+      "description": "Extensions for VS Code Compatible Editors",
+      "url": "https://open-vsx.org/",
+      "icon": "https://open-vsx.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "IDE插件",
+        "VSCode市场"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbkrayxyknjgdy8vc8l",
+      "createdAt": "2025-06-06T12:03:20.806Z",
+      "updatedAt": "2025-06-06T12:03:43.215Z"
+    },
+    {
+      "title": "Plasmo",
+      "description": "Plasmo is a browser extension development platform that helps you build, publish, and manage your browser extensions.",
+      "url": "https://www.plasmo.com/",
+      "icon": "https://www.plasmo.com/favicon-light.svg",
+      "iconType": "image",
+      "tags": [
+        "浏览器扩展开发"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbkreqfybnsz8lvojjj",
+      "createdAt": "2025-06-06T12:06:16.414Z",
+      "updatedAt": "2025-06-06T12:06:16.414Z"
     }
   ]
 }

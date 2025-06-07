@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, FileText, Book, Code, Clipboard, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
+type TabKey = 'readme' | 'api' | 'changelog' | 'license';
+
+interface Tab {
+  key: TabKey;
+  name: string;
+  icon: React.ElementType;
+}
 
 export default function DocumentGeneratorPage() {
   const [activeTab, setActiveTab] = useState<'readme' | 'api' | 'changelog' | 'license'>('readme');
@@ -746,7 +753,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.`,
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

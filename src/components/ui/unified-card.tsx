@@ -187,7 +187,7 @@ export function UnifiedCard({
   author,
   color,
   featured = false,
-  index = 0,
+  _index = 0,
   className,
   variant = 'default',
   children,

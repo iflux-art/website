@@ -70,7 +70,7 @@ export interface DocMeta {
   /**
    * 分类名称作为键，分类元数据作为值
    */
-  [key: string]: string | any;
+  [key: string]: string | unknown;
 }
 
 /**
@@ -429,7 +429,7 @@ export function useDocSidebar(category: string) {
  * @returns 侧边栏项目列表和加载状态
  * @deprecated 使用 useDocSidebar 代替
  */
-export function useDocSidebarItems(category: string, currentDoc?: string) {
+export function useDocSidebarItems(category: string, _currentDoc?: string) {
   // 使用新的钩子函数
   return useDocSidebar(category);
 }

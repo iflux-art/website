@@ -4,6 +4,27 @@ import React from 'react';
 import { ImageProps } from 'next/image';
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { ResponsiveImage } from '@/components/ui/responsive-image';
+
+interface ResourceCardProps {
+  title: string;
+  description: string;
+  url?: string;
+  href?: string;
+  icon?: string;
+  iconType?: 'emoji' | 'image';
+  featured?: boolean;
+}
+
+interface FriendLinkCardProps {
+  name?: string;
+  title?: string;
+  description: string;
+  url?: string;
+  href?: string;
+  avatar?: string;
+  icon?: string;
+  iconType?: 'emoji' | 'image';
+}
 import { CodeBlock } from '@/components/mdx/code-block';
 import { InlineCode } from '@/styles/inline-code';
 import { MarkdownLink } from '@/styles/markdown-link';
@@ -17,7 +38,7 @@ import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
 // React component you want, including inline styles,
 // components from other libraries, and more.
 
-export function useMDXComponents(components: Record<string, React.ComponentType<any>>) {
+export function useMDXComponents(_components: Record<string, React.ComponentType>) {
   return {
     // 基础包装器，使用 Typography 插件样式，符合 New York 风格
     wrapper: ({ children }: { children: React.ReactNode }) => (
@@ -30,7 +51,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     img: (props: ImageProps & { src: string | { [key: string]: string } | StaticImport }) => {
       return (
         <ResponsiveImage
-          {...(props as any)}
+          {...(props as ImageProps & { src: string | StaticImport })}
           width={props.width || 1080}
           height={props.height || 500}
           imageSizes={{
@@ -94,7 +115,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     },
 
     // 统一卡片组件
-    ResourceCard: (props: any) => (
+    ResourceCard: (props: ResourceCardProps) => (
       <UnifiedCard
         type="resource"
         title={props.title}
@@ -109,7 +130,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType<
     ),
 
     // 友情链接组件
-    FriendLinkCard: (props: any) => (
+    FriendLinkCard: (props: FriendLinkCardProps) => (
       <UnifiedCard
         type="friend"
         title={props.name || props.title}

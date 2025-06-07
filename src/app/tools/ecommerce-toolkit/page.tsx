@@ -231,7 +231,7 @@ export default function EcommerceToolkitPage() {
 
         {strategies && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(strategies).map(([key, strategy]: [string, any]) => (
+            {Object.entries(strategies).map(([key, strategy]: [string, PricingStrategy]) => (
               <Card key={key}>
                 <CardHeader>
                   <CardTitle className="text-base">{strategy.description}</CardTitle>

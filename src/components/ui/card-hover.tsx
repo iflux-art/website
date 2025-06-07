@@ -40,7 +40,7 @@ export const CardHover = forwardRef<HTMLDivElement, CardHoverProps>(
       if (isExternal) {
         return (
           <a
-            ref={ref as any}
+            ref={ref as React.Ref<HTMLAnchorElement>}
             href={href}
             target="_blank"
             rel="noopener noreferrer"
@@ -55,7 +55,7 @@ export const CardHover = forwardRef<HTMLDivElement, CardHoverProps>(
         // 对于内部链接，我们需要使用 Next.js Link
         return (
           <a
-            ref={ref as any}
+            ref={ref as React.Ref<HTMLAnchorElement>}
             href={href}
             className={baseClasses}
             style={style}

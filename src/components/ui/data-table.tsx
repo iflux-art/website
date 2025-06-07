@@ -6,7 +6,7 @@ import { LucideIcon } from 'lucide-react';
 interface TableColumn<T> {
   key: keyof T | string;
   title: string;
-  render?: (value: any, record: T, index: number) => React.ReactNode;
+  render?: (value: T[keyof T], record: T, index: number) => React.ReactNode;
   width?: string;
   align?: 'left' | 'center' | 'right';
 }
@@ -34,7 +34,7 @@ interface DataTableProps<T> {
   };
 }
 
-export function DataTable<T extends Record<string, any>>({
+export function DataTable<T extends Record<string, unknown>>({
   title,
   data,
   columns,
