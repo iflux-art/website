@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { NavigationData, NavigationItem, NavigationCategory } from '@/types/navigation';
 
-const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'navigation.json');
+const DATA_FILE_PATH = path.join(process.cwd(), 'src', 'content', 'data', 'navigation.json');
 
 /**
  * 确保数据目录存在
