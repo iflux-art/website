@@ -15548,21 +15548,6 @@
       "updatedAt": "2025-06-04T18:43:17.370Z"
     },
     {
-      "title": "Eleventy",
-      "description": "Eleventy is a simpler static site generator.",
-      "url": "https://www.11ty.dev/",
-      "icon": "https://www.11ty.dev/img/favicon.png",
-      "iconType": "image",
-      "tags": [
-        "SSG"
-      ],
-      "featured": false,
-      "category": "development",
-      "id": "mbianizz1ber6xjs5pb",
-      "createdAt": "2025-06-04T18:41:40.847Z",
-      "updatedAt": "2025-06-04T18:41:40.847Z"
-    },
-    {
       "title": "jsDelivr",
       "description": "Optimized for JS and ESM delivery from npm and GitHub. Works with all web formats. Serving more than 150 billion requests per month.",
       "url": "https://www.jsdelivr.com/",
@@ -19024,6 +19009,951 @@
       "id": "mbkreqfybnsz8lvojjj",
       "createdAt": "2025-06-06T12:06:16.414Z",
       "updatedAt": "2025-06-06T12:06:16.414Z"
+    },
+    {
+      "title": "Creative Market",
+      "description": "",
+      "url": "https://creativemarket.com/",
+      "icon": "https://creativemarket.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "素材售卖"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbmvco678uazhy55ems",
+      "createdAt": "2025-06-07T23:32:10.975Z",
+      "updatedAt": "2025-06-07T23:32:10.975Z"
+    },
+    {
+      "title": "包图网",
+      "description": "包图网拥有亿级正版商用素材模板，为企业 、政府机关、个人用户提供原创可商用的精品版权，涵盖4K/8K高清视频、AE模板、MG动画、配乐音效、AI素材、AI视频、AI音乐、PPT模板、海报模板、UI设计素材、PNG元素、电商淘宝、摄影图、插画动图、装饰装修、3D素材等，满足企业宣传、政府党建宣传及个人用户的创意剪辑、智能抠图、在线设计、AI绘画等各种使用场景，会员可享免费下载，立即访问包图网，获取高质素材！",
+      "url": "https://ibaotu.com/",
+      "icon": "https://ibaotu.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "素材售卖"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbmvd9zockg5hls7laa",
+      "createdAt": "2025-06-07T23:32:39.252Z",
+      "updatedAt": "2025-06-07T23:32:39.252Z"
+    },
+    {
+      "title": "千图网",
+      "description": "",
+      "url": "https://www.58pic.com/",
+      "icon": "https://www.58pic.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "素材售卖"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbmvdx98gvz6blgvkdl",
+      "createdAt": "2025-06-07T23:33:09.404Z",
+      "updatedAt": "2025-06-07T23:33:09.404Z"
+    },
+    {
+      "title": "我图网",
+      "description": "",
+      "url": "https://www.ooopic.com/",
+      "icon": "https://www.ooopic.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "素材售卖"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbmvei7vvhxa36soepb",
+      "createdAt": "2025-06-07T23:33:36.571Z",
+      "updatedAt": "2025-06-07T23:33:36.571Z"
+    },
+    {
+      "title": "React 官方中文文档",
+      "description": "React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript. React is designed to let you seamlessly combine components written by independent people, teams, and organizations.",
+      "url": "https://zh-hans.react.dev/",
+      "icon": "https://zh-hans.react.dev/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "JavaScript框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnexuzcvdb5fsgwb8h",
+      "createdAt": "2025-06-08T08:40:32.280Z",
+      "updatedAt": "2025-06-08T08:42:58.284Z"
+    },
+    {
+      "title": "React",
+      "description": "React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript. React is designed to let you seamlessly combine components written by independent people, teams, and organizations.",
+      "url": "https://react.dev/",
+      "icon": "https://react.dev/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "JavaScript框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbney65hdr8ns6zyn1p",
+      "createdAt": "2025-06-08T08:40:46.757Z",
+      "updatedAt": "2025-06-08T08:42:47.739Z"
+    },
+    {
+      "title": "Vue.js",
+      "description": "Vue.js - 渐进式的 JavaScript 框架",
+      "url": "https://cn.vuejs.org/",
+      "icon": "https://cn.vuejs.org/logo.svg",
+      "iconType": "image",
+      "tags": [
+        "JavaScript框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbneysgxo5193y0i4yp",
+      "createdAt": "2025-06-08T08:41:15.681Z",
+      "updatedAt": "2025-06-08T08:42:39.665Z"
+    },
+    {
+      "title": "Vue.js",
+      "description": "Vue.js - The Progressive JavaScript Framework",
+      "url": "https://vuejs.org/",
+      "icon": "https://vuejs.org/logo.svg",
+      "iconType": "image",
+      "tags": [],
+      "featured": false,
+      "category": "development",
+      "id": "mbnezagixkzlfwn6dzo",
+      "createdAt": "2025-06-08T08:41:38.994Z",
+      "updatedAt": "2025-06-08T08:41:38.994Z"
+    },
+    {
+      "title": "Angular",
+      "description": "The web development framework for building modern apps.",
+      "url": "https://angular.cn/",
+      "icon": "https://angular.cn/assets/icons/favicon-48x48.png",
+      "iconType": "image",
+      "tags": [
+        "JavaScript框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbneztulnofker878lj",
+      "createdAt": "2025-06-08T08:42:04.125Z",
+      "updatedAt": "2025-06-08T08:42:04.125Z"
+    },
+    {
+      "title": "Svelte",
+      "description": "Web development for the rest of us",
+      "url": "https://svelte.dev/",
+      "icon": "https://svelte.dev/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "JavaScript框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnf0b9280tmhamzntd",
+      "createdAt": "2025-06-08T08:42:26.678Z",
+      "updatedAt": "2025-06-08T08:42:26.678Z"
+    },
+    {
+      "title": "Next.js by Vercel",
+      "description": "Next.js by Vercel is the full-stack React framework for the web.",
+      "url": "https://nextjs.org/",
+      "icon": "https://nextjs.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "React框架",
+        "Next.js"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbngbn7espzao69m5m8",
+      "createdAt": "2025-06-08T09:19:15.002Z",
+      "updatedAt": "2025-06-08T09:19:53.027Z"
+    },
+    {
+      "title": "Next.js 中文文档",
+      "description": "Next.js 最新中文文档，是官方英文文档最新、最全面的中文翻译，已更新至 Next.js 15，欢迎中文开发者使用 Next.js 中文文档学习 Next.js，本文档包括 Next.js app router 和 Next.js pages router 知识",
+      "url": "https://nextjscn.org/",
+      "icon": "https://nextjscn.org/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "React框架",
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngc6shh1wnvims7pt",
+      "createdAt": "2025-06-08T09:19:40.385Z",
+      "updatedAt": "2025-06-08T09:19:40.385Z"
+    },
+    {
+      "title": "Next.js - React 应用开发框架",
+      "description": "Next.js 支持规模化的生产级 React 应用程序。大量世界领先的公司都在使用 Next.js 来构建静态和动态网站及 web 应用。",
+      "url": "https://www.nextjs.cn/",
+      "icon": "https://www.nextjs.cn/static/favicon/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "React框架",
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngd23wesnc5qc50xf",
+      "createdAt": "2025-06-08T09:20:20.972Z",
+      "updatedAt": "2025-06-08T09:20:20.972Z"
+    },
+    {
+      "title": "Awesome Nextjs",
+      "description": "",
+      "url": "https://officialrajdeepsingh.github.io/awesome-nextjs/",
+      "icon": "https://officialrajdeepsingh.github.io/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngdtz4osbwjth25ml",
+      "createdAt": "2025-06-08T09:20:57.088Z",
+      "updatedAt": "2025-06-08T09:20:57.088Z"
+    },
+    {
+      "title": "Create T3 App",
+      "description": "The best way to start a full-stack, typesafe Next.js app.",
+      "url": "https://create.t3.gg/",
+      "icon": "https://create.t3.gg/images/t3-dark.svg",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngezgd618i3tpgojy",
+      "createdAt": "2025-06-08T09:21:50.845Z",
+      "updatedAt": "2025-06-08T09:21:50.845Z"
+    },
+    {
+      "title": "Next.js templates",
+      "description": "Launch your Next.js project faster with our handcrafted boilerplates, templates, starter kits, and landing pages. Explore our expertly crafted free and premium templates, boilerplates, and starter kits. Build high-performance, feature-rich, and SEO-friendly websites, SaaS, landing pages and more with Next.js",
+      "url": "https://nextjstemplates.com/",
+      "icon": "https://nextjstemplates.com/assets/images/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngfn7pg4f4740p09e",
+      "createdAt": "2025-06-08T09:22:21.637Z",
+      "updatedAt": "2025-06-08T09:22:21.637Z"
+    },
+    {
+      "title": "Next.js Starter Kit",
+      "description": "A modern, full-stack Next.js starter kit with authentication, payments, and dashboard. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
+      "url": "https://www.nextstarter.xyz/",
+      "icon": "https://www.nextstarter.xyz/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngg5fgyqjkai5zvcj",
+      "createdAt": "2025-06-08T09:22:45.244Z",
+      "updatedAt": "2025-06-08T09:22:45.244Z"
+    },
+    {
+      "title": "SaaS Starter",
+      "description": "",
+      "url": "https://next-saas-stripe-starter.vercel.app/",
+      "icon": "https://next-saas-stripe-starter.vercel.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnggogzaclbgowczww",
+      "createdAt": "2025-06-08T09:23:09.923Z",
+      "updatedAt": "2025-06-08T09:23:09.923Z"
+    },
+    {
+      "title": "NextMerce",
+      "description": "NextMerce - a free Next.js eCommerce boilerplate template designed to help you launch and manage your online store effortlessly. With advanced features, smooth integration, and customizable options, NextMerce offers everything you need to build and scale your business. Enjoy top-tier performance and flexibility powered by Next.js",
+      "url": "https://nextmerce.com/",
+      "icon": "https://nextmerce.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnghb1c05a84016t20g",
+      "createdAt": "2025-06-08T09:23:39.168Z",
+      "updatedAt": "2025-06-08T09:23:39.168Z"
+    },
+    {
+      "title": "Remix",
+      "description": "Remix is a full stack web framework that lets you focus on the user interface and work back through web standards to deliver a fast, slick, and resilient user experience. People are gonna love using your stuff.",
+      "url": "https://remix.run/",
+      "icon": "https://remix.run/favicon-32.png",
+      "iconType": "image",
+      "tags": [
+        "React框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngi6mjklnio029nfa",
+      "createdAt": "2025-06-08T09:24:20.107Z",
+      "updatedAt": "2025-06-08T09:24:20.107Z"
+    },
+    {
+      "title": "Gatsby",
+      "description": "Gatsby is a React-based open source framework with performance, scalability and security built-in. Collaborate, build and deploy 1000x faster on Netlify.",
+      "url": "https://www.gatsbyjs.com/",
+      "icon": "https://www.gatsbyjs.com/favicon-32x32.png?v=3ad5294f3fa6c06e2d07ab07c76df2cf",
+      "iconType": "image",
+      "tags": [
+        "React框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngin96wlq6ymvwb1f",
+      "createdAt": "2025-06-08T09:24:41.658Z",
+      "updatedAt": "2025-06-08T09:24:41.658Z"
+    },
+    {
+      "title": "GatsbyJS 中文网",
+      "description": "",
+      "url": "https://www.gatsbyjs.cn/",
+      "icon": "https://www.gatsbyjs.cn/icons/icon-48x48.png?v=edf3d310d67f8284a562bc3a58c3e761",
+      "iconType": "image",
+      "tags": [
+        "React框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngiypfsqdrbx4fz6",
+      "createdAt": "2025-06-08T09:24:56.499Z",
+      "updatedAt": "2025-06-08T09:24:56.499Z"
+    },
+    {
+      "title": "Nuxt.js - Vue.js 通用应用框架",
+      "description": "Nuxt.js 是一个基于 Vue.js 的轻量级应用框架，可用来创建服务端渲染 (SSR) 应用，也可充当静态站点引擎生成静态站点应用，具有优雅的代码结构分层和热加载等特性。",
+      "url": "https://www.nuxtjs.cn/",
+      "icon": "https://www.nuxtjs.cn/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Vue框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngko2jyeqfgtlrokk",
+      "createdAt": "2025-06-08T09:26:16.027Z",
+      "updatedAt": "2025-06-08T09:26:16.027Z"
+    },
+    {
+      "title": "Ember FastBoot",
+      "description": "",
+      "url": "http://ember-fastboot.com/",
+      "icon": "http://ember-fastboot.com/images/favicon-0cb6ade5490dc1eae8ed49c88997cb9a.png",
+      "iconType": "image",
+      "tags": [
+        "Python框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnglngj7kijr4ng7d",
+      "createdAt": "2025-06-08T09:27:01.891Z",
+      "updatedAt": "2025-06-08T09:27:01.891Z"
+    },
+    {
+      "title": "TanStack",
+      "description": "Headless, type-safe, powerful utilities for complex workflows like Data Management, Data Visualization, Charts, Tables, and UI Components.",
+      "url": "https://tanstack.com/",
+      "icon": "https://tanstack.com/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "Python框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngm2frwqx0w0vzbj",
+      "createdAt": "2025-06-08T09:27:21.303Z",
+      "updatedAt": "2025-06-08T09:27:21.303Z"
+    },
+    {
+      "title": "Django",
+      "description": "The web framework for perfectionists with deadlines.",
+      "url": "https://www.djangoproject.com/",
+      "icon": "https://static.djangoproject.com/img/icon-touch.e4872c4da341.png",
+      "iconType": "image",
+      "tags": [
+        "Python框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngmk8ce6y2t4i3amd",
+      "createdAt": "2025-06-08T09:27:44.364Z",
+      "updatedAt": "2025-06-08T09:27:44.364Z"
+    },
+    {
+      "title": "Nextra – Next.js Static Site Generator",
+      "description": "Build fast, customizable, and content-rich websites with Nextra. Powered by Next.js, it offers seamless Markdown support, customizable themes, file conventions, and easy integration with MDX, making it perfect for documentation, blogs, and static websites.",
+      "url": "https://nextra.site/",
+      "icon": "https://nextra.site/icon.svg?cac6a12bdc398585",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "Nextra",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbngtm2bjh1ctujcg6",
+      "createdAt": "2025-06-08T09:33:13.331Z",
+      "updatedAt": "2025-06-08T09:44:28.852Z"
+    },
+    {
+      "title": "Rapidlaunch",
+      "description": "Get your startup off the ground quickly with RapidLaunch! This open source Next.js starter kit provides the foundation you need to build your MVP fast – pre-built components, optimized performance, and ready-to-go styling",
+      "url": "https://saas.launchmvpfast.com/",
+      "icon": "https://saas.launchmvpfast.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "Nextra",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngv2uxl7n8qifs9hn",
+      "createdAt": "2025-06-08T09:34:21.753Z",
+      "updatedAt": "2025-06-08T09:44:52.096Z"
+    },
+    {
+      "title": "Mantine Next.js + Nextra template",
+      "description": "",
+      "url": "https://github.com/gfazioli/next-app-nextra-template/",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "Nextra",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngvqchsigyjz24k9",
+      "createdAt": "2025-06-08T09:34:52.193Z",
+      "updatedAt": "2025-06-08T09:44:57.925Z"
+    },
+    {
+      "title": "Nextjs Nextra Starter",
+      "description": "",
+      "url": "https://github.com/pdsuwwz/nextjs-nextra-starter/",
+      "icon": "https://github.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "Nextra",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbngwolkzi1vna3ebv",
+      "createdAt": "2025-06-08T09:35:36.584Z",
+      "updatedAt": "2025-06-08T09:45:03.777Z"
+    },
+    {
+      "title": "Mintlify — The documentation you want, effortlessly",
+      "description": "Meet the modern standard for public facing documentation. Beautiful out of the box, easy to maintain, and optimized for user engagement.",
+      "url": "https://mintlify.com/",
+      "icon": "https://cdn.prod.website-files.com/66cc2bd703ccf308a49a6188/66cc3e0d67f2324645580a18_favicon.png",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbnh1620w1eghb7o2lg",
+      "createdAt": "2025-06-08T09:39:05.832Z",
+      "updatedAt": "2025-06-08T09:45:08.964Z"
+    },
+    {
+      "title": "Fumadocs",
+      "description": "",
+      "url": "https://fumadocs.vercel.app/",
+      "icon": "https://fumadocs.vercel.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh1m5crmymb5f5mfd",
+      "createdAt": "2025-06-08T09:39:26.688Z",
+      "updatedAt": "2025-06-08T09:45:13.496Z"
+    },
+    {
+      "title": "Ariadocs",
+      "description": "",
+      "url": "https://ariadocs.vercel.app/",
+      "icon": "https://ariadocs.vercel.app/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh22w450v7cw6yell",
+      "createdAt": "2025-06-08T09:39:48.388Z",
+      "updatedAt": "2025-06-08T09:45:18.973Z"
+    },
+    {
+      "title": "Taxonomy",
+      "description": "An open source application built using the new router, server components and everything new in Next.js 13.",
+      "url": "https://tx.shadcn.com/",
+      "icon": "https://tx.shadcn.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "Next.js",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh2g1qr7fm67dz4p",
+      "createdAt": "2025-06-08T09:40:05.438Z",
+      "updatedAt": "2025-06-08T09:45:24.948Z"
+    },
+    {
+      "title": "VitePress | 由 Vite 和 Vue 驱动的静态站点生成器",
+      "description": "由 Vite 和 Vue 驱动的静态站点生成器",
+      "url": "https://vitepress.dev/zh/",
+      "icon": "https://vitepress.dev/vitepress-logo-mini.svg",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "Vue",
+        "文档框架"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbnh3jzd9x596fmxqvf",
+      "createdAt": "2025-06-08T09:40:57.193Z",
+      "updatedAt": "2025-06-08T09:45:31.239Z"
+    },
+    {
+      "title": "VitePress | 快速上手中文教程",
+      "description": "我的vitpress文档教程",
+      "url": "https://vitepress.yiov.top/",
+      "icon": "https://vitepress.yiov.top/logo.png",
+      "iconType": "image",
+      "tags": [
+        "Vue",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh3vkpd2o3yn9y8on",
+      "createdAt": "2025-06-08T09:41:12.217Z",
+      "updatedAt": "2025-06-08T09:45:39.916Z"
+    },
+    {
+      "title": "VuePress",
+      "description": "Vue 驱动的静态网站生成器",
+      "url": "https://vuepress.vuejs.org/zh/",
+      "icon": "https://vuepress.vuejs.org/images/icons/favicon-16x16.png",
+      "iconType": "image",
+      "tags": [
+        "Vue",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh4fhwkng8fhgsrl",
+      "createdAt": "2025-06-08T09:41:38.036Z",
+      "updatedAt": "2025-06-08T09:45:45.630Z"
+    },
+    {
+      "title": "VuePress 生态系统",
+      "description": "VuePress 官方主题和插件",
+      "url": "https://ecosystem.vuejs.press/zh/",
+      "icon": "https://ecosystem.vuejs.press/images/icons/favicon-16x16.png",
+      "iconType": "image",
+      "tags": [
+        "Vue"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh5huj4s8rcv9ukov",
+      "createdAt": "2025-06-08T09:42:27.739Z",
+      "updatedAt": "2025-06-08T09:42:27.739Z"
+    },
+    {
+      "title": "Plume 主题",
+      "description": "GitHub Repo stars npm version npm downloads npm downloads github license peer dependency codecov 使用 使用以下命令，快速创建一个新的使用本主题的 VuePress 项目。 启动项目 更新记录 贡献者 感谢所有的贡献者！",
+      "url": "https://theme-plume.vuejs.press/",
+      "icon": "https://theme-plume.vuejs.press/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "Vue",
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnh61b2uoc3x8q4h7",
+      "createdAt": "2025-06-08T09:42:52.958Z",
+      "updatedAt": "2025-06-08T09:46:06.742Z"
+    },
+    {
+      "title": "GitBook – Build product documentation your users will love",
+      "description": "Forget building and maintaining your own custom docs platform. With GitBook you get beautiful documentation for your users, and a branch-based Git workflow your team will love.",
+      "url": "https://www.gitbook.com/",
+      "icon": "https://framerusercontent.com/images/93a6peqhbHQaWP67zttmrKDazq4.png",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbnhbd3oz5bo5tmgrae",
+      "createdAt": "2025-06-08T09:47:01.524Z",
+      "updatedAt": "2025-06-08T09:47:01.524Z"
+    },
+    {
+      "title": "Outline – Team knowledge base & wiki",
+      "description": "A modern team knowledge base for your internal documentation, product specs, support answers, meeting notes, onboarding, &amp; more…",
+      "url": "https://www.getoutline.com/",
+      "icon": "https://www.getoutline.com/favicon.png",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhbr2ulyrq1h52wms",
+      "createdAt": "2025-06-08T09:47:19.638Z",
+      "updatedAt": "2025-06-08T09:47:19.638Z"
+    },
+    {
+      "title": "Rspress",
+      "description": "Rspack based static site generator",
+      "url": "https://rspress.dev/zh/",
+      "icon": "https://assets.rspack.dev/rspress/rspress-logo-480x480.png",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhc7ub4fckf5kv9ux",
+      "createdAt": "2025-06-08T09:47:41.363Z",
+      "updatedAt": "2025-06-08T09:47:41.363Z"
+    },
+    {
+      "title": "NotionNext中文 | Notion笔记，轻松建站，NotionNext官网",
+      "description": "Notion笔记，轻松建站，NotionNext官网",
+      "url": "https://www.tangly1024.com/",
+      "icon": "https://www.tangly1024.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhctq86qle53q5a2c",
+      "createdAt": "2025-06-08T09:48:09.728Z",
+      "updatedAt": "2025-06-08T09:48:09.728Z"
+    },
+    {
+      "title": "Astro",
+      "description": "Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.",
+      "url": "https://astro.build/",
+      "icon": "https://astro.build/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架",
+        "博客框架"
+      ],
+      "featured": true,
+      "category": "development",
+      "id": "mbnhdl79qok6dzxjs6f",
+      "createdAt": "2025-06-08T09:48:45.333Z",
+      "updatedAt": "2025-06-08T09:48:45.333Z"
+    },
+    {
+      "title": "Docz",
+      "description": "",
+      "url": "https://www.docz.site/",
+      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhe3a4el6kgs8thyp",
+      "createdAt": "2025-06-08T09:49:08.764Z",
+      "updatedAt": "2025-06-08T09:49:08.764Z"
+    },
+    {
+      "title": "dumi",
+      "description": "为组件研发而生的静态站点框架",
+      "url": "https://d.umijs.org/",
+      "icon": "https://gw.alipayobjects.com/zos/bmw-prod/d3e3eb39-1cd7-4aa5-827c-877deced6b7e/lalxt4g3_w256_h256.png",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhelintfd8n8eyds8",
+      "createdAt": "2025-06-08T09:49:32.399Z",
+      "updatedAt": "2025-06-08T09:49:32.399Z"
+    },
+    {
+      "title": "Docus",
+      "description": "The best place to start your documentation.",
+      "url": "https://docus.dev/",
+      "icon": "https://docus.dev/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhfbi45kpiay10aio",
+      "createdAt": "2025-06-08T09:50:06.076Z",
+      "updatedAt": "2025-06-08T09:50:06.076Z"
+    },
+    {
+      "title": "Valaxy",
+      "description": "Valaxy Site Docs",
+      "url": "https://valaxy.site/",
+      "icon": "https://valaxy.site/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhfpv9v7jrk22owui",
+      "createdAt": "2025-06-08T09:50:24.693Z",
+      "updatedAt": "2025-06-08T09:50:24.693Z"
+    },
+    {
+      "title": "Docusaurus",
+      "description": "An optimized site generator in React. Docusaurus helps you to move fast and write content. Build documentation websites, blogs, marketing pages, and more.",
+      "url": "https://docusaurus.io/",
+      "icon": "https://docusaurus.io/img/docusaurus.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架",
+        "React框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhgiwofsr1v8xd127",
+      "createdAt": "2025-06-08T09:51:02.328Z",
+      "updatedAt": "2025-06-08T09:51:02.328Z"
+    },
+    {
+      "title": "docsify",
+      "description": "A magical documentation generator.",
+      "url": "https://docsify.js.org/",
+      "icon": "https://docsify.js.org/_media/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhh0euvggxnilg44m",
+      "createdAt": "2025-06-08T09:51:25.014Z",
+      "updatedAt": "2025-06-08T09:51:25.014Z"
+    },
+    {
+      "title": "Wiki.js",
+      "description": "",
+      "url": "https://js.wiki/",
+      "icon": "https://js.wiki/favicons/favicon-32x32.png",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhhebwicywzs5cll",
+      "createdAt": "2025-06-08T09:51:43.052Z",
+      "updatedAt": "2025-06-08T09:51:43.052Z"
+    },
+    {
+      "title": "TypeDoc",
+      "description": "Documentation for TypeDoc",
+      "url": "https://typedoc.org/",
+      "icon": "https://typedoc.org/assets/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhhq4i0pf50ysx0eho",
+      "createdAt": "2025-06-08T09:51:58.338Z",
+      "updatedAt": "2025-06-08T09:51:58.338Z"
+    },
+    {
+      "title": "MkDocs",
+      "description": "Project documentation with Markdown.",
+      "url": "https://www.mkdocs.org/",
+      "icon": "https://www.mkdocs.org/img/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "SSG",
+        "文档框架"
+      ],
+      "featured": false,
+      "category": "development",
+      "id": "mbnhi48hrw1vwiqx16s",
+      "createdAt": "2025-06-08T09:52:16.625Z",
+      "updatedAt": "2025-06-08T09:52:16.625Z"
+    },
+    {
+      "title": "Awwwards - Website Awards - Best Web Design Trends",
+      "description": "Awwwards are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.",
+      "url": "https://www.awwwards.com/",
+      "icon": "https://assets.awwwards.com/assets/images/favicon.svg",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbnhl2z8wk4vdeggx1p",
+      "createdAt": "2025-06-08T09:54:34.964Z",
+      "updatedAt": "2025-06-08T09:54:34.964Z"
+    },
+    {
+      "title": "优设网",
+      "description": "优设网 (uisdc.com) 是国内设计师入门到进阶的专业设计网站。AIGC及设计内容全面及时，全网粉丝过千万。专注前沿设计趋势和设计方法论，拥有原创独家设计内容和设计师网站导航。提供AIGC教程、灵感素材、UI设计、平面设计、网页设计、电商设计、SDC网站推荐。",
+      "url": "https://www.uisdc.com/",
+      "icon": "https://www.uisdc.com/favicon-32x32.ico",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": true,
+      "category": "design",
+      "id": "mbnhlnpiheino48lvcu",
+      "createdAt": "2025-06-08T09:55:01.830Z",
+      "updatedAt": "2025-06-08T09:55:01.830Z"
+    },
+    {
+      "title": "优优灵感",
+      "description": "优优教程网灵感频道,设计师没灵感?在这里你可以找到Banner设计,海报设计,logo设计,UI设计,网页设计,App设计等灵感,来优优,找设计灵感.",
+      "url": "https://uiiiuiii.com/inspiration",
+      "icon": "https://uiiiuiii.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbnhmac0s4e03xpxem",
+      "createdAt": "2025-06-08T09:55:31.152Z",
+      "updatedAt": "2025-06-08T09:55:31.152Z"
+    },
+    {
+      "title": "花瓣网",
+      "description": "花瓣网, 设计师寻找灵感的天堂！图片素材领导者，帮你采集、发现网络上你喜欢的事物。你可以用它收集灵感,保存有用的素材,计划旅行,晒晒自己想要的东西",
+      "url": "https://huaban.com/",
+      "icon": "https://huaban.com/img/touch-icon-iphone.png",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": true,
+      "category": "design",
+      "id": "mbnhmq8i035451rmcuiw",
+      "createdAt": "2025-06-08T09:55:51.762Z",
+      "updatedAt": "2025-06-08T09:55:51.762Z"
+    },
+    {
+      "title": "Pinterest",
+      "description": "",
+      "url": "https://www.pinterest.com/",
+      "icon": "https://www.pinterest.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbnhnfkfqm47zx7lpgk",
+      "createdAt": "2025-06-08T09:56:24.591Z",
+      "updatedAt": "2025-06-08T09:56:24.591Z"
+    },
+    {
+      "title": "typo/graphic posters",
+      "description": "since 2008, a reference platform for typographic and graphic posters.",
+      "url": "https://www.typographicposters.com/",
+      "icon": "https://www.typographicposters.com/favicon.ico",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbnhnqr3d9014gnelet",
+      "createdAt": "2025-06-08T09:56:39.087Z",
+      "updatedAt": "2025-06-08T09:56:39.087Z"
+    },
+    {
+      "title": "JULIAN GLANDER",
+      "description": "GLANDERCO: The grafix practice of 3D artist Julian Glander",
+      "url": "https://glander.co/",
+      "icon": "https://favicon.cargocollective.com/35962-1561097461.ico",
+      "iconType": "image",
+      "tags": [
+        "设计灵感"
+      ],
+      "featured": false,
+      "category": "design",
+      "id": "mbnho3bifqznhuelp",
+      "createdAt": "2025-06-08T09:56:55.374Z",
+      "updatedAt": "2025-06-08T09:56:55.374Z"
     }
   ]
 }
