@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChefHat, Calculator, ShoppingCart, Timer } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/ToolLayout';
+import { ToolLayout } from '@/components/layout/tool-layout';
 
 interface FoodItem {
   name: string;

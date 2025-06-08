@@ -44,6 +44,18 @@ export interface TableOfContentsProps {
    * @default "目录"
    */
   title?: string;
+
+  /**
+   * 是否启用自适应定位
+   * @default false
+   */
+  adaptive?: boolean;
+
+  /**
+   * 自适应定位的偏移量（单位：px）
+   * @default 80
+   */
+  adaptiveOffset?: number;
 }
 
 /**
@@ -60,8 +72,15 @@ export interface TableOfContentsProps {
  *   ]}
  * />
  */
-export function TableOfContents({ headings, className, title = '目录' }: TableOfContentsProps) {
+export function TableOfContents({ 
+  headings, 
+  className, 
+  title = '目录',
+  adaptive = false,
+  adaptiveOffset = 80 
+}: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
+  const [isFixed, setIsFixed] = useState(false);
   const tocRef = useRef<HTMLDivElement>(null);
 
   // 如果没有标题，不渲染目录组件
@@ -222,9 +241,43 @@ export function TableOfContents({ headings, className, title = '目录' }: Table
 
   const organizedHeadings = organizeHeadings(filteredHeadings);
 
+  useEffect(() => {
+    if (!adaptive) return;
+
+    const handleScroll = () => {
+      if (tocRef.current) {
+        const { top } = tocRef.current.getBoundingClientRect();
+        setIsFixed(top <= adaptiveOffset);
+      }
+    };
+
+    const handleResize = () => {
+      if (tocRef.current && isFixed) {
+        tocRef.current.style.maxHeight = `${window.innerHeight - adaptiveOffset}px`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    handleScroll(); // 初始检查
+    handleResize(); // 初始设置
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [adaptive, adaptiveOffset, isFixed]);
+
   return (
     <div className={cn('pl-0', className)}>
-      <div ref={tocRef} className="pb-4 pr-2">
+      <div 
+        ref={tocRef} 
+        className={cn(
+          'pb-4 pr-2',
+          adaptive && 'transition-all duration-200',
+          isFixed && adaptive && 'fixed top-[80px] overflow-y-auto'
+        )}
+      >
         <h3 className="text-sm font-medium mb-2 text-foreground flex items-center">
           <Text className="h-4 w-4 mr-1.5 text-primary/80" />
           <span>{title}</span>

@@ -1,54 +1,66 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-
-import { ArrowLeft, LucideIcon } from 'lucide-react';
-import Link from 'next/link';
+import React from 'react'
+import { LucideIcon } from 'lucide-react'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 interface AdminPageContentLayoutProps {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  children: React.ReactNode;
-  actions?: React.ReactNode;
-  backUrl?: string;
-  backLabel?: string;
+  children: React.ReactNode
+  title?: string
+  description?: string
+  icon?: LucideIcon
+  backUrl?: string
+  backLabel?: string
+  className?: string
+  headerClassName?: string
+  contentClassName?: string
 }
 
-export function AdminPageContentLayout({
+export default function AdminPageContentLayout({
+  children,
   title,
   description,
   icon: Icon,
-  children,
-  actions,
-  backUrl = '/admin',
-  backLabel = '返回管理后台',
+  backUrl,
+  backLabel,
+  className,
+  headerClassName,
+  contentClassName
 }: AdminPageContentLayoutProps) {
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href={backUrl}>
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            {backLabel}
-          </Button>
-        </Link>
+    <div className={cn("min-h-screen p-4 sm:p-6 md:p-8", className)} role="region" aria-label="管理页面内容">
+      <div className="mx-auto max-w-7xl">
+        {(title || description || backUrl) && (
+          <header className={cn("flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8", headerClassName)}>
+            {(title || description) && (
+              <div>
+                {title && <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>}
+                {description && (
+                  <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+                    {description}
+                  </p>
+                )}
+              </div>
+            )}
+            {(backUrl || Icon) && (
+              <div className="flex items-center space-x-3">
+                {Icon && <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground" aria-hidden="true" />}
+                {backUrl && (
+                  <Link
+                    href={backUrl}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={backLabel || "返回"}
+                  >
+                    {backLabel || "返回"}
+                  </Link>
+                )}
+              </div>
+            )}
+          </header>
+        )}
+        <main className={cn("w-full", contentClassName)} role="main">
+          {children}
+        </main>
       </div>
-
-      {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Icon className="h-8 w-8" />
-          {title}
-        </h1>
-        <p className="text-muted-foreground mt-2">{description}</p>
-      </div>
-
-      {/* 操作按钮 */}
-      {actions && <div className="mb-6">{actions}</div>}
-
-      {/* 主要内容 */}
-      {children}
     </div>
-  );
+  )
 }

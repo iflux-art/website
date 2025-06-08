@@ -1,114 +1,32 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { CardHover } from '@/components/ui/card-hover';
 
-/**
- * 卡片类型
- */
-export type CardType = 'blog' | 'category' | 'resource' | 'link' | 'navigation' | 'friend';
+export type CardType = 'blog' | 'category' | 'resource' | 'link' | 'navigation' | 'friend' | 'docs';
 
-/**
- * 统一卡片组件属性
- */
 export interface UnifiedCardProps {
-  /**
-   * 卡片类型
-   * @default "link"
-   */
   type?: CardType;
-
-  /**
-   * 卡片标题
-   */
   title: string;
-
-  /**
-   * 卡片描述
-   */
   description?: string;
-
-  /**
-   * 卡片链接
-   */
   href: string;
-
-  /**
-   * 是否为外部链接
-   * @default false
-   */
   isExternal?: boolean;
-
-  /**
-   * 卡片图标
-   * 可以是字符串、图片URL或React节点
-   */
   icon?: string | React.ReactNode;
-
-  /**
-   * 图标类型
-   * @default "emoji"
-   */
   iconType?: 'emoji' | 'image' | 'component';
-
-  /**
-   * 卡片标签
-   * 可以是字符串数组或逗号分隔的字符串
-   */
   tags?: string[] | string;
-
-  /**
-   * 卡片图片
-   */
   image?: string;
-
-  /**
-   * 卡片日期
-   */
   date?: string;
-
-  /**
-   * 卡片作者
-   */
   author?: string;
-
-  /**
-   * 卡片颜色
-   */
   color?: string;
-
-  /**
-   * 是否为精选卡片
-   * @default false
-   */
   featured?: boolean;
-
-  /**
-   * 索引，用于动画延迟
-   */
-  index?: number;
-
-  /**
-   * 自定义类名
-   */
+  _index?: number;
   className?: string;
-
-  /**
-   * 卡片样式变体
-   * - default: 默认样式，图标在左上角
-   * - compact: 紧凑样式，图标和标题在一行
-   * - horizontal: 水平样式，图标在左侧
-   */
   variant?: 'default' | 'compact' | 'horizontal';
-
-  /**
-   * 子元素
-   */
   children?: React.ReactNode;
 }
 
@@ -151,28 +69,6 @@ export interface UnifiedCardProps {
  * />
  * ```
  */
-/**
- * 卡片交互效果
- */
-const cardInteractions = {
-  // 基础交互效果
-  base: '',
-
-  // 悬停效果
-  hover: {
-    // 默认悬停效果
-    default: 'hover:shadow-lg',
-    // 边框高亮效果
-    border: 'hover:border-primary/20',
-    // 背景高亮效果
-    background: 'hover:bg-accent/50',
-    // 阴影效果
-    shadow: 'hover:shadow-lg',
-    // 缩放效果
-    scale: 'hover:scale-[1.02]',
-  },
-};
-
 export function UnifiedCard({
   type = 'link',
   title,
@@ -192,17 +88,12 @@ export function UnifiedCard({
   variant = 'default',
   children,
 }: UnifiedCardProps) {
-  // 处理标签，可以是字符串数组或逗号分隔的字符串
   const tagArray = Array.isArray(tags)
     ? tags
     : typeof tags === 'string'
-    ? tags
-        .split(',')
-        .map(tag => tag.trim())
-        .filter(Boolean)
+    ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
     : [];
 
-  // 处理图标
   const renderIcon = () => {
     if (!icon) return null;
 
@@ -219,18 +110,15 @@ export function UnifiedCard({
     }
   };
 
-  // 卡片内容
   const cardContent = (
-    <Card
+    <CardHover
+      href={href}
+      isExternal={isExternal}
       className={cn(
-        'h-full overflow-hidden transition-all border border-border',
+        'border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6 h-full',
         featured && 'border-primary/30',
-        cardInteractions.base,
-        cardInteractions.hover.shadow,
-        cardInteractions.hover.scale,
         type === 'category' && 'bg-gradient-to-br',
-        color &&
-          `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
+        color && `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
         className
       )}
       style={{
@@ -301,7 +189,7 @@ export function UnifiedCard({
           </div>
 
           {tagArray.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3">
+            <div className="flex flex-wrap gap-2 mt-3">
               {tagArray.map(tag => (
                 <Badge key={tag} variant="outline" className="text-xs">
                   {tag}
@@ -315,66 +203,35 @@ export function UnifiedCard({
       )}
 
       {variant === 'horizontal' && (
-        <div className="flex h-full">
+        <CardContent className="flex p-4 gap-4">
           {image && (
-            <div className="w-1/3 relative">
-              <Image src={image} alt={title} fill className="object-cover" />
+            <div className="flex-shrink-0">
+              <Image src={image} alt={title} width={120} height={80} className="rounded-lg object-cover" />
             </div>
           )}
-          <div className={cn('flex flex-col', image ? 'w-2/3' : 'w-full')}>
-            <CardHeader className="p-4 pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{title}</CardTitle>
-                {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
-              </div>
-            </CardHeader>
-            <CardContent className="p-4 pt-0 flex-grow">
-              {description && (
-                <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
-              )}
-            </CardContent>
-            {(tagArray.length > 0 || date) && (
-              <CardFooter className="p-4 pt-0 flex items-center justify-between">
-                {tagArray.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {tagArray.slice(0, 3).map(tag => (
-                      <Badge key={tag} variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                    {tagArray.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{tagArray.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                )}
-                {date && <div className="text-xs text-muted-foreground">{date}</div>}
-              </CardFooter>
+          <div className="flex-grow min-w-0">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold truncate">{title}</h3>
+              {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
+            </div>
+            {description && (
+              <p className="text-muted-foreground text-sm line-clamp-2 mb-2">{description}</p>
             )}
+            {tagArray.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {tagArray.map(tag => (
+                  <Badge key={tag} variant="outline" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
+            {children}
           </div>
-        </div>
+        </CardContent>
       )}
-    </Card>
+    </CardHover>
   );
 
-  // 包装链接
-  if (href) {
-    if (isExternal) {
-      return (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="block h-full">
-          {cardContent}
-        </a>
-      );
-    } else {
-      return (
-        <Link href={href} className="block h-full">
-          {cardContent}
-        </Link>
-      );
-    }
-  }
-
-  // 无链接
   return cardContent;
 }

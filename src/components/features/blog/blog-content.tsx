@@ -3,7 +3,7 @@ import { Calendar, Calculator } from 'lucide-react';
 import Link from 'next/link';
 
 import { countWords } from '@/lib/utils';
-import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
+import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 
 /**
  * 博客内容组件属性
@@ -109,7 +109,7 @@ export function BlogContent({
         </div>
       </header>
 
-      <MDXContent>{mdxContent}</MDXContent>
+      <MarkdownRenderer content={mdxContent} />
     </article>
   );
 }

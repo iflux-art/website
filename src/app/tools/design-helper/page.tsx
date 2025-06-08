@@ -7,7 +7,7 @@ type TabKey = 'colors' | 'typography' | 'spacing' | 'grid';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Palette, Type, Layout, Ruler, Copy, Check } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/ToolLayout';
+import { ToolLayout } from '@/components/layout/tool-layout';
 
 export default function DesignHelperPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('colors');

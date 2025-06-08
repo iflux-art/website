@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Copy, Check, Download, Eye, Edit, FileText, RotateCcw, FileDown, Columns } from 'lucide-react'; // Added Columns as a placeholder for split view
-import { ToolLayout } from '@/components/layout/ToolLayout';
+import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

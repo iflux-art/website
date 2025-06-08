@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AdminPageContentLayout } from '@/components/layout/AdminPageContentLayout';
+import AdminPageContentLayout from '@/components/layout/AdminPageContentLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Globe, BarChart3 } from 'lucide-react';
 

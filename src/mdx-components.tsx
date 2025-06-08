@@ -25,11 +25,11 @@ interface FriendLinkCardProps {
   icon?: string;
   iconType?: 'emoji' | 'image';
 }
-import { CodeBlock } from '@/components/mdx/code-block';
+import { CodeBlock } from '@/components/ui/code-block';
 import { InlineCode } from '@/styles/inline-code';
 import { MarkdownLink } from '@/styles/markdown-link';
-import { UnifiedCard } from '@/components/cards/unified-card';
-import { UnifiedGrid } from '@/components/cards/unified-grid';
+import { UnifiedCard } from '@/components/ui/unified-card';
+import { UnifiedGrid } from '@/components/ui/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
 import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
 

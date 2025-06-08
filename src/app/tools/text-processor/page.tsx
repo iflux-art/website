@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Type, RotateCcw, FileDown, Calculator, ArrowUp, ArrowDown } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/ToolLayout';
+import { ToolLayout } from '@/components/layout/tool-layout';
 import { DualTextarea } from '@/components/ui/dual-textarea';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { useToolState } from '@/hooks/use-tool-state';

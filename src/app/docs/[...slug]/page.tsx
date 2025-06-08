@@ -10,8 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Breadcrumb as BreadcrumbComponent, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { Sidebar } from '@/components/ui/sidebar';
 import { TocContainer } from '@/components/ui/toc-container';
-import { MarkdownContent as MDXContent } from '@/components/mdx/markdown-content';
-import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
+import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
@@ -187,9 +186,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               </div>
               <article className="prose prose-slate dark:prose-invert max-w-none">
                 <h1 className="text-4xl font-bold mb-8 tracking-tight">{frontmatter.title}</h1>
-                <MDXContent>
-                  <ServerMDX content={content} />
-                </MDXContent>
+                  <MarkdownRenderer content={content} />
               </article>
 
               {(prevDoc || nextDoc) && (

@@ -6,7 +6,7 @@ import matter from 'gray-matter';
 import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { TocContainer } from '@/components/ui/toc-container';
-import { MarkdownRenderer as ServerMDX } from '@/components/mdx/markdown-renderer';
+import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   // 使用 await 确保 params.slug 是可用的
@@ -299,7 +299,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 date={date}
                 tags={data.tags || []}
                 content={finalContent}
-                mdxContent={<ServerMDX content={finalContent} />}
+                mdxContent={<MarkdownRenderer content={finalContent} />}
                 path={`/blog/${fullSlug}`}
               />
             </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Hash, Copy, Check, RotateCcw, FileDown } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/ToolLayout';
+import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

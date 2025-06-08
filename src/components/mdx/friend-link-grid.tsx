@@ -1,4 +1,4 @@
-import { UnifiedCard } from '@/components/cards/unified-card';
+import { UnifiedCard } from '@/components/ui/unified-card';
 
 interface FriendLinkGridProps {
   children: React.ReactNode;
