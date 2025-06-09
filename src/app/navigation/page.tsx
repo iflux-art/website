@@ -36,10 +36,11 @@ export default function NavigationPage() {
       setItems(navigationData.items || []);
       setCategories(categoriesData || []);
       setAllTags(
+        categoryId ? 
         tagsData.filter((tag: string) =>
-          // 确保标签属于当前分类的项目
           navigationData.items.some((item: NavigationItem) => item.category === categoryId && item.tags.includes(tag))
-        ) || []
+        ) : 
+        tagsData || []
       );
 
       // 移除默认选择第一个分类的逻辑
