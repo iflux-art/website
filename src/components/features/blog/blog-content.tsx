@@ -36,7 +36,7 @@ export interface BlogContentProps {
   /**
    * 文章路径，用于评论系统区分不同文章
    */
-  path?: string;
+  _path?: string;
 }
 
 /**
@@ -62,7 +62,7 @@ export function BlogContent({
   content,
   mdxContent,
   tags = [],
-  path,
+  _path,
 }: BlogContentProps) {
   return (
     <article>
