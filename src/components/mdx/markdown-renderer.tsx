@@ -95,6 +95,38 @@ export const mdxComponents = {
     return <InlineCode className={className}>{children}</InlineCode>;
   },
 
+  // 表格组件
+  table: ({ children }: { children: React.ReactNode }) => (
+    <div className="my-6 w-full overflow-y-auto">
+      <table className="w-full border-collapse border border-border">{children}</table>
+    </div>
+  ),
+  
+  // 表头
+  th: ({ children }: { children: React.ReactNode }) => (
+    <th className="border border-border bg-muted px-4 py-2 text-left font-semibold">{children}</th>
+  ),
+  
+  // 表格单元格
+  td: ({ children }: { children: React.ReactNode }) => (
+    <td className="border border-border px-4 py-2">{children}</td>
+  ),
+  
+  // 表格行
+  tr: ({ children }: { children: React.ReactNode }) => (
+    <tr className="m-0 border-t border-border p-0 even:bg-muted">{children}</tr>
+  ),
+  
+  // 表格主体
+  tbody: ({ children }: { children: React.ReactNode }) => (
+    <tbody className="[&_tr:last-child]:border-0">{children}</tbody>
+  ),
+  
+  // 表格头部
+  thead: ({ children }: { children: React.ReactNode }) => (
+    <thead>{children}</thead>
+  ),
+
   // 统一卡片组件
   ResourceCard: (props: ResourceCardProps) => (
     <UnifiedCard

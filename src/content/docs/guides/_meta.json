@@ -1,5 +1,9 @@
 {
   "color-system": "颜色系统",
-  "interaction-system": "交互效果系统",
-  "performance-optimization": "性能优化"
+  "content": "内容管理",
+  "lazy-loading": "懒加载优化",
+  "modular-architecture": "模块化架构",
+  "performance-accessibility-guide": "性能与可访问性指南",
+  "style-management": "样式管理",
+  "youhua": "性能优化实践"
 }

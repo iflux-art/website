@@ -42,7 +42,27 @@ CodeBlock.displayName = 'CodeBlock';
 // 基础Markdown组件映射
 const baseComponents: CustomComponents = {
   code: CodeBlock,
-  // 可以添加更多基础组件映射
+  // 表格组件
+  table: ({ children }) => (
+    <div className="my-6 w-full overflow-y-auto">
+      <table className="w-full border-collapse border border-border">{children}</table>
+    </div>
+  ),
+  th: ({ children }) => (
+    <th className="border border-border bg-muted px-4 py-2 text-left font-semibold">{children}</th>
+  ),
+  td: ({ children }) => (
+    <td className="border border-border px-4 py-2">{children}</td>
+  ),
+  tr: ({ children }) => (
+    <tr className="m-0 border-t border-border p-0 even:bg-muted">{children}</tr>
+  ),
+  tbody: ({ children }) => (
+    <tbody className="[&_tr:last-child]:border-0">{children}</tbody>
+  ),
+  thead: ({ children }) => (
+    <thead>{children}</thead>
+  ),
 };
 
 export const MarkdownRenderer: FC<MarkdownRendererProps> = memo(({ source, components = {} }) => {
