@@ -146,7 +146,17 @@ const createResourceCardHTML = ({
     </div>
   `;
 };
-<edit>
+        if (element.hasAttribute('data-resource-card')) {
+          const parent = element.parentElement;
+          if (parent instanceof HTMLElement) {
+            processResourceCards(parent);
+          }
+        } else if (element.hasAttribute('data-resource-grid')) {
+          const parent = element.parentElement;
+          if (parent instanceof HTMLElement) {
+            processResourceGrids(parent);
+          }
+        }
         if (element.hasAttribute('data-resource-card')) {
           const parent = element.parentElement;
           if (parent instanceof HTMLElement) {

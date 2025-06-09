@@ -109,7 +109,7 @@ export function BlogContent({
         </div>
       </header>
 
-      <MarkdownRenderer content={mdxContent} />
+      {mdxContent}
     </article>
   );
 }

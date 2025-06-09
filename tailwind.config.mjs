@@ -67,54 +67,85 @@ const config = {
       typography: {
         DEFAULT: {
           css: {
-            // 表格样式
+            maxWidth: 'none',
+            color: 'var(--foreground)',
+            '--tw-prose-body': 'var(--foreground)',
+            '--tw-prose-headings': 'var(--foreground)',
+            '--tw-prose-links': 'var(--primary)',
+            '--tw-prose-bold': 'var(--foreground)',
+            '--tw-prose-counters': 'var(--muted-foreground)',
+            '--tw-prose-bullets': 'var(--muted-foreground)',
+            '--tw-prose-hr': 'var(--border)',
+            '--tw-prose-quotes': 'var(--foreground)',
+            '--tw-prose-quote-borders': 'var(--border)',
+            '--tw-prose-captions': 'var(--muted-foreground)',
+            '--tw-prose-code': 'var(--foreground)',
+            '--tw-prose-pre-code': 'var(--foreground)',
+            '--tw-prose-pre-bg': 'var(--muted)',
+            '--tw-prose-th-borders': 'var(--border)',
+            '--tw-prose-td-borders': 'var(--border)',
             'table': {
               width: '100%',
               borderCollapse: 'collapse',
-              marginTop: '1.5em',
-              marginBottom: '1.5em',
+              borderSpacing: 0,
+              marginTop: '2em',
+              marginBottom: '2em',
+              lineHeight: '1.7142857'
             },
             'thead': {
-              borderBottom: '2px solid var(--tw-prose-th-borders)',
+              borderBottomWidth: '1px',
+              borderBottomColor: 'var(--border)'
+            },
+            'thead th': {
+              color: 'var(--foreground)',
+              fontWeight: '600',
+              backgroundColor: 'var(--muted)',
+              borderBottom: '1px solid var(--border)',
+              padding: '0.75rem',
+              textAlign: 'left'
             },
             'tbody tr': {
-              borderBottom: '1px solid var(--tw-prose-td-borders)',
-            },
-            'th': {
-              padding: '0.75em 1em',
-              fontWeight: '600',
-              textAlign: 'left',
-              backgroundColor: 'var(--tw-prose-th-bg)',
-              color: 'var(--tw-prose-th)',
-            },
-            'td': {
-              padding: '0.75em 1em',
-              verticalAlign: 'top',
-              color: 'var(--tw-prose-td)',
-            },
-            'thead th:first-child': {
-              paddingLeft: '1em',
-            },
-            'thead th:last-child': {
-              paddingRight: '1em',
-            },
-            'tbody td:first-child': {
-              paddingLeft: '1em',
-            },
-            'tbody td:last-child': {
-              paddingRight: '1em',
+              borderBottomWidth: '1px',
+              borderBottomColor: 'var(--border)'
             },
             'tbody tr:last-child': {
-              borderBottom: 'none',
+              borderBottomWidth: '0'
             },
-            // 暗色模式
-            '--tw-prose-th-bg': 'var(--tw-prose-bg)',
-            '--tw-prose-th-borders': 'var(--tw-prose-borders)',
-            '--tw-prose-td-borders': 'var(--tw-prose-borders)',
-            '--tw-prose-th': 'var(--tw-prose-headings)',
-            '--tw-prose-td': 'var(--tw-prose-body)',
-          },
-        },
+            'tbody td': {
+              padding: '0.75rem',
+              verticalAlign: 'baseline'
+            },
+            'a:hover': {
+              color: 'var(--primary)',
+              textDecoration: 'underline'
+            },
+            'a:visited': {
+              color: 'var(--primary)',
+            },
+            img: {
+              marginTop: '2em',
+              marginBottom: '2em'
+            },
+            video: {
+              marginTop: '2em',
+              marginBottom: '2em'
+            },
+            figure: {
+              marginTop: '2em',
+              marginBottom: '2em'
+            },
+            'figure figcaption': {
+              color: 'var(--muted-foreground)',
+              fontStyle: 'italic'
+            },
+            'code::before': {
+              content: '""'
+            },
+            'code::after': {
+              content: '""'
+            }
+          }
+        }
       },
     },
   },
