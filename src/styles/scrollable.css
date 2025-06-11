@@ -1,0 +1,43 @@
+/* ==== 滚动条样式 ==== */
+/* 隐藏滚动条但保留滚动功能 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari and Opera */
+}
+
+/* 自定义滚动条样式 - 仅在需要时使用 */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--primary-foreground);
+  opacity: 0.2;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  opacity: 0.3;
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+}
+
+.scrollbar-thumb-primary\/20::-webkit-scrollbar-thumb {
+  background-color: oklch(from var(--primary) l c h / 0.2);
+}
+
+.hover\:scrollbar-thumb-primary\/30:hover::-webkit-scrollbar-thumb {
+  background-color: oklch(from var(--primary) l c h / 0.3);
+}

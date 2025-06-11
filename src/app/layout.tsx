@@ -3,7 +3,6 @@ import './globals.css';
 import { Navbar } from '@/components/layout/navbar/navbar';
 import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from 'next-themes';
-import { StyleManager } from '@/styles/style-manager';
 import React from 'react';
 import { generateMetadata, generateViewport } from '@/lib/metadata';
 
@@ -21,8 +20,6 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
-        {/* 添加 mermaid 脚本，用于流程图渲染 */}
-        <script async src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" />
       </head>
       <body>
         <ThemeProvider
@@ -32,7 +29,6 @@ export default function RootLayout({
           storageKey="iflux-theme-preference"
           disableTransitionOnChange
         >
-          <StyleManager />
           <div className="flex flex-col min-h-screen">
             <Navbar className="flex-shrink-0" />
             {/* 移除了 overflow-auto 以允许 sticky 定位正常工作 */}

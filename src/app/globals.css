@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+/* 导入模块化样式 */
+@import '../styles/scrollable.css';
+@import '../styles/inline-code.css';
+@import '../styles/markdown-link.css';
+@import '../styles/heading.css';
 /* 注意：Typography 插件同时在此处和 tailwind.config.mjs 中导入 */
 /* 这是必要的：tailwind.config.mjs 中导入用于配置插件，此处导入确保样式在正确位置加载 */
 @plugin "@tailwindcss/typography"; /* 使用 Typography 插件提供的 prose 类 */
@@ -322,36 +327,6 @@ body.home-page footer {
     grid-template-columns: repeat(20, minmax(0, 1fr));
   }
 
-  /* 自定义滚动条样式 */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-
-  .scrollbar-thumb-border {
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .scrollbar-track-transparent {
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: var(--border);
-    border-radius: 3px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: var(--muted-foreground);
-  }
-
   /* 文本截断 */
   .line-clamp-2 {
     display: -webkit-box;
@@ -375,69 +350,4 @@ body.home-page footer {
     border-radius: 0.25rem;
     font-weight: 500;
   }
-
-  /* 全站超链接悬浮动效 - 从中心向两侧扩散的下划线 */
-  .prose a,
-  .mdx-content a,
-  article a,
-  .content a,
-  a.link-hover {
-    position: relative;
-    text-decoration: none;
-    color: hsl(var(--primary));
-    transition: color 0.2s ease;
-  }
-
-  .prose a::after,
-  .mdx-content a::after,
-  article a::after,
-  .content a::after,
-  a.link-hover::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(-50%);
-  }
-
-  .prose a:hover::after,
-  .mdx-content a:hover::after,
-  article a:hover::after,
-  .content a:hover::after,
-  a.link-hover:hover::after {
-    width: 100%;
-  }
-
-  .prose a:hover,
-  .mdx-content a:hover,
-  article a:hover,
-  .content a:hover,
-  a.link-hover:hover {
-    color: hsl(var(--primary) / 0.8);
-  }
-
-  /* 排除特定类型的链接 */
-  .prose a.no-underline::after,
-  .mdx-content a.no-underline::after,
-  article a.no-underline::after,
-  .content a.no-underline::after,
-  a.no-underline::after,
-  .prose a[class*='button']::after,
-  .mdx-content a[class*='button']::after,
-  article a[class*='button']::after,
-  .content a[class*='button']::after {
-    display: none;
-  }
 }
-
-/*
-  注意：以下样式已移至组件中：
-  1. 滚动条样式 -> src/components/ui/scrollable/index.tsx
-  2. 内联代码样式 -> src/components/ui/markdown/inline-code.tsx
-  3. 超链接样式 -> src/components/ui/markdown/link.tsx
-  4. 标题样式 -> src/components/ui/markdown/heading.tsx
-*/

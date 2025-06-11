@@ -1,0 +1,53 @@
+/* ==== 内联代码样式 ==== */
+/* 隐藏行内代码中的反引号 */
+.prose code::before,
+.prose code::after,
+.prose *:not(pre) > code::before,
+.prose *:not(pre) > code::after,
+article code::before,
+article code::after,
+*:not(pre) > code::before,
+*:not(pre) > code::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* 确保行内代码有正确的间距和样式 */
+.prose p code:not(pre code),
+.prose li code:not(pre code),
+.prose h1 code:not(pre code),
+.prose h2 code:not(pre code),
+.prose h3 code:not(pre code),
+.prose h4 code:not(pre code),
+.prose h5 code:not(pre code),
+.prose h6 code:not(pre code),
+.prose blockquote code:not(pre code),
+.prose td code:not(pre code),
+.prose th code:not(pre code) {
+  margin: 0;
+  padding: 0.15rem 0.6rem;
+  border-radius: 0.375rem;
+  background-color: hsl(var(--muted));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+  font-family: var(--font-geist-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* 暗色模式下的行内代码样式 */
+.dark .prose p code:not(pre code),
+.dark .prose li code:not(pre code),
+.dark .prose h1 code:not(pre code),
+.dark .prose h2 code:not(pre code),
+.dark .prose h3 code:not(pre code),
+.dark .prose h4 code:not(pre code),
+.dark .prose h5 code:not(pre code),
+.dark .prose h6 code:not(pre code),
+.dark .prose blockquote code:not(pre code),
+.dark .prose td code:not(pre code),
+.dark .prose th code:not(pre code) {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}

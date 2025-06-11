@@ -9,8 +9,6 @@ import { cn } from '@/lib/utils';
 
 /**
  * Sheet 变体定义
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const sheetVariants = cva(
   'fixed z-50 gap-5 bg-background p-8 shadow-xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
@@ -88,8 +86,6 @@ export type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof SheetP
 /**
  * Sheet 组件
  * 用于创建从屏幕边缘滑入的面板
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  *
  * @example
  * <Sheet>

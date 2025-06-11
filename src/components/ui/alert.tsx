@@ -8,8 +8,6 @@ import { cn } from '@/lib/utils';
 /**
  * Alert 组件变体定义
  * 定义了警告框的不同样式变体
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const alertVariants = cva(
   'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',

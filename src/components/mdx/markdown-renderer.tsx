@@ -1,11 +1,15 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+
+interface MarkdownRendererProps {
+  content: string;
+}
 import Image, { ImageProps } from 'next/image';
 import { CodeBlock } from '@/components/ui/code-block';
-import { InlineCode } from '@/styles/inline-code';
-import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { MarkdownLink } from './markdown-link';
+import { InlineCode } from './inline-code';
 interface ResourceCardProps {
   title: string;
   description?: string;
@@ -133,12 +137,11 @@ export const mdxComponents = {
       type="resource"
       title={props.title}
       description={props.description}
-      href={props.url || props.href}
+      href={props.url || props.href || '#'}
       icon={props.icon}
       iconType={props.iconType || 'emoji'}
       featured={props.featured}
       isExternal={true}
-      {...props}
     />
   ),
   ResourceGrid: (props: ResourceGridProps) => <UnifiedGrid {...props} type="resource" />,
@@ -149,11 +152,10 @@ export const mdxComponents = {
       type="friend"
       title={props.name || props.title}
       description={props.description}
-      href={props.url || props.href}
+      href={props.url || props.href || '#'}
       icon={props.avatar || props.icon}
       iconType={props.iconType || 'emoji'}
       isExternal={true}
-      {...props}
     />
   ),
   FriendLinkGrid: (props: ResourceGridProps) => <UnifiedGrid {...props} type="friend" />,

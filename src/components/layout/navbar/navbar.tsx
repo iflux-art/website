@@ -9,8 +9,6 @@ import { useNavbarScroll } from '@/hooks/use-navbar-scroll';
 /**
  * 主导航栏组件
  * 负责整体导航布局和响应式处理
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 export function Navbar({ className = '' }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);

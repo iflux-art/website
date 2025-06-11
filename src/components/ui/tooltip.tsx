@@ -15,29 +15,21 @@ export type TooltipProviderProps = React.ComponentPropsWithoutRef<typeof Tooltip
 
 /**
  * Tooltip 组件提供者
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TooltipProvider = TooltipPrimitive.Provider;
 
 /**
  * Tooltip 组件
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Tooltip = TooltipPrimitive.Root;
 
 /**
  * TooltipTrigger 组件
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
 /**
  * TooltipContent 组件
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TooltipContent = React.forwardRef<
   HTMLDivElement,

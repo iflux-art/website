@@ -38,8 +38,6 @@ export type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * Card 组件
  * 用于创建卡片容器
  *
- * 已更新为 Tailwind CSS v4 兼容版本
- *
  * @example
  * <Card>
  *   <CardHeader>
@@ -62,8 +60,6 @@ Card.displayName = 'Card';
 /**
  * CardHeader 组件
  * 用于创建卡片的头部区域
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, ...props }, ref) => (
@@ -75,8 +71,6 @@ CardHeader.displayName = 'CardHeader';
 /**
  * CardTitle 组件
  * 用于创建卡片的标题
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CardTitle = React.forwardRef<HTMLParagraphElement, CardTitleProps>(
   ({ className, ...props }, ref) => (
@@ -92,8 +86,6 @@ CardTitle.displayName = 'CardTitle';
 /**
  * CardDescription 组件
  * 用于创建卡片的描述文本
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ className, ...props }, ref) => (
@@ -105,8 +97,6 @@ CardDescription.displayName = 'CardDescription';
 /**
  * CardContent 组件
  * 用于创建卡片的主要内容区域
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => (
@@ -118,8 +108,6 @@ CardContent.displayName = 'CardContent';
 /**
  * CardFooter 组件
  * 用于创建卡片的底部区域
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, ...props }, ref) => (

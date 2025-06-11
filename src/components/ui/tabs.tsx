@@ -41,14 +41,12 @@ export interface TabsContentProps {
   value: string;
   className?: string;
   children: React.ReactNode;
-  forceMount?: boolean;
+  forceMount?: true;
 }
 
 /**
  * Tabs 组件
  * 用于在同一区域内切换不同内容
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(({ className, ...props }, ref) => (
   <TabsPrimitive.Root
@@ -65,8 +63,6 @@ Tabs.displayName = TabsPrimitive.Root.displayName;
 /**
  * TabsList 组件
  * 用于包含所有标签触发器
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(({ className, ...props }, ref) => (
   <TabsPrimitive.List
@@ -83,8 +79,6 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 /**
  * TabsTrigger 组件
  * 用于切换标签内容的按钮
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
   ({ className, ...props }, ref) => (
@@ -103,8 +97,6 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 /**
  * TabsContent 组件
  * 用于显示标签内容
- *
- * 已更新为 Tailwind CSS v4 兼容版本
  */
 const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
   ({ className, ...props }, ref) => (
