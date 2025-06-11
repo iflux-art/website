@@ -12,7 +12,7 @@ interface ResourceCardProps {
   url?: string;
   href?: string;
   icon?: string;
-  iconType?: 'emoji' | 'image';
+  iconType?: 'image' | 'emoji';
   featured?: boolean;
 }
 
@@ -24,11 +24,8 @@ interface FriendLinkCardProps {
   href?: string;
   avatar?: string;
   icon?: string;
-  iconType?: 'emoji' | 'image';
+  iconType?: 'image' | 'emoji';
 }
-import { CodeBlock } from '@/components/ui/code-block';
-import { InlineCode } from '@/styles/inline-code';
-import { MarkdownLink } from '@/styles/markdown-link';
 import { UnifiedCard } from '@/components/ui/unified-card';
 import { UnifiedGrid } from '@/components/ui/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
@@ -109,23 +106,6 @@ export function useMDXComponents(_components: Record<string, React.ComponentType
       );
     },
 
-    // 自定义链接组件
-    a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-      if (!href) return <span {...props}>{children}</span>;
-
-      return (
-        <MarkdownLink
-          href={href}
-          isExternal={
-            href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')
-          }
-          {...props}
-        >
-          {children}
-        </MarkdownLink>
-      );
-    },
-
     // 表格组件
     table: ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
       <table className="w-full border-collapse my-6 overflow-hidden rounded-lg" {...props}>
@@ -162,26 +142,6 @@ export function useMDXComponents(_components: Record<string, React.ComponentType
         {children}
       </td>
     ),
-
-    // 使用自定义代码块组件 - 懒加载
-    pre: ({ children, className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
-      return (
-        <CodeBlock className={className} {...props}>
-          {children}
-        </CodeBlock>
-      );
-    },
-
-    // 使用自定义行内代码组件
-    code: ({ children, className }: { children: React.ReactNode; className?: string }) => {
-      // 如果是代码块的一部分，不使用行内代码样式
-      if (className?.includes('language-')) {
-        return <code className={className}>{children}</code>;
-      }
-
-      // 使用行内代码组件
-      return <InlineCode className={className}>{children}</InlineCode>;
-    },
 
     // 统一卡片组件
     ResourceCard: (props: ResourceCardProps) => (

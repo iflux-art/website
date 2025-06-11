@@ -36,11 +36,13 @@ export default function NavigationPage() {
       setItems(navigationData.items || []);
       setCategories(categoriesData || []);
       setAllTags(
-        categoryId ? 
-        tagsData.filter((tag: string) =>
-          navigationData.items.some((item: NavigationItem) => item.category === categoryId && item.tags.includes(tag))
-        ) : 
-        tagsData || []
+        categoryId
+          ? tagsData.filter((tag: string) =>
+              navigationData.items.some(
+                (item: NavigationItem) => item.category === categoryId && item.tags.includes(tag)
+              )
+            )
+          : tagsData || []
       );
 
       // 移除默认选择第一个分类的逻辑
@@ -98,7 +100,25 @@ export default function NavigationPage() {
       {/* 页面标题 */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
-        <p className="text-muted-foreground">精选网站集合，欢迎<a href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb" target="_blank" rel="noreferrer">“申请友链”</a></p>
+        {/* 统计信息 */}
+        {selectedCategory || selectedTag ? (
+          <p>
+            显示 {filteredItems.length} 个网址
+            {selectedCategory && ` · ${getCategoryName(selectedCategory)}`}
+            {selectedTag && ` · ${selectedTag}`}
+          </p>
+        ) : (
+          <p className="text-muted-foreground">
+            共收录 {items.length} 个优质网站，欢迎
+            <a
+              href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              “互换友链”
+            </a>
+          </p>
+        )}
       </div>
 
       {/* 分类选择 */}
@@ -174,19 +194,6 @@ export default function NavigationPage() {
               featured={item.featured}
             />
           ))
-        )}
-      </div>
-
-      {/* 统计信息 */}
-      <div className="mt-8 text-center text-sm text-muted-foreground">
-        {selectedCategory || selectedTag ? (
-          <p>
-            显示 {filteredItems.length} 个网址
-            {selectedCategory && ` · ${getCategoryName(selectedCategory)}`}
-            {selectedTag && ` · ${selectedTag}`}
-          </p>
-        ) : (
-          <p>共收录 {items.length} 个优质网址</p>
         )}
       </div>
     </div>

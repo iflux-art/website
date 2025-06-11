@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ai",
+    "name": "人工智能",
+    "description": "分享AIGC与实用技巧",
+    "order": 1
+  },
+  {
+    "id": "development",
+    "name": "开发工具",
+    "description": "编程开发相关工具和资源",
+    "order": 2
+  },
+  {
+    "id": "design",
+    "name": "设计资源",
+    "description": "设计工具和素材资源",
+    "order": 3
+  },
+  {
+    "id": "audio",
+    "name": "音频处理",
+    "description": "音频处理相关的工具",
+    "order": 4
+  },
+  {
+    "id": "video",
+    "name": "视频处理",
+    "description": "视频处理相关的工具",
+    "order": 5
+  },
+  {
+    "id": "office",
+    "name": "协作办公",
+    "description": "在线协作和办公相关的工具",
+    "order": 6
+  },
+  {
+    "id": "productivity",
+    "name": "效率工具",
+    "description": "提升工作效率的工具",
+    "order": 7
+  },
+  {
+    "id": "operation",
+    "name": "全域运营",
+    "description": "公域 + 私域 + 商域运营相关工具和资源",
+    "order": 8
+  },
+  {
+    "id": "profile",
+    "name": "个人主页",
+    "description": "入驻的平台和个人主页链接",
+    "order": 9
+  },
+  {
+    "id": "friends",
+    "name": "友情链接",
+    "description": "合作伙伴和友情链接",
+    "order": 10
+  }
+]

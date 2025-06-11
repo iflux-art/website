@@ -12,7 +12,6 @@ import {
   Palette,
   FileText,
   Smile,
-  Search,
   ExternalLink,
 } from 'lucide-react';
 
@@ -349,7 +348,7 @@ const TOOLS = [
 ];
 
 export default function ToolsPage() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showAllTags, setShowAllTags] = useState(false);
@@ -427,23 +426,14 @@ export default function ToolsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">工具箱</h1>
-
-      {/* 搜索框 */}
-      <div className="relative mb-6">
-        <input
-          type="text"
-          placeholder="搜索工具..."
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-        />
-        <Search className="absolute right-3 top-2.5 text-muted-foreground" />
+      {/* 页面标题 */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">工具箱</h1>
+        <p className="text-muted-foreground">好用的工具都在这里</p>
       </div>
 
       {/* 分类导航 */}
       <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">分类</h2>
         <div className="flex flex-wrap gap-2">
           {TOOL_CATEGORIES.map(category => {
             const CategoryIcon = category.icon;

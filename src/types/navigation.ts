@@ -8,7 +8,7 @@ export interface NavigationItem {
   description: string;
   url: string;
   icon?: string;
-  iconType?: 'emoji' | 'image' | 'text';
+  iconType?: 'image' | 'emoji' | 'text';
   tags: string[];
   featured?: boolean;
   category: string;
@@ -40,7 +40,7 @@ export interface NavigationFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: 'emoji' | 'image' | 'text';
+  iconType: 'image' | 'emoji' | 'text';
   tags: string[];
   featured: boolean;
   category: string;
