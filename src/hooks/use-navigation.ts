@@ -4,7 +4,7 @@
  */
 
 import { useState, useMemo, useEffect } from 'react';
-import { Category, Resource } from '@/types/navigation';
+import { NavigationCategory as Category, NavigationItem as Resource } from '@/types/navigation';
 
 interface Subcategory {
   title: string;
@@ -164,14 +164,15 @@ export function useCategoryResources(categoryId: string) {
             if (subcategory.links && Array.isArray(subcategory.links)) {
               subcategory.links.forEach((link: Link) => {
                 allResources.push({
+                  id: link.url.replace(/[^\w\s]/g, '-').toLowerCase(),
                   title: link.title,
                   description: link.description,
                   url: link.url,
                   category: subcategory.title,
                   icon: '🔗', // 默认图标
-                  author: '',
-                  free: true,
-                  tags: link.tags,
+                  tags: link.tags || [],
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
                 });
               });
             }

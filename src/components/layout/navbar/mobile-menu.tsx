@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/input/button';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/layout/sheet';
 import { ThemeToggle } from '@/components/layout/navbar/theme-toggle';
 import { TravelButton } from '@/components/layout/navbar/travel-button';
 import { Logo } from '@/components/layout/navbar/logo';

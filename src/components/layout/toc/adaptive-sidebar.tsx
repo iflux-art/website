@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { TableOfContents } from '@/components/ui/table-of-contents';
+import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 import type { Heading } from '@/types/docs';
 
 export interface AdaptiveSidebarProps {
@@ -18,7 +18,7 @@ export interface AdaptiveSidebarProps {
 
 /**
  * 自适应侧边栏组件
- * 
+ *
  * 封装了 TableOfContents 组件，提供自适应定位功能
  */
 export function AdaptiveSidebar({ headings, className }: AdaptiveSidebarProps) {

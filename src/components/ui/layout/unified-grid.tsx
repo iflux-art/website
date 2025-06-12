@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { UnifiedCard, UnifiedCardProps } from './unified-card';
+import { UnifiedCard, UnifiedCardProps } from '@/components/cards/unified-card';
 
 /**
  * 统一网格组件属性

@@ -1,27 +1,38 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/input/button';
+import { Input } from '@/components/ui/input/input';
+import { Textarea } from '@/components/ui/input/textarea';
+import { Label } from '@/components/ui/display/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/input/select';
+import { Switch } from '@/components/ui/input/switch';
+import { Badge } from '@/components/ui/display/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { Alert, AlertDescription } from '@/components/ui/feedback/alert';
 import { Loader2, Plus, X, Globe, AlertCircle, CheckCircle } from 'lucide-react';
 import { NavigationFormData, NavigationCategory } from '@/types/navigation';
 import { parseWebsiteMetadata, isValidUrl } from '@/lib/website-parser';
 
 interface NavigationFormProps {
-  onSubmit: (data: NavigationFormData) => Promise<void>;
+  submitAction: (data: NavigationFormData) => Promise<void>;
   onCancel?: () => void;
   initialData?: Partial<NavigationFormData>;
   isLoading?: boolean;
 }
 
-export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: NavigationFormProps) {
+export function NavigationForm({
+  submitAction,
+  onCancel,
+  initialData,
+  isLoading,
+}: NavigationFormProps) {
   const [formData, setFormData] = useState<NavigationFormData>({
     title: '',
     description: '',
@@ -50,10 +61,12 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
     Promise.all([
       fetch('/api/navigation?type=categories').then(res => res.json()),
       fetch('/api/navigation?type=tags').then(res => res.json()),
-    ]).then(([categoriesData, tagsData]) => {
-      setCategories(categoriesData);
-      setAvailableTags(tagsData);
-    }).catch(console.error);
+    ])
+      .then(([categoriesData, tagsData]) => {
+        setCategories(categoriesData);
+        setAvailableTags(tagsData);
+      })
+      .catch(console.error);
   }, []);
 
   // URL 变化时验证格式
@@ -65,9 +78,12 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
     }
   }, [formData.url]);
 
-  const handleInputChange = (field: keyof NavigationFormData, value: NavigationFormData[keyof NavigationFormData]) => {
+  const handleInputChange = (
+    field: keyof NavigationFormData,
+    value: NavigationFormData[keyof NavigationFormData]
+  ) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    
+
     // 清除解析状态
     if (field === 'url') {
       setParseError('');
@@ -87,14 +103,14 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
 
     try {
       const metadata = await parseWebsiteMetadata(formData.url);
-      
+
       setFormData(prev => ({
         ...prev,
         title: metadata.title || prev.title,
         description: metadata.description || prev.description,
         icon: metadata.icon || prev.icon,
       }));
-      
+
       setParseSuccess(true);
     } catch {
       setParseError('解析网站信息失败，请手动填写');
@@ -122,16 +138,16 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.url || !formData.category) {
       return;
     }
-    
+
     if (urlError) {
       return;
     }
 
-    await onSubmit(formData);
+    await submitAction(formData);
   };
 
   return (
@@ -153,7 +169,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
                 type="url"
                 placeholder="https://example.com"
                 value={formData.url}
-                onChange={(e) => handleInputChange('url', e.target.value)}
+                onChange={e => handleInputChange('url', e.target.value)}
                 className={urlError ? 'border-destructive' : ''}
                 required
               />
@@ -193,7 +209,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
               id="title"
               placeholder="网站标题"
               value={formData.title}
-              onChange={(e) => handleInputChange('title', e.target.value)}
+              onChange={e => handleInputChange('title', e.target.value)}
               required
             />
           </div>
@@ -205,7 +221,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
               id="description"
               placeholder="网站描述"
               value={formData.description}
-              onChange={(e) => handleInputChange('description', e.target.value)}
+              onChange={e => handleInputChange('description', e.target.value)}
               rows={3}
             />
           </div>
@@ -216,7 +232,9 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
             <div className="flex gap-2">
               <Select
                 value={formData.iconType}
-                onValueChange={(value: 'emoji' | 'image' | 'text') => handleInputChange('iconType', value)}
+                onValueChange={(value: 'emoji' | 'image' | 'text') =>
+                  handleInputChange('iconType', value)
+                }
               >
                 <SelectTrigger className="w-32">
                   <SelectValue />
@@ -230,12 +248,14 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
               <Input
                 id="icon"
                 placeholder={
-                  formData.iconType === 'emoji' ? '🌐' :
-                  formData.iconType === 'image' ? 'https://example.com/icon.png' :
-                  'A'
+                  formData.iconType === 'emoji'
+                    ? '🌐'
+                    : formData.iconType === 'image'
+                    ? 'https://example.com/icon.png'
+                    : 'A'
                 }
                 value={formData.icon}
-                onChange={(e) => handleInputChange('icon', e.target.value)}
+                onChange={e => handleInputChange('icon', e.target.value)}
                 className="flex-1"
               />
             </div>
@@ -246,14 +266,14 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
             <Label htmlFor="category">分类 *</Label>
             <Select
               value={formData.category}
-              onValueChange={(value) => handleInputChange('category', value)}
+              onValueChange={value => handleInputChange('category', value)}
               required
             >
               <SelectTrigger>
                 <SelectValue placeholder="选择分类" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((category) => (
+                {categories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
                   </SelectItem>
@@ -269,8 +289,8 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
               <Input
                 placeholder="添加标签"
                 value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                onChange={e => setNewTag(e.target.value)}
+                onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
               />
               <Button type="button" variant="outline" onClick={handleAddTag}>
                 <Plus className="h-4 w-4" />
@@ -278,13 +298,10 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
             </div>
             {formData.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {formData.tags.map((tag) => (
+                {formData.tags.map(tag => (
                   <Badge key={tag} variant="secondary" className="flex items-center gap-1">
                     {tag}
-                    <X
-                      className="h-3 w-3 cursor-pointer"
-                      onClick={() => handleRemoveTag(tag)}
-                    />
+                    <X className="h-3 w-3 cursor-pointer" onClick={() => handleRemoveTag(tag)} />
                   </Badge>
                 ))}
               </div>
@@ -296,7 +313,7 @@ export function NavigationForm({ onSubmit, onCancel, initialData, isLoading }: N
             <Switch
               id="featured"
               checked={formData.featured}
-              onCheckedChange={(checked) => handleInputChange('featured', checked)}
+              onCheckedChange={checked => handleInputChange('featured', checked)}
             />
             <Label htmlFor="featured">设为精选</Label>
           </div>

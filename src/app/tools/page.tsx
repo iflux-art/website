@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/input/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { Badge } from '@/components/ui/display/badge';
 import { Wrench, PenTool, Code, Palette, FileText, Smile, ExternalLink } from 'lucide-react';
+import { TagFilter } from '@/components/ui/utils/tag-filter';
 
 // 工具分类
 const TOOL_CATEGORIES = [
@@ -18,9 +19,7 @@ const TOOL_CATEGORIES = [
   { id: 'entertainment', name: '娱乐工具', icon: Smile },
 ];
 
-// 工具数据 - 优化后的工具集
 const TOOLS = [
-  // 开发工具
   {
     id: 'code-toolkit',
     name: '代码工具箱',
@@ -39,8 +38,6 @@ const TOOLS = [
     tags: ['正则', '测试', '匹配', '验证', '模式'],
     isInternal: true,
   },
-
-  // 设计工具
   {
     id: 'color-picker',
     name: '颜色选择器',
@@ -59,8 +56,6 @@ const TOOLS = [
     tags: ['CSS', '设计', '动画', '布局', '前端'],
     isInternal: true,
   },
-
-  // 文本工具
   {
     id: 'text-counter',
     name: '文本统计工具',
@@ -88,8 +83,6 @@ const TOOLS = [
     tags: ['创作', '文案', '标题', '大纲', '优化'],
     isInternal: true,
   },
-
-  // 转换工具
   {
     id: 'base64-encoder',
     name: '编码转换工具',
@@ -117,8 +110,6 @@ const TOOLS = [
     tags: ['单位', '换算', '长度', '重量', '温度'],
     isInternal: true,
   },
-
-  // 实用工具
   {
     id: 'calculator',
     name: '计算器',
@@ -146,8 +137,6 @@ const TOOLS = [
     tags: ['符号', 'Emoji', '颜文字', '特殊符号', '数学'],
     isInternal: true,
   },
-
-  // 娱乐工具
   {
     id: 'nonsense-generator',
     name: '废话文学生成器',
@@ -160,81 +149,25 @@ const TOOLS = [
 ];
 
 export default function ToolsPage() {
-  const [searchQuery] = useState('');
-  const [selectedTag, setSelectedTag] = useState('');
+  const [tagsExpanded, setTagsExpanded] = useState(false);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [showAllTags, setShowAllTags] = useState(false);
-  const [visibleTagCount, setVisibleTagCount] = useState(10); // 默认显示10个标签
-  const tagsContainerRef = useRef<HTMLDivElement>(null);
 
-  // 获取所有标签并按使用数量排序
-  const getTagsWithCount = () => {
-    const tagCounts: { [key: string]: number } = {};
-    TOOLS.forEach(tool => {
+  const currentTags = TOOLS.filter(
+    tool => selectedCategory === 'all' || tool.category === selectedCategory
+  )
+    .reduce((acc: { name: string; count: number }[], tool) => {
       tool.tags.forEach(tag => {
-        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-      });
-    });
-
-    return Object.entries(tagCounts)
-      .map(([tag, count]) => ({ tag, count }))
-      .sort((a, b) => b.count - a.count);
-  };
-
-  const tagsWithCount = getTagsWithCount();
-
-  // 计算可见标签数量
-  useEffect(() => {
-    if (!tagsContainerRef.current) return;
-
-    // 重置为显示所有标签
-    if (showAllTags) {
-      setVisibleTagCount(tagsWithCount.length);
-      return;
-    }
-
-    const calculateVisibleTags = () => {
-      const containerWidth = tagsContainerRef.current?.clientWidth || 0;
-      const tagElements = tagsContainerRef.current?.querySelectorAll('.tag-item');
-
-      if (!tagElements || tagElements.length === 0) {
-        setVisibleTagCount(tagsWithCount.length); // 默认显示所有标签
-        return;
-      }
-
-      let totalWidth = 0;
-      let visibleCount = 0;
-
-      // 计算"更多"按钮的宽度 (大约100px)
-      const moreButtonWidth = 100;
-      const maxWidth = containerWidth - moreButtonWidth;
-
-      // 计算每个标签的宽度并确定可见数量
-      for (let i = 0; i < tagElements.length; i++) {
-        const tagWidth = tagElements[i].getBoundingClientRect().width + 8; // 加上间距
-        if (totalWidth + tagWidth <= maxWidth) {
-          totalWidth += tagWidth;
-          visibleCount++;
+        const existing = acc.find(t => t.name === tag);
+        if (existing) {
+          existing.count++;
         } else {
-          break;
+          acc.push({ name: tag, count: 1 });
         }
-      }
-
-      // 至少显示1个标签
-      setVisibleTagCount(Math.max(1, visibleCount));
-    };
-
-    calculateVisibleTags();
-
-    // 添加窗口大小变化监听
-    window.addEventListener('resize', calculateVisibleTags);
-    return () => window.removeEventListener('resize', calculateVisibleTags);
-  }, [tagsWithCount, showAllTags]);
-
-  const displayTags = showAllTags ? tagsWithCount : tagsWithCount.slice(0, visibleTagCount);
-
-  // 检查是否需要显示"更多"按钮
-  const shouldShowMoreButton = !showAllTags && tagsWithCount.length > visibleTagCount;
+      });
+      return acc;
+    }, [])
+    .sort((a, b) => b.count - a.count);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -253,10 +186,10 @@ export default function ToolsPage() {
               <Button
                 key={category.id}
                 variant={category.id === selectedCategory ? 'default' : 'outline'}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 rounded-full"
                 onClick={() => {
                   setSelectedCategory(category.id);
-                  setSelectedTag('');
+                  setSelectedTag(null);
                 }}
               >
                 <CategoryIcon className="w-4 h-4" />
@@ -267,63 +200,28 @@ export default function ToolsPage() {
         </div>
       </div>
 
-      {/* 标签过滤 */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">按标签筛选</h2>
-        <div ref={tagsContainerRef} className="flex flex-wrap gap-2">
-          {displayTags.map(({ tag, count }) => (
-            <Badge
-              key={tag}
-              variant={selectedTag === tag ? 'primary' : 'default'}
-              className={`cursor-pointer tag-item ${
-                selectedTag === tag ? 'bg-primary text-primary-foreground' : ''
-              }`}
-              onClick={() => setSelectedTag(selectedTag === tag ? '' : tag)}
-            >
-              {tag} ({count})
-            </Badge>
-          ))}
-          {shouldShowMoreButton && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAllTags(true)}
-              className="ml-1"
-            >
-              更多
-            </Button>
-          )}
-          {showAllTags && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAllTags(false)}
-              className="ml-1"
-            >
-              收起
-            </Button>
-          )}
+      {/* 标签筛选 */}
+      {currentTags.length > 0 && (
+        <div className="mb-6">
+          <TagFilter
+            tags={currentTags}
+            selectedTag={selectedTag}
+            onTagSelectAction={setSelectedTag}
+            showCount={true}
+            maxVisible={8}
+            className="mt-4"
+            expanded={tagsExpanded}
+            onExpandChange={setTagsExpanded}
+          />
         </div>
-      </div>
+      )}
 
       {/* 工具列表 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {TOOLS.filter(tool => {
-          // 搜索过滤
-          const matchesSearch = searchQuery
-            ? tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-            : true;
-
-          // 标签过滤
-          const matchesTag = selectedTag ? tool.tags.includes(selectedTag) : true;
-
-          // 分类过滤
-          const matchesCategory =
-            selectedCategory === 'all' ? true : tool.category === selectedCategory;
-
-          return matchesSearch && matchesTag && matchesCategory;
+          const categoryMatch = selectedCategory === 'all' || tool.category === selectedCategory;
+          const tagMatch = !selectedTag || tool.tags.includes(selectedTag);
+          return categoryMatch && tagMatch;
         }).map(tool => (
           <Link href={tool.path} key={tool.id}>
             <Card className="h-full hover:shadow-md transition-shadow">

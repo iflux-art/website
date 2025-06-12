@@ -1,17 +1,17 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { Button } from '@/components/ui/input/button';
 import { LucideIcon } from 'lucide-react';
 
-interface TableColumn<T> {
-  key: keyof T | string;
+export interface TableColumn<T extends object> {
+  key: keyof T;
   title: string;
   render?: (value: T[keyof T], record: T, index: number) => React.ReactNode;
   width?: string;
   align?: 'left' | 'center' | 'right';
 }
 
-interface TableAction<T> {
+interface TableAction<T extends object> {
   label: string;
   onClick: (record: T, index: number) => void;
   icon?: LucideIcon;
@@ -19,7 +19,7 @@ interface TableAction<T> {
   disabled?: (record: T) => boolean;
 }
 
-interface DataTableProps<T> {
+interface DataTableProps<T extends object> {
   title?: string;
   data: T[];
   columns: TableColumn<T>[];
@@ -34,7 +34,7 @@ interface DataTableProps<T> {
   };
 }
 
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T extends object>({
   title,
   data,
   columns,
@@ -154,9 +154,7 @@ export function DataTable<T extends Record<string, unknown>>({
         {/* 分页 */}
         {pagination && pagination.total > pagination.pageSize && (
           <div className="flex items-center justify-between px-4 py-3 border-t">
-            <div className="text-sm text-muted-foreground">
-              共 {pagination.total} 条记录
-            </div>
+            <div className="text-sm text-muted-foreground">共 {pagination.total} 条记录</div>
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
@@ -167,16 +165,14 @@ export function DataTable<T extends Record<string, unknown>>({
                 上一页
               </Button>
               <span className="text-sm">
-                第 {pagination.current} 页，共{' '}
-                {Math.ceil(pagination.total / pagination.pageSize)} 页
+                第 {pagination.current} 页，共 {Math.ceil(pagination.total / pagination.pageSize)}{' '}
+                页
               </span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => pagination.onChange(pagination.current + 1)}
-                disabled={
-                  pagination.current >= Math.ceil(pagination.total / pagination.pageSize)
-                }
+                disabled={pagination.current >= Math.ceil(pagination.total / pagination.pageSize)}
               >
                 下一页
               </Button>

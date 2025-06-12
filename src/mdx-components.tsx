@@ -3,8 +3,11 @@
 import React from 'react';
 import { ImageProps } from 'next/image';
 import type { StaticImageData } from 'next/image';
-import { ResponsiveImage } from '@/components/ui/responsive-image';
-import type { ResponsiveImageSizes, ResponsiveImageFormats } from '@/components/ui/responsive-image';
+import { ResponsiveImage } from '@/components/ui/media/responsive-image';
+import type {
+  ResponsiveImageSizes,
+  ResponsiveImageFormats,
+} from '@/components/ui/media/responsive-image';
 
 interface ResourceCardProps {
   title: string;
@@ -27,7 +30,7 @@ interface FriendLinkCardProps {
   iconType?: 'image' | 'emoji';
 }
 import { UnifiedCard } from '@/components/ui/unified-card';
-import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { UnifiedGrid } from '@/components/ui/layout/unified-grid';
 import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
 import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
 
@@ -70,9 +73,9 @@ export function useMDXComponents(_components: Record<string, React.ComponentType
           original: true,
         },
         style: { width: '100%', height: 'auto' } as const,
-        className: "rounded-lg border border-border my-8 shadow-sm",
+        className: 'rounded-lg border border-border my-8 shadow-sm',
         lazy: true,
-        containerClassName: "my-8",
+        containerClassName: 'my-8',
         quality: 85,
         placeholder: (
           <div className="w-full h-full bg-muted/30 rounded-lg border border-border animate-pulse" />
@@ -80,14 +83,7 @@ export function useMDXComponents(_components: Record<string, React.ComponentType
       };
 
       if (typeof src === 'string') {
-        return (
-          <ResponsiveImage
-            {...props}
-            {...imageConfig}
-            src={src}
-            alt={alt || ''}
-          />
-        );
+        return <ResponsiveImage {...props} {...imageConfig} src={src} alt={alt || ''} />;
       }
 
       const imgSrc = (src as StaticImageData).src || src;

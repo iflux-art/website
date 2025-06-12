@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
-import { CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { CardContent } from '@/components/cards/card';
+import { Badge } from '@/components/ui/display/badge';
 import { cn } from '@/lib/utils';
-import { CardHover } from '@/components/ui/card-hover';
+import { CardHover } from '@/components/cards/card-hover';
 
 export type CardType = 'blog' | 'category' | 'resource' | 'link' | 'navigation' | 'friend' | 'docs';
 
@@ -91,7 +91,10 @@ export function UnifiedCard({
   const tagArray = Array.isArray(tags)
     ? tags
     : typeof tags === 'string'
-    ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
+    ? tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean)
     : [];
 
   const renderIcon = () => {
@@ -118,7 +121,8 @@ export function UnifiedCard({
         'border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6 h-full',
         featured && 'border-primary/30',
         type === 'category' && 'bg-gradient-to-br',
-        color && `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
+        color &&
+          `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
         className
       )}
       style={{
@@ -206,7 +210,13 @@ export function UnifiedCard({
         <CardContent className="flex p-4 gap-4">
           {image && (
             <div className="flex-shrink-0">
-              <Image src={image} alt={title} width={120} height={80} className="rounded-lg object-cover" />
+              <Image
+                src={image}
+                alt={title}
+                width={120}
+                height={80}
+                className="rounded-lg object-cover"
+              />
             </div>
           )}
           <div className="flex-grow min-w-0">

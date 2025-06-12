@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost } from '@/hooks/use-blog'; // 假设 BlogPost 类型定义在 use-blog.ts
-import { SidebarItem } from '@/components/ui/sidebar';
+import { SidebarItem } from '@/components/layout/sidebar';
 
 // ==================== 博客相关函数 ====================
 
@@ -202,7 +202,12 @@ function countDocsRecursively(dir: string): number {
   for (const item of items) {
     const itemPath = path.join(dir, item.name);
 
-    if (item.name.startsWith('_') || item.name.startsWith('.') || item.name === 'index.mdx' || item.name === 'index.md') {
+    if (
+      item.name.startsWith('_') ||
+      item.name.startsWith('.') ||
+      item.name === 'index.mdx' ||
+      item.name === 'index.md'
+    ) {
       continue;
     }
 
@@ -246,18 +251,24 @@ export function getDocCategories(): DocCategory[] {
 
   // Add remaining directories not in rootMeta, sorted alphabetically
   dirs.forEach(dir => {
-    if (dir.isDirectory() && !dir.name.startsWith('_') && !dir.name.startsWith('.') && !orderedCategoryNames.includes(dir.name)) {
+    if (
+      dir.isDirectory() &&
+      !dir.name.startsWith('_') &&
+      !dir.name.startsWith('.') &&
+      !orderedCategoryNames.includes(dir.name)
+    ) {
       orderedCategoryNames.push(dir.name);
     }
   });
-   // Sort the ones not in meta alphabetically if needed, but they are added after meta ones
-   const nonMetaDirs = orderedCategoryNames.slice(Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)).length);
-   nonMetaDirs.sort((a,b) => a.localeCompare(b));
-   const finalOrderedCategoryNames = [
+  // Sort the ones not in meta alphabetically if needed, but they are added after meta ones
+  const nonMetaDirs = orderedCategoryNames.slice(
+    Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)).length
+  );
+  nonMetaDirs.sort((a, b) => a.localeCompare(b));
+  const finalOrderedCategoryNames = [
     ...Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)),
-    ...nonMetaDirs
-   ];
-
+    ...nonMetaDirs,
+  ];
 
   finalOrderedCategoryNames.forEach(categoryId => {
     const categoryDir = path.join(docsDir, categoryId);
@@ -274,18 +285,19 @@ export function getDocCategories(): DocCategory[] {
         description = (rootMetaEntry as DocMetaItem).description || '';
       }
     }
-    
+
     // Category-level _meta.json can override title/description
     const categoryMetaPath = path.join(categoryDir, '_meta.json');
     if (fs.existsSync(categoryMetaPath)) {
-        try {
-            const catMetaContent = fs.readFileSync(categoryMetaPath, 'utf8');
-            const catMeta = JSON.parse(catMetaContent) as DocMetaItem;
-            if (catMeta.title) title = catMeta.title;
-            if (catMeta.description) description = catMeta.description;
-        } catch (e) { console.error(`Error parsing _meta.json for ${categoryId}`, e); }
+      try {
+        const catMetaContent = fs.readFileSync(categoryMetaPath, 'utf8');
+        const catMeta = JSON.parse(catMetaContent) as DocMetaItem;
+        if (catMeta.title) title = catMeta.title;
+        if (catMeta.description) description = catMeta.description;
+      } catch (e) {
+        console.error(`Error parsing _meta.json for ${categoryId}`, e);
+      }
     }
-
 
     categories.push({
       id: categoryId,
@@ -298,7 +310,6 @@ export function getDocCategories(): DocCategory[] {
   return categories;
 }
 
-
 /**
  * 获取最新文档
  */
@@ -310,13 +321,23 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
   const categories = fs.readdirSync(docsDir, { withFileTypes: true });
 
   categories.forEach(category => {
-    if (category.isDirectory() && !category.name.startsWith('_') && !category.name.startsWith('.')) {
+    if (
+      category.isDirectory() &&
+      !category.name.startsWith('_') &&
+      !category.name.startsWith('.')
+    ) {
       const categoryId = category.name;
       const categoryDir = path.join(docsDir, categoryId);
       const items = fs.readdirSync(categoryDir, { withFileTypes: true });
 
       items.forEach(item => {
-        if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md')) && !item.name.startsWith('_') && item.name !== 'index.mdx' && item.name !== 'index.md') {
+        if (
+          item.isFile() &&
+          (item.name.endsWith('.mdx') || item.name.endsWith('.md')) &&
+          !item.name.startsWith('_') &&
+          item.name !== 'index.mdx' &&
+          item.name !== 'index.md'
+        ) {
           const filePath = path.join(categoryDir, item.name);
           const fileContent = fs.readFileSync(filePath, 'utf8');
           const { data } = matter(fileContent);
@@ -336,14 +357,15 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
     }
   });
 
-  return allDocs.sort((a, b) => {
-    if (a.date && b.date) {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    }
-    return 0;
-  }).slice(0, limit);
+  return allDocs
+    .sort((a, b) => {
+      if (a.date && b.date) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+      return 0;
+    })
+    .slice(0, limit);
 }
-
 
 /**
  * 获取文档目录结构 (核心函数，用于 Sidebar 和上下翻页)
@@ -377,13 +399,21 @@ export function getDocDirectoryStructure(
   const collectedItems: { name: string; isDir: boolean }[] = [];
   itemsInDir.forEach(dirItem => {
     // Skip system files/dirs and index files (Requirement 4 for sidebar)
-    if (dirItem.name.startsWith('_') || dirItem.name.startsWith('.') || dirItem.name === 'index.mdx' || dirItem.name === 'index.md') {
+    if (
+      dirItem.name.startsWith('_') ||
+      dirItem.name.startsWith('.') ||
+      dirItem.name === 'index.mdx' ||
+      dirItem.name === 'index.md'
+    ) {
       return;
     }
 
     if (dirItem.isDirectory()) {
       collectedItems.push({ name: dirItem.name, isDir: true });
-    } else if (dirItem.isFile() && (dirItem.name.endsWith('.md') || dirItem.name.endsWith('.mdx'))) {
+    } else if (
+      dirItem.isFile() &&
+      (dirItem.name.endsWith('.md') || dirItem.name.endsWith('.mdx'))
+    ) {
       collectedItems.push({ name: dirItem.name.replace(/\.(md|mdx)$/, ''), isDir: false });
     }
   });
@@ -393,15 +423,14 @@ export function getDocDirectoryStructure(
   if (metaExists) {
     // Requirement 3: Strict order by _meta.json if it exists.
     // Filter collectedItems to only those present in metaConfig keys.
-    sortedItemNames = Object.keys(metaConfig)
-      .filter(key => {
-        const metaEntry = metaConfig[key];
-        // Exclude items marked as hidden in meta
-        if (typeof metaEntry === 'object' && metaEntry.display === 'hidden') {
-          return false;
-        }
-        return collectedItems.some(ci => ci.name === key);
-      });
+    sortedItemNames = Object.keys(metaConfig).filter(key => {
+      const metaEntry = metaConfig[key];
+      // Exclude items marked as hidden in meta
+      if (typeof metaEntry === 'object' && metaEntry.display === 'hidden') {
+        return false;
+      }
+      return collectedItems.some(ci => ci.name === key);
+    });
     // Requirement 1: Sidebar 顺序严格按 _meta.json 内容的先后排序.
     // The .sort() based on 'order' property is removed.
     // The order from Object.keys(metaConfig) (after filtering) is preserved.
@@ -409,58 +438,73 @@ export function getDocDirectoryStructure(
     // Requirement 3: Filename ascending order if no _meta.json
     sortedItemNames = collectedItems.map(ci => ci.name).sort((a, b) => a.localeCompare(b));
   }
-  
-  return sortedItemNames.map(itemName => {
-    const itemMetaEntry = metaConfig[itemName];
-    const itemSpecificConfig = typeof itemMetaEntry === 'string' ? { title: itemMetaEntry } : (itemMetaEntry as DocMetaItem) || {};
-    
-    const actualItem = collectedItems.find(ci => ci.name === itemName);
-    if (!actualItem) return null; // Should not happen
 
-    const itemFsRelativePath = path.join(currentRelativePath, itemName); // Relative to rootDocsDir
-    const isDirectory = actualItem.isDir;
+  return sortedItemNames
+    .map(itemName => {
+      const itemMetaEntry = metaConfig[itemName];
+      const itemSpecificConfig =
+        typeof itemMetaEntry === 'string'
+          ? { title: itemMetaEntry }
+          : (itemMetaEntry as DocMetaItem) || {};
 
-    let title = itemSpecificConfig.title || itemName;
-    const defaultHref = `/docs/${currentRelativePath ? currentRelativePath + '/' : ''}${itemName}`;
+      const actualItem = collectedItems.find(ci => ci.name === itemName);
+      if (!actualItem) return null; // Should not happen
 
-    if (isDirectory) {
-      const children = getDocDirectoryStructure(rootDocsDir, itemFsRelativePath);
-      return {
-        title,
-        href: itemSpecificConfig.href, // Use href from meta if present (could be external or custom internal for a category link)
-        items: children,
-        collapsed: itemSpecificConfig.collapsed,
-        type: itemSpecificConfig.type || 'menu',
-        isExternal: !!itemSpecificConfig.href && (itemSpecificConfig.href.startsWith('http://') || itemSpecificConfig.href.startsWith('https://')),
-        filePath: itemFsRelativePath,
-      };
-    } else { // It's a file
-      if (!itemSpecificConfig.title) { // Only read frontmatter if title not in meta
-        let mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.mdx`);
-        if (!fs.existsSync(mdFilePath)) {
-          mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.md`);
-        }
-        if (fs.existsSync(mdFilePath)) {
-          try {
-            const fileContent = fs.readFileSync(mdFilePath, 'utf8');
-            const { data: frontmatter } = matter(fileContent);
-            if (frontmatter.title) {
-              title = frontmatter.title;
+      const itemFsRelativePath = path.join(currentRelativePath, itemName); // Relative to rootDocsDir
+      const isDirectory = actualItem.isDir;
+
+      let title = itemSpecificConfig.title || itemName;
+      const defaultHref = `/docs/${
+        currentRelativePath ? currentRelativePath + '/' : ''
+      }${itemName}`;
+
+      if (isDirectory) {
+        const children = getDocDirectoryStructure(rootDocsDir, itemFsRelativePath);
+        return {
+          title,
+          href: itemSpecificConfig.href, // Use href from meta if present (could be external or custom internal for a category link)
+          items: children,
+          collapsed: itemSpecificConfig.collapsed,
+          type: itemSpecificConfig.type || 'menu',
+          isExternal:
+            !!itemSpecificConfig.href &&
+            (itemSpecificConfig.href.startsWith('http://') ||
+              itemSpecificConfig.href.startsWith('https://')),
+          filePath: itemFsRelativePath,
+        };
+      } else {
+        // It's a file
+        if (!itemSpecificConfig.title) {
+          // Only read frontmatter if title not in meta
+          let mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.mdx`);
+          if (!fs.existsSync(mdFilePath)) {
+            mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.md`);
+          }
+          if (fs.existsSync(mdFilePath)) {
+            try {
+              const fileContent = fs.readFileSync(mdFilePath, 'utf8');
+              const { data: frontmatter } = matter(fileContent);
+              if (frontmatter.title) {
+                title = frontmatter.title;
+              }
+            } catch (e) {
+              console.error(`Error reading frontmatter for ${mdFilePath}:`, e);
             }
-          } catch (e) {
-            console.error(`Error reading frontmatter for ${mdFilePath}:`, e);
           }
         }
+        return {
+          title,
+          href: itemSpecificConfig.href || defaultHref,
+          type: itemSpecificConfig.type || 'page',
+          isExternal:
+            !!itemSpecificConfig.href &&
+            (itemSpecificConfig.href.startsWith('http://') ||
+              itemSpecificConfig.href.startsWith('https://')),
+          filePath: itemFsRelativePath,
+        };
       }
-      return {
-        title,
-        href: itemSpecificConfig.href || defaultHref,
-        type: itemSpecificConfig.type || 'page',
-        isExternal: !!itemSpecificConfig.href && (itemSpecificConfig.href.startsWith('http://') || itemSpecificConfig.href.startsWith('https://')),
-        filePath: itemFsRelativePath,
-      };
-    }
-  }).filter(Boolean) as SidebarItem[];
+    })
+    .filter(Boolean) as SidebarItem[];
 }
 
 /**
@@ -502,29 +546,30 @@ export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
         // However, if a menu item (category) has an href, it might be a link to its own overview page (not index.mdx)
         // and its children should still be processed.
         if (item.items && item.items.length > 0) {
-            recurse(item.items);
+          recurse(item.items);
         }
         continue;
       }
 
       // Process page items and menu items that are also pages
       if (item.type === 'page' || (item.type === 'menu' && item.href)) {
-         // Ensure path starts with /docs/ and normalize
+        // Ensure path starts with /docs/ and normalize
         let itemPath = item.href;
         if (!itemPath.startsWith('/docs/')) {
-            // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
-            itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
+          // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
+          itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
         }
         itemPath = itemPath.replace(/\\/g, '/');
-        
+
         // Ensure it's not an accidental link to an index page that should be hidden from prev/next
         // (getDocDirectoryStructure already filters index.mdx from items for sidebar)
         // This check might be redundant if getDocDirectoryStructure is perfect.
-        if (!itemPath.endsWith('/index')) { // A simple check, might need refinement
-            flatList.push({ title: item.title, path: itemPath });
+        if (!itemPath.endsWith('/index')) {
+          // A simple check, might need refinement
+          flatList.push({ title: item.title, path: itemPath });
         }
       }
-      
+
       // Recursively process children of a menu
       if (item.items && item.items.length > 0 && item.type === 'menu') {
         recurse(item.items);

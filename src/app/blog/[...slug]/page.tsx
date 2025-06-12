@@ -3,9 +3,9 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/navigation/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { TableOfContents } from '@/components/ui/table-of-contents';
+import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 import { countWords } from '@/lib/utils';
 
@@ -17,7 +17,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const blogRoot = path.join(process.cwd(), 'src', 'content', 'blog');
   const possiblePaths = [
     path.join(blogRoot, `${fullSlug}.mdx`),
-    path.join(blogRoot, `${fullSlug}.md`)
+    path.join(blogRoot, `${fullSlug}.md`),
   ];
 
   // 查找存在的文件
@@ -49,10 +49,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     const level = match[1].length;
     const text = match[2].trim();
     const customId = match[3];
-    const id = customId || `heading-${text
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]/g, '')}-${match.index}`;
+    const id =
+      customId ||
+      `heading-${text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
 
     if (level >= 1 && level <= 4) {
       headings.push({ id, text, level });
@@ -63,7 +65,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   let processedContent = content;
   headings.forEach(heading => {
     const headingRegex = new RegExp(
-      `^(#{${heading.level})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\\s*{#[\\w-]+})?$`,
+      `^(#{${heading.level})\\s+(${heading.text.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )})(?:\\s*{#[\\w-]+})?$`,
       'gm'
     );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
@@ -111,9 +116,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </main>
 
           {/* 右侧目录 */}
-          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
-            <TableOfContents headings={headings} adaptive={true} />
-          </aside>
+          <PageTableOfContents headings={headings} />
         </div>
       </div>
     </div>

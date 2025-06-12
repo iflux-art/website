@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { SidebarItem } from '@/components/ui/sidebar';
+import { SidebarItem } from '@/components/layout/sidebar';
 import { docsSidebarCache } from '@/lib/local-storage-cache';
 
 /**

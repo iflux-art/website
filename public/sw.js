@@ -15,6 +15,12 @@ const STATIC_ASSETS = [
   '/manifest.json',
   '/logo.png',
   '/styles/non-critical.css',
+  '/images/icons/favicon-16x16.png',
+  '/images/icons/favicon-32x32.png',
+  '/images/icons/apple-touch-icon.png',
+  '/images/icons/ms-icon-144x144.png',
+  '/images/icons/icon-192x192.png',
+  '/images/icons/icon-512x512.png',
 ];
 
 // 需要缓存的页面

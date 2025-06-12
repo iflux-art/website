@@ -9,7 +9,7 @@ interface NavigationCardProps {
   description: string;
   url: string;
   icon?: string;
-  iconType?: 'emoji' | 'image' | 'text';
+  iconType?: 'image' | 'emoji' | 'text';
   featured?: boolean;
   className?: string;
 }

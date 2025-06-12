@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/input/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, Copy, Check, Code, Download, Upload } from 'lucide-react';
 import Link from 'next/link';
 

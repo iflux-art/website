@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Tag, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { TagFilter } from '@/components/ui/utils/tag-filter';
 
 interface BlogTagFilterProps {
   allTags: string[];
@@ -16,9 +15,6 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTagAction }: Bl
   const searchParams = useSearchParams();
   const tagParam = searchParams?.get('tag');
 
-  // 展开状态
-  const [isExpanded, setIsExpanded] = useState(false);
-
   // 从URL参数中获取标签
   useEffect(() => {
     if (tagParam) {
@@ -27,9 +23,8 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTagAction }: Bl
   }, [tagParam, setSelectedTagAction]);
 
   // 处理标签点击
-  const handleTagClick = (tag: string) => {
-    // 如果已经选中该标签，则取消选中
-    if (selectedTag === tag) {
+  const handleTagSelect = (tag: string | null) => {
+    if (tag === null) {
       setSelectedTagAction(null);
       // 更新URL，移除tag参数
       window.history.pushState({}, '', '/blog');
@@ -40,71 +35,20 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTagAction }: Bl
     }
   };
 
-  // 清除标签筛选
-  const clearTagFilter = () => {
-    setSelectedTagAction(null);
-    // 更新URL，移除tag参数
-    window.history.pushState({}, '', '/blog');
-  };
-
   if (!allTags || allTags.length === 0) {
     return null;
   }
 
-  // 计算显示的标签数量
-  const maxVisibleTags = 8; // 第一行最多显示8个标签
-  const visibleTags = isExpanded ? allTags : allTags.slice(0, maxVisibleTags - 1);
-  const hasMoreTags = allTags.length > maxVisibleTags;
-
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-2xl font-semibold tracking-tight flex items-center gap-2">
-          <Tag className="h-4 w-4" />
-          按标签浏览
-        </h2>
-        {selectedTag && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearTagFilter}
-            className="text-muted-foreground hover:text-foreground rounded-xl shadow-sm hover:shadow-md transition-all"
-          >
-            清除筛选 <X className="ml-1 h-3 w-3" />
-          </Button>
-        )}
-      </div>
-      <div className="flex flex-wrap gap-2.5">
-        {visibleTags.map((tag, index) => (
-          <button
-            key={index}
-            onClick={() => handleTagClick(tag)}
-            className={`px-3 py-1.5 rounded-md text-sm border transition-all ${
-              selectedTag === tag
-                ? 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80'
-                : 'bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/30 hover:border-primary/20 text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {tag}
-          </button>
-        ))}
-        {hasMoreTags && (
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="px-3 py-1.5 rounded-md text-sm border bg-background/80 backdrop-blur-sm border-border/50 hover:bg-accent/30 hover:border-primary/20 text-muted-foreground hover:text-foreground transition-all flex items-center gap-1"
-          >
-            {isExpanded ? (
-              <>
-                收起 <ChevronUp className="h-3 w-3" />
-              </>
-            ) : (
-              <>
-                更多 <ChevronDown className="h-3 w-3" />
-              </>
-            )}
-          </button>
-        )}
-      </div>
-    </div>
+    <TagFilter
+      tags={allTags}
+      selectedTag={selectedTag}
+      onTagSelectAction={handleTagSelect}
+      title="按标签浏览"
+      showCount={false}
+      maxVisible={8}
+      className="mb-8"
+      variant="secondary"
+    />
   );
 }

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/input/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { Copy, Check } from 'lucide-react';
 
 interface DualTextareaProps {
@@ -52,7 +52,7 @@ export function DualTextarea({
         <CardContent>
           <textarea
             value={inputValue}
-            onChange={(e) => onInputChange(e.target.value)}
+            onChange={e => onInputChange(e.target.value)}
             placeholder={inputPlaceholder}
             className={`w-full ${height} p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
           />
@@ -99,7 +99,9 @@ export function DualTextarea({
             className={`w-full ${height} p-3 border border-border rounded-lg ${
               readOnlyOutput ? 'bg-muted/50' : 'bg-background'
             } font-mono text-sm resize-none ${
-              !readOnlyOutput ? 'focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent' : ''
+              !readOnlyOutput
+                ? 'focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent'
+                : ''
             }`}
           />
         </CardContent>

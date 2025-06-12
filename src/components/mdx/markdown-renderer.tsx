@@ -5,9 +5,9 @@ interface MarkdownRendererProps {
   content: string;
 }
 import Image, { ImageProps } from 'next/image';
-import { CodeBlock } from '@/components/ui/code-block';
-import { UnifiedCard } from '@/components/ui/unified-card';
-import { UnifiedGrid } from '@/components/ui/unified-grid';
+import { CodeBlock } from '@/components/mdx/code-block';
+import { UnifiedCard } from '@/components/cards/unified-card';
+import { UnifiedGrid } from '@/components/ui/layout/unified-grid';
 import { MarkdownLink } from './markdown-link';
 import { InlineCode } from './inline-code';
 interface ResourceCardProps {
@@ -105,31 +105,29 @@ export const mdxComponents = {
       <table className="w-full border-collapse border border-border">{children}</table>
     </div>
   ),
-  
+
   // 表头
   th: ({ children }: { children: React.ReactNode }) => (
     <th className="border border-border bg-muted px-4 py-2 text-left font-semibold">{children}</th>
   ),
-  
+
   // 表格单元格
   td: ({ children }: { children: React.ReactNode }) => (
     <td className="border border-border px-4 py-2">{children}</td>
   ),
-  
+
   // 表格行
   tr: ({ children }: { children: React.ReactNode }) => (
     <tr className="m-0 border-t border-border p-0 even:bg-muted">{children}</tr>
   ),
-  
+
   // 表格主体
   tbody: ({ children }: { children: React.ReactNode }) => (
     <tbody className="[&_tr:last-child]:border-0">{children}</tbody>
   ),
-  
+
   // 表格头部
-  thead: ({ children }: { children: React.ReactNode }) => (
-    <thead>{children}</thead>
-  ),
+  thead: ({ children }: { children: React.ReactNode }) => <thead>{children}</thead>,
 
   // 统一卡片组件
   ResourceCard: (props: ResourceCardProps) => (
@@ -166,9 +164,9 @@ export const mdxComponents = {
 };
 /**
  * Markdown 渲染器组件
- * 
+ *
  * 使用 next-mdx-remote 渲染 Markdown/MDX 内容
- * 
+ *
  * @example
  * ```tsx
  * <MarkdownRenderer content="# Hello World" />

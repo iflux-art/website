@@ -1,17 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 
 import { BlogList } from '@/components/features/blog/blog-list';
-import { TagFilter } from '@/components/features/blog/tag-filter';
-import { useTags, useBlogPosts } from '@/hooks/use-blog';
+import { TagFilter } from '@/components/ui/utils/tag-filter';
+import { useTagCounts } from '@/hooks/use-blog';
+
+// 创建一个包装组件来处理动态数据
+function BlogContent() {
+  const { tagCounts } = useTagCounts();
+  const formattedTags = tagCounts.map(({ tag, count }) => ({
+    name: tag,
+    count: count
+  }));
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
+
+  return (
+    <>
+      {/* 标签过滤器 */}
+      <TagFilter
+        tags={formattedTags}
+        selectedTag={selectedTag}
+        onTagSelectAction={setSelectedTag}
+        showCount={true}
+        maxVisible={8}
+        className="mb-6"
+        expanded={tagsExpanded}
+        onExpandChange={setTagsExpanded}
+      />
+
+      {/* 博客列表 */}
+      <BlogList filterTag={selectedTag} onTagClickAction={setSelectedTag} />
+    </>
+  );
+}
 
 export default function BlogPage() {
-  const { postsCount } = useBlogPosts();
-  const { tags: allTags } = useTags();
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
@@ -37,16 +64,9 @@ export default function BlogPage() {
             </Link>
           </div>
 
-          {/* 标签过滤器 */}
-          <TagFilter
-            tags={allTags}
-            selectedTag={selectedTag}
-            onTagSelectAction={setSelectedTag}
-            postsCount={postsCount}
-          />
-
-          {/* 博客列表 */}
-          <BlogList filterTag={selectedTag} onTagClickAction={setSelectedTag} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <BlogContent />
+          </Suspense>
         </div>
       </div>
     </div>

@@ -1,19 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/layout/admin-layout';
-import { AdminActions } from '@/components/ui/admin-actions';
-import { DataTable } from '@/components/ui/data-table';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { AdminLayout } from '@/components/layout/admin/admin-layout';
+import { AdminActions } from '@/components/admin/admin-actions';
+import { DataTable, type TableColumn } from '@/components/admin/data-table';
+import { Input } from '@/components/ui/input/input';
+import { Card, CardContent } from '@/components/cards/card';
+import { Alert, AlertDescription } from '@/components/ui/feedback/alert';
+import { Badge } from '@/components/ui/display/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/feedback/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +18,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from '@/components/ui/feedback/alert-dialog';
 import {
   Plus,
   Edit,
@@ -214,12 +209,12 @@ export default function NavigationAdminPage() {
     },
   ];
 
-  const tableColumns = [
+  const tableColumns: TableColumn<NavigationItem>[] = [
     {
       key: 'icon',
       title: '图标',
       width: '60px',
-      render: (value: unknown, record: NavigationItem) => (
+      render: (value: NavigationItem['icon'], record: NavigationItem, _index: number) => (
         <div className="text-lg">
           {record.iconType === 'emoji' ? (
             record.icon
@@ -234,7 +229,7 @@ export default function NavigationAdminPage() {
     {
       key: 'title',
       title: '标题',
-      render: (value: string, record: NavigationItem) => (
+      render: (value: NavigationItem['title'], record: NavigationItem, _index: number) => (
         <div>
           <div className="font-medium">{value}</div>
           <div className="text-sm text-muted-foreground">{record.url}</div>
@@ -244,21 +239,22 @@ export default function NavigationAdminPage() {
     {
       key: 'category',
       title: '分类',
-      render: (value: string) => getCategoryName(value),
+      render: (value: NavigationItem['category'], _record: NavigationItem, _index: number) =>
+        getCategoryName(value),
     },
     {
       key: 'tags',
       title: '标签',
-      render: (tags: string[]) => (
+      render: (value: NavigationItem['tags'], _record: NavigationItem, _index: number) => (
         <div className="flex gap-1 flex-wrap">
-          {tags.slice(0, 3).map(tag => (
+          {value.slice(0, 3).map((tag: string) => (
             <Badge key={tag} variant="outline" className="text-xs">
               {tag}
             </Badge>
           ))}
-          {tags.length > 3 && (
+          {value.length > 3 && (
             <Badge variant="outline" className="text-xs">
-              +{tags.length - 3}
+              +{value.length - 3}
             </Badge>
           )}
         </div>
@@ -267,8 +263,8 @@ export default function NavigationAdminPage() {
     {
       key: 'featured',
       title: '状态',
-      render: (featured: boolean) =>
-        featured ? <Badge variant="default">精选</Badge> : <Badge variant="outline">普通</Badge>,
+      render: (value: NavigationItem['featured'], _record: NavigationItem, _index: number) =>
+        value ? <Badge variant="default">精选</Badge> : <Badge variant="outline">普通</Badge>,
     },
   ];
 
@@ -358,7 +354,7 @@ export default function NavigationAdminPage() {
       </Card>
 
       {/* 网址表格 */}
-      <DataTable
+      <DataTable<NavigationItem>
         data={filteredItems}
         columns={tableColumns}
         actions={tableActions}
@@ -373,7 +369,7 @@ export default function NavigationAdminPage() {
             <DialogTitle>添加新网址</DialogTitle>
           </DialogHeader>
           <NavigationForm
-            onSubmit={handleAddItem}
+            submitAction={handleAddItem}
             onCancel={() => setShowAddDialog(false)}
             isLoading={isSubmitting}
           />
@@ -388,7 +384,7 @@ export default function NavigationAdminPage() {
           </DialogHeader>
           {editingItem && (
             <NavigationForm
-              onSubmit={handleEditItem}
+              submitAction={handleEditItem}
               onCancel={() => setEditingItem(null)}
               initialData={editingItem}
               isLoading={isSubmitting}

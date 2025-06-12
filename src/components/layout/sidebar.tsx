@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
-import { NavLink as ActiveLink } from '@/components/layout/navbar/nav-link';
+import { NavLink } from '@/components/ui/navigation/nav-link';
 
 /**
  * 文档侧边栏项（用于侧边栏）
@@ -175,7 +175,7 @@ export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarP
                 </Collapsible.Root>
               </div>
             ) : (
-              <ActiveLink
+              <NavLink
                 href={item.href || '#'}
                 currentDoc={currentDoc}
                 target={isExternal ? '_blank' : undefined}
@@ -203,7 +203,7 @@ export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarP
                     <line x1="10" y1="14" x2="21" y2="3"></line>
                   </svg>
                 )}
-              </ActiveLink>
+              </NavLink>
             )}
           </li>
         );

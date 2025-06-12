@@ -6,19 +6,22 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Breadcrumb as BreadcrumbComponent, type BreadcrumbItem } from '@/components/ui/breadcrumb';
-import { Sidebar } from '@/components/ui/sidebar';
-import { TableOfContents } from '@/components/ui/table-of-contents';
+import { Card, CardContent } from '@/components/cards/card';
+import {
+  Breadcrumb as BreadcrumbComponent,
+  type BreadcrumbItem,
+} from '@/components/ui/navigation/breadcrumb';
+import { Sidebar } from '@/components/layout/sidebar';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
+import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
-  
+
   const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
-  const requestedPath = slug.join('/'); 
+  const requestedPath = slug.join('/');
   const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
 
   let filePath: string | undefined;
@@ -50,17 +53,18 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       // We can use getFlattenedDocsOrder for the *specific directory* to find its first item.
       const dirSpecificFlattenedDocs = getFlattenedDocsOrder(requestedPath); // Pass the dir path itself
       if (dirSpecificFlattenedDocs.length > 0) {
-          const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(/^\/docs\//, '');
-          filePath = path.join(docsContentDir, `${firstDocRelativePath}.mdx`);
-          if (!fs.existsSync(filePath)) {
-            filePath = path.join(docsContentDir, `${firstDocRelativePath}.md`);
-          }
-          actualSlugForNav = firstDocRelativePath; 
+        const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(/^\/docs\//, '');
+        filePath = path.join(docsContentDir, `${firstDocRelativePath}.mdx`);
+        if (!fs.existsSync(filePath)) {
+          filePath = path.join(docsContentDir, `${firstDocRelativePath}.md`);
+        }
+        actualSlugForNav = firstDocRelativePath;
       }
     }
-  } 
-  
-  if (!filePath) { // If it wasn't a directory or directory processing didn't set filePath
+  }
+
+  if (!filePath) {
+    // If it wasn't a directory or directory processing didn't set filePath
     const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
     if (fs.existsSync(possiblePathMdx)) {
       filePath = possiblePathMdx;
@@ -71,26 +75,28 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       }
     }
     actualSlugForNav = slug.join('/'); // If it's a direct file request, actualSlugForNav is the slug itself
-    isIndexPage = path.basename(filePath || "", path.extname(filePath || "")) === 'index';
+    isIndexPage = path.basename(filePath || '', path.extname(filePath || '')) === 'index';
   }
-
 
   if (!filePath || !fs.existsSync(filePath)) {
     console.error(`[DocPage] Document not found for slug: ${slug.join('/')}.`);
     notFound();
   }
 
-  console.log(`[DocPage] Rendering file: ${filePath}. actualSlugForNav: ${actualSlugForNav}, isIndexPage: ${isIndexPage}`);
+  console.log(
+    `[DocPage] Rendering file: ${filePath}. actualSlugForNav: ${actualSlugForNav}, isIndexPage: ${isIndexPage}`
+  );
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
   const content = originalContent; // TOC extraction uses originalContent
 
   const topLevelCategorySlug = slug[0];
-  
+
   // Determine docNameForSidebar: relative path from its top-level category for highlighting
-  const relativePathFromTopCategory = path.relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-                                      .replace(/\\/g, '/')
-                                      .replace(/\.(mdx|md)$/, '');
+  const relativePathFromTopCategory = path
+    .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
+    .replace(/\\/g, '/')
+    .replace(/\.(mdx|md)$/, '');
 
   // Prev/Next logic using topLevelCategorySlug for a global order
   const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
@@ -103,8 +109,14 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     // actualSlugForNav for an index page is its directory path (e.g., "category" or "category/sub").
     // We need the first item from flattenedDocs that is "under" this directory.
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
-    nextDoc = flattenedDocs.find(doc => doc.path.startsWith(indexDirNavPath + '/') || (doc.path.startsWith(indexDirNavPath) && doc.path !== indexDirNavPath && !doc.path.substring(indexDirNavPath.length+1).includes('/'))) || null;
-
+    nextDoc =
+      flattenedDocs.find(
+        doc =>
+          doc.path.startsWith(indexDirNavPath + '/') ||
+          (doc.path.startsWith(indexDirNavPath) &&
+            doc.path !== indexDirNavPath &&
+            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+      ) || null;
   } else {
     const currentNavPath = `/docs/${actualSlugForNav}`;
     const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
@@ -112,7 +124,9 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
       nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
     } else {
-        console.warn(`[DocPage] Current path ${currentNavPath} not found in flattenedDocs for prev/next.`);
+      console.warn(
+        `[DocPage] Current path ${currentNavPath} not found in flattenedDocs for prev/next.`
+      );
     }
   }
 
@@ -135,12 +149,17 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     const level = match[1].length;
     const text = match[2].trim();
     const customId = match[3];
-    const id = customId || `heading-${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}-${match.index}`;
+    const id =
+      customId ||
+      `heading-${text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
     if (level >= 1 && level <= 4) {
       headings.push({ id, text, level });
     }
   }
-  
+
   // Breadcrumbs
   const breadcrumbItems: BreadcrumbItem[] = [{ label: '文档', href: '/docs' }];
   let currentBreadcrumbPath = '/docs';
@@ -151,23 +170,23 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     currentBreadcrumbPath += `/${segment}`;
     let label = segment;
 
-    if (index === 0 && rootMeta) { 
+    if (index === 0 && rootMeta) {
       const metaEntry = rootMeta[segment];
       if (typeof metaEntry === 'string') label = metaEntry;
       else if (typeof metaEntry === 'object' && metaEntry.title) label = metaEntry.title;
-    } else if (isLastSegment && !isIndexPage) { 
+    } else if (isLastSegment && !isIndexPage) {
       label = frontmatter.title || segment;
     } else if (isLastSegment && isIndexPage) {
-        // For index page, label is its directory name, which is 'segment'
-        // If 'segment' is a category, its title might be in rootMeta
-        // If 'segment' is a sub-category, its title might be in parent's _meta.json (harder to get here)
-        // For simplicity, keep 'segment' or enhance if parent meta is available.
+      // For index page, label is its directory name, which is 'segment'
+      // If 'segment' is a category, its title might be in rootMeta
+      // If 'segment' is a sub-category, its title might be in parent's _meta.json (harder to get here)
+      // For simplicity, keep 'segment' or enhance if parent meta is available.
     }
-    
+
     if (isLastSegment) {
-        breadcrumbItems.push({ label }); // Current page, no href
+      breadcrumbItems.push({ label }); // Current page, no href
     } else {
-        breadcrumbItems.push({ label, href: currentBreadcrumbPath });
+      breadcrumbItems.push({ label, href: currentBreadcrumbPath });
     }
   });
 
@@ -176,7 +195,14 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       <div className="container mx-auto px-4 py-6">
         <div className="flex gap-8">
           <aside className="hidden lg:block w-64 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
-            <Sidebar category={topLevelCategorySlug} currentDoc={isIndexPage ? path.dirname(relativePathFromTopCategory) : relativePathFromTopCategory} />
+            <Sidebar
+              category={topLevelCategorySlug}
+              currentDoc={
+                isIndexPage
+                  ? path.dirname(relativePathFromTopCategory)
+                  : relativePathFromTopCategory
+              }
+            />
           </aside>
 
           <main className="flex-1 min-w-0">
@@ -186,7 +212,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               </div>
               <article className="prose prose-slate dark:prose-invert max-w-none">
                 <h1 className="text-4xl font-bold mb-8 tracking-tight">{frontmatter.title}</h1>
-                  <MarkdownRenderer content={content} />
+                <MarkdownRenderer content={content} />
               </article>
 
               {(prevDoc || nextDoc) && (
@@ -203,7 +229,9 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                         </Link>
                       </CardContent>
                     </Card>
-                  ) : ( <div className="flex-1 max-w-[48%]"></div> )}
+                  ) : (
+                    <div className="flex-1 max-w-[48%]"></div>
+                  )}
                   {nextDoc ? (
                     <Card className="flex-1 max-w-[48%] shadow-sm rounded-xl hover:shadow-md transition-all">
                       <CardContent className="p-5">
@@ -216,15 +244,15 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                         </Link>
                       </CardContent>
                     </Card>
-                  ) : ( <div className="flex-1 max-w-[48%]"></div> )}
+                  ) : (
+                    <div className="flex-1 max-w-[48%]"></div>
+                  )}
                 </div>
               )}
             </div>
           </main>
 
-          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
-            <TableOfContents headings={headings} adaptive={true} />
-          </aside>
+          <PageTableOfContents headings={headings} />
         </div>
       </div>
     </div>

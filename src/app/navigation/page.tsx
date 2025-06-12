@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/input/button';
 import { NavigationCard } from '@/components/cards/navigation-card';
 import { NavigationItem, NavigationCategory } from '@/types/navigation';
+import { TagFilter } from '@/components/ui/utils/tag-filter';
 
 export default function NavigationPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);
@@ -12,9 +12,8 @@ export default function NavigationPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
-  const [showAllTags, setShowAllTags] = useState(false);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
 
-  // 加载数据
   useEffect(() => {
     loadData();
   }, []);
@@ -26,8 +25,6 @@ export default function NavigationPage() {
         fetch('/api/navigation?type=categories').then(res => res.json()),
       ]);
 
-      // 根据分类获取标签
-      // 根据当前分类获取标签
       const tagsResponse = await fetch(
         `/api/navigation?type=tags${categoryId ? `&category=${categoryId}` : ''}`
       );
@@ -44,17 +41,11 @@ export default function NavigationPage() {
             )
           : tagsData || []
       );
-
-      // 移除默认选择第一个分类的逻辑
-      // if (categoriesData.length > 0) {
-      //   setSelectedCategory(categoriesData[0].id);
-      // }
     } catch (error) {
       console.error('Error loading data:', error);
     }
   };
 
-  // 过滤数据
   const filteredItems = items.filter(item => {
     const categoryMatch = !selectedCategory || item.category === selectedCategory;
     const tagMatch = !selectedTag || item.tags.includes(selectedTag);
@@ -71,12 +62,8 @@ export default function NavigationPage() {
     }
   };
 
-  const handleTagClick = (tag: string) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
-    } else {
-      setSelectedTag(tag);
-    }
+  const handleTagClick = (tag: string | null) => {
+    setSelectedTag(tag);
   };
 
   const getCategoryName = (categoryId: string) => {
@@ -84,7 +71,6 @@ export default function NavigationPage() {
     return category?.name || categoryId;
   };
 
-  // 按使用数量排序标签并限制显示数量
   const sortedTags = allTags
     .map(tag => ({
       name: tag,
@@ -92,15 +78,10 @@ export default function NavigationPage() {
     }))
     .sort((a, b) => b.count - a.count);
 
-  const visibleTags = showAllTags ? sortedTags : sortedTags.slice(0, 6);
-  const hasMoreTags = sortedTags.length > 6;
-
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 页面标题 */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
-        {/* 统计信息 */}
         {selectedCategory || selectedTag ? (
           <p>
             显示 {filteredItems.length} 个网址
@@ -115,13 +96,12 @@ export default function NavigationPage() {
               target="_blank"
               rel="noreferrer"
             >
-              “互换友链”
+              互换友链
             </a>
           </p>
         )}
       </div>
 
-      {/* 分类选择 */}
       <div className="mb-6">
         <div className="flex flex-wrap gap-2">
           <Button
@@ -144,37 +124,19 @@ export default function NavigationPage() {
         </div>
       </div>
 
-      {/* 标签筛选 */}
       {allTags.length > 0 && (
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-sm font-medium text-muted-foreground">按标签筛选</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {visibleTags.map(tagInfo => (
-              <Badge
-                key={tagInfo.name}
-                variant={selectedTag === tagInfo.name ? 'default' : 'outline'}
-                className="cursor-pointer hover:bg-accent transition-colors"
-                onClick={() => handleTagClick(tagInfo.name)}
-              >
-                {tagInfo.name} ({tagInfo.count})
-              </Badge>
-            ))}
-            {hasMoreTags && (
-              <Badge
-                variant="outline"
-                className="cursor-pointer hover:bg-accent transition-colors text-muted-foreground"
-                onClick={() => setShowAllTags(!showAllTags)}
-              >
-                {showAllTags ? '收起' : `更多 (+${sortedTags.length - 6})`}
-              </Badge>
-            )}
-          </div>
-        </div>
+        <TagFilter
+          tags={sortedTags}
+          selectedTag={selectedTag}
+          onTagSelectAction={handleTagClick}
+          showCount={true}
+          maxVisible={8}
+          className="mb-6"
+          expanded={tagsExpanded}
+          onExpandChange={setTagsExpanded}
+        />
       )}
 
-      {/* 网址卡片网格 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {filteredItems.length === 0 ? (
           <div className="col-span-full text-center py-12">
