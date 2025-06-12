@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Copy, Check, Code, Download, Upload } from 'lucide-react';
 import Link from 'next/link';
 
-export default function CodeFormatterPage() {
+export default function CodeToolkitPage() {
   const [activeTab, setActiveTab] = useState<'format' | 'minify' | 'convert' | 'encode'>('format');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -352,32 +352,27 @@ export default function CodeFormatterPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Code className="h-8 w-8" />
-          代码处理工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          全面的代码处理工具，包括格式化、压缩、JSON/CSV转换、HTML编解码
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">代码工具箱</h1>
+            <p className="text-muted-foreground">
+              一站式代码处理工具，支持代码格式化、压缩、JSON/CSV转换、HTML编解码等功能
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 标签页 */}
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabsData.map((tab) => {
+            {tabsData.map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button

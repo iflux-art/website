@@ -213,25 +213,20 @@ export default function TimestampConverterPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Clock className="h-8 w-8" />
-          时间工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          时间处理工具，包括时间戳转换、时区转换、格式化、日期计算
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">时间戳转换器</h1>
+            <p className="text-muted-foreground">
+              时间格式转换工具，支持时间戳转换、时区转换、日期格式化、时间计算
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 标签页 */}

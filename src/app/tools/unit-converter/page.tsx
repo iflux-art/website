@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ArrowUpDown, Ruler, RotateCcw } from 'lucide-react';
+import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
+import Link from 'next/link';
 
 export default function UnitConverterPage() {
   const [category, setCategory] = useState('length');
@@ -144,7 +144,8 @@ export default function UnitConverterPage() {
     // When convertUnit is called, category is not 'number' or 'temperature'.
     // These categories in unitCategories all have units with a 'factor' property.
 
-    const currentCategoryData = unitCategories[category as keyof Omit<typeof unitCategories, 'number' | 'temperature'>];
+    const currentCategoryData =
+      unitCategories[category as keyof Omit<typeof unitCategories, 'number' | 'temperature'>];
     const units = currentCategoryData.units;
 
     // Assert that 'from' and 'to' are valid keys and their values have 'factor'.
@@ -152,8 +153,15 @@ export default function UnitConverterPage() {
     const fromUnit = units[from as keyof typeof units] as { name: string; factor: number };
     const toUnit = units[to as keyof typeof units] as { name: string; factor: number };
 
-    if (!fromUnit || typeof fromUnit.factor !== 'number' || !toUnit || typeof toUnit.factor !== 'number') {
-      console.error(`Unit or factor not found for category '${category}': from='${from}', to='${to}'`);
+    if (
+      !fromUnit ||
+      typeof fromUnit.factor !== 'number' ||
+      !toUnit ||
+      typeof toUnit.factor !== 'number'
+    ) {
+      console.error(
+        `Unit or factor not found for category '${category}': from='${from}', to='${to}'`
+      );
       return NaN;
     }
 
@@ -289,160 +297,181 @@ export default function UnitConverterPage() {
   );
 
   return (
-    <ToolLayout
-      title="单位转换器"
-      description="长度、重量、温度、面积、体积、速度等单位转换"
-      icon={Ruler}
-      actions={<ToolActions actions={actions} />}
-      helpContent={helpContent}
-    >
-      {/* 分类选择 */}
-      <div className="mb-6">
-        <div className="flex flex-wrap gap-2">
-          {Object.entries(unitCategories).map(([key, cat]) => (
-            <Button
-              key={key}
-              variant={category === key ? 'default' : 'outline'}
-              onClick={() => setCategory(key)}
-              className="rounded-full"
-            >
-              {cat.name}
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
             </Button>
-          ))}
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">单位换算工具</h1>
+            <p className="text-muted-foreground">
+              全面的单位换算工具，支持长度、重量、温度、面积、体积、进制等多种单位转换
+            </p>
+          </div>
         </div>
       </div>
+      <ToolLayout
+        title="单位转换器"
+        description="长度、重量、温度、面积、体积、速度等单位转换"
+        icon={Ruler}
+        actions={<ToolActions actions={actions} />}
+        helpContent={helpContent}
+      >
+        {/* 分类选择 */}
+        <div className="mb-6">
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(unitCategories).map(([key, cat]) => (
+              <Button
+                key={key}
+                variant={category === key ? 'default' : 'outline'}
+                onClick={() => setCategory(key)}
+                className="rounded-full"
+              >
+                {cat.name}
+              </Button>
+            ))}
+          </div>
+        </div>
 
-      {/* 转换器主体 */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>{unitCategories[category as keyof typeof unitCategories].name}转换</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* 源单位 */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">从</label>
-                <select
-                  value={fromUnit}
-                  onChange={e => setFromUnit(e.target.value)}
-                  className="w-full p-3 border border-border rounded-lg bg-background"
-                >
-                  {Object.entries(currentUnits).map(([key, unit]) => (
-                    <option key={key} value={key}>
-                      {unit.name}
-                    </option>
-                  ))}
-                </select>
+        {/* 转换器主体 */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>
+              {unitCategories[category as keyof typeof unitCategories].name}转换
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 源单位 */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">从</label>
+                  <select
+                    value={fromUnit}
+                    onChange={e => setFromUnit(e.target.value)}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  >
+                    {Object.entries(currentUnits).map(([key, unit]) => (
+                      <option key={key} value={key}>
+                        {unit.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <input
+                    type={category === 'number' ? 'text' : 'number'}
+                    value={fromValue}
+                    onChange={e => handleFromValueChange(e.target.value)}
+                    placeholder={
+                      category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'
+                    }
+                    className="w-full p-3 border border-border rounded-lg bg-background text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
               </div>
-              <div>
-                <input
-                  type={category === 'number' ? 'text' : 'number'}
-                  value={fromValue}
-                  onChange={e => handleFromValueChange(e.target.value)}
-                  placeholder={category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'}
-                  className="w-full p-3 border border-border rounded-lg bg-background text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
+
+              {/* 交换按钮 */}
+              <div className="flex items-center justify-center md:flex-col">
+                <Button
+                  onClick={swapUnits}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <ArrowUpDown className="h-4 w-4" />
+                  交换
+                </Button>
+              </div>
+
+              {/* 目标单位 */}
+              <div className="space-y-4 md:order-3">
+                <div>
+                  <label className="block text-sm font-medium mb-2">到</label>
+                  <select
+                    value={toUnit}
+                    onChange={e => setToUnit(e.target.value)}
+                    className="w-full p-3 border border-border rounded-lg bg-background"
+                  >
+                    {Object.entries(currentUnits).map(([key, unit]) => (
+                      <option key={key} value={key}>
+                        {unit.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <input
+                    type={category === 'number' ? 'text' : 'number'}
+                    value={toValue}
+                    onChange={e => handleToValueChange(e.target.value)}
+                    placeholder="转换结果"
+                    className="w-full p-3 border border-border rounded-lg bg-muted/50 text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* 交换按钮 */}
-            <div className="flex items-center justify-center md:flex-col">
-              <Button
-                onClick={swapUnits}
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2"
-              >
-                <ArrowUpDown className="h-4 w-4" />
-                交换
+            {/* 操作按钮 */}
+            <div className="mt-6 flex justify-center">
+              <Button onClick={clearAll} variant="outline">
+                清空
               </Button>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* 目标单位 */}
-            <div className="space-y-4 md:order-3">
-              <div>
-                <label className="block text-sm font-medium mb-2">到</label>
-                <select
-                  value={toUnit}
-                  onChange={e => setToUnit(e.target.value)}
-                  className="w-full p-3 border border-border rounded-lg bg-background"
-                >
-                  {Object.entries(currentUnits).map(([key, unit]) => (
-                    <option key={key} value={key}>
-                      {unit.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <input
-                  type={category === 'number' ? 'text' : 'number'}
-                  value={toValue}
-                  onChange={e => handleToValueChange(e.target.value)}
-                  placeholder="转换结果"
-                  className="w-full p-3 border border-border rounded-lg bg-muted/50 text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
+        {/* 常用转换表 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>常用转换参考</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              {category === 'length' && (
+                <>
+                  <div className="p-3 bg-muted/50 rounded">1 米 = 100 厘米</div>
+                  <div className="p-3 bg-muted/50 rounded">1 千米 = 1000 米</div>
+                  <div className="p-3 bg-muted/50 rounded">1 英寸 = 2.54 厘米</div>
+                  <div className="p-3 bg-muted/50 rounded">1 英尺 = 30.48 厘米</div>
+                  <div className="p-3 bg-muted/50 rounded">1 码 = 0.9144 米</div>
+                  <div className="p-3 bg-muted/50 rounded">1 英里 = 1.609 千米</div>
+                </>
+              )}
+              {category === 'weight' && (
+                <>
+                  <div className="p-3 bg-muted/50 rounded">1 千克 = 1000 克</div>
+                  <div className="p-3 bg-muted/50 rounded">1 吨 = 1000 千克</div>
+                  <div className="p-3 bg-muted/50 rounded">1 磅 = 0.454 千克</div>
+                  <div className="p-3 bg-muted/50 rounded">1 盎司 = 28.35 克</div>
+                  <div className="p-3 bg-muted/50 rounded">1 英石 = 6.35 千克</div>
+                </>
+              )}
+              {category === 'temperature' && (
+                <>
+                  <div className="p-3 bg-muted/50 rounded">0°C = 32°F = 273.15K</div>
+                  <div className="p-3 bg-muted/50 rounded">100°C = 212°F = 373.15K</div>
+                  <div className="p-3 bg-muted/50 rounded">37°C = 98.6°F (体温)</div>
+                  <div className="p-3 bg-muted/50 rounded">-40°C = -40°F</div>
+                </>
+              )}
+              {category === 'number' && (
+                <>
+                  <div className="p-3 bg-muted/50 rounded">255 = FF = 377 = 11111111</div>
+                  <div className="p-3 bg-muted/50 rounded">16 = 10 = 20 = 10000</div>
+                  <div className="p-3 bg-muted/50 rounded">8 = 8 = 10 = 1000</div>
+                  <div className="p-3 bg-muted/50 rounded">1 = 1 = 1 = 1</div>
+                  <div className="p-3 bg-muted/50 rounded">0 = 0 = 0 = 0</div>
+                  <div className="p-3 bg-muted/50 rounded">十进制 = 十六进制 = 八进制 = 二进制</div>
+                </>
+              )}
             </div>
-          </div>
-
-          {/* 操作按钮 */}
-          <div className="mt-6 flex justify-center">
-            <Button onClick={clearAll} variant="outline">
-              清空
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* 常用转换表 */}
-      <Card>
-        <CardHeader>
-          <CardTitle>常用转换参考</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-            {category === 'length' && (
-              <>
-                <div className="p-3 bg-muted/50 rounded">1 米 = 100 厘米</div>
-                <div className="p-3 bg-muted/50 rounded">1 千米 = 1000 米</div>
-                <div className="p-3 bg-muted/50 rounded">1 英寸 = 2.54 厘米</div>
-                <div className="p-3 bg-muted/50 rounded">1 英尺 = 30.48 厘米</div>
-                <div className="p-3 bg-muted/50 rounded">1 码 = 0.9144 米</div>
-                <div className="p-3 bg-muted/50 rounded">1 英里 = 1.609 千米</div>
-              </>
-            )}
-            {category === 'weight' && (
-              <>
-                <div className="p-3 bg-muted/50 rounded">1 千克 = 1000 克</div>
-                <div className="p-3 bg-muted/50 rounded">1 吨 = 1000 千克</div>
-                <div className="p-3 bg-muted/50 rounded">1 磅 = 0.454 千克</div>
-                <div className="p-3 bg-muted/50 rounded">1 盎司 = 28.35 克</div>
-                <div className="p-3 bg-muted/50 rounded">1 英石 = 6.35 千克</div>
-              </>
-            )}
-            {category === 'temperature' && (
-              <>
-                <div className="p-3 bg-muted/50 rounded">0°C = 32°F = 273.15K</div>
-                <div className="p-3 bg-muted/50 rounded">100°C = 212°F = 373.15K</div>
-                <div className="p-3 bg-muted/50 rounded">37°C = 98.6°F (体温)</div>
-                <div className="p-3 bg-muted/50 rounded">-40°C = -40°F</div>
-              </>
-            )}
-            {category === 'number' && (
-              <>
-                <div className="p-3 bg-muted/50 rounded">255 = FF = 377 = 11111111</div>
-                <div className="p-3 bg-muted/50 rounded">16 = 10 = 20 = 10000</div>
-                <div className="p-3 bg-muted/50 rounded">8 = 8 = 10 = 1000</div>
-                <div className="p-3 bg-muted/50 rounded">1 = 1 = 1 = 1</div>
-                <div className="p-3 bg-muted/50 rounded">0 = 0 = 0 = 0</div>
-                <div className="p-3 bg-muted/50 rounded">十进制 = 十六进制 = 八进制 = 二进制</div>
-              </>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </ToolLayout>
+          </CardContent>
+        </Card>
+      </ToolLayout>
+    </div>
   );
 }

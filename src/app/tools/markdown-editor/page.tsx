@@ -1,11 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, Check, Download, Eye, Edit, FileText, RotateCcw, FileDown, Columns } from 'lucide-react'; // Added Columns as a placeholder for split view
+import {
+  Copy,
+  Check,
+  Download,
+  Eye,
+  Edit,
+  FileText,
+  RotateCcw,
+  FileDown,
+  Columns,
+  ArrowLeft,
+} from 'lucide-react'; // Added Columns as a placeholder for split view
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function MarkdownEditorPage() {
   const [markdown, setMarkdown] = useState('');
@@ -36,10 +48,16 @@ export default function MarkdownEditorPage() {
     html = html.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>');
 
     // 链接
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    html = html.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
 
     // 图片
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;height:auto;" loading="lazy"/>');
+    html = html.replace(
+      /!\[([^\]]*)\]\(([^)]+)\)/g,
+      '<img src="$2" alt="$1" style="max-width:100%;height:auto;" loading="lazy"/>'
+    );
 
     // 列表
     html = html.replace(/^\* (.+)$/gim, '<li>$1</li>');
@@ -55,7 +73,7 @@ export default function MarkdownEditorPage() {
     // 段落处理（优化版）
     html = html
       .split('\n\n')
-      .map(p => p.trim() ? `<p>${p}</p>` : '')
+      .map(p => (p.trim() ? `<p>${p}</p>` : ''))
       .join('');
 
     // 清理空标签
@@ -63,7 +81,7 @@ export default function MarkdownEditorPage() {
       /<p><\/p>/g,
       /<p>(<(h[1-6]|ul|blockquote|hr))/g,
       // eslint-disable-next-line no-useless-escape
-      /(<\/(h[1-6]|ul|blockquote)>)<\/p>/g
+      /(<\/(h[1-6]|ul|blockquote)>)<\/p>/g,
     ];
 
     cleanupPatterns.forEach(pattern => {
@@ -257,154 +275,203 @@ function greet(name) {
       <div>
         <h4 className="font-medium mb-2">基础语法</h4>
         <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• <code># 标题</code> - 一级标题</li>
-          <li>• <code>## 标题</code> - 二级标题</li>
-          <li>• <code>**粗体**</code> - 粗体文本</li>
-          <li>• <code>*斜体*</code> - 斜体文本</li>
-          <li>• <code>`代码`</code> - 行内代码</li>
-          <li>• <code>[链接](URL)</code> - 链接</li>
-          <li>• <code>![图片](URL)</code> - 图片</li>
+          <li>
+            • <code># 标题</code> - 一级标题
+          </li>
+          <li>
+            • <code>## 标题</code> - 二级标题
+          </li>
+          <li>
+            • <code>**粗体**</code> - 粗体文本
+          </li>
+          <li>
+            • <code>*斜体*</code> - 斜体文本
+          </li>
+          <li>
+            • <code>`代码`</code> - 行内代码
+          </li>
+          <li>
+            • <code>[链接](URL)</code> - 链接
+          </li>
+          <li>
+            • <code>![图片](URL)</code> - 图片
+          </li>
         </ul>
       </div>
       <div>
         <h4 className="font-medium mb-2">高级语法</h4>
         <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• <code>* 列表项</code> - 无序列表</li>
-          <li>• <code>1. 列表项</code> - 有序列表</li>
-          <li>• <code>{'>'} 引用</code> - 引用文本</li>
-          <li>• <code>---</code> - 分隔线</li>
-          <li>• <code>```代码块```</code> - 代码块</li>
-          <li>• <code>| 表格 | 语法 |</code> - 表格</li>
+          <li>
+            • <code>* 列表项</code> - 无序列表
+          </li>
+          <li>
+            • <code>1. 列表项</code> - 有序列表
+          </li>
+          <li>
+            • <code>{'>'} 引用</code> - 引用文本
+          </li>
+          <li>
+            • <code>---</code> - 分隔线
+          </li>
+          <li>
+            • <code>```代码块```</code> - 代码块
+          </li>
+          <li>
+            • <code>| 表格 | 语法 |</code> - 表格
+          </li>
         </ul>
       </div>
     </div>
   );
 
   return (
-    <ToolLayout
-      title="Markdown 编辑器"
-      description="在线 Markdown 编辑器，支持实时预览和语法高亮"
-      icon={FileText}
-      actions={<ToolActions actions={actions} />}
-      helpContent={helpContent}
-    >
-
-      {/* 工具栏 */}
-      <Card className="mb-6">
-        <CardContent className="p-4">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {/* Markdown 语法按钮 */}
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
-              <strong>B</strong>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('italic')}>
-              <em>I</em>
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('code')}>
-              {'</>'}
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('link')}>
-              🔗
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('image')}>
-              🖼️
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('h1')}>
-              H1
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('h2')}>
-              H2
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('ul')}>
-              • 列表
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('quote')}>
-              " 引用
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => insertMarkdown('table')}>
-              📊 表格
-            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Markdown编辑器</h1>
+            <p className="text-muted-foreground">
+              在线Markdown编辑器，支持实时预览、语法高亮、导出PDF、图片上传
+            </p>
           </div>
-
-          <div className="flex flex-wrap gap-2">
-            <Button
-              onClick={() => copyContent(markdown, 'markdown')}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              {copied === 'markdown' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              复制 Markdown
-            </Button>
-            <Button
-              onClick={() => copyContent(htmlContent, 'html')}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              {copied === 'html' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              复制 HTML
-            </Button>
-            <Button
-              onClick={() => downloadFile(markdown, 'document.md', 'text/markdown')}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <Download className="h-4 w-4" />
-              下载 MD
-            </Button>
-            <Button
-              onClick={() => downloadFile(htmlContent, 'document.html', 'text/html')}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <Download className="h-4 w-4" />
-              下载 HTML
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* 编辑器主体 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* 编辑区域 */}
-        {(viewMode === 'edit' || viewMode === 'split') && (
-          <Card className={viewMode === 'split' ? '' : 'lg:col-span-2'}>
-            <CardHeader>
-              <CardTitle>Markdown 编辑</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <textarea
-                value={markdown}
-                onChange={(e) => setMarkdown(e.target.value)}
-                placeholder="在此输入 Markdown 内容..."
-                className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </CardContent>
-          </Card>
-        )}
-
-        {/* 预览区域 */}
-        {(viewMode === 'preview' || viewMode === 'split') && (
-          <Card className={viewMode === 'split' ? '' : 'lg:col-span-2'}>
-            <CardHeader>
-              <CardTitle>预览</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="prose prose-sm max-w-none h-96 overflow-y-auto p-3 border border-border rounded-lg bg-muted/50"
-                dangerouslySetInnerHTML={{ __html: htmlContent || '\u003cp class="text-muted-foreground"\u003e预览内容将显示在这里...\u003c/p\u003e' }}
-                style={{
-                  lineHeight: '1.6',
-                }}
-              />
-            </CardContent>
-          </Card>
-        )}
+        </div>
       </div>
+      <ToolLayout
+        title="Markdown 编辑器"
+        description="在线 Markdown 编辑器，支持实时预览和语法高亮"
+        icon={FileText}
+        actions={<ToolActions actions={actions} />}
+        helpContent={helpContent}
+      >
+        {/* 工具栏 */}
+        <Card className="mb-6">
+          <CardContent className="p-4">
+            <div className="flex flex-wrap gap-2 mb-4">
+              {/* Markdown 语法按钮 */}
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
+                <strong>B</strong>
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('italic')}>
+                <em>I</em>
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('code')}>
+                {'</>'}
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('link')}>
+                🔗
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('image')}>
+                🖼️
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('h1')}>
+                H1
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('h2')}>
+                H2
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('ul')}>
+                • 列表
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('quote')}>
+                " 引用
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => insertMarkdown('table')}>
+                📊 表格
+              </Button>
+            </div>
 
-    </ToolLayout>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                onClick={() => copyContent(markdown, 'markdown')}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                {copied === 'markdown' ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+                复制 Markdown
+              </Button>
+              <Button
+                onClick={() => copyContent(htmlContent, 'html')}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                {copied === 'html' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                复制 HTML
+              </Button>
+              <Button
+                onClick={() => downloadFile(markdown, 'document.md', 'text/markdown')}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Download className="h-4 w-4" />
+                下载 MD
+              </Button>
+              <Button
+                onClick={() => downloadFile(htmlContent, 'document.html', 'text/html')}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Download className="h-4 w-4" />
+                下载 HTML
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 编辑器主体 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* 编辑区域 */}
+          {(viewMode === 'edit' || viewMode === 'split') && (
+            <Card className={viewMode === 'split' ? '' : 'lg:col-span-2'}>
+              <CardHeader>
+                <CardTitle>Markdown 编辑</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <textarea
+                  value={markdown}
+                  onChange={e => setMarkdown(e.target.value)}
+                  placeholder="在此输入 Markdown 内容..."
+                  className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </CardContent>
+            </Card>
+          )}
+
+          {/* 预览区域 */}
+          {(viewMode === 'preview' || viewMode === 'split') && (
+            <Card className={viewMode === 'split' ? '' : 'lg:col-span-2'}>
+              <CardHeader>
+                <CardTitle>预览</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div
+                  className="prose prose-sm max-w-none h-96 overflow-y-auto p-3 border border-border rounded-lg bg-muted/50"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      htmlContent ||
+                      '\u003cp class="text-muted-foreground"\u003e预览内容将显示在这里...\u003c/p\u003e',
+                  }}
+                  style={{
+                    lineHeight: '1.6',
+                  }}
+                />
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </ToolLayout>
+    </div>
   );
 }

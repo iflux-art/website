@@ -173,21 +173,21 @@ export const generateDemoResponse = (
     ],
     local: [
       `基于本地搜索结果，关于"${message}"的问题，我找到了以下相关内容：\n\n${
-        searchResults?.map((r, i) => `${i + 1}. ${r.title}: ${r.description}`).join('\n') ||
+        searchResults?.map((r, i) => `${i + 1}. ${r.title}: ${r.content}`).join('\n') ||
         '暂无相关结果'
       }\n\n结合这些信息，我建议...`,
       `根据本地文档和工具的搜索结果，"${message}"相关的内容如下：\n\n${
-        searchResults?.map(r => `• ${r.title} - ${r.description}`).join('\n') || '未找到相关内容'
+        searchResults?.map(r => `• ${r.title} - ${r.content}`).join('\n') || '未找到相关内容'
       }\n\n基于这些资源，您可以...`,
     ],
     web: [
       `通过网络搜索"${message}"，我找到了以下相关信息：\n\n${
         searchResults
-          ?.map((r, i) => `${i + 1}. ${r.title}\n   ${r.description}\n   来源：${r.url}`)
+          ?.map((r, i) => `${i + 1}. ${r.title}\n   ${r.content}\n   来源：${r.url}`)
           .join('\n\n') || '暂无网络搜索结果'
       }\n\n综合这些网络资源，我的建议是...`,
       `基于网络搜索结果，关于"${message}"的最新信息如下：\n\n${
-        searchResults?.map(r => `• ${r.title} (${r.url})\n  ${r.description}`).join('\n\n') ||
+        searchResults?.map(r => `• ${r.title} (${r.url})\n  ${r.content}`).join('\n\n') ||
         '未找到相关网络内容'
       }\n\n根据这些信息，您可以进一步...`,
     ],

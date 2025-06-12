@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Calculator, Delete, RotateCcw } from 'lucide-react';
+import { Calculator, Delete, RotateCcw, ArrowLeft } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { calculatorUtils } from '@/lib/tool-utils';
+import Link from 'next/link';
 
 export default function CalculatorPage() {
   const [display, setDisplay] = useState('0');
@@ -232,335 +233,432 @@ export default function CalculatorPage() {
   );
 
   return (
-    <ToolLayout
-      title="计算器"
-      description="多功能计算器，支持基本运算和科学计算"
-      icon={Calculator}
-      actions={<ToolActions actions={actions} />}
-      helpContent={helpContent}
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* 计算器主体 */}
-        <div className="lg:col-span-3">
-          <Card>
-            <CardContent className="p-6">
-              {/* 显示屏 */}
-              <div className="mb-4">
-                <div className="w-full p-4 text-right text-3xl font-mono bg-muted/50 rounded-lg border min-h-[4rem] flex items-center justify-end">
-                  {display}
-                </div>
-              </div>
-
-              {/* 按钮区域 */}
-              {mode === 'simple' ? (
-                // 简单计算器布局
-                <div className="grid grid-cols-4 gap-2">
-                  <Button variant="outline" onClick={clear} className="col-span-1">
-                    C
-                  </Button>
-                  <Button variant="outline" onClick={clearEntry} className="col-span-1">
-                    CE
-                  </Button>
-                  <Button variant="outline" onClick={backspace} className="col-span-1">
-                    <Delete className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performOperation('÷')}
-                    className="col-span-1"
-                  >
-                    ÷
-                  </Button>
-
-                  <Button variant="outline" onClick={() => inputNumber('7')} className="col-span-1">
-                    7
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('8')} className="col-span-1">
-                    8
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('9')} className="col-span-1">
-                    9
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('×')}
-                    className="col-span-1"
-                  >
-                    ×
-                  </Button>
-
-                  <Button variant="outline" onClick={() => inputNumber('4')} className="col-span-1">
-                    4
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('5')} className="col-span-1">
-                    5
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('6')} className="col-span-1">
-                    6
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('-')}
-                    className="col-span-1"
-                  >
-                    -
-                  </Button>
-
-                  <Button variant="outline" onClick={() => inputNumber('1')} className="col-span-1">
-                    1
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('2')} className="col-span-1">
-                    2
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('3')} className="col-span-1">
-                    3
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('+')}
-                    className="col-span-1 row-span-2"
-                  >
-                    +
-                  </Button>
-
-                  <Button variant="outline" onClick={() => inputNumber('0')} className="col-span-2">
-                    0
-                  </Button>
-                  <Button variant="outline" onClick={inputDecimal} className="col-span-1">
-                    .
-                  </Button>
-
-                  <Button variant="default" onClick={performEquals} className="col-span-4">
-                    =
-                  </Button>
-                </div>
-              ) : (
-                // 科学计算器布局
-                <div className="grid grid-cols-6 gap-2">
-                  {/* 第一行 */}
-                  <Button variant="outline" onClick={clear} className="col-span-1">
-                    C
-                  </Button>
-                  <Button variant="outline" onClick={clearEntry} className="col-span-1">
-                    CE
-                  </Button>
-                  <Button variant="outline" onClick={backspace} className="col-span-1">
-                    <Delete className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('/')}
-                    className="col-span-1"
-                  >
-                    ÷
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('sqrt')}
-                    className="col-span-1"
-                  >
-                    √
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('square')}
-                    className="col-span-1"
-                  >
-                    x²
-                  </Button>
-
-                  {/* 第二行 */}
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('sin')}
-                    className="col-span-1"
-                  >
-                    sin
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('cos')}
-                    className="col-span-1"
-                  >
-                    cos
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('tan')}
-                    className="col-span-1"
-                  >
-                    tan
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('*')}
-                    className="col-span-1"
-                  >
-                    ×
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('ln')}
-                    className="col-span-1"
-                  >
-                    ln
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('log')}
-                    className="col-span-1"
-                  >
-                    log
-                  </Button>
-
-                  {/* 第三行 */}
-                  <Button variant="outline" onClick={() => inputNumber('7')} className="col-span-1">
-                    7
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('8')} className="col-span-1">
-                    8
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('9')} className="col-span-1">
-                    9
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('-')}
-                    className="col-span-1"
-                  >
-                    -
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('pi')}
-                    className="col-span-1"
-                  >
-                    π
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('e')}
-                    className="col-span-1"
-                  >
-                    e
-                  </Button>
-
-                  {/* 第四行 */}
-                  <Button variant="outline" onClick={() => inputNumber('4')} className="col-span-1">
-                    4
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('5')} className="col-span-1">
-                    5
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('6')} className="col-span-1">
-                    6
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('+')}
-                    className="col-span-1"
-                  >
-                    +
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performOperation('^')}
-                    className="col-span-1"
-                  >
-                    x^y
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('factorial')}
-                    className="col-span-1"
-                  >
-                    n!
-                  </Button>
-
-                  {/* 第五行 */}
-                  <Button variant="outline" onClick={() => inputNumber('1')} className="col-span-1">
-                    1
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('2')} className="col-span-1">
-                    2
-                  </Button>
-                  <Button variant="outline" onClick={() => inputNumber('3')} className="col-span-1">
-                    3
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputOperator('%')}
-                    className="col-span-1"
-                  >
-                    %
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => performFunction('reciprocal')}
-                    className="col-span-1"
-                  >
-                    1/x
-                  </Button>
-                  <Button variant="default" onClick={calculate} className="col-span-1 row-span-2">
-                    =
-                  </Button>
-
-                  {/* 第六行 */}
-                  <Button variant="outline" onClick={() => inputNumber('0')} className="col-span-2">
-                    0
-                  </Button>
-                  <Button variant="outline" onClick={inputDecimal} className="col-span-1">
-                    .
-                  </Button>
-                  <Button variant="outline" onClick={toggleSign} className="col-span-1">
-                    ±
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => inputNumber('00')}
-                    className="col-span-1"
-                  >
-                    00
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 历史记录 */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                历史记录
-                {history.length > 0 && (
-                  <Button variant="ghost" size="sm" onClick={clearHistory}>
-                    <RotateCcw className="h-4 w-4" />
-                  </Button>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-96 overflow-y-auto">
-                {history.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-4">暂无计算记录</p>
-                ) : (
-                  history.map((entry, index) => (
-                    <div
-                      key={index}
-                      className="text-xs font-mono p-2 bg-muted/50 rounded cursor-pointer hover:bg-muted"
-                      onClick={() => setDisplay(entry.split(' = ')[1])}
-                    >
-                      {entry}
-                    </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">计算器</h1>
+            <p className="text-muted-foreground">
+              多功能计算器，支持基础运算、科学计算、单位换算、历史记录
+            </p>
+          </div>
         </div>
       </div>
-    </ToolLayout>
+      <ToolLayout
+        title="计算器"
+        description="多功能计算器，支持基本运算和科学计算"
+        icon={Calculator}
+        actions={<ToolActions actions={actions} />}
+        helpContent={helpContent}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* 计算器主体 */}
+          <div className="lg:col-span-3">
+            <Card>
+              <CardContent className="p-6">
+                {/* 显示屏 */}
+                <div className="mb-4">
+                  <div className="w-full p-4 text-right text-3xl font-mono bg-muted/50 rounded-lg border min-h-[4rem] flex items-center justify-end">
+                    {display}
+                  </div>
+                </div>
+
+                {/* 按钮区域 */}
+                {mode === 'simple' ? (
+                  // 简单计算器布局
+                  <div className="grid grid-cols-4 gap-2">
+                    <Button variant="outline" onClick={clear} className="col-span-1">
+                      C
+                    </Button>
+                    <Button variant="outline" onClick={clearEntry} className="col-span-1">
+                      CE
+                    </Button>
+                    <Button variant="outline" onClick={backspace} className="col-span-1">
+                      <Delete className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performOperation('÷')}
+                      className="col-span-1"
+                    >
+                      ÷
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('7')}
+                      className="col-span-1"
+                    >
+                      7
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('8')}
+                      className="col-span-1"
+                    >
+                      8
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('9')}
+                      className="col-span-1"
+                    >
+                      9
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('×')}
+                      className="col-span-1"
+                    >
+                      ×
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('4')}
+                      className="col-span-1"
+                    >
+                      4
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('5')}
+                      className="col-span-1"
+                    >
+                      5
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('6')}
+                      className="col-span-1"
+                    >
+                      6
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('-')}
+                      className="col-span-1"
+                    >
+                      -
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('1')}
+                      className="col-span-1"
+                    >
+                      1
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('2')}
+                      className="col-span-1"
+                    >
+                      2
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('3')}
+                      className="col-span-1"
+                    >
+                      3
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('+')}
+                      className="col-span-1 row-span-2"
+                    >
+                      +
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('0')}
+                      className="col-span-2"
+                    >
+                      0
+                    </Button>
+                    <Button variant="outline" onClick={inputDecimal} className="col-span-1">
+                      .
+                    </Button>
+
+                    <Button variant="default" onClick={performEquals} className="col-span-4">
+                      =
+                    </Button>
+                  </div>
+                ) : (
+                  // 科学计算器布局
+                  <div className="grid grid-cols-6 gap-2">
+                    {/* 第一行 */}
+                    <Button variant="outline" onClick={clear} className="col-span-1">
+                      C
+                    </Button>
+                    <Button variant="outline" onClick={clearEntry} className="col-span-1">
+                      CE
+                    </Button>
+                    <Button variant="outline" onClick={backspace} className="col-span-1">
+                      <Delete className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('/')}
+                      className="col-span-1"
+                    >
+                      ÷
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('sqrt')}
+                      className="col-span-1"
+                    >
+                      √
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('square')}
+                      className="col-span-1"
+                    >
+                      x²
+                    </Button>
+
+                    {/* 第二行 */}
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('sin')}
+                      className="col-span-1"
+                    >
+                      sin
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('cos')}
+                      className="col-span-1"
+                    >
+                      cos
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('tan')}
+                      className="col-span-1"
+                    >
+                      tan
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('*')}
+                      className="col-span-1"
+                    >
+                      ×
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('ln')}
+                      className="col-span-1"
+                    >
+                      ln
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('log')}
+                      className="col-span-1"
+                    >
+                      log
+                    </Button>
+
+                    {/* 第三行 */}
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('7')}
+                      className="col-span-1"
+                    >
+                      7
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('8')}
+                      className="col-span-1"
+                    >
+                      8
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('9')}
+                      className="col-span-1"
+                    >
+                      9
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('-')}
+                      className="col-span-1"
+                    >
+                      -
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('pi')}
+                      className="col-span-1"
+                    >
+                      π
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('e')}
+                      className="col-span-1"
+                    >
+                      e
+                    </Button>
+
+                    {/* 第四行 */}
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('4')}
+                      className="col-span-1"
+                    >
+                      4
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('5')}
+                      className="col-span-1"
+                    >
+                      5
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('6')}
+                      className="col-span-1"
+                    >
+                      6
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('+')}
+                      className="col-span-1"
+                    >
+                      +
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performOperation('^')}
+                      className="col-span-1"
+                    >
+                      x^y
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('factorial')}
+                      className="col-span-1"
+                    >
+                      n!
+                    </Button>
+
+                    {/* 第五行 */}
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('1')}
+                      className="col-span-1"
+                    >
+                      1
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('2')}
+                      className="col-span-1"
+                    >
+                      2
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('3')}
+                      className="col-span-1"
+                    >
+                      3
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputOperator('%')}
+                      className="col-span-1"
+                    >
+                      %
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => performFunction('reciprocal')}
+                      className="col-span-1"
+                    >
+                      1/x
+                    </Button>
+                    <Button variant="default" onClick={calculate} className="col-span-1 row-span-2">
+                      =
+                    </Button>
+
+                    {/* 第六行 */}
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('0')}
+                      className="col-span-2"
+                    >
+                      0
+                    </Button>
+                    <Button variant="outline" onClick={inputDecimal} className="col-span-1">
+                      .
+                    </Button>
+                    <Button variant="outline" onClick={toggleSign} className="col-span-1">
+                      ±
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => inputNumber('00')}
+                      className="col-span-1"
+                    >
+                      00
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* 历史记录 */}
+          <div className="lg:col-span-1">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  历史记录
+                  {history.length > 0 && (
+                    <Button variant="ghost" size="sm" onClick={clearHistory}>
+                      <RotateCcw className="h-4 w-4" />
+                    </Button>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 max-h-96 overflow-y-auto">
+                  {history.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-4">暂无计算记录</p>
+                  ) : (
+                    history.map((entry, index) => (
+                      <div
+                        key={index}
+                        className="text-xs font-mono p-2 bg-muted/50 rounded cursor-pointer hover:bg-muted"
+                        onClick={() => setDisplay(entry.split(' = ')[1])}
+                      >
+                        {entry}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </ToolLayout>
+    </div>
   );
 }

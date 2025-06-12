@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Palette, Box, Zap, Grid3X3, Copy, Check } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Box, Zap, Grid3X3 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function CSSToolkitPage() {
+export default function CssToolkitPage() {
   const [activeTab, setActiveTab] = useState<
     'shadow' | 'border' | 'animation' | 'flexbox' | 'grid'
   >('shadow');
@@ -305,9 +305,15 @@ export default function CSSToolkitPage() {
 
   // Flexbox生成器
   const FlexboxGenerator = () => {
-    const [direction, setDirection] = useState<'row' | 'row-reverse' | 'column' | 'column-reverse'>('row');
-    const [justify, setJustify] = useState<'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'>('center');
-    const [align, setAlign] = useState<'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'>('center');
+    const [direction, setDirection] = useState<'row' | 'row-reverse' | 'column' | 'column-reverse'>(
+      'row'
+    );
+    const [justify, setJustify] = useState<
+      'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'
+    >('center');
+    const [align, setAlign] = useState<
+      'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'
+    >('center');
     const [wrap, setWrap] = useState<'nowrap' | 'wrap' | 'wrap-reverse'>('nowrap');
 
     const cssCode = `display: flex;
@@ -810,23 +816,20 @@ gap: ${gap};`;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Palette className="h-8 w-8" />
-          CSS工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          CSS效果生成工具，包括阴影、圆角、动画、布局、Flexbox、Grid
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">CSS工具箱</h1>
+            <p className="text-muted-foreground">
+              前端开发必备的CSS工具集，包含阴影生成器、渐变编辑器、动画预览、布局工具
+            </p>
+          </div>
+        </div>
       </div>
 
       <Card className="mb-6">

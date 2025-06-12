@@ -12,11 +12,13 @@ import {
   Shuffle,
   RotateCcw,
   FileDown,
+  ArrowLeft,
 } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function TextCounterPage() {
   const [activeTab, setActiveTab] = useState('counter');
@@ -240,380 +242,400 @@ The tool can count:
   );
 
   return (
-    <ToolLayout
-      title="文本处理工具集"
-      description="全面的文本处理工具，包括文字统计、文本比较、排序、大小写转换、格式化"
-      icon={FileText}
-      actions={<ToolActions actions={actions} />}
-      helpContent={helpContent}
-    >
-      {/* 标签页 */}
-      <Card className="mb-6">
-        <CardContent className="p-0">
-          <div className="flex border-b">
-            {[
-              { key: 'counter', name: '文字统计', icon: Type },
-              { key: 'transform', name: '文本转换', icon: ArrowUpDown },
-              { key: 'compare', name: '文本比较', icon: FileText },
-              { key: 'format', name: '格式化', icon: Shuffle },
-            ].map(tab => {
-              const IconComponent = tab.icon;
-              return (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
-                    activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <IconComponent className="h-4 w-4" />
-                  {tab.name}
-                </button>
-              );
-            })}
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">文本统计工具</h1>
+            <p className="text-muted-foreground">
+              专业的文本分析工具，支持字数统计、字符分析、阅读时间估算、关键词提取
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
+      <ToolLayout
+        title="文本处理工具集"
+        description="全面的文本处理工具，包括文字统计、文本比较、排序、大小写转换、格式化"
+        icon={FileText}
+        actions={<ToolActions actions={actions} />}
+        helpContent={helpContent}
+      >
+        {/* 标签页 */}
+        <Card className="mb-6">
+          <CardContent className="p-0">
+            <div className="flex border-b">
+              {[
+                { key: 'counter', name: '文字统计', icon: Type },
+                { key: 'transform', name: '文本转换', icon: ArrowUpDown },
+                { key: 'compare', name: '文本比较', icon: FileText },
+                { key: 'format', name: '格式化', icon: Shuffle },
+              ].map(tab => {
+                const IconComponent = tab.icon;
+                return (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                      activeTab === tab.key
+                        ? 'border-primary text-primary bg-primary/5'
+                        : 'border-transparent text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <IconComponent className="h-4 w-4" />
+                    {tab.name}
+                  </button>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* 文字统计标签页 */}
-      {activeTab === 'counter' && (
-        <>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* 文本输入区域 */}
-            <div className="lg:col-span-2">
+        {/* 文字统计标签页 */}
+        {activeTab === 'counter' && (
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* 文本输入区域 */}
+              <div className="lg:col-span-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>输入文本</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <textarea
+                      value={text}
+                      onChange={e => setText(e.target.value)}
+                      placeholder="在此输入要统计的文本..."
+                      className="w-full h-96 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* 统计结果 */}
+              <div className="space-y-4">
+                {/* 基础统计 */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Type className="h-5 w-5" />
+                      基础统计
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">字符数（含空格）</span>
+                      <span className="font-mono font-medium">
+                        {stats.characters.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">字符数（不含空格）</span>
+                      <span className="font-mono font-medium">
+                        {stats.charactersNoSpaces.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">单词数</span>
+                      <span className="font-mono font-medium">{stats.words.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">句子数</span>
+                      <span className="font-mono font-medium">
+                        {stats.sentences.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">段落数</span>
+                      <span className="font-mono font-medium">
+                        {stats.paragraphs.toLocaleString()}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* 时间估算 */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Clock className="h-5 w-5" />
+                      时间估算
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">阅读时间</span>
+                      <span className="font-medium">{formatTime(stats.readingTime)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">演讲时间</span>
+                      <span className="font-medium">{formatTime(stats.speakingTime)}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* 详细分析 */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Hash className="h-5 w-5" />
+                      详细分析
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">平均句长</span>
+                      <span className="font-mono font-medium">
+                        {stats.sentences > 0 ? Math.round(stats.words / stats.sentences) : 0} 词
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">平均段长</span>
+                      <span className="font-mono font-medium">
+                        {stats.paragraphs > 0 ? Math.round(stats.sentences / stats.paragraphs) : 0}{' '}
+                        句
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">字符密度</span>
+                      <span className="font-mono font-medium">
+                        {stats.words > 0 ? Math.round(stats.charactersNoSpaces / stats.words) : 0}{' '}
+                        字符/词
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 文本转换标签页 */}
+        {activeTab === 'transform' && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>文本转换</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">输入文本</label>
+                  <textarea
+                    value={text}
+                    onChange={e => setText(e.target.value)}
+                    placeholder="在此输入要转换的文本..."
+                    className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  <Button onClick={() => transformText('uppercase')} variant="outline" size="sm">
+                    转大写
+                  </Button>
+                  <Button onClick={() => transformText('lowercase')} variant="outline" size="sm">
+                    转小写
+                  </Button>
+                  <Button onClick={() => transformText('capitalize')} variant="outline" size="sm">
+                    首字母大写
+                  </Button>
+                  <Button onClick={() => transformText('reverse')} variant="outline" size="sm">
+                    反转文本
+                  </Button>
+                  <Button onClick={() => transformText('removeSpaces')} variant="outline" size="sm">
+                    移除空格
+                  </Button>
+                  <Button
+                    onClick={() => transformText('removeLineBreaks')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    移除换行
+                  </Button>
+                  <Button onClick={() => transformText('sortLines')} variant="outline" size="sm">
+                    行排序
+                  </Button>
+                  <Button onClick={() => transformText('shuffleLines')} variant="outline" size="sm">
+                    行随机
+                  </Button>
+                  <Button
+                    onClick={() => transformText('removeDuplicateLines')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    去重复行
+                  </Button>
+                  <Button
+                    onClick={() => copyToClipboard(text, 'transform')}
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-1"
+                  >
+                    {copied === 'transform' ? (
+                      <Check className="h-3 w-3" />
+                    ) : (
+                      <Copy className="h-3 w-3" />
+                    )}
+                    复制结果
+                  </Button>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">转换结果</label>
+                  <textarea
+                    value={text}
+                    readOnly
+                    className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* 文本比较标签页 */}
+        {activeTab === 'compare' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>输入文本</CardTitle>
+                  <CardTitle>文本1</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <textarea
                     value={text}
                     onChange={e => setText(e.target.value)}
-                    placeholder="在此输入要统计的文本..."
-                    className="w-full h-96 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="输入第一个文本..."
+                    className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>文本2</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <textarea
+                    value={text2}
+                    onChange={e => setText2(e.target.value)}
+                    placeholder="输入第二个文本..."
+                    className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </CardContent>
               </Card>
             </div>
 
-            {/* 统计结果 */}
-            <div className="space-y-4">
-              {/* 基础统计 */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Type className="h-5 w-5" />
-                    基础统计
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">字符数（含空格）</span>
-                    <span className="font-mono font-medium">
-                      {stats.characters.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">字符数（不含空格）</span>
-                    <span className="font-mono font-medium">
-                      {stats.charactersNoSpaces.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">单词数</span>
-                    <span className="font-mono font-medium">{stats.words.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">句子数</span>
-                    <span className="font-mono font-medium">
-                      {stats.sentences.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">段落数</span>
-                    <span className="font-mono font-medium">
-                      {stats.paragraphs.toLocaleString()}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* 时间估算 */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5" />
-                    时间估算
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">阅读时间</span>
-                    <span className="font-medium">{formatTime(stats.readingTime)}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">演讲时间</span>
-                    <span className="font-medium">{formatTime(stats.speakingTime)}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* 详细分析 */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Hash className="h-5 w-5" />
-                    详细分析
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">平均句长</span>
-                    <span className="font-mono font-medium">
-                      {stats.sentences > 0 ? Math.round(stats.words / stats.sentences) : 0} 词
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">平均段长</span>
-                    <span className="font-mono font-medium">
-                      {stats.paragraphs > 0 ? Math.round(stats.sentences / stats.paragraphs) : 0} 句
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">字符密度</span>
-                    <span className="font-mono font-medium">
-                      {stats.words > 0 ? Math.round(stats.charactersNoSpaces / stats.words) : 0}{' '}
-                      字符/词
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* 文本转换标签页 */}
-      {activeTab === 'transform' && (
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>文本转换</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">输入文本</label>
-                <textarea
-                  value={text}
-                  onChange={e => setText(e.target.value)}
-                  placeholder="在此输入要转换的文本..."
-                  className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                <Button onClick={() => transformText('uppercase')} variant="outline" size="sm">
-                  转大写
-                </Button>
-                <Button onClick={() => transformText('lowercase')} variant="outline" size="sm">
-                  转小写
-                </Button>
-                <Button onClick={() => transformText('capitalize')} variant="outline" size="sm">
-                  首字母大写
-                </Button>
-                <Button onClick={() => transformText('reverse')} variant="outline" size="sm">
-                  反转文本
-                </Button>
-                <Button onClick={() => transformText('removeSpaces')} variant="outline" size="sm">
-                  移除空格
-                </Button>
-                <Button
-                  onClick={() => transformText('removeLineBreaks')}
-                  variant="outline"
-                  size="sm"
-                >
-                  移除换行
-                </Button>
-                <Button onClick={() => transformText('sortLines')} variant="outline" size="sm">
-                  行排序
-                </Button>
-                <Button onClick={() => transformText('shuffleLines')} variant="outline" size="sm">
-                  行随机
-                </Button>
-                <Button
-                  onClick={() => transformText('removeDuplicateLines')}
-                  variant="outline"
-                  size="sm"
-                >
-                  去重复行
-                </Button>
-                <Button
-                  onClick={() => copyToClipboard(text, 'transform')}
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1"
-                >
-                  {copied === 'transform' ? (
-                    <Check className="h-3 w-3" />
-                  ) : (
-                    <Copy className="h-3 w-3" />
-                  )}
-                  复制结果
-                </Button>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">转换结果</label>
-                <textarea
-                  value={text}
-                  readOnly
-                  className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* 文本比较标签页 */}
-      {activeTab === 'compare' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>文本1</CardTitle>
+                <CardTitle>比较结果</CardTitle>
               </CardHeader>
               <CardContent>
-                <textarea
-                  value={text}
-                  onChange={e => setText(e.target.value)}
-                  placeholder="输入第一个文本..."
-                  className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>文本2</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <textarea
-                  value={text2}
-                  onChange={e => setText2(e.target.value)}
-                  placeholder="输入第二个文本..."
-                  className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>比较结果</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {(() => {
-                const differences = compareTexts();
-                if (differences.length === 0) {
-                  return <p className="text-muted-foreground">两个文本相同或请输入文本进行比较</p>;
-                }
-                return (
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">
-                      发现 {differences.length} 处差异：
-                    </p>
-                    {differences.slice(0, 10).map((diff, index) => (
-                      <div key={index} className="p-3 border border-border rounded-lg">
-                        <div className="text-sm font-medium mb-2">第 {diff.line} 行</div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                          <div className="p-2 bg-red-50 dark:bg-red-950 rounded">
-                            <div className="text-red-600 dark:text-red-400 font-medium mb-1">
-                              文本1:
+                {(() => {
+                  const differences = compareTexts();
+                  if (differences.length === 0) {
+                    return (
+                      <p className="text-muted-foreground">两个文本相同或请输入文本进行比较</p>
+                    );
+                  }
+                  return (
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">
+                        发现 {differences.length} 处差异：
+                      </p>
+                      {differences.slice(0, 10).map((diff, index) => (
+                        <div key={index} className="p-3 border border-border rounded-lg">
+                          <div className="text-sm font-medium mb-2">第 {diff.line} 行</div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div className="p-2 bg-red-50 dark:bg-red-950 rounded">
+                              <div className="text-red-600 dark:text-red-400 font-medium mb-1">
+                                文本1:
+                              </div>
+                              <div>{diff.text1 || '(空行)'}</div>
                             </div>
-                            <div>{diff.text1 || '(空行)'}</div>
-                          </div>
-                          <div className="p-2 bg-green-50 dark:bg-green-950 rounded">
-                            <div className="text-green-600 dark:text-green-400 font-medium mb-1">
-                              文本2:
+                            <div className="p-2 bg-green-50 dark:bg-green-950 rounded">
+                              <div className="text-green-600 dark:text-green-400 font-medium mb-1">
+                                文本2:
+                              </div>
+                              <div>{diff.text2 || '(空行)'}</div>
                             </div>
-                            <div>{diff.text2 || '(空行)'}</div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                    {differences.length > 10 && (
-                      <p className="text-sm text-muted-foreground">
-                        ... 还有 {differences.length - 10} 处差异
-                      </p>
-                    )}
-                  </div>
-                );
-              })()}
-            </CardContent>
-          </Card>
-        </div>
-      )}
+                      ))}
+                      {differences.length > 10 && (
+                        <p className="text-sm text-muted-foreground">
+                          ... 还有 {differences.length - 10} 处差异
+                        </p>
+                      )}
+                    </div>
+                  );
+                })()}
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
-      {/* 格式化标签页 */}
-      {activeTab === 'format' && (
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>文本格式化</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">输入文本</label>
-                <textarea
-                  value={text}
-                  onChange={e => setText(e.target.value)}
-                  placeholder="在此输入要格式化的文本..."
-                  className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
+        {/* 格式化标签页 */}
+        {activeTab === 'format' && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>文本格式化</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">输入文本</label>
+                  <textarea
+                    value={text}
+                    onChange={e => setText(e.target.value)}
+                    placeholder="在此输入要格式化的文本..."
+                    className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <Button onClick={() => setText(text.trim())} variant="outline" size="sm">
-                  去除首尾空格
-                </Button>
-                <Button
-                  onClick={() => setText(text.replace(/\s+/g, ' '))}
-                  variant="outline"
-                  size="sm"
-                >
-                  合并空格
-                </Button>
-                <Button
-                  onClick={() => setText(text.replace(/\n\s*\n/g, '\n\n'))}
-                  variant="outline"
-                  size="sm"
-                >
-                  规范段落
-                </Button>
-                <Button
-                  onClick={() => setText(text.replace(/[^\w\s\u4e00-\u9fa5]/g, ''))}
-                  variant="outline"
-                  size="sm"
-                >
-                  移除标点
-                </Button>
-              </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  <Button onClick={() => setText(text.trim())} variant="outline" size="sm">
+                    去除首尾空格
+                  </Button>
+                  <Button
+                    onClick={() => setText(text.replace(/\s+/g, ' '))}
+                    variant="outline"
+                    size="sm"
+                  >
+                    合并空格
+                  </Button>
+                  <Button
+                    onClick={() => setText(text.replace(/\n\s*\n/g, '\n\n'))}
+                    variant="outline"
+                    size="sm"
+                  >
+                    规范段落
+                  </Button>
+                  <Button
+                    onClick={() => setText(text.replace(/[^\w\s\u4e00-\u9fa5]/g, ''))}
+                    variant="outline"
+                    size="sm"
+                  >
+                    移除标点
+                  </Button>
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">格式化结果</label>
-                <textarea
-                  value={text}
-                  readOnly
-                  className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-    </ToolLayout>
+                <div>
+                  <label className="block text-sm font-medium mb-2">格式化结果</label>
+                  <textarea
+                    value={text}
+                    readOnly
+                    className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </ToolLayout>
+    </div>
   );
 }

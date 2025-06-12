@@ -2,6 +2,63 @@ import { Metadata } from 'next';
 import { SITE_METADATA } from '@/lib/constants';
 
 /**
+ * 页面类型常量
+ */
+export const PAGE_TYPES = {
+  WEBSITE: 'website',
+  ARTICLE: 'article',
+  PROFILE: 'profile',
+} as const;
+
+export type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];
+
+/**
+ * 图标配置接口
+ */
+interface IconConfig {
+  icon?: string;
+  shortcut?: string;
+  apple?: string;
+  mask?: string;
+  manifest?: string;
+}
+
+/**
+ * 验证配置接口
+ */
+interface VerificationConfig {
+  google?: string;
+  yandex?: string;
+  yahoo?: string;
+  other?: Record<string, string[]>;
+}
+
+/**
+ * JSON-LD 配置接口
+ */
+interface JsonLdConfig {
+  type: string;
+  name?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  author?: string;
+  datePublished?: string;
+  dateModified?: string;
+  [key: string]: string | undefined;
+}
+
+/**
+ * 社交媒体配置接口
+ */
+interface SocialConfig {
+  twitter?: string;
+  facebook?: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
+/**
  * 生成 Metadata 对象的选项
  */
 export interface GenerateMetadataOptions {
@@ -28,7 +85,7 @@ export interface GenerateMetadataOptions {
   /**
    * 页面类型
    */
-  type?: 'website' | 'article' | 'profile';
+  type?: PageType;
 
   /**
    * 页面作者
@@ -64,21 +121,35 @@ export interface GenerateMetadataOptions {
    * 是否禁用跟踪
    */
   nofollow?: boolean;
-}
 
+  /**
+   * 图标配置
+   */
+  icons?: IconConfig;
+
+  /**
+   * 验证配置
+   */
+  verification?: VerificationConfig;
+
+  /**
+   * JSON-LD 配置
+   */
+  jsonLd?: JsonLdConfig;
+
+  /**
+   * 社交媒体配置
+   */
+  social?: SocialConfig;
+}
 /**
  * 生成视口配置
- *
- * @returns 视口配置
  */
 export function generateViewport() {
   return {
-    // 视口
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
-
-    // 主题色
+    maximumScale: 2,
     themeColor: [
       { media: '(prefers-color-scheme: light)', color: '#ffffff' },
       { media: '(prefers-color-scheme: dark)', color: '#000000' },
@@ -86,13 +157,37 @@ export function generateViewport() {
   };
 }
 
+// 缓存已生成的元数据
+const metadataCache = new Map<string, Metadata>();
+
 /**
- * 生成 Metadata 对象
- *
- * @param options 选项
- * @returns Metadata 对象
+ * 生成 JSON-LD 结构化数据
  */
+function generateJsonLd(config: JsonLdConfig): string {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': config.type,
+    name: config.name,
+    description: config.description,
+    url: config.url,
+    image: config.image,
+    author: config.author
+      ? {
+          '@type': 'Person',
+          name: config.author,
+        }
+      : undefined,
+    datePublished: config.datePublished,
+    dateModified: config.dateModified,
+    ...config,
+  });
+}
 export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
+  const cacheKey = JSON.stringify(options);
+  if (metadataCache.has(cacheKey)) {
+    return metadataCache.get(cacheKey)!;
+  }
+
   const {
     title,
     description = SITE_METADATA.description,
@@ -106,32 +201,32 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     url,
     noindex = false,
     nofollow = false,
+    icons,
+    verification,
+    jsonLd,
+    social,
   } = options;
 
-  // 完整标题
   const fullTitle = title ? `${title} | ${SITE_METADATA.title}` : SITE_METADATA.title;
-
-  // 完整 URL
   const fullUrl = url || SITE_METADATA.url;
-
-  // 完整图片 URL
   const fullImage = image.startsWith('http') ? image : `${SITE_METADATA.url}${image}`;
 
-  // 机器人指令
-  const robots = {
-    index: !noindex,
-    follow: !nofollow,
-  };
-
-  return {
-    // 基本信息
+  const metadata: Metadata = {
     title: fullTitle,
     description,
 
-    // 机器人指令
-    robots,
+    robots: {
+      index: !noindex,
+      follow: !nofollow,
+      googleBot: {
+        index: !noindex,
+        follow: !nofollow,
+        'max-image-preview': 'large',
+        'max-video-preview': -1,
+        'max-snippet': -1,
+      },
+    },
 
-    // Open Graph
     openGraph: {
       title: fullTitle,
       description,
@@ -140,58 +235,100 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
       images: [
         {
           url: fullImage,
-          width: 1200,
-          height: 630,
+          width: type === 'article' ? 1200 : 800,
+          height: type === 'article' ? 630 : 600,
           alt: fullTitle,
         },
       ],
       locale,
       type,
-      ...(type === 'article'
-        ? {
-            authors: [author],
-            publishedTime: date,
-            modifiedTime: modified || date,
-          }
-        : {}),
+      ...(type === 'article' && {
+        article: {
+          authors: [author],
+          publishedTime: date,
+          modifiedTime: modified || date,
+        },
+      }),
     },
 
-    // Twitter
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
       description,
       images: [fullImage],
-      creator: SITE_METADATA.twitter,
+      creator: social?.twitter || SITE_METADATA.twitter,
     },
 
-    // 其他
     keywords: keywords.join(', '),
     authors: [{ name: author, url: SITE_METADATA.url }],
     creator: author,
     publisher: SITE_METADATA.title,
 
-    // 替代语言
     alternates: {
       canonical: fullUrl,
     },
 
-    // 图标
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon-16x16.png',
-      apple: '/apple-touch-icon.png',
+      icon: icons?.icon || '/favicon.ico',
+      shortcut: icons?.shortcut || '/favicon-16x16.png',
+      apple: icons?.apple || '/apple-touch-icon.png',
+      other: [
+        {
+          rel: 'mask-icon',
+          url: icons?.mask || '/safari-pinned-tab.svg',
+        },
+        {
+          rel: 'manifest',
+          url: icons?.manifest || '/manifest.json',
+        },
+      ],
     },
 
-    // 验证
     verification: {
-      google: 'google-site-verification',
-      yandex: 'yandex-verification',
-      yahoo: 'yahoo-verification',
-      bing: 'msvalidate.01',
+      google: verification?.google || 'google-site-verification',
+      yandex: verification?.yandex || 'yandex-verification',
+      yahoo: verification?.yahoo || 'yahoo-verification',
       other: {
-        me: ['hello@iflux.art'],
+        ...(verification?.other || {
+          me: ['hello@iflux.art'],
+          'msvalidate.01': ['msvalidate.01'],
+        }),
       },
     },
   };
+
+  // 添加 JSON-LD 结构化数据
+  if (jsonLd) {
+    const ldJson = generateJsonLd(jsonLd);
+    const newOther: { [key: string]: string | number | (string | number)[] } = {
+      'script:ld+json': ldJson,
+    };
+
+    if (metadata.other) {
+      Object.entries(metadata.other).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          newOther[key] = value;
+        }
+      });
+    }
+
+    metadata.other = newOther;
+  }
+
+  metadataCache.set(cacheKey, metadata);
+  return metadata;
+}
+
+/**
+ * 生成文章页面的元数据
+ */
+export function generateArticleMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
+  return generateMetadata({ ...options, type: PAGE_TYPES.ARTICLE });
+}
+
+/**
+ * 生成个人资料页面的元数据
+ */
+export function generateProfileMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
+  return generateMetadata({ ...options, type: PAGE_TYPES.PROFILE });
 }

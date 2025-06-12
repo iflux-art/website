@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Copy, Check, Dices, Hash, QrCode, Key, Shield } from 'lucide-react';
 import Link from 'next/link';
 
-export default function GeneratorToolkitPage() {
+export default function RandomGeneratorPage() {
   const [activeTab, setActiveTab] = useState<'random' | 'uuid' | 'qrcode' | 'hash' | 'password'>(
     'random'
   );
@@ -126,7 +126,7 @@ export default function GeneratorToolkitPage() {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       setHashResult(hashHex);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       setHashResult('生成哈希时出错');
     }
@@ -154,25 +154,20 @@ export default function GeneratorToolkitPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Dices className="h-8 w-8" />
-          生成器工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          全能生成器工具，包括随机生成器、UUID生成器、二维码生成器、哈希生成器、密码生成器
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">随机生成器</h1>
+            <p className="text-muted-foreground">
+              全能随机生成工具，支持随机数、UUID、密码、颜色、名字等多种生成
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 标签页导航 */}
@@ -190,7 +185,9 @@ export default function GeneratorToolkitPage() {
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as 'random' | 'uuid' | 'qrcode' | 'hash' | 'password')}
+                  onClick={() =>
+                    setActiveTab(tab.key as 'random' | 'uuid' | 'qrcode' | 'hash' | 'password')
+                  }
                   className={`flex-1 min-w-[120px] p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
                       ? 'border-primary text-primary bg-primary/5'

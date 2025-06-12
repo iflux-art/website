@@ -34,15 +34,24 @@ export default function NonsenseGeneratorPage() {
         `如果${theme}是${theme}，那么${theme}就是${theme}`,
         `${theme}啊${theme}，你为什么是${theme}`,
         `世界上最远的距离，是${theme}到${theme}的距离`,
-        `${theme}不${theme}，${theme}还是${theme}`
+        `${theme}不${theme}，${theme}还是${theme}`,
       ];
 
-      const adjectives = ['美丽的', '忧伤的', '快乐的', '神秘的', '温柔的', '激情的', '深邃的', '纯真的'];
+      const adjectives = [
+        '美丽的',
+        '忧伤的',
+        '快乐的',
+        '神秘的',
+        '温柔的',
+        '激情的',
+        '深邃的',
+        '纯真的',
+      ];
       const nouns = ['心灵', '梦想', '时光', '回忆', '希望', '眼泪', '微笑', '拥抱'];
       const verbs = ['飞翔', '流淌', '绽放', '消逝', '闪耀', '沉睡', '苏醒', '歌唱'];
 
       let poetry = `《${theme}之歌》\n\n`;
-      
+
       for (let i = 0; i < lineCount; i++) {
         if (Math.random() > 0.5) {
           const template = poetryTemplates[Math.floor(Math.random() * poetryTemplates.length)];
@@ -63,14 +72,16 @@ export default function NonsenseGeneratorPage() {
 
     return (
       <Card>
-        <CardHeader><CardTitle>废话诗歌生成器</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>废话诗歌生成器</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm mb-2">诗歌主题</label>
             <input
               type="text"
               value={theme}
-              onChange={(e) => setTheme(e.target.value)}
+              onChange={e => setTheme(e.target.value)}
               placeholder="输入诗歌主题..."
               className="w-full p-3 border rounded-lg"
             />
@@ -100,7 +111,7 @@ export default function NonsenseGeneratorPage() {
               min="4"
               max="16"
               value={lines}
-              onChange={(e) => setLines(Number(e.target.value))}
+              onChange={e => setLines(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -134,12 +145,26 @@ export default function NonsenseGeneratorPage() {
         `当我们谈论${topic}的时候，我们实际上在谈论${topic}。`,
         `${topic}的本质在于${topic}，而${topic}的意义在于${topic}。`,
         `如果说${topic}是${topic}，那么${topic}就是${topic}的${topic}。`,
-        `${topic}不仅仅是${topic}，更是${topic}的${topic}。`
+        `${topic}不仅仅是${topic}，更是${topic}的${topic}。`,
       ];
 
       const philosophicalWords = [
-        '存在', '本质', '意义', '价值', '真理', '美好', '永恒', '瞬间',
-        '深刻', '浅薄', '复杂', '简单', '真实', '虚幻', '光明', '黑暗'
+        '存在',
+        '本质',
+        '意义',
+        '价值',
+        '真理',
+        '美好',
+        '永恒',
+        '瞬间',
+        '深刻',
+        '浅薄',
+        '复杂',
+        '简单',
+        '真实',
+        '虚幻',
+        '光明',
+        '黑暗',
       ];
 
       let prose = `关于${topic}的思考\n\n`;
@@ -167,14 +192,16 @@ export default function NonsenseGeneratorPage() {
 
     return (
       <Card>
-        <CardHeader><CardTitle>废话散文生成器</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>废话散文生成器</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm mb-2">散文主题</label>
             <input
               type="text"
               value={topic}
-              onChange={(e) => setTopic(e.target.value)}
+              onChange={e => setTopic(e.target.value)}
               placeholder="输入散文主题..."
               className="w-full p-3 border rounded-lg"
             />
@@ -205,7 +232,7 @@ export default function NonsenseGeneratorPage() {
               max="800"
               step="50"
               value={length}
-              onChange={(e) => setLength(Number(e.target.value))}
+              onChange={e => setLength(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -239,11 +266,11 @@ export default function NonsenseGeneratorPage() {
         `当${protagonist}看到${setting}的时候，${protagonist}想起了${setting}。`,
         `${protagonist}对${setting}说："${setting}啊，你就是${setting}。"`,
         `在${setting}里，${protagonist}发现了${protagonist}的${setting}。`,
-        `${protagonist}的${setting}让${protagonist}想起了${setting}的${protagonist}。`
+        `${protagonist}的${setting}让${protagonist}想起了${setting}的${protagonist}。`,
       ];
 
       let novel = `《${protagonist}在${setting}的故事》\n\n`;
-      
+
       novel += `第一章：${protagonist}的发现\n\n`;
       novel += `${protagonist}是一个普通的${protagonist}，生活在${setting}里。`;
       novel += `每天，${protagonist}都会在${setting}里思考关于${protagonist}的问题。`;
@@ -270,14 +297,16 @@ export default function NonsenseGeneratorPage() {
 
     return (
       <Card>
-        <CardHeader><CardTitle>废话小说生成器</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>废话小说生成器</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm mb-2">主人公姓名</label>
             <input
               type="text"
               value={protagonist}
-              onChange={(e) => setProtagonist(e.target.value)}
+              onChange={e => setProtagonist(e.target.value)}
               placeholder="输入主人公姓名..."
               className="w-full p-3 border rounded-lg"
             />
@@ -288,7 +317,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={setting}
-              onChange={(e) => setSetting(e.target.value)}
+              onChange={e => setSetting(e.target.value)}
               placeholder="输入故事场景..."
               className="w-full p-3 border rounded-lg"
             />
@@ -357,40 +386,40 @@ export default function NonsenseGeneratorPage() {
       const speechOpeners = [
         `亲爱的朋友们，今天我想和大家分享关于${topic}的思考。`,
         `各位，${topic}是我们每个人都关心的话题。`,
-        `让我们一起来探讨${topic}这个重要的主题。`
+        `让我们一起来探讨${topic}这个重要的主题。`,
       ];
 
       const speechPoints = [
         `首先，我们要明确什么是${topic}。${topic}就是${topic}，这是毫无疑问的。`,
         `其次，${topic}的重要性不言而喻。没有${topic}，就没有${topic}。`,
         `第三，我们要学会如何实现${topic}。实现${topic}的关键在于${topic}。`,
-        `最后，${topic}不仅仅是${topic}，更是我们生活的${topic}。`
+        `最后，${topic}不仅仅是${topic}，更是我们生活的${topic}。`,
       ];
 
       const speechClosers = [
         `总之，${topic}是我们每个人都应该追求的目标。`,
         `让我们一起为了${topic}而努力！`,
-        `谢谢大家，愿${topic}与我们同在！`
+        `谢谢大家，愿${topic}与我们同在！`,
       ];
 
       let speech = `《${topic}》演讲稿\n\n`;
-      
+
       // 开场
       speech += speechOpeners[Math.floor(Math.random() * speechOpeners.length)] + '\n\n';
-      
+
       // 主体（根据时长调整内容）
       const pointsCount = Math.max(3, Math.floor(minutes * 0.8));
       for (let i = 0; i < pointsCount; i++) {
         speech += speechPoints[i % speechPoints.length] + '\n\n';
-        
+
         // 添加一些废话填充
         speech += `正如古人所说，${topic}者，${topic}也。这句话虽然简单，但却蕴含着深刻的道理。`;
         speech += `当我们真正理解了${topic}的含义，我们就会发现，${topic}其实就在我们身边。\n\n`;
       }
-      
+
       // 结尾
       speech += speechClosers[Math.floor(Math.random() * speechClosers.length)];
-      
+
       speech += `\n\n预计演讲时长：${duration}分钟`;
       return speech;
     };
@@ -399,14 +428,16 @@ export default function NonsenseGeneratorPage() {
 
     return (
       <Card>
-        <CardHeader><CardTitle>废话演讲生成器</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>废话演讲生成器</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm mb-2">演讲主题</label>
             <input
               type="text"
               value={speechTopic}
-              onChange={(e) => setSpeechTopic(e.target.value)}
+              onChange={e => setSpeechTopic(e.target.value)}
               placeholder="输入演讲主题..."
               className="w-full p-3 border rounded-lg"
             />
@@ -436,7 +467,7 @@ export default function NonsenseGeneratorPage() {
               min="3"
               max="15"
               value={duration}
-              onChange={(e) => setDuration(Number(e.target.value))}
+              onChange={e => setDuration(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -478,23 +509,20 @@ export default function NonsenseGeneratorPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <BookOpen className="h-8 w-8" />
-          废话文学生成器
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          生成各种废话文学作品，包括废话诗歌、散文、小说和演讲稿
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">废话文学生成器</h1>
+            <p className="text-muted-foreground">
+              智能废话文学创作工具，支持多种风格生成，包括学术风、商业风、哲学风
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -503,12 +531,14 @@ export default function NonsenseGeneratorPage() {
           <Card>
             <CardContent className="p-0">
               <div className="flex border-b">
-                {tabs.map((tab) => {
+                {tabs.map(tab => {
                   const IconComponent = tab.icon;
                   return (
                     <button
                       key={tab.key}
-                      onClick={() => setActiveTab(tab.key as 'poetry' | 'prose' | 'novel' | 'speech')}
+                      onClick={() =>
+                        setActiveTab(tab.key as 'poetry' | 'prose' | 'novel' | 'speech')
+                      }
                       className={`flex-1 p-3 text-center border-b-2 transition-colors flex items-center justify-center gap-2 text-sm ${
                         activeTab === tab.key
                           ? 'border-primary text-primary bg-primary/5'
@@ -536,11 +566,21 @@ export default function NonsenseGeneratorPage() {
             <CardTitle>生成的作品</CardTitle>
             {generatedText && (
               <div className="flex gap-2">
-                <Button onClick={copyToClipboard} variant="outline" size="sm" className="flex items-center gap-2">
+                <Button
+                  onClick={copyToClipboard}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
                   <Copy className="h-3 w-3" />
                   复制
                 </Button>
-                <Button onClick={downloadText} variant="outline" size="sm" className="flex items-center gap-2">
+                <Button
+                  onClick={downloadText}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
                   <Download className="h-3 w-3" />
                   下载
                 </Button>
@@ -555,9 +595,7 @@ export default function NonsenseGeneratorPage() {
               </div>
             ) : generatedText ? (
               <div className="p-4 bg-gray-50 rounded-lg max-h-96 overflow-y-auto">
-                <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                  {generatedText}
-                </div>
+                <div className="whitespace-pre-wrap text-sm leading-relaxed">{generatedText}</div>
               </div>
             ) : (
               <div className="text-center text-muted-foreground h-64 flex items-center justify-center">

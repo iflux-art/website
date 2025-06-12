@@ -125,7 +125,7 @@ export default function Base64EncoderPage() {
         .replace(/'/g, '&#39;');
       setOutput(encoded);
       setError('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       setError('HTML编码失败');
       setOutput('');
@@ -142,7 +142,7 @@ export default function Base64EncoderPage() {
         .replace(/&#39;/g, "'");
       setOutput(decoded);
       setError('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       setError('HTML解码失败');
       setOutput('');
@@ -199,25 +199,20 @@ export default function Base64EncoderPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
-      {/* 页面标题 */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          {mode === 'encode' ? <Lock className="h-8 w-8" /> : <Unlock className="h-8 w-8" />}
-          编码工具集
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          编码转换工具，包括Base64、URL、HTML编解码、字符编码转换
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">编码转换工具</h1>
+            <p className="text-muted-foreground">
+              多格式编码转换工具，支持Base64、URL、HTML编解码，字符编码转换
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 标签页 */}

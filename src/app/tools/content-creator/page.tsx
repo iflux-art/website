@@ -727,23 +727,20 @@ export default function ContentCreatorPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <Link href="/tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            返回工具列表
-          </Button>
-        </Link>
-      </div>
-
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <PenTool className="h-8 w-8" />
-          内容创作工具
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          内容创作辅助工具，包括标题生成、创意灵感、内容大纲、开头钩子
-        </p>
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">内容创作助手</h1>
+            <p className="text-muted-foreground">
+              智能内容创作工具，支持标题生成、创意灵感、内容大纲、文案优化
+            </p>
+          </div>
+        </div>
       </div>
 
       <Card className="mb-6">

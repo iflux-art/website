@@ -1,11 +1,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Search, Copy, Check, AlertCircle, CheckCircle, RotateCcw, FileDown } from 'lucide-react';
+import {
+  Search,
+  Copy,
+  Check,
+  AlertCircle,
+  CheckCircle,
+  RotateCcw,
+  FileDown,
+  ArrowLeft,
+} from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/ui/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function RegexTesterPage() {
   const [pattern, setPattern] = useState('');
@@ -224,195 +234,212 @@ export default function RegexTesterPage() {
   );
 
   return (
-    <ToolLayout
-      title="正则表达式测试器"
-      description="测试和验证正则表达式，查看匹配结果和分组信息"
-      icon={Search}
-      actions={<ToolActions actions={actions} />}
-      helpContent={helpContent}
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 正则表达式输入 */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* 正则表达式 */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                正则表达式
-                {pattern &&
-                  (isValid ? (
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  ) : (
-                    <AlertCircle className="h-5 w-5 text-red-600" />
-                  ))}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  value={pattern}
-                  onChange={e => setPattern(e.target.value)}
-                  placeholder="输入正则表达式..."
-                  className="w-full p-3 border border-border rounded-lg bg-background font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-                {error && (
-                  <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
-                )}
-              </div>
-
-              {/* 标志位 */}
-              <div>
-                <label className="block text-sm font-medium mb-2">标志位</label>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { flag: 'g', name: '全局匹配', desc: '查找所有匹配项' },
-                    { flag: 'i', name: '忽略大小写', desc: '不区分大小写' },
-                    { flag: 'm', name: '多行模式', desc: '^和$匹配每行的开始和结束' },
-                    { flag: 's', name: '单行模式', desc: '.匹配换行符' },
-                  ].map(({ flag, name, desc }) => (
-                    <label key={flag} className="flex items-center space-x-2 text-sm">
-                      <input
-                        type="checkbox"
-                        checked={flags.includes(flag)}
-                        onChange={e => {
-                          if (e.target.checked) {
-                            setFlags(flags + flag);
-                          } else {
-                            setFlags(flags.replace(flag, ''));
-                          }
-                        }}
-                        className="rounded"
-                      />
-                      <span title={desc}>
-                        {name} ({flag})
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 测试字符串 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>测试字符串</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <textarea
-                value={testString}
-                onChange={e => setTestString(e.target.value)}
-                placeholder="输入要测试的字符串..."
-                className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </CardContent>
-          </Card>
-
-          {/* 匹配结果 */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                匹配结果 ({matches.length} 个匹配)
-                {matches.length > 0 && (
-                  <Button
-                    onClick={() => copyToClipboard(matches.map(m => m[0]).join('\n'))}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-2"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="h-4 w-4" />
-                        已复制
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4" />
-                        复制匹配项
-                      </>
-                    )}
-                  </Button>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {matches.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  {pattern && testString ? '没有找到匹配项' : '请输入正则表达式和测试字符串'}
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* 高亮显示 */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">高亮显示</h4>
-                    <div
-                      className="p-3 border border-border rounded-lg bg-muted/50 text-sm whitespace-pre-wrap"
-                      dangerouslySetInnerHTML={{
-                        __html: highlightMatches(testString, matches),
-                      }}
-                    />
-                  </div>
-
-                  {/* 匹配详情 */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">匹配详情</h4>
-                    <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {matches.map((match, index) => (
-                        <div key={index} className="p-2 border border-border rounded text-sm">
-                          <div className="font-mono font-medium">{match[0]}</div>
-                          <div className="text-muted-foreground text-xs">
-                            位置: {match.index} - {(match.index || 0) + match[0].length - 1}
-                            {match.length > 1 && (
-                              <span className="ml-2">
-                                分组:{' '}
-                                {match
-                                  .slice(1)
-                                  .map((group, i) => `$${i + 1}="${group}"`)
-                                  .join(', ')}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 常用模式 */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>常用正则模式</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {commonPatterns.map((item, index) => (
-                  <div
-                    key={index}
-                    className="p-3 border border-border rounded-lg hover:bg-muted/50 cursor-pointer"
-                    onClick={() => {
-                      setPattern(item.pattern);
-                      setFlags(item.flags);
-                      setTestString(item.example);
-                    }}
-                  >
-                    <div className="font-medium text-sm">{item.name}</div>
-                    <div className="font-mono text-xs text-muted-foreground mt-1 break-all">
-                      {item.pattern}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">示例: {item.example}</div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <Link href="/tools">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">正则表达式工具</h1>
+            <p className="text-muted-foreground">
+              强大的正则表达式测试工具，支持实时匹配、模式验证、语法高亮、常用模式库
+            </p>
+          </div>
         </div>
       </div>
-    </ToolLayout>
+      <ToolLayout
+        title="正则表达式测试器"
+        description="测试和验证正则表达式，查看匹配结果和分组信息"
+        icon={Search}
+        actions={<ToolActions actions={actions} />}
+        helpContent={helpContent}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* 正则表达式输入 */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* 正则表达式 */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  正则表达式
+                  {pattern &&
+                    (isValid ? (
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                    ) : (
+                      <AlertCircle className="h-5 w-5 text-red-600" />
+                    ))}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    value={pattern}
+                    onChange={e => setPattern(e.target.value)}
+                    placeholder="输入正则表达式..."
+                    className="w-full p-3 border border-border rounded-lg bg-background font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                  {error && (
+                    <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
+                  )}
+                </div>
+
+                {/* 标志位 */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">标志位</label>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { flag: 'g', name: '全局匹配', desc: '查找所有匹配项' },
+                      { flag: 'i', name: '忽略大小写', desc: '不区分大小写' },
+                      { flag: 'm', name: '多行模式', desc: '^和$匹配每行的开始和结束' },
+                      { flag: 's', name: '单行模式', desc: '.匹配换行符' },
+                    ].map(({ flag, name, desc }) => (
+                      <label key={flag} className="flex items-center space-x-2 text-sm">
+                        <input
+                          type="checkbox"
+                          checked={flags.includes(flag)}
+                          onChange={e => {
+                            if (e.target.checked) {
+                              setFlags(flags + flag);
+                            } else {
+                              setFlags(flags.replace(flag, ''));
+                            }
+                          }}
+                          className="rounded"
+                        />
+                        <span title={desc}>
+                          {name} ({flag})
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 测试字符串 */}
+            <Card>
+              <CardHeader>
+                <CardTitle>测试字符串</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <textarea
+                  value={testString}
+                  onChange={e => setTestString(e.target.value)}
+                  placeholder="输入要测试的字符串..."
+                  className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </CardContent>
+            </Card>
+
+            {/* 匹配结果 */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  匹配结果 ({matches.length} 个匹配)
+                  {matches.length > 0 && (
+                    <Button
+                      onClick={() => copyToClipboard(matches.map(m => m[0]).join('\n'))}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="h-4 w-4" />
+                          已复制
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-4 w-4" />
+                          复制匹配项
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {matches.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    {pattern && testString ? '没有找到匹配项' : '请输入正则表达式和测试字符串'}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {/* 高亮显示 */}
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">高亮显示</h4>
+                      <div
+                        className="p-3 border border-border rounded-lg bg-muted/50 text-sm whitespace-pre-wrap"
+                        dangerouslySetInnerHTML={{
+                          __html: highlightMatches(testString, matches),
+                        }}
+                      />
+                    </div>
+
+                    {/* 匹配详情 */}
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">匹配详情</h4>
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                        {matches.map((match, index) => (
+                          <div key={index} className="p-2 border border-border rounded text-sm">
+                            <div className="font-mono font-medium">{match[0]}</div>
+                            <div className="text-muted-foreground text-xs">
+                              位置: {match.index} - {(match.index || 0) + match[0].length - 1}
+                              {match.length > 1 && (
+                                <span className="ml-2">
+                                  分组:{' '}
+                                  {match
+                                    .slice(1)
+                                    .map((group, i) => `$${i + 1}="${group}"`)
+                                    .join(', ')}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* 常用模式 */}
+          <div className="lg:col-span-1">
+            <Card>
+              <CardHeader>
+                <CardTitle>常用正则模式</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {commonPatterns.map((item, index) => (
+                    <div
+                      key={index}
+                      className="p-3 border border-border rounded-lg hover:bg-muted/50 cursor-pointer"
+                      onClick={() => {
+                        setPattern(item.pattern);
+                        setFlags(item.flags);
+                        setTestString(item.example);
+                      }}
+                    >
+                      <div className="font-medium text-sm">{item.name}</div>
+                      <div className="font-mono text-xs text-muted-foreground mt-1 break-all">
+                        {item.pattern}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">示例: {item.example}</div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </ToolLayout>
+    </div>
   );
 }
