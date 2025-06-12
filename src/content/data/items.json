@@ -23656,5 +23656,50 @@
     "id": "mbs4dfaolygfa5i2dg",
     "createdAt": "2025-06-11T15:43:33.552Z",
     "updatedAt": "2025-06-11T15:43:33.552Z"
+  },
+  {
+    "title": "Teamo",
+    "description": "全球首个为知识工作者而生，A2A范式超级Agent",
+    "url": "https://teamo.floatmiracle.com/index",
+    "icon": "https://teamo.floatmiracle.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "智能体"
+    ],
+    "featured": true,
+    "category": "ai",
+    "id": "mbtkze630s14i0py30h",
+    "createdAt": "2025-06-12T16:16:18.555Z",
+    "updatedAt": "2025-06-12T16:16:18.555Z"
+  },
+  {
+    "title": "voimus-AI band Pro",
+    "description": "AI Band Pro是一款智能超级音乐制作软件，将致力于为广大音乐创作者提供便捷的创作工具。",
+    "url": "https://www.voimus.com/",
+    "icon": "https://www.voimus.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "音乐生成"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtlkg19cadjkqf3vt",
+    "createdAt": "2025-06-12T16:32:40.749Z",
+    "updatedAt": "2025-06-12T16:32:40.749Z"
+  },
+  {
+    "title": "商汤秒画SenseMirage – AI作画，有手就行！还是免费的！",
+    "description": "会打字就会用的AI绘画神器，完美支持中文提示词，支持摄影、可爱、精致、赛博朋克、电影等超多风格，人人都可以是插画师！快速创作二次元、写实向等多种风格小姐姐！",
+    "url": "https://miaohua.sensetime.com/",
+    "icon": "https://bkmksh.oss-cn-shanghai.aliyuncs.com/assets1/homepage/m-favicon.png",
+    "iconType": "image",
+    "tags": [
+      "图像生成"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtlr12gopota5fwqeb",
+    "createdAt": "2025-06-12T16:37:47.944Z",
+    "updatedAt": "2025-06-12T16:37:47.944Z"
   }
 ]

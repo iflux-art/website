@@ -64,12 +64,12 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
       case 'dark':
         return {
           icon: <Sun className="h-[1.2rem] w-[1.2rem]" />,
-          label: '切换到亮色模式',
+          label: '切换到浅色模式',
         };
       case 'light':
         return {
           icon: <Moon className="h-[1.2rem] w-[1.2rem]" />,
-          label: '切换到暗色模式',
+          label: '切换到暗黑模式',
         };
       default:
         return {

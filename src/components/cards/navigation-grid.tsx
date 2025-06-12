@@ -1,4 +1,4 @@
-import { UnifiedCard } from '@/components/ui/unified-card';
+import { UnifiedCard } from '@/components/cards/unified-card';
 
 interface NavigationGridProps {
   children: React.ReactNode;

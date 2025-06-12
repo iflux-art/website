@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { NAV_ITEMS } from '@/lib/constants';
-import { Home, Globe, Mail, Settings } from 'lucide-react';
+import { Home, Globe } from 'lucide-react';
 
 // 导航项描述
 const NAV_DESCRIPTIONS = {
@@ -28,18 +28,6 @@ const ADMIN_MENU_ITEMS = [
     label: '网址管理',
     icon: Globe,
     description: '管理网站导航中的所有网址',
-  },
-  {
-    key: 'admin/email',
-    label: '邮箱管理',
-    icon: Mail,
-    description: '管理多个邮箱账户，统一收发邮件',
-  },
-  {
-    key: 'admin/settings',
-    label: '系统设置',
-    icon: Settings,
-    description: '配置系统参数和选项',
   },
 ];
 

@@ -240,8 +240,8 @@ export function NavigationForm({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="emoji">表情符号</SelectItem>
                   <SelectItem value="image">图片链接</SelectItem>
+                  <SelectItem value="emoji">表情符号</SelectItem>
                   <SelectItem value="text">文字</SelectItem>
                 </SelectContent>
               </Select>

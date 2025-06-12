@@ -12,7 +12,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
-import { ToolActions } from '@/components/features/tools/tool-actions';
+import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { Button } from '@/components/ui/input/button';
 import Link from 'next/link';

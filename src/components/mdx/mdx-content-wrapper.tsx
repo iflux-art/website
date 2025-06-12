@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface ProcessingState {
   readonly isProcessing: boolean;
-  readonly error: Error | null; 
+  readonly error: Error | null;
   readonly processedCount: number;
   readonly totalCount: number;
   readonly remainingTasks: number;
@@ -14,7 +14,10 @@ interface ProcessingState {
 
 type AnyFunction = (...args: unknown[]) => void;
 
-const debounce = <F extends AnyFunction>(fn: F, delay: number): ((...args: Parameters<F>) => void) => {
+const debounce = <F extends AnyFunction>(
+  fn: F,
+  delay: number
+): ((...args: Parameters<F>) => void) => {
   let timeoutId: NodeJS.Timeout;
   return (...args: Parameters<F>) => {
     clearTimeout(timeoutId);
@@ -116,7 +119,12 @@ const createResourceCardHTML = ({
   const tagsList = tags.length
     ? `<div class="flex flex-wrap gap-2 mt-3">
         ${tags
-          .map(tag => `<span class="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground">${escapeHtml(tag.trim())}</span>`)
+          .map(
+            tag =>
+              `<span class="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground">${escapeHtml(
+                tag.trim()
+              )}</span>`
+          )
           .join('')}
       </div>`
     : '';
@@ -146,117 +154,7 @@ const createResourceCardHTML = ({
     </div>
   `;
 };
-        if (element.hasAttribute('data-resource-card')) {
-          const parent = element.parentElement;
-          if (parent instanceof HTMLElement) {
-            processResourceCards(parent);
-          }
-        } else if (element.hasAttribute('data-resource-grid')) {
-          const parent = element.parentElement;
-          if (parent instanceof HTMLElement) {
-            processResourceGrids(parent);
-          }
-        }
-        if (element.hasAttribute('data-resource-card')) {
-          const parent = element.parentElement;
-          if (parent instanceof HTMLElement) {
-            processResourceCards(parent);
-          }
-        } else if (element.hasAttribute('data-resource-grid')) {
-          const parent = element.parentElement;
-          if (parent instanceof HTMLElement) {
-            processResourceGrids(parent);
-          }
-        }
 
-/**
- * 验证URL是否合法
- */
-const isValidUrl = (url: string): boolean => {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-/**
- * 转义HTML特殊字符以防止XSS攻击
- */
-const escapeHtml = (unsafe: string): string => {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-};
-/**
- * 创建资源卡片HTML
- */
-const createResourceCardHTML = ({
-  title,
-  description,
-  url,
-  icon,
-  tags,
-  featured,
-}: ResourceCardProps): string => {
-  // 验证URL
-  if (!isValidUrl(url)) {
-    throw new MDXProcessingError(`Invalid URL: ${url}`);
-  }
-
-  // 转义所有文本内容
-  const safeTitle = escapeHtml(title);
-  const safeDescription = escapeHtml(description);
-  const safeIcon = escapeHtml(icon);
-
-  return `
-    <div class="h-3/4 overflow-hidden hover:shadow-lg transition-all border border-border rounded-lg ${
-      featured ? 'border-primary/30' : ''
-    }">
-      <div class="p-4 flex flex-col h-full">
-        <div class="flex items-start mb-3">
-          <div class="text-3xl">
-            <span class="text-primary">${safeIcon}</span>
-          </div>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">${safeTitle}</h3>
-        <p class="text-muted-foreground text-sm flex-grow">${safeDescription}</p>
-        ${
-          tags.length
-            ? `<div class="flex flex-wrap gap-2 mt-3">
-            ${tags
-              .map(tag => `<span class="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground">${escapeHtml(tag.trim())}</span>`)
-              .join('')}
-          </div>`
-            : ''
-        }
-        ${
-          featured
-            ? `<div class="absolute top-2 right-2">
-            <span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">精选</span>
-          </div>`
-            : ''
-        }
-      </div>
-    </div>
-  `;
-};
-/**
- * 获取网格列类名
- */
-const getGridColumns = (columns: ResourceGridProps['columns']): string => {
-  const columnMap = {
-    '1': 'grid-cols-1',
-    '2': 'grid-cols-1 md:grid-cols-2',
-    '3': 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    '4': 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-  };
-  return columnMap[columns];
-};
 /**
  * MDX内容包装器组件
  * 处理和渲染MDX内容中的自定义组件，包括资源卡片和网格布局
@@ -267,7 +165,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const retryCountRef = useRef<number>(0);
   const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
-  
+
   const [processingState, setProcessingState] = useState<ProcessingState>({
     isProcessing: false,
     error: null,
@@ -275,8 +173,9 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
     totalCount: 0,
     remainingTasks: 0,
     failedTasks: 0,
-    averageProcessingTime: 0
+    averageProcessingTime: 0,
   });
+
   /**
    * 处理资源卡片
    */
@@ -312,7 +211,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
         cardElement.target = '_blank';
         cardElement.rel = 'noopener noreferrer';
         cardElement.className = 'block h-full';
-        
+
         // 使用 requestAnimationFrame 优化渲染
         requestAnimationFrame(() => {
           cardElement.innerHTML = createResourceCardHTML(cardProps);
@@ -338,7 +237,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
       try {
         element.setAttribute('data-processed', 'true');
         const columns = (element.getAttribute('columns') || '3') as ResourceGridProps['columns'];
-        
+
         requestAnimationFrame(() => {
           element.className = `grid gap-6 my-8 ${getGridColumns(columns)}`;
         });
@@ -382,7 +281,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
       setProcessingState(prev => ({
         ...prev,
         error: error instanceof Error ? error : new Error(String(error)),
-        failedTasks: prev.failedTasks + 1
+        failedTasks: prev.failedTasks + 1,
       }));
 
       if (retryCountRef.current < CONFIG.MAX_RETRIES) {
@@ -398,7 +297,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
     if (!contentRef.current) return;
 
     intersectionObserverRef.current = new IntersectionObserver(
-      (entries) => {
+      entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const element = entry.target as HTMLElement;
@@ -421,7 +320,7 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
       {
         root: null,
         rootMargin: CONFIG.INTERSECTION_ROOT_MARGIN,
-        threshold: CONFIG.INTERSECTION_THRESHOLD
+        threshold: CONFIG.INTERSECTION_THRESHOLD,
       }
     );
 
@@ -473,21 +372,22 @@ export function MdxContentWrapper({ html }: MdxContentWrapperProps) {
       }
     };
   }, []);
+
   const getDataAttributes = () => ({
     'data-processing': processingState.isProcessing,
     'data-processed-count': processingState.processedCount,
-    'data-total-count': processingState.totalCount, 
+    'data-total-count': processingState.totalCount,
     'data-remaining-tasks': processingState.remainingTasks,
     'data-failed-tasks': processingState.failedTasks,
     'data-average-time': processingState.averageProcessingTime.toFixed(2),
-    'data-has-error': !!processingState.error
+    'data-has-error': !!processingState.error,
   });
 
   return (
     <div
       ref={contentRef}
+      className="prose prose-slate dark:prose-invert max-w-none"
       dangerouslySetInnerHTML={{ __html: html }}
-      className="mdx-content prose dark:prose-invert prose-neutral max-w-none"
       {...getDataAttributes()}
     />
   );

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Calculator, Delete, RotateCcw, ArrowLeft } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
-import { ToolActions } from '@/components/features/tools/tool-actions';
+import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { Button } from '@/components/ui/input/button';
 import { calculatorUtils } from '@/lib/tool-utils';

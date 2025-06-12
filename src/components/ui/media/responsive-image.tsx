@@ -56,7 +56,8 @@ export interface ResponsiveImageFormats {
 /**
  * 响应式图片组件属性
  */
-export interface ResponsiveImageProps extends Omit<ImageProps, 'src' | 'srcSet' | 'sizes'> {
+export interface ResponsiveImageProps
+  extends Omit<ImageProps, 'src' | 'srcSet' | 'sizes' | 'placeholder'> {
   /**
    * 图片源
    * 可以是字符串或对象

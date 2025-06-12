@@ -43,8 +43,8 @@ export function DataTable<T extends object>({
   emptyText = '暂无数据',
   pagination,
 }: DataTableProps<T>) {
-  const getValue = (record: T, key: string) => {
-    return key.split('.').reduce((obj, k) => obj?.[k], record);
+  const getValue = (record: T, key: keyof T) => {
+    return record[key];
   };
 
   return (
@@ -105,7 +105,6 @@ export function DataTable<T extends object>({
                 data.map((record, recordIndex) => (
                   <tr key={recordIndex} className="border-b hover:bg-muted/50">
                     {columns.map((column, columnIndex) => {
-                      const value = getValue(record, column.key as string);
                       return (
                         <td
                           key={columnIndex}
@@ -117,7 +116,9 @@ export function DataTable<T extends object>({
                               : 'text-left'
                           }`}
                         >
-                          {column.render ? column.render(value, record, recordIndex) : value}
+                          {column.render
+                            ? column.render(record[column.key], record, recordIndex)
+                            : String(record[column.key])}
                         </td>
                       );
                     })}

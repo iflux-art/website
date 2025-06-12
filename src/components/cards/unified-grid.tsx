@@ -96,14 +96,7 @@ export function UnifiedGrid({
   };
 
   return (
-    <div
-      className={cn(
-        'grid my-8',
-        gridCols[columns],
-        gridGap[gap],
-        className
-      )}
-    >
+    <div className={cn('grid my-8', gridCols[columns], gridGap[gap], className)}>
       {items &&
         items.map((item, index) => (
           <UnifiedCard
@@ -111,7 +104,7 @@ export function UnifiedGrid({
             {...item}
             type={type || item.type}
             variant={variant || item.variant}
-            index={index}
+            _index={index}
           />
         ))}
       {children}

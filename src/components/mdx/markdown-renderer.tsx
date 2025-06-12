@@ -7,7 +7,7 @@ interface MarkdownRendererProps {
 import Image, { ImageProps } from 'next/image';
 import { CodeBlock } from '@/components/mdx/code-block';
 import { UnifiedCard } from '@/components/cards/unified-card';
-import { UnifiedGrid } from '@/components/ui/layout/unified-grid';
+import { UnifiedGrid } from '@/components/cards/unified-grid';
 import { MarkdownLink } from './markdown-link';
 import { InlineCode } from './inline-code';
 interface ResourceCardProps {

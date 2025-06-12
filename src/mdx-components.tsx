@@ -29,9 +29,9 @@ interface FriendLinkCardProps {
   icon?: string;
   iconType?: 'image' | 'emoji';
 }
-import { UnifiedCard } from '@/components/ui/unified-card';
-import { UnifiedGrid } from '@/components/ui/layout/unified-grid';
-import { NavigationGrid, NavigationItem } from '@/components/mdx/navigation-grid';
+import { UnifiedCard } from '@/components/cards/unified-card';
+import { UnifiedGrid } from '@/components/cards/unified-grid';
+import { NavigationGrid, NavigationItem } from '@/components/cards/navigation-grid';
 import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
 
 // This file allows you to provide custom React components
