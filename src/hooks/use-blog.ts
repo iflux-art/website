@@ -4,6 +4,18 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
+
+/**
+ * 按日期对博客文章进行排序
+ */
+function sortPostsByDate(posts: BlogPost[]) {
+  return [...posts].sort((a, b) => {
+    if (a.date && b.date) {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    return 0;
+  });
+}
 import { usePathname } from 'next/navigation';
 
 /**
@@ -132,16 +144,19 @@ export function useBlogPosts() {
   }, [pathname]); // 添加pathname作为依赖，当路径变化时重新获取数据
 
   // 按日期排序的文章
-  const sortedPosts = useMemo(() => {
-    return [...posts].sort((a, b) => {
-      if (a.date && b.date) {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      }
-      return 0;
-    });
-  }, [posts]);
+  const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
 
-  return { posts: sortedPosts, loading, error };
+  // 计算每个标签的文章数量
+  const postsCount = useMemo(() => {
+    return sortedPosts.reduce((acc, post) => {
+      post.tags.forEach(tag => {
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
+      return acc;
+    }, {} as Record<string, number>);
+  }, [sortedPosts]);
+
+  return { posts: sortedPosts, postsCount, loading, error };
 }
 
 /**
@@ -176,14 +191,7 @@ export function useTaggedPosts(tag: string) {
   }, [tag]);
 
   // 按日期排序的文章
-  const sortedPosts = useMemo(() => {
-    return [...posts].sort((a, b) => {
-      if (a.date && b.date) {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      }
-      return 0;
-    });
-  }, [posts]);
+  const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
 
   return { posts: sortedPosts, loading, error };
 }
@@ -194,29 +202,16 @@ export function useTaggedPosts(tag: string) {
  * @returns 所有标签列表和加载状态
  */
 export function useTags() {
-  const [tags, setTags] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    async function fetchTags() {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/blog/tags');
-        if (!response.ok) {
-          throw new Error('Failed to fetch tags');
-        }
-        const data = await response.json();
-        setTags(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTags();
-  }, []);
+  const { posts, loading, error } = useBlogPosts();
+  
+  // 从文章中提取所有唯一标签
+  const tags = useMemo(() => {
+    const tagSet = new Set<string>();
+    posts.forEach(post => {
+      post.tags.forEach(tag => tagSet.add(tag));
+    });
+    return Array.from(tagSet);
+  }, [posts]);
 
   return { tags, loading, error };
 }

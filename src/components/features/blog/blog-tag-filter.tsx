@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 interface BlogTagFilterProps {
   allTags: string[];
   selectedTag: string | null;
-  setSelectedTag: (tag: string | null) => void;
+  setSelectedTagAction: (tag: string | null) => void;
 }
 
-export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagFilterProps) {
+export function BlogTagFilter({ allTags, selectedTag, setSelectedTagAction }: BlogTagFilterProps) {
   // 获取URL参数
   const searchParams = useSearchParams();
   const tagParam = searchParams?.get('tag');
@@ -22,19 +22,19 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
   // 从URL参数中获取标签
   useEffect(() => {
     if (tagParam) {
-      setSelectedTag(decodeURIComponent(tagParam));
+      setSelectedTagAction(decodeURIComponent(tagParam));
     }
-  }, [tagParam, setSelectedTag]);
+  }, [tagParam, setSelectedTagAction]);
 
   // 处理标签点击
   const handleTagClick = (tag: string) => {
     // 如果已经选中该标签，则取消选中
     if (selectedTag === tag) {
-      setSelectedTag(null);
+      setSelectedTagAction(null);
       // 更新URL，移除tag参数
       window.history.pushState({}, '', '/blog');
     } else {
-      setSelectedTag(tag);
+      setSelectedTagAction(tag);
       // 更新URL，添加tag参数
       window.history.pushState({}, '', `/blog?tag=${encodeURIComponent(tag)}`);
     }
@@ -42,7 +42,7 @@ export function BlogTagFilter({ allTags, selectedTag, setSelectedTag }: BlogTagF
 
   // 清除标签筛选
   const clearTagFilter = () => {
-    setSelectedTag(null);
+    setSelectedTagAction(null);
     // 更新URL，移除tag参数
     window.history.pushState({}, '', '/blog');
   };

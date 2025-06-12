@@ -2,8 +2,6 @@ import React from 'react';
 import { Calendar, Calculator } from 'lucide-react';
 import Link from 'next/link';
 
-import { countWords } from '@/lib/utils';
-
 /**
  * 博客内容组件属性
  */
@@ -19,11 +17,6 @@ export interface BlogContentProps {
   date: string | null;
 
   /**
-   * 文章内容（MDX 格式）- 已弃用，使用 mdxContent 代替
-   */
-  content?: string;
-
-  /**
    * 渲染后的 MDX 内容
    */
   mdxContent?: React.ReactNode;
@@ -32,6 +25,11 @@ export interface BlogContentProps {
    * 文章标签
    */
   tags?: string[];
+
+  /**
+   * 文章字数
+   */
+  wordCount?: number;
 
   /**
    * 文章路径，用于评论系统区分不同文章
@@ -59,9 +57,9 @@ export interface BlogContentProps {
 export function BlogContent({
   title,
   date,
-  content,
   mdxContent,
   tags = [],
+  wordCount = 0,
   _path,
 }: BlogContentProps) {
   return (
@@ -103,7 +101,7 @@ export function BlogContent({
           {/* 字数统计 */}
           <div className="flex items-center">
             <Calculator className="h-4 w-4 mr-1" />
-            <span>{content ? countWords(content) : 0} 字</span>
+            <span>{wordCount} 字</span>
           </div>
         </div>
       </header>

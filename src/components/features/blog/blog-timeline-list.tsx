@@ -1,17 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useTimelinePosts, BlogPost } from '@/hooks/use-blog';
+import { useTimelinePosts, type BlogPost } from '@/hooks/use-blog';
 
-/**
- * 博客时间轴列表组件属性
- */
 export interface BlogTimelineListProps {
-  /**
-   * 最大显示年份数量
-   * @default Infinity
-   */
   limit?: number;
 }
 
@@ -39,50 +33,33 @@ export interface PostsByMonth {
  * ```
  */
 export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
-  const { postsByYear, loading, error } = useTimelinePosts();
-  const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>({});
+  const { postsByYear, loading } = useTimelinePosts();
+  
+  const initialExpandedState = useMemo(() => {
+    if (!postsByYear) return {};
+    return Object.keys(postsByYear).reduce((acc, year) => {
+      acc[year] = true;
+      return acc;
+    }, {} as Record<string, boolean>);
+  }, [postsByYear]);
+  
+  const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>(initialExpandedState);
 
-  // 切换年份展开/折叠状态
-  const toggleYearExpand = (year: string) => {
+  const toggleYearExpand = useCallback((year: string) => {
     setExpandedYears(prev => ({
       ...prev,
       [year]: !prev[year],
     }));
-  };
+  }, []);
 
-  // 加载状态
-  if (loading) {
-    return (
-      <div className="col-span-full text-center py-10">
-        <p>加载中...</p>
-      </div>
-    );
-  }
+  const sortedYears = useMemo(() => {
+    if (!postsByYear) return [];
+    return Object.keys(postsByYear).sort((a: string, b: string) => parseInt(b) - parseInt(a));
+  }, [postsByYear]);
 
-  // 错误状态
-  if (error) {
-    return (
-      <div className="col-span-full text-center py-10">
-        <p className="text-destructive">加载失败: {error.message}</p>
-      </div>
-    );
-  }
-
-  // 空状态
-  const years = Object.keys(postsByYear);
-  if (years.length === 0) {
-    return (
-      <div className="col-span-full text-center py-10">
-        <p>暂无博客文章</p>
-      </div>
-    );
-  }
-
-  // 按年份排序（从新到旧）
-  const sortedYears = years.sort((a, b) => parseInt(b) - parseInt(a));
-
-  // 限制显示年份数量
-  const displayYears = limit < Infinity ? sortedYears.slice(0, limit) : sortedYears;
+  const displayYears = useMemo(() => {
+    return limit < Infinity ? sortedYears.slice(0, limit) : sortedYears;
+  }, [sortedYears, limit]);
 
   // 按月份分组文章（暂时未使用，但保留以备将来按月份显示文章）
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -114,28 +91,33 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
     return postsByYear[year].length;
   };
 
-  // 格式化日期为 MM-DD 格式
-  const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return '未知日期';
+  const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+    month: '2-digit',
+    day: '2-digit',
+  });
 
-    const date = new Date(dateString);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-  };
+  const formatDate = useCallback((dateString: string | undefined) => {
+    if (!dateString) return '';
+    return dateFormatter.format(new Date(dateString));
+  }, []);
+
+  if (loading || !postsByYear) {
+    return (
+      <div className="flex justify-center items-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex justify-center">
       <div className="relative w-full max-w-[600px]">
         {/* 时间轴线 */}
-        <div className="absolute left-[120px] top-0 bottom-0 w-[2px] bg-border opacity-70"></div>
+        <div className="absolute left-[120px] top-0 bottom-0 w-[2px] bg-border opacity-70" />
 
         {displayYears.map(year => {
-          const isExpanded = expandedYears[year] !== false; // 默认展开
-          const postCount = getPostCountByYear(year);
-
-          // 注意：这里暂时不使用按月份分组的功能，但保留代码以备将来使用
-          // const postsByMonth = groupPostsByMonth(postsByYear[year]);
+          const isExpanded = expandedYears[year];
+          const posts = postsByYear[year];
 
           return (
             <div key={year} className="mb-10 relative">
@@ -148,47 +130,51 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
                   <span className="text-xl sm:text-2xl font-bold text-foreground/80">{year}</span>
                 </div>
 
-                <div className="absolute left-[120px] -translate-x-1/2 w-4 h-4 rounded-full border-[3px] border-primary bg-background z-10 group-hover:scale-125 transition-transform"></div>
+                <div className="absolute left-[120px] -translate-x-1/2 w-4 h-4 rounded-full border-[3px] border-primary bg-background z-10 group-hover:scale-125 transition-transform" />
 
-                <div className="ml-10 flex items-center">
+                <div className="ml-10">
                   <span className="text-xs sm:text-sm text-muted-foreground">
-                    {postCount}篇文章
+                    {posts.length}篇文章
                   </span>
                 </div>
               </button>
 
-              {isExpanded && (
-                <div className="space-y-5">
-                  {postsByYear[year].map(post => {
-                    const date = formatDate(post.date);
+              <div
+                className={
+                  isExpanded
+                    ? 'space-y-5 transition-all duration-300 opacity-100 max-h-[5000px]'
+                    : 'space-y-5 transition-all duration-300 opacity-0 max-h-0 overflow-hidden'
+                }
+              >
+                {posts.map(post => {
+                  const date = formatDate(post.date);
 
-                    return (
-                      <div
-                        key={post.slug}
-                        className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2"
-                      >
-                        {/* 日期 */}
-                        <div className="w-[100px] text-right mr-10 relative group-hover:text-primary">
-                          <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary">
-                            {date}
-                          </span>
-                          <div className="absolute left-[120px] -translate-x-1/2 top-[10px] w-1.5 h-1.5 rounded-full border border-primary bg-background"></div>
-                        </div>
-
-                        {/* 文章标题 */}
-                        <div className="flex-1">
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            className="text-sm sm:text-base font-medium hover:text-primary"
-                          >
-                            {post.title}
-                          </Link>
-                        </div>
+                  return (
+                    <div
+                      key={post.slug}
+                      className="flex items-start group hover:bg-muted/30 rounded-md py-1 px-2 -mx-2 transition-colors"
+                    >
+                      {/* 日期 */}
+                      <div className="w-[100px] text-right mr-10 relative group-hover:text-primary">
+                        <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary">
+                          {date}
+                        </span>
+                        <div className="absolute left-[120px] -translate-x-1/2 top-[10px] w-1.5 h-1.5 rounded-full border border-primary bg-background" />
                       </div>
-                    );
-                  })}
-                </div>
-              )}
+
+                      {/* 文章标题 */}
+                      <div className="flex-1">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          className="text-sm sm:text-base font-medium hover:text-primary transition-colors"
+                        >
+                          {post.title}
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}

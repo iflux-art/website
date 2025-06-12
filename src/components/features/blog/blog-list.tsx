@@ -26,7 +26,7 @@ interface BlogListProps {
    * 标签点击处理函数
    * 当用户点击文章卡片中的标签时调用
    */
-  onTagClick?: (tag: string) => void;
+  onTagClickAction?: (tag: string) => void;
 }
 
 /**
@@ -42,37 +42,8 @@ interface BlogListProps {
  * <BlogList limit={10} />
  * ```
  */
-export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: BlogListProps) {
+export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction }: BlogListProps) {
   const { posts, loading, error } = useBlogPosts();
-
-  // 不显示加载状态，直接返回空内容
-  if (loading) {
-    return null;
-  }
-
-  // 错误状态
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-destructive font-medium text-lg">加载失败: {error.message}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-4 px-4 py-2 bg-muted rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors shadow-sm"
-        >
-          点击重试
-        </button>
-      </div>
-    );
-  }
-
-  // 空状态
-  if (posts.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-muted-foreground font-medium text-lg">暂无博客文章</p>
-      </div>
-    );
-  }
 
   // 筛选文章
   const filteredPosts = filterTag
@@ -99,21 +70,18 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClick }: Blo
     if (filterTag === tag) return;
 
     // 如果父组件提供了标签点击处理函数，则调用它
-    if (onTagClick) {
-      onTagClick(tag);
+    if (onTagClickAction) {
+      onTagClickAction(tag);
     }
   };
 
-  // 预先创建博客卡片列表
-  const blogCards = displayPosts.map(post => (
-    <div key={post.slug} className="break-inside-avoid mb-6">
-      <BlogCard post={post} onTagClick={handleTagClick} />
-    </div>
-  ));
-
   return (
     <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-0">
-      {blogCards}
+      {displayPosts.map(post => (
+        <div key={post.slug} className="break-inside-avoid mb-6">
+          <BlogCard post={post} onTagClick={handleTagClick} />
+        </div>
+      ))}
     </div>
   );
 }
