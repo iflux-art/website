@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Breadcrumb as BreadcrumbComponent, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { Sidebar } from '@/components/ui/sidebar';
-import { TocContainer } from '@/components/ui/toc-container';
+import { TableOfContents } from '@/components/ui/table-of-contents';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
@@ -223,7 +223,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
           </main>
 
           <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
-            <TocContainer headings={headings} />
+            <TableOfContents headings={headings} adaptive={true} />
           </aside>
         </div>
       </div>

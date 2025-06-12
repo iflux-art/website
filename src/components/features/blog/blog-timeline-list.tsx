@@ -87,9 +87,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   };
 
   // 获取指定年份的文章总数
-  const getPostCountByYear = (year: string) => {
-    return postsByYear[year].length;
-  };
+
 
   const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
     month: '2-digit',

@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 
 import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { TocContainer } from '@/components/ui/toc-container';
+import { TableOfContents } from '@/components/ui/table-of-contents';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 import { countWords } from '@/lib/utils';
 
@@ -112,7 +112,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* 右侧目录 */}
           <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
-            <TocContainer headings={headings} />
+            <TableOfContents headings={headings} adaptive={true} />
           </aside>
         </div>
       </div>

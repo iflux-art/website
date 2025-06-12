@@ -43,7 +43,7 @@ interface BlogListProps {
  * ```
  */
 export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction }: BlogListProps) {
-  const { posts, loading, error } = useBlogPosts();
+  const { posts } = useBlogPosts();
 
   // 筛选文章
   const filteredPosts = filterTag

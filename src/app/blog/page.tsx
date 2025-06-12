@@ -9,7 +9,7 @@ import { TagFilter } from '@/components/features/blog/tag-filter';
 import { useTags, useBlogPosts } from '@/hooks/use-blog';
 
 export default function BlogPage() {
-  const { posts, postsCount } = useBlogPosts();
+  const { postsCount } = useBlogPosts();
   const { tags: allTags } = useTags();
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   return (
