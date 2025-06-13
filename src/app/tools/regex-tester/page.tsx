@@ -186,7 +186,7 @@ export default function RegexTesterPage() {
     <div className="space-y-4">
       <div>
         <h4 className="font-medium mb-2">正则表达式语法</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>
             • <strong>.</strong> - 匹配任意字符（除换行符）
           </li>
@@ -215,7 +215,7 @@ export default function RegexTesterPage() {
       </div>
       <div>
         <h4 className="font-medium mb-2">标志位说明</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>
             • <strong>g</strong> - 全局匹配，查找所有匹配项
           </li>
@@ -280,10 +280,10 @@ export default function RegexTesterPage() {
                     value={pattern}
                     onChange={e => setPattern(e.target.value)}
                     placeholder="输入正则表达式..."
-                    className="w-full p-3 border border-border rounded-lg bg-background font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                   {error && (
-                    <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
+                    <div className="mt-2 text-sm text-destructive dark:text-red-400 p-2 rounded">{error}</div>
                   )}
                 </div>
 
@@ -297,7 +297,7 @@ export default function RegexTesterPage() {
                       { flag: 'm', name: '多行模式', desc: '^和$匹配每行的开始和结束' },
                       { flag: 's', name: '单行模式', desc: '.匹配换行符' },
                     ].map(({ flag, name, desc }) => (
-                      <label key={flag} className="flex items-center space-x-2 text-sm">
+                      <label key={flag} className="flex items-center space-x-2 text-sm text-gray-900 dark:text-gray-300">
                         <input
                           type="checkbox"
                           checked={flags.includes(flag)}
@@ -330,7 +330,7 @@ export default function RegexTesterPage() {
                   value={testString}
                   onChange={e => setTestString(e.target.value)}
                   placeholder="输入要测试的字符串..."
-                  className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </CardContent>
             </Card>
@@ -383,11 +383,11 @@ export default function RegexTesterPage() {
                     {/* 匹配详情 */}
                     <div>
                       <h4 className="text-sm font-medium mb-2">匹配详情</h4>
-                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                      <div className="space-y-2 p-4 rounded-lg border bg-background dark:bg-slate-900 max-h-48 overflow-y-auto">
                         {matches.map((match, index) => (
                           <div key={index} className="p-2 border border-border rounded text-sm">
                             <div className="font-mono font-medium">{match[0]}</div>
-                            <div className="text-muted-foreground text-xs">
+                            <div className="text-muted-foreground dark:text-slate-400 text-xs">
                               位置: {match.index} - {(match.index || 0) + match[0].length - 1}
                               {match.length > 1 && (
                                 <span className="ml-2">
@@ -428,10 +428,10 @@ export default function RegexTesterPage() {
                       }}
                     >
                       <div className="font-medium text-sm">{item.name}</div>
-                      <div className="font-mono text-xs text-muted-foreground mt-1 break-all">
+                      <div className="font-mono text-xs text-muted-foreground dark:text-slate-400 mt-1 break-all">
                         {item.pattern}
                       </div>
-                      <div className="text-xs text-muted-foreground mt-1">示例: {item.example}</div>
+                      <div className="text-xs text-muted-foreground dark:text-slate-400 mt-1">示例: {item.example}</div>
                     </div>
                   ))}
                 </div>

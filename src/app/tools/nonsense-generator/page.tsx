@@ -77,13 +77,13 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm mb-2">诗歌主题</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">诗歌主题</label>
             <input
               type="text"
               value={theme}
               onChange={e => setTheme(e.target.value)}
               placeholder="输入诗歌主题..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -116,7 +116,7 @@ export default function NonsenseGeneratorPage() {
             />
           </div>
 
-          <Button onClick={generatePoetry} disabled={isGenerating} className="w-full">
+          <Button onClick={generatePoetry} disabled={isGenerating} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600 w-full">
             <Shuffle className="h-4 w-4 mr-2" />
             {isGenerating ? '创作中...' : '生成诗歌'}
           </Button>
@@ -203,7 +203,7 @@ export default function NonsenseGeneratorPage() {
               value={topic}
               onChange={e => setTopic(e.target.value)}
               placeholder="输入散文主题..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -308,7 +308,7 @@ export default function NonsenseGeneratorPage() {
               value={protagonist}
               onChange={e => setProtagonist(e.target.value)}
               placeholder="输入主人公姓名..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -319,7 +319,7 @@ export default function NonsenseGeneratorPage() {
               value={setting}
               onChange={e => setSetting(e.target.value)}
               placeholder="输入故事场景..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -439,7 +439,7 @@ export default function NonsenseGeneratorPage() {
               value={speechTopic}
               onChange={e => setSpeechTopic(e.target.value)}
               placeholder="输入演讲主题..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -594,7 +594,7 @@ export default function NonsenseGeneratorPage() {
                 <span className="ml-2">正在创作废话文学...</span>
               </div>
             ) : generatedText ? (
-              <div className="p-4 bg-gray-50 rounded-lg max-h-96 overflow-y-auto">
+              <div className="w-full min-h-[200px] p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono text-sm max-h-96 overflow-y-auto">
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">{generatedText}</div>
               </div>
             ) : (
@@ -609,9 +609,9 @@ export default function NonsenseGeneratorPage() {
         </Card>
       </div>
 
-      <div className="mt-8 p-4 bg-purple-50 rounded-lg">
+      <div className="mt-8 space-y-4 p-4 rounded-lg border bg-background dark:bg-slate-900">
         <h4 className="font-medium mb-2 text-purple-800">创作说明</h4>
-        <div className="text-sm text-purple-700 space-y-1">
+        <div className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <div>• 废话文学是一种特殊的文学形式，以循环论证和同义反复为特色</div>
           <div>• 生成的作品仅供娱乐和创意启发，请勿用于正式场合</div>
           <div>• 可以作为幽默素材或创意写作的灵感来源</div>

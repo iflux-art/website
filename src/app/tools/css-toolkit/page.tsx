@@ -50,7 +50,7 @@ export default function CssToolkitPage() {
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">水平偏移 (px)</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">水平偏移 (px)</label>
                 <input
                   type="range"
                   min="-50"
@@ -107,7 +107,7 @@ export default function CssToolkitPage() {
                   type="color"
                   value={color}
                   onChange={e => setColor(e.target.value)}
-                  className="w-full h-10 border rounded"
+                  className="w-full p-3 rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
                 />
               </div>
 
@@ -129,7 +129,7 @@ export default function CssToolkitPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">预览</label>
-                <div className="h-48 bg-muted/50 rounded-lg flex items-center justify-center">
+                <div className="p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 h-48 flex items-center justify-center">
                   <div
                     className="w-24 h-24 bg-white rounded-lg"
                     style={{ boxShadow: generateShadow() }}
@@ -140,7 +140,7 @@ export default function CssToolkitPage() {
               <div>
                 <label className="block text-sm font-medium mb-2">CSS代码</label>
                 <div className="relative">
-                  <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                  <pre className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50">
                     <code>{cssCode}</code>
                   </pre>
                   <Button
@@ -335,7 +335,7 @@ flex-wrap: ${wrap};`;
                 <select
                   value={direction}
                   onChange={e => setDirection(e.target.value as typeof direction)}
-                  className="w-full p-2 border border-border rounded bg-background"
+                  className="w-full p-4 text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="row">row</option>
                   <option value="row-reverse">row-reverse</option>
@@ -825,7 +825,7 @@ gap: ${gap};`;
           </Link>
           <div>
             <h1 className="text-3xl font-bold tracking-tight">CSS工具箱</h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm text-muted-foreground dark:text-slate-400">
               前端开发必备的CSS工具集，包含阴影生成器、渐变编辑器、动画预览、布局工具
             </p>
           </div>
@@ -841,11 +841,10 @@ gap: ${gap};`;
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
-                    activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={activeTab === tab.key 
+                    ? "px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700"
+                    : "px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800"
+                  }
                 >
                   <IconComponent className="h-4 w-4" />
                   {tab.name}

@@ -274,7 +274,7 @@ function greet(name) {
     <div className="space-y-4">
       <div>
         <h4 className="font-medium mb-2">基础语法</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>
             • <code># 标题</code> - 一级标题
           </li>
@@ -335,7 +335,7 @@ function greet(name) {
           </Link>
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Markdown编辑器</h1>
-            <p className="text-muted-foreground">
+            <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               在线Markdown编辑器，支持实时预览、语法高亮、导出PDF、图片上传
             </p>
           </div>
@@ -351,9 +351,9 @@ function greet(name) {
         {/* 工具栏 */}
         <Card className="mb-6">
           <CardContent className="p-4">
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex items-center gap-2 p-2 bg-background dark:bg-slate-900 border-b dark:border-slate-800">
               {/* Markdown 语法按钮 */}
-              <Button variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
+              <Button className="p-2 rounded-md hover:bg-accent dark:hover:bg-slate-800 text-muted-foreground dark:text-slate-400" variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
                 <strong>B</strong>
               </Button>
               <Button variant="outline" size="sm" onClick={() => insertMarkdown('italic')}>
@@ -390,7 +390,7 @@ function greet(name) {
                 onClick={() => copyContent(markdown, 'markdown')}
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600"
               >
                 {copied === 'markdown' ? (
                   <Check className="h-4 w-4" />
@@ -431,7 +431,7 @@ function greet(name) {
         </Card>
 
         {/* 编辑器主体 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4 h-[calc(100vh-12rem)] bg-background dark:bg-slate-900 rounded-lg p-4">
           {/* 编辑区域 */}
           {(viewMode === 'edit' || viewMode === 'split') && (
             <Card className={viewMode === 'split' ? '' : 'lg:col-span-2'}>
@@ -443,7 +443,7 @@ function greet(name) {
                   value={markdown}
                   onChange={e => setMarkdown(e.target.value)}
                   placeholder="在此输入 Markdown 内容..."
-                  className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full h-full p-4 font-mono text-sm border rounded-lg resize-none bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </CardContent>
             </Card>
@@ -457,7 +457,7 @@ function greet(name) {
               </CardHeader>
               <CardContent>
                 <div
-                  className="prose prose-sm max-w-none h-96 overflow-y-auto p-3 border border-border rounded-lg bg-muted/50"
+                  className="w-full h-full p-4 border rounded-lg overflow-auto prose dark:prose-invert dark:bg-slate-900 dark:text-slate-50"
                   dangerouslySetInnerHTML={{
                     __html:
                       htmlContent ||

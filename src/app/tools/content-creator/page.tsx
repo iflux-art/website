@@ -117,11 +117,11 @@ export default function ContentCreatorPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">平台</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">平台</label>
                 <select
                   value={platform}
                   onChange={e => setPlatform(e.target.value)}
-                  className="w-full p-3 border border-border rounded-lg bg-background"
+                  className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="wechat">微信公众号</option>
                   <option value="xiaohongshu">小红书</option>
@@ -166,7 +166,7 @@ export default function ContentCreatorPage() {
                     <span className="text-sm flex-1">{title}</span>
                     <Button
                       onClick={() => copyContent(title, `title-${index}`)}
-                      variant="ghost"
+                      className="p-2 rounded-md hover:bg-accent dark:hover:bg-slate-800 text-muted-foreground dark:text-slate-400"
                       size="sm"
                     >
                       {copied === `title-${index}` ? (
@@ -752,10 +752,10 @@ export default function ContentCreatorPage() {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                  className={`flex-1 p-4 text-center transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                      ? 'px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700'
+                      : 'px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800'
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />

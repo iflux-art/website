@@ -237,8 +237,8 @@ export default function Base64EncoderPage() {
                   }}
                   className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
                     activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                      ? 'px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700'
+                      : 'px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800'
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
@@ -256,7 +256,7 @@ export default function Base64EncoderPage() {
           <Button
             variant={mode === 'encode' ? 'default' : 'outline'}
             onClick={() => setMode('encode')}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
             <Lock className="h-4 w-4" />
             编码
@@ -270,7 +270,7 @@ export default function Base64EncoderPage() {
             解码
           </Button>
         </div>
-        <Button onClick={switchMode} variant="outline" className="flex items-center gap-2">
+        <Button onClick={switchMode} variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-background hover:bg-accent dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100">
           <ArrowUpDown className="h-4 w-4" />
           交换输入输出
         </Button>
@@ -319,7 +319,7 @@ export default function Base64EncoderPage() {
                   ? '在此输入要解码的 HTML 编码字符串...'
                   : '在此输入要解码的 Unicode 编码字符串...'
               }
-              className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
             />
             {error && (
               <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
@@ -377,14 +377,14 @@ export default function Base64EncoderPage() {
                     : '编码后的 Unicode 字符串将显示在这里...'
                   : '解码后的原始文本将显示在这里...'
               }
-              className="w-full h-96 p-3 border border-border rounded-lg bg-muted/50 font-mono text-sm resize-none"
+              className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </CardContent>
         </Card>
       </div>
 
       {/* 使用说明 */}
-      <Card className="mt-8">
+      <Card className="mt-8 space-y-4 p-4 rounded-lg border bg-background dark:bg-slate-900">
         <CardHeader>
           <CardTitle>使用说明</CardTitle>
         </CardHeader>
@@ -398,7 +398,7 @@ export default function Base64EncoderPage() {
           </div>
           <div>
             <h4 className="font-medium mb-2">功能特点</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
               <li>• 支持中文字符的编码和解码</li>
               <li>• 自动处理 UTF-8 编码</li>
               <li>• 实时错误检测和提示</li>
@@ -407,7 +407,7 @@ export default function Base64EncoderPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">常见用途</h4>
+            <h4 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">常见用途</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
               <li>• 在 URL 中传递二进制数据</li>
               <li>• 在 JSON 中嵌入图片数据</li>

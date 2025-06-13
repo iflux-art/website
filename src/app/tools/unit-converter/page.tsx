@@ -260,7 +260,7 @@ export default function UnitConverterPage() {
     <div className="space-y-4">
       <div>
         <h4 className="font-medium mb-2">支持的转换类型</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>
             • <strong>长度</strong>：毫米、厘米、米、千米、英寸、英尺、码、英里
           </li>
@@ -286,7 +286,7 @@ export default function UnitConverterPage() {
       </div>
       <div>
         <h4 className="font-medium mb-2">使用说明</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>• 选择转换类型，然后选择源单位和目标单位</li>
           <li>• 在任一输入框中输入数值，另一个会自动计算</li>
           <li>• 点击交换按钮可以快速交换源单位和目标单位</li>
@@ -326,9 +326,12 @@ export default function UnitConverterPage() {
             {Object.entries(unitCategories).map(([key, cat]) => (
               <Button
                 key={key}
-                variant={category === key ? 'default' : 'outline'}
+                className={`rounded-full ${
+                  category === key 
+                    ? "px-4 py-2 bg-primary text-primary-foreground dark:bg-slate-700" 
+                    : "px-4 py-2 hover:bg-accent dark:hover:bg-slate-800"
+                }`}
                 onClick={() => setCategory(key)}
-                className="rounded-full"
               >
                 {cat.name}
               </Button>
@@ -337,7 +340,7 @@ export default function UnitConverterPage() {
         </div>
 
         {/* 转换器主体 */}
-        <Card className="mb-6">
+        <Card className="p-4 rounded-lg border bg-background dark:bg-slate-900 mb-6">
           <CardHeader>
             <CardTitle>
               {unitCategories[category as keyof typeof unitCategories].name}转换
@@ -348,11 +351,11 @@ export default function UnitConverterPage() {
               {/* 源单位 */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">从</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">从</label>
                   <select
                     value={fromUnit}
                     onChange={e => setFromUnit(e.target.value)}
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    className="relative w-full bg-background dark:bg-slate-900 rounded-md border dark:border-slate-700"
                   >
                     {Object.entries(currentUnits).map(([key, unit]) => (
                       <option key={key} value={key}>
@@ -369,7 +372,7 @@ export default function UnitConverterPage() {
                     placeholder={
                       category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'
                     }
-                    className="w-full p-3 border border-border rounded-lg bg-background text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
                   />
                 </div>
               </div>
@@ -390,7 +393,7 @@ export default function UnitConverterPage() {
               {/* 目标单位 */}
               <div className="space-y-4 md:order-3">
                 <div>
-                  <label className="block text-sm font-medium mb-2">到</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">到</label>
                   <select
                     value={toUnit}
                     onChange={e => setToUnit(e.target.value)}
@@ -409,7 +412,7 @@ export default function UnitConverterPage() {
                     value={toValue}
                     onChange={e => handleToValueChange(e.target.value)}
                     placeholder="转换结果"
-                    className="w-full p-3 border border-border rounded-lg bg-muted/50 text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
                   />
                 </div>
               </div>
@@ -433,7 +436,7 @@ export default function UnitConverterPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
               {category === 'length' && (
                 <>
-                  <div className="p-3 bg-muted/50 rounded">1 米 = 100 厘米</div>
+                  <div className="p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono">1 米 = 100 厘米</div>
                   <div className="p-3 bg-muted/50 rounded">1 千米 = 1000 米</div>
                   <div className="p-3 bg-muted/50 rounded">1 英寸 = 2.54 厘米</div>
                   <div className="p-3 bg-muted/50 rounded">1 英尺 = 30.48 厘米</div>

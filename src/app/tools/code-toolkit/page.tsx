@@ -378,11 +378,11 @@ export default function CodeToolkitPage() {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                  className={
                     activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  }`}
+                      ? 'px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700'
+                      : 'px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800'
+                  }
                 >
                   <IconComponent className="h-4 w-4" />
                   {tab.name}
@@ -402,7 +402,7 @@ export default function CodeToolkitPage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">语言</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">语言</label>
                 <select
                   value={language}
                   onChange={e => setLanguage(e.target.value as typeof language)}
@@ -419,7 +419,7 @@ export default function CodeToolkitPage() {
               {activeTab === 'format' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium mb-2">缩进类型</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">缩进类型</label>
                     <select
                       value={indentType}
                       onChange={e => setIndentType(e.target.value as typeof indentType)}
@@ -431,7 +431,7 @@ export default function CodeToolkitPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">缩进大小</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">缩进大小</label>
                     <select
                       value={indentSize}
                       onChange={e => setIndentSize(Number(e.target.value))}
@@ -611,7 +611,7 @@ export default function CodeToolkitPage() {
                   ? '输入HTML内容进行编码或解码...'
                   : '输入内容...'
               }
-              className="w-full h-96 p-3 border border-border rounded-lg bg-background font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
             />
           </CardContent>
         </Card>
@@ -688,7 +688,7 @@ export default function CodeToolkitPage() {
         <CardContent className="space-y-4">
           <div>
             <h4 className="font-medium mb-2">支持的语言</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
               <li>
                 • <strong>JavaScript/TypeScript</strong>：格式化JS/TS代码
               </li>
@@ -711,7 +711,7 @@ export default function CodeToolkitPage() {
           </div>
           <div>
             <h4 className="font-medium mb-2">功能特点</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
               <li>
                 • <strong>代码格式化</strong>：统一代码风格和缩进，支持多种编程语言
               </li>
@@ -734,7 +734,7 @@ export default function CodeToolkitPage() {
           </div>
           <div>
             <h4 className="font-medium mb-2">注意事项</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
               <li>• 这是简化版的代码处理工具，复杂代码可能需要专业工具</li>
               <li>• 压缩功能会移除注释，请注意备份原始代码</li>
               <li>• JSON/CSV转换要求数据格式正确，错误时会显示提示</li>

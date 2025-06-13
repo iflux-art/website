@@ -199,8 +199,8 @@ export default function CalculatorPage() {
   const helpContent = (
     <div className="space-y-4">
       <div>
-        <h4 className="font-medium mb-2">功能介绍</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">功能介绍</h4>
+        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
           <li>
             • <strong>简单模式</strong>：基本的四则运算
           </li>
@@ -263,7 +263,7 @@ export default function CalculatorPage() {
               <CardContent className="p-6">
                 {/* 显示屏 */}
                 <div className="mb-4">
-                  <div className="w-full p-4 text-right text-3xl font-mono bg-muted/50 rounded-lg border min-h-[4rem] flex items-center justify-end">
+                  <div className="w-full h-24 p-4 text-right text-2xl font-mono border rounded-lg mb-4 bg-background dark:bg-slate-900 dark:text-slate-50">
                     {display}
                   </div>
                 </div>
@@ -272,7 +272,7 @@ export default function CalculatorPage() {
                 {mode === 'simple' ? (
                   // 简单计算器布局
                   <div className="grid grid-cols-4 gap-2">
-                    <Button variant="outline" onClick={clear} className="col-span-1">
+                    <Button variant="outline" onClick={clear} className="w-full h-16 text-lg font-medium rounded-lg bg-destructive/10 hover:bg-destructive/20 dark:bg-red-900/30 dark:hover:bg-red-900/50 dark:text-slate-100 col-span-1">
                       C
                     </Button>
                     <Button variant="outline" onClick={clearEntry} className="col-span-1">
@@ -292,7 +292,7 @@ export default function CalculatorPage() {
                     <Button
                       variant="outline"
                       onClick={() => inputNumber('7')}
-                      className="col-span-1"
+                      className="w-full h-16 text-lg font-medium rounded-lg bg-background hover:bg-accent dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 col-span-1"
                     >
                       7
                     </Button>
@@ -313,7 +313,7 @@ export default function CalculatorPage() {
                     <Button
                       variant="outline"
                       onClick={() => inputOperator('×')}
-                      className="col-span-1"
+                      className="w-full h-16 text-lg font-medium rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-100 col-span-1"
                     >
                       ×
                     </Button>
@@ -387,7 +387,7 @@ export default function CalculatorPage() {
                       .
                     </Button>
 
-                    <Button variant="default" onClick={performEquals} className="col-span-4">
+                    <Button variant="default" onClick={performEquals} className="w-full h-16 text-lg font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-600 dark:hover:bg-slate-500 col-span-4">
                       =
                     </Button>
                   </div>
@@ -646,7 +646,7 @@ export default function CalculatorPage() {
                     history.map((entry, index) => (
                       <div
                         key={index}
-                        className="text-xs font-mono p-2 bg-muted/50 rounded cursor-pointer hover:bg-muted"
+                        className="text-sm text-muted-foreground dark:text-slate-400"
                         onClick={() => setDisplay(entry.split(' = ')[1])}
                       >
                         {entry}

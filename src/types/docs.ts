@@ -8,7 +8,9 @@ import { BaseContent, BaseCategory, BaseMeta } from './base';
  * 文档分类
  */
 export interface DocCategory extends BaseCategory {
-  // 继承自BaseCategory已包含所有必要字段
+  // 这是一个声明性接口,仅用于文档分类类型标记
+  // 所有必要字段都从BaseCategory继承
+  _brand?: never;
 }
 
 /**
@@ -31,7 +33,9 @@ export interface DocListItem extends BaseContent {
  * 文档元数据
  */
 export interface DocMeta extends BaseMeta {
-  // 继承自BaseMeta已包含所有必要字段
+  // 这是一个声明性接口,仅用于文档元数据类型标记
+  // 所有必要字段都从BaseMeta继承
+  _brand?: never;  
 }
 
 /**

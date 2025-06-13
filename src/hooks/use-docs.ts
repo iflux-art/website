@@ -10,7 +10,6 @@ import { SidebarItem } from '@/components/layout/sidebar';
 import { docsSidebarCache } from '@/lib/local-storage-cache';
 import { useContentData } from '@/hooks/use-content-data';
 import { DocItem, DocCategory, DocMeta, DocListItem } from '@/types/docs';
-import { ContentData, ContentOptions } from '@/types/hooks';
 
 /**
  * 使用文档分类
