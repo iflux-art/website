@@ -22,7 +22,7 @@ function ToolCard({ tool, onTagClick }: { tool: Tool; onTagClick: (tag: string) 
   const Icon = tool.isInternal ? null : ExternalLink;
 
   return (
-    <Card className="h-full rounded-lg border bg-card hover:shadow-md transition-shadow dark:bg-slate-900 dark:border-slate-800">
+    <Card className="h-full rounded-lg border bg-zinc-50 hover:shadow-md transition-shadow dark:bg-zinc-900 dark:border-zinc-800">
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-lg font-medium text-card-foreground dark:text-slate-100">
           <span>{tool.name}</span>
@@ -30,13 +30,13 @@ function ToolCard({ tool, onTagClick }: { tool: Tool; onTagClick: (tag: string) 
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground dark:text-slate-400 mb-4">{tool.description}</p>
+        <p className="text-sm mb-4">{tool.description}</p>
         <div className="flex flex-wrap gap-2">
           {tool.tags.map(tag => (
             <Badge
               key={tag}
               variant="secondary"
-              className="cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary dark:bg-slate-800 dark:text-slate-300 hover:bg-primary/20"
+              className="cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 hover:bg-primary/20"
               onClick={() => onTagClick(tag)}
             >
               {tag}

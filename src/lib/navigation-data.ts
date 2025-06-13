@@ -1,9 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import { NavigationData, NavigationItem, NavigationCategory } from '@/types/navigation';
-
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'src', 'content', 'data', 'categories.json');
-const ITEMS_FILE_PATH = path.join(process.cwd(), 'src', 'content', 'data', 'items.json');
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { navigation } from '@/config/navigation';
+import type { Category, Item } from '@/config/navigation';
+import type { NavigationData } from '@/types/navigation';
 /**
  * 确保数据目录存在
  */
@@ -15,6 +13,7 @@ function ensureDataDirectory() {
 }
 /**
  * 读取分类数据
+ * @internal 内部函数，用于底层数据读取操作
  */
 function readCategories(): NavigationCategory[] {
   if (!fs.existsSync(CATEGORIES_FILE_PATH)) {
@@ -33,6 +32,7 @@ function readCategories(): NavigationCategory[] {
 
 /**
  * 读取项目数据
+ * @internal 内部函数，用于底层数据读取操作
  */
 function readItems(): NavigationItem[] {
   if (!fs.existsSync(ITEMS_FILE_PATH)) {
@@ -51,6 +51,8 @@ function readItems(): NavigationItem[] {
 
 /**
  * 写入项目数据
+ * @internal 内部函数，用于底层数据写入操作
+ * @param items - 要写入的导航项数组
  */
 function writeItems(items: NavigationItem[]): void {
   try {
@@ -65,10 +67,9 @@ function writeItems(items: NavigationItem[]): void {
  * 读取完整导航数据
  */
 export function readNavigationData(): NavigationData {
-  ensureDataDirectory();
   return {
-    categories: readCategories(),
-    items: readItems(),
+    categories: navigation.categories,
+    items: navigation.items,
   };
 }
 /**
@@ -88,54 +89,36 @@ export function writeNavigationData(data: NavigationData): void {
 /**
  * 添加导航项 
  */
-export function addNavigationItem(item: Omit<NavigationItem, 'id' | 'createdAt' | 'updatedAt'>): NavigationItem {
-  const items = readItems();
-
+export function addNavigationItem(item: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Item {
   // 检查 URL 是否已存在
-  const existingItem = items.find(existing => existing.url === item.url);
+  const existingItem = navigation.items.find(existing => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
 
-  const newItem: NavigationItem = {
+  const newItem: Item = {
     ...item,
-    id: generateId(),
+    id: `item_${Date.now()}`,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
-
-  items.push(newItem);
-  writeItems(items);
 
   return newItem;
 }
 /**
  * 更新导航项
  */
-export function updateNavigationItem(id: string, updates: Partial<Omit<NavigationItem, 'id' | 'createdAt'>>): NavigationItem {
-  const items = readItems();
-
-  const itemIndex = items.findIndex(item => item.id === id);
-  if (itemIndex === -1) {
-    throw new Error('Navigation item not found');
+export function updateNavigationItem(id: string, updates: Partial<Item>): Item {
+  const item = navigation.items.find(item => item.id === id);
+  if (!item) {
+    throw new Error('Item not found');
   }
 
-  // 如果更新 URL，检查是否与其他项冲突
-  if (updates.url && updates.url !== items[itemIndex].url) {
-    const existingItem = items.find(existing => existing.url === updates.url && existing.id !== id);
-    if (existingItem) {
-      throw new Error('URL already exists');
-    }
-  }
-
-  const updatedItem: NavigationItem = {
-    ...items[itemIndex],
+  const updatedItem: Item = {
+    ...item,
     ...updates,
     updatedAt: new Date().toISOString(),
   };
-
-  items[itemIndex] = updatedItem;
-  writeItems(items);
 
   return updatedItem;
 }
@@ -143,38 +126,32 @@ export function updateNavigationItem(id: string, updates: Partial<Omit<Navigatio
  * 删除导航项
  */
 export function deleteNavigationItem(id: string): void {
-  const items = readItems();
-
-  const itemIndex = items.findIndex(item => item.id === id);
-  if (itemIndex === -1) {
-    throw new Error('Navigation item not found');
+  const item = navigation.items.find(item => item.id === id);
+  if (!item) {
+    throw new Error('Item not found');
   }
-
-  items.splice(itemIndex, 1);
-  writeItems(items);
 }
 /**
  * 获取所有分类
  */
-export function getCategories(): NavigationCategory[] {
-  const categories = readCategories();
-  return categories.sort((a, b) => a.order - b.order);
+export function getCategories(): Category[] {
+  return navigation.categories;
 }
 /**
  * 获取所有标签
  */
 export function getAllTags(): string[] {
-  const items = readItems();
-  const tagSet = new Set<string>();
-
-  items.forEach(item => {
-    item.tags.forEach(tag => tagSet.add(tag));
+  const tags = new Set<string>();
+  navigation.items.forEach(item => {
+    item.tags.forEach(tag => tags.add(tag));
   });
-
-  return Array.from(tagSet).sort();
+  return Array.from(tags).sort();
 }
 /**
+/**
  * 生成唯一 ID
+ * @internal 用于生成导航项的唯一标识符
+ * @returns 基于时间戳和随机数的唯一字符串
  */
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);

@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react';
+
 /**
  * 网址导航数据类型定义
  */
@@ -44,4 +46,17 @@ export interface NavigationFormData {
   tags: string[];
   featured: boolean;
   category: string;
+}
+
+export interface Link {
+  title: string;
+  url: string;
+  description: string;
+  tags: string[];
+  icon?: ComponentType<{ className?: string }>;
+}
+
+export interface Subcategory {
+  title: string;
+  links: Link[];
 }

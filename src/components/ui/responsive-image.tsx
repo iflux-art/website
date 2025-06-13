@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image, { ImageProps } from 'next/image';
 import { cn } from '@/lib/utils';
-import { useLazyLoad } from '@/hooks/use-intersection-observer';
 
 /**
  * 响应式图片尺寸配置
@@ -177,7 +176,6 @@ export function ResponsiveImage({
     avif: true,
     original: true,
   },
-  lazy = true,
   isHero = false,
   placeholder,
   fallback,
@@ -192,17 +190,9 @@ export function ResponsiveImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  // 使用自定义的懒加载 Hook
-  const [ref, isVisible] = useLazyLoad<HTMLDivElement>({
-    triggerOnce: true,
-    threshold: 0.1,
-    // 如果是关键图片或已设置优先级，则跳过懒加载
-    skip: isHero || !!props.priority,
-  });
-
   // 计算属性
   const priority = props.priority || isHero;
-  const loading = props.loading || (lazy && !priority ? 'lazy' : 'eager');
+  const loading = props.loading || (!priority ? 'lazy' : 'eager');
 
   // 构建响应式尺寸
   const { mobile = 640, tablet = 1024, desktop = 1920 } = imageSizes;
@@ -276,18 +266,10 @@ export function ResponsiveImage({
     setHasError(false);
   }, [src]);
 
-  // 如果启用了懒加载且图片不在视口内，只显示占位符
-  if (lazy && !priority && !isVisible) {
-    return (
-      <div ref={ref} className={cn('relative', containerClassName)}>
-        <div className="absolute inset-0 z-10">{placeholder || defaultPlaceholder}</div>
-      </div>
-    );
-  }
 
   // 渲染
   return (
-    <div className={cn('relative', containerClassName)} ref={lazy && !priority ? ref : undefined}>
+    <div className={cn('relative', containerClassName)}>
       {/* 加载中占位符 */}
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 z-10">{placeholder || defaultPlaceholder}</div>

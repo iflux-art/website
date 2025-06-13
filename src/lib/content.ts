@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { BlogPost } from '@/hooks/use-blog'; // 假设 BlogPost 类型定义在 use-blog.ts
+import { BlogPost } from '@/types/blog';
 import { SidebarItem } from '@/components/layout/sidebar';
 
 // ==================== 博客相关函数 ====================
