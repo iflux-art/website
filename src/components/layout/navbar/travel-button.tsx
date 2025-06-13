@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { TramFront } from 'lucide-react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 
 /**
  * 开往按钮组件属性

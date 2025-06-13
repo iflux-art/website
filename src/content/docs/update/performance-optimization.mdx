@@ -98,41 +98,46 @@ const HomeIcon = dynamicIcon('Home');
 
 ### 2. 图片优化
 
-#### 使用优化图片组件
+#### 使用 Next.js Image 组件
 
-使用 `OptimizedImage` 组件优化图片加载：
+使用 Next.js 内置的 Image 组件自动优化图片：
 
 ```tsx
-import { OptimizedImage } from '@/components/ui/optimized-image';
+import Image from 'next/image'
 
 // 基本用法
-<OptimizedImage
+<Image
   src="/image.jpg"
   alt="描述"
   width={800}
   height={600}
+  priority={false}
 />
 
-// 关键图片（优先加载）
-<OptimizedImage
+// 优先加载的图片
+<Image
   src="/hero.jpg"
   alt="Hero"
   width={1200}
   height={600}
-  isHero
+  priority={true}
 />
 ```
 
 #### 使用现代图片格式
 
-Next.js 已配置为自动使用 WebP 和 AVIF 格式，无需额外配置。
+Next.js 已配置为自动使用 WebP 和 AVIF 格式，无需额外配置。支持：
+- 自动转换为现代格式
+- 自动生成响应式尺寸
+- 自动延迟加载
+- 防止布局偏移
 
 #### 使用响应式图片
 
 使用 `sizes` 属性指定响应式图片尺寸：
 
 ```tsx
-<OptimizedImage
+<Image
   src="/image.jpg"
   alt="描述"
   width={800}

@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
-import { NavLink } from '@/components/ui/navigation/nav-link';
+import { NavLink } from '@/components/ui/nav-link';
 
 /**
  * 文档侧边栏项（用于侧边栏）

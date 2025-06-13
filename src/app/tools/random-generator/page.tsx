@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, Copy, Check, Dices, Hash, QrCode, Key, Shield } from 'lucide-react';
 import Link from 'next/link';

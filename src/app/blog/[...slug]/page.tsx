@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/navigation/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';

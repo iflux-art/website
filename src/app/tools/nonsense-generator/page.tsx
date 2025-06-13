@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, BookOpen, Shuffle, Copy, Download } from 'lucide-react';
 import Link from 'next/link';
@@ -77,7 +77,9 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">诗歌主题</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              诗歌主题
+            </label>
             <input
               type="text"
               value={theme}
@@ -116,7 +118,11 @@ export default function NonsenseGeneratorPage() {
             />
           </div>
 
-          <Button onClick={generatePoetry} disabled={isGenerating} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600 w-full">
+          <Button
+            onClick={generatePoetry}
+            disabled={isGenerating}
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600 w-full"
+          >
             <Shuffle className="h-4 w-4 mr-2" />
             {isGenerating ? '创作中...' : '生成诗歌'}
           </Button>

@@ -3,11 +3,11 @@
 import React from 'react';
 import { ImageProps } from 'next/image';
 import type { StaticImageData } from 'next/image';
-import { ResponsiveImage } from '@/components/ui/media/responsive-image';
+import { ResponsiveImage } from '@/components/ui/responsive-image';
 import type {
   ResponsiveImageSizes,
   ResponsiveImageFormats,
-} from '@/components/ui/media/responsive-image';
+} from '@/components/ui/responsive-image';
 
 interface ResourceCardProps {
   title: string;

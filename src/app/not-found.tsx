@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Home } from 'lucide-react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, Copy, Check, Box, Zap, Grid3X3 } from 'lucide-react';
 import Link from 'next/link';
@@ -50,7 +50,9 @@ export default function CssToolkitPage() {
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">水平偏移 (px)</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  水平偏移 (px)
+                </label>
                 <input
                   type="range"
                   min="-50"
@@ -841,9 +843,10 @@ gap: ${gap};`;
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={activeTab === tab.key 
-                    ? "px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700"
-                    : "px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800"
+                  className={
+                    activeTab === tab.key
+                      ? 'px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700'
+                      : 'px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800'
                   }
                 >
                   <IconComponent className="h-4 w-4" />

@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/layout/admin/admin-layout';
 import { AdminActions } from '@/components/admin/admin-actions';
 import { DataTable, type TableColumn } from '@/components/admin/data-table';
-import { Input } from '@/components/ui/input/input';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/cards/card';
-import { Alert, AlertDescription } from '@/components/ui/feedback/alert';
-import { Badge } from '@/components/ui/display/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/feedback/dialog';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/feedback/alert-dialog';
+} from '@/components/ui/alert-dialog';
 import {
   Plus,
   Edit,
@@ -239,8 +239,7 @@ export default function NavigationAdminPage() {
     {
       key: 'category',
       title: '分类',
-      render: (value, _record, _index) =>
-        value ? getCategoryName(value as string) : '-',
+      render: (value, _record, _index) => (value ? getCategoryName(value as string) : '-'),
     },
     {
       key: 'tags',

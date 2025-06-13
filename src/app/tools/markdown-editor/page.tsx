@@ -16,7 +16,7 @@ import {
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function MarkdownEditorPage() {
@@ -353,7 +353,12 @@ function greet(name) {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 p-2 bg-background dark:bg-slate-900 border-b dark:border-slate-800">
               {/* Markdown 语法按钮 */}
-              <Button className="p-2 rounded-md hover:bg-accent dark:hover:bg-slate-800 text-muted-foreground dark:text-slate-400" variant="outline" size="sm" onClick={() => insertMarkdown('bold')}>
+              <Button
+                className="p-2 rounded-md hover:bg-accent dark:hover:bg-slate-800 text-muted-foreground dark:text-slate-400"
+                variant="outline"
+                size="sm"
+                onClick={() => insertMarkdown('bold')}
+              >
                 <strong>B</strong>
               </Button>
               <Button variant="outline" size="sm" onClick={() => insertMarkdown('italic')}>

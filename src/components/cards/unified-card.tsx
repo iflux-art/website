@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 import { CardContent } from '@/components/cards/card';
-import { Badge } from '@/components/ui/display/badge';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CardHover } from '@/components/cards/card-hover';
 

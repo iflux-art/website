@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { LucideIcon } from 'lucide-react';
 
 export interface TableColumn<T extends object> {
@@ -43,7 +43,6 @@ export function DataTable<T extends object>({
   emptyText = '暂无数据',
   pagination,
 }: DataTableProps<T>) {
-
   return (
     <Card>
       {title && (

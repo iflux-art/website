@@ -1,3 +1,4 @@
+// src/components/layout/navbar/MainNavbar.tsx
 'use client';
 
 import { useState } from 'react';
@@ -7,10 +8,15 @@ import { NavMenu } from './nav-menu';
 import { useNavbarScroll } from '@/hooks/use-navbar-scroll';
 
 /**
- * 主导航栏组件
- * 负责整体导航布局和响应式处理
+ * 主站点导航栏组件
+ * @description 网站的顶部主导航栏，负责：
+ * - 展示网站 Logo
+ * - 提供主要导航链接
+ * - 响应式布局（桌面/移动设备）
+ * - 滚动时显示当前页面标题
+ * - 支持返回顶部功能
  */
-export function Navbar({ className = '' }: { className?: string }) {
+export function MainNavbar({ className = '' }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const { pageTitle, showTitle, scrollToTop } = useNavbarScroll();
 

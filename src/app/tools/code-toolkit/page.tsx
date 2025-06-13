@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, Copy, Check, Code, Download, Upload } from 'lucide-react';
 import Link from 'next/link';
@@ -402,7 +402,9 @@ export default function CodeToolkitPage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">语言</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  语言
+                </label>
                 <select
                   value={language}
                   onChange={e => setLanguage(e.target.value as typeof language)}
@@ -419,7 +421,9 @@ export default function CodeToolkitPage() {
               {activeTab === 'format' && (
                 <>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">缩进类型</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      缩进类型
+                    </label>
                     <select
                       value={indentType}
                       onChange={e => setIndentType(e.target.value as typeof indentType)}
@@ -431,7 +435,9 @@ export default function CodeToolkitPage() {
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">缩进大小</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      缩进大小
+                    </label>
                     <select
                       value={indentSize}
                       onChange={e => setIndentSize(Number(e.target.value))}

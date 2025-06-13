@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { Button } from '@/components/ui/input/button';
-import { SearchDialog } from './search-dialog';
+import { Button } from '@/components/ui/button';
+import { SearchDialog } from '@/components/search-dialog/search-dialog';
 
 /**
  * 搜索图标组件
@@ -37,7 +37,7 @@ export function SearchIcon() {
       >
         <Search className="h-5 w-5" />
       </Button>
-      <SearchDialog open={open} onOpenChange={setOpen} />
+      <SearchDialog open={open} onOpenChangeAction={setOpen} />
     </>
   );
 }

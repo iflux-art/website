@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
-import { Input } from '@/components/ui/input/input';
-import { Label } from '@/components/ui/display/label';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/feedback/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { User, Lock } from 'lucide-react';
 
 interface LoginDialogProps {

@@ -5,7 +5,7 @@ import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function UnitConverterPage() {
@@ -327,9 +327,9 @@ export default function UnitConverterPage() {
               <Button
                 key={key}
                 className={`rounded-full ${
-                  category === key 
-                    ? "px-4 py-2 bg-primary text-primary-foreground dark:bg-slate-700" 
-                    : "px-4 py-2 hover:bg-accent dark:hover:bg-slate-800"
+                  category === key
+                    ? 'px-4 py-2 bg-primary text-primary-foreground dark:bg-slate-700'
+                    : 'px-4 py-2 hover:bg-accent dark:hover:bg-slate-800'
                 }`}
                 onClick={() => setCategory(key)}
               >
@@ -351,7 +351,9 @@ export default function UnitConverterPage() {
               {/* 源单位 */}
               <div className="space-y-4">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">从</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    从
+                  </label>
                   <select
                     value={fromUnit}
                     onChange={e => setFromUnit(e.target.value)}
@@ -393,7 +395,9 @@ export default function UnitConverterPage() {
               {/* 目标单位 */}
               <div className="space-y-4 md:order-3">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">到</label>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    到
+                  </label>
                   <select
                     value={toUnit}
                     onChange={e => setToUnit(e.target.value)}
@@ -436,7 +440,9 @@ export default function UnitConverterPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
               {category === 'length' && (
                 <>
-                  <div className="p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono">1 米 = 100 厘米</div>
+                  <div className="p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono">
+                    1 米 = 100 厘米
+                  </div>
                   <div className="p-3 bg-muted/50 rounded">1 千米 = 1000 米</div>
                   <div className="p-3 bg-muted/50 rounded">1 英寸 = 2.54 厘米</div>
                   <div className="p-3 bg-muted/50 rounded">1 英尺 = 30.48 厘米</div>

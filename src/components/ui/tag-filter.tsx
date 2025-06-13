@@ -2,8 +2,8 @@
 'use client';
 
 import { Tag, X } from 'lucide-react';
-import { Badge } from '../display/badge';
-import { Button } from '../input/button';
+import { Badge } from './badge';
+import { Button } from './button';
 import { ReactNode } from 'react';
 
 export interface TagFilterProps {

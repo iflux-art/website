@@ -14,7 +14,7 @@ import {
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function RegexTesterPage() {
@@ -283,7 +283,9 @@ export default function RegexTesterPage() {
                     className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                   {error && (
-                    <div className="mt-2 text-sm text-destructive dark:text-red-400 p-2 rounded">{error}</div>
+                    <div className="mt-2 text-sm text-destructive dark:text-red-400 p-2 rounded">
+                      {error}
+                    </div>
                   )}
                 </div>
 
@@ -297,7 +299,10 @@ export default function RegexTesterPage() {
                       { flag: 'm', name: '多行模式', desc: '^和$匹配每行的开始和结束' },
                       { flag: 's', name: '单行模式', desc: '.匹配换行符' },
                     ].map(({ flag, name, desc }) => (
-                      <label key={flag} className="flex items-center space-x-2 text-sm text-gray-900 dark:text-gray-300">
+                      <label
+                        key={flag}
+                        className="flex items-center space-x-2 text-sm text-gray-900 dark:text-gray-300"
+                      >
                         <input
                           type="checkbox"
                           checked={flags.includes(flag)}
@@ -431,7 +436,9 @@ export default function RegexTesterPage() {
                       <div className="font-mono text-xs text-muted-foreground dark:text-slate-400 mt-1 break-all">
                         {item.pattern}
                       </div>
-                      <div className="text-xs text-muted-foreground dark:text-slate-400 mt-1">示例: {item.example}</div>
+                      <div className="text-xs text-muted-foreground dark:text-slate-400 mt-1">
+                        示例: {item.example}
+                      </div>
                     </div>
                   ))}
                 </div>

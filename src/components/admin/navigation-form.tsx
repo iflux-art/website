@@ -1,21 +1,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/input/button';
-import { Input } from '@/components/ui/input/input';
-import { Textarea } from '@/components/ui/input/textarea';
-import { Label } from '@/components/ui/display/label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/input/select';
-import { Switch } from '@/components/ui/input/switch';
-import { Badge } from '@/components/ui/display/badge';
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Alert, AlertDescription } from '@/components/ui/feedback/alert';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Plus, X, Globe, AlertCircle, CheckCircle } from 'lucide-react';
 import { NavigationFormData, NavigationCategory } from '@/types/navigation';
 import { parseWebsiteMetadata, isValidUrl } from '@/lib/website-parser';

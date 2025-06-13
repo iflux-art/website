@@ -69,30 +69,23 @@ export function NavItem({
   className,
   onClick,
   animated = true,
-  // TODO: 实现动画延迟功能
-  _animationDelay = 0,
+  animationDelay = 0,
   underline = true,
 }: NavItemProps) {
-  // 基础类名
-  const baseClasses = cn(
+  // 组合所有样式类名
+  const linkClasses = cn(
     'py-2 px-3 rounded-lg',
     isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary',
     underline && 'hover:underline',
+    animated && 'transition-all duration-300',
     className
   );
 
-  // 如果不使用动画，直接返回静态组件
-  if (!animated) {
-    return (
-      <Link href={href} className={baseClasses} onClick={onClick}>
-        {label}
-      </Link>
-    );
-  }
+  // 添加动画延迟样式
+  const style = animated ? { transitionDelay: `${animationDelay}s` } : undefined;
 
-  // 不使用动画，直接返回静态组件
   return (
-    <Link href={href} className={baseClasses} onClick={onClick}>
+    <Link href={href} className={linkClasses} onClick={onClick} style={style}>
       {label}
     </Link>
   );

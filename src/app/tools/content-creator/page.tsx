@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, PenTool, Lightbulb, Target, Zap, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
@@ -117,7 +117,9 @@ export default function ContentCreatorPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">平台</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  平台
+                </label>
                 <select
                   value={platform}
                   onChange={e => setPlatform(e.target.value)}

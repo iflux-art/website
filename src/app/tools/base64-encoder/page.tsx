@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
 import { ArrowLeft, Copy, Check, Lock, Unlock, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
@@ -270,7 +270,11 @@ export default function Base64EncoderPage() {
             解码
           </Button>
         </div>
-        <Button onClick={switchMode} variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-background hover:bg-accent dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100">
+        <Button
+          onClick={switchMode}
+          variant="outline"
+          className="flex items-center gap-2 px-4 py-2 rounded-md bg-background hover:bg-accent dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100"
+        >
           <ArrowUpDown className="h-4 w-4" />
           交换输入输出
         </Button>
@@ -407,7 +411,9 @@ export default function Base64EncoderPage() {
             </ul>
           </div>
           <div>
-            <h4 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">常见用途</h4>
+            <h4 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              常见用途
+            </h4>
             <ul className="text-sm text-muted-foreground space-y-1">
               <li>• 在 URL 中传递二进制数据</li>
               <li>• 在 JSON 中嵌入图片数据</li>

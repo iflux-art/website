@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 
 import { BlogList } from '@/components/features/blog/blog-list';
-import { TagFilter } from '@/components/ui/utils/tag-filter';
+import { TagFilter } from '@/components/ui/tag-filter';
 import { useTagCounts } from '@/hooks/use-blog';
 
 // 创建一个包装组件来处理动态数据
@@ -13,7 +13,7 @@ function BlogContent() {
   const { tagCounts } = useTagCounts();
   const formattedTags = tagCounts.map(({ tag, count }) => ({
     name: tag,
-    count: count
+    count: count,
   }));
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [tagsExpanded, setTagsExpanded] = useState(false);

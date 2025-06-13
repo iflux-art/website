@@ -15,7 +15,7 @@ import {
   HardDrive,
   ChevronDown,
 } from 'lucide-react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { AI_MODELS, type AIModel } from '@/lib/ai-models';
 import { TOOLS, NAVIGATION_SITES } from './constants';

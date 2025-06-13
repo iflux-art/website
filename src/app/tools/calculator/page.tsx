@@ -5,7 +5,7 @@ import { Calculator, Delete, RotateCcw, ArrowLeft } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/tool-layout';
 import { ToolActions } from '@/components/features/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { calculatorUtils } from '@/lib/tool-utils';
 import Link from 'next/link';
 
@@ -272,7 +272,11 @@ export default function CalculatorPage() {
                 {mode === 'simple' ? (
                   // 简单计算器布局
                   <div className="grid grid-cols-4 gap-2">
-                    <Button variant="outline" onClick={clear} className="w-full h-16 text-lg font-medium rounded-lg bg-destructive/10 hover:bg-destructive/20 dark:bg-red-900/30 dark:hover:bg-red-900/50 dark:text-slate-100 col-span-1">
+                    <Button
+                      variant="outline"
+                      onClick={clear}
+                      className="w-full h-16 text-lg font-medium rounded-lg bg-destructive/10 hover:bg-destructive/20 dark:bg-red-900/30 dark:hover:bg-red-900/50 dark:text-slate-100 col-span-1"
+                    >
                       C
                     </Button>
                     <Button variant="outline" onClick={clearEntry} className="col-span-1">
@@ -387,7 +391,11 @@ export default function CalculatorPage() {
                       .
                     </Button>
 
-                    <Button variant="default" onClick={performEquals} className="w-full h-16 text-lg font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-600 dark:hover:bg-slate-500 col-span-4">
+                    <Button
+                      variant="default"
+                      onClick={performEquals}
+                      className="w-full h-16 text-lg font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-600 dark:hover:bg-slate-500 col-span-4"
+                    >
                       =
                     </Button>
                   </div>

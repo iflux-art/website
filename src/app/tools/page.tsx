@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
-import { Badge } from '@/components/ui/display/badge';
-import { TagFilter } from '@/components/ui/utils/tag-filter';
+import { Badge } from '@/components/ui/badge';
+import { TagFilter } from '@/components/ui/tag-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/config/tools';
 import { useToolFilter, useToolSearch } from '@/hooks/use-tools';
 import type { Tool } from '@/types/pages';
@@ -56,14 +56,14 @@ export default function ToolsPage() {
     selectedTag,
     setSelectedCategory,
     setSelectedTag,
-    tagCounts
+    tagCounts,
   } = useToolFilter(TOOLS);
 
   const { searchResults } = useToolSearch(filteredTools);
 
   const formattedTags = tagCounts.map(({ tag, count }) => ({
     name: tag,
-    count: count
+    count: count,
   }));
 
   return (
@@ -80,7 +80,7 @@ export default function ToolsPage() {
               return (
                 <Button
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  variant={selectedCategory === category.id ? 'default' : 'outline'}
                   onClick={() => setSelectedCategory(category.id)}
                   className="flex items-center gap-2"
                 >

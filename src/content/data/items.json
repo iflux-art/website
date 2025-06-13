@@ -24038,5 +24038,21 @@
     "id": "mbtrge9h4tx1gkwyjax",
     "createdAt": "2025-06-12T19:17:29.525Z",
     "updatedAt": "2025-06-12T19:17:29.525Z"
+  },
+  {
+    "title": "Apple 设计资源",
+    "description": "使用 Apple 官方设计模板、图标制作模板、色彩指南以及其他资源，快速精准地设计 App。",
+    "url": "https://developer.apple.com/cn/design/resources/",
+    "icon": "https://developer.apple.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "样机",
+      "图标"
+    ],
+    "featured": true,
+    "category": "design",
+    "id": "mbukz2oul2jqvm7wf1",
+    "createdAt": "2025-06-13T09:03:49.854Z",
+    "updatedAt": "2025-06-13T09:03:49.854Z"
   }
 ]

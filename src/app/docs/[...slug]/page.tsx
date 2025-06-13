@@ -7,10 +7,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/cards/card';
-import {
-  Breadcrumb as BreadcrumbComponent,
-  type BreadcrumbItem,
-} from '@/components/ui/navigation/breadcrumb';
+import { Breadcrumb as BreadcrumbComponent, type BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { Sidebar } from '@/components/layout/sidebar';
 import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';

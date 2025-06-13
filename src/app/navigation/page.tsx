@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/input/button';
+import { Button } from '@/components/ui/button';
 import { NavigationCard } from '@/components/cards/navigation-card';
 import { NavigationItem, NavigationCategory } from '@/types/navigation';
-import { TagFilter } from '@/components/ui/utils/tag-filter';
+import { TagFilter } from '@/components/ui/tag-filter';
 
 export default function NavigationPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);
