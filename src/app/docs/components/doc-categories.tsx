@@ -1,10 +1,9 @@
-
 'use client';
 
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useDocCategories } from '@/hooks/use-docs';
+import { useDocCategories } from '@/components/features/docs/use-docs';
 
 export default function DocCategories() {
   const pathname = usePathname();

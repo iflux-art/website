@@ -6,12 +6,15 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Card, CardContent } from '@/components/cards/card';
-import { Breadcrumb as BreadcrumbComponent, type BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { Card, CardContent } from '@/components/common/cards/card';
+import {
+  Breadcrumb as BreadcrumbComponent,
+  type BreadcrumbItem,
+} from '@/components/common/breadcrumb';
 import { Sidebar } from '@/components/layout/sidebar';
-import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
+import { MarkdownRenderer } from '@/components/mdx/renderer/markdown-renderer';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
-import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
+import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/shared/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;

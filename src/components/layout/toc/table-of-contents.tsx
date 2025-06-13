@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/utils';
 import { Hash, Text } from 'lucide-react';
 // 我们将在未来的优化中使用 useIntersectionObserver
 
@@ -72,12 +72,12 @@ export interface TableOfContentsProps {
  *   ]}
  * />
  */
-export function TableOfContents({ 
-  headings, 
-  className, 
+export function TableOfContents({
+  headings,
+  className,
   title = '目录',
   adaptive = false,
-  adaptiveOffset = 80 
+  adaptiveOffset = 80,
 }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
   const [isFixed, setIsFixed] = useState(false);
@@ -270,8 +270,8 @@ export function TableOfContents({
 
   return (
     <div className={cn('pl-0', className)}>
-      <div 
-        ref={tocRef} 
+      <div
+        ref={tocRef}
         className={cn(
           'pb-4 pr-2',
           adaptive && 'transition-all duration-200',

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 import { BlogList } from '@/components/features/blog/blog-list';
 import { TagFilter } from '@/components/ui/tag-filter';
-import { useTagCounts } from '@/hooks/use-blog';
+import { useTagCounts } from '@/components/features/blog/use-blog';
 
 // 创建一个包装组件来处理动态数据
 function BlogContent() {

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image, { ImageProps } from 'next/image';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/utils';
 
 /**
  * 响应式图片尺寸配置
@@ -259,7 +259,6 @@ export function ResponsiveImage({
     setIsLoaded(false);
     setHasError(false);
   }, [src]);
-
 
   // 渲染
   return (

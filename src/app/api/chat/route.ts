@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getModelById, generateDemoResponse } from '@/lib/ai-models';
+import { getModelById, generateDemoResponse } from '@/components/features/home/ai-models';
 
 interface SearchResult {
   title: string;
@@ -77,7 +77,10 @@ export async function POST(request: NextRequest) {
 搜索结果：
 ${
   searchResults
-    ?.map((result: SearchResult, index: number) => `${index + 1}. ${result.title}: ${result.description}`)
+    ?.map(
+      (result: SearchResult, index: number) =>
+        `${index + 1}. ${result.title}: ${result.description}`
+    )
     .join('\n') || '暂无搜索结果'
 }
 

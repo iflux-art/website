@@ -3,11 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
-import { MarkdownRenderer } from '@/components/mdx/markdown-renderer';
-import { countWords } from '@/lib/utils';
+import { MarkdownRenderer } from '@/components/mdx/renderer/markdown-renderer';
+import { countWords } from '@/shared/utils/utils';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;

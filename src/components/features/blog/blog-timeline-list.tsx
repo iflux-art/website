@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { useTimelinePosts } from '@/hooks/use-blog';
-import type { BlogPost } from '@/types/blog';
+import { useTimelinePosts } from '@/components/features/blog/use-blog';
+import type { BlogPost } from '@/components/features/blog/blog-types';
 
 export interface BlogTimelineListProps {
   limit?: number;
@@ -34,7 +34,7 @@ export interface PostsByMonth {
  */
 export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   const { postsByYear } = useTimelinePosts();
-  
+
   const initialExpandedState = useMemo(() => {
     if (!postsByYear) return {};
     return Object.keys(postsByYear).reduce((acc, year) => {
@@ -42,7 +42,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
       return acc;
     }, {} as Record<string, boolean>);
   }, [postsByYear]);
-  
+
   const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>(initialExpandedState);
 
   const toggleYearExpand = useCallback((year: string) => {
@@ -87,7 +87,6 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   };
 
   // 获取指定年份的文章总数
-
 
   const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
     month: '2-digit',

@@ -1,5 +1,57 @@
 ## 项目优化
 
+文件夹分为：blog、docs、tools、navigation、admin
+
+建议按照以下方式重新组织组件：
+
+Core Components (核心组件)
+
+/components/core/
+layout/ (布局相关)
+header/
+footer/
+sidebar/
+navigation/
+seo/ (SEO相关组件)
+providers/ (上下文提供者)
+Common Components (通用组件)
+
+/components/common/
+data-display/ (数据展示)
+card/
+table/
+list/
+feedback/ (反馈组件)
+alert/
+modal/
+toast/
+forms/ (表单组件)
+input/
+select/
+checkbox/
+navigation/ (导航组件)
+menu/
+tabs/
+breadcrumb/
+Feature Components (功能组件)
+
+/components/features/
+blog/
+docs/
+admin/
+search/
+auth/
+UI Components (基础UI组件)
+
+/components/ui/ (保持现有结构)
+button/
+input/
+dialog/
+等等...
+MDX Components (MDX相关组件)
+
+/components/mdx/ (保持现有结构)
+
 添加搜索结果分类过滤
 增加更多快捷命令
 添加搜索建议功能

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
 import { Copy, Check } from 'lucide-react';
 
 interface DualTextareaProps {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { searchContent } from '@/lib/content-search';
+import { searchContent } from '@/shared/lib/content-search';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,15 +13,12 @@ export async function GET(request: NextRequest) {
 
     const results = searchContent(query, limit);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       results,
-      total: results.length 
+      total: results.length,
     });
   } catch (error) {
     console.error('Search API error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

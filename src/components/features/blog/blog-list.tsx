@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useBlogPosts } from '@/hooks/use-blog';
-import { BlogCard } from './blog-card';
+import { useBlogPosts } from '@/components/features/blog/use-blog';
+import { BlogCard } from '../../common/cards/blog-card';
 
 /**
  * 博客列表组件属性

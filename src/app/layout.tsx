@@ -1,15 +1,21 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { MainNavbar } from '@/components/layout/navbar/MainNavbar';
+import { MainNavbar } from '@/components/layout/navbar/main-navbar';
 import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
-import { generateMetadata, generateViewport } from '@/lib/metadata';
+import { generateMetadata, generateViewport } from '@/shared/lib/metadata';
 import '@algolia/autocomplete-theme-classic/dist/theme.css';
 
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { PWA_CONFIG, MOBILE_CONFIG, IOS_CONFIG, WINDOWS_CONFIG, ICONS_CONFIG } from '@/lib/constants';
+import {
+  PWA_CONFIG,
+  MOBILE_CONFIG,
+  IOS_CONFIG,
+  WINDOWS_CONFIG,
+  ICONS_CONFIG,
+} from '@/shared/lib/constants';
 
 export const metadata: Metadata = generateMetadata();
 export const viewport = generateViewport();
@@ -31,7 +37,10 @@ export default function RootLayout({
 
         {/* 移动设备优化 */}
         <meta name="format-detection" content={MOBILE_CONFIG.formatDetection} />
-        <meta name="msapplication-tap-highlight" content={MOBILE_CONFIG.msapplicationTapHighlight} />
+        <meta
+          name="msapplication-tap-highlight"
+          content={MOBILE_CONFIG.msapplicationTapHighlight}
+        />
         <meta name="mobile-web-app-capable" content={PWA_CONFIG.mobileWebAppCapable} />
 
         {/* iOS 设备配置 */}

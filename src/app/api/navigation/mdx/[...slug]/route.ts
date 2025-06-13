@@ -15,7 +15,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
   try {
     const resolvedParams = await params;
     // 确保 slug 是数组
-    const slugArray = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
+    const slugArray = Array.isArray(resolvedParams.slug)
+      ? resolvedParams.slug
+      : [resolvedParams.slug];
     slugForErrorLogging = slugArray; // 在 catch 中使用
     const fullSlug = slugArray.join('/');
 
@@ -72,7 +74,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
     const { data, content } = matter(fileContent);
 
     // 导入处理函数
-    const { processMdxContent } = await import('@/components/mdx/markdown-renderer');
+    const { processMdxContent } = await import('@/components/mdx/renderer/markdown-renderer');
 
     // 处理内容中的 ResourceCard 和 ResourceGrid 组件
     const processedContent = processMdxContent(content);

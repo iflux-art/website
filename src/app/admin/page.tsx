@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import AdminPageContentLayout from '@/components/layout/admin/AdminPageContentLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import AdminPageContentLayout from '@/components/features/admin/admin-page-content-layout';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
 import { Globe, BarChart3 } from 'lucide-react';
 
 export default function AdminDashboard() {

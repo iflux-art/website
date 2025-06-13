@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { Calculator, Delete, RotateCcw, ArrowLeft } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/tool-layout';
-import { ToolActions } from '@/components/features/tool-actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { ToolLayout } from '@/components/features/tools/tool-layout';
+import { ToolActions } from '@/components/features/tools/tool-actions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
 import { Button } from '@/components/ui/button';
-import { calculatorUtils } from '@/lib/tool-utils';
+import { calculatorUtils } from '@/components/features/tools/tool-utils';
 import Link from 'next/link';
 
 export default function CalculatorPage() {

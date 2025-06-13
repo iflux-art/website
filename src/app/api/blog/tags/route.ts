@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllTags } from '@/lib/content';
+import { getAllTags } from '@/shared/lib/content';
 
 /**
  * 获取所有标签的 API 路由

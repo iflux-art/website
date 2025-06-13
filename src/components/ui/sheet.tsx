@@ -5,7 +5,7 @@ import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/utils';
 
 /**
  * Sheet 变体定义
@@ -81,7 +81,9 @@ export type SheetTitleProps = React.ComponentPropsWithoutRef<typeof SheetPrimiti
 /**
  * Sheet 描述组件属性
  */
-export type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>;
+export type SheetDescriptionProps = React.ComponentPropsWithoutRef<
+  typeof SheetPrimitive.Description
+>;
 
 /**
  * Sheet 组件

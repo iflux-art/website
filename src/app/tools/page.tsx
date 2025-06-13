@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
 import { Badge } from '@/components/ui/badge';
 import { TagFilter } from '@/components/ui/tag-filter';
-import { TOOLS, TOOL_CATEGORIES } from '@/config/tools';
-import { useToolFilter, useToolSearch } from '@/hooks/use-tools';
-import type { Tool } from '@/types/pages';
+import { TOOLS, TOOL_CATEGORIES } from '@/components/features/tools/tools-data';
+import { useToolFilter, useToolSearch } from '@/components/features/tools/use-tools';
+import type { Tool } from '@/shared/types/pages';
 // 仅保留注释
 
 /**

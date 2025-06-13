@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { getDocSidebar } from '@/lib/content';
-import { DocListItem } from '@/hooks/use-docs';
+import { getDocSidebar } from '@/shared/lib/content';
+import { DocListItem } from '@/components/features/docs/use-docs';
 
 // 如果 SidebarNavItem 没有从 '@/lib/content' 导出，则在此定义
 interface SidebarNavItem {
@@ -17,7 +17,6 @@ interface SidebarNavItem {
   // icon?: React.ReactNode; // ReactNode 可能不适用于此上下文
   open?: boolean;
 }
-
 
 /**
  * 获取指定分类的文档列表的 API 路由
@@ -48,7 +47,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     // 递归函数，用于扁平化侧边栏结构
     const flattenSidebarItems = (items: SidebarNavItem[], parentPath: string = '') => {
       items.forEach(item => {
-        if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) { // 确保 filePath 存在
+        if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) {
+          // 确保 filePath 存在
           // 提取 slug
           const slug = item.filePath.split('/').pop() || '';
 
@@ -93,7 +93,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     return NextResponse.json(docs);
   } catch (error) {
     // resolvedParams 可能在 await params 失败时未定义
-    const categoryName = typeof params === 'object' && params !== null && 'category' in params ? decodeURIComponent((await params).category) : '未知分类';
+    const categoryName =
+      typeof params === 'object' && params !== null && 'category' in params
+        ? decodeURIComponent((await params).category)
+        : '未知分类';
     console.error(`获取分类 ${categoryName} 的文档列表失败:`, error);
 
     // 出错时返回空数组而不是错误，允许客户端降级

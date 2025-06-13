@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
-import type { Heading } from '@/types/docs';
+import type { Heading } from '@/components/features/docs/docs-types';
 
 export interface AdaptiveSidebarProps {
   /**

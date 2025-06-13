@@ -1,5 +1,5 @@
 import { AdaptiveSidebar } from './adaptive-sidebar';
-import type { Heading } from '@/types/docs';
+import type { Heading } from '@/components/features/docs/docs-types';
 
 export interface PageTableOfContentsProps {
   /**

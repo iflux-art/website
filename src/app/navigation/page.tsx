@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { NavigationCard } from '@/components/cards/navigation-card';
-import { NavigationItem, NavigationCategory } from '@/types/navigation';
+import { NavigationCard } from '@/components/common/cards/navigation-card';
+import {
+  NavigationItem,
+  NavigationCategory,
+} from '@/components/features/navigation/navigation-types';
 import { TagFilter } from '@/components/ui/tag-filter';
 
 export default function NavigationPage() {
