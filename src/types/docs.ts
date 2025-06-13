@@ -1,73 +1,62 @@
 /**
- * 文档标题项类型
+ * 文档数据相关类型定义
  */
-export interface Heading {
-  /**
-   * 标题ID
-   */
-  id: string;
 
-  /**
-   * 标题文本
-   */
-  text: string;
+import { BaseContent, BaseCategory, BaseMeta } from './base';
 
-  /**
-   * 标题级别（1-6）
-   */
-  level: number;
+/**
+ * 文档分类
+ */
+export interface DocCategory extends BaseCategory {
+  // 继承自BaseCategory已包含所有必要字段
 }
 
 /**
- * 自适应容器属性
+ * 文档项
  */
-export interface AdaptiveContainerProps {
-  /**
-   * 子组件
-   */
-  children: React.ReactNode;
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 自适应定位的偏移量（单位：px）
-   * @default 80
-   */
-  adaptiveOffset?: number;
+export interface DocItem extends BaseContent {
+  /** 所属分类 */
+  category: string;
 }
 
 /**
- * 目录组件属性
+ * 文档列表项（用于侧边栏）
  */
-export interface TableOfContentsProps {
-  /**
-   * 标题项数组
-   */
-  headings: Heading[];
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 自定义标题
-   * @default "目录"
-   */
-  title?: string;
-
-  /**
-   * 是否启用自适应定位
-   * @default false
-   */
-  adaptive?: boolean;
-
-  /**
-   * 自适应定位的偏移量（单位：px）
-   * @default 80
-   */
-  adaptiveOffset?: number;
+export interface DocListItem extends BaseContent {
+  /** 文档路径 */
+  path: string;
 }
+
+/**
+ * 文档元数据
+ */
+export interface DocMeta extends BaseMeta {
+  // 继承自BaseMeta已包含所有必要字段
+}
+
+/**
+ * 文档树节点
+ */
+export interface DocTreeNode {
+  /** 标题 */
+  title: string;
+  /** URL路径 */
+  path?: string;
+  /** 子节点 */
+  children?: DocTreeNode[];
+}
+
+/**
+ * 文档导航项
+ */
+export interface DocNavItem {
+  /** 标题 */
+  title: string;
+  /** URL路径 */
+  path: string;
+  /** 是否是下一篇 */
+  isNext?: boolean;
+}
+
+// 重新导出组件类型
+export * from './docs-components';

@@ -3,11 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { throttle } from 'lodash';
-
-type ScrollHandler = () => void;
-type ThrottledScrollHandler = ReturnType<typeof throttle> & {
-  cancel: () => void;
-};
+import { ScrollHandler, ThrottledScrollHandler } from '@/types/hooks-internal';
 
 /**
  * 导航栏滚动效果 Hook
@@ -119,7 +115,4 @@ useEffect(() => {
   } as const;
 }
 
-/**
- * Hook返回值类型
- */
 export type NavbarScrollHookResult = ReturnType<typeof useNavbarScroll>;

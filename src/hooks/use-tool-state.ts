@@ -1,22 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-
-export interface ToolState {
-  input: string;
-  output: string;
-  error: string;
-  isLoading: boolean;
-}
-
-export interface ToolActions {
-  setInput: (value: string) => void;
-  setOutput: (value: string) => void;
-  setError: (value: string) => void;
-  setLoading: (value: boolean) => void;
-  clearAll: () => void;
-  reset: () => void;
-}
+import { ToolState, ToolActions } from '@/types/tools';
 
 export function useToolState(initialState?: Partial<ToolState>): [ToolState, ToolActions] {
   const [state, setState] = useState<ToolState>({

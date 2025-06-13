@@ -1,39 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-
-/**
- * 懒加载钩子配置项
- */
-interface UseLazyLoadOptions {
-  /**
-   * 是否只触发一次可见性变化。设置为true时,元素一旦可见就不会再次触发。
-   * @default true
-   */
-  triggerOnce?: boolean;
-
-  /**
-   * 触发可见性检测的阈值,范围0-1。
-   * 例如:0.5表示元素50%可见时触发。
-   * @default 0
-   */
-  threshold?: number;
-
-  /**
-   * 是否跳过懒加载监测。
-   * 设置为true时将不会监测元素可见性。
-   * @default false 
-   */
-  skip?: boolean;
-
-  /**
-   * 根元素的外边距。
-   * 用于扩展或收缩监测的根元素范围。
-   * 例如:"100px 0px"代表上下扩展100px。
-   * @default "0px"
-   */
-  rootMargin?: string;
-}
+import { UseLazyLoadOptions } from '@/types/hooks-internal';
 
 /**
  * 用于实现元素懒加载的React Hook

@@ -5,34 +5,17 @@
 
 "use client";
 
-"use client";
-
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import type { ContentOptions } from './types';
-// 通用错误类
-export class ContentError extends Error {
-  constructor(message: string, public code?: string) {
-    super(message);
-    this.name = 'ContentError';
-  }
-}
+import { ContentOptions, ContentError } from '@/types/hooks';
+import { BaseContent, BaseCategory } from '@/types/base';
 
-// 通用数据类型
-export interface ContentItem {
-  slug: string;
-  title: string;
-  description: string;
-  tags?: string[];
-  date?: string;
-}
+// 通用错误类型
+export type { ContentError };
 
-export interface ContentCategory {
-  id: string;
-  title: string;
-  description: string;
-  count: number;
-}
+// 重新导出基础类型
+export type ContentItem = BaseContent;
+export type ContentCategory = BaseCategory;
 
 interface CacheItem<T> {
   data: T;
@@ -62,13 +45,13 @@ export function useContentData<T>({
 }: ContentOptions): {
   data: T | null;
   loading: boolean;
-  error: ContentError | null;
+  error: Error | null;
   refresh: () => void;
 } {
 
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<ContentError | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const pathname = usePathname();
 
   // 生成缓存key
@@ -137,7 +120,7 @@ export function useContentData<T>({
         } else if (type) {
           apiUrl = `/api/${type}/categories${category ? `/${encodeURIComponent(category)}` : ''}`;
         } else {
-          throw new ContentError('Either url, path or type must be provided');
+          throw new Error('Either url, path or type must be provided');
         }
 
         // 添加时间戳避免浏览器缓存
@@ -157,9 +140,8 @@ export function useContentData<T>({
         const result = await response.json();
 
         if (!response.ok) {
-          throw new ContentError(
-            result.error || `Failed to fetch ${type} data`,
-            response.status.toString()
+          throw new Error(
+            result.error || `Failed to fetch ${type} data (${response.status})`
           );
         }
 
@@ -171,9 +153,7 @@ export function useContentData<T>({
         console.error(`Error fetching ${type} data:`, err);
         if (isMounted) {
           setError(
-            err instanceof ContentError
-              ? err
-              : new ContentError(err instanceof Error ? err.message : 'Unknown error')
+            err instanceof Error ? err : new Error(String(err))
           );
         }
       } finally {

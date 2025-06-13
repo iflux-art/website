@@ -6,20 +6,8 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { NavigationCategory, NavigationItem as Resource } from '@/types/navigation';
+import { NavigationCategory, NavigationItem as Resource, Subcategory, Link } from '@/types/navigation';
 import { useContentData } from '@/hooks/use-content-data';
-
-interface Subcategory {
-  title: string;
-  links?: Link[];
-}
-
-interface Link {
-  title: string;
-  description: string;
-  url: string;
-  tags?: string[];
-}
 
 /**
  * 获取所有导航分类

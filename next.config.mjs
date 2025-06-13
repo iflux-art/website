@@ -77,38 +77,6 @@ const nextConfig = {
   // 优化服务器组件
   serverExternalPackages: ['@mdx-js/react'],
   
-  // 添加对 Algolia 的支持
-  transpilePackages: [
-    'algoliasearch',
-    '@algolia/client-search',
-    '@algolia/client-common',
-    '@algolia/requester-browser-lite',
-    '@algolia/transporter',
-    '@algolia/cache-browser-local-storage',
-    '@algolia/cache-common',
-    '@algolia/cache-in-memory',
-    '@algolia/client-analytics',
-    '@algolia/client-common',
-    '@algolia/client-personalization',
-    '@algolia/client-search',
-    '@algolia/logger-common',
-    '@algolia/logger-console',
-  ],
-
-  webpack: (config) => {
-    // 移除 Algolia 相关的 alias，让它使用默认版本
-    delete config.resolve.alias['algoliasearch'];
-    
-    // 添加 fallback
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-      os: false,
-    };
-
-    return config;
-  },
 };
 
 // MDX 配置
@@ -119,7 +87,8 @@ const withMDX = createMDX({
     rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
     providerImportSource: '@mdx-js/react',
   },
-});
+}
+);
 
 // 导出配置
 export default withMDX(nextConfig);
