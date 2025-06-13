@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "node_modules/@vercel/analytics/**/*.ts",
-    "node_modules/@vercel/speed-insights/**/*.ts"
+    "node_modules/@vercel/speed-insights/**/*.ts",
+    "node_modules/algoliasearch-helper/**/*.ts",
+    "node_modules/@algolia/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

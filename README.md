@@ -42,6 +42,55 @@
 
 导航栏代码优化
 
+## Algolia 搜索配置
+
+本项目使用 Algolia 提供站内搜索功能。按照以下步骤配置：
+
+### 1. 环境变量配置
+
+在 `.env.local` 文件中配置以下环境变量：
+
+```bash
+NEXT_PUBLIC_ALGOLIA_APP_ID="你的应用ID"
+NEXT_PUBLIC_ALGOLIA_SEARCH_KEY="你的搜索API密钥"
+NEXT_PUBLIC_ALGOLIA_INDEX_NAME="你的索引名称"
+ALGOLIA_ADMIN_KEY="你的管理员API密钥"
+```
+
+### 2. 初始化配置
+
+运行以下命令配置 Algolia 索引设置：
+
+```bash
+pnpm algolia:configure
+```
+
+这将：
+- 配置搜索索引的属性和权重
+- 设置高亮显示规则
+- 配置排序规则
+- 生成安全的搜索 API 密钥
+
+### 3. 同步数据
+
+在开发服务器运行时，执行以下命令同步数据到 Algolia：
+
+```bash
+pnpm algolia:sync
+```
+
+### 4. 自动同步
+
+内容更新时，系统会自动触发数据同步。你也可以：
+- 通过管理面板手动触发同步
+- 在内容发布工作流中添加同步步骤
+
+### 注意事项
+
+- 请确保将 `.env.local` 添加到 `.gitignore` 中
+- 定期更新 Algolia API 密钥以提高安全性
+- 监控搜索使用量，及时优化索引配置
+
 ## 后续优化
 
 ## 待办事项

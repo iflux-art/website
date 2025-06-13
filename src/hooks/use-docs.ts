@@ -3,10 +3,12 @@
  * @module hooks/use-docs
  */
 
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+"use client";
+
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { SidebarItem } from '@/components/layout/sidebar';
 import { docsSidebarCache } from '@/lib/local-storage-cache';
+import { useContentData } from '@/hooks/use-content-data';
 
 /**
  * 文档分类
@@ -58,6 +60,11 @@ export interface DocItem {
   description: string;
 
   /**
+   * 标签列表
+   */
+  tags: string[];
+
+  /**
    * 发布日期
    */
   date?: string;
@@ -99,40 +106,11 @@ export interface DocListItem {
  * @returns 文档分类列表和加载状态
  */
 export function useDocCategories() {
-  const pathname = usePathname(); // 获取当前路径
-  const [categories, setCategories] = useState<DocCategory[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [dataFetched, setDataFetched] = useState(false); // 标记数据是否已获取
-
-  useEffect(() => {
-    async function fetchCategories() {
-      // 如果已经在加载中，则不重复加载
-      if (loading && dataFetched) return;
-
-      setLoading(true);
-      try {
-        console.log('获取文档分类列表中...', pathname);
-        // 添加时间戳避免缓存
-        const response = await fetch('/api/docs/categories?t=' + Date.now());
-        if (!response.ok) {
-          throw new Error('Failed to fetch document categories');
-        }
-        const data = await response.json();
-        console.log('文档分类获取成功', data.length);
-        setCategories(data);
-        setDataFetched(true); // 标记数据已获取
-      } catch (err) {
-        console.error('获取文档分类失败:', err);
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchCategories();
-  }, [pathname]); // 添加pathname作为依赖，当路径变化时重新获取数据
-
+  const { data: categories = [], error, loading } = useContentData<DocCategory[]>({
+    type: 'docs',
+    path: '/api/docs/categories',
+    errorMessage: 'Failed to fetch doc categories'
+  });
   return { categories, loading, error };
 }
 
@@ -143,41 +121,11 @@ export function useDocCategories() {
  * @returns 分类下的文档列表和加载状态
  */
 export function useCategoryDocs(category: string) {
-  const [docs, setDocs] = useState<DocListItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    async function fetchCategoryDocs() {
-      try {
-        setLoading(true);
-        console.log(`开始获取分类 ${category} 的文档列表`);
-
-        const response = await fetch(`/api/docs/categories/${encodeURIComponent(category)}`);
-
-        // 即使响应不是 200，也尝试解析响应体
-        const data = await response.json();
-
-        if (!response.ok) {
-          // 如果响应包含错误信息，使用它
-          const errorMessage = data.error || `Failed to fetch documents for category: ${category}`;
-          console.error(`获取分类 ${category} 的文档列表失败:`, errorMessage);
-          throw new Error(errorMessage);
-        }
-
-        console.log(`成功获取分类 ${category} 的文档列表:`, data);
-        setDocs(data);
-      } catch (err) {
-        console.error(`获取分类 ${category} 的文档列表出错:`, err);
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchCategoryDocs();
-  }, [category]);
-
+  const { data: docs = [], error, loading } = useContentData<DocListItem[]>({
+    type: 'docs',
+    path: `/api/docs/categories/${encodeURIComponent(category)}`,
+    errorMessage: `Failed to fetch docs for category: ${category}`
+  });
   return { docs, loading, error };
 }
 
@@ -188,48 +136,11 @@ export function useCategoryDocs(category: string) {
  * @returns 文档元数据和加载状态
  */
 export function useDocMeta(category: string) {
-  const [meta, setMeta] = useState<DocMeta | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    async function fetchDocMeta() {
-      try {
-        setLoading(true);
-        console.log(`开始获取分类 ${category} 的元数据`);
-
-        const response = await fetch(`/api/docs/meta/${encodeURIComponent(category)}`);
-
-        // 即使响应不是 200，也尝试解析响应体
-        const data = await response.json();
-
-        if (!response.ok) {
-          // 如果响应包含错误信息，使用它
-          const errorMessage = data.error || `Failed to fetch meta for category: ${category}`;
-          console.error(`获取分类 ${category} 的元数据失败:`, errorMessage);
-          throw new Error(errorMessage);
-        }
-
-        // 检查返回的数据是否为空对象
-        if (data && Object.keys(data).length === 0) {
-          console.log(`分类 ${category} 没有元数据配置，将使用文件列表`);
-          // 不设置错误，因为这是一个有效的情况
-        } else {
-          console.log(`成功获取分类 ${category} 的元数据:`, data);
-        }
-
-        setMeta(data);
-      } catch (err) {
-        console.error(`获取分类 ${category} 的元数据出错:`, err);
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchDocMeta();
-  }, [category]);
-
+  const { data: meta = null, error, loading } = useContentData<DocMeta>({
+    type: 'docs',
+    path: `/api/docs/meta/${encodeURIComponent(category)}`,
+    errorMessage: `Failed to fetch meta for category: ${category}`
+  });
   return { meta, loading, error };
 }
 
@@ -419,6 +330,26 @@ export function useDocSidebar(category: string) {
     }),
     [items, loading, error, category, fetchSidebar]
   );
+}
+
+/**
+ * 获取所有文档
+ * @returns 所有文档列表
+ */
+export async function getAllDocs(): Promise<DocItem[]> {
+  const response = await fetch('/api/docs/all', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('获取文档失败');
+  }
+
+  const docs: DocItem[] = await response.json();
+  return docs;
 }
 
 /**

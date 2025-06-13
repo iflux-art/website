@@ -214,7 +214,7 @@ export default function NavigationAdminPage() {
       key: 'icon',
       title: '图标',
       width: '60px',
-      render: (value: NavigationItem['icon'], record: NavigationItem, _index: number) => (
+      render: (value, record, _index) => (
         <div className="text-lg">
           {record.iconType === 'emoji' ? (
             record.icon
@@ -229,7 +229,7 @@ export default function NavigationAdminPage() {
     {
       key: 'title',
       title: '标题',
-      render: (value: NavigationItem['title'], record: NavigationItem, _index: number) => (
+      render: (value, record, _index) => (
         <div>
           <div className="font-medium">{value}</div>
           <div className="text-sm text-muted-foreground">{record.url}</div>
@@ -239,32 +239,40 @@ export default function NavigationAdminPage() {
     {
       key: 'category',
       title: '分类',
-      render: (value: NavigationItem['category'], _record: NavigationItem, _index: number) =>
-        getCategoryName(value),
+      render: (value, _record, _index) =>
+        value ? getCategoryName(value as string) : '-',
     },
     {
       key: 'tags',
       title: '标签',
-      render: (value: NavigationItem['tags'], _record: NavigationItem, _index: number) => (
-        <div className="flex gap-1 flex-wrap">
-          {value.slice(0, 3).map((tag: string) => (
-            <Badge key={tag} variant="outline" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-          {value.length > 3 && (
-            <Badge variant="outline" className="text-xs">
-              +{value.length - 3}
-            </Badge>
-          )}
-        </div>
-      ),
+      render: (value, _record, _index) => {
+        const tags = value as string[];
+        if (!tags?.length) return null;
+        return (
+          <div className="flex gap-1 flex-wrap">
+            {tags.slice(0, 3).map((tag: string) => (
+              <Badge key={tag} variant="outline" className="text-xs">
+                {tag}
+              </Badge>
+            ))}
+            {tags.length > 3 && (
+              <Badge variant="outline" className="text-xs">
+                +{tags.length - 3}
+              </Badge>
+            )}
+          </div>
+        );
+      },
     },
     {
       key: 'featured',
       title: '状态',
-      render: (value: NavigationItem['featured'], _record: NavigationItem, _index: number) =>
-        value ? <Badge variant="default">精选</Badge> : <Badge variant="outline">普通</Badge>,
+      render: (value, _record, _index) =>
+        (value as boolean) ? (
+          <Badge variant="default">精选</Badge>
+        ) : (
+          <Badge variant="outline">普通</Badge>
+        ),
     },
   ];
 

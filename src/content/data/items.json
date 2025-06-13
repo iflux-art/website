@@ -23701,5 +23701,342 @@
     "id": "mbtlr12gopota5fwqeb",
     "createdAt": "2025-06-12T16:37:47.944Z",
     "updatedAt": "2025-06-12T16:37:47.944Z"
+  },
+  {
+    "title": "The JavaScript Oxidation Compiler",
+    "description": "A collection of high-performance JavaScript tools written in Rust",
+    "url": "https://oxc.rs/",
+    "icon": "https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/square.ico",
+    "iconType": "image",
+    "tags": [
+      "编译器"
+    ],
+    "featured": true,
+    "category": "development",
+    "id": "mbtpi6bywooq1ikra3g",
+    "createdAt": "2025-06-12T18:22:53.326Z",
+    "updatedAt": "2025-06-12T18:22:53.326Z"
+  },
+  {
+    "title": "Gauth - Best AI Homework Helper for All School Subjects",
+    "description": "Gauth is the best AI homework helper for all subjects, offering free online homework help through AI calculator, real live tutors, and expert assistance.",
+    "url": "https://www.gauthmath.com/",
+    "icon": "https://www.gauthmath.com/favicon.png",
+    "iconType": "image",
+    "tags": [
+      "AI教学"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtpqkwgkfa15zgey9",
+    "createdAt": "2025-06-12T18:29:25.456Z",
+    "updatedAt": "2025-06-12T18:29:25.456Z"
+  },
+  {
+    "title": "ResearchRabbit: Smarter Literature Reviews with AI",
+    "description": "Discover, visualize, and organize your research faster with ResearchRabbit. Explore papers, track trends, and build citation maps with ease. 🔥",
+    "url": "https://www.researchrabbit.ai/",
+    "icon": "https://cdn.prod.website-files.com/68185fa363c09e876547c6cf/681885f8d2a837a8b58fccae_favicon.png",
+    "iconType": "image",
+    "tags": [
+      "学术搜索"
+    ],
+    "featured": false,
+    "category": "productivity",
+    "id": "mbtprd3ao13ehy77w4a",
+    "createdAt": "2025-06-12T18:30:01.990Z",
+    "updatedAt": "2025-06-12T18:30:01.990Z"
+  },
+  {
+    "title": "Tana",
+    "description": "Stay on top of everything—without the busywork. An AI-native workspace that gives you an unfair advantage.",
+    "url": "https://tana.inc/",
+    "icon": "https://tana.inc/icon.svg?51e2fccf1114f3d5",
+    "iconType": "image",
+    "tags": [
+      "全能笔记"
+    ],
+    "featured": true,
+    "category": "office",
+    "id": "mbtptk8d9dzdj7dv1tc",
+    "createdAt": "2025-06-12T18:31:44.557Z",
+    "updatedAt": "2025-06-12T18:31:44.557Z"
+  },
+  {
+    "title": "Pixso AI-生成式免费AI设计工具",
+    "description": "Pixso AI是内置在Pixso的免费AI设计工具，具备文生图、AI生成图标、AI语言大师、AI灵感专家、AI设计规范、AI设计元素检查清单6大AI人工智能生成能力。支持AI绘画、图生图、AI抠图、AI生成图标icon、AI生成头像等，为设计师提供在线智能AI设计体验。",
+    "url": "https://pixso.cn/pixso-ai-generator/",
+    "icon": "https://cms.pixso.cn/images/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "图像生成",
+      "图标生成",
+      "抠图工具"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtpy3gsstyytdnob6k",
+    "createdAt": "2025-06-12T18:35:16.108Z",
+    "updatedAt": "2025-06-12T18:35:16.108Z"
+  },
+  {
+    "title": "OpenCreator: Unified Gen-AI Workstation for Creators",
+    "description": "We integrate all kinds of Gen-AI creative models into an intuitive interface allowing creators to produce high-quality content  without switching models or paying for multiple subscriptions.",
+    "url": "https://opencreator.io/",
+    "icon": "https://framerusercontent.com/images/BbmHbXLqH54vPbCDcwsSwojKc.png",
+    "iconType": "image",
+    "tags": [
+      "视频生成",
+      "套壳应用"
+    ],
+    "featured": true,
+    "category": "ai",
+    "id": "mbtq11gam45k55x7hgj",
+    "createdAt": "2025-06-12T18:37:33.466Z",
+    "updatedAt": "2025-06-12T18:37:33.466Z"
+  },
+  {
+    "title": "Creaibo 让你的创作立即提效",
+    "description": "",
+    "url": "https://www.creaibo.com/",
+    "icon": "https://www.creaibo.com/creaibo-icon-blue-white.png",
+    "iconType": "image",
+    "tags": [
+      "运营工具"
+    ],
+    "featured": true,
+    "category": "operation",
+    "id": "mbtq29t155kpjvcftdp",
+    "createdAt": "2025-06-12T18:38:30.949Z",
+    "updatedAt": "2025-06-12T18:38:30.949Z"
+  },
+  {
+    "title": "Noiz AI",
+    "description": "提供自然流畅、富有表现力的智能语音合成服务。依托自主研发的大规模语音模型，在成本效益、生成效率和个性化服务方面具有行业优势，提供从即时生成到专业级音色定制的多样化解决方案。应用场景包括文本转语音(TTS)、音色定制、多媒体配音及跨语言音视频翻译",
+    "url": "https://noiz.ai/landing",
+    "icon": "https://noiz.ai/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "语音合成"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtq48gsm6d0lz1y7k9",
+    "createdAt": "2025-06-12T18:40:02.524Z",
+    "updatedAt": "2025-06-12T18:40:02.524Z"
+  },
+  {
+    "title": "通义法睿",
+    "description": "拥有法律领域理解和推理能力，能够基于自然语言与人对话、回答法律问题、推送裁判类案、辅助案情分析、生成法律文书、检索法律知识。",
+    "url": "https://tongyi.aliyun.com/farui/home",
+    "icon": "https://img.alicdn.com/imgextra/i2/O1CN01mQiD6w26QVCtgwMmA_!!6000000007656-2-tps-119-118.png",
+    "iconType": "image",
+    "tags": [
+      "垂直模型"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtq5lhee19xoqifj7c",
+    "createdAt": "2025-06-12T18:41:06.050Z",
+    "updatedAt": "2025-06-12T18:41:06.050Z"
+  },
+  {
+    "title": "Firebase Studio",
+    "description": "Prototype an app with AI",
+    "url": "https://studio.firebase.google.com/",
+    "icon": "https://studio.firebase.google.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "AI应用开发"
+    ],
+    "featured": true,
+    "category": "development",
+    "id": "mbtq7uqnuqyj07qofsl",
+    "createdAt": "2025-06-12T18:42:51.360Z",
+    "updatedAt": "2025-06-12T18:42:51.360Z"
+  },
+  {
+    "title": "Moka人力资源管理系统-企业一体化招聘管理系统和人事管理系统-MokaHRSaaS",
+    "description": "MokaHRSaaS人力资源管理系统提供全面的招聘管理系统与人事管理系统，功能涵盖招聘管理、员工入离职管理、薪酬管理、绩效管理、假勤管理、组织人事管理等，为企业打造高效的人力资源管理流程和全面的一体化HRSaaS软件，让人力资源管理更智能、更便捷。",
+    "url": "https://www.mokahr.com/",
+    "icon": "https://www.mokahr.com/static/common/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "垂直模型"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtqa4655uzz07wvvqt",
+    "createdAt": "2025-06-12T18:44:36.893Z",
+    "updatedAt": "2025-06-12T18:44:36.893Z"
+  },
+  {
+    "title": "腾讯混元3D",
+    "description": "腾讯混元3D AI创作引擎基于腾讯混元3D生成大模型2.0版本，业界首个一站式3D内容AI创作平台。腾讯混元3D创作平台是一站式3D内容AI创作平台。具备文生、图生3D、3D动画生成、纹理生成等功能，支持草图生3D、3D人物生成，有低多边形模型生成优势。",
+    "url": "https://3d.hunyuan.tencent.com/",
+    "icon": "https://cdn-3d-prod.hunyuan.tencent.com/public/static/favicon/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "3D生成"
+    ],
+    "featured": true,
+    "category": "ai",
+    "id": "mbtqax4g3ukzyannr83",
+    "createdAt": "2025-06-12T18:45:14.416Z",
+    "updatedAt": "2025-06-12T18:45:14.416Z"
+  },
+  {
+    "title": "Hyper3D",
+    "description": "Closest to Production-ready 3D Assets Generator",
+    "url": "https://hyper3d.ai/",
+    "icon": "https://hyper3d.ai/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "3D生成"
+    ],
+    "featured": true,
+    "category": "ai",
+    "id": "mbtqcnaz99w057s8u59",
+    "createdAt": "2025-06-12T18:46:35.003Z",
+    "updatedAt": "2025-06-12T18:46:35.003Z"
+  },
+  {
+    "title": "夸克官网_电脑版下载_你的AI搜索",
+    "description": "夸克pc/app为你带来极速、智能、安全、高效的搜索体验,找答案,找资料,找工具,办公,学习,工作必备应用。夸克提供浏览器搜索引擎、网盘、AI扫描王工具及小说阅读等高效功能，为你提供稳定,安全,流畅的浏览环境和优质的产品服务体验",
+    "url": "https://www.quark.cn/",
+    "icon": "https://gw.alicdn.com/imgextra/i3/O1CN018r2tKf28YP7ev0fPF_!!6000000007944-2-tps-48-48.png",
+    "iconType": "image",
+    "tags": [
+      "AI搜索",
+      "浏览器",
+      "网盘"
+    ],
+    "featured": false,
+    "category": "ai",
+    "id": "mbtqhdkwnxaeyiu38n",
+    "createdAt": "2025-06-12T18:50:15.680Z",
+    "updatedAt": "2025-06-12T18:50:15.680Z"
+  },
+  {
+    "title": "讯飞同传-会议同传-专业AI同声传译设备-实时字幕翻译软件",
+    "description": "讯飞同传，基于科大讯飞的智能语音和语言技术，提供多场景多语种实时转写翻译、同声传译、直播字幕上屏和会议记录分享等一体化同传服务。",
+    "url": "https://tongchuan.iflyrec.com/",
+    "icon": "https://tongchuan.iflyrec.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "翻译"
+    ],
+    "featured": true,
+    "category": "productivity",
+    "id": "mbtqiiuh4ef7yn1te2l",
+    "createdAt": "2025-06-12T18:51:09.161Z",
+    "updatedAt": "2025-06-12T18:51:09.161Z"
+  },
+  {
+    "title": "Google AI for Developers",
+    "description": "AI for every developer",
+    "url": "https://ai.google.dev/",
+    "icon": "https://ai.google.dev/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "开发平台"
+    ],
+    "featured": true,
+    "category": "ai",
+    "id": "mbtqp9ar04qeg6mrs23l",
+    "createdAt": "2025-06-12T18:56:23.379Z",
+    "updatedAt": "2025-06-12T18:56:23.379Z"
+  },
+  {
+    "title": "compose",
+    "description": "分享compose模板，方便新人，老手快速部署docker容器",
+    "url": "https://github.com/FrozenGEE/compose",
+    "icon": "https://github.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "容器化"
+    ],
+    "featured": false,
+    "category": "development",
+    "id": "mbtqrssccemx5tks2yj",
+    "createdAt": "2025-06-12T18:58:21.948Z",
+    "updatedAt": "2025-06-12T18:58:21.948Z"
+  },
+  {
+    "title": "CS-Books-Store",
+    "description": "CS-Books-Store是一个收集计算机领域经典书籍的开源项目",
+    "url": "https://github.com/Jackpopc/CS-Books-Store",
+    "icon": "https://github.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "编程教程"
+    ],
+    "featured": true,
+    "category": "development",
+    "id": "mbtqxvpabcbv79pqpy",
+    "createdAt": "2025-06-12T19:03:05.662Z",
+    "updatedAt": "2025-06-12T19:03:05.662Z"
+  },
+  {
+    "title": "iCraft Editor - 3D架构图绘制工具",
+    "description": "iCraft Editor是一款免费的3D架构图设计工具，是一款免费的 3D 架构图设计工具，可以帮助您绘制系统架构图、软件架构图、云架构图、网络拓扑图、AWS|GCP|Azure|AliCloud架构图以及其他3D架构图，采用真实3D场景，可视化为等距架构图, 可旋转视角、嵌套子场景，帮助您轻松绘制出色的3D架构图。",
+    "url": "https://icraft.gantcloud.com/zh-CN",
+    "icon": "https://icraft.gantcloud.com/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "2D转3D"
+    ],
+    "featured": true,
+    "category": "design",
+    "id": "mbtr45o3tfzguas4qg",
+    "createdAt": "2025-06-12T19:07:58.515Z",
+    "updatedAt": "2025-06-12T19:07:58.515Z"
+  },
+  {
+    "title": "LKs 网站推荐合集",
+    "description": "良心到难以置信的网站推荐",
+    "url": "https://lkssite.vip/",
+    "icon": "https://lkssite.vip/favicon.ico",
+    "iconType": "emoji",
+    "tags": [
+      "网址导航",
+      "工具导航"
+    ],
+    "featured": false,
+    "category": "productivity",
+    "id": "mbtr5xxryo4vbt16xjq",
+    "createdAt": "2025-06-12T19:09:21.807Z",
+    "updatedAt": "2025-06-12T19:09:21.807Z"
+  },
+  {
+    "title": "Pagtive",
+    "description": "通过 AI 构建Active Pages，将概念、故事和场景以更佳的视觉与交互可视化方式呈现。",
+    "url": "https://pagtive.frago.ai/",
+    "icon": "https://pagtive.frago.ai/favicon.ico",
+    "iconType": "image",
+    "tags": [
+      "AI应用开发",
+      "智能体"
+    ],
+    "featured": true,
+    "category": "development",
+    "id": "mbtrcmgplrn0m5wfv1l",
+    "createdAt": "2025-06-12T19:14:33.529Z",
+    "updatedAt": "2025-06-12T19:14:33.529Z"
+  },
+  {
+    "title": "Meet Dia – the AI Browser Where You Can Chat with Your Tabs",
+    "description": "Dia is the AI browser from The Browser Company. Chat with your tabs, write in your own voice, learn and plan faster, shop, and more — all with privacy that you control.",
+    "url": "https://www.diabrowser.com/",
+    "icon": "https://www.diabrowser.com/favicon-96x96.png",
+    "iconType": "image",
+    "tags": [
+      "浏览器"
+    ],
+    "featured": true,
+    "category": "productivity",
+    "id": "mbtrge9h4tx1gkwyjax",
+    "createdAt": "2025-06-12T19:17:29.525Z",
+    "updatedAt": "2025-06-12T19:17:29.525Z"
   }
 ]

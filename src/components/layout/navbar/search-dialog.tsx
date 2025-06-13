@@ -29,14 +29,14 @@ interface SearchResult {
 // 搜索对话框属性
 interface SearchDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 /**
  * 搜索对话框组件
  * 提供全站内容搜索功能
  */
-export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
+export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -293,12 +293,12 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           } else {
             router.push(result.path);
           }
-          onOpenChange(false);
+          onOpenChangeAction(false);
         }
         break;
       case 'Escape':
         e.preventDefault();
-        onOpenChange(false);
+        onOpenChangeAction(false);
         break;
     }
   };
@@ -310,7 +310,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeAction}>
       <DialogContent className="sm:max-w-[550px] p-0 gap-0 overflow-hidden border dark:border-gray-700 shadow-lg [&>button]:hidden">
         <DialogTitle className="sr-only">站内搜索</DialogTitle>
         <div className="flex items-center border-b p-4">
@@ -346,7 +346,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                     } else {
                       router.push(result.path);
                     }
-                    onOpenChange(false);
+                    onOpenChangeAction(false);
                   };
 
                   return (
