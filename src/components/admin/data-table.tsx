@@ -43,9 +43,6 @@ export function DataTable<T extends object>({
   emptyText = '暂无数据',
   pagination,
 }: DataTableProps<T>) {
-  const getValue = (record: T, key: keyof T) => {
-    return record[key];
-  };
 
   return (
     <Card>

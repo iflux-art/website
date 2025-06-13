@@ -131,6 +131,7 @@ export function getPostsByTag(tag: string): BlogPost[] {
           posts.push({
             slug,
             title: data.title || slug,
+            description: data.description || data.excerpt || '点击阅读全文',
             excerpt: data.excerpt || '点击阅读全文',
             date: data.date,
             tags: data.tags,

@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { generateMetadata, generateViewport } from '@/lib/metadata';
+import '@algolia/autocomplete-theme-classic/dist/theme.css';
 
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
