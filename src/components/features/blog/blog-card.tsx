@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BlogPost } from '@/hooks/use-blog';
+import type { BlogPost } from '@/types/blog';
 
 /**
  * 博客卡片组件属性
@@ -16,7 +16,7 @@ export interface BlogCardProps {
   /**
    * 索引，用于动画延迟
    */
-  index: number;
+  _index: number;
 
   /**
    * 标签点击处理函数
@@ -27,28 +27,8 @@ export interface BlogCardProps {
 
 /**
  * 博客卡片组件
- *
- * 用于显示博客列表中的文章卡片，包括标题、日期、摘要和标签
- * 使用 AnimatedCard 组件实现动画效果
- *
- * @param {BlogCardProps} props - 组件属性
- * @returns {JSX.Element} 博客卡片组件
- *
- * @example
- * ```tsx
- * <BlogCard
- *   post={{
- *     slug: "hello-world",
- *     title: "Hello World",
- *     excerpt: "This is my first blog post",
- *     date: "2023-01-01",
- *     tags: ["blog", "intro"]
- *   }}
- *   index={0}
- * />
- * ```
  */
-export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
+export function BlogCard({ post, _index, onTagClick }: BlogCardProps) {
   // 处理标签点击
   const handleTagClick = (e: React.MouseEvent, tag: string) => {
     if (onTagClick) {
@@ -71,7 +51,7 @@ export function BlogCard({ post, onTagClick }: Omit<BlogCardProps, 'index'>) {
         <p className="text-muted-foreground mb-4 leading-relaxed">{post.excerpt}</p>
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {post.tags.map((tag, tagIndex) => (
+            {post.tags.map((tag: string, tagIndex: number) => (
               <Link
                 key={tagIndex}
                 href={`/blog/tags/${encodeURIComponent(tag)}`}

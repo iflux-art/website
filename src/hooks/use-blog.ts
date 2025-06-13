@@ -8,6 +8,7 @@
 import { useMemo } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
 import { BlogPost } from '@/types/blog';
+export type { BlogPost } from '@/types/blog';
 
 
 export interface TagCount {

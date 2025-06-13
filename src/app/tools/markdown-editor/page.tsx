@@ -56,7 +56,7 @@ export default function MarkdownEditorPage() {
     // 图片
     html = html.replace(
       /!\[([^\]]*)\]\(([^)]+)\)/g,
-      '<img src="$2" alt="$1" style="max-width:100%;height:auto;" loading="lazy"/>'
+      '<img src="$2" alt="$1" style="max-width:100%;height:auto;"/>'
     );
 
     // 列表

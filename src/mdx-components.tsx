@@ -2,175 +2,88 @@
 
 import React from 'react';
 import { ImageProps } from 'next/image';
-import type { StaticImageData } from 'next/image';
 import { ResponsiveImage } from '@/components/ui/responsive-image';
 import type {
   ResponsiveImageSizes,
   ResponsiveImageFormats,
 } from '@/components/ui/responsive-image';
 
-interface ResourceCardProps {
-  title: string;
-  description: string;
-  url?: string;
-  href?: string;
-  icon?: string;
-  iconType?: 'image' | 'emoji';
-  featured?: boolean;
-}
-
-interface FriendLinkCardProps {
-  name?: string;
-  title?: string;
-  description: string;
-  url?: string;
-  href?: string;
-  avatar?: string;
-  icon?: string;
-  iconType?: 'image' | 'emoji';
-}
-import { UnifiedCard } from '@/components/cards/unified-card';
-import { UnifiedGrid } from '@/components/cards/unified-grid';
-import { NavigationGrid, NavigationItem } from '@/components/cards/navigation-grid';
-import { FriendLinkItem } from '@/components/mdx/friend-link-grid';
-
-// This file allows you to provide custom React components
-// to be used in MDX files. You can import and use any
-// React component you want, including inline styles,
-// components from other libraries, and more.
-
-export function useMDXComponents(_components: Record<string, React.ComponentType>) {
-  return {
-    wrapper: ({ children }: { children: React.ReactNode }) => (
-      <article className="prose prose-neutral dark:prose-invert max-w-none prose-table:w-full">
-        {children}
-      </article>
-    ),
-    // 图片组件 - 使用响应式图片组件
-    img: ({ src, alt, width, height, ...props }: ImageProps) => {
-      const imageConfig: {
-        width: number;
-        height: number;
-        imageSizes: ResponsiveImageSizes;
-        formats: ResponsiveImageFormats;
-        style: { width: '100%'; height: 'auto' };
-        className: string;
-        lazy: boolean;
-        containerClassName: string;
-        quality: number;
-        placeholder: React.ReactNode;
-      } = {
-        width: Number(width) || 1080,
-        height: Number(height) || 500,
-        imageSizes: {
-          mobile: 640,
-          tablet: 1024,
-          desktop: 1920,
+type MDXProps = {
+  children?: React.ReactNode;  
+  className?: string;
+  [key: string]: unknown;
+};
+/**
+ * MDX 组件配置
+ */
+export function useMDXComponents(components: Record<string, React.ComponentType | JSX.Element | ((props: MDXProps) => JSX.Element)> = {}) {
+  const mdxComponents = {
+    img: ({
+      src,
+      alt,
+      width,
+      _height,
+      ...props
+    }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+      const imageConfig = {
+        lazy: true,
+        sizes: {
+          width: Number(width) || 1080,
+          breakpoints: {
+            mobile: 640,
+            tablet: 1080,
+          },
         },
         formats: {
           webp: true,
-          avif: true,
           original: true,
         },
         style: { width: '100%', height: 'auto' } as const,
-        className: 'rounded-lg border border-border my-8 shadow-sm',
-        lazy: true,
-        containerClassName: 'my-8',
-        quality: 85,
-        placeholder: (
-          <div className="w-full h-full bg-muted/30 rounded-lg border border-border animate-pulse" />
-        ),
+      } satisfies Partial<ImageProps> & {
+        sizes: ResponsiveImageSizes;
+        formats: ResponsiveImageFormats;
       };
 
-      if (typeof src === 'string') {
-        return <ResponsiveImage {...props} {...imageConfig} src={src} alt={alt || ''} />;
+      if (!src) {
+        return null;
       }
 
-      const imgSrc = (src as StaticImageData).src || src;
-      const imgWidth = (src as StaticImageData).width || imageConfig.width;
-      const imgHeight = (src as StaticImageData).height || imageConfig.height;
-
-      return (
-        <img
-          src={imgSrc as string}
-          alt={alt || ''}
-          width={imgWidth}
-          height={imgHeight}
-          className={`${imageConfig.className} w-full h-auto`}
-          {...props}
-        />
-      );
+      if (src.startsWith('http') || src.startsWith('data:')) {
+        return <img src={src} alt={alt || ''} {...props} />;
+      } else {
+        return <ResponsiveImage {...props} {...imageConfig} src={src} alt={alt || ''} />;
+      }
     },
 
-    // 表格组件
     table: ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
-      <table className="w-full border-collapse my-6 overflow-hidden rounded-lg" {...props}>
-        {children}
-      </table>
+      <div className="overflow-x-auto">
+        <table {...props} className="my-6 w-full">
+          {children}
+        </table>
+      </div>
     ),
 
     thead: ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <thead className="bg-muted border-b border-border" {...props}>
+      <thead {...props} className="bg-muted/50">
         {children}
       </thead>
     ),
 
-    tbody: ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <tbody className="divide-y divide-border" {...props}>
-        {children}
-      </tbody>
-    ),
-
-    tr: ({ children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-      <tr className="divide-x divide-border" {...props}>
-        {children}
-      </tr>
-    ),
-
-    th: ({ children, ...props }: React.ThHTMLAttributes<HTMLTableHeaderCellElement>) => (
-      <th className="p-3 text-left font-semibold" {...props}>
+    th: ({ children, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+      <th {...props} className="border px-4 py-2 text-left font-semibold">
         {children}
       </th>
     ),
 
-    td: ({ children, ...props }: React.TdHTMLAttributes<HTMLTableDataCellElement>) => (
-      <td className="p-3" {...props}>
+    td: ({ children, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+      <td {...props} className="border px-4 py-2">
         {children}
       </td>
     ),
+  };
 
-    // 统一卡片组件
-    ResourceCard: (props: ResourceCardProps) => (
-      <UnifiedCard
-        {...props}
-        type="resource"
-        title={props.title || ''}
-        href={props.url || props.href || '#'}
-        iconType={props.iconType || 'emoji'}
-        isExternal={true}
-      />
-    ),
-
-    // 友情链接组件
-    FriendLinkCard: (props: FriendLinkCardProps) => (
-      <UnifiedCard
-        {...props}
-        type="friend"
-        title={props.name || props.title || ''}
-        href={props.url || props.href || '#'}
-        icon={props.avatar || props.icon}
-        iconType={props.iconType || 'emoji'}
-        isExternal={true}
-      />
-    ),
-
-    // 直接使用统一组件
-    UnifiedCard,
-    UnifiedGrid,
-
-    // 新的模块化组件
-    NavigationGrid,
-    NavigationItem,
-    FriendLinkItem,
+  return {
+    ...components,
+    ...mdxComponents,
   };
 }

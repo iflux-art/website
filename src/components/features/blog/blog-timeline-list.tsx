@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useTimelinePosts, type BlogPost } from '@/hooks/use-blog';
+import { useTimelinePosts } from '@/hooks/use-blog';
+import type { BlogPost } from '@/types/blog';
 
 export interface BlogTimelineListProps {
   limit?: number;
@@ -33,7 +33,7 @@ export interface PostsByMonth {
  * ```
  */
 export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
-  const { postsByYear, loading } = useTimelinePosts();
+  const { postsByYear } = useTimelinePosts();
   
   const initialExpandedState = useMemo(() => {
     if (!postsByYear) return {};
@@ -99,12 +99,8 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
     return dateFormatter.format(new Date(dateString));
   }, []);
 
-  if (loading || !postsByYear) {
-    return (
-      <div className="flex justify-center items-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
+  if (!postsByYear) {
+    return null;
   }
 
   return (

@@ -111,16 +111,14 @@ import Image from 'next/image'
   alt="描述"
   width={800}
   height={600}
-  priority={false}
 />
 
-// 优先加载的图片
+// 关键图片
 <Image
   src="/hero.jpg"
   alt="Hero"
   width={1200}
   height={600}
-  priority={true}
 />
 ```
 
@@ -170,22 +168,16 @@ export default async function ServerComponent() {
 }
 ```
 
-#### 使用流式渲染
-
-使用 React 的 Suspense 和 streaming 功能：
+#### 使用服务器组件渲染
 
 ```tsx
-import { Suspense } from 'react';
-import Loading from './loading';
 import ServerComponent from './server-component';
 
 export default function Page() {
   return (
     <div>
       <h1>页面标题</h1>
-      <Suspense fallback={<Loading />}>
-        <ServerComponent />
-      </Suspense>
+      <ServerComponent />
     </div>
   );
 }

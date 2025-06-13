@@ -59,7 +59,6 @@ export const HOME_CONFIG = {
   // 性能配置
   performance: {
     enableVirtualization: true,
-    lazyLoadImages: true,
     enableServiceWorker: false,
     cacheStrategy: 'networkFirst',
   },

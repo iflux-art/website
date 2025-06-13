@@ -74,12 +74,6 @@ export interface ResponsiveImageProps
   formats?: ResponsiveImageFormats;
 
   /**
-   * 是否启用懒加载
-   * @default true
-   */
-  lazy?: boolean;
-
-  /**
    * 是否为关键图片（优先加载）
    * @default false
    */
@@ -192,7 +186,7 @@ export function ResponsiveImage({
 
   // 计算属性
   const priority = props.priority || isHero;
-  const loading = props.loading || (!priority ? 'lazy' : 'eager');
+  const loading = props.loading || 'eager';
 
   // 构建响应式尺寸
   const { mobile = 640, tablet = 1024, desktop = 1920 } = imageSizes;

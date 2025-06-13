@@ -1,9 +1,8 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
-
 import { BlogList } from '@/components/features/blog/blog-list';
 import { TagFilter } from '@/components/ui/tag-filter';
 import { useTagCounts } from '@/hooks/use-blog';
@@ -11,16 +10,16 @@ import { useTagCounts } from '@/hooks/use-blog';
 // 创建一个包装组件来处理动态数据
 function BlogContent() {
   const { tagCounts } = useTagCounts();
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
+
   const formattedTags = tagCounts.map(({ tag, count }) => ({
     name: tag,
     count: count,
   }));
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [tagsExpanded, setTagsExpanded] = useState(false);
 
   return (
     <>
-      {/* 标签过滤器 */}
       <TagFilter
         tags={formattedTags}
         selectedTag={selectedTag}
@@ -31,8 +30,6 @@ function BlogContent() {
         expanded={tagsExpanded}
         onExpandChange={setTagsExpanded}
       />
-
-      {/* 博客列表 */}
       <BlogList filterTag={selectedTag} onTagClickAction={setSelectedTag} />
     </>
   );
@@ -43,10 +40,8 @@ export default function BlogPage() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         <div className="mx-auto">
-          {/* 页面标题 */}
           <h1 className="text-3xl font-bold mb-6">博客</h1>
 
-          {/* 导航按钮 */}
           <div className="flex flex-wrap gap-4 mb-8">
             <Link
               href="/blog"
@@ -64,9 +59,7 @@ export default function BlogPage() {
             </Link>
           </div>
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <BlogContent />
-          </Suspense>
+          <BlogContent />
         </div>
       </div>
     </div>
