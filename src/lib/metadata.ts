@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { SITE_METADATA } from '@/shared/lib/constants';
+import { SITE_METADATA } from '@/lib/constants';
 
 /**
  * 页面类型常量

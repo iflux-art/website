@@ -1,7 +1,7 @@
 import React from 'react';
 import { SearchResult } from './types';
 import { ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import { TYPE_LABELS } from './commands';
 
 interface SearchResultsProps {

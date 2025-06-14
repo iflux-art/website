@@ -1,4 +1,4 @@
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 interface SeparatorProps {
   className?: string;

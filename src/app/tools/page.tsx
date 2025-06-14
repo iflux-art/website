@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { TagFilter } from '@/components/ui/tag-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/features/tools/tools-data';
 import { useToolFilter, useToolSearch } from '@/components/features/tools/use-tools';
-import type { Tool } from '@/shared/types/pages';
+import type { Tool } from '@/types/pages';
 // 仅保留注释
 
 /**

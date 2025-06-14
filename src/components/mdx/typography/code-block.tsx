@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 // 语言显示名称映射
 const languageNames: Record<string, string> = {
@@ -93,11 +93,14 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
       } else if (React.isValidElement(firstChild)) {
         // 使用类型断言处理 TypeScript 类型问题
         const anyElement = firstChild as React.ReactElement;
-        if (anyElement.props && typeof anyElement.props.children === 'string') {
-          codeContent = anyElement.props.children;
-        } else if (anyElement.props && anyElement.props.children) {
+        if (
+          (anyElement.props as { children?: string | React.ReactNode }).children &&
+          typeof (anyElement.props as { children?: string }).children === 'string'
+        ) {
+          codeContent = (anyElement.props as { children: string }).children;
+        } else if ((anyElement.props as { children?: React.ReactNode }).children) {
           // 处理复杂的子元素
-          const nestedChildren = anyElement.props.children;
+          const nestedChildren = (anyElement.props as { children: React.ReactNode }).children;
           if (typeof nestedChildren === 'string') {
             codeContent = nestedChildren;
           } else if (Array.isArray(nestedChildren)) {

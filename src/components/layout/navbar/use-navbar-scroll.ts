@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { throttle } from 'lodash';
-import { ScrollHandler, ThrottledScrollHandler } from '@/shared/types/hooks-internal';
+import { ScrollHandler, ThrottledScrollHandler } from '@/types/hooks-internal';
 
 /**
  * 导航栏滚动效果 Hook

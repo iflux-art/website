@@ -12,7 +12,7 @@ import {
   Subcategory,
   Link,
 } from '@/components/features/navigation/navigation-types';
-import { useContentData } from '@/shared/hooks/use-content-data';
+import { useContentData } from '@/hooks/use-content-data';
 
 /**
  * 获取所有导航分类

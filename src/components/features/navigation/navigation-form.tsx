@@ -21,7 +21,7 @@ import {
   NavigationFormData,
   NavigationCategory,
 } from '@/components/features/navigation/navigation-types';
-import { parseWebsiteMetadata, isValidUrl } from '@/shared/lib/website-parser';
+import { parseWebsiteMetadata, isValidUrl } from '@/lib/website-parser';
 
 interface NavigationFormProps {
   submitAction: (data: NavigationFormData) => Promise<void>;

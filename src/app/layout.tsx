@@ -4,8 +4,7 @@ import { MainNavbar } from '@/components/layout/navbar/main-navbar';
 import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
-import { generateMetadata, generateViewport } from '@/shared/lib/metadata';
-import '@algolia/autocomplete-theme-classic/dist/theme.css';
+import { generateMetadata, generateViewport } from '@/lib/metadata';
 
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -15,7 +14,7 @@ import {
   IOS_CONFIG,
   WINDOWS_CONFIG,
   ICONS_CONFIG,
-} from '@/shared/lib/constants';
+} from '@/lib/constants';
 
 export const metadata: Metadata = generateMetadata();
 export const viewport = generateViewport();

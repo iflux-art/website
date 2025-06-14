@@ -6,7 +6,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useContentData } from '@/shared/hooks/use-content-data';
+import { useContentData } from '@/hooks/use-content-data';
 import { BlogPost } from '@/components/features/blog/blog-types';
 export type { BlogPost } from '@/components/features/blog/blog-types';
 
@@ -18,8 +18,8 @@ export interface TagCount {
 /**
  * 按日期对博客文章进行排序
  */
-function sortPostsByDate(posts: BlogPost[] | null) {
-  if (!posts) return [];
+function sortPostsByDate(posts: BlogPost[] | null | undefined) {
+  if (!posts || !Array.isArray(posts)) return [];
   return [...posts].sort((a, b) => {
     if (a.date && b.date) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import { UnifiedCard, UnifiedCardProps } from '@/components/common/cards/unified-card';
 
 /**

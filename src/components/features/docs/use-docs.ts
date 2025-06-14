@@ -7,8 +7,8 @@
 
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { SidebarItem } from '@/components/layout/sidebar';
-import { docsSidebarCache } from '@/shared/lib/local-storage-cache';
-import { useContentData } from '@/shared/hooks/use-content-data';
+import { docsSidebarCache } from '@/lib/local-storage-cache';
+import { useContentData } from '@/hooks/use-content-data';
 import { DocItem, DocCategory, DocMeta, DocListItem } from '@/components/features/docs/docs-types';
 
 /**

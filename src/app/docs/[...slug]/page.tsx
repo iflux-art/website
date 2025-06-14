@@ -12,9 +12,9 @@ import {
   type BreadcrumbItem,
 } from '@/components/common/breadcrumb';
 import { Sidebar } from '@/components/layout/sidebar';
-import { MarkdownRenderer } from '@/components/mdx/renderer/markdown-renderer';
+import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
-import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/shared/lib/content';
+import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
@@ -89,6 +89,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
   const content = originalContent; // TOC extraction uses originalContent
+  const mdxContent = await <MDXRenderer content={content} />;
 
   const topLevelCategorySlug = slug[0];
 
@@ -212,7 +213,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               </div>
               <article className="prose prose-slate dark:prose-invert max-w-none">
                 <h1 className="text-4xl font-bold mb-8 tracking-tight">{frontmatter.title}</h1>
-                <MarkdownRenderer content={content} />
+                {mdxContent}
               </article>
 
               {(prevDoc || nextDoc) && (

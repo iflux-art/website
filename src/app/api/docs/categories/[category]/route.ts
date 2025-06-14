@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { getDocSidebar } from '@/shared/lib/content';
+import { getDocSidebar } from '@/lib/content';
 import { DocListItem } from '@/components/features/docs/use-docs';
 
 // 如果 SidebarNavItem 没有从 '@/lib/content' 导出，则在此定义

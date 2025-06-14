@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * 滚动区域组件

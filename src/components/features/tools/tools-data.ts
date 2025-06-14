@@ -4,7 +4,7 @@
  */
 
 import { Wrench, PenTool, Code, Palette, FileText, Smile } from 'lucide-react';
-import type { ToolCategory, Tool } from '@/shared/types/pages';
+import type { ToolCategory, Tool } from '@/types/pages';
 
 /**
  * 工具分类配置

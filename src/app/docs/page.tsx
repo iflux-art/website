@@ -1,6 +1,6 @@
 // page.tsx
 import { Suspense } from 'react';
-import DocCategories from './components/doc-categories';
+import DocCategories from '../../components/features/docs/doc-categories';
 import { PageHeader } from '@/components/ui/page-header';
 
 export default function DocsPage() {

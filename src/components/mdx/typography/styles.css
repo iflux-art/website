@@ -1,5 +1,7 @@
-/* ==== 内联代码样式 ==== */
-/* 隐藏行内代码中的反引号 */
+/* ==== Typography Styles ==== */
+
+/* ==== Inline Code Styles ==== */
+/* Hide backticks in inline code */
 .prose code::before,
 .prose code::after,
 .prose *:not(pre) > code::before,
@@ -12,7 +14,7 @@ article code::after,
   display: none !important;
 }
 
-/* 确保行内代码有正确的间距和样式 */
+/* Ensure proper spacing and styling for inline code */
 .prose p code:not(pre code),
 .prose li code:not(pre code),
 .prose h1 code:not(pre code),
@@ -35,7 +37,7 @@ article code::after,
   font-weight: 500;
 }
 
-/* 暗色模式下的行内代码样式 */
+/* Dark mode styles for inline code */
 .dark .prose p code:not(pre code),
 .dark .prose li code:not(pre code),
 .dark .prose h1 code:not(pre code),
@@ -50,4 +52,52 @@ article code::after,
   background-color: hsl(var(--muted));
   border-color: hsl(var(--border));
   color: hsl(var(--foreground));
+}
+
+/* ==== Table Styles ==== */
+.typography-table {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: collapse;
+}
+
+.typography-table th,
+.typography-table td {
+  padding: 0.75rem;
+  border: 1px solid hsl(var(--border));
+}
+
+.typography-table th {
+  background-color: hsl(var(--muted));
+  font-weight: 600;
+}
+
+/* ==== Heading Styles ==== */
+.typography-heading {
+  scroll-margin-top: 100px;
+  position: relative;
+}
+
+.typography-heading:hover .anchor {
+  opacity: 1;
+}
+
+.typography-heading .anchor {
+  opacity: 0;
+  position: absolute;
+  left: -1em;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+/* ==== Link Styles ==== */
+.typography-link {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.typography-link:hover {
+  color: hsl(var(--primary-foreground));
+  text-decoration: underline;
 }

@@ -4,7 +4,7 @@
  */
 
 import { useState, useMemo } from 'react';
-import type { Tool } from '@/shared/types/pages';
+import type { Tool } from '@/types/pages';
 
 /**
  * 工具过滤 hook

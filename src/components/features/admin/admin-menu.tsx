@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import { ADMIN_MENU_ITEMS } from '@/components/layout/navbar/nav';
-import { useActiveSection } from '@/shared/hooks/use-active-section';
+import { useActiveSection } from '@/hooks/use-active-section';
 import type { NavProps } from '../../layout/navbar/types';
 import type { LucideIcon } from 'lucide-react';
 

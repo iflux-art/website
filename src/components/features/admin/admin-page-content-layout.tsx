@@ -1,7 +1,7 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 interface AdminPageContentLayoutProps {
   children: React.ReactNode;

@@ -1,9 +1,4 @@
 @import 'tailwindcss';
-/* 导入模块化样式 */
-@import '../styles/scrollable.css';
-@import '../styles/inline-code.css';
-@import '../styles/markdown-link.css';
-@import '../styles/heading.css';
 /* 注意：Typography 插件同时在此处和 tailwind.config.mjs 中导入 */
 /* 这是必要的：tailwind.config.mjs 中导入用于配置插件，此处导入确保样式在正确位置加载 */
 @plugin "@tailwindcss/typography"; /* 使用 Typography 插件提供的 prose 类 */

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 // 背景样式类型
 export type BackgroundStyle =

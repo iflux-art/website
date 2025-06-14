@@ -1,4 +1,4 @@
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { HTMLAttributeAnchorTarget } from 'react';
 

@@ -2,7 +2,7 @@
  * 文档数据相关类型定义
  */
 
-import { BaseContent, BaseCategory, BaseMeta } from '../../../shared/types/base';
+import { BaseContent, BaseCategory, BaseMeta } from '../../../types/base';
 
 /**
  * 文档分类
@@ -63,4 +63,4 @@ export interface DocNavItem {
 }
 
 // 重新导出组件类型
-export * from '../../../shared/types/docs-components';
+export * from './docs-components';

@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, forwardRef } from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 interface CardHoverProps {
   children: ReactNode;

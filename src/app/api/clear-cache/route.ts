@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { clearApiCache } from '@/shared/lib/api-cache';
+import { clearApiCache } from '@/lib/api-cache';
 
 /**
  * 清除 API 缓存的路由

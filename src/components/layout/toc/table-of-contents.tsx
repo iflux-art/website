@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import { Hash, Text } from 'lucide-react';
 // 我们将在未来的优化中使用 useIntersectionObserver
 

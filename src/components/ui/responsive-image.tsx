@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image, { ImageProps } from 'next/image';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * 响应式图片尺寸配置

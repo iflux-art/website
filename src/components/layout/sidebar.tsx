@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/components/features/docs/use-docs';
 import { NavLink } from '@/components/ui/nav-link';

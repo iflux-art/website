@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * 导航链接组件属性

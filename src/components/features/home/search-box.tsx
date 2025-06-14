@@ -16,7 +16,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/shared/utils/utils';
+import { cn } from '@/lib/utils';
 import { AI_MODELS, type AIModel } from '@/components/features/home/ai-models';
 import { TOOLS, NAVIGATION_SITES } from './constants';
 

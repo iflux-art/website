@@ -7,7 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ContentOptions, ContentError } from '@/shared/types/hooks';
+import { ContentOptions, ContentError } from '@/types/hooks';
 import { BaseContent, BaseCategory } from '@/types/base';
 
 // 通用错误类型

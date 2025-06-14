@@ -2,7 +2,7 @@
  * 博客相关类型定义
  */
 
-import { BaseContent } from '../../../shared/types/base';
+import { BaseContent } from '../../../types/base';
 
 /**
  * 博客文章

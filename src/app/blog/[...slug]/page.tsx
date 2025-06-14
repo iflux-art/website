@@ -6,8 +6,8 @@ import matter from 'gray-matter';
 import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
 import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
-import { MarkdownRenderer } from '@/components/mdx/renderer/markdown-renderer';
-import { countWords } from '@/shared/utils/utils';
+import { MDXRenderer } from '@/components/mdx/mdx-renderer';
+import { countWords } from '@/lib/utils';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
@@ -87,6 +87,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     { label: title },
   ];
 
+  const mdxContent = await <MDXRenderer content={processedContent} />;
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
@@ -109,7 +111,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 date={date}
                 tags={data.tags || []}
                 wordCount={wordCount}
-                mdxContent={<MarkdownRenderer content={processedContent} />}
+                mdxContent={mdxContent}
                 _path={`/blog/${fullSlug}`}
               />
             </div>
