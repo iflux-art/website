@@ -13,7 +13,7 @@ import {
 } from '@/components/common/breadcrumb';
 import { Sidebar } from '@/components/layout/sidebar';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
-import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
+import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {

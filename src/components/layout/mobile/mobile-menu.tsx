@@ -4,7 +4,7 @@ import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
-import { ThemeToggle } from '@/components/common/theme/theme-toggle';
+import { ThemeToggle } from '@/components/features/theme-toggle';
 import { TravelButton } from '@/components/common/button/travel-button';
 import { Logo } from '@/components/common/logo';
 import { NavMenu } from '../navbar/nav-menu';

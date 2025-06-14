@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { TableOfContents } from '@/components/layout/toc/table-of-contents';
+import { TableOfContents } from '@/components/common/toc/table-of-contents';
 import type { Heading } from '@/components/features/docs/docs-types';
 
 export interface AdaptiveSidebarProps {

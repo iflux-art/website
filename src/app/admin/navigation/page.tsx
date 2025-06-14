@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/features/admin/admin-layout';
-import { AdminActions } from '@/components/features/admin/admin-actions';
-import { DataTable, type TableColumn } from '@/components/features/admin/data-table';
+import { AdminLayout } from '@/components/admin/admin-layout';
+import { AdminActions } from '@/components/admin/admin-actions';
+import { DataTable, type TableColumn } from '@/components/admin/data-table';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/common/cards/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';

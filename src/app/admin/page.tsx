@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import AdminPageContentLayout from '@/components/features/admin/admin-page-content-layout';
+import AdminPageContentLayout from '@/components/admin/admin-page-content-layout';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { Globe, BarChart3 } from 'lucide-react';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';

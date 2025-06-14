@@ -89,6 +89,7 @@ export function UnifiedCard({
   _index = 0,
   className,
   variant = 'default',
+  onTagClick,
   children,
 }: UnifiedCardProps) {
   const tagArray = Array.isArray(tags)
@@ -106,7 +107,15 @@ export function UnifiedCard({
     if (iconType === 'image') {
       return (
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <Image src={icon as string} alt={title} width={40} height={40} className="object-cover" />
+          <Image 
+            src={icon as string} 
+            alt={title} 
+            width={40} 
+            height={40} 
+            className="object-cover" 
+            unoptimized 
+            loading="lazy" 
+          />
         </div>
       );
     } else if (iconType === 'emoji') {
@@ -237,6 +246,8 @@ export function UnifiedCard({
                 width={120}
                 height={80}
                 className="rounded-lg object-cover"
+                unoptimized
+                loading="lazy"
               />
             </div>
           )}

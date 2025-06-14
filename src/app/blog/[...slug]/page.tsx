@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 
 import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
 import { BlogContent } from '@/components/features/blog/blog-content';
-import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
+import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { countWords } from '@/lib/utils';
 
