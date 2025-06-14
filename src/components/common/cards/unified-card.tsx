@@ -27,8 +27,13 @@ export interface UnifiedCardProps {
   _index?: number;
   className?: string;
   variant?: 'default' | 'compact' | 'horizontal';
+  /**
+   * 标签点击处理函数
+   */
+  onTagClick?: (tag: string) => void;
   children?: React.ReactNode;
 }
+
 
 /**
  * 统一卡片组件
@@ -36,7 +41,6 @@ export interface UnifiedCardProps {
  * 一个通用的卡片组件，可以根据类型显示不同的卡片样式
  *
  * @example
- * ```tsx
  * // 博客卡片
  * <UnifiedCard
  *   type="blog"
@@ -67,7 +71,6 @@ export interface UnifiedCardProps {
  *   iconType="image"
  *   isExternal
  * />
- * ```
  */
 export function UnifiedCard({
   type = 'link',
@@ -145,7 +148,16 @@ export function UnifiedCard({
           {tagArray.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-4">
               {tagArray.map(tag => (
-                <Badge key={tag} variant="outline" className="text-xs">
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  className="text-xs cursor-pointer hover:bg-primary/10"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onTagClick?.(tag);
+                  }}
+                >
                   {tag}
                 </Badge>
               ))}
@@ -195,7 +207,16 @@ export function UnifiedCard({
           {tagArray.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
               {tagArray.map(tag => (
-                <Badge key={tag} variant="outline" className="text-xs">
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  className="text-xs cursor-pointer hover:bg-primary/10"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onTagClick?.(tag);
+                  }}
+                >
                   {tag}
                 </Badge>
               ))}
@@ -230,7 +251,16 @@ export function UnifiedCard({
             {tagArray.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {tagArray.map(tag => (
-                  <Badge key={tag} variant="outline" className="text-xs">
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="text-xs cursor-pointer hover:bg-primary/10"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onTagClick?.(tag);
+                    }}
+                  >
                     {tag}
                   </Badge>
                 ))}

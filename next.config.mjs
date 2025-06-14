@@ -54,21 +54,20 @@ const nextConfig = {
   // 添加图片优化
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['img.dava.cc', 'www.google.com'],
-    // 图片质量优化
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24, // 24 小时
-    // 禁用静态图片导入
     disableStaticImages: false,
-    // 启用远程图片优化
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
+      {
+        protocol: 'http',
+        hostname: '**',
+      }
     ],
-    // 启用图片压缩
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

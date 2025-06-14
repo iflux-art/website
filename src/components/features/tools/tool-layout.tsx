@@ -1,26 +1,28 @@
+'use client';
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
-import { ArrowLeft, LucideIcon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 interface ToolLayoutProps {
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: React.ComponentType<{ className?: string }>;
   children: React.ReactNode;
   actions?: React.ReactNode;
   helpContent?: React.ReactNode;
 }
 
-export function ToolLayout({
+export const ToolLayout: React.FC<ToolLayoutProps> = ({
   title,
   description,
   icon: Icon,
   children,
   actions,
   helpContent,
-}: ToolLayoutProps) {
+}) => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* 返回按钮 */}

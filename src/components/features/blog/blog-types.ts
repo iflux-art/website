@@ -18,6 +18,10 @@ export interface BlogPost extends BaseContent {
   published?: boolean;
   /** 文章摘要 */
   excerpt: string;
+  /** 是否为特色文章 */
+  featured?: boolean;
+  /** 文章封面图片 */
+  image?: string;
   /** 分类 */
   category?: string;
 }

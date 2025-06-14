@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useDocCategories } from '@/components/features/docs/use-docs';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 
 export default function DocCategories() {
   const pathname = usePathname();
@@ -46,7 +47,7 @@ export default function DocCategories() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <UnifiedGrid columns={4}>
       {categories.map(category => (
         <Link key={category.id} href={`/docs/${category.id}`} className="block">
           <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card h-full">
@@ -65,6 +66,6 @@ export default function DocCategories() {
           </article>
         </Link>
       ))}
-    </div>
+    </UnifiedGrid>
   );
 }

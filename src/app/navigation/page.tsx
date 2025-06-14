@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { NavigationCard } from '@/components/common/cards/navigation-card';
+import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import {
   NavigationItem,
   NavigationCategory,
@@ -140,7 +141,7 @@ export default function NavigationPage() {
         />
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <UnifiedGrid columns={4}>
         {filteredItems.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p className="text-muted-foreground">
@@ -149,18 +150,21 @@ export default function NavigationPage() {
           </div>
         ) : (
           filteredItems.map(item => (
-            <NavigationCard
+            <UnifiedCard
               key={item.id}
+              type="category"
+              variant="compact"
               title={item.title}
               description={item.description}
-              url={item.url}
+              href={item.url}
               icon={item.icon}
-              iconType={item.iconType}
-              featured={item.featured}
+              iconType={item.iconType === 'text' ? 'component' : item.iconType}
+              isExternal={true}
+              hideArrow={true}
             />
           ))
         )}
-      </div>
+      </UnifiedGrid>
     </div>
   );
 }

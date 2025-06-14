@@ -1,16 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
-import { Badge } from '@/components/ui/badge';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import { TagFilter } from '@/components/ui/tag-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/features/tools/tools-data';
 import { useToolFilter, useToolSearch } from '@/components/features/tools/use-tools';
 import type { Tool } from '@/types/pages';
-// 仅保留注释
+import { UnifiedCard } from '@/components/common/cards/unified-card';
 
 /**
  * 工具页面组件
@@ -19,32 +16,17 @@ import type { Tool } from '@/types/pages';
  * @see src/config/tools.ts - 使用工具和分类配置
  */
 function ToolCard({ tool, onTagClick }: { tool: Tool; onTagClick: (tag: string) => void }) {
-  const Icon = tool.isInternal ? null : ExternalLink;
-
   return (
-    <Card className="h-full rounded-lg border bg-zinc-50 hover:shadow-md transition-shadow dark:bg-zinc-900 dark:border-zinc-800">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between text-lg font-medium text-card-foreground dark:text-slate-100">
-          <span>{tool.name}</span>
-          {Icon && <Icon className="w-4 h-4" />}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm mb-4">{tool.description}</p>
-        <div className="flex flex-wrap gap-2">
-          {tool.tags.map(tag => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 hover:bg-primary/20"
-              onClick={() => onTagClick(tag)}
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <UnifiedCard
+      type="resource"
+      variant="default"
+      title={tool.name}
+      description={tool.description}
+      href={tool.path}
+      tags={tool.tags}
+      isExternal={!tool.isInternal}
+      onTagClick={onTagClick}
+    />
   );
 }
 
@@ -104,13 +86,11 @@ export default function ToolsPage() {
           />
 
           {/* 工具卡片网格 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <UnifiedGrid columns={4} className="mt-8">
             {searchResults.map(tool => (
-              <Link key={tool.id} href={tool.path}>
-                <ToolCard tool={tool} onTagClick={setSelectedTag} />
-              </Link>
+              <ToolCard key={tool.id} tool={tool} onTagClick={setSelectedTag} />
             ))}
-          </div>
+          </UnifiedGrid>
         </div>
       </div>
     </div>
