@@ -149,7 +149,10 @@ export default async function ContentPage({
               {renderContent({
                 title,
                 content: mdxContent,
-                metadata,
+                metadata: {
+                  ...metadata,
+                  title: title,
+                },
               })}
             </div>
           </main>

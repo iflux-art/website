@@ -4,7 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
-import { ContentDisplay } from '@/components/common/content/content-display';
+import { ContentDisplay } from '@/components/common/content-display';
 import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { countWords } from '@/lib/utils';
@@ -87,7 +87,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     { label: title },
   ];
 
-  const mdxContent = await <MDXRenderer content={processedContent} />;
+  const mdxContent = await (<MDXRenderer content={processedContent} />);
 
   return (
     <div className="min-h-screen bg-background">

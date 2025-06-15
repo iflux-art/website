@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { countWords } from '@/lib/utils';
 import { DocPagination } from '@/components/common/doc-pagination';
 import {
   Breadcrumb as BreadcrumbComponent,
@@ -12,7 +13,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
-import { ContentDisplay } from '@/components/common/content/content-display';
+import { ContentDisplay } from '@/components/common/content-display';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
@@ -85,8 +86,21 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   );
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
+  
+  // 格式化日期
+  const date = frontmatter.date
+    ? new Date(frontmatter.date).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
+
+  // 计算字数
+  const wordCount = countWords(originalContent);
+  
   const content = originalContent; // TOC extraction uses originalContent
-  const mdxContent = await <MDXRenderer content={content} />;
+  const mdxContent = await (<MDXRenderer content={content} />);
 
   const topLevelCategorySlug = slug[0];
 
@@ -211,10 +225,10 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               <ContentDisplay
                 contentType="docs"
                 title={frontmatter.title}
-                date={frontmatter.date}
+                date={date}
                 category={frontmatter.category}
-                tags={frontmatter.tags}
-                wordCount={content.split(/\s+/).length}
+                tags={frontmatter.tags || []}
+                wordCount={wordCount}
               >
                 {mdxContent}
               </ContentDisplay>
