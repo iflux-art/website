@@ -4,7 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
-import { BlogContent } from '@/components/features/blog/blog-content';
+import { ContentDisplay } from '@/components/common/content/content-display';
 import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { countWords } from '@/lib/utils';
@@ -106,14 +106,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <Breadcrumb items={breadcrumbItems} />
               </div>
 
-              <BlogContent
+              <ContentDisplay
+                contentType="blog"
                 title={title}
                 date={date}
+                category={data.category}
                 tags={data.tags || []}
                 wordCount={wordCount}
-                mdxContent={mdxContent}
-                _path={`/blog/${fullSlug}`}
-              />
+              >
+                {mdxContent}
+              </ContentDisplay>
             </div>
           </main>
 

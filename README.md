@@ -396,3 +396,36 @@ pnpm start
 通过实施以上优化，项目将更加符合Next.js、React、TypeScript和TailwindCSS的最佳实践，提高代码质量、可维护性和用户体验。
 
         当前模型请求量过大，请求排队约 1 位，请稍候或切换至其他模型问答体验更流畅。
+
+## 更新 frontmatter 的规范：
+
+src/content/ 目录下的 mdx 文档，都要根据正文内容把 frontmatter 补充完整，包含 [content-display.tsx](src\components\common\content\content-display.tsx) 上规定的 title、date、category、tags
+
+根据正文内容把 mdx 的 frontmatter 补充完整，顺序依次为 title、description、date、category、tags
+
+必需字段：
+
+title：保持原有标题
+date：统一使用 2025-05-01 作为发布日期
+category：根据文档所在目录确定主分类（如：广告、开发、文档等）
+tags：根据内容特点添加相关标签，通常包含：
+类型标签（如：文案、教程、指南）
+领域标签（如：广告、品牌、服装）
+特征标签（如：创意、诗意、案例）
+description：简要描述文档内容和特点
+标签体系：
+
+保持层级性：从大类到具体特征
+确保相关性：标签要与内容直接相关
+控制数量：每篇文档通常 3-5 个标签最为合适
+分类原则：
+
+根据目录结构确定主分类
+确保分类的一致性
+避免过于细分
+文档整理优先级：
+
+先处理核心文档
+保持同类文档的一致性
+按目录层级逐步推进
+这个规范可以帮助我们统一处理所有 MDX 文档的 frontmatter，确保它们都符合 ContentDisplay 组件的要求。

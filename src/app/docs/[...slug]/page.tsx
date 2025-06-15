@@ -12,7 +12,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
-
+import { ContentDisplay } from '@/components/common/content/content-display';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
@@ -208,10 +208,16 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               <div className="mb-6">
                 <BreadcrumbComponent items={breadcrumbItems} />
               </div>
-              <article className="prose prose-slate dark:prose-invert max-w-none">
-                <h1 className="text-4xl font-bold mb-8 tracking-tight">{frontmatter.title}</h1>
+              <ContentDisplay
+                contentType="docs"
+                title={frontmatter.title}
+                date={frontmatter.date}
+                category={frontmatter.category}
+                tags={frontmatter.tags}
+                wordCount={content.split(/\s+/).length}
+              >
                 {mdxContent}
-              </article>
+              </ContentDisplay>
               <DocPagination prevDoc={prevDoc} nextDoc={nextDoc} />
             </div>
           </main>
