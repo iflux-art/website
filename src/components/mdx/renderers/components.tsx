@@ -23,6 +23,7 @@ export const BaseComponents = {
 
     const imgSrc = String(src);
     if (imgSrc.startsWith('http') || imgSrc.startsWith('data:')) {
+      // 对于外部链接和 base64 图片，使用原生 img 标签
       // eslint-disable-next-line @next/next/no-img-element
       return <img src={imgSrc} alt={alt || ''} {...props} />;
     }

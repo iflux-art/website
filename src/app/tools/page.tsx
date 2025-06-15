@@ -3,7 +3,7 @@
 import React from 'react';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedFilter } from '@/components/common/filter/unified-filter';
+import { UnifiedFilter } from '@/components/layout/filter/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/features/tools/tools-data';
 import { useToolFilter, useToolSearch } from '@/components/features/tools/use-tools';
 import type { Tool } from '@/types/pages';

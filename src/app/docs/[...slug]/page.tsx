@@ -4,16 +4,16 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { countWords } from '@/lib/utils';
-import { DocPagination } from '@/components/common/doc-pagination';
+import { DocPagination } from '@/components/layout/doc-pagination';
 import {
   Breadcrumb as BreadcrumbComponent,
   type BreadcrumbItem,
-} from '@/components/common/breadcrumb';
+} from '@/components/layout/breadcrumb';
 import { Sidebar } from '@/components/layout/sidebar';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
-import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
+import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
-import { ContentDisplay } from '@/components/common/content-display';
+import { ContentDisplay } from '@/components/layout/content-display';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
@@ -86,7 +86,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   );
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
-  
+
   // 格式化日期
   const date = frontmatter.date
     ? new Date(frontmatter.date).toLocaleDateString('zh-CN', {
@@ -98,7 +98,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
   // 计算字数
   const wordCount = countWords(originalContent);
-  
+
   const content = originalContent; // TOC extraction uses originalContent
   const mdxContent = await (<MDXRenderer content={content} />);
 

@@ -4,11 +4,11 @@
     "@typescript-eslint" // Explicitly add plugin
   ],
   "extends": [
-    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended" // Add recommended TS rules
+    "plugin:@typescript-eslint/recommended", // Add recommended TS rules
+    "next/core-web-vitals"
   ],
   "rules": {
     "react/prop-types": "off",

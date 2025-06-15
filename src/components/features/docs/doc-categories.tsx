@@ -1,54 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useDocCategories } from '@/components/features/docs/use-docs';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 
 export default function DocCategories() {
-  const pathname = usePathname();
-  const { categories = [], loading, error } = useDocCategories();
-
-  // 开发环境调试信息
-  if (process.env.NODE_ENV === 'development') {
-    useEffect(() => {
-      console.log('文档页面路径:', pathname);
-      console.log('文档分类加载状态:', loading);
-      console.log('文档分类数量:', categories?.length);
-      if (error) {
-        console.error('文档分类加载错误:', error);
-      }
-    }, [pathname, loading, categories?.length, error]);
-  }
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <div className="text-muted-foreground">加载中...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <div className="text-destructive">加载失败，请稍后重试</div>
-      </div>
-    );
-  }
-
-  if (!categories?.length) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <div className="text-muted-foreground">暂无文档分类</div>
-      </div>
-    );
-  }
+  const { categories = [] } = useDocCategories();
 
   return (
     <UnifiedGrid columns={4}>
-      {categories.map(category => (
+      {categories?.map(category => (
         <Link key={category.id} href={`/docs/${category.id}`} className="block">
           <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card h-full">
             <div className="p-6">

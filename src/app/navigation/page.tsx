@@ -1,112 +1,31 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
-import {
-  NavigationItem,
-  NavigationCategory,
-} from '@/components/features/navigation/navigation-types';
-import { UnifiedFilter } from '@/components/common/filter/unified-filter';
-
+import React from 'react';
+import { NavigationHeader } from '@/components/features/navigation/navigation-header';
+import { NavigationGrid } from '@/components/features/navigation/navigation-grid';
+import { UnifiedFilter } from '@/components/layout/filter/unified-filter';
+import { useNavigationData } from '@/components/features/navigation/hooks/use-navigation-data';
 export default function NavigationPage() {
-  const [items, setItems] = useState<NavigationItem[]>([]);
-  const [categories, setCategories] = useState<NavigationCategory[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [allTags, setAllTags] = useState<string[]>([]);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async (categoryId?: string) => {
-    try {
-      const [navigationData, categoriesData] = await Promise.all([
-        fetch('/api/navigation').then(res => res.json()),
-        fetch('/api/navigation?type=categories').then(res => res.json()),
-      ]);
-
-      const tagsResponse = await fetch(
-        `/api/navigation?type=tags${categoryId ? `&category=${categoryId}` : ''}`
-      );
-      const tagsData = await tagsResponse.json();
-
-      setItems(navigationData.items || []);
-      setCategories(categoriesData || []);
-      setAllTags(
-        categoryId
-          ? tagsData.filter((tag: string) =>
-              navigationData.items.some(
-                (item: NavigationItem) => item.category === categoryId && item.tags.includes(tag)
-              )
-            )
-          : tagsData || []
-      );
-    } catch (error) {
-      console.error('Error loading data:', error);
-    }
-  };
-
-  const filteredItems = items.filter(item => {
-    const categoryMatch = !selectedCategory || item.category === selectedCategory;
-    const tagMatch = !selectedTag || item.tags.includes(selectedTag);
-    return categoryMatch && tagMatch;
-  });
-
-  const handleCategoryClick = async (categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setSelectedTag(null);
-    try {
-      await loadData(categoryId);
-    } catch (error) {
-      console.error('加载分类数据时出错:', error);
-    }
-  };
-
-  const handleTagClick = (tag: string | null) => {
-    setSelectedTag(tag);
-  };
-
-  const handleCardTagClick = (tag: string) => {
-    setSelectedTag(tag);
-  };
-
-  const getCategoryName = (categoryId: string) => {
-    const category = categories.find(cat => cat.id === categoryId);
-    return category?.name || categoryId;
-  };
-
-  const sortedTags = allTags
-    .map(tag => ({
-      name: tag,
-      count: items.filter(item => item.tags.includes(tag)).length,
-    }))
-    .sort((a, b) => b.count - a.count);
-
+  const {
+    items,
+    categories,
+    selectedCategory,
+    selectedTag,
+    filteredItems,
+    sortedTags,
+    handleCategoryClick,
+    handleTagClick,
+    getCategoryName
+  } = useNavigationData();
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
-        {selectedCategory || selectedTag ? (
-          <p>
-            显示 {filteredItems.length} 个网址
-            {selectedCategory && ` · ${getCategoryName(selectedCategory)}`}
-            {selectedTag && ` · ${selectedTag}`}
-          </p>
-        ) : (
-          <p className="text-muted-foreground">
-            共收录 {items.length} 个优质网站，欢迎
-            <a
-              href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb"
-              target="_blank"
-              rel="noreferrer"
-            >
-              互换友链
-            </a>
-          </p>
-        )}
-      </div>
+      <NavigationHeader
+        filteredCount={filteredItems.length}
+        selectedCategory={selectedCategory}
+        selectedTag={selectedTag}
+        totalItems={items.length}
+        getCategoryName={getCategoryName}
+      />
 
       <UnifiedFilter
         categories={categories}
@@ -115,36 +34,17 @@ export default function NavigationPage() {
         tags={sortedTags}
         selectedTag={selectedTag}
         onTagChange={handleTagClick}
-        onCardTagClick={handleCardTagClick}
+        onCardTagClick={handleTagClick}
         categoryButtonClassName="rounded-full"
         className="mb-6"
       />
 
-      <UnifiedGrid columns={4}>
-        {filteredItems.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground">
-              {selectedCategory || selectedTag ? '没有找到匹配的网址' : '暂无网址数据'}
-            </p>
-          </div>
-        ) : (
-          filteredItems.map(item => (
-            <UnifiedCard
-              key={item.id}
-              type="category"
-              variant="compact"
-              title={item.title}
-              description={item.description}
-              href={item.url}
-              icon={item.icon}
-              iconType={item.iconType === 'text' ? 'component' : item.iconType}
-              isExternal={true}
-              tags={item.tags}
-              onTagClick={handleCardTagClick}
-            />
-          ))
-        )}
-      </UnifiedGrid>
+      <NavigationGrid
+        items={filteredItems}
+        selectedCategory={selectedCategory}
+        selectedTag={selectedTag}
+        onTagClick={handleTagClick}
+      />
     </div>
   );
 }

@@ -1,25 +1,17 @@
 // page.tsx
-import { Suspense } from 'react';
-import DocCategories from '../../components/features/docs/doc-categories';
-import { PageHeader } from '@/components/common/page-header';
+import DocCategories from '@/components/features/docs/doc-categories';
 
 export default function DocsPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         <div className="mx-auto">
-          <PageHeader 
-            heading="文档中心"
-            text="探索我们的技术文档和指南"
-          />
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">文档中心</h1>
+            <p className="text-muted-foreground">探索我们的技术文档和指南</p>
+          </div>
 
-          <Suspense fallback={
-            <div className="flex justify-center items-center py-12">
-              <div className="text-muted-foreground">加载中...</div>
-            </div>
-          }>
-            <DocCategories />
-          </Suspense>
+          <DocCategories />
         </div>
       </div>
     </div>

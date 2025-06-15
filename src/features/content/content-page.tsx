@@ -2,9 +2,9 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/layout/breadcrumb';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
-import { PageTableOfContents } from '@/components/common/toc/page-table-of-contents';
+import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
 
 interface Frontmatter {
   title: string;
@@ -87,7 +87,10 @@ export function getContentData(contentRoot: string, slug: string[]) {
   let processedContent = content;
   headings.forEach(heading => {
     const headingRegex = new RegExp(
-      `^(#{${heading.level}})\\s+(${heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})(?:\\s*{#[\\w-]+})?$`,
+      `^(#{${heading.level}})\\s+(${heading.text.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )})(?:\\s*{#[\\w-]+})?$`,
       'gm'
     );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
@@ -127,7 +130,7 @@ export default async function ContentPage({
     { label: title },
   ];
 
-  const mdxContent = await <MDXRenderer content={content} />;
+  const mdxContent = await (<MDXRenderer content={content} />);
 
   return (
     <div className="min-h-screen bg-background">

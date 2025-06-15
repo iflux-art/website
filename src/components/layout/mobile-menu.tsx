@@ -7,8 +7,8 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { ThemeToggle } from '@/components/features/theme-toggle';
 import { TravelButton } from '@/components/common/button/travel-button';
 import { Logo } from '@/components/common/logo';
-import { NavMenu } from '../navbar/nav-menu';
-import { SearchIcon } from '../../common/button/search-button';
+import { NavMenu } from '@/components/layout/navbar/nav-menu';
+import { SearchIcon } from '@/components/common/button/search-button';
 
 /**
  * 移动端菜单组件属性接口

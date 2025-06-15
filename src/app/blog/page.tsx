@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 import { BlogList } from '@/components/features/blog/blog-list';
-import { TagFilter } from '@/components/common/filter/tag-filter';
+import { TagFilter } from '@/components/layout/filter/tag-filter';
 import { useTagCounts } from '@/components/features/blog/use-blog';
 
 // 创建一个包装组件来处理动态数据

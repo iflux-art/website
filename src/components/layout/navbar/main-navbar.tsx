@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { Logo } from '@/components/common/logo';
-import { MobileMenu } from '../mobile/mobile-menu';
+import { MobileMenu } from '@/components/layout/mobile-menu';
 import { NavMenu } from './nav-menu';
 import { useNavbarScroll } from '@/components/layout/navbar/use-navbar-scroll';
 

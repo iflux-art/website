@@ -39,12 +39,7 @@ export function useMDXComponents(components: Record<string, React.ComponentType 
         return null;
       }
 
-      const imgSrc = src as string;
-      if (imgSrc.startsWith('http') || imgSrc.startsWith('data:')) {
-        return <img src={imgSrc} alt={alt || ''} {...props} />;
-      } else {
-        return <ResponsiveImage {...imageConfig} {...props} src={imgSrc} alt={alt || ''} />;
-      }
+      return <ResponsiveImage {...imageConfig} {...props} src={src} alt={alt || ''} />;
     },
 
     table: ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
