@@ -11,7 +11,6 @@ import type { ToolCategory, Tool } from '@/types/pages';
  * @see src/app/tools/page.tsx - 工具页面使用此配置展示分类
  */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  { id: 'all', name: '全部', icon: Wrench },
   { id: 'development', name: '开发工具', icon: Code },
   { id: 'design', name: '设计工具', icon: Palette },
   { id: 'text', name: '文本工具', icon: PenTool },

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ResponsiveImage } from '@/components/ui/responsive-image';
-import type { ResponsiveImageProps } from '@/components/ui/responsive-image';
+import { ResponsiveImage } from '@/components/mdx/responsive-image';
+import type { ResponsiveImageProps } from '@/components/mdx/responsive-image';
 
 type MDXProps = {
   children?: React.ReactNode;

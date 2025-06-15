@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
-import { CardContent } from '@/components/common/cards/card';
+import { CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CardHover } from '@/components/common/cards/card-hover';
@@ -33,7 +33,6 @@ export interface UnifiedCardProps {
   onTagClick?: (tag: string) => void;
   children?: React.ReactNode;
 }
-
 
 /**
  * 统一卡片组件
@@ -107,14 +106,14 @@ export function UnifiedCard({
     if (iconType === 'image') {
       return (
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <Image 
-            src={icon as string} 
-            alt={title} 
-            width={40} 
-            height={40} 
-            className="object-cover" 
-            unoptimized 
-            loading="lazy" 
+          <Image
+            src={icon as string}
+            alt={title}
+            width={40}
+            height={40}
+            className="object-cover"
+            unoptimized
+            loading="lazy"
           />
         </div>
       );
@@ -161,7 +160,7 @@ export function UnifiedCard({
                   key={tag}
                   variant="outline"
                   className="text-xs cursor-pointer hover:bg-primary/10"
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     onTagClick?.(tag);
@@ -220,7 +219,7 @@ export function UnifiedCard({
                   key={tag}
                   variant="outline"
                   className="text-xs cursor-pointer hover:bg-primary/10"
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     onTagClick?.(tag);
@@ -266,7 +265,7 @@ export function UnifiedCard({
                     key={tag}
                     variant="outline"
                     className="text-xs cursor-pointer hover:bg-primary/10"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       e.stopPropagation();
                       onTagClick?.(tag);

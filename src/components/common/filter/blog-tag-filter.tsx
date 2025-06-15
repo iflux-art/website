@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TagFilter } from '@/components/ui/tag-filter';
+import { TagFilter } from '@/components/common/filter/tag-filter';
 
 interface BlogTagFilterProps {
   allTags: string[];

@@ -26,28 +26,36 @@ import type { Tool } from '@/types/pages';
  * @see src/app/tools/page.tsx - 工具页面使用此 hook 管理工具过滤状态
  */
 export function useToolFilter(tools: Tool[]) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // 根据分类和标签过滤工具
   const filteredTools = useMemo(() => {
     return tools.filter(tool => {
-      const matchCategory = selectedCategory === 'all' || tool.category === selectedCategory;
-      const matchTag = !selectedTag || tool.tags.includes(selectedTag);
+      const matchCategory = !selectedCategory || tool.category === selectedCategory;
+      const matchTag = !selectedTag || (tool.tags && tool.tags.includes(selectedTag));
       return matchCategory && matchTag;
     });
   }, [tools, selectedCategory, selectedTag]);
 
-  // 获取所有标签及其计数
+  // 获取当前分类下所有标签及其计数
   const tagCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    tools.forEach(tool => {
+    // 根据当前分类筛选工具
+    const categoryTools = !selectedCategory 
+      ? tools 
+      : tools.filter(tool => tool.category === selectedCategory);
+
+    // 计算标签统计
+    const counts: Record<string, number> = {};
+    categoryTools.forEach(tool => {
+      if (!tool.tags) return;
       tool.tags.forEach(tag => {
-        counts.set(tag, (counts.get(tag) || 0) + 1);
+        counts[tag] = (counts[tag] || 0) + 1;
       });
     });
-    return Array.from(counts.entries()).map(([tag, count]) => ({ tag, count }));
-  }, [tools]);
+
+    return counts;
+  }, [tools, selectedCategory]);
 
   return {
     filteredTools,

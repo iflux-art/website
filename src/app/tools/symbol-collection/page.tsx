@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/cards/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Smile, Star, Hash, Type } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';

@@ -2,14 +2,15 @@
 'use client';
 
 import { Tag, X } from 'lucide-react';
-import { Badge } from './badge';
-import { Button } from './button';
+import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
 import { ReactNode } from 'react';
 
 export interface TagFilterProps {
   tags: Array<string | { name: string; count?: number }>;
   selectedTag: string | null;
   onTagSelectAction: (tag: string | null) => void;
+  onCardTagClick?: (tag: string) => void;
   title?: string;
   showCount?: boolean;
   showClear?: boolean;
@@ -24,6 +25,7 @@ export function TagFilter({
   tags,
   selectedTag,
   onTagSelectAction,
+  onCardTagClick,
   title = '按标签筛选',
   showCount = true,
   showClear = true,
@@ -46,11 +48,15 @@ export function TagFilter({
 
   const visibleTags = expanded ? sortedTags : sortedTags.slice(0, maxVisible);
   const hasMoreTags = sortedTags.length > maxVisible;
-  const handleTagClick = (tagName: string) => {
-    if (selectedTag === tagName) {
-      onTagSelectAction(null);
+  const handleTagClick = (tagName: string, fromCard?: boolean) => {
+    if (fromCard && onCardTagClick) {
+      onCardTagClick(tagName);
     } else {
-      onTagSelectAction(tagName);
+      if (selectedTag === tagName) {
+        onTagSelectAction(null);
+      } else {
+        onTagSelectAction(tagName);
+      }
     }
   };
 

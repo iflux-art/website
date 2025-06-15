@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
-import { TagFilter } from '@/components/ui/tag-filter';
+import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/features/tools/tools-data';
 import { useToolFilter, useToolSearch } from '@/components/features/tools/use-tools';
 import type { Tool } from '@/types/pages';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
 
 /**
  * 工具页面组件
@@ -31,7 +30,6 @@ function ToolCard({ tool, onTagClick }: { tool: Tool; onTagClick: (tag: string) 
 }
 
 export default function ToolsPage() {
-  const [tagsExpanded, setTagsExpanded] = useState(false);
   const {
     filteredTools,
     selectedCategory,
@@ -43,10 +41,34 @@ export default function ToolsPage() {
 
   const { searchResults } = useToolSearch(filteredTools);
 
-  const formattedTags = tagCounts.map(({ tag, count }) => ({
-    name: tag,
-    count: count,
-  }));
+  // 处理分类切换
+  const handleCategoryClick = (categoryId: string) => {
+    // 如果点击当前选中的分类，则切换到全部状态
+    if (categoryId === selectedCategory) {
+      setSelectedCategory('');
+    } else {
+      setSelectedCategory(categoryId);
+    }
+    setSelectedTag(null); // 清除已选标签
+  };
+
+  // 处理标签点击（包括卡片标签）
+  const handleTagClick = (tag: string | null) => {
+    setSelectedTag(tag);
+  };
+
+  // 处理卡片标签点击
+  const handleCardTagClick = (tag: string) => {
+    setSelectedTag(tag);
+  };
+
+  // 格式化标签数据
+  const formattedTags = Object.entries(tagCounts)
+    .map(([tag, count]) => ({
+      name: tag,
+      count,
+    }))
+    .sort((a, b) => b.count - a.count);
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,41 +77,32 @@ export default function ToolsPage() {
           {/* 页面标题 */}
           <h1 className="text-3xl font-bold text-foreground dark:text-slate-100 mb-6">工具箱</h1>
 
-          {/* 分类过滤 */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {TOOL_CATEGORIES.map(category => {
-              const Icon = category.icon;
-              return (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? 'default' : 'outline'}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center gap-2"
-                >
-                  <Icon className="w-4 h-4" />
-                  {category.name}
-                </Button>
-              );
-            })}
-          </div>
-
-          {/* 标签过滤器 */}
-          <TagFilter
+          {/* 使用统一的筛选组件 */}
+          <UnifiedFilter
+            categories={TOOL_CATEGORIES}
+            selectedCategory={selectedCategory}
+            onCategoryChange={handleCategoryClick}
             tags={formattedTags}
             selectedTag={selectedTag}
-            onTagSelectAction={setSelectedTag}
-            showCount={true}
-            maxVisible={8}
+            onTagChange={handleTagClick}
+            onCardTagClick={handleCardTagClick}
+            categoryButtonClassName="rounded-full"
             className="mb-6"
-            expanded={tagsExpanded}
-            onExpandChange={setTagsExpanded}
           />
 
           {/* 工具卡片网格 */}
           <UnifiedGrid columns={4} className="mt-8">
-            {searchResults.map(tool => (
-              <ToolCard key={tool.id} tool={tool} onTagClick={setSelectedTag} />
-            ))}
+            {searchResults.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground">
+                  {selectedCategory || selectedTag ? '没有找到匹配的工具' : '暂无工具数据'}
+                </p>
+              </div>
+            ) : (
+              searchResults.map(tool => (
+                <ToolCard key={tool.id} tool={tool} onTagClick={handleCardTagClick} />
+              ))
+            )}
           </UnifiedGrid>
         </div>
       </div>

@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import {
   NavigationItem,
   NavigationCategory,
 } from '@/components/features/navigation/navigation-types';
-import { TagFilter } from '@/components/ui/tag-filter';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 
 export default function NavigationPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);
@@ -16,7 +15,6 @@ export default function NavigationPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
-  const [tagsExpanded, setTagsExpanded] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -70,6 +68,10 @@ export default function NavigationPage() {
     setSelectedTag(tag);
   };
 
+  const handleCardTagClick = (tag: string) => {
+    setSelectedTag(tag);
+  };
+
   const getCategoryName = (categoryId: string) => {
     const category = categories.find(cat => cat.id === categoryId);
     return category?.name || categoryId;
@@ -106,40 +108,17 @@ export default function NavigationPage() {
         )}
       </div>
 
-      <div className="mb-6">
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={selectedCategory === '' ? 'default' : 'outline'}
-            onClick={() => handleCategoryClick('')}
-            className="rounded-full"
-          >
-            全部
-          </Button>
-          {categories.map(category => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? 'default' : 'outline'}
-              onClick={() => handleCategoryClick(category.id)}
-              className="rounded-full"
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {allTags.length > 0 && (
-        <TagFilter
-          tags={sortedTags}
-          selectedTag={selectedTag}
-          onTagSelectAction={handleTagClick}
-          showCount={true}
-          maxVisible={8}
-          className="mb-6"
-          expanded={tagsExpanded}
-          onExpandChange={setTagsExpanded}
-        />
-      )}
+      <UnifiedFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryClick}
+        tags={sortedTags}
+        selectedTag={selectedTag}
+        onTagChange={handleTagClick}
+        onCardTagClick={handleCardTagClick}
+        categoryButtonClassName="rounded-full"
+        className="mb-6"
+      />
 
       <UnifiedGrid columns={4}>
         {filteredItems.length === 0 ? (
@@ -160,7 +139,8 @@ export default function NavigationPage() {
               icon={item.icon}
               iconType={item.iconType === 'text' ? 'component' : item.iconType}
               isExternal={true}
-              hideArrow={true}
+              tags={item.tags}
+              onTagClick={handleCardTagClick}
             />
           ))
         )}

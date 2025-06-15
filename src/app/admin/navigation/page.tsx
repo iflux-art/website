@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/admin/admin-layout';
 import { AdminActions } from '@/components/admin/admin-actions';
-import { DataTable, type TableColumn } from '@/components/admin/data-table';
+import { DataTable, type TableColumn } from '@/components/admin/navigation/data-table';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/common/cards/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
