@@ -1,7 +1,7 @@
 'use client';
 
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { motion } from 'framer-motion';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { PageLayout, PageTitle } from '@/components/layout/page-layout';
 import { useBlogFilter } from '@/hooks/use-blog-filter';
@@ -31,28 +31,35 @@ function BlogContent() {
         categoryButtonClassName="rounded-full"
         className="mb-6"
       />
-      <UnifiedGrid columns={4} className="items-stretch">
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6">
         {filteredPosts.length === 0 ? (
-          <div className="col-span-full text-center py-12">
+          <div className="text-center py-12 break-inside-avoid">
             <p className="text-muted-foreground">
               {selectedCategory || selectedTag ? '没有找到匹配的文章' : '暂无博客文章'}
             </p>
           </div>
         ) : (
           filteredPosts.map((post: BlogPost) => (
-            <UnifiedCard
+            <motion.div
               key={post.slug}
-              title={post.title}
-              description={post.description}
-              href={`/blog/${post.slug}`}
-              image={post.image}
-              tags={post.tags}
-              onTagClick={(tag: string) => handleTagChange(tag)}
-              className="hover:border-primary/50 hover:bg-muted/50 h-full"
-            />
+              className="mb-6 break-inside-avoid block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <UnifiedCard
+                title={post.title}
+                description={post.description}
+                href={`/blog/${post.slug}`}
+                image={post.image}
+                tags={post.tags}
+                onTagClick={(tag: string) => handleTagChange(tag)}
+                className="hover:border-primary/50 hover:bg-muted/50 transition-all duration-300 border rounded-lg overflow-hidden w-full block"
+              />
+            </motion.div>
           ))
         )}
-      </UnifiedGrid>
+      </div>
     </div>
   );
 }

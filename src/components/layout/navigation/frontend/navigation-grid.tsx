@@ -16,7 +16,7 @@ export function NavigationGrid({
   selectedTag,
 }: NavigationGridProps) {
   return (
-    <UnifiedGrid columns={4} className="items-stretch">
+    <UnifiedGrid columns={5} className="items-stretch">
       {items.length === 0 ? (
         <div className="col-span-full text-center py-12">
           <p className="text-muted-foreground">

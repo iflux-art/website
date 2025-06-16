@@ -8,7 +8,7 @@ import { AlertCircle, ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { JournalEntry } from '@/types/journal-types';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 type GroupedEntries = [string, JournalEntry[]][];
 
 function groupEntriesByYear(entries: JournalEntry[]): GroupedEntries {
@@ -38,10 +38,20 @@ const typeLabels: Record<JournalEntry['type'], string> = {
 export default function JournalPage() {
   const { entries, loading, error } = useJournalEntries();
   const groupedEntries = groupEntriesByYear(entries);
-  const [expandedYears, setExpandedYears] = useState<string[]>(() => {
-    // 默认展开最新的年份
-    return entries.length > 0 ? [new Date(entries[0].date).getFullYear().toString()] : [];
-  });
+
+  const allYears = useMemo(() => {
+    return entries
+      .map((entry) => new Date(entry.date).getFullYear().toString())
+      .filter((year, index, array) => array.indexOf(year) === index);
+  }, [entries]);
+
+  const [expandedYears, setExpandedYears] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!loading && entries.length > 0) {
+      setExpandedYears(allYears);
+    }
+  }, [loading, entries, allYears]);
 
   const toggleYear = (year: string) => {
     setExpandedYears((prev) =>

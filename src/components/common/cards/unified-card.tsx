@@ -129,7 +129,7 @@ export function UnifiedCard({
       href={href}
       isExternal={isExternal}
       className={cn(
-        'border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-6 h-full',
+        'border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-4 h-full',
         featured && 'border-primary/30',
         type === 'category' && 'bg-gradient-to-br',
         color &&
@@ -145,14 +145,16 @@ export function UnifiedCard({
       }}
     >
       {variant === 'default' && (
-        <CardContent className="p-6 flex flex-col h-full">
-          <div className="flex items-start justify-between mb-4">
+        <CardContent className="p-4 flex flex-col h-full">
+          <div className="flex items-start justify-between mb-2">
             <div className="text-3xl">{renderIcon()}</div>
             {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
           </div>
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
+          <h3 className="text-xl font-semibold mb-1">{title}</h3>
           {description && (
-            <p className="text-muted-foreground text-sm flex-grow line-clamp-1">{description}</p>
+            <p className="text-muted-foreground text-sm flex-grow whitespace-pre-wrap">
+              {description}
+            </p>
           )}
 
           {tagArray.length > 0 && (
@@ -194,7 +196,7 @@ export function UnifiedCard({
       )}
 
       {variant === 'compact' && (
-        <CardContent className="p-4">
+        <CardContent className="px-5 py-5">
           <div className="flex items-start gap-3">
             {icon && (
               <div className="flex-shrink-0 text-2xl w-8 h-8 flex items-center justify-center">
