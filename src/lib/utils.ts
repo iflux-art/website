@@ -51,7 +51,7 @@ export function countWords(text: string): number {
   const englishWords = cleanText
     .replace(/[\u4e00-\u9fa5]/g, '') // 移除中文字符
     .split(/\s+/)
-    .filter(word => word.length > 0);
+    .filter((word) => word.length > 0);
 
   // 中文字符 + 英文单词 = 总字数
   return chineseChars.length + englishWords.length;
@@ -110,23 +110,21 @@ export function throttle<T extends (...args: unknown[]) => void | Promise<void>>
  * @param format 格式化字符串，默认为 'YYYY-MM-DD'
  * @returns 格式化后的日期字符串
  */
-export function formatDate(date: Date | string, format: string = 'YYYY-MM-DD'): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
+export function formatDate(date: string | Date, format: string = 'yyyy-MM-dd'): string {
+  const d = new Date(date);
 
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  const hours = String(d.getHours()).padStart(2, '0');
-  const minutes = String(d.getMinutes()).padStart(2, '0');
-  const seconds = String(d.getSeconds()).padStart(2, '0');
+  const map: Record<string, number> = {
+    yyyy: d.getFullYear(),
+    MM: d.getMonth() + 1,
+    dd: d.getDate(),
+    HH: d.getHours(),
+    mm: d.getMinutes(),
+    ss: d.getSeconds(),
+  };
 
-  return format
-    .replace('YYYY', String(year))
-    .replace('MM', month)
-    .replace('DD', day)
-    .replace('HH', hours)
-    .replace('mm', minutes)
-    .replace('ss', seconds);
+  return format.replace(/yyyy|MM|dd|HH|mm|ss/g, (matched) =>
+    String(map[matched]).padStart(matched === 'yyyy' ? 4 : 2, '0')
+  );
 }
 
 /**

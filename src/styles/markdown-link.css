@@ -1,5 +1,5 @@
 /* ==== 超链接样式 ==== */
-.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]) {
+.prose a:not(.no-underline):not(.btn):not(.card):not([role='tab']) {
   color: hsl(var(--primary));
   text-decoration: none;
   position: relative;
@@ -8,8 +8,8 @@
 }
 
 /* 超链接悬停效果 - 中心向外扩散的下划线 */
-.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"])::after {
-  content: "";
+.prose a:not(.no-underline):not(.btn):not(.card):not([role='tab'])::after {
+  content: '';
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -21,13 +21,13 @@
 }
 
 /* 超链接悬停时下划线从中心向两侧扩散 */
-.prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]):hover::after {
+.prose a:not(.no-underline):not(.btn):not(.card):not([role='tab']):hover::after {
   left: 0;
   right: 0;
 }
 
 /* 暗色模式下的超链接样式 */
-.dark .prose a:not(.no-underline):not(.btn):not(.card):not([role="tab"]) {
+.dark .prose a:not(.no-underline):not(.btn):not(.card):not([role='tab']) {
   color: hsl(var(--primary));
   font-weight: 500;
 }

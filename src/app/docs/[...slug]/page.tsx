@@ -126,7 +126,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
     nextDoc =
       flattenedDocs.find(
-        doc =>
+        (doc) =>
           doc.path.startsWith(indexDirNavPath + '/') ||
           (doc.path.startsWith(indexDirNavPath) &&
             doc.path !== indexDirNavPath &&
@@ -134,7 +134,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       ) || null;
   } else {
     const currentNavPath = `/docs/${actualSlugForNav}`;
-    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
+    const currentIndex = flattenedDocs.findIndex((doc) => doc.path === currentNavPath);
     if (currentIndex !== -1) {
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
       nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
@@ -220,7 +220,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </main>
 
-          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
+          <aside className="hidden xl:block w-64 max-w-64 box-border pr-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
             <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
           </aside>
         </div>

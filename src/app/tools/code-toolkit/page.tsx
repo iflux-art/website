@@ -113,7 +113,7 @@ export default function CodeToolkitPage() {
 
       let formatted = code.toUpperCase();
 
-      keywords.forEach(keyword => {
+      keywords.forEach((keyword) => {
         const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
         formatted = formatted.replace(regex, `\n${keyword}`);
       });
@@ -137,7 +137,7 @@ export default function CodeToolkitPage() {
     const indent = indentType === 'spaces' ? ' '.repeat(indentSize) : '\t';
 
     return lines
-      .map(line => {
+      .map((line) => {
         const trimmed = line.trim();
         if (!trimmed) return '';
 
@@ -299,7 +299,7 @@ export default function CodeToolkitPage() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = e => {
+    reader.onload = (e) => {
       setInput(e.target?.result as string);
     };
     reader.readAsText(file);
@@ -372,7 +372,7 @@ export default function CodeToolkitPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabsData.map(tab => {
+            {tabsData.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -407,10 +407,10 @@ export default function CodeToolkitPage() {
                 </label>
                 <select
                   value={language}
-                  onChange={e => setLanguage(e.target.value as typeof language)}
+                  onChange={(e) => setLanguage(e.target.value as typeof language)}
                   className="w-full p-2 border border-border rounded-lg bg-background"
                 >
-                  {languages.map(lang => (
+                  {languages.map((lang) => (
                     <option key={lang.value} value={lang.value}>
                       {lang.name}
                     </option>
@@ -426,7 +426,7 @@ export default function CodeToolkitPage() {
                     </label>
                     <select
                       value={indentType}
-                      onChange={e => setIndentType(e.target.value as typeof indentType)}
+                      onChange={(e) => setIndentType(e.target.value as typeof indentType)}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                     >
                       <option value="spaces">空格</option>
@@ -440,7 +440,7 @@ export default function CodeToolkitPage() {
                     </label>
                     <select
                       value={indentSize}
-                      onChange={e => setIndentSize(Number(e.target.value))}
+                      onChange={(e) => setIndentSize(Number(e.target.value))}
                       className="w-full p-2 border border-border rounded-lg bg-background"
                       disabled={indentType === 'tabs'}
                     >
@@ -507,8 +507,8 @@ export default function CodeToolkitPage() {
                   if (Array.isArray(data) && data.length > 0) {
                     const headers = Object.keys(data[0]);
                     const csvRows = [headers.join(',')];
-                    data.forEach(row => {
-                      const values = headers.map(header => {
+                    data.forEach((row) => {
+                      const values = headers.map((header) => {
                         const value = row[header];
                         return typeof value === 'string' && value.includes(',')
                           ? `"${value}"`
@@ -523,10 +523,10 @@ export default function CodeToolkitPage() {
                 } else {
                   // CSV to JSON
                   const lines = input.trim().split('\n');
-                  const headers = lines[0].split(',').map(h => h.trim());
+                  const headers = lines[0].split(',').map((h) => h.trim());
                   const result = [];
                   for (let i = 1; i < lines.length; i++) {
-                    const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                    const values = lines[i].split(',').map((v) => v.trim().replace(/^"|"$/g, ''));
                     const obj: Record<string, string> = {};
                     headers.forEach((header, index) => {
                       obj[header] = values[index] || '';
@@ -605,17 +605,17 @@ export default function CodeToolkitPage() {
           <CardContent>
             <textarea
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
               placeholder={
                 activeTab === 'format'
-                  ? `输入${languages.find(l => l.value === language)?.name}代码...`
+                  ? `输入${languages.find((l) => l.value === language)?.name}代码...`
                   : activeTab === 'minify'
-                  ? `输入${languages.find(l => l.value === language)?.name}代码...`
-                  : activeTab === 'convert'
-                  ? 'JSON格式: [{"name":"张三","age":25}]\nCSV格式: name,age\n张三,25'
-                  : activeTab === 'encode'
-                  ? '输入HTML内容进行编码或解码...'
-                  : '输入内容...'
+                    ? `输入${languages.find((l) => l.value === language)?.name}代码...`
+                    : activeTab === 'convert'
+                      ? 'JSON格式: [{"name":"张三","age":25}]\nCSV格式: name,age\n张三,25'
+                      : activeTab === 'encode'
+                        ? '输入HTML内容进行编码或解码...'
+                        : '输入内容...'
               }
               className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
             />

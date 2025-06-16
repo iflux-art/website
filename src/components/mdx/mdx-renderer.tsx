@@ -15,10 +15,7 @@ export const MDXRenderer = async ({ content, options = {} }: MDXContentProps) =>
   try {
     return (
       <div className={STYLE_CONFIG.BASE_CLASSES.prose}>
-        <MDXRemote
-          source={content}
-          components={{ ...BaseComponents, ...customComponents }}
-        />
+        <MDXRemote source={content} components={{ ...BaseComponents, ...customComponents }} />
       </div>
     );
   } catch (error) {

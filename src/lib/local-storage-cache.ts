@@ -142,7 +142,7 @@ class LocalStorageCache {
         }
       }
 
-      keysToRemove.forEach(key => localStorage.removeItem(key));
+      keysToRemove.forEach((key) => localStorage.removeItem(key));
     } catch (error) {
       console.error('清除 localStorage 缓存失败:', error);
     }

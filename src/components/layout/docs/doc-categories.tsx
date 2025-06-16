@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useDocCategories } from '@/components/layout/docs/use-docs';
+import { useDocCategories } from '@/hooks/use-docs';
 import { UnifiedGrid } from '@/components/layout/unified-grid';
 
 export default function DocCategories() {
@@ -9,7 +9,7 @@ export default function DocCategories() {
 
   return (
     <UnifiedGrid columns={4}>
-      {categories?.map(category => (
+      {categories?.map((category) => (
         <Link key={category.id} href={`/docs/${category.id}`} className="block">
           <article className="border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-card h-full">
             <div className="p-6">

@@ -109,7 +109,7 @@ export default function ContentCreatorPage() {
               <input
                 type="text"
                 value={keyword}
-                onChange={e => setKeyword(e.target.value)}
+                onChange={(e) => setKeyword(e.target.value)}
                 placeholder="输入内容关键词..."
                 className="w-full p-3 border border-border rounded-lg bg-background"
               />
@@ -122,7 +122,7 @@ export default function ContentCreatorPage() {
                 </label>
                 <select
                   value={platform}
-                  onChange={e => setPlatform(e.target.value)}
+                  onChange={(e) => setPlatform(e.target.value)}
                   className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="wechat">微信公众号</option>
@@ -136,7 +136,7 @@ export default function ContentCreatorPage() {
                 <label className="block text-sm font-medium mb-2">风格</label>
                 <select
                   value={style}
-                  onChange={e => setStyle(e.target.value)}
+                  onChange={(e) => setStyle(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value="attractive">吸引眼球</option>
@@ -235,7 +235,7 @@ export default function ContentCreatorPage() {
               <input
                 type="text"
                 value={topic}
-                onChange={e => setTopic(e.target.value)}
+                onChange={(e) => setTopic(e.target.value)}
                 placeholder="输入内容主题..."
                 className="w-full p-3 border border-border rounded-lg bg-background"
               />
@@ -245,7 +245,7 @@ export default function ContentCreatorPage() {
               <label className="block text-sm font-medium mb-2">内容类型</label>
               <select
                 value={contentType}
-                onChange={e => setContentType(e.target.value)}
+                onChange={(e) => setContentType(e.target.value)}
                 className="w-full p-3 border border-border rounded-lg bg-background"
               >
                 <option value="article">图文文章</option>
@@ -382,7 +382,7 @@ export default function ContentCreatorPage() {
               <input
                 type="text"
                 value={title}
-                onChange={e => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="输入文章标题..."
                 className="w-full p-3 border border-border rounded-lg bg-background"
               />
@@ -392,7 +392,7 @@ export default function ContentCreatorPage() {
               <label className="block text-sm font-medium mb-2">文章类型</label>
               <select
                 value={articleType}
-                onChange={e => setArticleType(e.target.value)}
+                onChange={(e) => setArticleType(e.target.value)}
                 className="w-full p-3 border border-border rounded-lg bg-background"
               >
                 <option value="tutorial">教程指南</option>
@@ -501,7 +501,7 @@ export default function ContentCreatorPage() {
               <input
                 type="text"
                 value={topic}
-                onChange={e => setTopic(e.target.value)}
+                onChange={(e) => setTopic(e.target.value)}
                 placeholder="输入内容主题..."
                 className="w-full p-3 border border-border rounded-lg bg-background"
               />
@@ -511,7 +511,7 @@ export default function ContentCreatorPage() {
               <label className="block text-sm font-medium mb-2">钩子类型</label>
               <select
                 value={hookType}
-                onChange={e => setHookType(e.target.value)}
+                onChange={(e) => setHookType(e.target.value)}
                 className="w-full p-3 border border-border rounded-lg bg-background"
               >
                 <option value="question">疑问式</option>
@@ -653,7 +653,7 @@ export default function ContentCreatorPage() {
                 <label className="block text-sm font-medium mb-2">文本类型</label>
                 <select
                   value={textType}
-                  onChange={e => setTextType(e.target.value)}
+                  onChange={(e) => setTextType(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value="lorem">Lorem Ipsum</option>
@@ -664,7 +664,7 @@ export default function ContentCreatorPage() {
                 <label className="block text-sm font-medium mb-2">长度单位</label>
                 <select
                   value={length}
-                  onChange={e => setLength(e.target.value)}
+                  onChange={(e) => setLength(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value="word">单词</option>
@@ -677,7 +677,7 @@ export default function ContentCreatorPage() {
                 <input
                   type="number"
                   value={count}
-                  onChange={e => setCount(parseInt(e.target.value) || 1)}
+                  onChange={(e) => setCount(parseInt(e.target.value) || 1)}
                   min="1"
                   max="20"
                   className="w-full p-3 border border-border rounded-lg bg-background"
@@ -748,7 +748,7 @@ export default function ContentCreatorPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabs.map(tab => {
+            {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button

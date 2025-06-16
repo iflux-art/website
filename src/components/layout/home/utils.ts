@@ -11,12 +11,11 @@ import { GREETINGS_BY_TIME, type TimeOfDay } from '@/components/layout/home/data
  */
 export const getTimeOfDay = (): TimeOfDay => {
   const hour = new Date().getHours();
-  
-  if (hour >= 6 && hour <= 10) return 'morning';
-  if (hour >= 11 && hour <= 13) return 'noon';
-  if (hour >= 14 && hour <= 17) return 'afternoon';
-  if (hour >= 18 && hour <= 23) return 'evening';
-  return 'lateNight'; // 0-5点
+
+  if (hour >= 5 && hour <= 11) return 'morning';
+  if (hour >= 12 && hour <= 17) return 'afternoon';
+  if (hour >= 18 && hour <= 22) return 'evening';
+  return 'night'; // 23-4点
 };
 
 /**
@@ -98,7 +97,7 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
   wait: number
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -116,12 +115,12 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(
   limit: number
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
-  
+
   return (...args: Parameters<T>) => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };
@@ -163,11 +162,11 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
  */
 export const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';
-  
+
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
+
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 

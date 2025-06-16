@@ -2,8 +2,8 @@
 'use client';
 
 import { Tag, X } from 'lucide-react';
-import { Badge } from '../../ui/badge';
-import { Button } from '../../ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { ReactNode } from 'react';
 
 export interface TagFilterProps {
@@ -35,7 +35,7 @@ export function TagFilter({
   expanded = false,
   onExpandChange,
 }: TagFilterProps): ReactNode {
-  const processedTags = tags.map(tag =>
+  const processedTags = tags.map((tag) =>
     typeof tag === 'string' ? { name: tag, count: undefined } : tag
   );
 
@@ -83,7 +83,7 @@ export function TagFilter({
         )}
       </div>
       <div className="flex flex-wrap gap-2">
-        {visibleTags.map(tag => (
+        {visibleTags.map((tag) => (
           <Badge
             key={tag.name}
             variant={selectedTag === tag.name ? 'default' : variant}

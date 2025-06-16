@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { useTimelinePosts } from '@/components/layout/blog/use-blog';
-import type { BlogPost } from '@/components/layout/blog/blog-types';
+import { useTimelinePosts } from '@/hooks/use-blog';
+import type { BlogPost } from '@/types/blog-types';
 
 export interface BlogTimelineListProps {
   limit?: number;
@@ -37,16 +37,19 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
 
   const initialExpandedState = useMemo(() => {
     if (!postsByYear) return {};
-    return Object.keys(postsByYear).reduce((acc, year) => {
-      acc[year] = true;
-      return acc;
-    }, {} as Record<string, boolean>);
+    return Object.keys(postsByYear).reduce(
+      (acc, year) => {
+        acc[year] = true;
+        return acc;
+      },
+      {} as Record<string, boolean>
+    );
   }, [postsByYear]);
 
   const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>(initialExpandedState);
 
   const toggleYearExpand = useCallback((year: string) => {
-    setExpandedYears(prev => ({
+    setExpandedYears((prev) => ({
       ...prev,
       [year]: !prev[year],
     }));
@@ -66,7 +69,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
   const groupPostsByMonth = (posts: BlogPost[]) => {
     const postsByMonth: PostsByMonth = {};
 
-    posts.forEach(post => {
+    posts.forEach((post) => {
       if (post.date) {
         const date = new Date(post.date);
         const month = date.getMonth() + 1; // 月份从0开始，所以+1
@@ -108,7 +111,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
         {/* 时间轴线 */}
         <div className="absolute left-[120px] top-0 bottom-0 w-[2px] bg-border opacity-70" />
 
-        {displayYears.map(year => {
+        {displayYears.map((year) => {
           const isExpanded = expandedYears[year];
           const posts = postsByYear[year];
 
@@ -139,7 +142,7 @@ export function BlogTimelineList({ limit = Infinity }: BlogTimelineListProps) {
                     : 'space-y-5 transition-all duration-300 opacity-0 max-h-0 overflow-hidden'
                 }
               >
-                {posts.map(post => {
+                {posts.map((post) => {
                   const date = formatDate(post.date);
 
                   return (

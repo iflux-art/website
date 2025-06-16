@@ -15,6 +15,15 @@ import {
 } from 'lucide-react';
 
 // 根据时间段的问候语数据
+export type TimeOfDay = 'morning' | 'afternoon' | 'evening' | 'night';
+
+export const GREETINGS_BY_TIME: Record<TimeOfDay, string[]> = {
+  morning: ['早安', '早上好', '早'],
+  afternoon: ['午安', '下午好'],
+  evening: ['晚安', '晚上好'],
+  night: ['夜深了', '该休息了'],
+};
+
 // 推荐标签数据
 export const RECOMMENDATION_TAGS = {
   initial: [
@@ -62,9 +71,7 @@ export const AI_MODELS = [
 ] as const;
 
 // 背景样式类型
-export const BACKGROUND_STYLES = [
-  'wave',
-] as const;
+export const BACKGROUND_STYLES = ['wave'] as const;
 
 // 背景样式类型
 export type BackgroundStyle = (typeof BACKGROUND_STYLES)[number];

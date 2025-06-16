@@ -68,7 +68,7 @@ export interface NavLinkProps {
    * 是否为导航类型链接
    * 如果为 true，则不会自动添加 /docs 前缀
    */
-  isNavigation?: boolean;
+  _isNavigation?: boolean;
 }
 
 /**

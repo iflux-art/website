@@ -10,7 +10,9 @@ export interface SearchBarProps extends React.InputHTMLAttributes<HTMLInputEleme
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   ({ isLoading, onClear, className, value, ...props }, ref) => {
     return (
-      <div className={`relative flex items-center border-b border-border/30 dark:border-border/20 px-3 py-2.5 group hover:bg-accent/5 focus-within:bg-accent/10 transition-colors ${className || ''}`}>
+      <div
+        className={`relative flex items-center border-b border-border/30 dark:border-border/20 px-3 py-2.5 group hover:bg-accent/5 focus-within:bg-accent/10 transition-colors ${className || ''}`}
+      >
         <Search className="h-4 w-4 text-muted-foreground/70 group-hover:text-muted-foreground/90 transition-colors" />
         <Input
           ref={ref}
@@ -21,9 +23,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
           {...props}
         />
         <div className="flex items-center gap-2">
-          {isLoading && (
-            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground/70" />
-          )}
+          {isLoading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground/70" />}
           {value && !isLoading && onClear && (
             <button
               onClick={onClear}

@@ -7,8 +7,8 @@
 
 import { useMemo } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
-import { BlogPost } from '@/components/layout/blog/blog-types';
-export type { BlogPost } from '@/components/layout/blog/blog-types';
+import { BlogPost } from '@/types/blog-types';
+export type { BlogPost } from '@/types/blog-types';
 
 export interface TagCount {
   tag: string;
@@ -46,18 +46,29 @@ export function useBlogPosts() {
 
   const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
 
-  const postsCount = useMemo(() => {
-    return (
-      sortedPosts?.reduce((acc, post) => {
-        post.tags?.forEach(tag => {
-          acc[tag] = (acc[tag] || 0) + 1;
-        });
-        return acc;
-      }, {} as Record<string, number>) ?? {}
-    );
+  const { postsCount, categories } = useMemo(() => {
+    const postsCount: Record<string, number> = {};
+    const categoriesSet = new Set<string>();
+
+    sortedPosts?.forEach((post) => {
+      // 处理标签统计
+      post.tags?.forEach((tag) => {
+        postsCount[tag] = (postsCount[tag] || 0) + 1;
+      });
+
+      // 处理分类统计
+      if (post.category) {
+        categoriesSet.add(post.category);
+      }
+    });
+
+    return {
+      postsCount,
+      categories: Array.from(categoriesSet),
+    };
   }, [sortedPosts]);
 
-  return { posts: sortedPosts, postsCount, loading, error };
+  return { posts: sortedPosts, postsCount, categories, loading, error };
 }
 
 /**

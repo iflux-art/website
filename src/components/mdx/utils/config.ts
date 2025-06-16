@@ -1,4 +1,3 @@
-
 export const MDX_CONFIG = {
   // 缓存设置
   CACHE_MAX_AGE: 3600000, // 1小时
@@ -39,5 +38,5 @@ export const STYLE_CONFIG = {
     card: 'overflow-hidden hover:shadow-lg transition-all border border-border rounded-lg',
     cardFeatured: 'border-primary/30',
     grid: 'grid gap-6 my-8',
-  }
+  },
 } as const;

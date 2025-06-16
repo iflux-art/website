@@ -9,7 +9,7 @@ export const HOME_CONFIG = {
   title: '智能搜索与AI对话',
   subtitle: '探索知识，创造可能',
   description: '集成本地搜索、联网搜索和AI对话的智能平台',
-  
+
   // 搜索配置
   search: {
     placeholder: '有什么可以帮助您的吗？',
@@ -17,7 +17,7 @@ export const HOME_CONFIG = {
     debounceDelay: 300,
     minQueryLength: 1,
   },
-  
+
   // AI对话配置
   ai: {
     defaultModel: 'none',
@@ -25,7 +25,7 @@ export const HOME_CONFIG = {
     typingDelay: 50,
     maxTokens: 2000,
   },
-  
+
   // 背景效果配置
   background: {
     defaultStyle: 'default',
@@ -33,7 +33,7 @@ export const HOME_CONFIG = {
     animationSpeed: 'slow',
     enableParallax: true,
   },
-  
+
   // 动画配置
   animation: {
     fadeInDuration: 300,
@@ -41,28 +41,28 @@ export const HOME_CONFIG = {
     hoverTransition: 200,
     enableReducedMotion: true,
   },
-  
+
   // 响应式断点
   breakpoints: {
     mobile: 768,
     tablet: 1024,
     desktop: 1280,
   },
-  
+
   // 主题配置
   theme: {
     enableSystemTheme: true,
     defaultTheme: 'system',
     enableThemeTransition: true,
   },
-  
+
   // 性能配置
   performance: {
     enableVirtualization: true,
     enableServiceWorker: false,
     cacheStrategy: 'networkFirst',
   },
-  
+
   // 功能开关
   features: {
     enableLocalSearch: true,
@@ -72,7 +72,7 @@ export const HOME_CONFIG = {
     enableKeyboardShortcuts: true,
     enableAnalytics: false,
   },
-  
+
   // 键盘快捷键
   shortcuts: {
     focusSearch: 'cmd+k',
@@ -80,7 +80,7 @@ export const HOME_CONFIG = {
     submitSearch: 'enter',
     toggleTheme: 'cmd+shift+t',
   },
-  
+
   // API配置
   api: {
     searchEndpoint: '/api/search',
@@ -88,7 +88,7 @@ export const HOME_CONFIG = {
     timeout: 10000,
     retryAttempts: 3,
   },
-  
+
   // 缓存配置
   cache: {
     searchResults: {

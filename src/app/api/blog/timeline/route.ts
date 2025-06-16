@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { BlogPost } from '@/components/layout/blog/use-blog';
+import { BlogPost } from '@/hooks/use-blog';
 
 /**
  * 获取所有博客文章并按年份分组
@@ -47,12 +47,13 @@ function getPostsByYear(): Record<string, BlogPost[]> {
             slug: fullSlug,
             title: data.title || slug,
             date: data.date,
+            description: data.description || data.excerpt || '',
             excerpt: data.excerpt || '',
             tags: data.tags || [],
             author: data.author || '',
             authorAvatar: data.authorAvatar || null,
             authorBio: data.authorBio || '',
-            published: data.published !== false,
+            published: data.published ?? true,
           });
         }
       }
@@ -62,7 +63,7 @@ function getPostsByYear(): Record<string, BlogPost[]> {
   findPostsInDirectory(blogDir);
 
   // 对每个年份内的文章按日期排序（从新到旧）
-  Object.keys(postsByYear).forEach(year => {
+  Object.keys(postsByYear).forEach((year) => {
     postsByYear[year].sort((a, b) => {
       return new Date(b.date || '').getTime() - new Date(a.date || '').getTime();
     });

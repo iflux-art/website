@@ -1,4 +1,4 @@
-import { WebsiteMetadata } from '@/components/layout/navigation/common/navigation-types';
+import { WebsiteMetadata } from '@/types/navigation-types';
 
 /**
  * 解析网站元数据

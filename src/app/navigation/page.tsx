@@ -4,7 +4,7 @@ import React from 'react';
 import { NavigationHeader } from '@/components/layout/navigation/frontend/navigation-header';
 import { NavigationGrid } from '@/components/layout/navigation/frontend/navigation-grid';
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
-import { useNavigationData } from '@/components/layout/navigation/frontend/use-navigation-data';
+import { useNavigationData } from '@/hooks/use-navigation-data';
 export default function NavigationPage() {
   const {
     items,

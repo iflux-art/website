@@ -7,7 +7,7 @@ import {
   getCategories,
   getAllTags,
 } from '@/components/layout/navigation/admin/navigation-manage';
-import { NavigationFormData } from '@/components/layout/navigation/common/navigation-types';
+import { NavigationFormData } from '@/types/navigation-types';
 
 // GET - 获取导航数据
 export async function GET(request: NextRequest) {

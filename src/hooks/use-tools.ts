@@ -31,7 +31,7 @@ export function useToolFilter(tools: Tool[]) {
 
   // 根据分类和标签过滤工具
   const filteredTools = useMemo(() => {
-    return tools.filter(tool => {
+    return tools.filter((tool) => {
       const matchCategory = !selectedCategory || tool.category === selectedCategory;
       const matchTag = !selectedTag || (tool.tags && tool.tags.includes(selectedTag));
       return matchCategory && matchTag;
@@ -43,13 +43,13 @@ export function useToolFilter(tools: Tool[]) {
     // 根据当前分类筛选工具
     const categoryTools = !selectedCategory
       ? tools
-      : tools.filter(tool => tool.category === selectedCategory);
+      : tools.filter((tool) => tool.category === selectedCategory);
 
     // 计算标签统计
     const counts: Record<string, number> = {};
-    categoryTools.forEach(tool => {
+    categoryTools.forEach((tool) => {
       if (!tool.tags) return;
-      tool.tags.forEach(tag => {
+      tool.tags.forEach((tag) => {
         counts[tag] = (counts[tag] || 0) + 1;
       });
     });

@@ -7,7 +7,9 @@ import { MoreHorizontal } from 'lucide-react';
 import { RECOMMENDATION_TAGS } from '@/components/layout/home/data/constants';
 
 const DynamicMoreRecommendationTags = dynamic(() =>
-  import('@/components/layout/home/tags/more-recommendation-tags').then((mod) => mod.MoreRecommendationTags)
+  import('@/components/layout/home/tags/more-recommendation-tags').then(
+    (mod) => mod.MoreRecommendationTags
+  )
 );
 
 interface RecommendationTagsProps {

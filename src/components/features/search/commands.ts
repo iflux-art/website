@@ -1,5 +1,4 @@
-
-import { Command } from './types';
+import { Command } from '@/types/search-types';
 
 // 快捷命令列表
 export const COMMANDS: Command[] = [
@@ -13,7 +12,7 @@ export const COMMANDS: Command[] = [
     id: 'docs',
     title: '查看文档',
     description: '跳转到文档首页',
-    action: () => window.location.href = '/docs',
+    action: () => (window.location.href = '/docs'),
   },
   {
     id: 'github',

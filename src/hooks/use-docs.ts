@@ -10,6 +10,7 @@ import { SidebarItem } from '@/components/layout/docs/sidebar';
 import { docsSidebarCache } from '@/lib/local-storage-cache';
 import { useContentData } from '@/hooks/use-content-data';
 import { DocItem, DocCategory, DocMeta, DocListItem } from '@/types/docs-types';
+export type { DocListItem };
 
 /**
  * 使用文档分类
@@ -178,7 +179,7 @@ export function useDocSidebar(category: string) {
         if (fallbackResponse.ok && Array.isArray(fallbackData) && fallbackData.length > 0) {
           console.log(`使用旧方法获取分类 ${category} 的侧边栏结构`);
 
-          const mappedItems = fallbackData.map(doc => ({
+          const mappedItems = fallbackData.map((doc) => ({
             title: doc.title,
             href: doc.path,
           }));

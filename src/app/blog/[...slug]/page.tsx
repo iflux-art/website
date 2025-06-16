@@ -11,19 +11,57 @@ import { extractHeadings } from '@/components/layout/toc/extract-headings';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+  const { slug } = resolvedParams;
   const fullSlug = slug.join('/');
+
   // 构建文件路径
   const blogRoot = path.join(process.cwd(), 'src', 'content', 'blog');
-  const possiblePaths = [
-    path.join(blogRoot, `${fullSlug}.mdx`),
-    path.join(blogRoot, `${fullSlug}.md`),
-  ];
+  const requestedPath = slug.join('/');
+  const absoluteRequestedPath = path.join(blogRoot, requestedPath);
+  let filePath: string | undefined;
 
-  // 查找存在的文件
-  const filePath = possiblePaths.find(p => fs.existsSync(p));
+  // 1. 检查是否是目录请求
+  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
+    const indexMdxPath = path.join(absoluteRequestedPath, 'index.mdx');
+    const indexMdPath = path.join(absoluteRequestedPath, 'index.md');
+
+    if (fs.existsSync(indexMdxPath)) {
+      filePath = indexMdxPath;
+    } else if (fs.existsSync(indexMdPath)) {
+      filePath = indexMdPath;
+    }
+  }
+
+  // 2. 如果不是目录或目录中没有索引文件，尝试直接文件路径
   if (!filePath) {
-    throw new Error('博客文章未找到');
+    const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
+    if (fs.existsSync(possiblePathMdx)) {
+      filePath = possiblePathMdx;
+    } else {
+      const possiblePathMd = `${absoluteRequestedPath}.md`;
+      if (fs.existsSync(possiblePathMd)) {
+        filePath = possiblePathMd;
+      }
+    }
+  }
+
+  // 收集所有可能的文件路径用于错误报告
+  const possiblePaths = {
+    indexMdx: path.join(absoluteRequestedPath, 'index.mdx'),
+    indexMd: path.join(absoluteRequestedPath, 'index.md'),
+    directMdx: `${absoluteRequestedPath}.mdx`,
+    directMd: `${absoluteRequestedPath}.md`,
+  };
+  if (!filePath) {
+    console.error('Failed to find blog post:', {
+      params: resolvedParams,
+      slug,
+      fullSlug,
+      possiblePaths,
+      cwd: process.cwd(),
+      blogRoot,
+    });
+    throw new Error(`博客文章未找到: ${fullSlug}`);
   }
   // 读取文件内容
   const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -89,7 +127,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </main>
 
           {/* 右侧目录 */}
-          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
+          <aside className="hidden xl:block w-64 max-w-64 box-border pr-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
             <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
           </aside>
         </div>

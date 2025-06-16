@@ -7,10 +7,10 @@
  */
 export interface ContentOptions {
   /** 内容类型 */
-  type: 'blog' | 'docs';
+  type?: 'blog' | 'docs' | 'journal';
 
   /** API请求的基础路径 */
-  path: string;
+  path?: string;
 
   /** 完整的API请求URL，如果提供则优先使用此URL而不是path */
   url?: string;

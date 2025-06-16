@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
+import { BlogPost } from '@/types/blog-types';
 
 // 获取所有博客文章
-function getAllPosts() {
+function getAllPosts(): BlogPost[] {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 
-  const posts = [];
+  const posts: BlogPost[] = [];
 
   // 递归函数来查找所有博客文件
   const findPosts = (dir: string) => {
@@ -42,9 +43,11 @@ function getAllPosts() {
           posts.push({
             slug,
             title: data.title || slug,
+            description: data.description || '暂无描述',
             excerpt: data.excerpt || '点击阅读全文',
             date: data.date,
             tags: data.tags || [],
+            category: data.category || '未分类',
           });
         }
       }

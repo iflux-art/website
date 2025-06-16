@@ -90,8 +90,8 @@ export function useNavbarScroll() {
             pathSegments.length === 1
               ? '博客'
               : pathSegments[1] === 'timeline'
-              ? '博客时间轴'
-              : '博客文章',
+                ? '博客时间轴'
+                : '博客文章',
           navigation: '网址导航',
           friends: '友情链接',
         };

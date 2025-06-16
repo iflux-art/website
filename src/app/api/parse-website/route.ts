@@ -37,10 +37,14 @@ function isValidUrl(urlString: string): boolean {
 }
 
 // 延时函数
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // 创建带重试的 fetch 函数
-async function fetchWithRetry(url: string, options: RequestInit, retries = MAX_RETRIES): Promise<Response> {
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  retries = MAX_RETRIES
+): Promise<Response> {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
@@ -87,20 +91,13 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
     '';
 
   // 网站名称
-  const siteName =
-    $('meta[property="og:site_name"]').attr('content') ||
-    '';
+  const siteName = $('meta[property="og:site_name"]').attr('content') || '';
 
   // 内容类型
-  const type =
-    $('meta[property="og:type"]').attr('content') ||
-    '';
+  const type = $('meta[property="og:type"]').attr('content') || '';
 
   // 语言
-  const language =
-    $('html').attr('lang') ||
-    $('meta[property="og:locale"]').attr('content') ||
-    '';
+  const language = $('html').attr('lang') || $('meta[property="og:locale"]').attr('content') || '';
 
   // 图标处理
   let icon = '';
@@ -153,10 +150,7 @@ export async function GET(request: NextRequest) {
 
   // URL 验证
   if (!url || !isValidUrl(url)) {
-    return NextResponse.json(
-      { error: 'Invalid or missing URL' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid or missing URL' }, { status: 400 });
   }
 
   try {
@@ -169,12 +163,13 @@ export async function GET(request: NextRequest) {
     // 请求配置
     const options = {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
-        'DNT': '1',
-        'Connection': 'keep-alive',
+        DNT: '1',
+        Connection: 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
       },
       signal: AbortSignal.timeout(10000),
@@ -195,7 +190,6 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json(metadata);
-
   } catch (error) {
     console.error('Error parsing website:', error);
 

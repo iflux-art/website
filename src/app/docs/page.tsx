@@ -1,4 +1,5 @@
-// page.tsx
+'use client';
+
 import DocCategories from '@/components/layout/docs/doc-categories';
 
 export default function DocsPage() {

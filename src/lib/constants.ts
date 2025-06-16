@@ -104,7 +104,8 @@ export const PWA_CONFIG: PwaConfig = {
 };
 // 移动设备配置
 export const MOBILE_CONFIG: MobileConfig = {
-  viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
+  viewport:
+    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
   formatDetection: 'telephone=no',
   msapplicationTapHighlight: 'no',
 };
@@ -119,19 +120,23 @@ export const IOS_CONFIG: IosConfig = {
   splashScreens: [
     {
       href: '/images/splash/apple-splash-2048-2732.png',
-      media: '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+      media:
+        '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
       href: '/images/splash/apple-splash-1668-2388.png',
-      media: '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+      media:
+        '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
       href: '/images/splash/apple-splash-1536-2048.png',
-      media: '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+      media:
+        '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
       href: '/images/splash/apple-splash-1125-2436.png',
-      media: '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+      media:
+        '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
     },
   ],
 };

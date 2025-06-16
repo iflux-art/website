@@ -6,7 +6,7 @@ import { ChevronRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { useDocSidebar } from '@/components/layout/docs/use-docs';
+import { useDocSidebar } from '@/hooks/use-docs';
 import { NavLink } from '@/components/ui/nav-link';
 
 /**
@@ -71,7 +71,7 @@ interface SidebarProps {
    * 如果为 true，则不会自动添加 /docs 前缀
    * @default false
    */
-  isNavigation?: boolean;
+  _isNavigation?: boolean;
 }
 
 /**
@@ -79,7 +79,7 @@ interface SidebarProps {
  *
  * 用于显示文档的侧边栏导航，支持嵌套分类和高亮当前文档
  */
-export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarProps) {
+export function Sidebar({ category, currentDoc, _isNavigation = false }: SidebarProps) {
   const pathname = usePathname();
   const { items, loading, error } = useDocSidebar(category);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
@@ -92,7 +92,7 @@ export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarP
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories(prev => {
+      setOpenCategories((prev) => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
@@ -182,7 +182,7 @@ export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarP
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 onMouseEnter={() => handleMouseEnter(itemId)}
                 onMouseLeave={handleMouseLeave}
-                isNavigation={isNavigation}
+                _isNavigation={_isNavigation}
               >
                 <span>{item.title}</span>
                 {isExternal && (
@@ -216,7 +216,7 @@ export function Sidebar({ category, currentDoc, isNavigation = false }: SidebarP
       handleOpenChange,
       handleMouseEnter,
       handleMouseLeave,
-      isNavigation,
+      _isNavigation,
     ]
   );
 

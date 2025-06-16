@@ -1,8 +1,8 @@
 import React from 'react';
-import { SearchResult } from './types';
+import { SearchResult } from '@/types/search-types';
 import { ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { TYPE_LABELS } from './commands';
+import { TYPE_LABELS } from '@/components/features/search/commands';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -61,7 +61,7 @@ export function SearchResults({
             </div>
             {result.type === 'history' ? (
               <button
-                onClick={e => {
+                onClick={(e) => {
                   e.stopPropagation();
                   onHistoryClick(result.title);
                 }}

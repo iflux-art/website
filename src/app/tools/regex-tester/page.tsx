@@ -169,7 +169,7 @@ export default function RegexTesterPage() {
     },
     {
       label: '复制匹配项',
-      onClick: () => copyToClipboard(matches.map(m => m[0]).join('\n')),
+      onClick: () => copyToClipboard(matches.map((m) => m[0]).join('\n')),
       icon: copied ? Check : Copy,
       variant: 'outline' as const,
       disabled: matches.length === 0,
@@ -278,7 +278,7 @@ export default function RegexTesterPage() {
                   <input
                     type="text"
                     value={pattern}
-                    onChange={e => setPattern(e.target.value)}
+                    onChange={(e) => setPattern(e.target.value)}
                     placeholder="输入正则表达式..."
                     className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
@@ -306,7 +306,7 @@ export default function RegexTesterPage() {
                         <input
                           type="checkbox"
                           checked={flags.includes(flag)}
-                          onChange={e => {
+                          onChange={(e) => {
                             if (e.target.checked) {
                               setFlags(flags + flag);
                             } else {
@@ -333,7 +333,7 @@ export default function RegexTesterPage() {
               <CardContent>
                 <textarea
                   value={testString}
-                  onChange={e => setTestString(e.target.value)}
+                  onChange={(e) => setTestString(e.target.value)}
                   placeholder="输入要测试的字符串..."
                   className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                 />
@@ -347,7 +347,7 @@ export default function RegexTesterPage() {
                   匹配结果 ({matches.length} 个匹配)
                   {matches.length > 0 && (
                     <Button
-                      onClick={() => copyToClipboard(matches.map(m => m[0]).join('\n'))}
+                      onClick={() => copyToClipboard(matches.map((m) => m[0]).join('\n'))}
                       variant="outline"
                       size="sm"
                       className="flex items-center gap-2"

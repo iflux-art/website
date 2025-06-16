@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { Tag, Clock } from 'lucide-react';
 
@@ -12,9 +11,7 @@ export function BlogNav({ active }: BlogNavProps) {
       <Link
         href="/blog"
         className={`flex items-center gap-2 px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all ${
-          active === 'posts'
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-muted hover:bg-muted/80'
+          active === 'posts' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
         }`}
       >
         <Tag className="h-4 w-4" />

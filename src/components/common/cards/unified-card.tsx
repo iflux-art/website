@@ -94,11 +94,11 @@ export function UnifiedCard({
   const tagArray = Array.isArray(tags)
     ? tags
     : typeof tags === 'string'
-    ? tags
-        .split(',')
-        .map(tag => tag.trim())
-        .filter(Boolean)
-    : [];
+      ? tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+      : [];
 
   const renderIcon = () => {
     if (!icon) return null;
@@ -151,16 +151,18 @@ export function UnifiedCard({
             {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
           </div>
           <h3 className="text-xl font-semibold mb-2">{title}</h3>
-          {description && <p className="text-muted-foreground text-sm flex-grow">{description}</p>}
+          {description && (
+            <p className="text-muted-foreground text-sm flex-grow line-clamp-1">{description}</p>
+          )}
 
           {tagArray.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-4">
-              {tagArray.map(tag => (
+              {tagArray.map((tag) => (
                 <Badge
                   key={tag}
                   variant="outline"
                   className="text-xs cursor-pointer hover:bg-primary/10"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onTagClick?.(tag);
@@ -207,19 +209,19 @@ export function UnifiedCard({
                 )}
               </div>
               {description && (
-                <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
+                <p className="text-muted-foreground text-sm line-clamp-1">{description}</p>
               )}
             </div>
           </div>
 
           {tagArray.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
-              {tagArray.map(tag => (
+              {tagArray.map((tag) => (
                 <Badge
                   key={tag}
                   variant="outline"
                   className="text-xs cursor-pointer hover:bg-primary/10"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onTagClick?.(tag);
@@ -260,12 +262,12 @@ export function UnifiedCard({
             )}
             {tagArray.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {tagArray.map(tag => (
+                {tagArray.map((tag) => (
                   <Badge
                     key={tag}
                     variant="outline"
                     className="text-xs cursor-pointer hover:bg-primary/10"
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       onTagClick?.(tag);

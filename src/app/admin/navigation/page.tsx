@@ -30,11 +30,7 @@ import {
   Globe,
 } from 'lucide-react';
 import { NavigationForm } from '@/components/layout/navigation/admin/navigation-form';
-import {
-  NavigationItem,
-  NavigationFormData,
-  NavigationCategory,
-} from '@/components/layout/navigation/common/navigation-types';
+import { NavigationItem, NavigationFormData, NavigationCategory } from '@/types/navigation-types';
 
 export default function NavigationAdminPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);
@@ -60,16 +56,16 @@ export default function NavigationAdminPage() {
 
     if (searchTerm) {
       filtered = filtered.filter(
-        item =>
+        (item) =>
           item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+          item.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
 
     if (selectedCategory) {
-      filtered = filtered.filter(item => item.category === selectedCategory);
+      filtered = filtered.filter((item) => item.category === selectedCategory);
     }
 
     setFilteredItems(filtered);
@@ -79,8 +75,8 @@ export default function NavigationAdminPage() {
     try {
       setIsLoading(true);
       const [navigationData, categoriesData] = await Promise.all([
-        fetch('/api/navigation').then(res => res.json()),
-        fetch('/api/navigation?type=categories').then(res => res.json()),
+        fetch('/api/navigation').then((res) => res.json()),
+        fetch('/api/navigation?type=categories').then((res) => res.json()),
       ]);
 
       setItems(navigationData.items || []);
@@ -113,7 +109,7 @@ export default function NavigationAdminPage() {
       }
 
       const newItem = await response.json();
-      setItems(prev => [...prev, newItem]);
+      setItems((prev) => [...prev, newItem]);
       setShowAddDialog(false);
       showAlert('success', '网址添加成功');
     } catch (error) {
@@ -145,7 +141,7 @@ export default function NavigationAdminPage() {
       }
 
       const updatedItem = await response.json();
-      setItems(prev => prev.map(item => (item.id === editingItem.id ? updatedItem : item)));
+      setItems((prev) => prev.map((item) => (item.id === editingItem.id ? updatedItem : item)));
       setEditingItem(null);
       showAlert('success', '网址更新成功');
     } catch (error) {
@@ -172,7 +168,7 @@ export default function NavigationAdminPage() {
         throw new Error('Failed to delete item');
       }
 
-      setItems(prev => prev.filter(item => item.id !== deletingItem.id));
+      setItems((prev) => prev.filter((item) => item.id !== deletingItem.id));
       setDeletingItem(null);
       showAlert('success', '网址删除成功');
     } catch (error) {
@@ -182,7 +178,7 @@ export default function NavigationAdminPage() {
   };
 
   const getCategoryName = (categoryId: string) => {
-    const category = categories.find(cat => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     return category?.name || categoryId;
   };
 
@@ -341,7 +337,7 @@ export default function NavigationAdminPage() {
                 <Input
                   placeholder="搜索网址、标题、描述或标签..."
                   value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
                 />
               </div>
@@ -349,11 +345,11 @@ export default function NavigationAdminPage() {
             <div className="w-48">
               <select
                 value={selectedCategory}
-                onChange={e => setSelectedCategory(e.target.value)}
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
               >
                 <option value="">所有分类</option>
-                {categories.map(category => (
+                {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>

@@ -12,12 +12,12 @@ const nextConfig = {
   // 基本配置
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 
-  // 忽略构建错误
+  // ESLint 和 TypeScript 错误检查配置
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: process.env.NODE_ENV === 'development',
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: process.env.NODE_ENV === 'development',
   },
 
   // 实验性功能

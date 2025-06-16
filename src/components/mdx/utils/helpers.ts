@@ -1,4 +1,3 @@
-
 import { MDX_CONFIG, STYLE_CONFIG } from './config';
 import type { ResourceCardProps, ResourceGridProps } from '../types';
 
@@ -19,9 +18,9 @@ export function debounce<Args extends unknown[], R>(
 }
 
 // URL验证
-export const isValidUrl = (url: string): boolean => {
+export const isValidUrl = (href: string): boolean => {
   try {
-    new URL(url);
+    new URL(href);
     return true;
   } catch {
     return false;
@@ -40,31 +39,31 @@ export const escapeHtml = (unsafe: string): string => {
 
 // 获取网格列数类名
 export const getGridColumns = (columns: ResourceGridProps['columns']): string => {
-  return STYLE_CONFIG.GRID_COLUMNS[columns];
+  const col = String(columns || 3) as keyof typeof STYLE_CONFIG.GRID_COLUMNS;
+  return STYLE_CONFIG.GRID_COLUMNS[col];
 };
 
 // 创建资源卡片HTML
 export const createResourceCardHTML = ({
   title,
   description,
-  url,
+  href,
   icon,
   tags,
   featured,
 }: ResourceCardProps): string => {
-  if (!isValidUrl(url)) {
-    throw new Error(`Invalid URL: ${url}`);
+  if (href && !isValidUrl(href)) {
+    throw new Error(`Invalid href: ${href}`);
   }
 
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
-  const safeIcon = escapeHtml(icon);
 
-  const tagsList = tags.length
+  const tagsList = tags?.length
     ? `<div class="flex flex-wrap gap-2 mt-3">
         ${tags
           .map(
-            tag =>
+            (tag) =>
               `<span class="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground">
                 ${escapeHtml(tag.trim())}
               </span>`
@@ -84,11 +83,15 @@ export const createResourceCardHTML = ({
   return `
     <div class="${STYLE_CONFIG.BASE_CLASSES.card} ${featured ? STYLE_CONFIG.BASE_CLASSES.cardFeatured : ''}">
       <div class="p-4 flex flex-col h-full">
-        <div class="flex items-start mb-3">
+        ${
+          icon
+            ? `<div class="flex items-start mb-3">
           <div class="text-3xl">
-            <span class="text-primary">${safeIcon}</span>
+            <span class="text-primary">${icon}</span>
           </div>
-        </div>
+        </div>`
+            : ''
+        }
         <h3 class="text-xl font-semibold mb-2">${safeTitle}</h3>
         <p class="text-muted-foreground text-sm flex-grow">${safeDescription}</p>
         ${tagsList}
@@ -105,8 +108,9 @@ class MDXCache {
   set(key: string, content: string): void {
     if (this.cache.size >= MDX_CONFIG.CACHE_MAX_ITEMS) {
       // 删除最旧的缓存项
-      const oldestKey = Array.from(this.cache.entries())
-        .sort(([, a], [, b]) => a.timestamp - b.timestamp)[0][0];
+      const oldestKey = Array.from(this.cache.entries()).sort(
+        ([, a], [, b]) => a.timestamp - b.timestamp
+      )[0][0];
       this.cache.delete(oldestKey);
     }
     this.cache.set(key, { content, timestamp: Date.now() });
@@ -136,7 +140,7 @@ export const generateCacheKey = (content: string): string => {
   let hash = 0;
   for (let i = 0; i < content.length; i++) {
     const char = content.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
   return `mdx_${hash}`;

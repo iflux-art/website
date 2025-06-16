@@ -1,14 +1,13 @@
 {
-  "parser": "@typescript-eslint/parser", // Explicitly set parser
-  "plugins": [
-    "@typescript-eslint" // Explicitly add plugin
-  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended", // Add recommended TS rules
-    "next/core-web-vitals"
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "react/prop-types": "off",
@@ -18,11 +17,12 @@
     "react/no-unknown-property": [2, { "ignore": ["jsx", "global"] }],
     "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "off",
-    "no-unused-vars": "off", // Keep JS version off if TS version is used
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Enable TS version, warn for unused vars except those starting with _
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-undef": "off",
     "@next/next/no-img-element": "off",
-    "jsx-a11y/alt-text": "off"
+    "jsx-a11y/alt-text": "off",
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
   },
   "settings": {
     "react": {

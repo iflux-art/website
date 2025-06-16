@@ -1,6 +1,6 @@
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { UnifiedGrid } from '@/components/layout/unified-grid';
-import { NavigationItem } from './navigation-types';
+import { NavigationItem } from '@/types/navigation-types';
 
 interface NavigationGridProps {
   items: NavigationItem[];
@@ -16,7 +16,7 @@ export function NavigationGrid({
   selectedTag,
 }: NavigationGridProps) {
   return (
-    <UnifiedGrid columns={4}>
+    <UnifiedGrid columns={4} className="items-stretch">
       {items.length === 0 ? (
         <div className="col-span-full text-center py-12">
           <p className="text-muted-foreground">
@@ -24,19 +24,20 @@ export function NavigationGrid({
           </p>
         </div>
       ) : (
-        items.map(item => (
+        items.map((item) => (
           <UnifiedCard
             key={item.id}
             type="category"
             variant="compact"
             title={item.title}
-            description={item.description}
+            description={item.description || item.url}
             href={item.url}
             icon={item.icon}
-            iconType={item.iconType || 'text'}
+            iconType={item.iconType === 'text' ? 'component' : item.iconType}
             isExternal={true}
             tags={item.tags}
             onTagClick={onTagClick}
+            className="hover:border-primary/50 hover:bg-muted/50 h-full"
           />
         ))
       )}

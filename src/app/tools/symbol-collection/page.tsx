@@ -575,7 +575,7 @@ export default function SymbolCollectionPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b overflow-x-auto">
-            {tabs.map(tab => {
+            {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button

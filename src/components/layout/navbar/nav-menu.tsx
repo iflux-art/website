@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { NAV_ITEMS, ADMIN_MENU_ITEMS, NAV_DESCRIPTIONS } from '@/components/layout/navbar/nav';
-import { useAuthState } from '@/components/features/auth/use-auth-state';
+import { useAuthState } from '@/hooks/use-auth-state';
 import { useActiveSection } from '@/hooks/use-active-section';
 
 interface NavProps {
@@ -25,7 +25,7 @@ function NavLinks({ onClose, className }: NavProps) {
         className
       )}
     >
-      {NAV_ITEMS.map(item => (
+      {NAV_ITEMS.map((item) => (
         <li
           key={item.key}
           className="w-full lg:w-auto transition-all duration-300 hover:scale-105 active:scale-95"
@@ -53,7 +53,7 @@ function NavCards({ onClose, className }: NavProps) {
 
   return (
     <div className={cn('grid grid-cols-1 sm:grid-cols-2 gap-4', className)}>
-      {NAV_ITEMS.map(item => (
+      {NAV_ITEMS.map((item) => (
         <Link
           key={item.key}
           href={`/${item.key}`}
@@ -101,7 +101,7 @@ function AdminMenu({ onClose }: NavProps) {
         <h3 className="text-sm font-medium text-muted-foreground">管理后台</h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {ADMIN_MENU_ITEMS.map(item => {
+        {ADMIN_MENU_ITEMS.map((item) => {
           const Icon = item.icon;
           return (
             <Link

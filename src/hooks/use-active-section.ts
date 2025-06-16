@@ -1,9 +1,8 @@
-
 import { usePathname } from 'next/navigation';
 
 /**
  * Hook for checking if a path section is currently active
- * 
+ *
  * @returns A function that checks if a given path is active
  */
 export function useActiveSection() {

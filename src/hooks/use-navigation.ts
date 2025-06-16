@@ -11,7 +11,7 @@ import {
   NavigationItem as Resource,
   Subcategory,
   Link,
-} from '@/components/layout/navigation/common/navigation-types';
+} from '@/types/navigation-types';
 import { useContentData } from '@/hooks/use-content-data';
 
 /**
@@ -111,12 +111,12 @@ export function useCategoryResources(categoryId: string) {
   }, [data]);
 
   const categories = useMemo(() => {
-    return [...new Set(resources.map(resource => resource.category))];
+    return [...new Set(resources.map((resource) => resource.category))];
   }, [resources]);
 
   const filteredResources = useMemo(() => {
     return selectedCategory
-      ? resources.filter(resource => resource.category === selectedCategory)
+      ? resources.filter((resource) => resource.category === selectedCategory)
       : resources;
   }, [resources, selectedCategory]);
 
@@ -149,7 +149,7 @@ export function useCategoryDetails(categoryId: string) {
   });
 
   const category = useMemo(
-    () => categories?.find(cat => cat.id === categoryId) || null,
+    () => categories?.find((cat) => cat.id === categoryId) || null,
     [categories, categoryId]
   );
 

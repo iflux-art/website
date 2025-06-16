@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import fs from 'fs';
+import path from 'path';
+import type { NavigationCategory, NavigationItem } from '@/types/navigation-types';
+import type { NavigationData } from '@/types/navigation-types';
 import { navigation } from '@/components/layout/navigation/common/navigation-data';
-import type { Category, Item } from '@/components/layout/navigation/common/navigation-data';
-import type { NavigationData } from '@/components/layout/navigation/common/navigation-types';
+
+const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'categories.json');
+const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'items.json');
 /**
  * 确保数据目录存在
  */
@@ -89,14 +94,16 @@ export function writeNavigationData(data: NavigationData): void {
 /**
  * 添加导航项
  */
-export function addNavigationItem(item: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Item {
+export function addNavigationItem(
+  item: Omit<NavigationItem, 'id' | 'createdAt' | 'updatedAt'>
+): NavigationItem {
   // 检查 URL 是否已存在
-  const existingItem = navigation.items.find(existing => existing.url === item.url);
+  const existingItem = navigation.items.find((existing) => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
 
-  const newItem: Item = {
+  const newItem: NavigationItem = {
     ...item,
     id: `item_${Date.now()}`,
     createdAt: new Date().toISOString(),
@@ -108,13 +115,13 @@ export function addNavigationItem(item: Omit<Item, 'id' | 'createdAt' | 'updated
 /**
  * 更新导航项
  */
-export function updateNavigationItem(id: string, updates: Partial<Item>): Item {
-  const item = navigation.items.find(item => item.id === id);
+export function updateNavigationItem(id: string, updates: Partial<NavigationItem>): NavigationItem {
+  const item = navigation.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
 
-  const updatedItem: Item = {
+  const updatedItem: NavigationItem = {
     ...item,
     ...updates,
     updatedAt: new Date().toISOString(),
@@ -126,7 +133,7 @@ export function updateNavigationItem(id: string, updates: Partial<Item>): Item {
  * 删除导航项
  */
 export function deleteNavigationItem(id: string): void {
-  const item = navigation.items.find(item => item.id === id);
+  const item = navigation.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
@@ -134,7 +141,7 @@ export function deleteNavigationItem(id: string): void {
 /**
  * 获取所有分类
  */
-export function getCategories(): Category[] {
+export function getCategories(): NavigationCategory[] {
   return navigation.categories;
 }
 /**
@@ -142,8 +149,8 @@ export function getCategories(): Category[] {
  */
 export function getAllTags(): string[] {
   const tags = new Set<string>();
-  navigation.items.forEach(item => {
-    item.tags.forEach(tag => tags.add(tag));
+  navigation.items.forEach((item) => {
+    item.tags.forEach((tag) => tags.add(tag));
   });
   return Array.from(tags).sort();
 }

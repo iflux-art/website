@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Hash, Text } from 'lucide-react';
-import { useHeadingObserver } from './use-heading-observer';
+import { useHeadingObserver } from '../../../hooks/use-heading-observer';
 
 /**
  * 标题项类型
@@ -116,10 +116,10 @@ export function TableOfContents({
     }
   }, [activeId]);
 
-// 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
+  // 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
   // 过滤掉h1标题，只显示h2-h4
-  const filteredHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
+  const filteredHeadings = headings.filter((heading) => heading.level >= 2 && heading.level <= 4);
 
   // 根据标题级别对目录进行分组和嵌套
   const organizeHeadings = (headings: Heading[]) => {
@@ -171,7 +171,7 @@ export function TableOfContents({
   }, [adaptive, adaptiveOffset, isFixed]);
 
   return (
-    <div className={cn('pl-0', className)}>
+    <div className={cn('pl-0 overflow-hidden', className)}>
       <div
         ref={tocRef}
         className={cn(
@@ -202,7 +202,7 @@ export function TableOfContents({
                 key={index}
                 href={`#${heading.id}`}
                 className={cn(
-                  'flex items-center py-1.5 text-sm transition-colors group',
+                  'flex items-start py-1.5 text-sm transition-colors group min-w-0',
                   headingSize,
                   {
                     'text-primary font-medium bg-accent/50 rounded-md': activeId === heading.id,
@@ -213,7 +213,7 @@ export function TableOfContents({
                 style={{
                   paddingLeft: heading.level > 2 ? `calc(${indent}rem + 0.5rem)` : '0.5rem',
                 }}
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
                   const element = document.getElementById(heading.id);
                   if (element) {
@@ -230,7 +230,7 @@ export function TableOfContents({
                     // 更新 URL 中的锚点，但不触发滚动
                     history.pushState(null, '', `#${heading.id}`);
 
-// 删除该行，因为活动ID现在由 hook 管理
+                    // 删除该行，因为活动ID现在由 hook 管理
                   }
                 }}
               >
@@ -240,7 +240,7 @@ export function TableOfContents({
                     activeId === heading.id ? 'opacity-100 text-primary' : ''
                   )}
                 />
-                <span className="truncate">{heading.text}</span>
+                <span className="break-words whitespace-normal min-w-0 w-full">{heading.text}</span>
               </a>
             );
           })}

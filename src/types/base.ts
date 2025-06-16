@@ -38,3 +38,23 @@ export interface BaseCategory {
 export interface BaseMeta {
   [key: string]: string | unknown;
 }
+
+/**
+ * 通用处理状态接口
+ */
+export interface ProcessingState {
+  /** 是否正在处理中 */
+  isProcessing: boolean;
+  /** 错误信息 */
+  error: Error | null;
+  /** 已处理数量 */
+  processedCount: number;
+  /** 总数量 */
+  totalCount: number;
+  /** 剩余任务数 */
+  remainingTasks: number;
+  /** 失败任务数 */
+  failedTasks: number;
+  /** 平均处理时间 */
+  averageProcessingTime: number;
+}

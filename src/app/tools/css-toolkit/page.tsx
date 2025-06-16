@@ -58,7 +58,7 @@ export default function CssToolkitPage() {
                   min="-50"
                   max="50"
                   value={offsetX}
-                  onChange={e => setOffsetX(Number(e.target.value))}
+                  onChange={(e) => setOffsetX(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{offsetX}px</span>
@@ -71,7 +71,7 @@ export default function CssToolkitPage() {
                   min="-50"
                   max="50"
                   value={offsetY}
-                  onChange={e => setOffsetY(Number(e.target.value))}
+                  onChange={(e) => setOffsetY(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{offsetY}px</span>
@@ -84,7 +84,7 @@ export default function CssToolkitPage() {
                   min="0"
                   max="50"
                   value={blurRadius}
-                  onChange={e => setBlurRadius(Number(e.target.value))}
+                  onChange={(e) => setBlurRadius(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{blurRadius}px</span>
@@ -97,7 +97,7 @@ export default function CssToolkitPage() {
                   min="-20"
                   max="20"
                   value={spreadRadius}
-                  onChange={e => setSpreadRadius(Number(e.target.value))}
+                  onChange={(e) => setSpreadRadius(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{spreadRadius}px</span>
@@ -108,7 +108,7 @@ export default function CssToolkitPage() {
                 <input
                   type="color"
                   value={color}
-                  onChange={e => setColor(e.target.value)}
+                  onChange={(e) => setColor(e.target.value)}
                   className="w-full p-3 rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
                 />
               </div>
@@ -121,7 +121,7 @@ export default function CssToolkitPage() {
                   max="1"
                   step="0.01"
                   value={opacity}
-                  onChange={e => setOpacity(Number(e.target.value))}
+                  onChange={(e) => setOpacity(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{opacity}</span>
@@ -194,7 +194,7 @@ export default function CssToolkitPage() {
                   min="0"
                   max="50"
                   value={topLeft}
-                  onChange={e => setTopLeft(Number(e.target.value))}
+                  onChange={(e) => setTopLeft(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{topLeft}px</span>
@@ -207,7 +207,7 @@ export default function CssToolkitPage() {
                   min="0"
                   max="50"
                   value={topRight}
-                  onChange={e => setTopRight(Number(e.target.value))}
+                  onChange={(e) => setTopRight(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{topRight}px</span>
@@ -220,7 +220,7 @@ export default function CssToolkitPage() {
                   min="0"
                   max="50"
                   value={bottomRight}
-                  onChange={e => setBottomRight(Number(e.target.value))}
+                  onChange={(e) => setBottomRight(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{bottomRight}px</span>
@@ -233,7 +233,7 @@ export default function CssToolkitPage() {
                   min="0"
                   max="50"
                   value={bottomLeft}
-                  onChange={e => setBottomLeft(Number(e.target.value))}
+                  onChange={(e) => setBottomLeft(Number(e.target.value))}
                   className="w-full"
                 />
                 <span className="text-sm text-muted-foreground">{bottomLeft}px</span>
@@ -336,7 +336,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">方向 (flex-direction)</label>
                 <select
                   value={direction}
-                  onChange={e => setDirection(e.target.value as typeof direction)}
+                  onChange={(e) => setDirection(e.target.value as typeof direction)}
                   className="w-full p-4 text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="row">row</option>
@@ -350,7 +350,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">主轴对齐 (justify-content)</label>
                 <select
                   value={justify}
-                  onChange={e => setJustify(e.target.value as typeof justify)}
+                  onChange={(e) => setJustify(e.target.value as typeof justify)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="flex-start">flex-start</option>
@@ -366,7 +366,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">交叉轴对齐 (align-items)</label>
                 <select
                   value={align}
-                  onChange={e => setAlign(e.target.value as typeof align)}
+                  onChange={(e) => setAlign(e.target.value as typeof align)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="stretch">stretch</option>
@@ -381,7 +381,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">换行 (flex-wrap)</label>
                 <select
                   value={wrap}
-                  onChange={e => setWrap(e.target.value as typeof wrap)}
+                  onChange={(e) => setWrap(e.target.value as typeof wrap)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="nowrap">nowrap</option>
@@ -526,8 +526,8 @@ flex-wrap: ${wrap};`;
 
 .animated-element {
   animation: ${animationType} ${duration}s ${timing} ${delay}s ${
-      iteration === 'infinite' ? 'infinite' : iteration
-    };
+    iteration === 'infinite' ? 'infinite' : iteration
+  };
 }`;
 
     return (
@@ -542,7 +542,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">动画类型</label>
                 <select
                   value={animationType}
-                  onChange={e => setAnimationType(e.target.value)}
+                  onChange={(e) => setAnimationType(e.target.value)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   {Object.entries(animations).map(([key, anim]) => (
@@ -558,7 +558,7 @@ flex-wrap: ${wrap};`;
                 <input
                   type="number"
                   value={duration}
-                  onChange={e => setDuration(e.target.value)}
+                  onChange={(e) => setDuration(e.target.value)}
                   min="0.1"
                   step="0.1"
                   className="w-full p-2 border border-border rounded bg-background"
@@ -569,7 +569,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">缓动函数</label>
                 <select
                   value={timing}
-                  onChange={e => setTiming(e.target.value)}
+                  onChange={(e) => setTiming(e.target.value)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="ease">ease</option>
@@ -586,7 +586,7 @@ flex-wrap: ${wrap};`;
                 <input
                   type="number"
                   value={delay}
-                  onChange={e => setDelay(e.target.value)}
+                  onChange={(e) => setDelay(e.target.value)}
                   min="0"
                   step="0.1"
                   className="w-full p-2 border border-border rounded bg-background"
@@ -597,7 +597,7 @@ flex-wrap: ${wrap};`;
                 <label className="block text-sm font-medium mb-2">重复次数</label>
                 <select
                   value={iteration}
-                  onChange={e => setIteration(e.target.value)}
+                  onChange={(e) => setIteration(e.target.value)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="1">1次</option>
@@ -693,7 +693,7 @@ gap: ${gap};`;
                 <input
                   type="number"
                   value={columns}
-                  onChange={e => {
+                  onChange={(e) => {
                     setColumns(e.target.value);
                     updateTemplate('columns', e.target.value);
                   }}
@@ -708,7 +708,7 @@ gap: ${gap};`;
                 <input
                   type="number"
                   value={rows}
-                  onChange={e => {
+                  onChange={(e) => {
                     setRows(e.target.value);
                     updateTemplate('rows', e.target.value);
                   }}
@@ -722,7 +722,7 @@ gap: ${gap};`;
                 <label className="block text-sm font-medium mb-2">间距</label>
                 <select
                   value={gap}
-                  onChange={e => setGap(e.target.value)}
+                  onChange={(e) => setGap(e.target.value)}
                   className="w-full p-2 border border-border rounded bg-background"
                 >
                   <option value="0">无间距</option>
@@ -739,7 +739,7 @@ gap: ${gap};`;
                 <input
                   type="text"
                   value={templateColumns}
-                  onChange={e => setTemplateColumns(e.target.value)}
+                  onChange={(e) => setTemplateColumns(e.target.value)}
                   placeholder="1fr 1fr 1fr"
                   className="w-full p-2 border border-border rounded bg-background"
                 />
@@ -750,7 +750,7 @@ gap: ${gap};`;
                 <input
                   type="text"
                   value={templateRows}
-                  onChange={e => setTemplateRows(e.target.value)}
+                  onChange={(e) => setTemplateRows(e.target.value)}
                   placeholder="1fr 1fr 1fr"
                   className="w-full p-2 border border-border rounded bg-background"
                 />
@@ -837,7 +837,7 @@ gap: ${gap};`;
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabs.map(tab => {
+            {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button

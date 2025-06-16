@@ -37,7 +37,7 @@ export default function CalculatorPage() {
 
     if (result.success) {
       const calculation = `${fullExpression} = ${result.data}`;
-      setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+      setHistory((prev) => [calculation, ...prev.slice(0, 9)]);
       setDisplay(result.data!);
       setExpression('');
       // setError('');
@@ -92,7 +92,7 @@ export default function CalculatorPage() {
 
     setDisplay(String(result));
     const calculation = `${func}(${inputValue}) = ${result}`;
-    setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+    setHistory((prev) => [calculation, ...prev.slice(0, 9)]);
     // setError('');
   };
 
@@ -142,7 +142,7 @@ export default function CalculatorPage() {
 
     if (result.success) {
       const calculation = `${fullExpression} = ${result.data}`;
-      setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+      setHistory((prev) => [calculation, ...prev.slice(0, 9)]);
       setDisplay(result.data!);
       setExpression('');
       // setError('');

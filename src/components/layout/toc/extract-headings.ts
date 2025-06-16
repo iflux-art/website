@@ -42,7 +42,7 @@ export function extractHeadings(content: string): {
   }
 
   // 确保所有标题都有唯一ID
-  headings.forEach(heading => {
+  headings.forEach((heading) => {
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(${heading.text.replace(
         /[-/\\^$*+?.()|[\]{}]/g,
@@ -55,6 +55,6 @@ export function extractHeadings(content: string): {
 
   return {
     headings,
-    processedContent
+    processedContent,
   };
 }

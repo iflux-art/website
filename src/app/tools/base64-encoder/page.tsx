@@ -156,7 +156,7 @@ export default function Base64EncoderPage() {
         // 转换为Unicode编码
         const unicode = input
           .split('')
-          .map(char => {
+          .map((char) => {
             const code = char.charCodeAt(0);
             return `\\u${code.toString(16).padStart(4, '0')}`;
           })
@@ -224,7 +224,7 @@ export default function Base64EncoderPage() {
               { key: 'url', name: 'URL编码', icon: ArrowUpDown },
               { key: 'html', name: 'HTML编码', icon: Check },
               { key: 'charset', name: '字符编码', icon: ArrowUpDown },
-            ].map(tab => {
+            ].map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -300,28 +300,28 @@ export default function Base64EncoderPage() {
               {mode === 'encode'
                 ? '原始文本'
                 : activeTab === 'base64'
-                ? 'Base64 编码'
-                : activeTab === 'url'
-                ? 'URL 编码'
-                : activeTab === 'html'
-                ? 'HTML 编码'
-                : 'Unicode 编码'}
+                  ? 'Base64 编码'
+                  : activeTab === 'url'
+                    ? 'URL 编码'
+                    : activeTab === 'html'
+                      ? 'HTML 编码'
+                      : 'Unicode 编码'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <textarea
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
               placeholder={
                 mode === 'encode'
                   ? '在此输入要编码的文本...'
                   : activeTab === 'base64'
-                  ? '在此输入要解码的 Base64 字符串...'
-                  : activeTab === 'url'
-                  ? '在此输入要解码的 URL 编码字符串...'
-                  : activeTab === 'html'
-                  ? '在此输入要解码的 HTML 编码字符串...'
-                  : '在此输入要解码的 Unicode 编码字符串...'
+                    ? '在此输入要解码的 Base64 字符串...'
+                    : activeTab === 'url'
+                      ? '在此输入要解码的 URL 编码字符串...'
+                      : activeTab === 'html'
+                        ? '在此输入要解码的 HTML 编码字符串...'
+                        : '在此输入要解码的 Unicode 编码字符串...'
               }
               className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -339,10 +339,10 @@ export default function Base64EncoderPage() {
                 ? activeTab === 'base64'
                   ? 'Base64 编码'
                   : activeTab === 'url'
-                  ? 'URL 编码'
-                  : activeTab === 'html'
-                  ? 'HTML 编码'
-                  : 'Unicode 编码'
+                    ? 'URL 编码'
+                    : activeTab === 'html'
+                      ? 'HTML 编码'
+                      : 'Unicode 编码'
                 : '解码结果'}
               {output && (
                 <Button
@@ -375,10 +375,10 @@ export default function Base64EncoderPage() {
                   ? activeTab === 'base64'
                     ? '编码后的 Base64 字符串将显示在这里...'
                     : activeTab === 'url'
-                    ? '编码后的 URL 字符串将显示在这里...'
-                    : activeTab === 'html'
-                    ? '编码后的 HTML 字符串将显示在这里...'
-                    : '编码后的 Unicode 字符串将显示在这里...'
+                      ? '编码后的 URL 字符串将显示在这里...'
+                      : activeTab === 'html'
+                        ? '编码后的 HTML 字符串将显示在这里...'
+                        : '编码后的 Unicode 字符串将显示在这里...'
                   : '解码后的原始文本将显示在这里...'
               }
               className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"

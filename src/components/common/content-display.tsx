@@ -155,9 +155,7 @@ export function ContentDisplay({
         </div>
       </header>
 
-      <div className="prose prose-zinc dark:prose-invert max-w-none">
-        {children}
-      </div>
+      <div className="prose prose-zinc dark:prose-invert max-w-none">{children}</div>
     </article>
   );
 }

@@ -62,8 +62,8 @@ export function DataTable<T extends object>({
                       column.align === 'center'
                         ? 'text-center'
                         : column.align === 'right'
-                        ? 'text-right'
-                        : 'text-left'
+                          ? 'text-right'
+                          : 'text-left'
                     }`}
                     style={{ width: column.width }}
                   >
@@ -108,8 +108,8 @@ export function DataTable<T extends object>({
                             column.align === 'center'
                               ? 'text-center'
                               : column.align === 'right'
-                              ? 'text-right'
-                              : 'text-left'
+                                ? 'text-right'
+                                : 'text-left'
                           }`}
                         >
                           {column.render

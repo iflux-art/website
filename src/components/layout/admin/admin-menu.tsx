@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ADMIN_MENU_ITEMS } from '@/components/layout/navbar/nav';
 import { useActiveSection } from '@/hooks/use-active-section';
-import type { NavProps } from '../navbar/types';
+import type { NavProps } from '@/components/layout/navbar/types';
 import type { LucideIcon } from 'lucide-react';
 
 /**
@@ -19,7 +19,7 @@ export function AdminMenu({ onClose }: NavProps) {
         <h3 className="text-sm font-medium text-muted-foreground">管理后台</h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {ADMIN_MENU_ITEMS.map(item => {
+        {ADMIN_MENU_ITEMS.map((item) => {
           const Icon: LucideIcon = item.icon;
           return (
             <Link

@@ -66,9 +66,8 @@ export function getAllContentFiles(): ContentItem[] {
             .replace(/\n+/g, ' ') // 替换换行为空格
             .trim();
 
-          const excerpt = plainContent.length > 200 
-            ? plainContent.substring(0, 200) + '...' 
-            : plainContent;
+          const excerpt =
+            plainContent.length > 200 ? plainContent.substring(0, 200) + '...' : plainContent;
 
           items.push({
             title: frontmatter.title || path.basename(file, '.mdx'),
@@ -91,7 +90,7 @@ export function getAllContentFiles(): ContentItem[] {
 
   // 扫描docs目录
   scanDirectory(path.join(contentDir, 'docs'), 'doc');
-  
+
   // 扫描blog目录
   scanDirectory(path.join(contentDir, 'blog'), 'blog');
 
@@ -124,7 +123,7 @@ export function searchContent(query: string, limit: number = 8): ContentItem[] {
     }
 
     // 搜索标签
-    const tagMatch = item.tags?.some(tag => tag.toLowerCase().includes(lowerQuery));
+    const tagMatch = item.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery));
     if (tagMatch) {
       score += 3;
     }
@@ -163,29 +162,29 @@ function findContentMatches(content: string, query: string, maxMatches: number =
   const lowerContent = content.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const matches: string[] = [];
-  
+
   let startIndex = 0;
-  
+
   while (matches.length < maxMatches) {
     const index = lowerContent.indexOf(lowerQuery, startIndex);
     if (index === -1) break;
-    
+
     // 获取匹配周围的上下文（前后各50个字符）
     const start = Math.max(0, index - 50);
     const end = Math.min(content.length, index + query.length + 50);
     let context = content.substring(start, end);
-    
+
     // 如果不是从开头开始，添加省略号
     if (start > 0) context = '...' + context;
     if (end < content.length) context = context + '...';
-    
+
     // 高亮匹配的文本
     const highlightedContext = highlightText(context, query);
     matches.push(highlightedContext);
-    
+
     startIndex = index + query.length;
   }
-  
+
   return matches;
 }
 

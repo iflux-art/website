@@ -1,67 +1,67 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Tag, Clock } from 'lucide-react';
-import { BlogList } from '@/components/layout/blog/blog-list';
-import { TagFilter } from '@/components/common/filter/tag-filter';
-import { useTagCounts } from '@/components/layout/blog/use-blog';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { PageLayout, PageTitle } from '@/components/layout/page-layout';
+import { useBlogFilter } from '@/hooks/use-blog-filter';
+import type { BlogPost } from '@/types/blog-types';
 
-// 创建一个包装组件来处理动态数据
 function BlogContent() {
-  const { tagCounts } = useTagCounts();
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [tagsExpanded, setTagsExpanded] = useState(false);
-
-  const formattedTags = tagCounts.map(({ tag, count }) => ({
-    name: tag,
-    count: count,
-  }));
+  const {
+    categories,
+    selectedCategory,
+    selectedTag,
+    filteredPosts,
+    tags,
+    handleCategoryChange,
+    handleTagChange,
+  } = useBlogFilter();
 
   return (
-    <>
-      <TagFilter
-        tags={formattedTags}
+    <div className="container mx-auto px-4">
+      <UnifiedFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryChange}
+        tags={tags}
         selectedTag={selectedTag}
-        onTagSelectAction={setSelectedTag}
-        showCount={true}
-        maxVisible={8}
+        onTagChange={handleTagChange}
+        onCardTagClick={handleTagChange}
+        categoryButtonClassName="rounded-full"
         className="mb-6"
-        expanded={tagsExpanded}
-        onExpandChange={setTagsExpanded}
       />
-      <BlogList filterTag={selectedTag} onTagClickAction={setSelectedTag} />
-    </>
+      <UnifiedGrid columns={4} className="items-stretch">
+        {filteredPosts.length === 0 ? (
+          <div className="col-span-full text-center py-12">
+            <p className="text-muted-foreground">
+              {selectedCategory || selectedTag ? '没有找到匹配的文章' : '暂无博客文章'}
+            </p>
+          </div>
+        ) : (
+          filteredPosts.map((post: BlogPost) => (
+            <UnifiedCard
+              key={post.slug}
+              title={post.title}
+              description={post.description}
+              href={`/blog/${post.slug}`}
+              image={post.image}
+              tags={post.tags}
+              onTagClick={(tag: string) => handleTagChange(tag)}
+              className="hover:border-primary/50 hover:bg-muted/50 h-full"
+            />
+          ))
+        )}
+      </UnifiedGrid>
+    </div>
   );
 }
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        <div className="mx-auto">
-          <h1 className="text-3xl font-bold mb-6">博客</h1>
-
-          <div className="flex flex-wrap gap-4 mb-8">
-            <Link
-              href="/blog"
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl shadow-sm hover:shadow-md transition-all"
-            >
-              <Tag className="h-4 w-4" />
-              全部文章
-            </Link>
-            <Link
-              href="/blog/timeline"
-              className="flex items-center gap-2 px-5 py-2.5 bg-muted hover:bg-muted/80 rounded-xl shadow-sm hover:shadow-md transition-all"
-            >
-              <Clock className="h-4 w-4" />
-              时间轴
-            </Link>
-          </div>
-
-          <BlogContent />
-        </div>
-      </div>
-    </div>
+    <PageLayout>
+      <PageTitle>博客</PageTitle>
+      <BlogContent />
+    </PageLayout>
   );
 }

@@ -83,7 +83,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={theme}
-              onChange={e => setTheme(e.target.value)}
+              onChange={(e) => setTheme(e.target.value)}
               placeholder="输入诗歌主题..."
               className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -113,7 +113,7 @@ export default function NonsenseGeneratorPage() {
               min="4"
               max="16"
               value={lines}
-              onChange={e => setLines(Number(e.target.value))}
+              onChange={(e) => setLines(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -207,7 +207,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={topic}
-              onChange={e => setTopic(e.target.value)}
+              onChange={(e) => setTopic(e.target.value)}
               placeholder="输入散文主题..."
               className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -238,7 +238,7 @@ export default function NonsenseGeneratorPage() {
               max="800"
               step="50"
               value={length}
-              onChange={e => setLength(Number(e.target.value))}
+              onChange={(e) => setLength(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -312,7 +312,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={protagonist}
-              onChange={e => setProtagonist(e.target.value)}
+              onChange={(e) => setProtagonist(e.target.value)}
               placeholder="输入主人公姓名..."
               className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -323,7 +323,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={setting}
-              onChange={e => setSetting(e.target.value)}
+              onChange={(e) => setSetting(e.target.value)}
               placeholder="输入故事场景..."
               className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -443,7 +443,7 @@ export default function NonsenseGeneratorPage() {
             <input
               type="text"
               value={speechTopic}
-              onChange={e => setSpeechTopic(e.target.value)}
+              onChange={(e) => setSpeechTopic(e.target.value)}
               placeholder="输入演讲主题..."
               className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -473,7 +473,7 @@ export default function NonsenseGeneratorPage() {
               min="3"
               max="15"
               value={duration}
-              onChange={e => setDuration(Number(e.target.value))}
+              onChange={(e) => setDuration(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -537,7 +537,7 @@ export default function NonsenseGeneratorPage() {
           <Card>
             <CardContent className="p-0">
               <div className="flex border-b">
-                {tabs.map(tab => {
+                {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   return (
                     <button

@@ -20,3 +20,17 @@ export interface MDXContentProps {
 export interface MDXRemoteProps extends MDXContentProps {
   compiledSource?: string;
 }
+
+export interface ResourceCardProps {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+  href?: string;
+  tags?: string[];
+  featured?: boolean;
+}
+
+export interface ResourceGridProps {
+  items: ResourceCardProps[];
+  columns?: number;
+}

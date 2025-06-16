@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { BlogPost } from '@/components/layout/blog/blog-types';
+import { BlogPost } from '@/types/blog-types';
 import { SidebarItem } from '@/components/layout/docs/sidebar';
 
 // ==================== 博客相关函数 ====================
@@ -244,14 +244,14 @@ export function getDocCategories(): DocCategory[] {
   const orderedCategoryNames: string[] = [];
 
   // Add categories from rootMeta first, in their defined order
-  Object.keys(rootMeta).forEach(key => {
-    if (dirs.some(dir => dir.name === key && dir.isDirectory())) {
+  Object.keys(rootMeta).forEach((key) => {
+    if (dirs.some((dir) => dir.name === key && dir.isDirectory())) {
       orderedCategoryNames.push(key);
     }
   });
 
   // Add remaining directories not in rootMeta, sorted alphabetically
-  dirs.forEach(dir => {
+  dirs.forEach((dir) => {
     if (
       dir.isDirectory() &&
       !dir.name.startsWith('_') &&
@@ -263,15 +263,15 @@ export function getDocCategories(): DocCategory[] {
   });
   // Sort the ones not in meta alphabetically if needed, but they are added after meta ones
   const nonMetaDirs = orderedCategoryNames.slice(
-    Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)).length
+    Object.keys(rootMeta).filter((k) => orderedCategoryNames.includes(k)).length
   );
   nonMetaDirs.sort((a, b) => a.localeCompare(b));
   const finalOrderedCategoryNames = [
-    ...Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)),
+    ...Object.keys(rootMeta).filter((k) => orderedCategoryNames.includes(k)),
     ...nonMetaDirs,
   ];
 
-  finalOrderedCategoryNames.forEach(categoryId => {
+  finalOrderedCategoryNames.forEach((categoryId) => {
     const categoryDir = path.join(docsDir, categoryId);
     const docCount = countDocsRecursively(categoryDir);
     let title = categoryId;
@@ -321,7 +321,7 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
   const allDocs: DocItem[] = [];
   const categories = fs.readdirSync(docsDir, { withFileTypes: true });
 
-  categories.forEach(category => {
+  categories.forEach((category) => {
     if (
       category.isDirectory() &&
       !category.name.startsWith('_') &&
@@ -331,7 +331,7 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
       const categoryDir = path.join(docsDir, categoryId);
       const items = fs.readdirSync(categoryDir, { withFileTypes: true });
 
-      items.forEach(item => {
+      items.forEach((item) => {
         if (
           item.isFile() &&
           (item.name.endsWith('.mdx') || item.name.endsWith('.md')) &&
@@ -398,7 +398,7 @@ export function getDocDirectoryStructure(
   }
 
   const collectedItems: { name: string; isDir: boolean }[] = [];
-  itemsInDir.forEach(dirItem => {
+  itemsInDir.forEach((dirItem) => {
     // Skip system files/dirs and index files (Requirement 4 for sidebar)
     if (
       dirItem.name.startsWith('_') ||
@@ -424,31 +424,31 @@ export function getDocDirectoryStructure(
   if (metaExists) {
     // Requirement 3: Strict order by _meta.json if it exists.
     // Filter collectedItems to only those present in metaConfig keys.
-    sortedItemNames = Object.keys(metaConfig).filter(key => {
+    sortedItemNames = Object.keys(metaConfig).filter((key) => {
       const metaEntry = metaConfig[key];
       // Exclude items marked as hidden in meta
       if (typeof metaEntry === 'object' && metaEntry.display === 'hidden') {
         return false;
       }
-      return collectedItems.some(ci => ci.name === key);
+      return collectedItems.some((ci) => ci.name === key);
     });
     // Requirement 1: Sidebar 顺序严格按 _meta.json 内容的先后排序.
     // The .sort() based on 'order' property is removed.
     // The order from Object.keys(metaConfig) (after filtering) is preserved.
   } else {
     // Requirement 3: Filename ascending order if no _meta.json
-    sortedItemNames = collectedItems.map(ci => ci.name).sort((a, b) => a.localeCompare(b));
+    sortedItemNames = collectedItems.map((ci) => ci.name).sort((a, b) => a.localeCompare(b));
   }
 
   return sortedItemNames
-    .map(itemName => {
+    .map((itemName) => {
       const itemMetaEntry = metaConfig[itemName];
       const itemSpecificConfig =
         typeof itemMetaEntry === 'string'
           ? { title: itemMetaEntry }
           : (itemMetaEntry as DocMetaItem) || {};
 
-      const actualItem = collectedItems.find(ci => ci.name === itemName);
+      const actualItem = collectedItems.find((ci) => ci.name === itemName);
       if (!actualItem) return null; // Should not happen
 
       const itemFsRelativePath = path.join(currentRelativePath, itemName); // Relative to rootDocsDir

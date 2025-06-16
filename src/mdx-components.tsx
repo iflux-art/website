@@ -13,13 +13,14 @@ type MDXImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 /**
  * MDX 组件配置
  */
-export function useMDXComponents(components: Record<string, React.ComponentType | React.ReactElement | ((props: MDXProps) => React.ReactElement)> = {}) {
+export function useMDXComponents(
+  components: Record<
+    string,
+    React.ComponentType | React.ReactElement | ((props: MDXProps) => React.ReactElement)
+  > = {}
+) {
   const mdxComponents = {
-    img: ({
-      src,
-      alt,
-      ...props
-    }: MDXImageProps) => {
+    img: ({ src, alt, ...props }: MDXImageProps) => {
       if (!src) {
         return null;
       }

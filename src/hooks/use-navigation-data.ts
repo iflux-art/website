@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavigationItem, NavigationCategory } from './navigation-types';
+import { NavigationItem, NavigationCategory } from '@/types/navigation-types';
 
 export const useNavigationData = () => {
   const [items, setItems] = useState<NavigationItem[]>([]);
@@ -10,8 +10,8 @@ export const useNavigationData = () => {
 
   const loadData = async (categoryId?: string) => {
     const [navigationData, categoriesData] = await Promise.all([
-      fetch('/api/navigation').then(res => res.json()),
-      fetch('/api/navigation?type=categories').then(res => res.json()),
+      fetch('/api/navigation').then((res) => res.json()),
+      fetch('/api/navigation?type=categories').then((res) => res.json()),
     ]);
 
     const tagsResponse = await fetch(
@@ -32,7 +32,7 @@ export const useNavigationData = () => {
     );
   };
 
-  const filteredItems = items.filter(item => {
+  const filteredItems = items.filter((item) => {
     const categoryMatch = !selectedCategory || item.category === selectedCategory;
     const tagMatch = !selectedTag || item.tags.includes(selectedTag);
     return categoryMatch && tagMatch;
@@ -49,14 +49,14 @@ export const useNavigationData = () => {
   };
 
   const getCategoryName = (categoryId: string) => {
-    const category = categories.find(cat => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     return category?.name || categoryId;
   };
 
   const sortedTags = allTags
-    .map(tag => ({
+    .map((tag) => ({
       name: tag,
-      count: items.filter(item => item.tags.includes(tag)).length,
+      count: items.filter((item) => item.tags.includes(tag)).length,
     }))
     .sort((a, b) => b.count - a.count);
 

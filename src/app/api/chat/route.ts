@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getModelById, generateDemoResponse } from '@/components/layout/home/data/ai-models';
-
-interface SearchResult {
-  title: string;
-  description: string;
-  url?: string;
-}
+import { SearchResult as WebSearchResult } from '@/types/search-types';
+import type { SearchResult as AISearchResult } from '@/components/layout/home/data/ai-models';
 
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -31,7 +27,7 @@ export async function POST(request: NextRequest) {
     }: {
       message: string;
       searchMode: 'ai' | 'local' | 'web';
-      searchResults?: SearchResult[];
+      searchResults?: WebSearchResult[];
       modelId?: string;
       messages?: ChatMessage[];
     } = await request.json();
@@ -45,8 +41,18 @@ export async function POST(request: NextRequest) {
     // 检查API密钥
     const apiKey = process.env[model.apiKeyEnv];
     if (!apiKey || apiKey === `your_${model.apiKeyEnv.toLowerCase()}_here`) {
+      // 转换搜索结果类型
+      const convertedResults = searchResults?.map(
+        (result: WebSearchResult) =>
+          ({
+            title: result.title,
+            content: result.excerpt, // 使用 excerpt 代替 description
+            url: result.path, // 使用 path 代替 url
+          }) as AISearchResult
+      );
+
       // 返回演示回复
-      const demoResponse = generateDemoResponse(message, searchMode, searchResults, model.name);
+      const demoResponse = generateDemoResponse(message, searchMode, convertedResults, model.name);
       return NextResponse.json({
         success: true,
         response: demoResponse,
@@ -78,8 +84,7 @@ export async function POST(request: NextRequest) {
 ${
   searchResults
     ?.map(
-      (result: SearchResult, index: number) =>
-        `${index + 1}. ${result.title}: ${result.description}`
+      (result: WebSearchResult, index: number) => `${index + 1}. ${result.title}: ${result.excerpt}`
     )
     .join('\n') || '暂无搜索结果'
 }
@@ -99,8 +104,8 @@ ${
 ${
   searchResults
     ?.map(
-      (result: SearchResult, index: number) =>
-        `${index + 1}. ${result.title}: ${result.description} (来源: ${result.url})`
+      (result: WebSearchResult, index: number) =>
+        `${index + 1}. ${result.title}: ${result.excerpt} (来源: ${result.path})`
     )
     .join('\n') || '暂无搜索结果'
 }
@@ -217,11 +222,21 @@ ${
           if (errorMessage.includes('Insufficient Balance') || errorMessage.includes('quota')) {
             errorMessage = `${model.name} API余额不足，请充值后继续使用。当前将使用演示模式回复。`;
 
+            // 转换搜索结果类型
+            const convertedResults = searchResults?.map(
+              (result: WebSearchResult) =>
+                ({
+                  title: result.title,
+                  content: result.excerpt, // 使用 excerpt 代替 description
+                  url: result.path, // 使用 path 代替 url
+                }) as AISearchResult
+            );
+
             // 返回演示回复
             const demoResponse = generateDemoResponse(
               message,
               searchMode,
-              searchResults,
+              convertedResults,
               model.name
             );
             return NextResponse.json({

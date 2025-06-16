@@ -1,9 +1,9 @@
 import { LucideIcon } from 'lucide-react';
-import { Button } from '../../ui/button';
-import { TagFilter } from './tag-filter';
+import { Button } from '@/components/ui/button';
+import { TagFilter } from '@/components/common/filter/tag-filter';
 import { useState } from 'react';
 
-interface Category {
+export interface Category {
   id: string;
   name: string;
   icon?: LucideIcon;
@@ -76,7 +76,7 @@ export function UnifiedFilter({
             {allCategoryText}
           </Button>
         )}
-        {categories.map(category => {
+        {categories.map((category) => {
           const Icon = category.icon;
           return (
             <Button
