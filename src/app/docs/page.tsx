@@ -1,5 +1,5 @@
 // page.tsx
-import DocCategories from '@/components/features/docs/doc-categories';
+import DocCategories from '@/components/layout/docs/doc-categories';
 
 export default function DocsPage() {
   return (

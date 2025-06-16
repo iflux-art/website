@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { searchContent } from '@/lib/content-search';
+import { searchContent } from '@/components/features/search/content-search';
 
 export async function GET(request: NextRequest) {
   try {

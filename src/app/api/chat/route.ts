@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getModelById, generateDemoResponse } from '@/components/features/home/ai-models';
+import { getModelById, generateDemoResponse } from '@/components/layout/home/data/ai-models';
 
 interface SearchResult {
   title: string;

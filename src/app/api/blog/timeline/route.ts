@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { BlogPost } from '@/components/features/blog/use-blog';
+import { BlogPost } from '@/components/layout/blog/use-blog';
 
 /**
  * 获取所有博客文章并按年份分组

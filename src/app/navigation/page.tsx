@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { NavigationHeader } from '@/components/features/navigation/navigation-header';
-import { NavigationGrid } from '@/components/features/navigation/navigation-grid';
-import { UnifiedFilter } from '@/components/layout/filter/unified-filter';
-import { useNavigationData } from '@/components/features/navigation/hooks/use-navigation-data';
+import { NavigationHeader } from '@/components/layout/navigation/frontend/navigation-header';
+import { NavigationGrid } from '@/components/layout/navigation/frontend/navigation-grid';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
+import { useNavigationData } from '@/components/layout/navigation/frontend/use-navigation-data';
 export default function NavigationPage() {
   const {
     items,
@@ -15,7 +15,7 @@ export default function NavigationPage() {
     sortedTags,
     handleCategoryClick,
     handleTagClick,
-    getCategoryName
+    getCategoryName,
   } = useNavigationData();
   return (
     <div className="container mx-auto px-4 py-8">

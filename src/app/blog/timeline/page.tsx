@@ -1,5 +1,5 @@
-import { BlogTimelineList } from '@/components/features/blog/blog-timeline-list';
-import { BlogNav } from '@/components/features/blog/blog-nav';
+import { BlogTimelineList } from '@/components/layout/blog/blog-timeline-list';
+import { BlogNav } from '@/components/layout/blog/blog-nav';
 
 export default async function TimelinePage() {
   return (

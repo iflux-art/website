@@ -1,19 +1,19 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { countWords } from '@/lib/utils';
-import { DocPagination } from '@/components/layout/doc-pagination';
+import { DocPagination } from '@/components/layout/docs/doc-pagination';
 import {
   Breadcrumb as BreadcrumbComponent,
   type BreadcrumbItem,
-} from '@/components/layout/breadcrumb';
-import { Sidebar } from '@/components/layout/sidebar';
+} from '@/components/common/breadcrumb';
+import { Sidebar } from '@/components/layout/docs/sidebar';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
-import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
+import { TableOfContents } from '@/components/layout/toc/table-of-contents';
+import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
-import { ContentDisplay } from '@/components/layout/content-display';
+import { ContentDisplay } from '@/components/common/content-display';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
@@ -25,7 +25,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   let filePath: string | undefined;
   let actualSlugForNav = slug.join('/'); // Represents the logical path for navigation and breadcrumbs
   let isIndexPage = false;
-  // let isDirectoryRequest = false; // Unused variable
+  // let isDirectoryRequest = false; // 未使用的变量
 
   if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
     // isDirectoryRequest = true; // Unused variable
@@ -40,12 +40,12 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       filePath = indexMdPath;
       isIndexPage = true;
     } else {
-      // No index file, get the first doc from sidebar order for this directory
-      // getFlattenedDocsOrder now takes topLevelCategory, so we need a way to get first item of a sub-directory
-      // For now, let's assume DocPage will always resolve to a file if slug is a dir without index.
-      // This part of the logic might need refinement if a directory URL should auto-resolve to its first non-index doc.
-      // For now, if no index, and it's a dir, it will lead to notFound unless slug points to a file.
-      // Let's simplify: if it's a dir and no index, it will eventually try to load a file based on slug.
+      // 没有索引文件，从此目录的侧边栏顺序中获取第一个文档
+      // getFlattenedDocsOrder 现在接受 topLevelCategory，所以我们需要一种方法来获取子目录的第一个项目
+      // 目前，让我们假设如果目录没有索引，DocPage 将始终解析到文件
+      // 如果目录 URL 应该自动解析到其第一个非索引文档，这部分逻辑可能需要改进
+      // 目前，如果没有索引且是目录，除非 slug 指向文件，否则将抛出错误
+      // 简化：如果是目录且没有索引，最终将尝试基于 slug 加载文件
       // The user requirement is: "if content/docs 目录下有 index.mdx ，则在浏览器中输入该文件夹的路径，默认打开的就是 index.mdx 文件"
       // "index.mdx > _meta.json > 默认排序" - this implies if no index, first from sorted list.
       // We can use getFlattenedDocsOrder for the *specific directory* to find its first item.
@@ -62,7 +62,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   }
 
   if (!filePath) {
-    // If it wasn't a directory or directory processing didn't set filePath
+    // 如果不是目录或目录处理未设置 filePath
     const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
     if (fs.existsSync(possiblePathMdx)) {
       filePath = possiblePathMdx;
@@ -78,7 +78,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
   if (!filePath || !fs.existsSync(filePath)) {
     console.error(`[DocPage] Document not found for slug: ${slug.join('/')}.`);
-    notFound();
+    throw new Error(`Document not found for slug: ${slug.join('/')}`);
   }
 
   console.log(
@@ -99,27 +99,30 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   // 计算字数
   const wordCount = countWords(originalContent);
 
-  const content = originalContent; // TOC extraction uses originalContent
-  const mdxContent = await (<MDXRenderer content={content} />);
+  // 从原始内容中提取标题，但保持原始内容不变
+  const { headings } = extractHeadings(originalContent);
+
+  // 直接使用原始内容进行渲染
+  const mdxContent = await MDXRenderer({ content: originalContent });
 
   const topLevelCategorySlug = slug[0];
 
-  // Determine docNameForSidebar: relative path from its top-level category for highlighting
+  // 确定 docNameForSidebar：从顶级分类计算相对路径，用于高亮显示
   const relativePathFromTopCategory = path
     .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
     .replace(/\\/g, '/')
     .replace(/\.(mdx|md)$/, '');
 
-  // Prev/Next logic using topLevelCategorySlug for a global order
+  // 使用顶级分类 slug 计算前后页面逻辑
   const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
   let prevDoc: NavDocItem | null = null;
   let nextDoc: NavDocItem | null = null;
 
   if (isIndexPage) {
-    prevDoc = null; // Requirement 2: index.mdx has no "previous" page in its own context
-    // Requirement 2: "next" page is the first item in its directory's flattened list
-    // actualSlugForNav for an index page is its directory path (e.g., "category" or "category/sub").
-    // We need the first item from flattenedDocs that is "under" this directory.
+    prevDoc = null; // 需求2：index.mdx 在其自身上下文中没有"上一页"
+    // 需求2："下一页"是其目录展平列表中的第一个项目
+    // 索引页面的 actualSlugForNav 是其目录路径（例如："category"或"category/sub"）
+    // 我们需要从 flattenedDocs 中获取该目录下的第一个项目
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
     nextDoc =
       flattenedDocs.find(
@@ -142,7 +145,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     }
   }
 
-  // Root meta for category titles
+  // 根目录元数据，用于分类标题
   const rootMetaFilePath = path.join(docsContentDir, '_meta.json');
   let rootMeta: Record<string, DocMetaItem | string> | null = null;
   if (fs.existsSync(rootMetaFilePath)) {
@@ -150,25 +153,6 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       rootMeta = JSON.parse(fs.readFileSync(rootMetaFilePath, 'utf8'));
     } catch (error) {
       console.error('Error loading root _meta.json file:', error);
-    }
-  }
-
-  // TOC Headings Extraction
-  const headings: { id: string; text: string; level: number }[] = [];
-  const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
-  let match;
-  while ((match = headingRegex.exec(originalContent)) !== null) {
-    const level = match[1].length;
-    const text = match[2].trim();
-    const customId = match[3];
-    const id =
-      customId ||
-      `heading-${text
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '')}-${match.index}`;
-    if (level >= 1 && level <= 4) {
-      headings.push({ id, text, level });
     }
   }
 
@@ -189,10 +173,10 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     } else if (isLastSegment && !isIndexPage) {
       label = frontmatter.title || segment;
     } else if (isLastSegment && isIndexPage) {
-      // For index page, label is its directory name, which is 'segment'
-      // If 'segment' is a category, its title might be in rootMeta
-      // If 'segment' is a sub-category, its title might be in parent's _meta.json (harder to get here)
-      // For simplicity, keep 'segment' or enhance if parent meta is available.
+      // 对于索引页面，标签使用其目录名称（segment）
+      // 如果是分类，其标题可能在 rootMeta 中
+      // 如果是子分类，其标题可能在父级的 _meta.json 中（这里较难获取）
+      // 为简单起见，保持使用 segment 或在有父级元数据时增强
     }
 
     if (isLastSegment) {
@@ -236,7 +220,9 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </main>
 
-          <PageTableOfContents headings={headings} />
+          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
+            <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
+          </aside>
         </div>
       </div>
     </div>

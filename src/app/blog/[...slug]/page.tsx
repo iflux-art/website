@@ -1,13 +1,13 @@
-import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Breadcrumb, type BreadcrumbItem } from '@/components/layout/breadcrumb';
-import { ContentDisplay } from '@/components/layout/content-display';
-import { PageTableOfContents } from '@/components/layout/toc/page-table-of-contents';
+import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
+import { ContentDisplay } from '@/components/common/content-display';
+import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { countWords } from '@/lib/utils';
+import { extractHeadings } from '@/components/layout/toc/extract-headings';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
@@ -23,7 +23,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   // 查找存在的文件
   const filePath = possiblePaths.find(p => fs.existsSync(p));
   if (!filePath) {
-    notFound();
+    throw new Error('博客文章未找到');
   }
   // 读取文件内容
   const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -41,38 +41,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     : null;
 
   // 提取标题作为目录
-  const headings: { id: string; text: string; level: number }[] = [];
-  const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
-  let match;
-
-  while ((match = headingRegex.exec(content)) !== null) {
-    const level = match[1].length;
-    const text = match[2].trim();
-    const customId = match[3];
-    const id =
-      customId ||
-      `heading-${text
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '')}-${match.index}`;
-
-    if (level >= 1 && level <= 4) {
-      headings.push({ id, text, level });
-    }
-  }
-
-  // 确保所有标题都有唯一ID
-  let processedContent = content;
-  headings.forEach(heading => {
-    const headingRegex = new RegExp(
-      `^(#{${heading.level})\\s+(${heading.text.replace(
-        /[-/\\^$*+?.()|[\]{}]/g,
-        '\\$&'
-      )})(?:\\s*{#[\\w-]+})?$`,
-      'gm'
-    );
-    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
-  });
+  const { headings } = extractHeadings(content);
   // 构建面包屑导航项
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: '博客', href: '/blog' },
@@ -87,7 +56,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     { label: title },
   ];
 
-  const mdxContent = await (<MDXRenderer content={processedContent} />);
+  const mdxContent = await MDXRenderer({ content });
 
   return (
     <div className="min-h-screen bg-background">
@@ -120,7 +89,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </main>
 
           {/* 右侧目录 */}
-          <PageTableOfContents headings={headings} />
+          <aside className="hidden xl:block w-64 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
+            <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
+          </aside>
         </div>
       </div>
     </div>

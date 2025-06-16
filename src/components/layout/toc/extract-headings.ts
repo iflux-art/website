@@ -1,6 +1,5 @@
-
 /**
- * 从 Markdown/MDX 内容中提取标题
+ * 标题项类型
  */
 export interface Heading {
   /** 标题ID */
@@ -12,15 +11,20 @@ export interface Heading {
 }
 
 /**
- * 从 Markdown/MDX 内容中提取标题
+ * 从 Markdown/MDX 内容中提取标题并更新内容
  * @param content Markdown/MDX 内容
- * @returns 标题列表
+ * @returns 标题列表和处理后的内容
  */
-export function extractHeadings(content: string): Heading[] {
+export function extractHeadings(content: string): {
+  headings: Heading[];
+  processedContent: string;
+} {
   const headings: Heading[] = [];
   const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
   let match;
+  let processedContent = content;
 
+  // 首先提取所有标题
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
@@ -37,5 +41,20 @@ export function extractHeadings(content: string): Heading[] {
     }
   }
 
-  return headings;
+  // 确保所有标题都有唯一ID
+  headings.forEach(heading => {
+    const headingRegex = new RegExp(
+      `^(#{${heading.level}})\\s+(${heading.text.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )})(?:\\s*{#[\\w-]+})?$`,
+      'gm'
+    );
+    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
+  });
+
+  return {
+    headings,
+    processedContent
+  };
 }

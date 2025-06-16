@@ -6,8 +6,8 @@ import {
   deleteNavigationItem,
   getCategories,
   getAllTags,
-} from '@/components/features/navigation/navigation-manage';
-import { NavigationFormData } from '@/components/features/navigation/navigation-types';
+} from '@/components/layout/navigation/admin/navigation-manage';
+import { NavigationFormData } from '@/components/layout/navigation/common/navigation-types';
 
 // GET - 获取导航数据
 export async function GET(request: NextRequest) {

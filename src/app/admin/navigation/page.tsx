@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/admin/admin-layout';
-import { AdminActions } from '@/components/admin/admin-actions';
-import { DataTable, type TableColumn } from '@/components/admin/navigation/data-table';
+import { AdminLayout } from '@/components/layout/admin/admin-layout';
+import { AdminActions } from '@/components/layout/admin/admin-actions';
+import { DataTable, type TableColumn } from '@/components/layout/navigation/admin/data-table';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -29,12 +29,12 @@ import {
   CheckCircle,
   Globe,
 } from 'lucide-react';
-import { NavigationForm } from '@/components/features/navigation/navigation-form';
+import { NavigationForm } from '@/components/layout/navigation/admin/navigation-form';
 import {
   NavigationItem,
   NavigationFormData,
   NavigationCategory,
-} from '@/components/features/navigation/navigation-types';
+} from '@/components/layout/navigation/common/navigation-types';
 
 export default function NavigationAdminPage() {
   const [items, setItems] = useState<NavigationItem[]>([]);

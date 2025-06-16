@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LoginDialog } from '@/components/admin/auth/login-dialog';
+import { LoginDialog } from '@/components/features/auth/login-dialog';
 
 /**
  * 底栏组件

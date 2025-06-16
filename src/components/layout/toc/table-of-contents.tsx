@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Hash, Text } from 'lucide-react';
-// 我们将在未来的优化中使用 useIntersectionObserver
+import { useHeadingObserver } from './use-heading-observer';
 
 /**
  * 标题项类型
@@ -79,9 +79,11 @@ export function TableOfContents({
   adaptive = false,
   adaptiveOffset = 80,
 }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>('');
   const [isFixed, setIsFixed] = useState(false);
   const tocRef = useRef<HTMLDivElement>(null);
+
+  // 使用自定义 hook 处理标题观察
+  const activeId = useHeadingObserver(headings);
 
   // 如果没有标题，不渲染目录组件
   if (headings.length === 0) {
@@ -114,97 +116,7 @@ export function TableOfContents({
     }
   }, [activeId]);
 
-  // 监听滚动，高亮当前可见的标题
-  useEffect(() => {
-    if (headings.length === 0) return;
-
-    // 确保所有标题都有ID并且可以被正确观察
-    const checkAndFixHeadingIds = () => {
-      headings.forEach(heading => {
-        // 检查元素是否存在
-        if (!document.getElementById(heading.id)) {
-          // 查找匹配文本内容的标题元素
-          const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-          headingElements.forEach(el => {
-            if (el.textContent?.trim() === heading.text) {
-              // 为没有ID的标题元素添加ID
-              if (!el.id) {
-                el.id = heading.id;
-              }
-            }
-          });
-        }
-      });
-    };
-
-    // 页面加载后立即检查并修复标题ID
-    checkAndFixHeadingIds();
-
-    // 延迟再次检查，以防DOM还未完全加载
-    setTimeout(checkAndFixHeadingIds, 500);
-
-    // 创建一个映射，用于存储每个标题ID对应的观察器
-    const observers: Record<string, IntersectionObserver> = {};
-
-    // 观察所有标题元素
-    const observeHeadings = () => {
-      headings.forEach(heading => {
-        const element = document.getElementById(heading.id);
-
-        if (element) {
-          // 为每个标题创建一个单独的观察器
-          const observer = new IntersectionObserver(
-            entries => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  setActiveId(entry.target.id);
-                }
-              });
-            },
-            { rootMargin: '-100px 0px -80% 0px', threshold: 0.1 }
-          );
-
-          observer.observe(element);
-          observers[heading.id] = observer;
-        } else {
-          // 尝试通过文本内容查找
-          const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-          headingElements.forEach(el => {
-            if (el.textContent?.trim() === heading.text) {
-              if (!el.id) {
-                el.id = heading.id;
-              }
-
-              // 为找到的标题创建观察器
-              const observer = new IntersectionObserver(
-                entries => {
-                  entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                      setActiveId(entry.target.id);
-                    }
-                  });
-                },
-                { rootMargin: '-100px 0px -80% 0px', threshold: 0.1 }
-              );
-
-              observer.observe(el);
-              observers[heading.id] = observer;
-            }
-          });
-        }
-      });
-    };
-
-    // 延迟观察以确保DOM已完全加载
-    setTimeout(observeHeadings, 1000);
-
-    return () => {
-      // 清理所有观察器
-      Object.values(observers).forEach(observer => {
-        observer.disconnect();
-      });
-    };
-  }, [headings]);
+// 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
   // 过滤掉h1标题，只显示h2-h4
   const filteredHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
@@ -212,7 +124,7 @@ export function TableOfContents({
   // 根据标题级别对目录进行分组和嵌套
   const organizeHeadings = (headings: Heading[]) => {
     // 确保标题ID唯一性
-    const processedHeadings = headings.map((heading, index) => {
+    return headings.map((heading, index) => {
       // 如果ID为空或者不存在，生成一个基于文本的ID
       if (!heading.id) {
         heading.id = `heading-${heading.text
@@ -221,16 +133,6 @@ export function TableOfContents({
           .replace(/[^\w-]/g, '')}-${index}`;
       }
       return heading;
-    });
-
-    // 按照标题级别进行排序和分组
-    return processedHeadings.sort((a, b) => {
-      // 首先按级别排序
-      if (a.level !== b.level) {
-        return a.level - b.level;
-      }
-      // 如果级别相同，保持原有顺序
-      return headings.findIndex(h => h.id === a.id) - headings.findIndex(h => h.id === b.id);
     });
   };
 
@@ -328,8 +230,7 @@ export function TableOfContents({
                     // 更新 URL 中的锚点，但不触发滚动
                     history.pushState(null, '', `#${heading.id}`);
 
-                    // 设置活动 ID
-                    setActiveId(heading.id);
+// 删除该行，因为活动ID现在由 hook 管理
                   }
                 }}
               >

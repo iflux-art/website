@@ -1,8 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ResponsiveImage } from '@/components/mdx/responsive-image';
-import type { ResponsiveImageProps } from '@/components/mdx/responsive-image';
 
 type MDXProps = {
   children?: React.ReactNode;
@@ -10,9 +8,8 @@ type MDXProps = {
   [key: string]: unknown;
 };
 
-interface MDXImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'height'> {
-  _height?: number;
-}
+type MDXImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
+
 /**
  * MDX 组件配置
  */
@@ -21,25 +18,13 @@ export function useMDXComponents(components: Record<string, React.ComponentType 
     img: ({
       src,
       alt,
-      width,
-      _height,
       ...props
     }: MDXImageProps) => {
-      const imageConfig: Partial<ResponsiveImageProps> = {
-        formats: {
-          webp: true,
-          original: true,
-        },
-        loading: 'lazy' as const,
-        height: _height,
-        width: width ? Number(width) : undefined
-      };
-
       if (!src) {
         return null;
       }
 
-      return <ResponsiveImage {...imageConfig} {...props} src={src} alt={alt || ''} />;
+      return <img src={src} alt={alt || ''} {...props} />;
     },
 
     table: ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
@@ -61,10 +46,9 @@ export function useMDXComponents(components: Record<string, React.ComponentType 
     td: (props: React.TdHTMLAttributes<HTMLTableDataCellElement>) => (
       <td {...props} className="border-b py-4 px-4" />
     ),
-  };
 
-  return {
-    ...mdxComponents,
     ...components,
   };
+
+  return mdxComponents;
 }

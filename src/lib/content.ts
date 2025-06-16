@@ -6,8 +6,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { BlogPost } from '@/components/features/blog/blog-types';
-import { SidebarItem } from '@/components/layout/sidebar';
+import { BlogPost } from '@/components/layout/blog/blog-types';
+import { SidebarItem } from '@/components/layout/docs/sidebar';
 
 // ==================== 博客相关函数 ====================
 
