@@ -1,86 +1,57 @@
-import type { Metadata } from 'next';
 import './globals.css';
 import { MainNavbar } from '@/components/layout/navbar/main-navbar';
 import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
-import { generateMetadata, generateViewport } from '@/lib/metadata';
-
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import {
-  PWA_CONFIG,
-  MOBILE_CONFIG,
-  IOS_CONFIG,
-  WINDOWS_CONFIG,
-  ICONS_CONFIG,
-} from '@/lib/constants';
 
-export const metadata: Metadata = generateMetadata();
-export const viewport = generateViewport();
+/**
+ * 导入集中管理的元数据配置
+ * Next.js要求这些配置必须从layout.tsx中导出，这是一个约定
+ * 1. 先从配置文件导入 - 便于集中管理和复用
+ * 2. 然后再导出 - 满足Next.js的约定要求
+ */
+import { metadata, viewport, splashScreens } from '@/config/metadata';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+// 导出元数据配置 - Next.js会在构建时处理这些导出
+export { metadata, viewport };
+
+// 主题配置
+const themeConfig = {
+  attribute: 'class',
+  defaultTheme: 'system',
+  enableSystem: true,
+  storageKey: 'iflux-theme-preference',
+  disableTransitionOnChange: true,
+} as const;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html
+      lang="zh-CN"
+      // 禁用hydration warning提示 - next-themes要求
+      suppressHydrationWarning
+    >
       <head>
-        <meta name="viewport" content={MOBILE_CONFIG.viewport} />
-
-        {/* 基础配置 */}
-        <link rel="manifest" href={PWA_CONFIG.manifestPath} />
-        <meta name="application-name" content={PWA_CONFIG.applicationName} />
-        <meta name="theme-color" content={PWA_CONFIG.themeColor} />
-
-        {/* 移动设备优化 */}
-        <meta name="format-detection" content={MOBILE_CONFIG.formatDetection} />
-        <meta
-          name="msapplication-tap-highlight"
-          content={MOBILE_CONFIG.msapplicationTapHighlight}
-        />
-        <meta name="mobile-web-app-capable" content={PWA_CONFIG.mobileWebAppCapable} />
-
-        {/* iOS 设备配置 */}
-        <meta name="apple-mobile-web-app-capable" content={IOS_CONFIG.mobileWebAppCapable} />
-        <meta name="apple-mobile-web-app-status-bar-style" content={IOS_CONFIG.statusBarStyle} />
-        <meta name="apple-mobile-web-app-title" content={IOS_CONFIG.appTitle} />
-        <link rel="apple-touch-icon" sizes="180x180" href={IOS_CONFIG.icons.touchIcon} />
-        {IOS_CONFIG.splashScreens.map((screen, index) => (
-          <link
-            key={index}
-            rel="apple-touch-startup-image"
-            href={screen.href}
-            media={screen.media}
-          />
+        {/* 
+          iOS启动屏配置
+          动态生成不同设备尺寸的启动图配置
+        */}
+        {splashScreens.map(({ href, media }, index) => (
+          <link key={index} rel="apple-touch-startup-image" href={href} media={media} />
         ))}
-
-        {/* Windows 设备配置 */}
-        <meta name="msapplication-TileColor" content={WINDOWS_CONFIG.msapplicationTileColor} />
-        <meta name="msapplication-TileImage" content={WINDOWS_CONFIG.msapplicationTileImage} />
-
-        {/* 图标 */}
-        <link rel="icon" type="image/png" sizes="32x32" href={ICONS_CONFIG.favicon32} />
-        <link rel="icon" type="image/png" sizes="16x16" href={ICONS_CONFIG.favicon16} />
-        <link rel="shortcut icon" href={ICONS_CONFIG.favicon} />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          storageKey="iflux-theme-preference"
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col min-h-screen">
+        <ThemeProvider {...themeConfig}>
+          {/* 页面主体布局容器 */}
+          <div className="min-h-screen flex flex-col">
             <MainNavbar className="flex-shrink-0" />
-            {/* 移除了 overflow-auto 以允许 sticky 定位正常工作 */}
-            <div className="flex-1 flex-grow">
-              <main className="flex-1 flex-grow">{children}</main>
-            </div>
+            {/* 主内容区域 - 自动填充剩余空间 */}
+            <main className="flex-auto">{children}</main>
             <Footer />
           </div>
+          {/* 性能分析工具 */}
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

@@ -1,20 +1,15 @@
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { UnifiedGrid } from '@/components/layout/unified-grid';
-import { NavigationItem } from '@/types/navigation-types';
+import { LinksItem } from '@/types/links-types';
 
-interface NavigationGridProps {
-  items: NavigationItem[];
+interface LinksGridProps {
+  items: LinksItem[];
   onTagClick: (tag: string) => void;
   selectedCategory: string;
   selectedTag: string | null;
 }
 
-export function NavigationGrid({
-  items,
-  onTagClick,
-  selectedCategory,
-  selectedTag,
-}: NavigationGridProps) {
+export function LinksGrid({ items, onTagClick, selectedCategory, selectedTag }: LinksGridProps) {
   return (
     <UnifiedGrid columns={5} className="items-stretch">
       {items.length === 0 ? (

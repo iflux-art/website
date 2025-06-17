@@ -17,26 +17,21 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Plus, X, Globe, AlertCircle, CheckCircle } from 'lucide-react';
-import { NavigationFormData, NavigationCategory } from '@/types/navigation-types';
+import { LinksFormData, LinksCategory } from '@/types/links-types';
 import {
   parseWebsiteMetadata,
   isValidUrl,
-} from '@/components/layout/navigation/frontend/website-parser';
+} from '@/components/layout/links/frontend/website-parser';
 
-interface NavigationFormProps {
-  submitAction: (data: NavigationFormData) => Promise<void>;
+interface LinksFormProps {
+  submitAction: (data: LinksFormData) => Promise<void>;
   onCancel?: () => void;
-  initialData?: Partial<NavigationFormData>;
+  initialData?: Partial<LinksFormData>;
   isLoading?: boolean;
 }
 
-export function NavigationForm({
-  submitAction,
-  onCancel,
-  initialData,
-  isLoading,
-}: NavigationFormProps) {
-  const [formData, setFormData] = useState<NavigationFormData>({
+export function LinksForm({ submitAction, onCancel, initialData, isLoading }: LinksFormProps) {
+  const [formData, setFormData] = useState<LinksFormData>({
     title: '',
     description: '',
     url: '',
@@ -48,7 +43,7 @@ export function NavigationForm({
     ...initialData,
   });
 
-  const [categories, setCategories] = useState<NavigationCategory[]>([]);
+  const [categories, setCategories] = useState<LinksCategory[]>([]);
   // TODO: availableTags 将用于实现标签建议和自动完成功能
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [availableTags, setAvailableTags] = useState<string[]>([]);
@@ -82,8 +77,8 @@ export function NavigationForm({
   }, [formData.url]);
 
   const handleInputChange = (
-    field: keyof NavigationFormData,
-    value: NavigationFormData[keyof NavigationFormData]
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData]
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
 

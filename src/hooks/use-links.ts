@@ -6,12 +6,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import {
-  NavigationCategory,
-  NavigationItem as Resource,
-  Subcategory,
-  Link,
-} from '@/types/navigation-types';
+import { LinksCategory, LinksItem as Resource, Subcategory, Link } from '@/types/links-types';
 import { useContentData } from '@/hooks/use-content-data';
 
 /**
@@ -19,12 +14,12 @@ import { useContentData } from '@/hooks/use-content-data';
  *
  * @returns 导航分类列表和加载状态
  */
-export function useNavigationCategories() {
+export function useLinksCategories() {
   const {
     data: categories,
     loading,
     error,
-  } = useContentData<NavigationCategory[]>({
+  } = useContentData<LinksCategory[]>({
     type: 'blog',
     path: '/api/navigation/categories',
     errorMessage: '获取导航分类失败',
@@ -142,7 +137,7 @@ export function useCategoryDetails(categoryId: string) {
     data: categories,
     loading,
     error: fetchError,
-  } = useContentData<NavigationCategory[]>({
+  } = useContentData<LinksCategory[]>({
     type: 'blog',
     path: '/api/navigation/categories',
     errorMessage: '获取分类详情失败',
@@ -166,14 +161,14 @@ export function useCategoryDetails(categoryId: string) {
  * 获取导航数据
  * @returns 导航数据，包含分类和工具列表
  */
-export async function getNavigationData() {
+export async function getLinksData() {
   const response = await fetch('http://localhost:3000/api/navigation');
   if (!response.ok) {
     throw new Error('Failed to fetch navigation data');
   }
   const data = await response.json();
   return data as {
-    categories: NavigationCategory[];
+    categories: LinksCategory[];
     tools: Array<{
       id: string;
       title: string;

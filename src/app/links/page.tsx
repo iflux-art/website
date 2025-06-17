@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { NavigationHeader } from '@/components/layout/navigation/frontend/navigation-header';
-import { NavigationGrid } from '@/components/layout/navigation/frontend/navigation-grid';
+import { LinksHeader } from '@/components/layout/links/frontend/links-header';
+import { LinksGrid } from '@/components/layout/links/frontend/links-grid';
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
-import { useNavigationData } from '@/hooks/use-navigation-data';
-export default function NavigationPage() {
+import { useLinksData } from '@/hooks/use-links-data';
+export default function LinksPage() {
   const {
     items,
     categories,
@@ -16,10 +16,10 @@ export default function NavigationPage() {
     handleCategoryClick,
     handleTagClick,
     getCategoryName,
-  } = useNavigationData();
+  } = useLinksData();
   return (
     <div className="container mx-auto px-4 py-8">
-      <NavigationHeader
+      <LinksHeader
         filteredCount={filteredItems.length}
         selectedCategory={selectedCategory}
         selectedTag={selectedTag}
@@ -39,7 +39,7 @@ export default function NavigationPage() {
         className="mb-6"
       />
 
-      <NavigationGrid
+      <LinksGrid
         items={filteredItems}
         selectedCategory={selectedCategory}
         selectedTag={selectedTag}

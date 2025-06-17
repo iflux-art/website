@@ -1,4 +1,4 @@
-interface NavigationHeaderProps {
+interface LinksHeaderProps {
   totalItems: number;
   filteredCount: number;
   selectedCategory?: string;
@@ -6,16 +6,16 @@ interface NavigationHeaderProps {
   getCategoryName: (categoryId: string) => string;
 }
 
-export function NavigationHeader({
+export function LinksHeader({
   totalItems,
   filteredCount,
   selectedCategory,
   selectedTag,
   getCategoryName,
-}: NavigationHeaderProps) {
+}: LinksHeaderProps) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold tracking-tight mb-2">导航</h1>
+      <h1 className="text-3xl font-bold tracking-tight mb-2">网址</h1>
       {selectedCategory || selectedTag ? (
         <p>
           显示 {filteredCount} 个网址

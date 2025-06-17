@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { NAV_ITEMS, ADMIN_MENU_ITEMS, NAV_DESCRIPTIONS } from '@/components/layout/navbar/nav';
+import { NAV_ITEMS, ADMIN_MENU_ITEMS, NAV_DESCRIPTIONS } from '@/config/navigation.config';
 import { useAuthState } from '@/hooks/use-auth-state';
 import { useActiveSection } from '@/hooks/use-active-section';
 

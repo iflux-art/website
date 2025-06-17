@@ -1,31 +1,48 @@
 'use client';
 
+import { useCallback } from 'react';
 import Link from 'next/link';
+
+const TRANSITION_STYLE = {
+  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+} as const;
+
+const LOGO_CLASSES = [
+  'text-sm sm:text-md md:text-lg',
+  'font-bold tracking-wide',
+  'hover:text-primary',
+  'transition-all duration-400',
+  'animate-in fade-in zoom-in-90',
+  'hover:scale-105',
+].join(' ');
+
+interface LogoProps {
+  /** Logo文本内容 */
+  text?: string;
+  /** 自定义类名 */
+  className?: string;
+}
 
 /**
  * Logo 组件
  *
- * 网站 Logo 组件，点击时会硬刷新导航到首页
+ * 网站 Logo 组件，支持：
+ * 1. 点击时硬刷新导航到首页
+ * 2. 自定义Logo文本
+ * 3. 响应式设计
+ * 4. 平滑过渡动画
+ * 5. 无障碍访问支持
  */
-export function Logo() {
-  // 处理点击事件，使用硬刷新导航到首页
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault(); // 阻止默认链接行为
-
-    // 使用 window.location.href 进行硬刷新
-    // 这将完全重新加载页面，确保所有内容都会重新获取
+export function Logo({ text = 'iFluxArt', className = 'inline-block' }: LogoProps) {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     window.location.href = '/';
-  };
+  }, []);
 
   return (
-    <Link href="/" className="inline-block" onClick={handleClick}>
-      <h2
-        className="text-sm sm:text-md md:text-lg font-bold tracking--wide hover:text-primary transition-all duration-400 animate-in fade-in zoom-in-90 hover:scale-105"
-        style={{
-          transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-        }}
-      >
-        iFluxArt
+    <Link href="/" className={className} onClick={handleClick} aria-label={`${text} - 返回首页`}>
+      <h2 className={LOGO_CLASSES} style={TRANSITION_STYLE}>
+        {text}
       </h2>
     </Link>
   );

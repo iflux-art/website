@@ -1,9 +1,9 @@
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 
 /**
- * 导航项属性
+ * 链接项属性
  */
-export interface NavigationItemProps {
+export interface LinksItemProps {
   /** 标题 */
   title: string;
   /** 描述 */
@@ -17,14 +17,14 @@ export interface NavigationItemProps {
 }
 
 /**
- * 导航项组件
+ * 链接项组件
  *
  * @example
  * ```tsx
  * <UnifiedGrid columns={3}>
- *   <NavigationItem
- *     title="示例导航"
- *     description="这是一个示例导航项"
+ *   <LinksItem
+ *     title="示例链接"
+ *     description="这是一个示例链接项"
  *     url="https://example.com"
  *     icon="icon.svg"
  *     featured={true}
@@ -32,16 +32,10 @@ export interface NavigationItemProps {
  * </UnifiedGrid>
  * ```
  */
-export function NavigationItem({
-  title,
-  description,
-  url,
-  icon,
-  featured = false,
-}: NavigationItemProps) {
+export function LinksItem({ title, description, url, icon, featured = false }: LinksItemProps) {
   return (
     <UnifiedCard
-      type="navigation"
+      type="link"
       title={title}
       description={description}
       href={url}

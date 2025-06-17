@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react';
-import { NavigationItem, NavigationCategory } from '@/types/navigation-types';
+import { LinksItem, LinksCategory } from '@/types/links-types';
 
-export const useNavigationData = () => {
-  const [items, setItems] = useState<NavigationItem[]>([]);
-  const [categories, setCategories] = useState<NavigationCategory[]>([]);
+export const useLinksData = () => {
+  const [items, setItems] = useState<LinksItem[]>([]);
+  const [categories, setCategories] = useState<LinksCategory[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
 
   const loadData = async (categoryId?: string) => {
-    const [navigationData, categoriesData] = await Promise.all([
-      fetch('/api/navigation').then((res) => res.json()),
-      fetch('/api/navigation?type=categories').then((res) => res.json()),
+    const [linksData, categoriesData] = await Promise.all([
+      fetch('/api/links').then((res) => res.json()),
+      fetch('/api/links?type=categories').then((res) => res.json()),
     ]);
 
     const tagsResponse = await fetch(
-      `/api/navigation?type=tags${categoryId ? `&category=${categoryId}` : ''}`
+      `/api/links?type=tags${categoryId ? `&category=${categoryId}` : ''}`
     );
     const tagsData = await tagsResponse.json();
 
-    setItems(navigationData.items || []);
+    setItems(linksData.items || []);
     setCategories(categoriesData || []);
     setAllTags(
       categoryId
         ? tagsData.filter((tag: string) =>
-            navigationData.items.some(
-              (item: NavigationItem) => item.category === categoryId && item.tags.includes(tag)
+            linksData.items.some(
+              (item: LinksItem) => item.category === categoryId && item.tags.includes(tag)
             )
           )
         : tagsData || []

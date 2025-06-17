@@ -5,6 +5,25 @@ import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Sun, Moon } from 'lucide-react';
 
+type Theme = 'dark' | 'light' | 'system';
+
+const ICON_SIZE = {
+  height: '1rem',
+  width: '1rem',
+} as const;
+
+const THEME_ICONS = {
+  dark: () => <Sun style={ICON_SIZE} />,
+  light: () => <Moon style={ICON_SIZE} />,
+  system: () => <Sun style={ICON_SIZE} />,
+} as const;
+
+const THEME_LABELS = {
+  dark: '切换到浅色模式',
+  light: '切换到暗黑模式',
+  system: '切换主题',
+} as const;
+
 /**
  * 主题切换组件属性
  */
@@ -41,45 +60,27 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
   // 处理主题切换
   const toggleTheme = React.useCallback(() => {
     if (!setTheme) return;
-
-    // 简单地在亮色和暗色主题之间切换
-    const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-
-    // 强制重新渲染以确保主题切换生效
-    setTimeout(() => {
-      document.documentElement.classList.toggle('dark', newTheme === 'dark');
-    }, 0);
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   }, [resolvedTheme, setTheme]);
 
-  // 获取当前主题图标和标签
-  const getThemeInfo = () => {
-    if (!mounted || !resolvedTheme) return { icon: null, label: '加载中...' };
-
-    // 获取当前解析的主题（实际显示的主题）
-    const currentTheme = resolvedTheme || 'system';
-
-    // 根据当前解析的主题显示相应的图标和标签
-    switch (currentTheme) {
-      case 'dark':
-        return {
-          icon: <Sun className="h-[1.2rem] w-[1.2rem]" />,
-          label: '切换到浅色模式',
-        };
-      case 'light':
-        return {
-          icon: <Moon className="h-[1.2rem] w-[1.2rem]" />,
-          label: '切换到暗黑模式',
-        };
-      default:
-        return {
-          icon: <Sun className="h-[1.2rem] w-[1.2rem]" />,
-          label: '切换主题',
-        };
+  // 获取当前主题信息
+  const themeInfo = React.useMemo(() => {
+    if (!mounted || !resolvedTheme) {
+      return {
+        icon: null,
+        label: '加载中...',
+      };
     }
-  };
 
-  // 服务端渲染时返回占位符
+    const currentTheme = (resolvedTheme || 'system') as Theme;
+    const IconComponent = THEME_ICONS[currentTheme];
+
+    return {
+      icon: <IconComponent />,
+      label: THEME_LABELS[currentTheme],
+    };
+  }, [mounted, resolvedTheme]);
+  // 服务端渲染或未加载完成时显示占位符
   if (!mounted) {
     return (
       <Button variant="ghost" size="icon" disabled>
@@ -88,8 +89,6 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
       </Button>
     );
   }
-
-  const { icon, label } = getThemeInfo();
 
   return (
     <Button
@@ -100,13 +99,13 @@ export function ThemeToggle({ showLabel = false }: ThemeToggleProps = {}) {
           ? 'gap-2 text-muted-foreground hover:text-foreground'
           : 'h-9 w-9 text-muted-foreground hover:text-foreground'
       }
-      title={label}
-      aria-label={label}
+      title={themeInfo.label}
+      aria-label={themeInfo.label}
       onClick={toggleTheme}
     >
-      <div className="flex items-center justify-center">{icon}</div>
+      <div className="flex items-center justify-center">{themeInfo.icon}</div>
 
-      {showLabel && <span className="hidden sm:inline-block">{label}</span>}
+      {showLabel && <span className="hidden sm:inline-block">{themeInfo.label}</span>}
     </Button>
   );
 }

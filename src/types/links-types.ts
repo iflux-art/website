@@ -4,7 +4,7 @@ import type { ComponentType } from 'react';
  * 网址导航数据类型定义
  */
 
-export interface NavigationItem {
+export interface LinksItem {
   id: string;
   title: string;
   description: string;
@@ -18,16 +18,16 @@ export interface NavigationItem {
   updatedAt: string;
 }
 
-export interface NavigationCategory {
+export interface LinksCategory {
   id: string;
   name: string;
   description?: string;
   order: number;
 }
 
-export interface NavigationData {
-  categories: NavigationCategory[];
-  items: NavigationItem[];
+export interface LinksData {
+  categories: LinksCategory[];
+  items: LinksItem[];
 }
 
 export interface WebsiteMetadata {
@@ -37,7 +37,7 @@ export interface WebsiteMetadata {
   image?: string;
 }
 
-export interface NavigationFormData {
+export interface LinksFormData {
   title: string;
   description: string;
   url: string;

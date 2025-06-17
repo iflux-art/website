@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/layout/admin/admin-layout';
 import { AdminActions } from '@/components/layout/admin/admin-actions';
-import { DataTable, type TableColumn } from '@/components/layout/navigation/admin/data-table';
+import { DataTable, type TableColumn } from '@/components/layout/links/admin/data-table';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -29,20 +29,20 @@ import {
   CheckCircle,
   Globe,
 } from 'lucide-react';
-import { NavigationForm } from '@/components/layout/navigation/admin/navigation-form';
-import { NavigationItem, NavigationFormData, NavigationCategory } from '@/types/navigation-types';
+import { LinksForm } from '@/components/layout/links/admin/links-form';
+import { LinksItem, LinksFormData, LinksCategory } from '@/types/links-types';
 
-export default function NavigationAdminPage() {
-  const [items, setItems] = useState<NavigationItem[]>([]);
-  const [categories, setCategories] = useState<NavigationCategory[]>([]);
-  const [filteredItems, setFilteredItems] = useState<NavigationItem[]>([]);
+export default function LinksAdminPage() {
+  const [items, setItems] = useState<LinksItem[]>([]);
+  const [categories, setCategories] = useState<LinksCategory[]>([]);
+  const [filteredItems, setFilteredItems] = useState<LinksItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [editingItem, setEditingItem] = useState<NavigationItem | null>(null);
-  const [deletingItem, setDeletingItem] = useState<NavigationItem | null>(null);
+  const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
+  const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // 加载数据
@@ -94,7 +94,7 @@ export default function NavigationAdminPage() {
     setTimeout(() => setAlert(null), 5000);
   };
 
-  const handleAddItem = async (formData: NavigationFormData) => {
+  const handleAddItem = async (formData: LinksFormData) => {
     try {
       setIsSubmitting(true);
       const response = await fetch('/api/navigation', {
@@ -124,7 +124,7 @@ export default function NavigationAdminPage() {
     }
   };
 
-  const handleEditItem = async (formData: NavigationFormData) => {
+  const handleEditItem = async (formData: LinksFormData) => {
     if (!editingItem) return;
 
     try {
@@ -209,7 +209,7 @@ export default function NavigationAdminPage() {
     },
   ];
 
-  const tableColumns: TableColumn<NavigationItem>[] = [
+  const tableColumns: TableColumn<LinksItem>[] = [
     {
       key: 'icon',
       title: '图标',
@@ -278,19 +278,19 @@ export default function NavigationAdminPage() {
   const tableActions = [
     {
       label: '访问',
-      onClick: (record: NavigationItem) => window.open(record.url, '_blank'),
+      onClick: (record: LinksItem) => window.open(record.url, '_blank'),
       icon: ExternalLink,
       variant: 'outline' as const,
     },
     {
       label: '编辑',
-      onClick: (record: NavigationItem) => setEditingItem(record),
+      onClick: (record: LinksItem) => setEditingItem(record),
       icon: Edit,
       variant: 'outline' as const,
     },
     {
       label: '删除',
-      onClick: (record: NavigationItem) => setDeletingItem(record),
+      onClick: (record: LinksItem) => setDeletingItem(record),
       icon: Trash2,
       variant: 'destructive' as const,
     },
@@ -361,7 +361,7 @@ export default function NavigationAdminPage() {
       </Card>
 
       {/* 网址表格 */}
-      <DataTable<NavigationItem>
+      <DataTable<LinksItem>
         data={filteredItems}
         columns={tableColumns}
         actions={tableActions}
@@ -375,7 +375,7 @@ export default function NavigationAdminPage() {
           <DialogHeader>
             <DialogTitle>添加新网址</DialogTitle>
           </DialogHeader>
-          <NavigationForm
+          <LinksForm
             submitAction={handleAddItem}
             onCancel={() => setShowAddDialog(false)}
             isLoading={isSubmitting}
@@ -390,7 +390,7 @@ export default function NavigationAdminPage() {
             <DialogTitle>编辑网址</DialogTitle>
           </DialogHeader>
           {editingItem && (
-            <NavigationForm
+            <LinksForm
               submitAction={handleEditItem}
               onCancel={() => setEditingItem(null)}
               initialData={editingItem}

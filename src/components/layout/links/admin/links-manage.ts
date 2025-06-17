@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs';
 import path from 'path';
-import type { NavigationCategory, NavigationItem } from '@/types/navigation-types';
-import type { NavigationData } from '@/types/navigation-types';
-import { navigation } from '@/components/layout/navigation/common/navigation-data';
+import type { LinksCategory, LinksItem } from '@/types/links-types';
+import type { LinksData } from '@/types/links-types';
+import { navigation } from '@/components/layout/links/common/links-data';
 
 const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'categories.json');
 const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'items.json');
@@ -20,7 +20,7 @@ function ensureDataDirectory() {
  * 读取分类数据
  * @internal 内部函数，用于底层数据读取操作
  */
-function readCategories(): NavigationCategory[] {
+function readCategories(): LinksCategory[] {
   if (!fs.existsSync(CATEGORIES_FILE_PATH)) {
     fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
     return [];
@@ -39,7 +39,7 @@ function readCategories(): NavigationCategory[] {
  * 读取项目数据
  * @internal 内部函数，用于底层数据读取操作
  */
-function readItems(): NavigationItem[] {
+function readItems(): LinksItem[] {
   if (!fs.existsSync(ITEMS_FILE_PATH)) {
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
     return [];
@@ -59,7 +59,7 @@ function readItems(): NavigationItem[] {
  * @internal 内部函数，用于底层数据写入操作
  * @param items - 要写入的导航项数组
  */
-function writeItems(items: NavigationItem[]): void {
+function writeItems(items: LinksItem[]): void {
   try {
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify(items, null, 2), 'utf-8');
   } catch (error) {
@@ -71,7 +71,7 @@ function writeItems(items: NavigationItem[]): void {
 /**
  * 读取完整导航数据
  */
-export function readNavigationData(): NavigationData {
+export function readLinksData(): LinksData {
   return {
     categories: navigation.categories,
     items: navigation.items,
@@ -80,7 +80,7 @@ export function readNavigationData(): NavigationData {
 /**
  * 写入导航数据
  */
-export function writeNavigationData(data: NavigationData): void {
+export function writeLinksData(data: LinksData): void {
   ensureDataDirectory();
 
   try {
@@ -94,16 +94,14 @@ export function writeNavigationData(data: NavigationData): void {
 /**
  * 添加导航项
  */
-export function addNavigationItem(
-  item: Omit<NavigationItem, 'id' | 'createdAt' | 'updatedAt'>
-): NavigationItem {
+export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updatedAt'>): LinksItem {
   // 检查 URL 是否已存在
   const existingItem = navigation.items.find((existing) => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
 
-  const newItem: NavigationItem = {
+  const newItem: LinksItem = {
     ...item,
     id: `item_${Date.now()}`,
     createdAt: new Date().toISOString(),
@@ -115,13 +113,13 @@ export function addNavigationItem(
 /**
  * 更新导航项
  */
-export function updateNavigationItem(id: string, updates: Partial<NavigationItem>): NavigationItem {
+export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksItem {
   const item = navigation.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
 
-  const updatedItem: NavigationItem = {
+  const updatedItem: LinksItem = {
     ...item,
     ...updates,
     updatedAt: new Date().toISOString(),
@@ -132,7 +130,7 @@ export function updateNavigationItem(id: string, updates: Partial<NavigationItem
 /**
  * 删除导航项
  */
-export function deleteNavigationItem(id: string): void {
+export function deleteLinksItem(id: string): void {
   const item = navigation.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
@@ -141,7 +139,7 @@ export function deleteNavigationItem(id: string): void {
 /**
  * 获取所有分类
  */
-export function getCategories(): NavigationCategory[] {
+export function getCategories(): LinksCategory[] {
   return navigation.categories;
 }
 /**
