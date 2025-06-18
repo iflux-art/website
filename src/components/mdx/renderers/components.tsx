@@ -1,8 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { CodeBlock } from '@/components/mdx/typography/code-block';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
+import { UnifiedCard } from '@/components/common/unified-card';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
 import { MarkdownLink } from '@/components/mdx/typography/markdown-link';
 import { InlineCode } from '@/components/mdx/typography/inline-code';
 import { MDX_CONFIG } from '../utils/config';

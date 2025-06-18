@@ -7,19 +7,18 @@ import React from 'react';
 import matter from 'gray-matter';
 
 // 布局组件
-import {
-  Breadcrumb as BreadcrumbComponent,
-  type BreadcrumbItem,
-} from '@/components/common/breadcrumb';
+import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
+import { createDocBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb-utils';
 import { ContentDisplay } from '@/components/common/content-display';
-import { DocPagination } from '@/components/layout/docs/doc-pagination';
+import { DocPagination } from '@/components/layout/docs/pagination';
 import { Sidebar } from '@/components/layout/docs/sidebar';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 
 // 内容渲染
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
-import { getFlattenedDocsOrder, type NavDocItem, type DocMetaItem } from '@/lib/content';
+import { getFlattenedDocsOrder, type NavDocItem } from '@/lib/content';
+import type { DocMetaItem } from '@/types/docs-types';
 import { countWords } from '@/lib/utils';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
@@ -84,13 +83,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   }
 
   if (!filePath || !fs.existsSync(filePath)) {
-    console.error(`[DocPage] Document not found for slug: ${slug.join('/')}.`);
-    throw new Error(`Document not found for slug: ${slug.join('/')}`);
+    throw new Error();
   }
-
-  console.log(
-    `[DocPage] Rendering file: ${filePath}. actualSlugForNav: ${actualSlugForNav}, isIndexPage: ${isIndexPage}`
-  );
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
@@ -145,10 +139,6 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     if (currentIndex !== -1) {
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
       nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
-    } else {
-      console.warn(
-        `[DocPage] Current path ${currentNavPath} not found in flattenedDocs for prev/next.`
-      );
     }
   }
 
@@ -156,42 +146,23 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const rootMetaFilePath = path.join(docsContentDir, '_meta.json');
   let rootMeta: Record<string, DocMetaItem | string> | null = null;
   if (fs.existsSync(rootMetaFilePath)) {
-    try {
-      rootMeta = JSON.parse(fs.readFileSync(rootMetaFilePath, 'utf8'));
-    } catch (error) {
-      console.error('Error loading root _meta.json file:', error);
-    }
+    rootMeta = JSON.parse(fs.readFileSync(rootMetaFilePath, 'utf8'));
   }
 
-  // Breadcrumbs
-  const breadcrumbItems: BreadcrumbItem[] = [{ label: '文档', href: '/docs' }];
-  let currentBreadcrumbPath = '/docs';
-  const navPathSegments = actualSlugForNav.split('/');
+  // 辅助函数：将元数据转换为仅标题的格式
+  function convertMetaToTitleOnly(
+    meta: Record<string, DocMetaItem | string> | null
+  ): Record<string, { title?: string }> | undefined {
+    if (!meta) return undefined;
+    return Object.fromEntries(
+      Object.entries(meta).map(([key, value]) => [
+        key,
+        { title: typeof value === 'string' ? value : value.title },
+      ])
+    );
+  }
 
-  navPathSegments.forEach((segment, index) => {
-    const isLastSegment = index === navPathSegments.length - 1;
-    currentBreadcrumbPath += `/${segment}`;
-    let label = segment;
-
-    if (index === 0 && rootMeta) {
-      const metaEntry = rootMeta[segment];
-      if (typeof metaEntry === 'string') label = metaEntry;
-      else if (typeof metaEntry === 'object' && metaEntry.title) label = metaEntry.title;
-    } else if (isLastSegment && !isIndexPage) {
-      label = frontmatter.title || segment;
-    } else if (isLastSegment && isIndexPage) {
-      // 对于索引页面，标签使用其目录名称（segment）
-      // 如果是分类，其标题可能在 rootMeta 中
-      // 如果是子分类，其标题可能在父级的 _meta.json 中（这里较难获取）
-      // 为简单起见，保持使用 segment 或在有父级元数据时增强
-    }
-
-    if (isLastSegment) {
-      breadcrumbItems.push({ label }); // Current page, no href
-    } else {
-      breadcrumbItems.push({ label, href: currentBreadcrumbPath });
-    }
-  });
+  const convertedRootMeta = convertMetaToTitleOnly(rootMeta);
 
   return (
     <div className="min-h-screen bg-background">
@@ -211,7 +182,13 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
           <main className="flex-1 min-w-0 max-w-4xl">
             <div className="mx-auto">
               <div className="mb-6">
-                <BreadcrumbComponent items={breadcrumbItems} />
+                <Breadcrumb
+                  items={createDocBreadcrumbs({
+                    slug: actualSlugForNav.split('/'),
+                    title: frontmatter.title,
+                    meta: convertedRootMeta,
+                  })}
+                />
               </div>
               <ContentDisplay
                 contentType="docs"

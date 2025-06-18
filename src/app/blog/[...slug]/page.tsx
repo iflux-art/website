@@ -46,28 +46,8 @@ function validatePath(filePath: string, type: 'file' | 'directory' = 'file'): bo
   }
 }
 
-// 生成完整的面包屑路径
-function generateBreadcrumbs(slug: string[]): BreadcrumbItem[] {
-  const items: BreadcrumbItem[] = [{ label: '博客', href: '/blog' }];
-
-  let currentPath = '';
-  for (let i = 0; i < slug.length - 1; i++) {
-    currentPath += `/${slug[i]}`;
-    const fullPath = path.join(process.cwd(), 'src/content/blog', currentPath);
-
-    if (validatePath(fullPath, 'directory')) {
-      items.push({
-        label: slug[i],
-        href: `/blog${currentPath}`,
-      });
-    }
-  }
-
-  items.push({ label: slug[slug.length - 1] });
-  return items;
-}
-
-import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
+import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
+import { createBlogBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb-utils';
 import { ContentDisplay } from '@/components/common/content-display';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
@@ -85,18 +65,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     const articles = getArticlesInDirectory(dirPath);
     const directoryTitle = slug[slug.length - 1] || 'Blog';
 
-    const breadcrumbs = [
-      { label: 'Home', href: '/' },
-      { label: 'Blog', href: '/blog' },
-      ...slug.map((part, index) => ({
-        label: part,
-        href: `/blog/${slug.slice(0, index + 1).join('/')}`,
-      })),
-    ];
-
     return (
       <article className="relative mx-auto w-full max-w-3xl px-4 py-6">
-        <Breadcrumb items={breadcrumbs} />
+        <Breadcrumb items={createBlogBreadcrumbs({ slug, title: directoryTitle })} />
         <div className="mt-8">
           <h1 className="text-3xl font-bold mb-8">{directoryTitle}</h1>
           <div className="space-y-6">
@@ -149,7 +120,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       day: 'numeric',
     });
 
-  const breadcrumbItems = generateBreadcrumbs(slug);
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
@@ -159,7 +129,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <main className="flex-1 min-w-0 max-w-4xl">
             <div>
               <div className="mb-6">
-                <Breadcrumb items={breadcrumbItems} />
+                <Breadcrumb items={createBlogBreadcrumbs({ slug, title })} />
               </div>
 
               <ContentDisplay

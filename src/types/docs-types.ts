@@ -5,6 +5,32 @@
 import { BaseContent, BaseCategory, BaseMeta } from './base';
 
 /**
+ * 文档元数据项接口 (_meta.json)
+ */
+export interface DocMetaItem {
+  /** 标题 */
+  title?: string;
+  /** 链接地址,用于外部链接或自定义内部路径 */
+  href?: string;
+  /** 分类/菜单是否折叠 */
+  collapsed?: boolean;
+  /** 嵌套结构项 */
+  items?: string[] | Record<string, DocMetaItem | string>;
+  /** 项目类型 */
+  type?: 'separator' | 'page' | 'menu';
+  /** 显示模式 */
+  display?: 'hidden' | 'normal';
+  /** 显式排序序号 */
+  order?: number;
+  /** 分类描述 */
+  description?: string;
+  /** 是否为索引页 */
+  index?: boolean;
+  /** 是否隐藏 */
+  hidden?: boolean;
+}
+
+/**
  * 标题数据类型
  */
 export interface Heading {
@@ -101,8 +127,6 @@ export interface UseDocSidebarResult {
   items: SidebarItem[];
   /** 加载状态 */
   loading: boolean;
-  /** 错误信息 */
-  error: string | null;
   /** 刷新侧边栏数据的方法 */
   refetch: () => Promise<void>;
 }

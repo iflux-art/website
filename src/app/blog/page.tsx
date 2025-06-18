@@ -1,8 +1,8 @@
 'use client';
 
 import { UnifiedFilter, type Category } from '@/components/common/filter/unified-filter';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
+import { UnifiedCard } from '@/components/common/unified-card';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
 import { useFilterState } from '@/components/common/filter/use-filter-state';
 import { useBlogPosts } from '@/hooks/use-blog';
 import { useMemo } from 'react';

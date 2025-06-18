@@ -1,8 +1,8 @@
 'use client';
 
 import { useDocCategories } from '@/hooks/use-docs';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { UnifiedCard } from '@/components/common/unified-card';
 
 export default function DocsPage() {
   const { categories = [] } = useDocCategories();

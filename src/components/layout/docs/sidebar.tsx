@@ -17,9 +17,10 @@ const isBrowser = typeof window !== 'undefined';
  * 侧边栏组件属性
  */
 interface SidebarProps {
+  /** 文档分类名称 */
   category: string;
+  /** 当前打开的文档路径 */
   currentDoc?: string;
-  _isNavigation?: boolean;
 }
 
 /**
@@ -27,9 +28,9 @@ interface SidebarProps {
  *
  * 用于显示文档的侧边栏导航，支持嵌套分类和高亮当前文档
  */
-export function Sidebar({ category, currentDoc, _isNavigation = false }: SidebarProps) {
+export function Sidebar({ category, currentDoc }: SidebarProps) {
   const pathname = usePathname();
-  const { items, loading, error } = useDocSidebar(category);
+  const { items, loading } = useDocSidebar(category);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -44,11 +45,7 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
-          try {
-            localStorage.setItem(localStorageKey, JSON.stringify(newState));
-          } catch (e) {
-            console.error('保存折叠状态失败:', e);
-          }
+          localStorage.setItem(localStorageKey, JSON.stringify(newState));
         }
         return newState;
       });
@@ -57,14 +54,9 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
   );
 
   // 处理鼠标悬停
-  const handleMouseEnter = useCallback((itemId: string) => {
+  const handleHover = (itemId: string | null) => {
     setIsHovering(itemId);
-  }, []);
-
-  // 处理鼠标离开
-  const handleMouseLeave = useCallback(() => {
-    setIsHovering(null);
-  }, []);
+  };
 
   // 渲染侧边栏项目
   const renderItems = useCallback(
@@ -128,9 +120,8 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
                 currentDoc={currentDoc}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                onMouseEnter={() => handleMouseEnter(itemId)}
-                onMouseLeave={handleMouseLeave}
-                _isNavigation={_isNavigation}
+                onMouseEnter={() => handleHover(itemId)}
+                onMouseLeave={() => handleHover(null)}
               >
                 <span>{item.title}</span>
                 {isExternal && (
@@ -157,25 +148,16 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
         );
       });
     },
-    [
-      pathname,
-      openCategories,
-      isHovering,
-      handleOpenChange,
-      handleMouseEnter,
-      handleMouseLeave,
-      _isNavigation,
-    ]
+    [openCategories, isHovering, handleOpenChange, currentDoc]
   );
 
   // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
   const MemoizedSidebarItems = useMemo(() => {
     if (loading) return null;
-    if (error) return null;
     if (items.length === 0) return null;
 
     return renderItems(items);
-  }, [items, loading, error, renderItems]);
+  }, [items, loading, renderItems]);
 
   // 递归函数，用于设置初始折叠状态
   const setInitialState = useCallback(
@@ -247,13 +229,9 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
     // 尝试从 localStorage 中读取保存的状态（仅在客户端）
     let savedState: Record<string, boolean> = {};
     if (isBrowser) {
-      try {
-        const savedStateStr = localStorage.getItem(localStorageKey);
-        if (savedStateStr) {
-          savedState = JSON.parse(savedStateStr);
-        }
-      } catch (e) {
-        console.error('读取折叠状态失败:', e);
+      const savedStateStr = localStorage.getItem(localStorageKey);
+      if (savedStateStr) {
+        savedState = JSON.parse(savedStateStr);
       }
     }
 
@@ -267,38 +245,12 @@ export function Sidebar({ category, currentDoc, _isNavigation = false }: Sidebar
 
     // 合并保存的状态和初始状态，优先使用保存的状态
     const mergedState = { ...initialOpenState, ...savedState };
-
     setOpenCategories(mergedState);
   }, [items, currentDoc, pathname, setInitialState, findAndOpenPath, localStorageKey]);
 
   // 加载状态
-  if (loading) {
-    return null; // 不显示加载状态
-  }
-
-  // 错误状态
-  if (error) {
-    console.error('文档侧边栏加载失败:', error);
-    return (
-      <div className="text-destructive p-5 border border-destructive/50 rounded-lg shadow-sm">
-        加载文档导航失败
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-3 px-3 py-1.5 bg-muted rounded-md text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
-        >
-          点击重试
-        </button>
-      </div>
-    );
-  }
-
-  // 如果没有项目但不是因为加载中或错误，显示空状态
-  if (items.length === 0 && !loading && !error) {
-    return (
-      <div className="p-5 border border-border rounded-lg shadow-sm text-muted-foreground">
-        此分类下暂无文档
-      </div>
-    );
+  if (loading || items.length === 0) {
+    return null;
   }
 
   return (

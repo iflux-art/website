@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost } from '@/types/blog-types';
-import type { SidebarItem } from '@/types/docs-types';
+import type { SidebarItem, DocMetaItem } from '@/types/docs-types';
 
 // ==================== 博客相关函数 ====================
 
@@ -173,20 +173,6 @@ export interface DocItem {
   title: string;
   description: string;
   date?: string;
-}
-
-/**
- * 文档元数据项接口 (_meta.json)
- */
-export interface DocMetaItem {
-  title?: string;
-  href?: string; // For external links or custom internal paths
-  collapsed?: boolean; // For categories/menus
-  items?: string[] | Record<string, DocMetaItem | string>; // For nested structure
-  type?: 'separator' | 'page' | 'menu';
-  display?: 'hidden' | 'normal';
-  order?: number; // For explicit sorting
-  description?: string; // For category descriptions in _meta.json
 }
 
 /**

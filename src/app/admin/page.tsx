@@ -2,9 +2,9 @@
 
 import React from 'react';
 import AdminPageContentLayout from '@/components/layout/admin/admin-page-content-layout';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { UnifiedCard } from '@/components/common/unified-card';
 import { Globe, BarChart3 } from 'lucide-react';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
 
 export default function AdminDashboard() {
   const stats = [

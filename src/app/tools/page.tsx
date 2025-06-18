@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { UnifiedGrid } from '@/components/common/cards/unified-grid';
-import { UnifiedCard } from '@/components/common/cards/unified-card';
+import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { UnifiedCard } from '@/components/common/unified-card';
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/layout/tools/tools-data';
-import { PageLayout, PageTitle } from '@/components/layout/page-layout';
+import { ToolLayout } from '@/components/layout/tools/tool-layout';
 import { useFilterState } from '@/components/common/filter/use-filter-state';
 import type { Tool } from '@/components/layout/tools/tools-data';
 
@@ -47,8 +47,13 @@ export default function ToolsPage() {
   };
 
   return (
-    <PageLayout>
-      <PageTitle>工具箱</PageTitle>
+    <ToolLayout>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">工具箱</h1>
+        <p className="text-muted-foreground mt-2">
+          这里是工具箱，提供了各种工具，帮助你完成各种任务。
+        </p>
+      </div>
 
       {/* 使用统一的筛选组件 */}
       <UnifiedFilter
@@ -77,6 +82,6 @@ export default function ToolsPage() {
           ))
         )}
       </UnifiedGrid>
-    </PageLayout>
+    </ToolLayout>
   );
 }

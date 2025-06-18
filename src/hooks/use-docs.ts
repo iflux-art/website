@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
 import { useCache } from '@/hooks/use-cache';
 import {
@@ -65,45 +65,31 @@ export function useDocMeta(category: string): { meta: DocMeta | null } {
  */
 export function useDocSidebar(category: string): UseDocSidebarResult {
   const fetchSidebarData = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`, {
-        headers: {
-          'Cache-Control': 'max-age=1800',
-          Pragma: 'no-cache',
-        },
-        cache: 'no-store',
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || `Failed to fetch sidebar for category: ${category}`);
-      }
-      return data as SidebarItem[];
-    } catch (err) {
-      console.error(`获取分类 ${category} 的侧边栏结构出错:`, err);
-      throw err;
-    }
+    const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`, {
+      headers: {
+        'Cache-Control': 'max-age=1800, stale-while-revalidate=3600',
+        Pragma: 'no-cache',
+      },
+      cache: 'no-store',
+    });
+    const data = await response.json();
+    return data as SidebarItem[];
   }, [category]);
 
-  const { data, loading, error, refetch } = useCache<SidebarItem[]>(
+  const { data, loading, refetch } = useCache<SidebarItem[]>(
     `sidebar:${category}`,
     fetchSidebarData,
     {
-      prefix: 'docs:',
       expiry: 30 * 60 * 1000,
       useMemoryCache: true,
-      useLocalStorage: true,
     }
   );
 
-  return useMemo(
-    () => ({
-      items: data || [],
-      loading,
-      error: error?.message || null,
-      refetch,
-    }),
-    [data, loading, error, refetch]
-  );
+  return {
+    items: data || [],
+    loading,
+    refetch,
+  };
 }
 
 /**
@@ -116,10 +102,6 @@ export async function getAllDocs(): Promise<DocItem[]> {
       'Content-Type': 'application/json',
     },
   });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch all docs');
-  }
 
   return response.json();
 }

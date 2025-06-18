@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Hash, Text } from 'lucide-react';
-import { useHeadingObserver } from '../../../hooks/use-heading-observer';
+import { useHeadingObserver } from '@/hooks/use-heading-observer';
 import { NAVBAR_HEIGHT, SCROLL_OFFSET } from '@/config/layout';
 import { scrollToElement } from '@/utils/route-utils';
 

@@ -3,21 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-
-/**
- * 面包屑导航项接口
- */
-export interface BreadcrumbItem {
-  /**
-   * 显示的标签文本
-   */
-  label: string;
-
-  /**
-   * 链接地址，如果不提供则显示为纯文本
-   */
-  href?: string;
-}
+import type { BreadcrumbItem } from '@/components/common/breadcrumb/breadcrumb-utils';
 
 /**
  * 面包屑导航组件属性
