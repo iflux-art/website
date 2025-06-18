@@ -4,7 +4,31 @@
  */
 
 import { Wrench, PenTool, Code, Palette, FileText, Smile } from 'lucide-react';
-import type { ToolCategory, Tool } from '@/components/layout/tools/pages';
+import type { LucideIcon } from 'lucide-react';
+
+/**
+ * 工具分类接口
+ * @see src/app/tools/page.tsx - 工具页面使用此类型
+ */
+export interface ToolCategory {
+  id: string;
+  name: string;
+  icon: LucideIcon;
+}
+
+/**
+ * 工具接口
+ * @see src/app/tools/page.tsx - 工具页面的工具列表使用此类型
+ */
+export interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+  tags: string[];
+  isInternal: boolean;
+}
 
 /**
  * 工具分类配置

@@ -1,19 +1,26 @@
-import React from 'react';
+// Node.js 核心模块
 import fs from 'fs';
 import path from 'path';
+import React from 'react';
+
+// 第三方依赖
 import matter from 'gray-matter';
-import { countWords } from '@/lib/utils';
-import { DocPagination } from '@/components/layout/docs/doc-pagination';
+
+// 布局组件
 import {
   Breadcrumb as BreadcrumbComponent,
   type BreadcrumbItem,
 } from '@/components/common/breadcrumb';
-import { Sidebar } from '@/components/layout/docs/sidebar';
-import { MDXRenderer } from '@/components/mdx/mdx-renderer';
-import { TableOfContents } from '@/components/layout/toc/table-of-contents';
-import { extractHeadings } from '@/components/layout/toc/extract-headings';
-import { getFlattenedDocsOrder, NavDocItem, DocMetaItem } from '@/lib/content';
 import { ContentDisplay } from '@/components/common/content-display';
+import { DocPagination } from '@/components/layout/docs/doc-pagination';
+import { Sidebar } from '@/components/layout/docs/sidebar';
+import { TableOfContents } from '@/components/layout/toc/table-of-contents';
+
+// 内容渲染
+import { MDXRenderer } from '@/components/mdx/mdx-renderer';
+import { extractHeadings } from '@/components/layout/toc/extract-headings';
+import { getFlattenedDocsOrder, type NavDocItem, type DocMetaItem } from '@/lib/content';
+import { countWords } from '@/lib/utils';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];

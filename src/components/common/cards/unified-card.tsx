@@ -128,16 +128,11 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
     };
 
     const baseClasses = cn(
-      'group relative overflow-hidden rounded-lg border text-card-foreground',
-      'transition-all duration-300 ease-out',
-      'hover:border-primary/50',
-      'hover:bg-muted/50',
-      'hover:shadow-lg hover:shadow-black/10',
-      'dark:hover:shadow-white/5',
-      'border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card break-inside-avoid mb-4 h-full',
+      'group relative overflow-hidden h-full text-card-foreground',
+      'border rounded-lg hover:bg-accent/50 hover:border-primary/50 hover:shadow-md shadow-black/5 transition-all duration-200 p-6',
       featured && 'border-primary/30',
-      type === 'category' && 'bg-gradient-to-br',
-      color && `from-${color}-50 to-${color}-100 dark:from-${color}-950/20 dark:to-${color}-900/30`,
+      type === 'link' && 'hover:border-primary',
+      type === 'navigation' && 'cursor-pointer transition-colors',
       className
     );
 
@@ -295,11 +290,11 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
             rel="noopener noreferrer"
             className={baseClasses}
             style={{
-              ...(color && !color.startsWith('#')
-                ? {}
-                : {
+              ...(color && color.startsWith('#')
+                ? {
                     background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
-                  }),
+                  }
+                : {}),
             }}
           >
             {cardContent}
@@ -312,11 +307,11 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
           href={href}
           className={baseClasses}
           style={{
-            ...(color && !color.startsWith('#')
-              ? {}
-              : {
+            ...(color && color.startsWith('#')
+              ? {
                   background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
-                }),
+                }
+              : {}),
           }}
         >
           {cardContent}
@@ -329,11 +324,11 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
         ref={ref}
         className={baseClasses}
         style={{
-          ...(color && !color.startsWith('#')
-            ? {}
-            : {
+          ...(color && color.startsWith('#')
+            ? {
                 background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
-              }),
+              }
+            : {}),
         }}
       >
         {cardContent}

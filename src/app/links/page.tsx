@@ -43,7 +43,7 @@ function LinksHeader({
 }
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedFilter } from '@/components/common/unified-filter';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { useLinksData } from '@/hooks/use-links-data';
 export default function LinksPage() {
   const {

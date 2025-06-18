@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useFilterState } from '@/hooks/use-filter-state';
+import { useFilterState } from '@/components/common/filter/use-filter-state';
 import { LinksItem, LinksCategory } from '@/types/links-types';
 
 export const useLinksData = () => {

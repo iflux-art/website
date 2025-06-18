@@ -3,12 +3,11 @@
 import React from 'react';
 import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedFilter } from '@/components/common/unified-filter';
+import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/layout/tools/tools-data';
-import { useToolSearch } from '@/hooks/use-tools';
 import { PageLayout, PageTitle } from '@/components/layout/page-layout';
-import { useFilterState } from '@/hooks/use-filter-state';
-import type { Tool } from '@/components/layout/tools/pages';
+import { useFilterState } from '@/components/common/filter/use-filter-state';
+import type { Tool } from '@/components/layout/tools/tools-data';
 
 /**
  * 工具卡片组件
@@ -47,8 +46,6 @@ export default function ToolsPage() {
     handleTagChange(null);
   };
 
-  const { searchResults } = useToolSearch(filteredTools);
-
   return (
     <PageLayout>
       <PageTitle>工具箱</PageTitle>
@@ -68,14 +65,14 @@ export default function ToolsPage() {
 
       {/* 工具卡片网格 */}
       <UnifiedGrid columns={4} className="mt-8">
-        {searchResults.length === 0 ? (
+        {filteredTools.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p className="text-muted-foreground">
               {selectedCategory || selectedTag ? '没有找到匹配的工具' : '暂无工具数据'}
             </p>
           </div>
         ) : (
-          searchResults.map((tool) => (
+          filteredTools.map((tool) => (
             <ToolCard key={tool.name} tool={tool} onTagClick={handleTagChange} />
           ))
         )}
