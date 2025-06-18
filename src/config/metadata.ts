@@ -26,9 +26,9 @@ import { PWA_CONFIG, IOS_CONFIG, WINDOWS_CONFIG, ICONS_CONFIG } from '@/lib/cons
  * @description 包含网站的基本信息
  */
 const siteMetadata = {
-  title: 'Forefront: Software Development Learning Platform',
+  title: 'iFluxArt · 斐流艺创',
   description:
-    'A platform for learning software development, providing documentation, tools and resources.',
+    '“斐流艺创” 是 “iFluxArt” 的中文翻译，代表智能技术与艺术创作的有机融合，“斐然成章” 的创作力与 “川流不息” 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。',
 };
 
 /**

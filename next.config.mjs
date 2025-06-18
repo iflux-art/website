@@ -7,10 +7,25 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
 
+// MDX 配置
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+    // 启用 JSX
+    jsx: true,
+    // 启用 rsc
+    format: 'mdx'
+  }
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 基本配置
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+
+  // 配置外部包
+  serverExternalPackages: ['@mdx-js/react'],
 
   // ESLint 和 TypeScript 错误检查配置
   eslint: {
@@ -35,23 +50,7 @@ const nextConfig = {
     mdxRs: true,
   },
 
-  // 启用压缩
-  compress: true,
-
-  // Turbopack 配置
-  turbopack: {},
-
-  // 模块化导入配置
-  modularizeImports: {
-    'lucide-react': {
-      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
-    },
-    '@radix-ui/react-icons': {
-      transform: '@radix-ui/react-icons/dist/{{kebabCase member}}',
-    },
-  },
-
-  // 添加图片优化
+  // 图片优化配置
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -69,21 +68,19 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
-  // 优化服务器组件
-  serverExternalPackages: ['@mdx-js/react'],
-  
-};
+  // 启用压缩
+  compress: true,
 
-// MDX 配置
-const withMDX = createMDX({
-  extension: /\.(md|mdx)$/,
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
-    providerImportSource: '@mdx-js/react',
+  // 模块化导入配置
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
+    '@radix-ui/react-icons': {
+      transform: '@radix-ui/react-icons/dist/{{kebabCase member}}',
+    },
   },
-}
-);
+};
 
 // 导出配置
 export default withMDX(nextConfig);

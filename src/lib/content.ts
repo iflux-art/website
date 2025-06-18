@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost } from '@/types/blog-types';
-import { SidebarItem } from '@/components/layout/docs/sidebar';
+import type { SidebarItem } from '@/types/docs-types';
 
 // ==================== 博客相关函数 ====================
 

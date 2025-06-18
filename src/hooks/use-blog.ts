@@ -31,17 +31,12 @@ function sortPostsByDate(posts: BlogPost[] | null | undefined) {
 /**
  * 使用博客文章列表
  *
- * @returns 博客文章列表和加载状态
+ * @returns 博客文章列表
  */
 export function useBlogPosts() {
-  const {
-    data: posts = [],
-    loading,
-    error,
-  } = useContentData<BlogPost[]>({
+  const { data: posts = [] } = useContentData<BlogPost[]>({
     type: 'blog',
     path: '/api/blog/posts',
-    errorMessage: '获取博客文章失败',
   });
 
   const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
@@ -68,19 +63,18 @@ export function useBlogPosts() {
     };
   }, [sortedPosts]);
 
-  return { posts: sortedPosts, postsCount, categories, loading, error };
+  return { posts: sortedPosts, postsCount, categories };
 }
 
 /**
  * 使用标签统计
  *
- * @returns 标签统计列表和加载状态
+ * @returns 标签统计列表
  */
 export function useTagCounts() {
-  const { data, loading, error } = useContentData<Record<string, number>>({
+  const { data } = useContentData<Record<string, number>>({
     type: 'blog',
     path: '/api/blog/tags/count',
-    errorMessage: '获取标签统计失败',
   });
 
   const tagCounts = useMemo(() => {
@@ -93,26 +87,21 @@ export function useTagCounts() {
     return countsArray.sort((a, b) => b.count - a.count);
   }, [data]);
 
-  return { tagCounts, loading, error };
+  return { tagCounts };
 }
 
 /**
  * 使用按年份分组的博客文章
  *
- * @returns 按年份分组的博客文章和加载状态
+ * @returns 按年份分组的博客文章
  */
 export function useTimelinePosts() {
-  const {
-    data: postsByYear = {},
-    loading,
-    error,
-  } = useContentData<Record<string, BlogPost[]>>({
+  const { data: postsByYear = {} } = useContentData<Record<string, BlogPost[]>>({
     type: 'blog',
     path: '/api/blog/timeline',
-    errorMessage: '获取时间线文章失败',
   });
 
-  return { postsByYear, loading, error };
+  return { postsByYear };
 }
 
 /**

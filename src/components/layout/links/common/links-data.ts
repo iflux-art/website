@@ -28,7 +28,7 @@ export interface Item {
   updatedAt: string;
 }
 
-export const navigation = {
+export const links = {
   categories: [
     {
       id: 'ai',
@@ -21405,12 +21405,12 @@ export const navigation = {
 
 // 辅助函数
 export const getItemsByCategory = (categoryId: CategoryId) =>
-  navigation.items.filter((item) => item.category === categoryId);
+  links.items.filter((item) => item.category === categoryId);
 
-export const getFeaturedItems = () => navigation.items.filter((item) => item.featured);
+export const getFeaturedItems = () => links.items.filter((item) => item.featured);
 
 export const searchItems = (query: string) =>
-  navigation.items.filter(
+  links.items.filter(
     (item) =>
       item.title.toLowerCase().includes(query.toLowerCase()) ||
       item.description.toLowerCase().includes(query.toLowerCase()) ||

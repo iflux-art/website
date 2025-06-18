@@ -8,46 +8,7 @@ import { cn } from '@/lib/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
 import { NavLink } from '@/components/ui/nav-link';
-
-/**
- * 文档侧边栏项（用于侧边栏）
- */
-export interface SidebarItem {
-  /**
-   * 文档标题
-   */
-  title: string;
-
-  /**
-   * 文档链接
-   */
-  href?: string;
-
-  /**
-   * 子文档列表
-   */
-  items?: SidebarItem[];
-
-  /**
-   * 是否默认折叠
-   */
-  collapsed?: boolean;
-
-  /**
-   * 项目类型
-   */
-  type?: 'separator' | 'page' | 'menu';
-
-  /**
-   * 是否为外部链接
-   */
-  isExternal?: boolean;
-
-  /**
-   * 文件路径（用于匹配当前页面）
-   */
-  filePath?: string;
-}
+import { SidebarItem } from '@/types/docs-types';
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== 'undefined';
@@ -56,21 +17,8 @@ const isBrowser = typeof window !== 'undefined';
  * 侧边栏组件属性
  */
 interface SidebarProps {
-  /**
-   * 文档分类
-   */
   category: string;
-
-  /**
-   * 当前文档
-   */
   currentDoc?: string;
-
-  /**
-   * 是否为导航类型
-   * 如果为 true，则不会自动添加 /docs 前缀
-   * @default false
-   */
   _isNavigation?: boolean;
 }
 

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { getDocSidebar } from '@/lib/content';
-import { DocListItem } from '@/hooks/use-docs';
+import { DocListItem } from '@/types/docs-types';
 
 interface SidebarNavItem {
   type?: 'menu' | 'separator' | 'page' | 'item' | 'category';

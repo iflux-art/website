@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import type { LinksCategory, LinksItem } from '@/types/links-types';
 import type { LinksData } from '@/types/links-types';
-import { navigation } from '@/components/layout/links/common/links-data';
+import { links } from '@/components/layout/links/common/links-data';
 
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'categories.json');
-const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'navigation', 'items.json');
+const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'categories.json');
+const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'items.json');
 /**
  * 确保数据目录存在
  */
@@ -73,8 +73,8 @@ function writeItems(items: LinksItem[]): void {
  */
 export function readLinksData(): LinksData {
   return {
-    categories: navigation.categories,
-    items: navigation.items,
+    categories: links.categories,
+    items: links.items,
   };
 }
 /**
@@ -87,8 +87,8 @@ export function writeLinksData(data: LinksData): void {
     fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify(data.categories, null, 2), 'utf-8');
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify(data.items, null, 2), 'utf-8');
   } catch (error) {
-    console.error('Error writing navigation data:', error);
-    throw new Error('Failed to write navigation data');
+    console.error('Error writing links data:', error);
+    throw new Error('Failed to write links data');
   }
 }
 /**
@@ -96,7 +96,7 @@ export function writeLinksData(data: LinksData): void {
  */
 export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updatedAt'>): LinksItem {
   // 检查 URL 是否已存在
-  const existingItem = navigation.items.find((existing) => existing.url === item.url);
+  const existingItem = links.items.find((existing) => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
@@ -114,7 +114,7 @@ export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updated
  * 更新导航项
  */
 export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksItem {
-  const item = navigation.items.find((item) => item.id === id);
+  const item = links.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
@@ -131,7 +131,7 @@ export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksI
  * 删除导航项
  */
 export function deleteLinksItem(id: string): void {
-  const item = navigation.items.find((item) => item.id === id);
+  const item = links.items.find((item) => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
@@ -140,14 +140,14 @@ export function deleteLinksItem(id: string): void {
  * 获取所有分类
  */
 export function getCategories(): LinksCategory[] {
-  return navigation.categories;
+  return links.categories;
 }
 /**
  * 获取所有标签
  */
 export function getAllTags(): string[] {
   const tags = new Set<string>();
-  navigation.items.forEach((item) => {
+  links.items.forEach((item) => {
     item.tags.forEach((tag) => tags.add(tag));
   });
   return Array.from(tags).sort();

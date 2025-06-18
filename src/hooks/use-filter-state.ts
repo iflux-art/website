@@ -18,6 +18,29 @@ export function useFilterState<T extends FilterableItem>(items: T[]) {
     });
   }, [items, selectedCategory, selectedTag]);
 
+  // 根据当前选中的分类过滤和统计标签
+  const filteredTags = useMemo(() => {
+    const currentItems = selectedCategory
+      ? items.filter((item) => item.category === selectedCategory)
+      : items;
+
+    // 收集当前分类下的所有标签
+    const tags = new Map<string, number>();
+    currentItems.forEach((item) => {
+      item.tags?.forEach((tag) => {
+        tags.set(tag, (tags.get(tag) || 0) + 1);
+      });
+    });
+
+    // 转换为排序后的数组
+    return Array.from(tags.entries())
+      .map(([tag, count]) => ({
+        name: tag,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [items, selectedCategory]);
+
   // 处理分类切换
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId === selectedCategory ? '' : categoryId);
@@ -35,5 +58,6 @@ export function useFilterState<T extends FilterableItem>(items: T[]) {
     selectedTag,
     handleCategoryChange,
     handleTagChange,
+    filteredTags,
   };
 }

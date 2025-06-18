@@ -1,0 +1,36 @@
+---
+title: Zero Trust 使用教程
+---
+
+## 账号注册
+
+注册 [Cloudflare](https://dash.cloudflare.com/sign-up) 账号后，在左侧的功能列表中，选择 Zero Trust，选择一个团队账号。
+
+选择免费方案，并添加支付方式。
+
+在 Settings 里找到 WARP Client 。
+
+在 Device enrollment 选择 Manage ，添加规则后保存。
+
+- Rule name 随便填
+- Rule action 选择 Allow
+- Selector 选择 Emails ending in
+- Value 填你的邮箱后缀
+
+## 软件下载
+
+点击[此处](https://one.one.one.one/zh-Hans/)打开 `1.1.1.1` WARP 应用官网，并根据自己的系统情况，下载相应的软件。
+
+## 软件配置
+
+打开 Cloudflare WARP 软件，找到偏好设置-账户。
+
+选择登录 Zero Trust 账号，填入刚才注册的团队账号。此时会弹出一个网页，需要填入一个刚才创建规则使用的后缀的邮箱。
+
+系统会给那个邮箱发送验证码，将验证码填入后即可连接。
+
+## 参考资料
+
+> [Cloudflare注册及使用](https://yiov.top/website/cloudflare.html#%E6%B3%A8%E5%86%8C)
+> 
+> [配置Cloudflare Zero Trust遇到的问题](https://www.bilibili.com/read/cv34567067/)

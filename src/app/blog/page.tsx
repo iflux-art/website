@@ -1,6 +1,6 @@
 'use client';
 
-import { UnifiedFilter } from '@/components/common/filter/unified-filter';
+import { UnifiedFilter } from '@/components/common/unified-filter';
 import { motion } from 'framer-motion';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
 import { PageLayout, PageTitle } from '@/components/layout/page-layout';
@@ -53,8 +53,8 @@ function BlogContent() {
                 href={`/blog/${post.slug}`}
                 image={post.image}
                 tags={post.tags}
-                onTagClick={(tag: string) => handleTagChange(tag)}
-                className="hover:border-primary/50 hover:bg-muted/50 transition-all duration-300 border rounded-lg overflow-hidden w-full block"
+                onTagClick={handleTagChange}
+                className="w-full block"
               />
             </motion.div>
           ))

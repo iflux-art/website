@@ -1,8 +1,12 @@
 'use client';
 
-import DocCategories from '@/components/layout/docs/doc-categories';
+import { useDocCategories } from '@/hooks/use-docs';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
+import { UnifiedCard } from '@/components/common/cards/unified-card';
 
 export default function DocsPage() {
+  const { categories = [] } = useDocCategories();
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
@@ -12,7 +16,22 @@ export default function DocsPage() {
             <p className="text-muted-foreground">探索我们的技术文档和指南</p>
           </div>
 
-          <DocCategories />
+          <UnifiedGrid columns={4}>
+            {categories?.map((category) => (
+              <UnifiedCard
+                key={category.id}
+                title={category.title}
+                description={category.description}
+                href={`/docs/${category.id}`}
+                className="h-full"
+              >
+                <div className="flex justify-between items-center mt-4">
+                  <span className="text-sm text-muted-foreground">{category.count} 篇文档</span>
+                  <span className="text-sm text-primary font-medium">浏览文档 →</span>
+                </div>
+              </UnifiedCard>
+            ))}
+          </UnifiedGrid>
         </div>
       </div>
     </div>

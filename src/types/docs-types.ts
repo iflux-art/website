@@ -5,6 +5,15 @@
 import { BaseContent, BaseCategory, BaseMeta } from './base';
 
 /**
+ * 标题数据类型
+ */
+export interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+/**
  * 文档分类
  */
 export interface DocCategory extends BaseCategory {
@@ -62,5 +71,40 @@ export interface DocNavItem {
   isNext?: boolean;
 }
 
+/**
+ * 侧边栏项目
+ */
+export interface SidebarItem {
+  /** 文档标题 */
+  title: string;
+  /** 文档链接（可选） */
+  href?: string;
+  /** 子文档列表 */
+  items?: SidebarItem[];
+  /** 是否默认折叠 */
+  collapsed?: boolean;
+  /** 项目类型 */
+  type?: 'separator' | 'page' | 'menu';
+  /** 是否为外部链接 */
+  isExternal?: boolean;
+  /** 文件路径（用于匹配当前页面） */
+  filePath?: string;
+  /** 显示标签（可选） */
+  label?: string;
+}
+
+/**
+ * useDocSidebar hook的返回值类型
+ */
+export interface UseDocSidebarResult {
+  /** 侧边栏项目列表 */
+  items: SidebarItem[];
+  /** 加载状态 */
+  loading: boolean;
+  /** 错误信息 */
+  error: string | null;
+  /** 刷新侧边栏数据的方法 */
+  refetch: () => Promise<void>;
+}
+
 // 重新导出组件类型
-export * from '../components/layout/docs/docs-components';

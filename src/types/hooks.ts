@@ -1,8 +1,4 @@
 /**
- * Hooks相关类型定义
- */
-
-/**
  * 内容数据获取配置选项
  */
 export interface ContentOptions {
@@ -30,12 +26,6 @@ export interface ContentOptions {
   /** API请求的自定义头部信息 */
   headers?: HeadersInit;
 
-  /** 请求超时时间，单位为毫秒 */
-  timeout?: number;
-
-  /** 请求失败时的重试次数 */
-  retries?: number;
-
   /** 是否启用数据自动刷新功能 */
   autoRefresh?: boolean;
 
@@ -44,9 +34,6 @@ export interface ContentOptions {
 
   /** 组件挂载时是否立即请求数据 */
   initialFetch?: boolean;
-
-  /** 自定义错误提示信息 */
-  errorMessage?: string;
 
   /** 触发数据重新获取的依赖项数组 */
   dependencies?: unknown[];
@@ -70,10 +57,6 @@ export interface ContentError {
 export interface ContentData<T> {
   /** 数据 */
   data: T | null;
-  /** 加载状态 */
-  loading: boolean;
-  /** 错误信息 */
-  error: string | null;
   /** 刷新方法 */
   refresh: () => Promise<void>;
 }

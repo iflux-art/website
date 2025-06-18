@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import React from 'react';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedFilter } from '@/components/common/filter/unified-filter';
+import { UnifiedFilter } from '@/components/common/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/layout/tools/tools-data';
 import { useToolSearch } from '@/hooks/use-tools';
 import { PageLayout, PageTitle } from '@/components/layout/page-layout';
@@ -38,6 +38,7 @@ export default function ToolsPage() {
     selectedTag,
     handleCategoryChange: baseHandleCategoryChange,
     handleTagChange,
+    filteredTags,
   } = useFilterState(TOOLS);
 
   // 处理分类切换，同时清空标签选择
@@ -45,29 +46,6 @@ export default function ToolsPage() {
     baseHandleCategoryChange(category);
     handleTagChange(null);
   };
-
-  // 根据当前选中的分类过滤标签
-  const filteredTags = useMemo(() => {
-    const currentTools = selectedCategory
-      ? TOOLS.filter((tool) => tool.category === selectedCategory)
-      : TOOLS;
-
-    // 收集当前分类下的所有标签
-    const tags = new Map<string, number>();
-    currentTools.forEach((tool) => {
-      tool.tags.forEach((tag) => {
-        tags.set(tag, (tags.get(tag) || 0) + 1);
-      });
-    });
-
-    // 转换为排序后的数组
-    return Array.from(tags.entries())
-      .map(([tag, count]) => ({
-        name: tag,
-        count,
-      }))
-      .sort((a, b) => b.count - a.count);
-  }, [selectedCategory, TOOLS]);
 
   const { searchResults } = useToolSearch(filteredTools);
 

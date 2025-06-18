@@ -28,8 +28,8 @@ export async function GET(request: NextRequest) {
     const data = readLinksData();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error getting navigation data:', error);
-    return NextResponse.json({ error: 'Failed to get navigation data' }, { status: 500 });
+    console.error('Error getting links data:', error);
+    return NextResponse.json({ error: 'Failed to get links data' }, { status: 500 });
   }
 }
 
@@ -56,13 +56,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
-    console.error('Error adding navigation item:', error);
+    console.error('Error adding links item:', error);
 
     if (error instanceof Error && error.message === 'URL already exists') {
       return NextResponse.json({ error: 'URL already exists' }, { status: 409 });
     }
 
-    return NextResponse.json({ error: 'Failed to add navigation item' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to add links item' }, { status: 500 });
   }
 }
 
@@ -81,7 +81,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(updatedItem);
   } catch (error) {
-    console.error('Error updating navigation item:', error);
+    console.error('Error updating links item:', error);
 
     if (error instanceof Error && error.message === 'Links item not found') {
       return NextResponse.json({ error: 'Links item not found' }, { status: 404 });
@@ -91,7 +91,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'URL already exists' }, { status: 409 });
     }
 
-    return NextResponse.json({ error: 'Failed to update navigation item' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to update links item' }, { status: 500 });
   }
 }
 
@@ -109,12 +109,12 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error deleting navigation item:', error);
+    console.error('Error deleting links item:', error);
 
     if (error instanceof Error && error.message === 'Links item not found') {
       return NextResponse.json({ error: 'Links item not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ error: 'Failed to delete navigation item' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to delete links item' }, { status: 500 });
   }
 }

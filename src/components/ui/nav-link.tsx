@@ -4,73 +4,23 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { NavLinkProps } from '@/types/nav-types';
 
 /**
- * 导航链接组件属性
+ * 导航链接组件
+ *
+ * 用于在导航菜单中显示当前活动页面的链接，支持多种匹配方式
+ *
+ * @example
+ * ```tsx
+ * <NavLink
+ *   href="/docs/getting-started"
+ *   currentDoc="installation"
+ * >
+ *   安装指南
+ * </NavLink>
+ * ```
  */
-export interface NavLinkProps {
-  /**
-   * 链接地址
-   */
-  href: string;
-
-  /**
-   * 链接内容
-   */
-  children: React.ReactNode;
-
-  /**
-   * 当前文档标识符，用于更灵活的匹配
-   */
-  currentDoc?: string;
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 活动状态的类名
-   */
-  activeClassName?: string;
-
-  /**
-   * 非活动状态的类名
-   */
-  inactiveClassName?: string;
-
-  /**
-   * 点击事件处理函数
-   */
-  onClick?: () => void;
-
-  /**
-   * 鼠标进入事件处理函数
-   */
-  onMouseEnter?: () => void;
-
-  /**
-   * 鼠标离开事件处理函数
-   */
-  onMouseLeave?: () => void;
-
-  /**
-   * 链接目标
-   */
-  target?: string;
-
-  /**
-   * 链接关系
-   */
-  rel?: string;
-
-  /**
-   * 是否为导航类型链接
-   * 如果为 true，则不会自动添加 /docs 前缀
-   */
-  _isNavigation?: boolean;
-}
-
 /**
  * 导航链接组件
  *

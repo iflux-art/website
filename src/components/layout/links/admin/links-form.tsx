@@ -57,8 +57,8 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   // 加载分类和标签
   useEffect(() => {
     Promise.all([
-      fetch('/api/navigation?type=categories').then((res) => res.json()),
-      fetch('/api/navigation?type=tags').then((res) => res.json()),
+      fetch('/api/links?type=categories').then((res) => res.json()),
+      fetch('/api/links?type=tags').then((res) => res.json()),
     ])
       .then(([categoriesData, tagsData]) => {
         setCategories(categoriesData);

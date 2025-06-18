@@ -23,6 +23,4 @@ export interface JournalEntry {
 
 export interface JournalState {
   entries: JournalEntry[];
-  loading: boolean;
-  error: Error | null;
 }

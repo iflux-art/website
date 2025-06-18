@@ -131,7 +131,7 @@ export function LoginDialog({ children, open, onOpenChange }: LoginDialogProps) 
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-primary"></div>
                   登录中...
                 </div>
               ) : (

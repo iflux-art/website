@@ -13,13 +13,8 @@ function sortEntriesByDate(entries: JournalEntry[] | null | undefined) {
 }
 
 export function useJournalEntries(): JournalState {
-  const {
-    data: entries = [],
-    loading,
-    error,
-  } = useContentData<JournalEntry[]>({
+  const { data: entries = [] } = useContentData<JournalEntry[]>({
     url: '/api/journal',
-    errorMessage: '获取日志条目失败',
     cacheTime: 5 * 60 * 1000, // 5分钟缓存
   });
 
@@ -27,7 +22,5 @@ export function useJournalEntries(): JournalState {
 
   return {
     entries: sortedEntries,
-    loading,
-    error,
   };
 }

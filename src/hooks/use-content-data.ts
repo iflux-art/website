@@ -1,19 +1,10 @@
-/**
- * 通用内容数据获取钩子
- * @module hooks/use-content-data
- */
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ContentOptions, ContentError } from '@/types/hooks';
+import { ContentOptions } from '@/types/hooks';
 import { BaseContent, BaseCategory } from '@/types/base';
 
-// 通用错误类型
-export type { ContentError };
-
-// 重新导出基础类型
 export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
 
@@ -44,13 +35,9 @@ export function useContentData<T>({
   headers,
 }: ContentOptions): {
   data: T | null;
-  loading: boolean;
-  error: Error | null;
   refresh: () => void;
 } {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const pathname = usePathname();
 
   // 生成缓存key
@@ -101,14 +88,10 @@ export function useContentData<T>({
       const cachedData = getFromCache();
       if (cachedData) {
         setData(cachedData as T);
-        setLoading(false);
         return;
       }
 
       try {
-        setLoading(true);
-        setError(null);
-
         // 构建API URL
         let apiUrl: string;
 
@@ -139,7 +122,8 @@ export function useContentData<T>({
         const result = await response.json();
 
         if (!response.ok) {
-          throw new Error(result.error || `Failed to fetch ${type} data (${response.status})`);
+          console.error(`Failed to fetch ${type} data (${response.status})`);
+          return;
         }
 
         if (isMounted) {
@@ -149,11 +133,7 @@ export function useContentData<T>({
       } catch (err) {
         console.error(`Error fetching ${type} data:`, err);
         if (isMounted) {
-          setError(err instanceof Error ? err : new Error(String(err)));
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
+          setData(null);
         }
       }
     };
@@ -165,7 +145,7 @@ export function useContentData<T>({
     };
   }, [type, path, url, category, pathname, cacheTime, disableCache, params, headers]);
 
-  return { data, loading, error, refresh: () => setData(null) };
+  return { data, refresh: () => setData(null) };
 }
 
 // 分类数据获取hook

@@ -3,7 +3,7 @@
 import React from 'react';
 import { useBlogPosts } from '@/hooks/use-blog';
 import { UnifiedCard } from '@/components/common/cards/unified-card';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { UnifiedGrid } from '@/components/common/cards/unified-grid';
 /**
  * 博客列表组件属性
  *
