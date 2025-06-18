@@ -195,9 +195,9 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex gap-8">
-          <aside className="hidden lg:block w-64 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto">
+      <div className="container mx-auto px-6 py-8">
+        <div className="flex gap-10 justify-center">
+          <aside className="hidden lg:block w-72 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4">
             <Sidebar
               category={topLevelCategorySlug}
               currentDoc={
@@ -208,8 +208,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             />
           </aside>
 
-          <main className="flex-1 min-w-0">
-            <div className="max-w-4xl">
+          <main className="flex-1 min-w-0 max-w-4xl">
+            <div className="mx-auto">
               <div className="mb-6">
                 <BreadcrumbComponent items={breadcrumbItems} />
               </div>
@@ -227,7 +227,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </main>
 
-          <aside className="hidden xl:block w-64 max-w-64 box-border pr-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
+          <aside className="hidden xl:block w-72 max-w-72 box-border px-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
             <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
           </aside>
         </div>

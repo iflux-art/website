@@ -1,6 +1,71 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { notFound } from 'next/navigation';
+
+// 获取目录下的所有文章
+function getArticlesInDirectory(dirPath: string): Array<{
+  slug: string;
+  title: string;
+  description?: string;
+  date?: string;
+}> {
+  const articles = [];
+  const files = fs.readdirSync(dirPath);
+
+  for (const file of files) {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isFile() && file.endsWith('.mdx')) {
+      const content = fs.readFileSync(fullPath, 'utf8');
+      const { data } = matter(content);
+      articles.push({
+        slug: file.slice(0, -4),
+        title: data.title || file.slice(0, -4),
+        description: data.description,
+        date: data.date,
+      });
+    }
+  }
+
+  return articles.sort((a, b) => {
+    if (a.date && b.date) {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    return 0;
+  });
+}
+
+// 验证目录是否存在
+function validatePath(filePath: string, type: 'file' | 'directory' = 'file'): boolean {
+  try {
+    if (!fs.existsSync(filePath)) return false;
+    const stats = fs.statSync(filePath);
+    return type === 'file' ? stats.isFile() : stats.isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+// 生成完整的面包屑路径
+function generateBreadcrumbs(slug: string[]): BreadcrumbItem[] {
+  const items: BreadcrumbItem[] = [{ label: '博客', href: '/blog' }];
+
+  let currentPath = '';
+  for (let i = 0; i < slug.length - 1; i++) {
+    currentPath += `/${slug[i]}`;
+    const fullPath = path.join(process.cwd(), 'src/content/blog', currentPath);
+
+    if (validatePath(fullPath, 'directory')) {
+      items.push({
+        label: slug[i],
+        href: `/blog${currentPath}`,
+      });
+    }
+  }
+
+  items.push({ label: slug[slug.length - 1] });
+  return items;
+}
 
 import { Breadcrumb, type BreadcrumbItem } from '@/components/common/breadcrumb';
 import { ContentDisplay } from '@/components/common/content-display';
@@ -8,107 +73,91 @@ import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 import { countWords } from '@/lib/utils';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
+import { NAVBAR_HEIGHT } from '@/config/layout';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string[] }> }) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  const fullSlug = slug.join('/');
+  const { slug } = await params;
+  const filePath = path.join(process.cwd(), 'src/content/blog', `${slug.join('/')}.mdx`);
+  const dirPath = path.join(process.cwd(), 'src/content/blog', slug.join('/'));
 
-  // 构建文件路径
-  const blogRoot = path.join(process.cwd(), 'src', 'content', 'blog');
-  const requestedPath = slug.join('/');
-  const absoluteRequestedPath = path.join(blogRoot, requestedPath);
-  let filePath: string | undefined;
+  // 检查是否为目录
+  if (validatePath(dirPath, 'directory')) {
+    const articles = getArticlesInDirectory(dirPath);
+    const directoryTitle = slug[slug.length - 1] || 'Blog';
 
-  // 1. 检查是否是目录请求
-  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
-    const indexMdxPath = path.join(absoluteRequestedPath, 'index.mdx');
-    const indexMdPath = path.join(absoluteRequestedPath, 'index.md');
+    const breadcrumbs = [
+      { label: 'Home', href: '/' },
+      { label: 'Blog', href: '/blog' },
+      ...slug.map((part, index) => ({
+        label: part,
+        href: `/blog/${slug.slice(0, index + 1).join('/')}`,
+      })),
+    ];
 
-    if (fs.existsSync(indexMdxPath)) {
-      filePath = indexMdxPath;
-    } else if (fs.existsSync(indexMdPath)) {
-      filePath = indexMdPath;
-    }
+    return (
+      <article className="relative mx-auto w-full max-w-3xl px-4 py-6">
+        <Breadcrumb items={breadcrumbs} />
+        <div className="mt-8">
+          <h1 className="text-3xl font-bold mb-8">{directoryTitle}</h1>
+          <div className="space-y-6">
+            {articles.map((article) => (
+              <article
+                key={article.slug}
+                className="group rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all"
+              >
+                <a href={`/blog/${slug.join('/')}/${article.slug}`} className="block p-6">
+                  <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors">
+                    {article.title}
+                  </h2>
+                  {article.description && (
+                    <p className="text-neutral-600 dark:text-neutral-400 mb-2">
+                      {article.description}
+                    </p>
+                  )}
+                  {article.date && (
+                    <time className="text-sm text-neutral-500 dark:text-neutral-500">
+                      {new Date(article.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </time>
+                  )}
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </article>
+    );
   }
 
-  // 2. 如果不是目录或目录中没有索引文件，尝试直接文件路径
-  if (!filePath) {
-    const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
-    if (fs.existsSync(possiblePathMdx)) {
-      filePath = possiblePathMdx;
-    } else {
-      const possiblePathMd = `${absoluteRequestedPath}.md`;
-      if (fs.existsSync(possiblePathMd)) {
-        filePath = possiblePathMd;
-      }
-    }
+  // 如果不是目录，检查文件是否存在
+  if (!validatePath(filePath, 'file')) {
+    notFound();
   }
 
-  // 收集所有可能的文件路径用于错误报告
-  const possiblePaths = {
-    indexMdx: path.join(absoluteRequestedPath, 'index.mdx'),
-    indexMd: path.join(absoluteRequestedPath, 'index.md'),
-    directMdx: `${absoluteRequestedPath}.mdx`,
-    directMd: `${absoluteRequestedPath}.md`,
-  };
-  if (!filePath) {
-    console.error('Failed to find blog post:', {
-      params: resolvedParams,
-      slug,
-      fullSlug,
-      possiblePaths,
-      cwd: process.cwd(),
-      blogRoot,
-    });
-    throw new Error(`博客文章未找到: ${fullSlug}`);
-  }
-  // 读取文件内容
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const { content, data } = matter(fileContent);
-  const wordCount = countWords(content);
+  const { content, data } = matter(fs.readFileSync(filePath, 'utf8'));
 
-  // 提取文章元数据
-  const title = data.title || fullSlug;
-  const date = data.date
-    ? new Date(data.date).toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : null;
-
-  // 提取标题作为目录
   const { headings } = extractHeadings(content);
-  // 构建面包屑导航项
-  const breadcrumbItems: BreadcrumbItem[] = [
-    { label: '博客', href: '/blog' },
-    ...(slug.length > 1
-      ? [
-          {
-            label: slug[0],
-            href: `/blog/${slug[0]}`,
-          },
-        ]
-      : []),
-    { label: title },
-  ];
+  const title = data.title || slug.join('/');
+  const date =
+    data.date &&
+    new Date(data.date).toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
 
-  const mdxContent = await MDXRenderer({ content });
-
+  const breadcrumbItems = generateBreadcrumbs(slug);
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex gap-8">
-          {/* 左侧空白区域，用于保持与文档页面布局一致 */}
-          <aside className="hidden lg:block w-64 shrink-0">
-            {/* 这里可以添加博客分类或其他导航 */}
-          </aside>
+      <div className="container mx-auto px-6 py-8">
+        <div className="flex justify-center gap-12">
+          <aside className="hidden lg:block w-72 shrink-0"></aside>
 
-          {/* 主内容区 */}
-          <main className="flex-1 min-w-0">
-            <div className="max-w-4xl">
-              {/* 面包屑导航 */}
+          <main className="flex-1 min-w-0 max-w-4xl">
+            <div>
               <div className="mb-6">
                 <Breadcrumb items={breadcrumbItems} />
               </div>
@@ -119,16 +168,17 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 date={date}
                 category={data.category}
                 tags={data.tags || []}
-                wordCount={wordCount}
+                wordCount={countWords(content)}
               >
-                {mdxContent}
+                {await MDXRenderer({ content })}
               </ContentDisplay>
             </div>
           </main>
 
-          {/* 右侧目录 */}
-          <aside className="hidden xl:block w-64 max-w-64 box-border pr-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
-            <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
+          <aside
+            className={`hidden xl:block w-72 box-border pl-4 shrink-0 self-start sticky top-[${NAVBAR_HEIGHT}px] max-h-[calc(100vh-${NAVBAR_HEIGHT}px-env(safe-area-inset-bottom))] overflow-y-auto`}
+          >
+            <TableOfContents headings={headings} adaptive={true} adaptiveOffset={NAVBAR_HEIGHT} />
           </aside>
         </div>
       </div>

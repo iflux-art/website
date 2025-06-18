@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Hash, Text } from 'lucide-react';
 import { useHeadingObserver } from '../../../hooks/use-heading-observer';
+import { NAVBAR_HEIGHT, SCROLL_OFFSET } from '@/config/layout';
+import { scrollToElement } from '@/utils/route-utils';
 
 /**
  * 标题项类型
@@ -77,9 +79,8 @@ export function TableOfContents({
   className,
   title = '目录',
   adaptive = false,
-  adaptiveOffset = 80,
+  adaptiveOffset = NAVBAR_HEIGHT,
 }: TableOfContentsProps) {
-  const [isFixed, setIsFixed] = useState(false);
   const tocRef = useRef<HTMLDivElement>(null);
 
   // 使用自定义 hook 处理标题观察
@@ -92,29 +93,46 @@ export function TableOfContents({
 
   // 自动滚动目录到当前活动标题
   useEffect(() => {
-    if (activeId && tocRef.current) {
-      const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
-      if (activeElement) {
-        // 计算需要滚动的位置
-        const containerRect = tocRef.current.getBoundingClientRect();
-        const activeRect = activeElement.getBoundingClientRect();
+    let timeoutId: number;
 
-        // 检查活动元素是否在可视区域内
-        const isInView =
-          activeRect.top >= containerRect.top && activeRect.bottom <= containerRect.bottom;
-
-        // 如果不在可视区域内，滚动到该元素
-        if (!isInView) {
-          const scrollTop =
-            activeRect.top - containerRect.top - containerRect.height / 2 + activeRect.height / 2;
-          tocRef.current.scrollTo({
-            top: tocRef.current.scrollTop + scrollTop,
-            behavior: 'smooth',
-          });
-        }
+    const handleScroll = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
-    }
-  }, [activeId]);
+
+      timeoutId = window.setTimeout(() => {
+        if (activeId && tocRef.current) {
+          const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
+          if (activeElement) {
+            const containerRect = tocRef.current.getBoundingClientRect();
+            const activeRect = activeElement.getBoundingClientRect();
+
+            const isInView =
+              activeRect.top >= containerRect.top && activeRect.bottom <= containerRect.bottom;
+
+            if (!isInView) {
+              const scrollTop =
+                activeRect.top -
+                containerRect.top -
+                containerRect.height / 2 +
+                activeRect.height / 2;
+              tocRef.current.scrollTo({
+                top: tocRef.current.scrollTop + scrollTop,
+                behavior: 'smooth',
+              });
+            }
+          }
+        }
+      }, 150);
+    };
+
+    handleScroll();
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [activeId, tocRef]);
 
   // 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
@@ -146,29 +164,32 @@ export function TableOfContents({
   useEffect(() => {
     if (!adaptive) return;
 
-    const handleScroll = () => {
-      if (tocRef.current) {
-        const { top } = tocRef.current.getBoundingClientRect();
-        setIsFixed(top <= adaptiveOffset);
-      }
-    };
+    let scrollTimeoutId: number;
 
-    const handleResize = () => {
-      if (tocRef.current && isFixed) {
-        tocRef.current.style.maxHeight = `${window.innerHeight - adaptiveOffset}px`;
+    const handleScroll = () => {
+      if (scrollTimeoutId) {
+        clearTimeout(scrollTimeoutId);
       }
+
+      scrollTimeoutId = window.setTimeout(() => {
+        if (tocRef.current) {
+          tocRef.current.style.maxHeight = `${window.innerHeight - adaptiveOffset}px`;
+        }
+      }, 150);
     };
 
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-    handleScroll(); // 初始检查
-    handleResize(); // 初始设置
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
 
     return () => {
+      if (scrollTimeoutId) {
+        clearTimeout(scrollTimeoutId);
+      }
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleScroll);
     };
-  }, [adaptive, adaptiveOffset, isFixed]);
+  }, [adaptive, adaptiveOffset]);
 
   return (
     <div className={cn('pl-0 overflow-hidden', className)}>
@@ -177,7 +198,7 @@ export function TableOfContents({
         className={cn(
           'pb-4 pr-2',
           adaptive && 'transition-all duration-200',
-          isFixed && adaptive && 'fixed top-[80px] overflow-y-auto'
+          adaptive && `fixed top-[${NAVBAR_HEIGHT}px] overflow-y-auto`
         )}
       >
         <h3 className="text-sm font-medium mb-2 text-foreground flex items-center">
@@ -215,23 +236,7 @@ export function TableOfContents({
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  const element = document.getElementById(heading.id);
-                  if (element) {
-                    // 滚动到元素位置，并添加一些偏移以避免被导航栏遮挡
-                    const offset = 80; // 根据您的导航栏高度调整
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth',
-                    });
-
-                    // 更新 URL 中的锚点，但不触发滚动
-                    history.pushState(null, '', `#${heading.id}`);
-
-                    // 删除该行，因为活动ID现在由 hook 管理
-                  }
+                  scrollToElement(heading.id, SCROLL_OFFSET);
                 }}
               >
                 <Hash
