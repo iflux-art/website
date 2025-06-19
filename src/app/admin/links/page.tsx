@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useDebouncedValue } from '@/hooks/use-debounced-value';
 import { AdminLayout } from '@/components/layout/admin/admin-layout';
 import { AdminActions } from '@/components/layout/admin/admin-actions';
 import { DataTable } from '@/components/layout/links/admin/data-table';
@@ -29,8 +30,10 @@ export default function LinksAdminPage() {
   const [categories, setCategories] = useState<LinksCategory[]>([]);
   const [filteredItems, setFilteredItems] = useState<LinksItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
   const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
@@ -43,26 +46,35 @@ export default function LinksAdminPage() {
 
   // 过滤数据
   useEffect(() => {
-    let filtered = items;
+    const filterItems = () => {
+      if (!debouncedSearchTerm && !selectedCategory) {
+        setFilteredItems(items);
+        return;
+      }
 
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+      const searchLower = debouncedSearchTerm.toLowerCase();
+
+      setFilteredItems(
+        items.filter((item) => {
+          const matchesSearch =
+            !debouncedSearchTerm ||
+            item.title.toLowerCase().includes(searchLower) ||
+            item.description.toLowerCase().includes(searchLower) ||
+            item.url.toLowerCase().includes(searchLower) ||
+            item.tags.some((tag) => tag.toLowerCase().includes(searchLower));
+
+          const matchesCategory = !selectedCategory || item.category === selectedCategory;
+
+          return matchesSearch && matchesCategory;
+        })
       );
-    }
+    };
 
-    if (selectedCategory) {
-      filtered = filtered.filter((item) => item.category === selectedCategory);
-    }
-
-    setFilteredItems(filtered);
-  }, [items, searchTerm, selectedCategory]);
+    filterItems();
+  }, [items, debouncedSearchTerm, selectedCategory]);
 
   const loadData = async () => {
+    setIsLoading(true);
     try {
       const [linksData, categoriesData] = await Promise.all([
         fetch('/api/links').then((res) => res.json()),
@@ -74,6 +86,8 @@ export default function LinksAdminPage() {
     } catch (error) {
       console.error('Error loading data:', error);
       showAlert('error', '加载数据失败');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -250,7 +264,7 @@ export default function LinksAdminPage() {
           (record) => setEditingItem(record),
           (record) => setDeletingItem(record)
         )}
-        loading={false}
+        loading={isLoading}
         emptyText={searchTerm || selectedCategory ? '没有找到匹配的网址' : '还没有添加任何网址'}
       />
 

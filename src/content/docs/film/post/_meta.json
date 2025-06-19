@@ -1,14 +1,14 @@
 {
-  "edius-shortcuts": {
-    "title": "EDIUS快捷键",
-    "description": "EDIUS剪辑软件操作指南"
+  "premiere-glossary": {
+    "title": "Premiere术语表",
+    "description": "PR剪辑软件专业词汇解析"
   },
   "fcp-shortcuts": {
     "title": "Final Cut Pro快捷键",
     "description": "FCP剪辑软件使用技巧"
   },
-  "premiere-glossary": {
-    "title": "Premiere术语表",
-    "description": "PR剪辑软件专业词汇解析"
+  "edius-shortcuts": {
+    "title": "EDIUS快捷键",
+    "description": "EDIUS剪辑软件操作指南"
   }
 }

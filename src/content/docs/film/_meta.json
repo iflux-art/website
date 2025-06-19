@@ -1,19 +1,19 @@
 {
-  "theory": {
-    "title": "电影理论",
-    "description": "电影创作的理论基础"
-  },
   "script": {
     "title": "剧本创作",
     "description": "电影剧本写作指南"
   },
-  "dialogue": {
-    "title": "对白艺术",
-    "description": "优秀电影对白案例分析"
+  "theory": {
+    "title": "电影理论",
+    "description": "电影创作的理论基础"
   },
   "review": {
-    "title": "影片分析",
+    "title": "影视评论",
     "description": "经典电影解析"
+  },
+  "dialogue": {
+    "title": "电影台词",
+    "description": "优秀电影对白案例分析"
   },
   "research": {
     "title": "节目研究",

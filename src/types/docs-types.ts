@@ -127,6 +127,8 @@ export interface UseDocSidebarResult {
   items: SidebarItem[];
   /** 加载状态 */
   loading: boolean;
+  /** 错误信息 */
+  error: string | null;
   /** 刷新侧边栏数据的方法 */
   refetch: () => Promise<void>;
 }

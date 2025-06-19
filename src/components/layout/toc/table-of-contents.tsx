@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Hash, Text } from 'lucide-react';
+import { Text } from 'lucide-react';
 import { useHeadingObserver } from '@/hooks/use-heading-observer';
 import { NAVBAR_HEIGHT, SCROLL_OFFSET } from '@/config/layout';
 import { scrollToElement } from '@/utils/route-utils';
@@ -201,7 +201,7 @@ export function TableOfContents({
           adaptive && `fixed top-[${NAVBAR_HEIGHT}px] overflow-y-auto`
         )}
       >
-        <h3 className="text-sm font-medium mb-2 text-foreground flex items-center">
+        <h3 className="text-sm font-medium mb-2 px-2 text-foreground flex items-center">
           <Text className="h-4 w-4 mr-1.5 text-primary/80" />
           <span>{title}</span>
         </h3>
@@ -239,13 +239,9 @@ export function TableOfContents({
                   scrollToElement(heading.id, SCROLL_OFFSET);
                 }}
               >
-                <Hash
-                  className={cn(
-                    'h-3.5 w-3.5 mr-1.5 ml-0.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary/70',
-                    activeId === heading.id ? 'opacity-100 text-primary' : ''
-                  )}
-                />
-                <span className="break-words whitespace-normal min-w-0 w-full">{heading.text}</span>
+                <span className="break-words whitespace-normal min-w-0 w-full block">
+                  {heading.text}
+                </span>
               </a>
             );
           })}

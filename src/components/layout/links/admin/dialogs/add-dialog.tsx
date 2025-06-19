@@ -12,9 +12,9 @@ interface AddDialogProps {
 export function AddDialog({ open, onOpenChange, onSubmit, isSubmitting }: AddDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto space-y-6">
         <DialogHeader>
-          <DialogTitle>添加新网址</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">添加新网址</DialogTitle>
         </DialogHeader>
         <LinksForm
           submitAction={onSubmit}

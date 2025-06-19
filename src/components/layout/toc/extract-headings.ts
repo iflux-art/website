@@ -28,26 +28,27 @@ export function extractHeadings(content: string): {
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
+    // 解析markdown链接格式 [text](url)
+    const linkMatch = text.match(/\[([^\]]+)\]\([^)]+\)/);
+    const finalText = linkMatch ? linkMatch[1] : text;
     const customId = match[3];
     const id =
       customId ||
-      `heading-${text
+      `heading-${finalText
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^\w-]/g, '')}-${match.index}`;
 
     if (level >= 1 && level <= 4) {
-      headings.push({ id, text, level });
+      headings.push({ id, text: finalText, level });
     }
   }
 
   // 确保所有标题都有唯一ID
   headings.forEach((heading) => {
+    const escapedText = heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
     const headingRegex = new RegExp(
-      `^(#{${heading.level}})\\s+(${heading.text.replace(
-        /[-/\\^$*+?.()|[\]{}]/g,
-        '\\$&'
-      )})(?:\\s*{#[\\w-]+})?$`,
+      `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,
       'gm'
     );
     processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);

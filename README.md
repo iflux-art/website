@@ -4,22 +4,20 @@
 
 ### 当前优化
 
-我们已经完成了所有必要的更改：
+基础字段重复：
 
-移除了 use-content-data.ts 中的 loading 状态管理
-移除了 use-journal.ts 中的 loading 状态依赖
-优化了 loading.tsx 为服务端组件
-现在整个加载流程将由 React Suspense 和 Next.js 的内置加载机制来处理，不再需要手动管理加载状态。页面加载时会自动显示我们的 loading.tsx 组件，然后平滑过渡到实际内容。
+LinksItem 和 LinksCategory 中的基础字段（id, title, description）与 BaseContent 和 BaseCategory 重复，应该继承基类
+Link 接口与 LinksItem 有重复字段（title, url, description, tags）
+类似的导航结构：
 
-所有功能性的状态（如折叠/展开状态、数据缓存等）都保持不变。您需要我检查其他组件吗？
+DocTreeNode (docs-types.ts) 和导航相关的类型结构类似，都包含 title 和 path/url
+DocNavItem 与 NavLinkProps 有相似的导航属性
+分类定义重复：
+
+LinksCategory 与 BaseCategory 有重叠字段
+DocCategory 已经正确继承了 BaseCategory，但 LinksCategory 没有
 
 针对 Next.js + Tailwind CSS v4 + shadcn/ui + Typescript 的最新特性，和项目技术栈的最佳实践，对项目整体进行一次全面的优化
-
-组件冗余：
-
-建议继续优化：
-考虑将导航按钮也抽象为可复用组件
-统一处理加载状态
 
 未优化的性能问题：
 features/navigation/navigation-data.ts 文件大小达到867.5KB，需要拆分或优化

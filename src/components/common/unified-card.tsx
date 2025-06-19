@@ -129,7 +129,7 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
 
     const baseClasses = cn(
       'group relative overflow-hidden h-full text-card-foreground',
-      'border rounded-lg hover:bg-accent/50 hover:border-primary/50 hover:shadow-md shadow-black/5 transition-all duration-200 p-6',
+      'border rounded-lg p-6 transition-all duration-300 hover:bg-accent/30 hover:border-primary/50 hover:scale-[1.01]',
       featured && 'border-primary/30',
       type === 'link' && 'hover:border-primary',
       type === 'navigation' && 'cursor-pointer transition-colors',

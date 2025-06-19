@@ -5,9 +5,8 @@
 
 'use client';
 
-import { useCallback } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
-import { useCache } from '@/hooks/use-cache';
+import { API_PATHS, HookResult } from '../utils/constants';
 import {
   DocItem,
   DocCategory,
@@ -22,12 +21,11 @@ import {
  *
  * @returns 文档分类列表
  */
-export function useDocCategories(): { categories: DocCategory[] } {
-  const { data: categories } = useContentData<DocCategory[]>({
+export function useDocCategories(): HookResult<DocCategory[]> {
+  return useContentData<DocCategory[]>({
     type: 'docs',
-    path: '/api/docs/categories',
+    path: API_PATHS.DOCS.CATEGORIES,
   });
-  return { categories: categories || [] };
 }
 
 /**
@@ -36,12 +34,11 @@ export function useDocCategories(): { categories: DocCategory[] } {
  * @param category 分类名称
  * @returns 分类下的文档列表
  */
-export function useCategoryDocs(category: string): { docs: DocListItem[] } {
-  const { data: docs } = useContentData<DocListItem[]>({
+export function useCategoryDocs(category: string): HookResult<DocListItem[]> {
+  return useContentData<DocListItem[]>({
     type: 'docs',
-    path: `/api/docs/categories/${encodeURIComponent(category)}`,
+    path: API_PATHS.DOCS.CATEGORY(category),
   });
-  return { docs: docs || [] };
 }
 
 /**
@@ -50,12 +47,11 @@ export function useCategoryDocs(category: string): { docs: DocListItem[] } {
  * @param category 分类名称
  * @returns 文档元数据
  */
-export function useDocMeta(category: string): { meta: DocMeta | null } {
-  const { data: meta } = useContentData<DocMeta>({
+export function useDocMeta(path: string): HookResult<DocMeta> {
+  return useContentData<DocMeta>({
     type: 'docs',
-    path: `/api/docs/meta/${encodeURIComponent(category)}`,
+    path: API_PATHS.DOCS.META(path),
   });
-  return { meta: meta || null };
 }
 
 /**
@@ -64,54 +60,38 @@ export function useDocMeta(category: string): { meta: DocMeta | null } {
  * @returns 侧边栏结构和加载状态
  */
 export function useDocSidebar(category: string): UseDocSidebarResult {
-  const fetchSidebarData = useCallback(async () => {
-    const response = await fetch(`/api/docs/sidebar/${encodeURIComponent(category)}`, {
-      headers: {
-        'Cache-Control': 'max-age=1800, stale-while-revalidate=3600',
-        Pragma: 'no-cache',
-      },
-      cache: 'no-store',
-    });
-    const data = await response.json();
-    return data as SidebarItem[];
-  }, [category]);
-
-  const { data, loading, refetch } = useCache<SidebarItem[]>(
-    `sidebar:${category}`,
-    fetchSidebarData,
-    {
-      expiry: 30 * 60 * 1000,
-      useMemoryCache: true,
-    }
-  );
+  const { data, loading, refresh, error } = useContentData<SidebarItem[]>({
+    type: 'docs',
+    path: API_PATHS.DOCS.SIDEBAR(category),
+    disableCache: true,
+  });
 
   return {
     items: data || [],
     loading,
-    refetch,
+    error: error?.message || null,
+    refetch: async () => {
+      await refresh();
+    },
   };
 }
+
+// 导出类型
+export type { DocItem, DocCategory, DocMeta, DocListItem, UseDocSidebarResult, SidebarItem };
 
 /**
  * 获取所有文档
  * @returns 所有文档列表
  */
-export async function getAllDocs(): Promise<DocItem[]> {
-  const response = await fetch('/api/docs/all', {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return response.json();
-}
-
 /**
- * 使用文档侧边栏项目（兼容旧版本）
- * @param category 分类名称
- * @returns 侧边栏项目列表和加载状态
- * @deprecated 使用 useDocSidebar 代替
+ * 使用文档内容
+ *
+ * @param path 文档路径
+ * @returns 文档内容和刷新方法
  */
-export function useDocSidebarItems(category: string): UseDocSidebarResult {
-  return useDocSidebar(category);
+export function useDocContent(path: string): HookResult<DocItem> {
+  return useContentData<DocItem>({
+    type: 'docs',
+    path: API_PATHS.DOCS.CONTENT(path),
+  });
 }

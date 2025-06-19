@@ -1,10 +1,10 @@
 {
-  "adventure-reality-show-formats": {
-    "label": "冒险真人秀节目形式",
-    "description": "冒险类真人秀的制作模式研究"
-  },
   "tv-comedy-competition-show-research": {
-    "label": "喜剧竞演节目研究",
-    "description": "喜剧类竞演节目的制作特点"
+    "title": "中国喜剧竞技真人秀研究",
+    "description": "从《超级笑星》到《欢乐喜剧人》，探讨中国喜剧竞技真人秀的发展历程、现状问题与未来走向，深入分析这一电视节目形态的演变规律。"
+  },
+  "adventure-reality-show-formats": {
+    "title": "探险类真人秀节目模式研究",
+    "description": "收录和分析全球15档经典探险与求生类真人秀节目，包括制作特点、节目亮点和播出信息，为相关节目制作提供参考。"
   }
 }

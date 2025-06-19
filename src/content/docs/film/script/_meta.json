@@ -1,38 +1,38 @@
 {
-  "character-relationships": {
-    "title": "人物关系设计",
-    "description": "创建生动角色关系的技巧"
-  },
-  "director-mindset": {
-    "title": "导演思维",
-    "description": "电影导演的创作视角"
-  },
-  "dramatic-actions": {
-    "title": "戏剧性动作",
-    "description": "塑造富有张力的剧情动作"
-  },
-  "dramatic-conflicts": {
-    "title": "戏剧冲突",
-    "description": "制造扣人心弦的剧情冲突"
-  },
-  "dramatic-events": {
-    "title": "戏剧事件",
-    "description": "设计关键剧情节点"
-  },
-  "screenplay-elements": {
-    "title": "剧本要素",
-    "description": "电影剧本的核心组成"
-  },
-  "story-endings": {
-    "title": "故事结局",
-    "description": "设计完美电影结局"
+  "three-act-structure": {
+    "title": "经典三幕式的写作公式",
+    "description": "详细解析电影剧本经典三幕式结构的写作规律，从建制、对抗到结束三个阶段，探讨如何构建富有戏剧性的故事架构"
   },
   "suspense-techniques": {
-    "title": "悬疑技巧",
-    "description": "创造悬疑氛围的方法"
+    "title": "制造悬念的 21 种方法",
+    "description": "全面介绍电影创作中制造悬念和戏剧张力的 21 种实用技巧，从希区柯克的经典手法到现代电影的创新方式"
   },
-  "three-act-structure": {
-    "title": "三幕结构",
-    "description": "经典剧作结构解析"
+  "story-endings": {
+    "title": "故事的 13 种结局方式",
+    "description": "深入分析经典和现代文学作品中的十三种故事结局写作技巧，从传统的死亡、大团圆到现代主义的迷失、循环往复等结局方式"
+  },
+  "screenplay-elements": {
+    "title": "什么是好剧本",
+    "description": "探讨优秀剧本的核心要素，从立意、故事性、人物塑造、观众感受等多个维度分析好剧本的标准和创作要点"
+  },
+  "character-relationships": {
+    "title": "人物关系设计",
+    "description": "剧本创作中人物关系设计的详细指南，包括一号人物设计原则、人物关系网络构建方法以及人物关系设计的九大要点"
+  },
+  "dramatic-conflicts": {
+    "title": "戏剧冲突设计",
+    "description": "深入解析戏剧冲突的概念、特征和来源，详细阐述剧本创作中如何设计和运用戏剧冲突来推动故事发展"
+  },
+  "dramatic-events": {
+    "title": "戏剧事件设计",
+    "description": "深入解析戏剧事件的概念、标准和设计原则，探讨九种事件组合形式，帮助编剧更好地构建戏剧性的故事结构"
+  },
+  "dramatic-actions": {
+    "title": "戏剧动作设置",
+    "description": "深入探讨剧本创作中的戏剧动作设计，包括动作的定义、来源、单线和复线故事的动作设置以及副线动作的处理原则"
+  },
+  "director-mindset": {
+    "title": "培养导演思维",
+    "description": "系统阐述导演思维的培养方法，从初读剧本的三个关键问题到深入分析的五条思维路径，帮助导演建立专业的创作视角"
   }
 }

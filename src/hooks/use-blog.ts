@@ -7,14 +7,28 @@
 
 import { useMemo } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
+import { API_PATHS, HookResult } from '../utils/constants';
 import { BlogPost } from '@/types/blog-types';
-export type { BlogPost } from '@/types/blog-types';
 
 export interface TagCount {
   tag: string;
   count: number;
 }
 
+export interface BlogResult<T> extends HookResult<T> {
+  loading: boolean;
+  error: Error | null;
+}
+
+export interface UseBlogPostsResult extends BlogResult<BlogPost[]> {
+  posts: BlogPost[];
+  postsCount: Record<string, number>;
+  categories: string[];
+}
+
+export interface UseTimelinePostsResult extends BlogResult<Record<string, BlogPost[]>> {
+  postsByYear: Record<string, BlogPost[]>;
+}
 /**
  * 按日期对博客文章进行排序
  */
@@ -33,10 +47,15 @@ function sortPostsByDate(posts: BlogPost[] | null | undefined) {
  *
  * @returns 博客文章列表
  */
-export function useBlogPosts() {
-  const { data: posts = [] } = useContentData<BlogPost[]>({
+export function useBlogPosts(): UseBlogPostsResult {
+  const {
+    data: posts,
+    loading,
+    error,
+    refresh,
+  } = useContentData<BlogPost[]>({
     type: 'blog',
-    path: '/api/blog/posts',
+    path: API_PATHS.BLOG.POSTS,
   });
 
   const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
@@ -63,7 +82,15 @@ export function useBlogPosts() {
     };
   }, [sortedPosts]);
 
-  return { posts: sortedPosts, postsCount, categories };
+  return {
+    data: sortedPosts,
+    posts: sortedPosts ?? [],
+    loading,
+    error,
+    refresh,
+    postsCount,
+    categories,
+  };
 }
 
 /**
@@ -71,10 +98,10 @@ export function useBlogPosts() {
  *
  * @returns 标签统计列表
  */
-export function useTagCounts() {
-  const { data } = useContentData<Record<string, number>>({
+export function useTagCounts(): HookResult<TagCount[]> {
+  const { data, loading, error, refresh } = useContentData<Record<string, number>>({
     type: 'blog',
-    path: '/api/blog/tags/count',
+    path: API_PATHS.BLOG.TAGS_COUNT,
   });
 
   const tagCounts = useMemo(() => {
@@ -87,7 +114,12 @@ export function useTagCounts() {
     return countsArray.sort((a, b) => b.count - a.count);
   }, [data]);
 
-  return { tagCounts };
+  return {
+    data: tagCounts,
+    loading,
+    error,
+    refresh,
+  };
 }
 
 /**
@@ -95,13 +127,19 @@ export function useTagCounts() {
  *
  * @returns 按年份分组的博客文章
  */
-export function useTimelinePosts() {
-  const { data: postsByYear = {} } = useContentData<Record<string, BlogPost[]>>({
+export function useTimelinePosts(): UseTimelinePostsResult {
+  const { data, loading, error, refresh } = useContentData<Record<string, BlogPost[]>>({
     type: 'blog',
-    path: '/api/blog/timeline',
+    path: API_PATHS.BLOG.TIMELINE,
   });
 
-  return { postsByYear };
+  return {
+    data,
+    postsByYear: data ?? {},
+    loading,
+    error,
+    refresh,
+  };
 }
 
 /**

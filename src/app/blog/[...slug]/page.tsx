@@ -3,6 +3,34 @@ import path from 'path';
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
+import { RelatedPosts } from '@/components/layout/blog/related-posts';
+// 获取相关文章
+function getRelatedPosts(currentSlug: string[], _category?: string) {
+  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const currentPath = currentSlug.slice(0, -1).join('/');
+
+  try {
+    // 尝试从同一目录获取文章
+    const dirPath = path.join(blogDir, currentPath);
+    if (validatePath(dirPath, 'directory')) {
+      const relatedPosts = getArticlesInDirectory(dirPath)
+        .filter((post) => post.slug !== currentSlug[currentSlug.length - 1])
+        .map((post) => ({
+          title: post.title,
+          href: `/blog/${currentPath ? `${currentPath}/` : ''}${post.slug}`,
+          category: post.category,
+        }))
+        .slice(0, 5); // 限制相关文章数量为5
+
+      return relatedPosts;
+    }
+  } catch {
+    // 如果出现错误，返回空数组
+    return [];
+  }
+
+  return [];
+}
 
 // 获取目录下的所有文章
 function getArticlesInDirectory(dirPath: string): Array<{
@@ -10,6 +38,7 @@ function getArticlesInDirectory(dirPath: string): Array<{
   title: string;
   description?: string;
   date?: string;
+  category?: string;
 }> {
   const articles = [];
   const files = fs.readdirSync(dirPath);
@@ -24,6 +53,7 @@ function getArticlesInDirectory(dirPath: string): Array<{
         title: data.title || file.slice(0, -4),
         description: data.description,
         date: data.date,
+        category: data.category,
       });
     }
   }
@@ -108,9 +138,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!validatePath(filePath, 'file')) {
     notFound();
   }
-
   const { content: rawContent, data } = matter(fs.readFileSync(filePath, 'utf8'));
   const content = await serialize(rawContent);
+  const posts = getRelatedPosts(slug, data.category);
 
   const { headings } = extractHeadings(rawContent);
   const title = data.title || slug.join('/');
@@ -126,7 +156,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
         <div className="flex justify-center gap-12">
-          <aside className="hidden lg:block w-72 shrink-0"></aside>
+          <aside className="hidden lg:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4">
+            <RelatedPosts posts={posts} currentSlug={slug} />
+          </aside>
 
           <main className="flex-1 min-w-0 max-w-4xl">
             <div>
@@ -147,9 +179,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           </main>
 
-          <aside
-            className={`hidden xl:block w-72 box-border pl-4 shrink-0 self-start sticky top-[${NAVBAR_HEIGHT}px] max-h-[calc(100vh-${NAVBAR_HEIGHT}px-env(safe-area-inset-bottom))] overflow-y-auto`}
-          >
+          <aside className="hidden xl:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
             <TableOfContents headings={headings} adaptive={true} adaptiveOffset={NAVBAR_HEIGHT} />
           </aside>
         </div>

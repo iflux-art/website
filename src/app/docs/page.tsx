@@ -5,7 +5,7 @@ import { UnifiedGrid } from '@/components/layout/unified-grid';
 import { UnifiedCard } from '@/components/common/unified-card';
 
 export default function DocsPage() {
-  const { categories = [] } = useDocCategories();
+  const { data: categories = [] } = useDocCategories();
 
   return (
     <div className="min-h-screen bg-background">

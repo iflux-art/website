@@ -1,23 +1,23 @@
 {
-  "creativity-basics": {
-    "title": "创意基础",
-    "description": "从零开始的创意思维训练"
-  },
-  "brand-creativity-principles": {
-    "title": "品牌创意原则",
-    "description": "品牌创意的核心原则与方法"
-  },
   "creative-eye-catching": {
-    "title": "吸引眼球的创意",
-    "description": "如何创作具有视觉冲击力的作品"
+    "title": "创意吸睛心法",
+    "description": "以武侠小说笔法阐述创意人修炼之道，涵盖灵感获取、技能提升、创意修炼等方面的实用心法"
   },
   "ad-man-confessions": {
-    "title": "广告人自白",
-    "description": "奥格威的广告经营智慧"
+    "title": "一个广告人的自白",
+    "description": "广告界传奇人物大卫·奥格威的经典著作《一个广告人的自白》读书笔记，包含关于广告公司经营、客户关系、创意管理等核心洞察"
   },
   "bernbach-ad-quotes": {
-    "title": "广告大师语录",
-    "description": "伯恩巴克的创意理念"
+    "title": "广告大师伯恩巴克的广告语录",
+    "description": "DDB广告公司创始人威廉·伯恩巴克关于广告创意的经典语录，涵盖创意的重要性、来源、表达和目的等多个维度的洞见"
+  },
+  "brand-creativity-principles": {
+    "title": "品牌创意的想象规律",
+    "description": "基于《文案发烧》一书，探讨品牌创意的本质与规律，包含詹姆斯·韦伯·杨的五条创意想象规律以及品牌建设的核心原则"
+  },
+  "creativity-basics": {
+    "title": "从一张白纸开始你的创意",
+    "description": "介绍如何从零开始激发创意，提供了一系列实用的思考方法和创意生成技巧"
   },
   "copy": {
     "title": "文案写作",

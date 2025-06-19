@@ -19,14 +19,13 @@ import type { MDXRendererProps } from './types';
  */
 export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
   const [serializedContent, setSerializedContent] = React.useState<MDXRemoteSerializeResult | null>(
-    null
+    typeof content !== 'string' ? content : null
   );
 
   // 合并自定义组件
   const { components: customComponents = {} } = options;
   const components = { ...MDXComponents, ...customComponents };
 
-  // 当内容是字符串时进行序列化
   React.useEffect(() => {
     if (typeof content === 'string') {
       serialize(content, {
@@ -35,8 +34,14 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
           development: MDX_DEFAULT_OPTIONS.compile.development,
         },
       }).then(setSerializedContent);
+    } else {
+      setSerializedContent(content);
     }
   }, [content]);
+
+  if (!content) {
+    return null;
+  }
 
   try {
     return (
@@ -53,8 +58,8 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
       </div>
     );
   } catch (error) {
-    console.error('Failed to render MDX content:', error);
-    return <div className="text-red-500">Failed to render content</div>;
+    console.error('Error rendering MDX:', error);
+    return <div className="text-red-500">Error rendering content</div>;
   }
 };
 

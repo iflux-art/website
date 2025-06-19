@@ -9,7 +9,7 @@ export const getTableColumns = (
   {
     key: 'icon',
     title: '图标',
-    width: '60px',
+    width: '64px',
     render: (value, record, _index) => (
       <div className="text-lg">
         {record.iconType === 'emoji' ? (
@@ -25,33 +25,36 @@ export const getTableColumns = (
   {
     key: 'title',
     title: '标题',
+    width: '450px',
     render: (value, record, _index) => (
       <div>
         <div className="font-medium">{value}</div>
-        <div className="text-sm text-muted-foreground">{record.url}</div>
+        <div className="text-sm text-muted-foreground truncate max-w-[300px]">{record.url}</div>
       </div>
     ),
   },
   {
     key: 'category',
     title: '分类',
+    width: '120px',
     render: (value, _record, _index) => (value ? getCategoryName(value as string) : '-'),
   },
   {
     key: 'tags',
     title: '标签',
+    width: '350px',
     render: (value, _record, _index) => {
       const tags = value as string[];
       if (!tags?.length) return null;
       return (
         <div className="flex gap-1 flex-wrap">
           {tags.slice(0, 3).map((tag: string) => (
-            <Badge key={tag} variant="outline" className="text-xs">
+            <Badge key={tag} variant="outline" className="text-xs px-2">
               {tag}
             </Badge>
           ))}
           {tags.length > 3 && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs px-2">
               +{tags.length - 3}
             </Badge>
           )}
@@ -62,11 +65,16 @@ export const getTableColumns = (
   {
     key: 'featured',
     title: '状态',
+    width: '100px',
     render: (value, _record, _index) =>
       (value as boolean) ? (
-        <Badge variant="default">精选</Badge>
+        <Badge variant="default" className="text-xs px-2">
+          精选
+        </Badge>
       ) : (
-        <Badge variant="outline">普通</Badge>
+        <Badge variant="outline" className="text-xs px-2">
+          普通
+        </Badge>
       ),
   },
 ];

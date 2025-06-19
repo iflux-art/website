@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useBlogPosts } from '@/hooks/use-blog';
+import type { BlogPost } from '@/types/blog-types';
 import { UnifiedCard } from '@/components/common/unified-card';
 import { UnifiedGrid } from '@/components/layout/unified-grid';
 /**
@@ -47,7 +48,7 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction 
 
   // 筛选文章
   const filteredPosts = filterTag
-    ? posts.filter((post) => post.tags && post.tags.includes(filterTag))
+    ? posts.filter((post: BlogPost) => post.tags && post.tags.includes(filterTag))
     : posts;
 
   // 限制显示数量
@@ -77,7 +78,7 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction 
 
   return (
     <UnifiedGrid columns={4}>
-      {displayPosts.map((post) => (
+      {displayPosts.map((post: BlogPost) => (
         <UnifiedCard
           key={post.slug}
           type="blog"

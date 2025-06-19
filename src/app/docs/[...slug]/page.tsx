@@ -170,7 +170,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
         <div className="flex gap-10 justify-center">
-          <aside className="hidden lg:block w-72 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4">
+          <aside className="hidden lg:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4">
             <Sidebar
               category={topLevelCategorySlug}
               currentDoc={
@@ -206,7 +206,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </main>
 
-          <aside className="hidden xl:block w-72 max-w-72 box-border px-4 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
+          <aside className="hidden xl:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
             <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
           </aside>
         </div>
