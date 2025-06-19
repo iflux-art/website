@@ -1,0 +1,38 @@
+{
+  "character-relationships": {
+    "title": "人物关系设计",
+    "description": "创建生动角色关系的技巧"
+  },
+  "director-mindset": {
+    "title": "导演思维",
+    "description": "电影导演的创作视角"
+  },
+  "dramatic-actions": {
+    "title": "戏剧性动作",
+    "description": "塑造富有张力的剧情动作"
+  },
+  "dramatic-conflicts": {
+    "title": "戏剧冲突",
+    "description": "制造扣人心弦的剧情冲突"
+  },
+  "dramatic-events": {
+    "title": "戏剧事件",
+    "description": "设计关键剧情节点"
+  },
+  "screenplay-elements": {
+    "title": "剧本要素",
+    "description": "电影剧本的核心组成"
+  },
+  "story-endings": {
+    "title": "故事结局",
+    "description": "设计完美电影结局"
+  },
+  "suspense-techniques": {
+    "title": "悬疑技巧",
+    "description": "创造悬疑氛围的方法"
+  },
+  "three-act-structure": {
+    "title": "三幕结构",
+    "description": "经典剧作结构解析"
+  }
+}

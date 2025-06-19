@@ -1,42 +1,10 @@
 {
-  "guides": {
-    "title": "入门指南",
-    "description": "轻松上手的官方手册"
-  },
-  "update": {
-    "title": "更新日志",
-    "description": "每次更新的简要记录"
-  },
-  "ai": {
-    "title": "Ai",
-    "description": "探索人工智能的文档与教程"
-  },
-  "dev": {
-    "title": "开发指南",
-    "description": "探索全栈开发的文档与教程"
-  },
-  "live": {
-    "title": "直播运营指南",
-    "description": "直播运营的详细指南"
-  },
-  "douyin": {
-    "title": "抖音运营指南",
-    "description": "抖音运营的详细指南"
-  },
-  "channels": {
-    "title": "视频号运营指南",
-    "description": "视频号运营的详细指南"
-  },
-  "mp": {
-    "title": "公众号号运营指南",
-    "description": "公众号运营的详细指南"
-  },
-  "private": {
-    "title": "私域运营指南",
-    "description": "私域运营的详细指南"
+  "film": {
+    "title": "影视传媒",
+    "description": "深入电影创作的方方面面，从理论到实践，涵盖剧本写作、结构分析、对白技巧、影评研究等核心内容，助你系统掌握电影创作的艺术"
   },
   "ad": {
-    "title": "广告",
-    "description": "广告创意与策略分享"
+    "title": "广告创意",
+    "description": "汇集广告界传奇人物的经典著作与洞见，以及实用的创意方法论，助你掌握从策略到执行的广告创意全流程"
   }
 }

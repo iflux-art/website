@@ -5,6 +5,7 @@ import React from 'react';
 
 // 第三方依赖
 import matter from 'gray-matter';
+import { serialize } from 'next-mdx-remote/serialize';
 
 // 布局组件
 import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
@@ -15,7 +16,7 @@ import { Sidebar } from '@/components/layout/docs/sidebar';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 
 // 内容渲染
-import { MDXRenderer } from '@/components/mdx/mdx-renderer';
+import { MDXRenderer } from '@/components/mdx';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { getFlattenedDocsOrder, type NavDocItem } from '@/lib/content';
 import type { DocMetaItem } from '@/types/docs-types';
@@ -104,7 +105,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const { headings } = extractHeadings(originalContent);
 
   // 直接使用原始内容进行渲染
-  const mdxContent = await MDXRenderer({ content: originalContent });
+  const mdxSource = await serialize(originalContent);
+  const mdxContent = <MDXRenderer content={mdxSource} />;
 
   const topLevelCategorySlug = slug[0];
 

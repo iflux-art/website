@@ -1,0 +1,26 @@
+{
+  "theory": {
+    "title": "电影理论",
+    "description": "电影创作的理论基础"
+  },
+  "script": {
+    "title": "剧本创作",
+    "description": "电影剧本写作指南"
+  },
+  "dialogue": {
+    "title": "对白艺术",
+    "description": "优秀电影对白案例分析"
+  },
+  "review": {
+    "title": "影片分析",
+    "description": "经典电影解析"
+  },
+  "research": {
+    "title": "节目研究",
+    "description": "影视节目形态研究"
+  },
+  "post": {
+    "title": "后期制作",
+    "description": "影视后期剪辑指南"
+  }
+}

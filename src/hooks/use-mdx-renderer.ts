@@ -1,8 +1,10 @@
 import { useMemo, useCallback } from 'react';
-import type { MDXComponents } from '@/components/mdx/types';
+import type { MDXOptions } from '@/features/mdx/types';
 import { debounce } from '@/utils/helpers';
 import { MDX_CONFIG } from '@/utils/config';
 import { getCachedMDX, setCachedMDX } from '@/lib/mdx-cache';
+
+type MDXComponents = NonNullable<MDXOptions['components']>;
 
 interface RenderResult {
   content: string;

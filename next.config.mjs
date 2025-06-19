@@ -11,10 +11,29 @@ import remarkGfm from 'remark-gfm';
 const withMDX = createMDX({
   options: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
-    // 启用 JSX
+    rehypePlugins: [
+      rehypeSlug, 
+      rehypeAutolinkHeadings,
+      // 添加基础代码块处理
+      () => (tree) => {
+        // 遍历 AST，确保代码块使用标准标签
+        const visit = (node) => {
+          if (node.tagName === 'pre') {
+            const code = node.children.find(child => child.tagName === 'code');
+            if (code) {
+              code.tagName = 'code';
+              code.properties = code.properties || {};
+              code.properties.className = code.properties.className || ['language-text'];
+            }
+          }
+          if (node.children) {
+            node.children.forEach(visit);
+          }
+        };
+        visit(tree);
+      }
+    ],
     jsx: true,
-    // 启用 rsc
     format: 'mdx'
   }
 });
@@ -46,8 +65,6 @@ const nextConfig = {
     ],
     // 优化页面加载
     optimisticClientCache: true,
-    // 启用 MDX 内容的静态生成
-    mdxRs: true,
   },
 
   // 图片优化配置
@@ -57,10 +74,12 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24, // 24 小时
     disableStaticImages: false,
+    domains: ['img.dava.cc'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'img.dava.cc',
+        pathname: '/img/**',
       }
     ],
     dangerouslyAllowSVG: true,

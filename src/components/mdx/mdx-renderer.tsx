@@ -1,27 +1,28 @@
-// 使用临时文件来确保内容正确
+'use client';
 
-import React from 'react';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import type { MDXContentProps } from './types';
-import { STYLE_CONFIG } from './utils/config';
-import { BaseComponents } from './renderers/components';
+import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { useMemo } from 'react';
+import { MDXComponents } from './mdx-components';
 
-/**
- * MDX内容渲染器
- */
-export const MDXRenderer = async ({ content, options = {} }: MDXContentProps) => {
-  const { components: customComponents = {} } = options;
+interface MDXRendererProps {
+  content: MDXRemoteSerializeResult;
+  components?: Record<string, React.ComponentType<{ children?: React.ReactNode }>>;
+}
 
-  try {
-    return (
-      <div className={STYLE_CONFIG.BASE_CLASSES.prose}>
-        <MDXRemote source={content} components={{ ...BaseComponents, ...customComponents }} />
-      </div>
-    );
-  } catch (error) {
-    console.error('Failed to compile MDX:', error);
-    return <div>Error rendering content</div>;
+export function MDXRenderer({ content, components: customComponents = {} }: MDXRendererProps) {
+  const components = useMemo(
+    () => ({
+      ...MDXComponents,
+      ...customComponents,
+    }),
+    [customComponents]
+  );
+
+  // 确保 content 是有效的序列化结果
+  if (!content || typeof content !== 'object') {
+    console.warn('Invalid MDX content provided to MDXRenderer');
+    return null;
   }
-};
 
-export default MDXRenderer;
+  return <MDXRemote {...content} components={components} />;
+}

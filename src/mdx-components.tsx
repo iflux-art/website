@@ -20,14 +20,6 @@ export function useMDXComponents(
   > = {}
 ) {
   const mdxComponents = {
-    img: ({ src, alt, ...props }: MDXImageProps) => {
-      if (!src) {
-        return null;
-      }
-
-      return <img src={src} alt={alt || ''} {...props} />;
-    },
-
     table: ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
       <div className="overflow-x-auto">
         <table {...props} className="my-6 w-full">
@@ -47,6 +39,20 @@ export function useMDXComponents(
     td: (props: React.TdHTMLAttributes<HTMLTableDataCellElement>) => (
       <td {...props} className="border-b py-4 px-4" />
     ),
+
+    img: ({ src, alt, ...props }: MDXImageProps) => {
+      if (!src) return null;
+      // eslint-disable-next-line @next/next/no-img-element
+      return (
+        <img
+          src={String(src)}
+          alt={alt || ''}
+          loading="lazy"
+          className="rounded-lg my-4 max-w-full h-auto"
+          {...props}
+        />
+      );
+    },
 
     ...components,
   };

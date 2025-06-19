@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
+import { serialize } from 'next-mdx-remote/serialize';
 
 // 获取目录下的所有文章
 function getArticlesInDirectory(dirPath: string): Array<{
@@ -50,7 +51,7 @@ import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
 import { createBlogBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb-utils';
 import { ContentDisplay } from '@/components/common/content-display';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
-import { MDXRenderer } from '@/components/mdx/mdx-renderer';
+import { MDXRenderer } from '@/components/mdx';
 import { countWords } from '@/lib/utils';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { NAVBAR_HEIGHT } from '@/config/layout';
@@ -108,9 +109,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  const { content, data } = matter(fs.readFileSync(filePath, 'utf8'));
+  const { content: rawContent, data } = matter(fs.readFileSync(filePath, 'utf8'));
+  const content = await serialize(rawContent);
 
-  const { headings } = extractHeadings(content);
+  const { headings } = extractHeadings(rawContent);
   const title = data.title || slug.join('/');
   const date =
     data.date &&
@@ -138,9 +140,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 date={date}
                 category={data.category}
                 tags={data.tags || []}
-                wordCount={countWords(content)}
+                wordCount={countWords(rawContent)}
               >
-                {await MDXRenderer({ content })}
+                <MDXRenderer content={content} />
               </ContentDisplay>
             </div>
           </main>

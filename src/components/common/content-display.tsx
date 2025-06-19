@@ -95,7 +95,7 @@ export function ContentDisplay({
   };
 
   return (
-    <article className={cn('', className)}>
+    <article className={cn('prose-container', className)}>
       <header className="mb-8">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-8">{title}</h1>
         <div className="flex flex-wrap items-center gap-y-2 text-sm text-muted-foreground font-medium">
@@ -155,7 +155,9 @@ export function ContentDisplay({
         </div>
       </header>
 
-      <div className="prose prose-zinc dark:prose-invert max-w-none">{children}</div>
+      <div className="prose prose-zinc dark:prose-invert max-w-none prose-img:rounded-xl">
+        {children}
+      </div>
     </article>
   );
 }

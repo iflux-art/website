@@ -74,13 +74,15 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
     const { data, content } = matter(fileContent);
 
     // 导入处理函数
-    const { processMdxContent } = await import('@/components/mdx/renderers/markdown-renderer');
+    const { processMdxContent } = await import('@/components/mdx/process-mdx');
 
     // 处理内容中的 ResourceCard 和 ResourceGrid 组件
-    const processedContent = processMdxContent(content);
+    const processedContent = await processMdxContent({
+      source: content,
+    });
 
     console.log('API 路由: 成功处理 MDX 内容', {
-      contentLength: processedContent.length,
+      contentLength: processedContent.source.length,
       frontmatterKeys: Object.keys(data),
     });
 
