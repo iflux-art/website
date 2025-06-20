@@ -19,8 +19,20 @@
     "title": "从一张白纸开始你的创意",
     "description": "介绍如何从零开始激发创意，提供了一系列实用的思考方法和创意生成技巧"
   },
-  "copy": {
-    "title": "文案写作",
+  "theory": {
+    "title": "文案写作指南",
     "description": "专业的文案创作指南集"
+  },
+  "brand-campaigns": {
+    "title": "品牌广告文案",
+    "description": "各个品牌的创意广告文案"
+  },
+  "examples": {
+    "title": "行业广告文案",
+    "description": "各个垂直行业的创意广告文案"
+  },
+  "pun-based-usernames": {
+    "title": "谐音梗网名",
+    "description": "基于谐音梗的创意用户名集合，包含姓氏谐音、成语改编、流行语改编等多种玩法，为社交媒体用户名提供灵感"
   }
 }

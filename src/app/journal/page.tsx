@@ -57,6 +57,14 @@ export default function JournalPage() {
     );
   };
 
+  if (entries.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+        <div className="text-center text-muted-foreground">暂无日志记录</div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <div>
