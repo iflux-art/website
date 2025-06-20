@@ -234,7 +234,7 @@ export default {
 ```tsx
 // components/ui/content.tsx
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 interface ContentProps {
   children: React.ReactNode;
@@ -317,7 +317,7 @@ export default function BlogPost() {
 // components/ui/content-button.tsx
 import React from 'react';
 import { Button, ButtonProps } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 export function ContentButton({ className, ...props }: ButtonProps) {
   return (

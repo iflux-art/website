@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 import { CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 export type CardType = 'blog' | 'category' | 'resource' | 'link' | 'navigation' | 'friend' | 'docs';
 

@@ -2,11 +2,10 @@
 import Link from 'next/link';
 
 import { useJournalEntries } from '@/hooks/use-journal';
-import { formatDate } from '@/lib/utils';
+import { formatDate, cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { JournalEntry } from '@/types/journal-types';
-import { cn } from '@/lib/utils';
 import { useState, useEffect, useMemo } from 'react';
 type GroupedEntries = [string, JournalEntry[]][];
 

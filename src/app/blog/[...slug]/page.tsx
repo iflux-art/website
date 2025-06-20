@@ -82,7 +82,7 @@ import { createBlogBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb
 import { ContentDisplay } from '@/components/common/content-display';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 import { MDXRenderer } from '@/components/mdx';
-import { countWords } from '@/lib/utils';
+import { countWords } from '@/utils';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { NAVBAR_HEIGHT } from '@/config/layout';
 

@@ -2,30 +2,86 @@
 
 文件夹分为：blog、docs、tools、navigation、admin
 
+API 路由安全性强化
+缓存策略优化
+错误处理统一化
+内容处理优化
+Hooks 增强
+类型系统改进
+
 ### 当前优化
 
-基础字段重复：
+让我分析这个项目的性能相关问题：
 
-LinksItem 和 LinksCategory 中的基础字段（id, title, description）与 BaseContent 和 BaseCategory 重复，应该继承基类
-Link 接口与 LinksItem 有重复字段（title, url, description, tags）
-类似的导航结构：
+1. 大文件问题：
+- pnpm-lock.yaml 文件高达 244.7KB，这个文件会被版本控制，但不会影响运行性能
+- globals.css 有 9.5KB，建议拆分为必要的关键CSS和非关键CSS
+- public/styles/non-critical.css 有 5.7KB，建议进行压缩和优化
 
-DocTreeNode (docs-types.ts) 和导航相关的类型结构类似，都包含 title 和 path/url
-DocNavItem 与 NavLinkProps 有相似的导航属性
-分类定义重复：
+2. 资源管理：
+- public/images 目录下有多个子目录，建议对图片资源进行:
+  - 响应式图片优化（使用 srcset 和 sizes）
+  - 图片格式优化（考虑使用 WebP/AVIF）
+  - 实现懒加载
 
-LinksCategory 与 BaseCategory 有重叠字段
-DocCategory 已经正确继承了 BaseCategory，但 LinksCategory 没有
+1. 代码结构：
+- components 目录结构良好，但需要注意：
+  - 确保组件实现了代码分割
+  - 使用 dynamic import 延迟加载非首屏组件
 
-针对 Next.js + Tailwind CSS v4 + shadcn/ui + Typescript 的最新特性，和项目技术栈的最佳实践，对项目整体进行一次全面的优化
+1. 性能优化建议：
 
-未优化的性能问题：
-features/navigation/navigation-data.ts 文件大小达到867.5KB，需要拆分或优化
-features/home/search-box.tsx 高达37.6KB，建议拆分组件
+A. 立即可实施的优化：
+1. 实现组件级别的代码分割：
+```typescript
+import dynamic from 'next/dynamic'
+const HeavyComponent = dynamic(() => import('./HeavyComponent'))
+```
 
-考虑添加 Prettier 配置来统一代码风格
-可以添加 Husky 进行 git hooks 管理
-使用 git hooks 自动在提交前格式化代码
+2. 优化 CSS 加载：
+- 将 globals.css 拆分为关键 CSS 和非关键 CSS
+- 使用 CSS Module 或 styled-components 实现更好的 CSS 代码分割
+
+3. 实现资源预加载：
+```typescript
+<link rel="preload" href="critical-path.css" as="style">
+<link rel="preload" href="important-font.woff2" as="font" crossorigin>
+```
+
+B. 中期优化建议：
+1. 图片优化策略：
+- 实现响应式图片
+- 使用现代图片格式
+- 图片懒加载
+- 考虑使用图片 CDN
+
+2. 缓存策略优化：
+- 优化 Service Worker 缓存策略
+- 实现 stale-while-revalidate 模式
+- 合理设置缓存时间
+
+3. 状态管理优化：
+- 审查 use-blog.ts、use-cache.ts 等状态管理
+- 实现更细粒度的状态更新
+- 考虑使用 React Query 或 SWR 优化数据获取
+
+C. 长期优化建议：
+1. 架构层面：
+- 考虑使用 Edge Runtime 部署关键 API 路由
+- 实现 ISR (Incremental Static Regeneration)
+- 优化首屏 TTI (Time to Interactive)
+
+2. 监控与分析：
+- 实现性能监控
+- 收集核心 Web 指标
+- 建立性能预算
+
+3. 基础设施：
+- 使用 CDN 分发静态资源
+- 实现智能路由和边缘计算
+- 考虑使用微前端架构拆分大型应用
+
+需要我帮你完成其中的某项具体优化吗？
 
 ## 可以使用以下命令：
 

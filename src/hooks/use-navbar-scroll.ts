@@ -1,9 +1,52 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useReducer, useEffect, useCallback, useRef, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { throttle } from 'lodash';
-import { ScrollHandler, ThrottledScrollHandler } from '@/types/hooks-internal';
+import { ThrottledScrollHandler } from '@/types/hooks-internal';
+
+interface ScrollState {
+  direction: 'up' | 'down';
+  position: number;
+  showTitle: boolean;
+  pageTitle: string;
+}
+
+type ScrollAction = { type: 'SCROLL'; payload: number } | { type: 'SET_TITLE'; payload: string };
+
+const SCROLL_THRESHOLD = 10;
+const THROTTLE_DELAY = 300;
+
+const initialState: ScrollState = {
+  direction: 'up',
+  position: 0,
+  showTitle: false,
+  pageTitle: '',
+};
+
+function scrollReducer(state: ScrollState, action: ScrollAction): ScrollState {
+  switch (action.type) {
+    case 'SCROLL': {
+      const newPosition = action.payload;
+      if (Math.abs(newPosition - state.position) <= SCROLL_THRESHOLD) {
+        return state;
+      }
+      return {
+        ...state,
+        direction: newPosition > state.position ? 'down' : 'up',
+        position: newPosition,
+        showTitle: newPosition > 100,
+      };
+    }
+    case 'SET_TITLE':
+      return {
+        ...state,
+        pageTitle: action.payload,
+      };
+    default:
+      return state;
+  }
+}
 
 /**
  * 导航栏滚动效果 Hook
@@ -16,45 +59,16 @@ import { ScrollHandler, ThrottledScrollHandler } from '@/types/hooks-internal';
  * @returns 返回导航栏状态和控制函数对象
  */
 export function useNavbarScroll() {
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
-  const [pageTitle, setPageTitle] = useState('');
-  const [showTitle, setShowTitle] = useState(false);
-  const lastScrollYRef = useRef(0);
+  const [state, dispatch] = useReducer(scrollReducer, initialState);
   const pathname = usePathname();
+  const titleObserverRef = useRef<MutationObserver | null>(null);
 
-  const scrollToTop = useCallback(() => {
-    try {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    } catch (error) {
-      console.error('Failed to scroll to top:', error);
-      // Fallback for older browsers
-      window.scrollTo(0, 0);
-    }
-  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  const THROTTLE_DELAY = 200;
-
-  const handleScroll: ScrollHandler = useCallback(() => {
-    try {
-      const currentScrollY = window.scrollY;
-      const lastScroll = lastScrollYRef.current;
-      const direction = currentScrollY > lastScroll ? 'down' : 'up';
-
-      // 只有在滚动距离超过阈值时才更新方向
-      if (Math.abs(currentScrollY - lastScroll) > 10) {
-        setScrollDirection(direction);
-        lastScrollYRef.current = currentScrollY;
-      }
-
-      // 根据滚动位置和方向决定是否显示标题
-      const shouldShowTitle = currentScrollY > 100 && direction === 'down';
-      setShowTitle(shouldShowTitle);
-    } catch (error) {
-      console.error('Error handling scroll:', error);
-    }
+  const handleScroll = useCallback(() => {
+    dispatch({ type: 'SCROLL', payload: window.scrollY });
   }, []);
 
   const throttledHandleScroll = useMemo(
@@ -62,61 +76,77 @@ export function useNavbarScroll() {
     [handleScroll]
   );
 
+  // 监听滚动事件
   useEffect(() => {
     window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-
     return () => {
       throttledHandleScroll.cancel();
       window.removeEventListener('scroll', throttledHandleScroll);
     };
   }, [throttledHandleScroll]);
 
-  // 根据路径设置页面标题
+  // 设置页面标题
   const updatePageTitle = useCallback(() => {
-    const timeoutId = setTimeout(() => {
-      try {
-        const h1Element = document.querySelector('h1');
-        if (h1Element) {
-          setPageTitle(h1Element.textContent?.trim() || '');
-          return;
-        }
+    // 清理之前的 observer
+    if (titleObserverRef.current) {
+      titleObserverRef.current.disconnect();
+    }
 
-        // 如果没有 h1，根据路径设置默认标题
-        const pathSegments = pathname.split('/').filter(Boolean);
-        const titleMap: Record<string, string> = {
-          '': '首页',
-          docs: pathSegments.length === 1 ? '文档中心' : '文档',
-          blog:
-            pathSegments.length === 1
-              ? '博客'
-              : pathSegments[1] === 'timeline'
-                ? '博客时间轴'
-                : '博客文章',
-          navigation: '网址导航',
-          friends: '友情链接',
-        };
-
-        setPageTitle(titleMap[pathSegments[0]] || '页面');
-      } catch (error) {
-        console.error('Error updating page title:', error);
-        setPageTitle('页面');
+    // 创建新的 observer 监听标题变化
+    titleObserverRef.current = new MutationObserver(() => {
+      const h1Element = document.querySelector('h1');
+      if (h1Element) {
+        dispatch({ type: 'SET_TITLE', payload: h1Element.textContent?.trim() || '' });
       }
-    }, 100);
+    });
 
-    return () => clearTimeout(timeoutId);
+    // 立即获取标题
+    const h1Element = document.querySelector('h1');
+    if (h1Element) {
+      dispatch({ type: 'SET_TITLE', payload: h1Element.textContent?.trim() || '' });
+      titleObserverRef.current.observe(h1Element, {
+        characterData: true,
+        subtree: true,
+        childList: true,
+      });
+    } else {
+      // 如果没有 h1，根据路径设置默认标题
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const titleMap: Record<string, string> = {
+        '': '首页',
+        docs: pathSegments.length === 1 ? '文档中心' : '文档',
+        blog:
+          pathSegments.length === 1
+            ? '博客'
+            : pathSegments[1] === 'timeline'
+              ? '博客时间轴'
+              : '博客文章',
+        navigation: '网址导航',
+        friends: '友情链接',
+      };
+      dispatch({
+        type: 'SET_TITLE',
+        payload: titleMap[pathSegments[0]] || '页面',
+      });
+    }
+
+    return () => {
+      if (titleObserverRef.current) {
+        titleObserverRef.current.disconnect();
+      }
+    };
   }, [pathname]);
 
+  // 路径变化时更新标题
   useEffect(() => {
     const cleanup = updatePageTitle();
     return cleanup;
   }, [updatePageTitle]);
 
   return {
-    scrollDirection,
-    pageTitle,
-    showTitle,
+    scrollDirection: state.direction,
+    pageTitle: state.pageTitle,
+    showTitle: state.showTitle,
     scrollToTop,
   } as const;
 }
-
-export type NavbarScrollHookResult = ReturnType<typeof useNavbarScroll>;

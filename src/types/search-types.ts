@@ -13,6 +13,10 @@ export interface SearchResult {
   icon: ReactNode;
   isExternal?: boolean;
   action?: () => void;
+  highlights?: {
+    title?: string;
+    content?: string[];
+  };
 }
 
 export interface Command {
@@ -36,4 +40,16 @@ export interface SearchDialogContentProps {
 export interface SearchHistoryProps {
   searchHistory: string[];
   onClear: () => void;
+}
+
+export interface APISearchResult {
+  title: string;
+  path: string;
+  excerpt: string;
+  type: 'doc' | 'blog' | 'tool' | 'link';
+  score: number;
+  highlights?: {
+    title?: string;
+    content?: string[];
+  };
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 export function Background({ className }: { className?: string }) {
   return (

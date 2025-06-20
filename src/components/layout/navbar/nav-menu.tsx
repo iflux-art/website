@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { NAV_ITEMS, NAV_DESCRIPTIONS } from '@/config/navigation.config';
 import { useAuthState } from '@/hooks/use-auth-state';
 import { useActiveSection } from '@/hooks/use-active-section';

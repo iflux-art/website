@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, Calculator, FolderKanban, Tag as TagIcon } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 /**
  * 内容显示组件的类型

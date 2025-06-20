@@ -178,7 +178,7 @@ pre::before {
 ```tsx
 // components/ui/markdown/inline-code.tsx
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 // 导入项目中的 InlineCode 组件
 import { InlineCode as ProjectInlineCode } from '@/components/ui/markdown/inline-code';
@@ -200,7 +200,7 @@ export function InlineCode({
 // components/ui/markdown/code-block.tsx
 import React from 'react';
 import { Highlight } from 'prism-react-renderer';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 export function CodeBlock({
   code,
@@ -269,7 +269,7 @@ export function CodeBlock({
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { mdxTypographyComponents } from '@/components/ui/markdown/mdx-typography';
 import { CodeBlock } from '@/components/ui/markdown/code-block';
 import { InlineCode } from '@/components/ui/markdown/inline-code';

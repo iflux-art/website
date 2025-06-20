@@ -35,7 +35,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
     description: '',
     url: '',
     icon: '',
-    iconType: 'emoji',
+    iconType: 'image',
     tags: [],
     featured: false,
     category: '',

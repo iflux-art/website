@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Wrench, ExternalLink, Clock, Command } from 'lucide-react';
-import { SearchDialogProps, SearchResult } from '@/types/search-types';
+import { Wrench, ExternalLink, Clock, Command, FileText, Book } from 'lucide-react';
+import { SearchDialogProps, SearchResult, APISearchResult } from '@/types/search-types';
 import { COMMANDS, SEARCH_HISTORY_KEY } from '@/components/features/search/commands';
-import { TOOLS, NAVIGATION_SITES } from '@/components/features/search/search-data';
+import { TOOLS } from '@/components/features/search/search-data';
+import { links } from '@/components/layout/links/common/links-data';
 import { SearchBar } from '@/components/features/search/search-bar';
 import { SearchResults } from '@/components/features/search/search-results';
 import { KeyboardHints } from '@/components/features/search/keyboard-hints';
@@ -105,7 +106,45 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
     }
 
     setIsLoading(true);
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
+      // 处理文档搜索结果
+      const docResults: SearchResult[] = [];
+      const blogResults: SearchResult[] = [];
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+
+        // 处理文档搜索结果
+        docResults.push(
+          ...data.results
+            .filter((result: APISearchResult) => result.type === 'doc')
+            .map((doc: APISearchResult) => ({
+              title: doc.title,
+              path: doc.path,
+              excerpt: doc.excerpt,
+              type: 'doc' as const,
+              icon: <FileText className="h-4 w-4" />,
+              highlights: doc.highlights,
+            }))
+        );
+
+        // 处理博客搜索结果
+        blogResults.push(
+          ...data.results
+            .filter((result: APISearchResult) => result.type === 'blog')
+            .map((blog: APISearchResult) => ({
+              title: blog.title,
+              path: blog.path,
+              excerpt: blog.excerpt,
+              type: 'blog' as const,
+              icon: <Book className="h-4 w-4" />,
+              highlights: blog.highlights,
+            }))
+        );
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+
       // 处理历史记录
       const historyResults: SearchResult[] = searchHistory
         .filter((item) => item.toLowerCase().includes(query))
@@ -132,21 +171,6 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         icon: <Wrench className="h-4 w-4" />,
       }));
 
-      // 处理导航结果
-      const navigationResults: SearchResult[] = NAVIGATION_SITES.filter(
-        (site) =>
-          site.name.toLowerCase().includes(query) ||
-          site.description.toLowerCase().includes(query) ||
-          site.category.toLowerCase().includes(query)
-      ).map((site) => ({
-        title: site.name,
-        path: site.url,
-        excerpt: site.description,
-        type: 'navigation' as const,
-        icon: <ExternalLink className="h-4 w-4" />,
-        isExternal: true,
-      }));
-
       // 处理命令结果
       const commandResults: SearchResult[] = COMMANDS.filter(
         (command) =>
@@ -161,10 +185,29 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         action: command.action,
       }));
 
+      // 处理链接导航搜索结果
+      const linkResults: SearchResult[] = links.items
+        .filter(
+          (item) =>
+            item.title.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query) ||
+            item.tags.some((tag) => tag.toLowerCase().includes(query))
+        )
+        .map((item) => ({
+          title: item.title,
+          path: item.url,
+          excerpt: item.description,
+          type: 'navigation' as const,
+          icon: <ExternalLink className="h-4 w-4" />,
+          isExternal: true,
+        }));
+
       const allResults: SearchResult[] = [
         ...historyResults,
+        ...docResults,
+        ...blogResults,
         ...toolResults,
-        ...navigationResults,
+        ...linkResults,
         ...commandResults,
       ];
       setResults(allResults);
@@ -177,7 +220,7 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChangeAction}>
-      <DialogContent className="sm:max-w-[550px] p-0 gap-0 overflow-hidden border dark:border-gray-700 shadow-lg [&>button]:hidden">
+      <DialogContent className="sm:max-w-[550px] sm:max-h-[85vh] p-0 gap-0 overflow-hidden border dark:border-gray-700 shadow-lg [&>button]:hidden">
         <DialogTitle className="sr-only">站内搜索</DialogTitle>
 
         <SearchBar

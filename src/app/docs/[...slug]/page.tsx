@@ -20,7 +20,7 @@ import { MDXRenderer } from '@/components/mdx';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { getFlattenedDocsOrder, type NavDocItem } from '@/lib/content';
 import type { DocMetaItem } from '@/types/docs-types';
-import { countWords } from '@/lib/utils';
+import { countWords } from '@/utils';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];

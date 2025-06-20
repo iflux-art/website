@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ChevronRight } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
 import { NavLink } from '@/components/ui/nav-link';

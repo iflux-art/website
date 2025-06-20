@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { ServiceWorkerProvider } from '@/components/providers/service-worker-provider';
 
 /**
  * 导入集中管理的元数据配置
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider {...themeConfig}>
           {/* 页面主体布局容器 */}
           <div className="min-h-screen flex flex-col">
+            <ServiceWorkerProvider />
             <MainNavbar className="flex-shrink-0" />
             {/* 主内容区域 - 自动填充剩余空间 */}
             <main className="flex-auto">{children}</main>

@@ -14,12 +14,6 @@ export const COMMANDS: Command[] = [
     description: '跳转到文档首页',
     action: () => (window.location.href = '/docs'),
   },
-  {
-    id: 'github',
-    title: '访问 GitHub',
-    description: '查看项目源码',
-    action: () => window.open('https://github.com/yourusername/yourrepo', '_blank'),
-  },
 ];
 
 // 本地存储键

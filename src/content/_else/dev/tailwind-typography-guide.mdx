@@ -366,7 +366,7 @@ Typography 插件特别适合与 Next.js 和 MDX 结合使用，为你的内容�
 ```tsx
 // src/components/mdx-layout.tsx
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 interface MDXLayoutProps {
   children: React.ReactNode;
@@ -432,7 +432,7 @@ Typography 插件可以与自定义组件结合使用，创建更丰富的内容
 ```tsx
 // src/components/ui/markdown/inline-code.tsx
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 // 导入项目中的 InlineCode 组件
 import { InlineCode as ProjectInlineCode } from '@/components/ui/markdown/inline-code';
@@ -456,7 +456,7 @@ export function InlineCode({
 // src/components/ui/markdown/code-block.tsx
 import React from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { useTheme } from 'next-themes';
 
 export function CodeBlock({
