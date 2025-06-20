@@ -1,7 +1,5 @@
 ## 项目优化
 
-文件夹分为：blog、docs、tools、navigation、admin
-
 API 路由安全性强化
 缓存策略优化
 错误处理统一化
