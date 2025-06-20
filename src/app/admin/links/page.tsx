@@ -7,8 +7,7 @@ import { AdminActions } from '@/components/layout/admin/admin-actions';
 import { DataTable } from '@/components/layout/links/admin/data-table';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Search, AlertCircle, CheckCircle, Globe } from 'lucide-react';
+import { Search, Globe } from 'lucide-react';
 import { AddDialog } from '@/components/layout/links/admin/dialogs/add-dialog';
 import { EditDialog } from '@/components/layout/links/admin/dialogs/edit-dialog';
 import { DeleteDialog } from '@/components/layout/links/admin/dialogs/delete-dialog';
@@ -17,7 +16,7 @@ import {
   getTableActions,
   getPageActions,
 } from '@/components/layout/links/admin/table-config';
-import type { LinksItem, LinksFormData, LinksCategory } from '@/types/links-types';
+import type { LinksItem, LinksCategory } from '@/types/links-types';
 import {
   Select,
   SelectContent,
@@ -32,12 +31,9 @@ export default function LinksAdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
   const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
-  const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // 加载数据
   useEffect(() => {
@@ -74,109 +70,12 @@ export default function LinksAdminPage() {
   }, [items, debouncedSearchTerm, selectedCategory]);
 
   const loadData = async () => {
-    setIsLoading(true);
-    try {
-      const [linksData, categoriesData] = await Promise.all([
-        fetch('/api/links').then((res) => res.json()),
-        fetch('/api/links?type=categories').then((res) => res.json()),
-      ]);
-
-      setItems(linksData.items || []);
-      setCategories(categoriesData || []);
-    } catch (error) {
-      console.error('Error loading data:', error);
-      showAlert('error', '加载数据失败');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const showAlert = (type: 'success' | 'error', message: string) => {
-    setAlert({ type, message });
-    setTimeout(() => setAlert(null), 5000);
-  };
-
-  const handleAddItem = async (formData: LinksFormData) => {
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('/api/links', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to add item');
-      }
-
-      const newItem = await response.json();
-      setItems((prev) => [...prev, newItem]);
-      setShowAddDialog(false);
-      showAlert('success', '网址添加成功');
-    } catch (error) {
-      console.error('Error adding item:', error);
-      if (error instanceof Error && error.message === 'URL already exists') {
-        showAlert('error', '该网址已存在');
-      } else {
-        showAlert('error', '添加网址失败');
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleEditItem = async (formData: LinksFormData) => {
-    if (!editingItem) return;
-
-    setIsSubmitting(true);
-    try {
-      const response = await fetch(`/api/links?id=${editingItem.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to update item');
-      }
-
-      const updatedItem = await response.json();
-      setItems((prev) => prev.map((item) => (item.id === editingItem.id ? updatedItem : item)));
-      setEditingItem(null);
-      showAlert('success', '网址更新成功');
-    } catch (error) {
-      console.error('Error updating item:', error);
-      if (error instanceof Error && error.message === 'URL already exists') {
-        showAlert('error', '该网址已存在');
-      } else {
-        showAlert('error', '更新网址失败');
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleDeleteItem = async () => {
-    if (!deletingItem) return;
-
-    try {
-      const response = await fetch(`/api/links?id=${deletingItem.id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete item');
-      }
-
-      setItems((prev) => prev.filter((item) => item.id !== deletingItem.id));
-      setDeletingItem(null);
-      showAlert('success', '网址删除成功');
-    } catch (error) {
-      console.error('Error deleting item:', error);
-      showAlert('error', '删除网址失败');
-    }
+    const [linksData, categoriesData] = await Promise.all([
+      fetch('/api/links').then((res) => res.json()),
+      fetch('/api/links?type=categories').then((res) => res.json()),
+    ]);
+    setItems(linksData.items || []);
+    setCategories(categoriesData || []);
   };
 
   const getCategoryName = (categoryId: string) => {
@@ -187,6 +86,26 @@ export default function LinksAdminPage() {
   // Delete this block
 
   // 配置已移至 table-config.ts
+
+  const handleAddSuccess = (newItem: LinksItem) => {
+    setItems((prev) => [...prev, newItem]);
+    setShowAddDialog(false);
+  };
+  const handleAddError = () => {};
+
+  // 编辑成功/失败回调
+  const handleEditSuccess = (updatedItem: LinksItem) => {
+    setItems((prev) => prev.map((item) => (item.id === updatedItem.id ? updatedItem : item)));
+    setEditingItem(null);
+  };
+  const handleEditError = () => {};
+
+  // 删除成功/失败回调
+  const handleDeleteSuccess = (deletedId: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== deletedId));
+    setDeletingItem(null);
+  };
+  const handleDeleteError = () => {};
 
   return (
     <AdminLayout>
@@ -205,19 +124,6 @@ export default function LinksAdminPage() {
       <div className="mb-6">
         <AdminActions actions={getPageActions(() => setShowAddDialog(true), loadData)} />
       </div>
-      {/* 提示信息 */}
-      {alert && (
-        <Alert
-          className={`mb-6 ${alert.type === 'error' ? 'border-destructive' : 'border-green-500'}`}
-        >
-          {alert.type === 'error' ? (
-            <AlertCircle className="h-4 w-4" />
-          ) : (
-            <CheckCircle className="h-4 w-4" />
-          )}
-          <AlertDescription>{alert.message}</AlertDescription>
-        </Alert>
-      )}
 
       {/* 搜索和过滤 */}
       <Card className="mb-6">
@@ -264,29 +170,28 @@ export default function LinksAdminPage() {
           (record) => setEditingItem(record),
           (record) => setDeletingItem(record)
         )}
-        loading={isLoading}
-        emptyText={searchTerm || selectedCategory ? '没有找到匹配的网址' : '还没有添加任何网址'}
       />
 
       {/* 对话框组件 */}
       <AddDialog
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
-        onSubmit={handleAddItem}
-        isSubmitting={isSubmitting}
+        onSuccess={handleAddSuccess}
+        onError={handleAddError}
       />
 
       <EditDialog
         item={editingItem}
         onOpenChange={(open) => !open && setEditingItem(null)}
-        onSubmit={handleEditItem}
-        isSubmitting={isSubmitting}
+        onSuccess={handleEditSuccess}
+        onError={handleEditError}
       />
 
       <DeleteDialog
         item={deletingItem}
         onOpenChange={(open) => !open && setDeletingItem(null)}
-        onConfirm={handleDeleteItem}
+        onSuccess={handleDeleteSuccess}
+        onError={handleDeleteError}
       />
     </AdminLayout>
   );

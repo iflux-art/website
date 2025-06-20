@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,10 +14,30 @@ import type { LinksItem } from '@/types/links-types';
 interface DeleteDialogProps {
   item: LinksItem | null;
   onOpenChange: (open: boolean) => void;
-  onConfirm: () => Promise<void>;
+  onSuccess: (deletedId: string) => void;
+  onError: (message: string) => void;
 }
 
-export function DeleteDialog({ item, onOpenChange, onConfirm }: DeleteDialogProps) {
+export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleDelete = async () => {
+    if (!item) return;
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/links?id=${item.id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('删除网址失败');
+      onSuccess(item.id);
+      onOpenChange(false);
+    } catch {
+      onError('删除网址失败');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AlertDialog open={!!item} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -27,8 +48,10 @@ export function DeleteDialog({ item, onOpenChange, onConfirm }: DeleteDialogProp
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>取消</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>删除</AlertDialogAction>
+          <AlertDialogCancel disabled={isLoading}>取消</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
+            {isLoading ? '删除中...' : '删除'}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

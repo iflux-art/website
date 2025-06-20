@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { LinksForm } from '@/components/layout/links/admin/links-form';
 import type { LinksItem, LinksFormData } from '@/types/links-types';
@@ -5,11 +6,43 @@ import type { LinksItem, LinksFormData } from '@/types/links-types';
 interface EditDialogProps {
   item: LinksItem | null;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: LinksFormData) => Promise<void>;
-  isSubmitting: boolean;
+  onSuccess: (updatedItem: LinksItem) => void;
+  onError: (message: string) => void;
 }
 
-export function EditDialog({ item, onOpenChange, onSubmit, isSubmitting }: EditDialogProps) {
+export function EditDialog({ item, onOpenChange, onSuccess, onError }: EditDialogProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleSubmit = async (formData: LinksFormData) => {
+    if (!item) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`/api/links?id=${item.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update item');
+      }
+
+      const updatedItem = await response.json();
+      onSuccess(updatedItem);
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Error updating item:', error);
+      if (error instanceof Error && error.message === 'URL already exists') {
+        onError('该网址已存在');
+      } else {
+        onError('更新网址失败');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Dialog open={!!item} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -18,7 +51,7 @@ export function EditDialog({ item, onOpenChange, onSubmit, isSubmitting }: EditD
         </DialogHeader>
         {item && (
           <LinksForm
-            submitAction={onSubmit}
+            submitAction={handleSubmit}
             onCancel={() => onOpenChange(false)}
             initialData={item}
             isLoading={isSubmitting}

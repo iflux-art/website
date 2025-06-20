@@ -77,30 +77,22 @@ function BlogContent() {
           />
 
           <UnifiedGrid columns={3} className="mt-8 gap-6">
-            {filteredPosts.length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <p className="text-muted-foreground">
-                  {selectedCategory || selectedTag ? '没有找到匹配的文章' : '暂无博客文章'}
-                </p>
-              </div>
-            ) : (
-              filteredPosts.map((post: BlogPost) => (
-                <UnifiedCard
-                  key={post.slug}
-                  title={post.title}
-                  description={post.description}
-                  href={`/blog/${post.slug}`}
-                  image={post.image}
-                  tags={post.tags}
-                  onTagClick={handleTagChange}
-                >
-                  <div className="flex justify-between items-center mt-6">
-                    <span className="text-sm text-muted-foreground">{formatDate(post.date)}</span>
-                    <span className="text-sm text-primary font-medium">阅读全文 →</span>
-                  </div>
-                </UnifiedCard>
-              ))
-            )}
+            {filteredPosts.map((post: BlogPost) => (
+              <UnifiedCard
+                key={post.slug}
+                title={post.title}
+                description={post.description}
+                href={`/blog/${post.slug}`}
+                image={post.image}
+                tags={post.tags}
+                onTagClick={handleTagChange}
+              >
+                <div className="flex justify-between items-center mt-6">
+                  <span className="text-sm text-muted-foreground">{formatDate(post.date)}</span>
+                  <span className="text-sm text-primary font-medium">阅读全文 →</span>
+                </div>
+              </UnifiedCard>
+            ))}
           </UnifiedGrid>
         </div>
       </div>

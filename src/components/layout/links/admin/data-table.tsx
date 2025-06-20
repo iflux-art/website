@@ -24,8 +24,6 @@ interface DataTableProps<T extends object> {
   data: T[];
   columns: TableColumn<T>[];
   actions?: TableAction<T>[];
-  loading?: boolean;
-  emptyText?: string;
   pagination?: {
     current: number;
     total: number;
@@ -39,8 +37,6 @@ export function DataTable<T extends object>({
   data,
   columns,
   actions,
-  loading = false,
-  emptyText = '暂无数据',
   pagination,
 }: DataTableProps<T>) {
   return (
@@ -76,74 +72,53 @@ export function DataTable<T extends object>({
               </tr>
             </thead>
             <tbody>
-              {loading ? (
-                <tr>
-                  <td
-                    colSpan={columns.length + (actions ? 1 : 0)}
-                    className="px-4 py-8 text-center text-muted-foreground"
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                      加载中...
-                    </div>
-                  </td>
-                </tr>
-              ) : data.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={columns.length + (actions ? 1 : 0)}
-                    className="px-4 py-8 text-center text-muted-foreground"
-                  >
-                    {emptyText}
-                  </td>
-                </tr>
-              ) : (
-                data.map((record, recordIndex) => (
-                  <tr key={recordIndex} className="border-b hover:bg-muted/50">
-                    {columns.map((column, columnIndex) => {
-                      return (
-                        <td
-                          key={columnIndex}
-                          className={`px-4 py-3 text-sm ${
-                            column.align === 'center'
-                              ? 'text-center'
-                              : column.align === 'right'
-                                ? 'text-right'
-                                : 'text-left'
-                          }`}
-                        >
-                          {column.render
-                            ? column.render(record[column.key], record, recordIndex)
-                            : String(record[column.key])}
+              {data.length === 0
+                ? null
+                : data.map((record, recordIndex) => (
+                    <tr key={recordIndex} className="border-b hover:bg-muted/50">
+                      {columns.map((column, columnIndex) => {
+                        return (
+                          <td
+                            key={columnIndex}
+                            className={`px-4 py-3 text-sm ${
+                              column.align === 'center'
+                                ? 'text-center'
+                                : column.align === 'right'
+                                  ? 'text-right'
+                                  : 'text-left'
+                            }`}
+                          >
+                            {column.render
+                              ? column.render(record[column.key], record, recordIndex)
+                              : String(record[column.key])}
+                          </td>
+                        );
+                      })}
+                      {actions && actions.length > 0 && (
+                        <td className="px-4 py-3 text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            {actions.map((action, actionIndex) => {
+                              const IconComponent = action.icon;
+                              const isDisabled = action.disabled?.(record) || false;
+                              return (
+                                <Button
+                                  key={actionIndex}
+                                  variant={action.variant || 'outline'}
+                                  size="sm"
+                                  onClick={() => action.onClick(record, recordIndex)}
+                                  disabled={isDisabled}
+                                  className="flex items-center gap-1"
+                                >
+                                  {IconComponent && <IconComponent className="h-3 w-3" />}
+                                  {action.label}
+                                </Button>
+                              );
+                            })}
+                          </div>
                         </td>
-                      );
-                    })}
-                    {actions && actions.length > 0 && (
-                      <td className="px-4 py-3 text-center">
-                        <div className="flex items-center justify-center gap-2">
-                          {actions.map((action, actionIndex) => {
-                            const IconComponent = action.icon;
-                            const isDisabled = action.disabled?.(record) || false;
-                            return (
-                              <Button
-                                key={actionIndex}
-                                variant={action.variant || 'outline'}
-                                size="sm"
-                                onClick={() => action.onClick(record, recordIndex)}
-                                disabled={isDisabled}
-                                className="flex items-center gap-1"
-                              >
-                                {IconComponent && <IconComponent className="h-3 w-3" />}
-                                {action.label}
-                              </Button>
-                            );
-                          })}
-                        </div>
-                      </td>
-                    )}
-                  </tr>
-                ))
-              )}
+                      )}
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

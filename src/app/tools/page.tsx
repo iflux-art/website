@@ -70,17 +70,9 @@ export default function ToolsPage() {
 
       {/* 工具卡片网格 */}
       <UnifiedGrid columns={4} className="mt-8">
-        {filteredTools.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground">
-              {selectedCategory || selectedTag ? '没有找到匹配的工具' : '暂无工具数据'}
-            </p>
-          </div>
-        ) : (
-          filteredTools.map((tool) => (
-            <ToolCard key={tool.name} tool={tool} onTagClick={handleTagChange} />
-          ))
-        )}
+        {filteredTools.map((tool) => (
+          <ToolCard key={tool.name} tool={tool} onTagClick={handleTagChange} />
+        ))}
       </UnifiedGrid>
     </ToolLayout>
   );

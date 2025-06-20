@@ -57,6 +57,8 @@ export default function LinksPage() {
     handleTagClick,
     getCategoryName,
   } = useLinksData();
+
+  if (!items.length) return null;
   return (
     <div className="container mx-auto px-4 py-8">
       <LinksHeader
@@ -80,30 +82,22 @@ export default function LinksPage() {
       />
 
       <UnifiedGrid columns={5} className="items-stretch">
-        {filteredItems.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground">
-              {selectedCategory || selectedTag ? '没有找到匹配的网址' : '暂无网址数据'}
-            </p>
-          </div>
-        ) : (
-          filteredItems.map((item) => (
-            <UnifiedCard
-              key={item.id}
-              type="category"
-              variant="compact"
-              title={item.title}
-              description={item.description || item.url}
-              href={item.url}
-              icon={item.icon}
-              iconType={item.iconType === 'text' ? 'component' : item.iconType}
-              isExternal={true}
-              tags={item.tags}
-              onTagClick={handleTagClick}
-              className="h-full"
-            />
-          ))
-        )}
+        {filteredItems.map((item) => (
+          <UnifiedCard
+            key={item.id}
+            type="category"
+            variant="compact"
+            title={item.title}
+            description={item.description || item.url}
+            href={item.url}
+            icon={item.icon}
+            iconType={item.iconType === 'text' ? 'component' : item.iconType}
+            isExternal={true}
+            tags={item.tags}
+            onTagClick={handleTagClick}
+            className="h-full"
+          />
+        ))}
       </UnifiedGrid>
     </div>
   );

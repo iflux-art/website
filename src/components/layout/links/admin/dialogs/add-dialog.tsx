@@ -1,15 +1,47 @@
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { LinksForm } from '@/components/layout/links/admin/links-form';
-import type { LinksFormData } from '@/types/links-types';
+import type { LinksFormData, LinksItem } from '@/types/links-types';
 
 interface AddDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: LinksFormData) => Promise<void>;
-  isSubmitting: boolean;
+  onSuccess: (newItem: LinksItem) => void;
+  onError: (message: string) => void;
 }
 
-export function AddDialog({ open, onOpenChange, onSubmit, isSubmitting }: AddDialogProps) {
+export function AddDialog({ open, onOpenChange, onSuccess, onError }: AddDialogProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (formData: LinksFormData) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/links', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to add item');
+      }
+
+      const newItem = await response.json();
+      onSuccess(newItem);
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Error adding item:', error);
+      if (error instanceof Error && error.message === 'URL already exists') {
+        onError('该网址已存在');
+      } else {
+        onError('添加网址失败');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto space-y-6">
@@ -17,7 +49,7 @@ export function AddDialog({ open, onOpenChange, onSubmit, isSubmitting }: AddDia
           <DialogTitle className="text-xl font-semibold">添加新网址</DialogTitle>
         </DialogHeader>
         <LinksForm
-          submitAction={onSubmit}
+          submitAction={handleSubmit}
           onCancel={() => onOpenChange(false)}
           isLoading={isSubmitting}
         />
