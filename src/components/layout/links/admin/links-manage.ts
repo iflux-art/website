@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import type { LinksCategory, LinksItem } from '@/types/links-types';
 import type { LinksData } from '@/types/links-types';
-import { links } from '@/components/layout/links/common/links-data';
+import { links } from '@/components/layout/links/links-data';
 
 const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'categories.json');
 const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'items.json');

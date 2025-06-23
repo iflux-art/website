@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import { TOOLS } from '@/components/layout/tools/tools-data';
-import { links } from '@/components/layout/links/common/links-data';
+import { links } from '@/components/layout/links/links-data';
 
 // 辅助函数
 function escapeRegExp(string: string): string {

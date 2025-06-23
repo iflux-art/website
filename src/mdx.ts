@@ -1,2 +1,2 @@
-// Re-export everything from features/mdx
-export * from './features/mdx';
+// Re-export MDX components and configuration
+export * from './components/mdx';

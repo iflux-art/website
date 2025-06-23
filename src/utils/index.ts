@@ -6,7 +6,7 @@
 export { cn } from './styles';
 
 // 文本处理工具
-export { countWords, formatReadingTime } from './text';
+export { countWords, formatReadingTime, slugify } from './text';
 
 // DOM 操作工具
 export { scrollToElement, isElementInViewport, getElementPosition } from './dom';

@@ -198,8 +198,9 @@ export function TableOfContents({
         className={cn(
           'pb-4 pr-2',
           adaptive && 'transition-all duration-200',
-          adaptive && `fixed top-[${NAVBAR_HEIGHT}px] overflow-y-auto`
+          adaptive && 'fixed overflow-y-auto'
         )}
+        style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >
         <h3 className="text-sm font-medium mb-2 px-2 text-foreground flex items-center">
           <Text className="h-4 w-4 mr-1.5 text-primary/80" />

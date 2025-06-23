@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { cn } from '@/utils';
-import { NAV_ITEMS, NAV_DESCRIPTIONS } from '@/config/navigation.config';
+import { NAV_ITEMS, NAV_DESCRIPTIONS } from '@/config/nav-config';
 import { useAuthState } from '@/hooks/use-auth-state';
 import { useActiveSection } from '@/hooks/use-active-section';
 import { AdminMenu as AdminMenuComponent } from '@/components/layout/admin/admin-menu';

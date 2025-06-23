@@ -17,10 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from 'lucide-react';
 import { LinksFormData, LinksCategory } from '@/types/links-types';
-import {
-  parseWebsiteMetadata,
-  isValidUrl,
-} from '@/components/layout/links/frontend/website-parser';
+import { parseWebsiteMetadata, isValidUrl } from '@/components/layout/links/website-parser';
 
 interface LinksFormProps {
   submitAction: (data: LinksFormData) => Promise<void>;

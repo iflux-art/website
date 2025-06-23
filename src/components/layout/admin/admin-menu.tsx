@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { cn } from '@/utils';
-import { ADMIN_MENU_ITEMS } from '@/config/navigation.config';
+import { ADMIN_MENU_ITEMS } from '@/config/nav-config';
 import { useActiveSection } from '@/hooks/use-active-section';
 import type { NavProps } from '@/components/layout/navbar/types';
 import type { LucideIcon } from 'lucide-react';

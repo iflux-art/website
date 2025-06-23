@@ -34,6 +34,20 @@ export function countWords(text: string): number {
 }
 
 /**
+ * 将文本转换为 URL 友好的格式
+ * @param text 要转换的文本
+ * @returns URL 友好的字符串
+ */
+export const slugify = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // 移除特殊字符
+    .replace(/[\s_-]+/g, '-') // 替换空格和下划线为连字符
+    .replace(/^-+|-+$/g, ''); // 移除开头和结尾的连字符
+};
+
+/**
  * 格式化阅读时间
  * @param minutes 阅读时间（分钟）
  * @returns 格式化后的阅读时间

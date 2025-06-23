@@ -7,7 +7,7 @@ import { Wrench, ExternalLink, Clock, Command, FileText, Book } from 'lucide-rea
 import { SearchDialogProps, SearchResult, APISearchResult } from '@/types/search-types';
 import { COMMANDS, SEARCH_HISTORY_KEY } from '@/components/features/search/commands';
 import { TOOLS } from '@/components/features/search/search-data';
-import { links } from '@/components/layout/links/common/links-data';
+import { links } from '@/components/layout/links/links-data';
 import { SearchBar } from '@/components/features/search/search-bar';
 import { SearchResults } from '@/components/features/search/search-results';
 import { KeyboardHints } from '@/components/features/search/keyboard-hints';

@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
 import { RelatedPosts } from '@/components/layout/blog/related-posts';
+import { BlogContent } from '@/components/layout/blog/BlogContent';
 // 获取相关文章
 function getRelatedPosts(currentSlug: string[], _category?: string) {
   const blogDir = path.join(process.cwd(), 'src/content/blog');
@@ -81,7 +82,6 @@ import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
 import { createBlogBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb-utils';
 import { ContentDisplay } from '@/components/common/content-display';
 import { TableOfContents } from '@/components/layout/toc/table-of-contents';
-import { MDXRenderer } from '@/components/mdx';
 import { countWords } from '@/utils';
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { NAVBAR_HEIGHT } from '@/config/layout';
@@ -174,7 +174,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 tags={data.tags || []}
                 wordCount={countWords(rawContent)}
               >
-                <MDXRenderer content={content} />
+                <BlogContent content={content} />
               </ContentDisplay>
             </div>
           </main>

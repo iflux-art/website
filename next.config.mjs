@@ -1,37 +1,34 @@
 /**
  * Next.js 配置文件
  */
-
 import createMDX from '@next/mdx';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
 
 // MDX 配置
 const withMDX = createMDX({
   options: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
-      rehypeSlug, 
+      rehypeSlug,
       rehypeAutolinkHeadings,
-      // 添加基础代码块处理
-      () => (tree) => {
-        // 遍历 AST，确保代码块使用标准标签
-        const visit = (node) => {
-          if (node.tagName === 'pre') {
-            const code = node.children.find(child => child.tagName === 'code');
-            if (code) {
-              code.tagName = 'code';
-              code.properties = code.properties || {};
-              code.properties.className = code.properties.className || ['language-text'];
-            }
+      [rehypePrettyCode, {
+        theme: 'github-dark',
+        keepBackground: true,
+        onVisitLine(node) {
+          if (node.children.length === 0) {
+            node.children = [{type: 'text', value: ' '}];
           }
-          if (node.children) {
-            node.children.forEach(visit);
-          }
-        };
-        visit(tree);
-      }
+        },
+        onVisitHighlightedLine(node) {
+          node.properties.className.push('line--highlighted');
+        },
+        onVisitHighlightedWord(node) {
+          node.properties.className = ['word--highlighted'];
+        },
+      }],
     ],
     jsx: true,
     format: 'mdx'
@@ -74,12 +71,21 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24, // 24 小时
     disableStaticImages: false,
-    domains: ['img.dava.cc'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'img.dava.cc',
         pathname: '/img/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        pathname: '/**',
       }
     ],
     dangerouslyAllowSVG: true,

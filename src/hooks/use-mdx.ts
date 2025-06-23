@@ -1,33 +1,25 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import type { MDXOptions } from '@/features/mdx/types';
+import type { MDXOptions } from '@/types/mdx-types';
 import { debounce } from '@/utils/helpers';
 import { MDX_CONFIG } from '@/utils/config';
-import { getCachedMDX, setCachedMDX } from '@/lib/mdx-cache';
 
 type MDXComponents = NonNullable<MDXOptions['components']>;
 type DebouncedFunction<T> = T & { cancel: () => void };
 
-interface RenderResult {
-  content: string;
-  components: MDXComponents;
-}
-
 interface UseMDXOptions {
   initialContent?: string;
-  enableCache?: boolean;
   debounceDelay?: number;
   components?: MDXComponents;
 }
 
 /**
- * 统一的 MDX 处理 Hook
- * 集成了内容管理和渲染功能
+ * MDX 内容管理 Hook
+ * 提供内容管理和更新功能
  */
 export function useMDX({
   initialContent = '',
-  enableCache = true,
   debounceDelay = MDX_CONFIG.DEBOUNCE_DELAY,
-  components = Object.create(null) as MDXComponents,
+  components = {},
 }: UseMDXOptions = {}) {
   // 内容状态管理
   const [content, setContent] = useState(initialContent);
@@ -60,46 +52,9 @@ export function useMDX({
     [debouncedFn]
   );
 
-  // 渲染函数
-  const renderMDX = useCallback(
-    (mdxContent: string): RenderResult | null => {
-      if (!mdxContent) return null;
-
-      try {
-        // 如果启用缓存，先检查缓存
-        if (enableCache) {
-          const cached = getCachedMDX(mdxContent);
-          if (cached) {
-            return { content: cached, components: customComponents };
-          }
-        }
-
-        // 渲染内容
-        const renderedContent = mdxContent; // 保持原有的渲染逻辑
-
-        // 如果启用缓存，保存到缓存
-        if (enableCache) {
-          setCachedMDX(mdxContent, renderedContent);
-        }
-
-        return {
-          content: renderedContent,
-          components: customComponents,
-        };
-      } catch (error) {
-        console.error('Error rendering MDX:', error);
-        return null;
-      }
-    },
-    [enableCache, customComponents]
-  );
-
   return {
     content,
     setContent: debouncedSetContent,
-    renderMDX,
     components: customComponents,
   };
 }
-
-export default useMDX;
