@@ -15,19 +15,29 @@ const withMDX = createMDX({
       rehypeSlug,
       rehypeAutolinkHeadings,
       [rehypePrettyCode, {
-        theme: 'github-dark',
-        keepBackground: true,
+        // 使用 Atom One Dark Pro 主题，拥有更丰富的语法高亮色彩
+        theme: 'one-dark-pro',
+        keepBackground: false,
+        // 支持行号显示
+        showLineNumbers: true,
+        // 确保空行显示正确
         onVisitLine(node) {
           if (node.children.length === 0) {
             node.children = [{type: 'text', value: ' '}];
           }
         },
+        // 高亮行样式
         onVisitHighlightedLine(node) {
           node.properties.className.push('line--highlighted');
         },
+        // 高亮词样式
         onVisitHighlightedWord(node) {
           node.properties.className = ['word--highlighted'];
         },
+        // 格式化选项
+        defaultLang: 'plaintext',
+        // 支持的语言
+        filterMetaString: (string) => string.replace(/\:\/\/.+/, ''),
       }],
     ],
     jsx: true,

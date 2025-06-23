@@ -27,8 +27,15 @@ export type ScrollHandler = () => void;
 /**
  * 节流后的滚动处理函数类型
  */
-export type ThrottledScrollHandler = ReturnType<typeof import('lodash').throttle> & {
-  cancel: () => void;
+export type ThrottledScrollHandler = ((this: Window, event: Event) => void) & {
+  /**
+   * Cancels any scheduled invocations of the throttled function
+   */
+  cancel(): void;
+  /**
+   * Immediately invokes any pending throttled invocations of the function
+   */
+  flush(): void;
 };
 
 /**

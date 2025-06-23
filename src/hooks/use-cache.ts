@@ -5,7 +5,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { debounce } from 'lodash';
+import { default as debounce } from 'lodash/debounce';
 
 interface CacheOptions {
   /** 缓存键前缀 */

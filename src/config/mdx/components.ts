@@ -12,6 +12,7 @@ import { MDXLink } from '@/components/mdx/MDXLink';
 import { MDXCodeBlock } from '@/components/mdx/MDXCodeBlock';
 import { MDXBlockquote } from '@/components/mdx/MDXBlockquote';
 import { MDXCodeInline } from '@/components/mdx/MDXCodeInline';
+import { MDXTableComponents } from '@/components/mdx/MDXTable';
 
 // Code style components
 import {
@@ -39,6 +40,12 @@ export const MDXComponentsMapping = {
   pre: MDXCodeBlock,
   blockquote: MDXBlockquote,
   code: MDXCodeInline,
+  table: MDXTableComponents.table,
+  thead: MDXTableComponents.thead,
+  tbody: MDXTableComponents.tbody,
+  tr: MDXTableComponents.tr,
+  th: MDXTableComponents.th,
+  td: MDXTableComponents.td,
 
   // 代码样式变体
   'code.primary': PrimaryCode,
@@ -72,6 +79,11 @@ export const defaultComponentProps = {
   },
   code: {
     inline: true,
+  },
+  table: {
+    striped: true,
+    hover: true,
+    compact: false,
   },
 };
 

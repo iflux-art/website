@@ -1,7 +1,7 @@
 'use client';
 
-import { type HTMLAttributes } from 'react';
-import { Copy } from 'lucide-react';
+import { type HTMLAttributes, useState, useEffect } from 'react';
+import { Copy, Check } from 'lucide-react';
 import { cn } from '@/utils';
 
 /**
@@ -44,10 +44,22 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
   const language = className?.replace(/language-/, '') || 'text';
   const displayLanguage = LANGUAGE_MAP[language] || language;
 
+  // 复制状态
+  const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    if (typeof children === 'string') {
+      console.log('Code content:', JSON.stringify(children));
+    }
+  }, [children]);
+
   // 复制代码到剪贴板
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(children);
+      setIsCopied(true);
+      // 2秒后重置状态
+      setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy code:', err);
     }
@@ -59,6 +71,9 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
         // 外层容器
         'my-6 overflow-hidden rounded-lg border',
         'bg-transparent',
+        '[&_code]:!text-current',
+        '[&_pre]:!bg-transparent [&_code]:!bg-transparent',
+        '[&_span]:!text-inherit',
         '[&_pre]:p-0 [&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:border-0',
         // 滚动条样式
         '[&_pre::-webkit-scrollbar]:h-2 [&_pre::-webkit-scrollbar]:w-2',
@@ -69,6 +84,10 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
         '[&_.line]:px-4 [&_.line]:min-h-6 [&_.line]:py-0.5',
         '[&_.line--highlighted]:bg-muted-foreground/10 [&_.line--highlighted]:shadow-[2px_0_currentColor_inset]',
         '[&_.word--highlighted]:bg-muted-foreground/10 [&_.word--highlighted]:rounded',
+        // 语法高亮基础样式
+        'prose-pre:bg-transparent',
+        '[&_pre]:overflow-x-auto',
+        '[&_code]:grid',
         // 行号样式
         '[&_[data-line-numbers]>.line]:pl-2 [&_[data-line-numbers]>.line]:before:text-muted-foreground/40',
         '[&_[data-line-numbers]>.line]:before:mr-4 [&_[data-line-numbers]>.line]:before:content-[counter(line)] [&_[data-line-numbers]>.line]:before:counter-increment-[line]'
@@ -86,14 +105,23 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
           onClick={copyToClipboard}
           className={cn(
             'flex items-center gap-1 rounded px-2 py-1',
-            'bg-muted-foreground/10 hover:bg-muted-foreground/20',
-            'text-muted-foreground transition-colors'
+            'transition-all duration-200',
+            isCopied
+              ? 'bg-success/10 text-success hover:bg-success/20'
+              : 'bg-muted-foreground/10 hover:bg-muted-foreground/20 text-muted-foreground'
           )}
         >
-          <>
-            <Copy className="h-3.5 w-3.5" />
-            <span>复制</span>
-          </>
+          {isCopied ? (
+            <>
+              <Check className="h-3.5 w-3.5" />
+              <span>已复制</span>
+            </>
+          ) : (
+            <>
+              <Copy className="h-3.5 w-3.5" />
+              <span>复制</span>
+            </>
+          )}
         </button>
       </div>
 
@@ -118,7 +146,7 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
               'border-0'
             )}
           >
-            {children}
+            {typeof children === 'string' ? children.trim() : children}
           </code>
         </pre>
       </div>

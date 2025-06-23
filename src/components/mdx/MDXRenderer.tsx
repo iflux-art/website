@@ -2,17 +2,14 @@
 
 import React from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import {
-  MDXBaseOptions,
-  MDXStyles,
-  MDXComponentsMapping,
-  useMDXComponents,
-  type MDXOptions,
-} from '@/config/mdx';
+import { MDXComponentsMapping, useMDXComponents } from '@/config/mdx/components';
+import type { MDXComponents } from '@/config/mdx/types';
 
 interface MDXRendererProps {
   content: MDXRemoteSerializeResult;
-  options?: MDXOptions;
+  options?: {
+    components?: Partial<MDXComponents>;
+  };
 }
 
 /**
@@ -24,7 +21,7 @@ interface MDXRendererProps {
  * 3. 支持自定义组件和配置
  * 4. 错误处理和降级显示
  */
-export const MDXRenderer = ({ content, options = MDXBaseOptions }: MDXRendererProps) => {
+export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
   // 使用上下文中的组件配置
   const { components: contextComponents } = useMDXComponents();
 
@@ -41,7 +38,7 @@ export const MDXRenderer = ({ content, options = MDXBaseOptions }: MDXRendererPr
 
   try {
     return (
-      <div className={MDXStyles.prose}>
+      <div className="prose dark:prose-invert max-w-none">
         <MDXRemote {...content} components={components} />
       </div>
     );
@@ -49,7 +46,8 @@ export const MDXRenderer = ({ content, options = MDXBaseOptions }: MDXRendererPr
     console.error('Error rendering MDX:', error);
     return (
       <div className="text-destructive p-4 rounded-md bg-destructive/10">
-        Error rendering content
+        <h3 className="font-semibold mb-2">Render Error</h3>
+        <p>{error instanceof Error ? error.message : 'Failed to render content'}</p>
       </div>
     );
   }

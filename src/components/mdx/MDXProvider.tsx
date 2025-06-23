@@ -4,7 +4,11 @@
  */
 
 import { type ReactNode } from 'react';
-import { MDXComponentContext, MDXComponentsMapping, defaultComponentProps } from '@/config/mdx';
+import {
+  MDXComponentContext,
+  MDXComponentsMapping,
+  defaultComponentProps,
+} from '@/config/mdx/components';
 
 // MDX Provider Props 类型
 interface MDXProviderProps {
@@ -35,4 +39,4 @@ export function MDXProvider({
 }
 
 // 导出统一的 Hook
-export { useMDXComponents } from '@/config/mdx';
+export { useMDXComponents } from '@/config/mdx/components';
