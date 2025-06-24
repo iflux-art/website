@@ -96,7 +96,7 @@ export function UnifiedFilter({
             {allCategoryText}
           </Button>
         )}
-        {categories.map((category) => {
+        {categories.map(category => {
           const Icon = category.icon;
           return (
             <Button
@@ -132,7 +132,7 @@ export function UnifiedFilter({
             )}
           </div>
           <div className="flex flex-wrap gap-2">
-            {visibleTags.map((tag) => (
+            {visibleTags.map(tag => (
               <Badge
                 key={tag.name}
                 variant={selectedTag === tag.name ? 'default' : 'outline'}

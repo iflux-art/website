@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs';
 import path from 'path';
-import type { LinksCategory, LinksItem } from '@/types/links-types';
-import type { LinksData } from '@/types/links-types';
+import type { LinksCategory, LinksItem, LinksData } from '@/types';
 import { links } from '@/components/layout/links/links-data';
 
 const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'categories.json');
@@ -73,8 +72,17 @@ function writeItems(items: LinksItem[]): void {
  */
 export function readLinksData(): LinksData {
   return {
-    categories: links.categories,
-    items: links.items,
+    categories: links.categories.map(cat => ({
+      ...cat,
+      title: cat.name,
+      description: cat.description,
+      count: links.items.filter(item => item.category === cat.id).length,
+    })),
+    items: links.items.map(item => ({
+      ...item,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    })),
   };
 }
 /**
@@ -96,7 +104,7 @@ export function writeLinksData(data: LinksData): void {
  */
 export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updatedAt'>): LinksItem {
   // 检查 URL 是否已存在
-  const existingItem = links.items.find((existing) => existing.url === item.url);
+  const existingItem = links.items.find(existing => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
@@ -114,7 +122,7 @@ export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updated
  * 更新导航项
  */
 export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksItem {
-  const item = links.items.find((item) => item.id === id);
+  const item = links.items.find(item => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
@@ -131,7 +139,7 @@ export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksI
  * 删除导航项
  */
 export function deleteLinksItem(id: string): void {
-  const item = links.items.find((item) => item.id === id);
+  const item = links.items.find(item => item.id === id);
   if (!item) {
     throw new Error('Item not found');
   }
@@ -140,15 +148,20 @@ export function deleteLinksItem(id: string): void {
  * 获取所有分类
  */
 export function getCategories(): LinksCategory[] {
-  return links.categories;
+  return links.categories.map(cat => ({
+    ...cat,
+    title: cat.name,
+    description: cat.description,
+    count: links.items.filter(item => item.category === cat.id).length,
+  }));
 }
 /**
  * 获取所有标签
  */
 export function getAllTags(): string[] {
   const tags = new Set<string>();
-  links.items.forEach((item) => {
-    item.tags.forEach((tag) => tags.add(tag));
+  links.items.forEach(item => {
+    item.tags.forEach(tag => tags.add(tag));
   });
   return Array.from(tags).sort();
 }

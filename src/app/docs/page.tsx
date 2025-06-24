@@ -17,7 +17,7 @@ export default function DocsPage() {
           </div>
 
           <UnifiedGrid columns={4}>
-            {categories?.map((category) => (
+            {categories?.map(category => (
               <UnifiedCard
                 key={category.id}
                 title={category.title}

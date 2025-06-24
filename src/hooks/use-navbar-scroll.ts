@@ -3,7 +3,7 @@
 import { useReducer, useEffect, useCallback, useRef, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { default as throttle } from 'lodash/throttle';
-import { ThrottledScrollHandler } from '@/types/hooks-internal';
+import { ThrottledScrollHandler } from '@/types';
 
 const SCROLL_THRESHOLD = 3; // 更小的滚动检测阈值，使响应更灵敏
 const SHOW_THRESHOLD = 80; // 略微降低显示阈值

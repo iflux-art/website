@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { LinksForm } from '@/components/layout/links/admin/links-form';
-import type { LinksFormData, LinksItem } from '@/types/links-types';
+import type { LinksFormData, LinksItem } from '@/types';
 
 interface AddDialogProps {
   open: boolean;

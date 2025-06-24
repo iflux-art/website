@@ -1,4 +1,4 @@
-import { WebsiteMetadata } from '@/types/links-types';
+import { WebsiteMetadata } from '@/types';
 
 /**
  * 解析网站元数据

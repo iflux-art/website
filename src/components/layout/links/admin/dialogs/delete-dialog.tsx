@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import type { LinksItem } from '@/types/links-types';
+import type { LinksItem } from '@/types';
 
 interface DeleteDialogProps {
   item: LinksItem | null;

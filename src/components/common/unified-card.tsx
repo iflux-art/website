@@ -99,7 +99,7 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
       : typeof tags === 'string'
         ? tags
             .split(',')
-            .map((tag) => tag.trim())
+            .map(tag => tag.trim())
             .filter(Boolean)
         : [];
 
@@ -153,12 +153,12 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
 
             {tagArray.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4">
-                {tagArray.map((tag) => (
+                {tagArray.map(tag => (
                   <Badge
                     key={tag}
                     variant="outline"
                     className="text-xs cursor-pointer hover:bg-primary/10"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       e.stopPropagation();
                       onTagClick?.(tag);
@@ -212,12 +212,12 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
 
             {tagArray.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-3">
-                {tagArray.map((tag) => (
+                {tagArray.map(tag => (
                   <Badge
                     key={tag}
                     variant="outline"
                     className="text-xs cursor-pointer hover:bg-primary/10"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       e.stopPropagation();
                       onTagClick?.(tag);
@@ -258,12 +258,12 @@ export const UnifiedCard = forwardRef<HTMLDivElement, UnifiedCardProps>(
               )}
               {tagArray.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {tagArray.map((tag) => (
+                  {tagArray.map(tag => (
                     <Badge
                       key={tag}
                       variant="outline"
                       className="text-xs cursor-pointer hover:bg-primary/10"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault();
                         e.stopPropagation();
                         onTagClick?.(tag);

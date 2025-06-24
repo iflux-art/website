@@ -6,7 +6,7 @@ import { Greeting } from '@/components/layout/home/sections/greeting';
 import { SearchBox } from '@/components/layout/home/sections/search-box';
 import { RecommendationTags } from '@/components/layout/home/tags/recommendation-tags';
 
-const Background = dynamic(() => import('./background').then((mod) => mod.Background));
+const Background = dynamic(() => import('./background').then(mod => mod.Background));
 
 /**
  * ChatGPT 风格的首页英雄区组件

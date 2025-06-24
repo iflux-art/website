@@ -7,8 +7,8 @@
 
 import { useMemo } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
-import { API_PATHS, HookResult } from '../utils/constants';
-import { BlogPost } from '@/types/blog-types';
+import { API_PATHS, HookResult } from '../lib/constants';
+import { BlogPost } from '@/types';
 
 export interface TagCount {
   tag: string;
@@ -64,9 +64,9 @@ export function useBlogPosts(): UseBlogPostsResult {
     const postsCount: Record<string, number> = {};
     const categoriesSet = new Set<string>();
 
-    sortedPosts?.forEach((post) => {
+    sortedPosts?.forEach(post => {
       // 处理标签统计
-      post.tags?.forEach((tag) => {
+      post.tags?.forEach(tag => {
         postsCount[tag] = (postsCount[tag] || 0) + 1;
       });
 

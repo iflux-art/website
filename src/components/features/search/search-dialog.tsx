@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Wrench, ExternalLink, Clock, Command, FileText, Book } from 'lucide-react';
-import { SearchDialogProps, SearchResult, APISearchResult } from '@/types/search-types';
+import { SearchDialogProps, SearchResult, APISearchResult } from '@/types';
 import { COMMANDS, SEARCH_HISTORY_KEY } from '@/components/features/search/commands';
 import { TOOLS } from '@/components/features/search/search-data';
 import { links } from '@/components/layout/links/links-data';
@@ -36,7 +36,7 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
   // 保存搜索历史
   const saveToHistory = (query: string) => {
     if (!query.trim()) return;
-    const newHistory = [query, ...searchHistory.filter((item) => item !== query)].slice(0, 10);
+    const newHistory = [query, ...searchHistory.filter(item => item !== query)].slice(0, 10);
     setSearchHistory(newHistory);
     localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
   };
@@ -66,10 +66,10 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : results.length - 1));
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0));
+      setSelectedIndex(prev => (prev < results.length - 1 ? prev + 1 : 0));
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       handleSelect(results[selectedIndex]);
     }
@@ -81,8 +81,8 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
     if (!query) {
       // 显示搜索历史和快捷命令
       const historyResults: SearchResult[] = searchHistory
-        .filter((item) => item.toLowerCase().includes(query))
-        .map((item) => ({
+        .filter(item => item.toLowerCase().includes(query))
+        .map(item => ({
           title: item,
           path: '#',
           excerpt: '最近搜索',
@@ -91,7 +91,7 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
           action: () => setSearchQuery(item),
         }));
 
-      const commandResults: SearchResult[] = COMMANDS.map((cmd) => ({
+      const commandResults: SearchResult[] = COMMANDS.map(cmd => ({
         title: cmd.title,
         path: '',
         excerpt: cmd.description,
@@ -147,8 +147,8 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
       // 处理历史记录
       const historyResults: SearchResult[] = searchHistory
-        .filter((item) => item.toLowerCase().includes(query))
-        .map((item) => ({
+        .filter(item => item.toLowerCase().includes(query))
+        .map(item => ({
           title: item,
           path: '#',
           excerpt: '最近搜索',
@@ -159,11 +159,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
       // 处理工具结果
       const toolResults: SearchResult[] = TOOLS.filter(
-        (tool) =>
+        tool =>
           tool.name.toLowerCase().includes(query) ||
           tool.description.toLowerCase().includes(query) ||
-          tool.tags.some((tag) => tag.toLowerCase().includes(query))
-      ).map((tool) => ({
+          tool.tags.some(tag => tag.toLowerCase().includes(query))
+      ).map(tool => ({
         title: tool.name,
         path: tool.path,
         excerpt: tool.description,
@@ -173,10 +173,10 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
       // 处理命令结果
       const commandResults: SearchResult[] = COMMANDS.filter(
-        (command) =>
+        command =>
           command.title.toLowerCase().includes(query) ||
           command.description.toLowerCase().includes(query)
-      ).map((command) => ({
+      ).map(command => ({
         title: command.title,
         path: '#',
         excerpt: command.description,
@@ -188,12 +188,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
       // 处理链接导航搜索结果
       const linkResults: SearchResult[] = links.items
         .filter(
-          (item) =>
+          item =>
             item.title.toLowerCase().includes(query) ||
             item.description.toLowerCase().includes(query) ||
-            item.tags.some((tag) => tag.toLowerCase().includes(query))
+            item.tags.some(tag => tag.toLowerCase().includes(query))
         )
-        .map((item) => ({
+        .map(item => ({
           title: item.title,
           path: item.url,
           excerpt: item.description,
@@ -226,7 +226,7 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         <SearchBar
           ref={inputRef}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={e => setSearchQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           isLoading={isLoading}
           onClear={() => setSearchQuery('')}
@@ -244,7 +244,7 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
               onSelect={handleSelect}
               onClearHistory={clearHistory}
               searchHistory={searchHistory}
-              onHistoryClick={(query) => setSearchQuery(query)}
+              onHistoryClick={query => setSearchQuery(query)}
             />
           </div>
         </div>

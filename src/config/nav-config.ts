@@ -99,23 +99,23 @@ export const NAV_PATHS: Record<NavKey, string> = {
  * @description 用于显示导航项的详细描述
  */
 export const NAV_DESCRIPTIONS: Record<NavKey, string> = {
-  blog: NAV_ITEMS.find((item) => item.key === 'blog')!.description,
-  docs: NAV_ITEMS.find((item) => item.key === 'docs')!.description,
-  journal: NAV_ITEMS.find((item) => item.key === 'journal')!.description,
-  tools: NAV_ITEMS.find((item) => item.key === 'tools')!.description,
-  links: NAV_ITEMS.find((item) => item.key === 'links')!.description,
+  blog: NAV_ITEMS.find(item => item.key === 'blog')!.description,
+  docs: NAV_ITEMS.find(item => item.key === 'docs')!.description,
+  journal: NAV_ITEMS.find(item => item.key === 'journal')!.description,
+  tools: NAV_ITEMS.find(item => item.key === 'tools')!.description,
+  links: NAV_ITEMS.find(item => item.key === 'links')!.description,
 } as const;
 
 /**
  * 检查导航配置完整性
  */
 if (process.env.NODE_ENV === 'development') {
-  const navKeys = NAV_ITEMS.map((item) => item.key);
+  const navKeys = NAV_ITEMS.map(item => item.key);
   const pathKeys = Object.keys(NAV_PATHS);
   const descKeys = Object.keys(NAV_DESCRIPTIONS);
 
   // 确保所有配置项的key一致
-  const allKeysMatch = navKeys.every((key) => pathKeys.includes(key) && descKeys.includes(key));
+  const allKeysMatch = navKeys.every(key => pathKeys.includes(key) && descKeys.includes(key));
 
   if (!allKeysMatch) {
     console.warn('Navigation configuration mismatch detected!');

@@ -52,6 +52,7 @@ function getMdxFiles(): JournalEntry[] {
 
                 const entry: JournalEntry = {
                   id: `${type}:${fileName}`,
+                  slug: fileName,
                   title: data.title || fileName,
                   description: data.description || data.excerpt || '',
                   date: data.date,
@@ -77,7 +78,9 @@ function getMdxFiles(): JournalEntry[] {
 
   // 按日期排序（从新到旧）
   return entries.sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
+    const dateA = a.date ? new Date(a.date).getTime() : 0;
+    const dateB = b.date ? new Date(b.date).getTime() : 0;
+    return dateB - dateA;
   });
 }
 

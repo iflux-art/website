@@ -7,7 +7,7 @@ import {
   getCategories,
   getAllTags,
 } from '@/components/layout/links/admin/links-manage';
-import { LinksFormData } from '@/types/links-types';
+import { LinksFormData } from '@/types';
 
 // GET - 获取导航数据
 export async function GET(request: NextRequest) {

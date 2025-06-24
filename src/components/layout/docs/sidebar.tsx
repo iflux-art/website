@@ -7,7 +7,7 @@ import { cn } from '@/utils';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useDocSidebar } from '@/hooks/use-docs';
 import { NavLink } from '@/components/ui/nav-link';
-import { SidebarItem } from '@/types/docs-types';
+import { SidebarItem } from '@/types';
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== 'undefined';
@@ -41,7 +41,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories((prev) => {
+      setOpenCategories(prev => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {

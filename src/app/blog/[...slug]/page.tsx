@@ -15,8 +15,8 @@ function getRelatedPosts(currentSlug: string[], _category?: string) {
     const dirPath = path.join(blogDir, currentPath);
     if (validatePath(dirPath, 'directory')) {
       const relatedPosts = getArticlesInDirectory(dirPath)
-        .filter((post) => post.slug !== currentSlug[currentSlug.length - 1])
-        .map((post) => ({
+        .filter(post => post.slug !== currentSlug[currentSlug.length - 1])
+        .map(post => ({
           title: post.title,
           href: `/blog/${currentPath ? `${currentPath}/` : ''}${post.slug}`,
           category: post.category,
@@ -102,7 +102,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <div className="mt-8">
           <h1 className="text-3xl font-bold mb-8">{directoryTitle}</h1>
           <div className="space-y-6">
-            {articles.map((article) => (
+            {articles.map(article => (
               <article
                 key={article.slug}
                 className="group rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all"

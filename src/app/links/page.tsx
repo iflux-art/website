@@ -70,7 +70,11 @@ export default function LinksPage() {
       />
 
       <UnifiedFilter
-        categories={categories}
+        categories={categories.map(cat => ({
+          id: cat.id,
+          name: cat.name,
+          icon: undefined, // LinksCategory 的 icon 是 string，不是 LucideIcon
+        }))}
         selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryClick}
         tags={sortedTags}
@@ -82,7 +86,7 @@ export default function LinksPage() {
       />
 
       <UnifiedGrid columns={5} className="items-stretch">
-        {filteredItems.map((item) => (
+        {filteredItems.map(item => (
           <UnifiedCard
             key={item.id}
             type="category"

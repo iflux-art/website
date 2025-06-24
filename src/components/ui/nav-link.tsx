@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils';
-import { NavLinkProps } from '@/types/nav-types';
+import { NavLinkProps } from '@/types';
 
 /**
  * 导航链接组件

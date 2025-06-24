@@ -143,7 +143,7 @@ export default function ColorPickerPage() {
   // 添加到历史记录
   const addToHistory = (color: string) => {
     if (!colorHistory.includes(color)) {
-      setColorHistory((prev) => [color, ...prev.slice(0, 19)]); // 保留最近20个颜色
+      setColorHistory(prev => [color, ...prev.slice(0, 19)]); // 保留最近20个颜色
     }
   };
 
@@ -170,7 +170,7 @@ export default function ColorPickerPage() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       const img = new Image();
       img.onload = () => {
         const canvas = canvasRef.current;
@@ -282,7 +282,7 @@ export default function ColorPickerPage() {
               { key: 'picker', name: '颜色选择器', icon: Palette },
               { key: 'palette', name: '调色板生成', icon: Eye },
               { key: 'random', name: '随机颜色', icon: Shuffle },
-            ].map((tab) => {
+            ].map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -318,7 +318,7 @@ export default function ColorPickerPage() {
                   <input
                     type="color"
                     value={selectedColor}
-                    onChange={(e) => handleColorChange(e.target.value)}
+                    onChange={e => handleColorChange(e.target.value)}
                     className="w-20 h-20 border border-border rounded-lg cursor-pointer"
                   />
                   <div className="flex-1">
@@ -335,7 +335,7 @@ export default function ColorPickerPage() {
                   <input
                     type="text"
                     value={selectedColor}
-                    onChange={(e) => {
+                    onChange={e => {
                       const value = e.target.value;
                       if (/^#[0-9A-Fa-f]{0,6}$/.test(value)) {
                         setSelectedColor(value);
@@ -353,7 +353,7 @@ export default function ColorPickerPage() {
                 <div>
                   <label className="block text-sm font-medium mb-2">预设颜色</label>
                   <div className="grid grid-cols-6 gap-2">
-                    {presetColors.map((color) => (
+                    {presetColors.map(color => (
                       <button
                         key={color}
                         onClick={() => handleColorChange(color)}
@@ -408,7 +408,7 @@ export default function ColorPickerPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {colorFormats.map((format) => (
+                  {colorFormats.map(format => (
                     <div key={format.name} className="space-y-1">
                       <div className="flex items-center justify-between">
                         <label className="text-sm font-medium">{format.name}</label>
@@ -520,13 +520,13 @@ export default function ColorPickerPage() {
                     <input
                       type="color"
                       value={selectedColor}
-                      onChange={(e) => setSelectedColor(e.target.value)}
+                      onChange={e => setSelectedColor(e.target.value)}
                       className="w-12 h-12 border border-border rounded cursor-pointer"
                     />
                     <input
                       type="text"
                       value={selectedColor}
-                      onChange={(e) => setSelectedColor(e.target.value)}
+                      onChange={e => setSelectedColor(e.target.value)}
                       className="flex-1 p-2 border border-border rounded bg-background font-mono"
                     />
                   </div>
@@ -535,7 +535,7 @@ export default function ColorPickerPage() {
                   <label className="block text-sm font-medium mb-2">调色板类型</label>
                   <select
                     value={paletteType}
-                    onChange={(e) => {
+                    onChange={e => {
                       setPaletteType(e.target.value);
                       setPaletteColors(generatePalette(selectedColor, e.target.value));
                     }}

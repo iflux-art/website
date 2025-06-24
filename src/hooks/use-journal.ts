@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useContentData } from '@/hooks/use-content-data';
-import { JournalEntry, JournalState } from '@/types/journal-types';
+import { JournalEntry, JournalState } from '@/types';
 
 function sortEntriesByDate(entries: JournalEntry[] | null | undefined) {
   if (!entries || !Array.isArray(entries)) return [];
@@ -13,7 +13,11 @@ function sortEntriesByDate(entries: JournalEntry[] | null | undefined) {
 }
 
 export function useJournalEntries(): JournalState {
-  const { data: entries = [], loading } = useContentData<JournalEntry[]>({
+  const {
+    data: entries = [],
+    loading,
+    error,
+  } = useContentData<JournalEntry[]>({
     url: '/api/journal',
     cacheTime: 5 * 60 * 1000, // 5分钟缓存
   });
@@ -23,5 +27,6 @@ export function useJournalEntries(): JournalState {
   return {
     entries: sortedEntries,
     loading,
+    error,
   };
 }

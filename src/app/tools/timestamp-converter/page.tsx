@@ -237,7 +237,7 @@ export default function TimestampConverterPage() {
               { key: 'converter', name: '时间戳转换', icon: Clock },
               { key: 'timezone', name: '时区转换', icon: RefreshCw },
               { key: 'calculator', name: '日期计算', icon: Calendar },
-            ].map((tab) => {
+            ].map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -336,7 +336,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="text"
                     value={timestamp}
-                    onChange={(e) => setTimestamp(e.target.value)}
+                    onChange={e => setTimestamp(e.target.value)}
                     placeholder="输入时间戳（支持秒级和毫秒级）"
                     className="w-full p-3 border border-border rounded-lg bg-background font-mono focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
@@ -389,7 +389,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="text"
                     value={datetime}
-                    onChange={(e) => setDatetime(e.target.value)}
+                    onChange={e => setDatetime(e.target.value)}
                     placeholder="YYYY-MM-DD HH:mm:ss"
                     className="w-full p-3 border border-border rounded-lg bg-background font-mono focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
@@ -454,10 +454,10 @@ export default function TimestampConverterPage() {
                   <label className="block text-sm font-medium mb-2">源时区</label>
                   <select
                     value={sourceTimezone}
-                    onChange={(e) => setSourceTimezone(e.target.value)}
+                    onChange={e => setSourceTimezone(e.target.value)}
                     className="w-full p-2 border border-border rounded-lg bg-background"
                   >
-                    {timezones.map((tz) => (
+                    {timezones.map(tz => (
                       <option key={tz.value} value={tz.value}>
                         {tz.label}
                       </option>
@@ -468,10 +468,10 @@ export default function TimestampConverterPage() {
                   <label className="block text-sm font-medium mb-2">目标时区</label>
                   <select
                     value={targetTimezone}
-                    onChange={(e) => setTargetTimezone(e.target.value)}
+                    onChange={e => setTargetTimezone(e.target.value)}
                     className="w-full p-2 border border-border rounded-lg bg-background"
                   >
-                    {timezones.map((tz) => (
+                    {timezones.map(tz => (
                       <option key={tz.value} value={tz.value}>
                         {tz.label}
                       </option>
@@ -485,7 +485,7 @@ export default function TimestampConverterPage() {
                 <input
                   type="datetime-local"
                   value={sourceDateTime}
-                  onChange={(e) => setSourceDateTime(e.target.value)}
+                  onChange={e => setSourceDateTime(e.target.value)}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 />
               </div>
@@ -573,7 +573,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="date"
                     value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
+                    onChange={e => setStartDate(e.target.value)}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -582,7 +582,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="date"
                     value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
+                    onChange={e => setEndDate(e.target.value)}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -629,7 +629,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="date"
                     value={baseDate}
-                    onChange={(e) => setBaseDate(e.target.value)}
+                    onChange={e => setBaseDate(e.target.value)}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -638,7 +638,7 @@ export default function TimestampConverterPage() {
                   <input
                     type="number"
                     value={addDays}
-                    onChange={(e) => setAddDays(e.target.value)}
+                    onChange={e => setAddDays(e.target.value)}
                     placeholder="正数为增加，负数为减少"
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />

@@ -37,7 +37,7 @@ function isValidUrl(urlString: string): boolean {
 }
 
 // 延时函数
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // 创建带重试的 fetch 函数
 async function fetchWithRetry(

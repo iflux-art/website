@@ -21405,14 +21405,14 @@ export const links = {
 
 // 辅助函数
 export const getItemsByCategory = (categoryId: CategoryId) =>
-  links.items.filter((item) => item.category === categoryId);
+  links.items.filter(item => item.category === categoryId);
 
-export const getFeaturedItems = () => links.items.filter((item) => item.featured);
+export const getFeaturedItems = () => links.items.filter(item => item.featured);
 
 export const searchItems = (query: string) =>
   links.items.filter(
-    (item) =>
+    item =>
       item.title.toLowerCase().includes(query.toLowerCase()) ||
       item.description.toLowerCase().includes(query.toLowerCase()) ||
-      item.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+      item.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
   );

@@ -26,7 +26,7 @@ export default function AdminDashboard() {
     >
       {/* 统计卡片 */}
       <UnifiedGrid columns={4} className="mb-8">
-        {stats.map((stat) => (
+        {stats.map(stat => (
           <UnifiedCard
             key={stat.title}
             type="navigation"

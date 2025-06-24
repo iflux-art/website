@@ -100,22 +100,22 @@ MDXCodeInline.displayName = 'MDXCodeInline';
  * 创建带有特定样式的行内代码组件
  */
 // 导出预设变体
-export const PrimaryCode: React.FC<MDXCodeInlineProps> = (props) => (
+export const PrimaryCode: React.FC<MDXCodeInlineProps> = props => (
   <MDXCodeInline variant="primary" {...props} />
 );
 
-export const SecondaryCode: React.FC<MDXCodeInlineProps> = (props) => (
+export const SecondaryCode: React.FC<MDXCodeInlineProps> = props => (
   <MDXCodeInline variant="secondary" {...props} />
 );
 
-export const SuccessCode: React.FC<MDXCodeInlineProps> = (props) => (
+export const SuccessCode: React.FC<MDXCodeInlineProps> = props => (
   <MDXCodeInline variant="success" {...props} />
 );
 
-export const WarningCode: React.FC<MDXCodeInlineProps> = (props) => (
+export const WarningCode: React.FC<MDXCodeInlineProps> = props => (
   <MDXCodeInline variant="warning" {...props} />
 );
 
-export const ErrorCode: React.FC<MDXCodeInlineProps> = (props) => (
+export const ErrorCode: React.FC<MDXCodeInlineProps> = props => (
   <MDXCodeInline variant="error" {...props} />
 );

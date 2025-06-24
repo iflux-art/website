@@ -44,7 +44,7 @@ export const MDXImageZoom = ({
   // 处理缩放
   const handleZoom = useCallback(
     (factor: number) => {
-      setScale((currentScale) => {
+      setScale(currentScale => {
         const newScale = currentScale * factor;
         return Math.min(Math.max(newScale, minZoom), maxZoom);
       });

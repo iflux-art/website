@@ -49,19 +49,19 @@ export default function TextCounterPage() {
         : inputText
             .trim()
             .split(/\s+/)
-            .filter((word) => word.length > 0).length;
+            .filter(word => word.length > 0).length;
 
     // 句子数（按句号、问号、感叹号分割）
     const sentences =
       inputText.trim() === ''
         ? 0
-        : inputText.split(/[.!?。！？]+/).filter((sentence) => sentence.trim().length > 0).length;
+        : inputText.split(/[.!?。！？]+/).filter(sentence => sentence.trim().length > 0).length;
 
     // 段落数（按换行符分割）
     const paragraphs =
       inputText.trim() === ''
         ? 0
-        : inputText.split(/\n\s*\n/).filter((paragraph) => paragraph.trim().length > 0).length;
+        : inputText.split(/\n\s*\n/).filter(paragraph => paragraph.trim().length > 0).length;
 
     // 阅读时间（假设每分钟阅读200个中文字符或250个英文单词）
     const chineseChars = (inputText.match(/[\u4e00-\u9fa5]/g) || []).length;
@@ -140,7 +140,7 @@ The tool can count:
   const textTransforms = {
     uppercase: (text: string) => text.toUpperCase(),
     lowercase: (text: string) => text.toLowerCase(),
-    capitalize: (text: string) => text.replace(/\b\w/g, (l) => l.toUpperCase()),
+    capitalize: (text: string) => text.replace(/\b\w/g, l => l.toUpperCase()),
     reverse: (text: string) => text.split('').reverse().join(''),
     removeSpaces: (text: string) => text.replace(/\s+/g, ''),
     removeLineBreaks: (text: string) => text.replace(/\n/g, ' ').replace(/\s+/g, ' '),
@@ -274,7 +274,7 @@ The tool can count:
                 { key: 'transform', name: '文本转换', icon: ArrowUpDown },
                 { key: 'compare', name: '文本比较', icon: FileText },
                 { key: 'format', name: '格式化', icon: Shuffle },
-              ].map((tab) => {
+              ].map(tab => {
                 const IconComponent = tab.icon;
                 return (
                   <button
@@ -308,7 +308,7 @@ The tool can count:
                   <CardContent>
                     <textarea
                       value={text}
-                      onChange={(e) => setText(e.target.value)}
+                      onChange={e => setText(e.target.value)}
                       placeholder="在此输入要统计的文本..."
                       className="w-full h-96 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
@@ -426,7 +426,7 @@ The tool can count:
                   <label className="block text-sm font-medium mb-2">输入文本</label>
                   <textarea
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={e => setText(e.target.value)}
                     placeholder="在此输入要转换的文本..."
                     className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
@@ -507,7 +507,7 @@ The tool can count:
                 <CardContent>
                   <textarea
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={e => setText(e.target.value)}
                     placeholder="输入第一个文本..."
                     className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
@@ -521,7 +521,7 @@ The tool can count:
                 <CardContent>
                   <textarea
                     value={text2}
-                    onChange={(e) => setText2(e.target.value)}
+                    onChange={e => setText2(e.target.value)}
                     placeholder="输入第二个文本..."
                     className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
@@ -590,7 +590,7 @@ The tool can count:
                   <label className="block text-sm font-medium mb-2">输入文本</label>
                   <textarea
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={e => setText(e.target.value)}
                     placeholder="在此输入要格式化的文本..."
                     className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />

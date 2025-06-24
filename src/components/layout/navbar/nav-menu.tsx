@@ -25,7 +25,7 @@ function NavLinks({ onClose, className }: NavProps) {
         className
       )}
     >
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map(item => (
         <li
           key={item.key}
           className="w-full lg:w-auto transition-all duration-300 hover:scale-105 active:scale-95"
@@ -53,7 +53,7 @@ function NavCards({ onClose, className }: NavProps) {
 
   return (
     <div className={cn('grid grid-cols-1 sm:grid-cols-2 gap-4', className)}>
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map(item => (
         <Link
           key={item.key}
           href={`/${item.key}`}

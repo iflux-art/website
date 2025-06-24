@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXComponentsMapping, useMDXComponents } from '@/config/mdx/components';
-import type { MDXComponents } from '@/config/mdx/types';
+import { MDXComponentsMapping, useMDXComponents, type MDXComponents } from '@/config/mdx';
 
 interface MDXRendererProps {
   content: MDXRemoteSerializeResult;

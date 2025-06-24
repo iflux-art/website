@@ -156,7 +156,7 @@ export default function Base64EncoderPage() {
         // 转换为Unicode编码
         const unicode = input
           .split('')
-          .map((char) => {
+          .map(char => {
             const code = char.charCodeAt(0);
             return `\\u${code.toString(16).padStart(4, '0')}`;
           })
@@ -224,7 +224,7 @@ export default function Base64EncoderPage() {
               { key: 'url', name: 'URL编码', icon: ArrowUpDown },
               { key: 'html', name: 'HTML编码', icon: Check },
               { key: 'charset', name: '字符编码', icon: ArrowUpDown },
-            ].map((tab) => {
+            ].map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -311,7 +311,7 @@ export default function Base64EncoderPage() {
           <CardContent>
             <textarea
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={e => setInput(e.target.value)}
               placeholder={
                 mode === 'encode'
                   ? '在此输入要编码的文本...'

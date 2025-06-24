@@ -24,7 +24,7 @@ export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
         相关文章
       </h3>
       <nav className="space-y-1">
-        {posts.map((post) => (
+        {posts.map(post => (
           <NavLink
             key={post.href}
             href={post.href}

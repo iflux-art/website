@@ -76,3 +76,20 @@ Thumbs.db
 
 # 大型二进制文件
 **/*.{psd,ai,pdf,docx,xlsx}
+
+# From .eslintignore & .prettierignore
+**/*.d.ts
+next.config.mjs
+next.config.js
+tailwind.config.mjs
+tailwind.config.js
+postcss.config.js
+jest.config.js
+jest.setup.js
+public/
+scripts/
+src/lib/vendor/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+*.md

@@ -19,7 +19,7 @@ export function AdminMenu({ onClose }: NavProps) {
         <h3 className="text-sm font-medium text-muted-foreground">管理后台</h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {ADMIN_MENU_ITEMS.map((item) => {
+        {ADMIN_MENU_ITEMS.map(item => {
           const Icon: LucideIcon = item.icon;
           return (
             <Link

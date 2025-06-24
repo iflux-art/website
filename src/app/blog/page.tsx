@@ -32,7 +32,7 @@ function BlogContent() {
   // 转换分类数据格式
   const categories = useMemo<Category[]>(
     () =>
-      rawCategories.map((cat) => ({
+      rawCategories.map(cat => ({
         id: cat,
         name: cat,
       })),
@@ -88,7 +88,9 @@ function BlogContent() {
                 onTagClick={handleTagChange}
               >
                 <div className="flex justify-between items-center mt-6">
-                  <span className="text-sm text-muted-foreground">{formatDate(post.date)}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {formatDate(post.date?.toString())}
+                  </span>
                   <span className="text-sm text-primary font-medium">阅读全文 →</span>
                 </div>
               </UnifiedCard>

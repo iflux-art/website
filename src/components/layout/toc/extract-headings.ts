@@ -45,7 +45,7 @@ export function extractHeadings(content: string): {
   }
 
   // 确保所有标题都有唯一ID
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     const escapedText = heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,

@@ -5,20 +5,10 @@
  */
 
 // 导出所有基础类型
-export * from './types';
+export type { MDXOptions, MDXComponents } from '@/types';
 
 // 导出样式相关配置
 export { typographyConfig, MDXStyles } from './styles';
-
-// 导出解析器配置和类型
-export {
-  MDXBaseOptions,
-  MDXParserConfig,
-  frontmatterConfig,
-  type FrontmatterField,
-  type MDXParseResult,
-  type MDXValidateOptions,
-} from './parser';
 
 // 导出组件相关配置
 export {
@@ -30,9 +20,68 @@ export {
 } from './components';
 
 // 导入核心配置
-import { MDXBaseOptions, frontmatterConfig } from './parser';
 import { typographyConfig } from './styles';
 import { MDXComponentsMapping } from './components';
+
+// === 直接补充 parser.ts 的核心常量 ===
+import type { MDXOptions } from '@/types';
+
+export const frontmatterConfig = {
+  required: ['title'] as const,
+  optional: [
+    'description',
+    'date',
+    'tags',
+    'draft',
+    'category',
+    'author',
+    'image',
+    'slug',
+    'lastModified',
+    'wordCount',
+    'seo',
+  ] as const,
+  validate: {
+    title: (v: unknown): v is string => typeof v === 'string' && v.length > 0,
+    date: (v: unknown): v is string | Date =>
+      v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
+    tags: (v: unknown): v is string[] => Array.isArray(v) && v.every(t => typeof t === 'string'),
+    draft: (v: unknown): v is boolean => typeof v === 'boolean',
+    category: (v: unknown): v is string => typeof v === 'string',
+    author: (v: unknown): v is string => typeof v === 'string',
+    image: (v: unknown): v is string => typeof v === 'string',
+    slug: (v: unknown): v is string => typeof v === 'string',
+    lastModified: (v: unknown): v is string | Date =>
+      v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
+    wordCount: (v: unknown): v is number => typeof v === 'number' && v >= 0,
+    seo: (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null,
+  },
+} as const;
+
+export const MDXBaseOptions: MDXOptions = {
+  compile: {
+    parseFrontmatter: true,
+    development: process.env.NODE_ENV === 'development',
+  },
+  image: {
+    defaultWidth: 1200,
+    defaultHeight: 800,
+    priority: false,
+    placeholder: 'empty',
+    domains: [],
+  },
+  link: {
+    openExternalInNewTab: true,
+    externalIcon: true,
+    underline: true,
+  },
+  code: {
+    showLineNumbers: true,
+    defaultLanguage: 'typescript',
+    theme: 'github-dark',
+    wrap: true,
+  },
+};
 
 /**
  * 默认配置对象
@@ -72,7 +121,7 @@ export const MDXValidators = {
    * @returns 是否包含所有必需字段
    */
   validateRequired: (frontmatter: Record<string, unknown>) => {
-    return frontmatterConfig.required.every((field) => field in frontmatter);
+    return frontmatterConfig.required.every((field: string) => field in frontmatter);
   },
 
   /**
@@ -85,12 +134,11 @@ export const MDXValidators = {
       title: (v: unknown): v is string => typeof v === 'string',
       date: (v: unknown): v is string | Date =>
         v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
-      tags: (v: unknown): v is string[] =>
-        Array.isArray(v) && v.every((t) => typeof t === 'string'),
+      tags: (v: unknown): v is string[] => Array.isArray(v) && v.every(t => typeof t === 'string'),
       draft: (v: unknown): v is boolean => typeof v === 'boolean',
     } as const;
 
-    return Object.entries(typeChecks).every(([field, check]) => {
+    return Object.entries(typeChecks).every(([field, check]: [string, (v: unknown) => boolean]) => {
       return !(field in frontmatter) || check(frontmatter[field]);
     });
   },

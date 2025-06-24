@@ -2,18 +2,20 @@
  * 工具相关类型定义
  */
 
+import { LoadingState, ID } from './common';
+
 /**
  * 工具状态接口
  */
-export interface ToolState {
+export interface ToolState extends LoadingState {
   /** 输入内容 */
   input: string;
   /** 输出内容 */
   output: string;
-  /** 错误信息 */
-  error: string;
-  /** 加载状态 */
-  isLoading: boolean;
+  /** 是否正在处理 */
+  isProcessing?: boolean;
+  /** 处理进度 (0-100) */
+  progress?: number;
 }
 
 /**
@@ -39,7 +41,7 @@ export interface ToolActions {
  */
 export interface ToolConfig {
   /** 工具ID */
-  id: string;
+  id: ID;
   /** 工具名称 */
   name: string;
   /** 工具描述 */
@@ -48,4 +50,12 @@ export interface ToolConfig {
   placeholder?: string;
   /** 初始输入值 */
   defaultInput?: string;
+  /** 工具分类 */
+  category?: string;
+  /** 工具标签 */
+  tags?: string[];
+  /** 是否为特色工具 */
+  featured?: boolean;
+  /** 工具图标 */
+  icon?: string;
 }

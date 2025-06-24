@@ -15,12 +15,12 @@ interface BlogPost {
 async function getAllFiles(dirPath: string): Promise<string[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const files = await Promise.all(
-    entries.map((entry) => {
+    entries.map(entry => {
       const res = path.resolve(dirPath, entry.name);
       return entry.isDirectory() ? getAllFiles(res) : res;
     })
   );
-  return files.flat().filter((file) => /\.(md|mdx)$/.test(file));
+  return files.flat().filter(file => /\.(md|mdx)$/.test(file));
 }
 
 // 读取博客内容
@@ -29,7 +29,7 @@ async function getBlogPosts(): Promise<BlogPost[]> {
   const files = await getAllFiles(blogDir);
 
   const posts = await Promise.all(
-    files.map(async (file) => {
+    files.map(async file => {
       const content = await fs.readFile(file, 'utf-8');
       const { data, content: markdown } = matter(content);
       const relativePath = path.relative(blogDir, file);
@@ -59,11 +59,11 @@ export async function GET(request: NextRequest) {
 
     const blogPosts = await getBlogPosts();
     const searchResults = blogPosts
-      .filter((post) => {
+      .filter(post => {
         const searchContent = `${post.title} ${post.description} ${post.content}`.toLowerCase();
         return searchContent.includes(query.toLowerCase());
       })
-      .map((post) => ({
+      .map(post => ({
         title: post.title,
         path: post.url,
         excerpt: post.description || post.content.slice(0, 160) + '...',

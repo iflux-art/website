@@ -218,11 +218,11 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
       const lowerQuery = query.toLowerCase();
 
       // 搜索工具
-      TOOLS.forEach((tool) => {
+      TOOLS.forEach(tool => {
         if (
           tool.name.toLowerCase().includes(lowerQuery) ||
           tool.description.toLowerCase().includes(lowerQuery) ||
-          tool.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))
+          tool.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
         ) {
           results.push({
             title: tool.name,
@@ -234,7 +234,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
       });
 
       // 搜索网址导航
-      NAVIGATION_SITES.forEach((site) => {
+      NAVIGATION_SITES.forEach(site => {
         if (
           site.name.toLowerCase().includes(lowerQuery) ||
           site.description.toLowerCase().includes(lowerQuery) ||
@@ -256,7 +256,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
   // 联网搜索功能
   const performWebSearch = async (query: string): Promise<SearchResult[]> => {
     // 模拟搜索延迟
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise(resolve => setTimeout(resolve, 800));
 
     // 模拟不同搜索引擎的结果
     const engineSpecificResults = {
@@ -323,7 +323,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
     return (
       engineSpecificResults[selectedSearchEngine.id as keyof typeof engineSpecificResults] ||
       mockWebResults.filter(
-        (result) =>
+        result =>
           result.title.toLowerCase().includes(query.toLowerCase()) ||
           result.description.toLowerCase().includes(query.toLowerCase())
       )
@@ -338,7 +338,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
   ): Promise<string> => {
     try {
       // 构建对话历史，转换为API需要的格式
-      const conversationHistory = messages.map((msg) => ({
+      const conversationHistory = messages.map(msg => ({
         role: msg.type === 'user' ? 'user' : 'assistant',
         content: msg.content,
       }));
@@ -395,7 +395,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
       searchMode: 'ai', // 默认为AI模式
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
     setIsExpanded(true);
@@ -428,7 +428,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
           searchMode: selectedSearchEngine.id === 'local' ? 'local' : 'web',
         };
 
-        setMessages((prev) => [...prev, searchMessage]);
+        setMessages(prev => [...prev, searchMessage]);
       } else {
         // AI对话逻辑
         const aiResponse = await performAIChat(userMessage.content, 'ai');
@@ -442,7 +442,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
           searchMode: 'ai',
         };
 
-        setMessages((prev) => [...prev, aiMessage]);
+        setMessages(prev => [...prev, aiMessage]);
       }
     } catch (error) {
       console.error('处理请求时出错:', error);
@@ -456,7 +456,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
         timestamp: new Date(),
         searchMode: 'ai',
       };
-      setMessages((prev) => [...prev, errorMsg]);
+      setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
     }
@@ -494,7 +494,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
         >
           <div className="p-4 space-y-4">
             {/* 消息列表 */}
-            {messages.map((message) => (
+            {messages.map(message => (
               <div key={message.id} className="space-y-2">
                 {/* 用户消息 - 右侧对齐 */}
                 {message.type === 'user' && (
@@ -899,7 +899,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                   <div className="text-xs font-medium text-muted-foreground px-2 py-1">
                     选择AI模型
                   </div>
-                  {AI_MODELS.map((model) => (
+                  {AI_MODELS.map(model => (
                     <button
                       key={model.id}
                       onClick={() => {
@@ -945,7 +945,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                   <div className="text-xs font-medium text-muted-foreground px-2 py-1">
                     选择搜索引擎
                   </div>
-                  {SEARCH_ENGINES.map((engine) => (
+                  {SEARCH_ENGINES.map(engine => (
                     <button
                       key={engine.id}
                       onClick={() => {

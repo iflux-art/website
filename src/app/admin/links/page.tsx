@@ -16,7 +16,7 @@ import {
   getTableActions,
   getPageActions,
 } from '@/components/layout/links/admin/table-config';
-import type { LinksItem, LinksCategory } from '@/types/links-types';
+import type { LinksItem, LinksCategory } from '@/types';
 import {
   Select,
   SelectContent,
@@ -51,13 +51,13 @@ export default function LinksAdminPage() {
       const searchLower = debouncedSearchTerm.toLowerCase();
 
       setFilteredItems(
-        items.filter((item) => {
+        items.filter(item => {
           const matchesSearch =
             !debouncedSearchTerm ||
             item.title.toLowerCase().includes(searchLower) ||
             item.description.toLowerCase().includes(searchLower) ||
             item.url.toLowerCase().includes(searchLower) ||
-            item.tags.some((tag) => tag.toLowerCase().includes(searchLower));
+            item.tags.some(tag => tag.toLowerCase().includes(searchLower));
 
           const matchesCategory = !selectedCategory || item.category === selectedCategory;
 
@@ -71,15 +71,15 @@ export default function LinksAdminPage() {
 
   const loadData = async () => {
     const [linksData, categoriesData] = await Promise.all([
-      fetch('/api/links').then((res) => res.json()),
-      fetch('/api/links?type=categories').then((res) => res.json()),
+      fetch('/api/links').then(res => res.json()),
+      fetch('/api/links?type=categories').then(res => res.json()),
     ]);
     setItems(linksData.items || []);
     setCategories(categoriesData || []);
   };
 
   const getCategoryName = (categoryId: string) => {
-    const category = categories.find((cat) => cat.id === categoryId);
+    const category = categories.find(cat => cat.id === categoryId);
     return category?.name || categoryId;
   };
 
@@ -88,21 +88,21 @@ export default function LinksAdminPage() {
   // 配置已移至 table-config.ts
 
   const handleAddSuccess = (newItem: LinksItem) => {
-    setItems((prev) => [...prev, newItem]);
+    setItems(prev => [...prev, newItem]);
     setShowAddDialog(false);
   };
   const handleAddError = () => {};
 
   // 编辑成功/失败回调
   const handleEditSuccess = (updatedItem: LinksItem) => {
-    setItems((prev) => prev.map((item) => (item.id === updatedItem.id ? updatedItem : item)));
+    setItems(prev => prev.map(item => (item.id === updatedItem.id ? updatedItem : item)));
     setEditingItem(null);
   };
   const handleEditError = () => {};
 
   // 删除成功/失败回调
   const handleDeleteSuccess = (deletedId: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== deletedId));
+    setItems(prev => prev.filter(item => item.id !== deletedId));
     setDeletingItem(null);
   };
   const handleDeleteError = () => {};
@@ -135,7 +135,7 @@ export default function LinksAdminPage() {
                 <Input
                   placeholder="搜索网址、标题、描述或标签..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={e => setSearchTerm(e.target.value)}
                   className="pl-10"
                 />
               </div>
@@ -143,14 +143,14 @@ export default function LinksAdminPage() {
             <div className="w-48">
               <Select
                 value={selectedCategory || 'all'}
-                onValueChange={(value) => setSelectedCategory(value === 'all' ? '' : value)}
+                onValueChange={value => setSelectedCategory(value === 'all' ? '' : value)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="所有分类" />
                 </SelectTrigger>
                 <SelectContent className="z-50">
                   <SelectItem value="all">所有分类</SelectItem>
-                  {categories.map((category) => (
+                  {categories.map(category => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
                     </SelectItem>
@@ -167,8 +167,8 @@ export default function LinksAdminPage() {
         data={filteredItems}
         columns={getTableColumns(getCategoryName)}
         actions={getTableActions(
-          (record) => setEditingItem(record),
-          (record) => setDeletingItem(record)
+          record => setEditingItem(record),
+          record => setDeletingItem(record)
         )}
       />
 
@@ -182,14 +182,14 @@ export default function LinksAdminPage() {
 
       <EditDialog
         item={editingItem}
-        onOpenChange={(open) => !open && setEditingItem(null)}
+        onOpenChange={open => !open && setEditingItem(null)}
         onSuccess={handleEditSuccess}
         onError={handleEditError}
       />
 
       <DeleteDialog
         item={deletingItem}
-        onOpenChange={(open) => !open && setDeletingItem(null)}
+        onOpenChange={open => !open && setDeletingItem(null)}
         onSuccess={handleDeleteSuccess}
         onError={handleDeleteError}
       />

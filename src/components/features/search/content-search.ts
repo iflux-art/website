@@ -123,7 +123,7 @@ export function searchContent(query: string, limit: number = 8): ContentItem[] {
     }
 
     // 搜索标签
-    const tagMatch = item.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery));
+    const tagMatch = item.tags?.some(tag => tag.toLowerCase().includes(lowerQuery));
     if (tagMatch) {
       score += 3;
     }

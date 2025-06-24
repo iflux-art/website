@@ -6,15 +6,8 @@
 'use client';
 
 import { useContentData } from '@/hooks/use-content-data';
-import { API_PATHS, HookResult } from '../utils/constants';
-import {
-  DocItem,
-  DocCategory,
-  DocMeta,
-  DocListItem,
-  UseDocSidebarResult,
-  SidebarItem,
-} from '@/types/docs-types';
+import { API_PATHS, HookResult } from '../lib/constants';
+import { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarItem } from '@/types';
 
 /**
  * 使用文档分类
@@ -47,8 +40,8 @@ export function useCategoryDocs(category: string): HookResult<DocListItem[]> {
  * @param category 分类名称
  * @returns 文档元数据
  */
-export function useDocMeta(path: string): HookResult<DocMeta> {
-  return useContentData<DocMeta>({
+export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
+  return useContentData<Record<string, unknown>>({
     type: 'docs',
     path: API_PATHS.DOCS.META(path),
   });
@@ -77,7 +70,7 @@ export function useDocSidebar(category: string): UseDocSidebarResult {
 }
 
 // 导出类型
-export type { DocItem, DocCategory, DocMeta, DocListItem, UseDocSidebarResult, SidebarItem };
+export type { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarItem };
 
 /**
  * 获取所有文档

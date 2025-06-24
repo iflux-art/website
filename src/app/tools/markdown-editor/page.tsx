@@ -73,7 +73,7 @@ export default function MarkdownEditorPage() {
     // 段落处理（优化版）
     html = html
       .split('\n\n')
-      .map((p) => (p.trim() ? `<p>${p}</p>` : ''))
+      .map(p => (p.trim() ? `<p>${p}</p>` : ''))
       .join('');
 
     // 清理空标签
@@ -84,7 +84,7 @@ export default function MarkdownEditorPage() {
       /(<\/(h[1-6]|ul|blockquote)>)<\/p>/g,
     ];
 
-    cleanupPatterns.forEach((pattern) => {
+    cleanupPatterns.forEach(pattern => {
       html = html.replace(pattern, (_, g) => g || '');
     });
 
@@ -446,7 +446,7 @@ function greet(name) {
               <CardContent>
                 <textarea
                   value={markdown}
-                  onChange={(e) => setMarkdown(e.target.value)}
+                  onChange={e => setMarkdown(e.target.value)}
                   placeholder="在此输入 Markdown 内容..."
                   className="w-full h-full p-4 font-mono text-sm border rounded-lg resize-none bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
                 />

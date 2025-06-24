@@ -147,12 +147,12 @@ export const getDefaultModel = (): AIModel => {
 
 // 根据ID获取模型
 export const getModelById = (id: string): AIModel | undefined => {
-  return AI_MODELS.find((model) => model.id === id);
+  return AI_MODELS.find(model => model.id === id);
 };
 
 // 获取可用的模型（检查环境变量）
 export const getAvailableModels = (): AIModel[] => {
-  return AI_MODELS.filter((model) => {
+  return AI_MODELS.filter(model => {
     const apiKey = process.env[model.apiKeyEnv];
     return apiKey && apiKey !== `your_${model.apiKeyEnv.toLowerCase()}_here`;
   });
@@ -177,7 +177,7 @@ export const generateDemoResponse = (
         '暂无相关结果'
       }\n\n结合这些信息，我建议...`,
       `根据本地文档和工具的搜索结果，"${message}"相关的内容如下：\n\n${
-        searchResults?.map((r) => `• ${r.title} - ${r.content}`).join('\n') || '未找到相关内容'
+        searchResults?.map(r => `• ${r.title} - ${r.content}`).join('\n') || '未找到相关内容'
       }\n\n基于这些资源，您可以...`,
     ],
     web: [
@@ -187,7 +187,7 @@ export const generateDemoResponse = (
           .join('\n\n') || '暂无网络搜索结果'
       }\n\n综合这些网络资源，我的建议是...`,
       `基于网络搜索结果，关于"${message}"的最新信息如下：\n\n${
-        searchResults?.map((r) => `• ${r.title} (${r.url})\n  ${r.content}`).join('\n\n') ||
+        searchResults?.map(r => `• ${r.title} (${r.url})\n  ${r.content}`).join('\n\n') ||
         '未找到相关网络内容'
       }\n\n根据这些信息，您可以进一步...`,
     ],

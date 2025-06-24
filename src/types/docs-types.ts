@@ -2,7 +2,7 @@
  * 文档数据相关类型定义
  */
 
-import { BaseContent, BaseCategory, BaseMeta } from '@/types/base';
+import { BaseContent, BaseCategory, URL } from './common';
 
 /**
  * 文档元数据项接口 (_meta.json)
@@ -11,7 +11,7 @@ export interface DocMetaItem {
   /** 标题 */
   title?: string;
   /** 链接地址,用于外部链接或自定义内部路径 */
-  href?: string;
+  href?: URL;
   /** 分类/菜单是否折叠 */
   collapsed?: boolean;
   /** 嵌套结构项 */
@@ -43,9 +43,12 @@ export interface Heading {
  * 文档分类
  */
 export interface DocCategory extends BaseCategory {
-  // 这是一个声明性接口,仅用于文档分类类型标记
-  // 所有必要字段都从BaseCategory继承
-  _brand?: never;
+  /** 分类图标 */
+  icon?: string;
+  /** 分类颜色 */
+  color?: string;
+  /** 是否为根分类 */
+  isRoot?: boolean;
 }
 
 /**
@@ -54,23 +57,23 @@ export interface DocCategory extends BaseCategory {
 export interface DocItem extends BaseContent {
   /** 所属分类 */
   category: string;
+  /** 文档路径 */
+  path: string;
+  /** 是否为索引页 */
+  isIndex?: boolean;
+  /** 文档深度 */
+  depth?: number;
 }
 
 /**
  * 文档列表项（用于侧边栏）
  */
-export interface DocListItem extends BaseContent {
-  /** 文档路径 */
-  path: string;
-}
-
-/**
- * 文档元数据
- */
-export interface DocMeta extends BaseMeta {
-  // 这是一个声明性接口,仅用于文档元数据类型标记
-  // 所有必要字段都从BaseMeta继承
-  _brand?: never;
+export interface DocListItem
+  extends Pick<DocItem, 'slug' | 'title' | 'description' | 'path' | 'category'> {
+  /** 是否为当前页面 */
+  isActive?: boolean;
+  /** 是否为父级页面 */
+  isParent?: boolean;
 }
 
 /**

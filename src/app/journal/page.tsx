@@ -11,7 +11,7 @@ type GroupedEntries = [string, JournalEntry[]][];
 
 function groupEntriesByYear(entries: JournalEntry[]): GroupedEntries {
   const groups = entries.reduce<Record<string, JournalEntry[]>>((acc, entry) => {
-    const year = new Date(entry.date).getFullYear().toString();
+    const year = entry.date ? new Date(entry.date).getFullYear().toString() : '未知';
     if (!acc[year]) {
       acc[year] = [];
     }
@@ -26,11 +26,15 @@ function groupEntriesByYear(entries: JournalEntry[]): GroupedEntries {
 const typeColors: Record<JournalEntry['type'], string> = {
   blog: 'bg-blue-500/10 text-blue-700 dark:text-blue-300',
   doc: 'bg-purple-500/10 text-purple-700 dark:text-purple-300',
+  note: 'bg-green-500/10 text-green-700 dark:text-green-300',
+  idea: 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-300',
 } as const;
 
 const typeLabels: Record<JournalEntry['type'], string> = {
   blog: '博客',
   doc: '文档',
+  note: '笔记',
+  idea: '想法',
 } as const;
 
 export default function JournalPage() {
@@ -39,7 +43,7 @@ export default function JournalPage() {
 
   const allYears = useMemo(() => {
     return entries
-      .map((entry) => new Date(entry.date).getFullYear().toString())
+      .map(entry => (entry.date ? new Date(entry.date).getFullYear().toString() : '未知'))
       .filter((year, index, array) => array.indexOf(year) === index);
   }, [entries]);
 
@@ -52,8 +56,8 @@ export default function JournalPage() {
   }, [entries.length, allYears]);
 
   const toggleYear = (year: string) => {
-    setExpandedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+    setExpandedYears(prev =>
+      prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
     );
   };
 
@@ -97,7 +101,7 @@ export default function JournalPage() {
                 <div key={entry.id} className="relative flex items-start group mb-8">
                   {/* 左侧日期 */}
                   <time className="w-48 text-sm text-muted-foreground pt-0.5 pr-8 text-right">
-                    {formatDate(entry.date, 'MM月dd日')}
+                    {entry.date ? formatDate(entry.date.toString(), 'MM月dd日') : '未知日期'}
                   </time>
 
                   {/* 中间圆点 */}

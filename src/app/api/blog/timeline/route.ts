@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import type { BlogPost } from '@/types/blog-types';
+import type { BlogPost } from '@/types';
 
 /**
  * 获取所有博客文章并按年份分组
@@ -63,7 +63,7 @@ function getPostsByYear(): Record<string, BlogPost[]> {
   findPostsInDirectory(blogDir);
 
   // 对每个年份内的文章按日期排序（从新到旧）
-  Object.keys(postsByYear).forEach((year) => {
+  Object.keys(postsByYear).forEach(year => {
     postsByYear[year].sort((a, b) => {
       return new Date(b.date || '').getTime() - new Date(a.date || '').getTime();
     });

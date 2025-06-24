@@ -58,7 +58,7 @@ export default function RandomGeneratorPage() {
       const num = Math.floor(Math.random() * (numberMax - numberMin + 1)) + numberMin;
       numbers.push(num);
     }
-    setResults(numbers.map((n) => n.toString()));
+    setResults(numbers.map(n => n.toString()));
   };
 
   // UUID生成器
@@ -124,7 +124,7 @@ export default function RandomGeneratorPage() {
       }
 
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       setHashResult(hashHex);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
@@ -180,7 +180,7 @@ export default function RandomGeneratorPage() {
               { key: 'qrcode', name: '二维码生成', icon: QrCode },
               { key: 'hash', name: '哈希生成', icon: Hash },
               { key: 'password', name: '密码生成', icon: Shield },
-            ].map((tab) => {
+            ].map(tab => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -217,7 +217,7 @@ export default function RandomGeneratorPage() {
                   <input
                     type="number"
                     value={numberMin}
-                    onChange={(e) => setNumberMin(Number(e.target.value))}
+                    onChange={e => setNumberMin(Number(e.target.value))}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -226,7 +226,7 @@ export default function RandomGeneratorPage() {
                   <input
                     type="number"
                     value={numberMax}
-                    onChange={(e) => setNumberMax(Number(e.target.value))}
+                    onChange={e => setNumberMax(Number(e.target.value))}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -237,7 +237,7 @@ export default function RandomGeneratorPage() {
                     min="1"
                     max="100"
                     value={numberCount}
-                    onChange={(e) => setNumberCount(Number(e.target.value))}
+                    onChange={e => setNumberCount(Number(e.target.value))}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -288,7 +288,7 @@ export default function RandomGeneratorPage() {
                   <label className="block text-sm font-medium mb-2">UUID版本</label>
                   <select
                     value={uuidVersion}
-                    onChange={(e) => setUuidVersion(e.target.value as 'v1' | 'v4')}
+                    onChange={e => setUuidVersion(e.target.value as 'v1' | 'v4')}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   >
                     <option value="v4">UUID v4 (随机)</option>
@@ -302,7 +302,7 @@ export default function RandomGeneratorPage() {
                     min="1"
                     max="50"
                     value={uuidCount}
-                    onChange={(e) => setUuidCount(Number(e.target.value))}
+                    onChange={e => setUuidCount(Number(e.target.value))}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   />
                 </div>
@@ -371,7 +371,7 @@ export default function RandomGeneratorPage() {
                 <label className="block text-sm font-medium mb-2">输入文本或URL</label>
                 <textarea
                   value={qrText}
-                  onChange={(e) => setQrText(e.target.value)}
+                  onChange={e => setQrText(e.target.value)}
                   placeholder="输入要生成二维码的文本或URL..."
                   className="w-full h-32 p-3 border border-border rounded-lg bg-background resize-none"
                 />
@@ -381,7 +381,7 @@ export default function RandomGeneratorPage() {
                 <label className="block text-sm font-medium mb-2">二维码尺寸</label>
                 <select
                   value={qrSize}
-                  onChange={(e) => setQrSize(Number(e.target.value))}
+                  onChange={e => setQrSize(Number(e.target.value))}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value={150}>150x150</option>
@@ -435,7 +435,7 @@ export default function RandomGeneratorPage() {
                 <label className="block text-sm font-medium mb-2">输入文本</label>
                 <textarea
                   value={hashText}
-                  onChange={(e) => setHashText(e.target.value)}
+                  onChange={e => setHashText(e.target.value)}
                   placeholder="输入要生成哈希的文本..."
                   className="w-full h-32 p-3 border border-border rounded-lg bg-background resize-none"
                 />
@@ -445,7 +445,7 @@ export default function RandomGeneratorPage() {
                 <label className="block text-sm font-medium mb-2">哈希算法</label>
                 <select
                   value={hashAlgorithm}
-                  onChange={(e) => setHashAlgorithm(e.target.value as 'SHA1' | 'SHA256' | 'SHA512')}
+                  onChange={e => setHashAlgorithm(e.target.value as 'SHA1' | 'SHA256' | 'SHA512')}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 >
                   <option value="SHA1">SHA-1</option>
@@ -501,7 +501,7 @@ export default function RandomGeneratorPage() {
                   min="4"
                   max="128"
                   value={passwordLength}
-                  onChange={(e) => setPasswordLength(Number(e.target.value))}
+                  onChange={e => setPasswordLength(Number(e.target.value))}
                   className="w-full p-3 border border-border rounded-lg bg-background"
                 />
               </div>
@@ -513,7 +513,7 @@ export default function RandomGeneratorPage() {
                     <input
                       type="checkbox"
                       checked={includeUppercase}
-                      onChange={(e) => setIncludeUppercase(e.target.checked)}
+                      onChange={e => setIncludeUppercase(e.target.checked)}
                       className="rounded"
                     />
                     <span className="text-sm">大写字母 (A-Z)</span>
@@ -522,7 +522,7 @@ export default function RandomGeneratorPage() {
                     <input
                       type="checkbox"
                       checked={includeLowercase}
-                      onChange={(e) => setIncludeLowercase(e.target.checked)}
+                      onChange={e => setIncludeLowercase(e.target.checked)}
                       className="rounded"
                     />
                     <span className="text-sm">小写字母 (a-z)</span>
@@ -531,7 +531,7 @@ export default function RandomGeneratorPage() {
                     <input
                       type="checkbox"
                       checked={includeNumbers}
-                      onChange={(e) => setIncludeNumbers(e.target.checked)}
+                      onChange={e => setIncludeNumbers(e.target.checked)}
                       className="rounded"
                     />
                     <span className="text-sm">数字 (0-9)</span>
@@ -540,7 +540,7 @@ export default function RandomGeneratorPage() {
                     <input
                       type="checkbox"
                       checked={includeSymbols}
-                      onChange={(e) => setIncludeSymbols(e.target.checked)}
+                      onChange={e => setIncludeSymbols(e.target.checked)}
                       className="rounded"
                     />
                     <span className="text-sm">特殊符号</span>

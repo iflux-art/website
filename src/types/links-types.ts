@@ -1,28 +1,48 @@
-import type { ComponentType } from 'react';
-
 /**
  * 网址导航数据类型定义
  */
 
+import type { ComponentType } from 'react';
+import { BaseCategory, URL, ID, Timestamp } from './common';
+
+/** 导航链接项 */
 export interface LinksItem {
-  id: string;
+  /** 唯一标识 */
+  id: ID;
+  /** 标题 */
   title: string;
+  /** 描述 */
   description: string;
-  url: string;
+  /** 链接地址 */
+  url: URL;
+  /** 图标 */
   icon?: string;
+  /** 图标类型 */
   iconType?: 'image' | 'emoji' | 'text';
+  /** 标签列表 */
   tags: string[];
+  /** 是否为特色链接 */
   featured?: boolean;
+  /** 所属分类 */
   category: string;
-  createdAt: string;
-  updatedAt: string;
+  /** 创建时间 */
+  createdAt: Timestamp;
+  /** 更新时间 */
+  updatedAt: Timestamp;
+  /** 访问次数 */
+  visits?: number;
+  /** 是否可用 */
+  isActive?: boolean;
 }
 
-export interface LinksCategory {
-  id: string;
+/** 导航分类 */
+export interface LinksCategory extends BaseCategory {
+  /** 分类名称 */
   name: string;
-  description?: string;
-  order: number;
+  /** 分类图标 */
+  icon?: string;
+  /** 分类颜色 */
+  color?: string;
 }
 
 export interface LinksData {

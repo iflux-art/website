@@ -61,7 +61,7 @@ export function SearchResults({
             </div>
             {result.type === 'history' ? (
               <button
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   onHistoryClick(result.title);
                 }}

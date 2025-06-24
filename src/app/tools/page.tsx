@@ -70,7 +70,7 @@ export default function ToolsPage() {
 
       {/* 工具卡片网格 */}
       <UnifiedGrid columns={4} className="mt-8">
-        {filteredTools.map((tool) => (
+        {filteredTools.map(tool => (
           <ToolCard key={tool.name} tool={tool} onTagClick={handleTagChange} />
         ))}
       </UnifiedGrid>

@@ -137,7 +137,7 @@ export function TableOfContents({
   // 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
   // 过滤掉h1标题，只显示h2-h4
-  const filteredHeadings = headings.filter((heading) => heading.level >= 2 && heading.level <= 4);
+  const filteredHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
 
   // 根据标题级别对目录进行分组和嵌套
   const organizeHeadings = (headings: Heading[]) => {
@@ -235,7 +235,7 @@ export function TableOfContents({
                 style={{
                   paddingLeft: heading.level > 2 ? `calc(${indent}rem + 0.5rem)` : '0.5rem',
                 }}
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
                   scrollToElement(heading.id, SCROLL_OFFSET);
                 }}

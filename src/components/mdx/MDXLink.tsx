@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ExternalLinkIcon } from 'lucide-react';
 import { cn } from '@/utils';
-import { MDX_DEFAULT_OPTIONS } from '@/config/mdx-config';
+import MDXConfig from '@/config/mdx';
 
 /**
  * MDX链接组件的属性定义
@@ -61,9 +61,9 @@ export const MDXLink: React.FC<MDXLinkProps> = ({
 
   // 确定链接类型和行为
   const isExternal = external ?? isExternalLink(href);
-  const showExternalIcon = MDX_DEFAULT_OPTIONS?.link?.externalIcon ?? true;
-  const showUnderline = MDX_DEFAULT_OPTIONS?.link?.underline ?? true;
-  const openExternal = openInNewTab ?? MDX_DEFAULT_OPTIONS?.link?.openExternalInNewTab ?? true;
+  const showExternalIcon = MDXConfig.options.link.externalIcon ?? true;
+  const showUnderline = MDXConfig.options.link.underline ?? true;
+  const openExternal = openInNewTab ?? MDXConfig.options.link.openExternalInNewTab ?? true;
 
   // 组合样式类名
   const linkClasses = cn(

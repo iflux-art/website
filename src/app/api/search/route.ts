@@ -54,12 +54,12 @@ interface SearchResult {
 async function getAllFiles(dirPath: string): Promise<string[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const files = await Promise.all(
-    entries.map((entry) => {
+    entries.map(entry => {
       const res = path.resolve(dirPath, entry.name);
       return entry.isDirectory() ? getAllFiles(res) : res;
     })
   );
-  return files.flat().filter((file) => /\.(md|mdx)$/.test(file));
+  return files.flat().filter(file => /\.(md|mdx)$/.test(file));
 }
 
 async function searchDocs(query: string): Promise<SearchResult[]> {
@@ -271,7 +271,7 @@ export async function GET(request: NextRequest) {
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
       // 确保保留 score 属性
-      .map((result) => ({
+      .map(result => ({
         ...result,
       }));
 

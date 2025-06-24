@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { getDocSidebar } from '@/lib/content';
-import { DocListItem } from '@/types/docs-types';
+import { DocListItem } from '@/types';
 
 interface SidebarNavItem {
   type?: 'menu' | 'separator' | 'page' | 'item' | 'category';
@@ -32,7 +32,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     const docs: DocListItem[] = [];
 
     const flattenSidebarItems = (items: SidebarNavItem[], parentPath = '') => {
-      items.forEach((item) => {
+      items.forEach(item => {
         if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) {
           const slug = item.filePath.split('/').pop() || '';
 
@@ -41,6 +41,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
             title: item.title,
             path: item.href,
             description: item.label || item.title,
+            category: resolvedParams.category,
           });
         }
 
@@ -57,8 +58,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
 
       const fallbackDocs = fs
         .readdirSync(categoryDir)
-        .filter((file) => file.endsWith('.mdx') || file.endsWith('.md'))
-        .map((file) => {
+        .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
+        .map(file => {
           const docPath = path.join(categoryDir, file);
           const docContent = fs.readFileSync(docPath, 'utf8');
           const { data } = matter(docContent);

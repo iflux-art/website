@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, ExternalLink, Search } from 'lucide-react';
 import type { TableColumn } from '@/components/layout/links/admin/data-table';
-import type { LinksItem } from '@/types/links-types';
+import type { LinksItem } from '@/types';
 
 export const getTableColumns = (
   getCategoryName: (categoryId: string) => string
@@ -28,7 +28,7 @@ export const getTableColumns = (
     width: '450px',
     render: (value, record, _index) => (
       <div>
-        <div className="font-medium">{value}</div>
+        <div className="font-medium">{String(value)}</div>
         <div className="text-sm text-muted-foreground truncate max-w-[300px]">{record.url}</div>
       </div>
     ),

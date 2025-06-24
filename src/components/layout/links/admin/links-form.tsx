@@ -16,7 +16,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from 'lucide-react';
-import { LinksFormData, LinksCategory } from '@/types/links-types';
+import { LinksFormData, LinksCategory } from '@/types';
 import { parseWebsiteMetadata, isValidUrl } from '@/components/layout/links/website-parser';
 
 interface LinksFormProps {
@@ -53,8 +53,8 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   // 加载分类和标签
   useEffect(() => {
     Promise.all([
-      fetch('/api/links?type=categories').then((res) => res.json()),
-      fetch('/api/links?type=tags').then((res) => res.json()),
+      fetch('/api/links?type=categories').then(res => res.json()),
+      fetch('/api/links?type=tags').then(res => res.json()),
     ])
       .then(([categoriesData, tagsData]) => {
         setCategories(categoriesData);
@@ -76,7 +76,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
     field: keyof LinksFormData,
     value: LinksFormData[keyof LinksFormData]
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData(prev => ({ ...prev, [field]: value }));
 
     // 清除解析状态
     if (field === 'url') {
@@ -98,7 +98,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
     try {
       const metadata = await parseWebsiteMetadata(formData.url);
 
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
         title: metadata.title || prev.title,
         description: metadata.description || prev.description,
@@ -115,7 +115,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
 
   const handleAddTag = () => {
     if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
         tags: [...prev.tags, newTag.trim()],
       }));
@@ -124,9 +124,9 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+      tags: prev.tags.filter(tag => tag !== tagToRemove),
     }));
   };
 
@@ -155,7 +155,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
             type="url"
             placeholder="https://example.com"
             value={formData.url}
-            onChange={(e) => handleInputChange('url', e.target.value)}
+            onChange={e => handleInputChange('url', e.target.value)}
             className={urlError ? 'border-destructive' : ''}
             required
           />
@@ -195,7 +195,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           id="title"
           placeholder="网站标题"
           value={formData.title}
-          onChange={(e) => handleInputChange('title', e.target.value)}
+          onChange={e => handleInputChange('title', e.target.value)}
           required
         />
       </div>
@@ -207,7 +207,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           id="description"
           placeholder="网站描述"
           value={formData.description}
-          onChange={(e) => handleInputChange('description', e.target.value)}
+          onChange={e => handleInputChange('description', e.target.value)}
           rows={3}
         />
       </div>
@@ -241,7 +241,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
                   : 'A'
             }
             value={formData.icon}
-            onChange={(e) => handleInputChange('icon', e.target.value)}
+            onChange={e => handleInputChange('icon', e.target.value)}
             className="flex-1"
           />
         </div>
@@ -252,14 +252,14 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <Label htmlFor="category">分类 *</Label>
         <Select
           value={formData.category}
-          onValueChange={(value) => handleInputChange('category', value)}
+          onValueChange={value => handleInputChange('category', value)}
           required
         >
           <SelectTrigger>
             <SelectValue placeholder="选择分类" />
           </SelectTrigger>
           <SelectContent>
-            {categories.map((category) => (
+            {categories.map(category => (
               <SelectItem key={category.id} value={category.id}>
                 {category.name}
               </SelectItem>
@@ -275,8 +275,8 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           <Input
             placeholder="添加标签"
             value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+            onChange={e => setNewTag(e.target.value)}
+            onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
           />
           <Button type="button" variant="outline" onClick={handleAddTag}>
             <Plus className="h-4 w-4" />
@@ -284,7 +284,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         </div>
         {formData.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {formData.tags.map((tag) => (
+            {formData.tags.map(tag => (
               <Badge key={tag} variant="secondary" className="flex items-center gap-1">
                 {tag}
                 <X className="h-3 w-3 cursor-pointer" onClick={() => handleRemoveTag(tag)} />
@@ -299,7 +299,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <Switch
           id="featured"
           checked={formData.featured}
-          onCheckedChange={(checked) => handleInputChange('featured', checked)}
+          onCheckedChange={checked => handleInputChange('featured', checked)}
         />
         <Label htmlFor="featured">设为精选</Label>
       </div>

@@ -164,7 +164,7 @@ export const textUtils = {
     const words = input
       .trim()
       .split(/\s+/)
-      .filter((word) => word.length > 0);
+      .filter(word => word.length > 0);
     const chars = input.length;
     const charsNoSpaces = input.replace(/\s/g, '').length;
     const lines = input.split('\n').length;
@@ -571,7 +571,7 @@ export const hashUtils = {
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest('MD5', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       return { success: true, data: hashHex };
     } catch {
       // MD5 不被所有浏览器支持，使用简单的哈希算法
@@ -591,7 +591,7 @@ export const hashUtils = {
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       return { success: true, data: hashHex };
     } catch {
       return { success: false, error: '浏览器不支持 SHA-256' };

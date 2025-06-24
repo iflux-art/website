@@ -19,7 +19,7 @@ import { TableOfContents } from '@/components/layout/toc/table-of-contents';
 // 内容渲染
 import { extractHeadings } from '@/components/layout/toc/extract-headings';
 import { getFlattenedDocsOrder, type NavDocItem } from '@/lib/content';
-import type { DocMetaItem } from '@/types/docs-types';
+import type { DocMetaItem } from '@/types';
 import { countWords } from '@/utils';
 export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
@@ -129,7 +129,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
     nextDoc =
       flattenedDocs.find(
-        (doc) =>
+        doc =>
           doc.path.startsWith(indexDirNavPath + '/') ||
           (doc.path.startsWith(indexDirNavPath) &&
             doc.path !== indexDirNavPath &&
@@ -137,7 +137,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       ) || null;
   } else {
     const currentNavPath = `/docs/${actualSlugForNav}`;
-    const currentIndex = flattenedDocs.findIndex((doc) => doc.path === currentNavPath);
+    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
     if (currentIndex !== -1) {
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
       nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;

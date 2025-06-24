@@ -1,24 +1,13 @@
 /**
  * MDX 核心类型定义
- *
- * 该文件只包含 MDX 核心类型，包括：
- * - Frontmatter 相关类型
- * - MDX 内容和解析结果类型
- * - 配置和选项类型
+ * 统一管理所有 MDX 相关类型
  */
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import type { ComponentType, ReactNode } from 'react';
 import type { ImageProps } from 'next/image';
+import type { BaseComponentProps, BaseFrontmatter } from './common';
 
-// ==================== Base Types ====================
-
-/** 基础组件属性 */
-export interface BaseComponentProps {
-  children?: ReactNode;
-  className?: string;
-  id?: string;
-  style?: React.CSSProperties;
-}
+// ==================== MDX 特定类型 ====================
 
 /** 自定义组件属性 */
 export interface CustomComponentProps extends BaseComponentProps {
@@ -29,26 +18,24 @@ export interface CustomComponentProps extends BaseComponentProps {
   dataAttributes?: Record<`data-${string}`, unknown>;
 }
 
-// ==================== Frontmatter Types ====================
-
-/** 基础 frontmatter 值类型 */
-type PrimitiveFrontmatterValue = string | number | boolean | null;
-/** 数组 frontmatter 值类型 */
-type ArrayFrontmatterValue = string[] | number[];
-/** 日期 frontmatter 值类型 */
-type DateFrontmatterValue = Date;
-/** 组合 frontmatter 值类型 */
-export type FrontmatterValue =
-  | PrimitiveFrontmatterValue
-  | ArrayFrontmatterValue
-  | DateFrontmatterValue;
+/** MDX Frontmatter 扩展 */
+export interface MDXFrontmatter extends BaseFrontmatter {
+  /** 阅读时间（分钟） */
+  readingTime?: number;
+  /** 目录层级 */
+  tocDepth?: number;
+  /** 是否显示目录 */
+  showToc?: boolean;
+  /** 自定义样式类 */
+  customClass?: string;
+}
 
 /** MDX 内容类型 */
 export interface MDXContent {
   /** MDX 源代码 */
   source: string;
   /** frontmatter 数据 */
-  frontmatter?: BaseFrontmatter;
+  frontmatter?: MDXFrontmatter;
   /** 编译后的 MDX 结果 */
   compiled?: MDXRemoteSerializeResult;
 }
@@ -61,10 +48,14 @@ export interface MDXRendererProps {
   options?: MDXOptions;
 }
 
+/** MDX 组件映射类型 */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MDXComponents = Record<string, ComponentType<any>>;
+
 /** MDX配置选项 */
 export interface MDXOptions {
   /** 组件映射配置 */
-  components?: Record<string, ComponentType<{ children?: ReactNode }>>;
+  components?: MDXComponents;
   /** 作用域变量 */
   scope?: Record<string, unknown>;
   /** 编译选项 */
@@ -109,24 +100,7 @@ export interface MDXOptions {
   };
 }
 
-// ==================== Component Types ====================
-
-// 基础组件属性
-export interface BaseComponentProps {
-  children?: ReactNode;
-  className?: string;
-  id?: string;
-  style?: React.CSSProperties;
-}
-
-// 自定义组件属性
-export interface CustomComponentProps extends BaseComponentProps {
-  /**
-   * 自定义data属性
-   * @remarks 使用Record类型避免索引签名冲突
-   */
-  dataAttributes?: Record<`data-${string}`, unknown>;
-}
+// ==================== MDX 组件类型 ====================
 
 /** 图片组件属性 */
 export interface MDXImageProps extends Omit<ImageProps, 'src' | 'alt'> {
@@ -245,56 +219,9 @@ export interface MDXStyleConfig {
   };
 }
 
-// ==================== Core MDX Types ====================
+// ==================== 类型保护函数 ====================
 
-/** Frontmatter 基础类型 */
-export interface BaseFrontmatter {
-  /** 文章标题 */
-  title: string;
-  /** 文章描述 */
-  description?: string;
-  /** 发布日期 */
-  date?: string | Date;
-  /** 标签列表 */
-  tags?: string[];
-  /** 是否为草稿 */
-  draft?: boolean;
-  /** 分类 */
-  category?: string;
-  /** 作者 */
-  author?: string;
-  /** 封面图片 */
-  image?: string;
-  /** 文章别名 */
-  slug?: string;
-  /** 最后修改时间 */
-  lastModified?: string | Date;
-  /** 字数统计 */
-  wordCount?: number;
-  /** SEO 相关字段 */
-  seo?: {
-    title?: string;
-    description?: string;
-    keywords?: string[];
-  };
-}
-
-// ==================== Component Types ====================
-
-// 导出类型保护函数
-// 类型保护函数
-export const isFrontmatterValue = (value: unknown): value is FrontmatterValue => {
-  if (value === null) return true;
-  if (['string', 'number', 'boolean'].includes(typeof value)) return true;
-  if (value instanceof Date) return true;
-  if (
-    Array.isArray(value) &&
-    value.every((item) => typeof item === 'string' || typeof item === 'number')
-  )
-    return true;
-  return false;
-};
-
+/** 检查值是否为有效的 MDX 内容 */
 export const isMDXContent = (value: unknown): value is MDXContent => {
   if (!value || typeof value !== 'object') return false;
   const content = value as Partial<MDXContent>;

@@ -27,7 +27,7 @@ export function countWords(text: string): number {
   const englishWords = cleanText
     .replace(/[\u4e00-\u9fa5]/g, '') // 移除中文字符
     .split(/\s+/)
-    .filter((word) => word.length > 0);
+    .filter(word => word.length > 0);
 
   // 返回中文字符数和英文单词数之和
   return chineseChars.length + englishWords.length;

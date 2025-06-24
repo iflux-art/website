@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useFilterState } from '@/components/common/filter/use-filter-state';
-import { LinksItem, LinksCategory } from '@/types/links-types';
+import { LinksItem, LinksCategory } from '@/types';
 
 export const useLinksData = () => {
   const [items, setItems] = useState<LinksItem[]>([]);
@@ -17,8 +17,8 @@ export const useLinksData = () => {
 
   const loadData = async (_categoryId?: string) => {
     const [linksData, categoriesData] = await Promise.all([
-      fetch('/api/links').then((res) => res.json()),
-      fetch('/api/links?type=categories').then((res) => res.json()),
+      fetch('/api/links').then(res => res.json()),
+      fetch('/api/links?type=categories').then(res => res.json()),
     ]);
 
     setItems(linksData.items || []);
@@ -31,7 +31,7 @@ export const useLinksData = () => {
   };
 
   const getCategoryName = (categoryId: string) => {
-    const category = categories.find((cat) => cat.id === categoryId);
+    const category = categories.find(cat => cat.id === categoryId);
     return category?.name || categoryId;
   };
 

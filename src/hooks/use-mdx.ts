@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import type { MDXOptions } from '@/types/mdx-types';
+import type { MDXOptions } from '@/types';
 import { debounce } from '@/utils/helpers';
 import { MDX_CONFIG } from '@/utils/config';
 

@@ -91,7 +91,7 @@ export const MDXTabs = ({
         `}
         role="tablist"
       >
-        {tabs.map((tab) => (
+        {tabs.map(tab => (
           <button
             key={tab.id}
             role="tab"
@@ -113,7 +113,7 @@ export const MDXTabs = ({
       </nav>
 
       {/* 内容面板 */}
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <div
           key={tab.id}
           role="tabpanel"

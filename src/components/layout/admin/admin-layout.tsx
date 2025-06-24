@@ -92,7 +92,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
             {/* 简化的导航 */}
             <div className="flex items-center gap-2 mb-6">
-              {adminMenuItems.map((item) => {
+              {adminMenuItems.map(item => {
                 const Icon = item.icon;
                 const isActive = isActiveRoute(item.href);
 

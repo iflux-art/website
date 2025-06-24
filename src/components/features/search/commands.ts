@@ -1,4 +1,4 @@
-import { Command } from '@/types/search-types';
+import { Command } from '@/types';
 
 // 快捷命令列表
 export const COMMANDS: Command[] = [

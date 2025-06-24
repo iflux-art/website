@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { LRUCache } from 'lru-cache';
-import { BlogPost } from '@/types/blog-types';
+import { BlogPost } from '@/types';
 import chokidar from 'chokidar';
 
 // 博客文章缓存
@@ -102,10 +102,10 @@ export function getPaginatedPosts(
   // 应用过滤
   if (filters) {
     if (filters.tag) {
-      posts = posts.filter((post) => post.tags?.includes(filters.tag as string));
+      posts = posts.filter(post => post.tags?.includes(filters.tag as string));
     }
     if (filters.category) {
-      posts = posts.filter((post) => post.category === filters.category);
+      posts = posts.filter(post => post.category === filters.category);
     }
   }
 
@@ -143,8 +143,8 @@ export function getAllTagsWithStats(): Array<{ name: string; count: number }> {
   const posts = getAllPosts();
   const tagStats = new Map<string, number>();
 
-  posts.forEach((post) => {
-    post.tags?.forEach((tag) => {
+  posts.forEach(post => {
+    post.tags?.forEach(tag => {
       tagStats.set(tag, (tagStats.get(tag) || 0) + 1);
     });
   });
@@ -169,11 +169,11 @@ export function getRelatedTags(
   tag: string,
   limit: number = 5
 ): Array<{ name: string; count: number }> {
-  const posts = getAllPosts().filter((post) => post.tags?.includes(tag));
+  const posts = getAllPosts().filter(post => post.tags?.includes(tag));
   const relatedTagStats = new Map<string, number>();
 
-  posts.forEach((post) => {
-    post.tags?.forEach((t) => {
+  posts.forEach(post => {
+    post.tags?.forEach(t => {
       if (t !== tag) {
         relatedTagStats.set(t, (relatedTagStats.get(t) || 0) + 1);
       }
@@ -214,7 +214,7 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
 
   // 应用标签过滤
   if (tag) {
-    posts = posts.filter((post) => post.tags?.includes(tag));
+    posts = posts.filter(post => post.tags?.includes(tag));
   }
 
   // 按年份分组
@@ -222,7 +222,7 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
   let minYear = Infinity;
   let maxYear = -Infinity;
 
-  posts.forEach((post) => {
+  posts.forEach(post => {
     if (post.date) {
       const year = new Date(post.date).getFullYear();
 
@@ -249,7 +249,7 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
   }
 
   // 对每个年份内的文章按日期排序
-  Object.keys(postsByYear).forEach((year) => {
+  Object.keys(postsByYear).forEach(year => {
     postsByYear[year].sort(
       (a, b) => new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
     );

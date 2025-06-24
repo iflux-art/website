@@ -62,7 +62,7 @@ export const MDXAccordion = ({
 
     if (allowMultiple) {
       newExpanded = expandedItems.includes(itemId)
-        ? expandedItems.filter((id) => id !== itemId)
+        ? expandedItems.filter(id => id !== itemId)
         : [...expandedItems, itemId];
     } else {
       newExpanded = expandedItems.includes(itemId) ? [] : [itemId];
@@ -80,7 +80,7 @@ export const MDXAccordion = ({
       ${className}
     `}
     >
-      {items.map((item) => {
+      {items.map(item => {
         const isExpanded = expandedItems.includes(item.id);
 
         return (

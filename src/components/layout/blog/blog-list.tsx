@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useBlogPosts } from '@/hooks/use-blog';
-import type { BlogPost } from '@/types/blog-types';
+import type { BlogPost } from '@/types';
 import { UnifiedCard } from '@/components/common/unified-card';
 import { UnifiedGrid } from '@/components/layout/unified-grid';
 /**

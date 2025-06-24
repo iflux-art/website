@@ -356,7 +356,7 @@ export default function UnitConverterPage() {
                   </label>
                   <select
                     value={fromUnit}
-                    onChange={(e) => setFromUnit(e.target.value)}
+                    onChange={e => setFromUnit(e.target.value)}
                     className="relative w-full bg-background dark:bg-slate-900 rounded-md border dark:border-slate-700"
                   >
                     {Object.entries(currentUnits).map(([key, unit]) => (
@@ -370,7 +370,7 @@ export default function UnitConverterPage() {
                   <input
                     type={category === 'number' ? 'text' : 'number'}
                     value={fromValue}
-                    onChange={(e) => handleFromValueChange(e.target.value)}
+                    onChange={e => handleFromValueChange(e.target.value)}
                     placeholder={
                       category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'
                     }
@@ -400,7 +400,7 @@ export default function UnitConverterPage() {
                   </label>
                   <select
                     value={toUnit}
-                    onChange={(e) => setToUnit(e.target.value)}
+                    onChange={e => setToUnit(e.target.value)}
                     className="w-full p-3 border border-border rounded-lg bg-background"
                   >
                     {Object.entries(currentUnits).map(([key, unit]) => (
@@ -414,7 +414,7 @@ export default function UnitConverterPage() {
                   <input
                     type={category === 'number' ? 'text' : 'number'}
                     value={toValue}
-                    onChange={(e) => handleToValueChange(e.target.value)}
+                    onChange={e => handleToValueChange(e.target.value)}
                     placeholder="转换结果"
                     className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
                   />

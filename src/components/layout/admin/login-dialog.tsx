@@ -99,7 +99,7 @@ export function LoginDialog({ children, open, onOpenChange }: LoginDialogProps) 
                   type="text"
                   placeholder="请输入用户名"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={e => setUsername(e.target.value)}
                   required
                   disabled={isLoading}
                   className="pl-10"
@@ -116,7 +116,7 @@ export function LoginDialog({ children, open, onOpenChange }: LoginDialogProps) 
                   type="password"
                   placeholder="请输入密码"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
                   className="pl-10"

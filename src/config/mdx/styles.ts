@@ -3,7 +3,12 @@
  * 统一管理所有 MDX 相关样式
  */
 
-import type { TypographyConfig } from './types';
+// 类型定义移动到了 @/types 中
+interface TypographyConfig {
+  [key: string]: {
+    css: Record<string, string>;
+  };
+}
 
 /**
  * Typography 配置

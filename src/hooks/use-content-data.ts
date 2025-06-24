@@ -1,10 +1,9 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { ContentOptions } from '@/types/hooks';
-import { BaseContent, BaseCategory } from '@/types/base';
+import { ContentOptions, BaseContent, BaseCategory } from '@/types';
 import { useCache } from './use-cache';
-import { CACHE_CONFIG, HookResult } from '../utils/constants';
+import { CACHE_CONFIG, HookResult } from '../lib/constants';
 export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
 

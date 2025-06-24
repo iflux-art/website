@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { MDXImage } from '@/components/mdx/MDXImage';
-import type { MDXImageProps } from '@/types/mdx-types';
+import type { MDXImageProps } from '@/types';
 import { cn } from '@/utils';
 
 interface MDXFigureProps extends MDXImageProps {

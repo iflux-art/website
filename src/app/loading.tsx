@@ -14,7 +14,7 @@ export default function Loading() {
 
     // 渐进增长阶段
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
+      setProgress(prev => {
         if (prev >= 90) {
           clearInterval(progressInterval);
           return prev;
@@ -27,7 +27,7 @@ export default function Loading() {
 
     // 透明度闪烁效果
     const opacityInterval = setInterval(() => {
-      setOpacity((prev) => (prev === 0.8 ? 1 : 0.8));
+      setOpacity(prev => (prev === 0.8 ? 1 : 0.8));
     }, 800);
 
     return () => {

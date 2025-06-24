@@ -4,7 +4,7 @@
  */
 
 import * as React from 'react';
-import type { MDXComponents } from './types';
+import type { MDXComponents } from '@/types';
 
 // Base components
 import { MDXImage } from '@/components/mdx/MDXImage';

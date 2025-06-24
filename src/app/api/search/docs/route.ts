@@ -14,12 +14,12 @@ interface Doc {
 async function getAllFiles(dirPath: string): Promise<string[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const files = await Promise.all(
-    entries.map((entry) => {
+    entries.map(entry => {
       const res = path.resolve(dirPath, entry.name);
       return entry.isDirectory() ? getAllFiles(res) : res;
     })
   );
-  return files.flat().filter((file) => /\.(md|mdx)$/.test(file));
+  return files.flat().filter(file => /\.(md|mdx)$/.test(file));
 }
 
 // 读取文档内容
@@ -28,7 +28,7 @@ async function getDocs(): Promise<Doc[]> {
   const files = await getAllFiles(docsDir);
 
   const docs = await Promise.all(
-    files.map(async (file) => {
+    files.map(async file => {
       const content = await fs.readFile(file, 'utf-8');
       const { data, content: markdown } = matter(content);
       const relativePath = path.relative(docsDir, file);
@@ -57,11 +57,11 @@ export async function GET(request: NextRequest) {
 
     const docs = await getDocs();
     const searchResults = docs
-      .filter((doc) => {
+      .filter(doc => {
         const searchContent = `${doc.title} ${doc.description} ${doc.content}`.toLowerCase();
         return searchContent.includes(query.toLowerCase());
       })
-      .map((doc) => ({
+      .map(doc => ({
         title: doc.title,
         path: doc.url,
         excerpt: doc.description || doc.content.slice(0, 160) + '...',
