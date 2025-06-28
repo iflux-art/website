@@ -29,12 +29,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "node_modules/@types/**/*.d.ts",
-    "node_modules/@vercel/analytics/**/*.ts",
-    "node_modules/@vercel/speed-insights/**/*.ts",
-    "node_modules/algoliasearch-helper/**/*.ts",
-    "node_modules/@algolia/**/*.ts"
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "!node_modules/@types"]
+  "exclude": ["node_modules"]
 }

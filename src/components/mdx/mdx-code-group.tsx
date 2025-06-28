@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MDXCodeBlock } from '@/components/mdx/MDXCodeBlock';
+import { MDXCodeBlock } from '@/components/mdx/mdx-code-block';
 
 interface CodeTab {
   label: string;

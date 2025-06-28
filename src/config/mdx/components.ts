@@ -7,12 +7,12 @@ import * as React from 'react';
 import type { MDXComponents } from '@/types';
 
 // Base components
-import { MDXImage } from '@/components/mdx/MDXImage';
-import { MDXLink } from '@/components/mdx/MDXLink';
-import { MDXCodeBlock } from '@/components/mdx/MDXCodeBlock';
-import { MDXBlockquote } from '@/components/mdx/MDXBlockquote';
-import { MDXCodeInline } from '@/components/mdx/MDXCodeInline';
-import { MDXTableComponents } from '@/components/mdx/MDXTable';
+import { MDXImage } from '@/components/mdx/mdx-image';
+import { MDXLink } from '@/components/mdx/mdx-link';
+import { MDXCodeBlock } from '@/components/mdx/mdx-code-block';
+import { MDXBlockquote } from '@/components/mdx/mdx-blockquote';
+import { MDXCodeInline } from '@/components/mdx/mdx-codeInline';
+import { MDXTableComponents } from '@/components/mdx/mdx-table';
 
 // Code style components
 import {
@@ -21,14 +21,14 @@ import {
   SuccessCode,
   WarningCode,
   ErrorCode,
-} from '@/components/mdx/MDXCodeInline';
+} from '@/components/mdx/mdx-codeInline';
 
 // Extended components
-import { MDXTabs } from '@/components/mdx/MDXTabs';
-import { MDXAccordion } from '@/components/mdx/MDXAccordion';
-import { MDXVideo } from '@/components/mdx/MDXVideo';
-import { MDXImageZoom } from '@/components/mdx/MDXImageZoom';
-import { MDXCodeDemo } from '@/components/mdx/MDXCodeDemo';
+import { MDXTabs } from '@/components/mdx/mdx-tabs';
+import { MDXAccordion } from '@/components/mdx/mdx-accordion';
+import { MDXVideo } from '@/components/mdx/mdx-video';
+import { MDXImageZoom } from '@/components/mdx/mdx-image-zoom';
+import { MDXCodeDemo } from '@/components/mdx/mdx-code-demo';
 
 /**
  * MDX 组件映射配置

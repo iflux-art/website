@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MDXImage } from '@/components/mdx/MDXImage';
+import { MDXImage } from '@/components/mdx/mdx-image';
 import type { MDXImageProps } from '@/types';
 import { cn } from '@/utils';
 
