@@ -3,7 +3,7 @@
  * 统一管理所有 MDX 组件的配置和映射
  */
 
-import * as React from 'react';
+// React import removed as it's not used
 import type { MDXComponents } from '@/types';
 
 // Base components
@@ -96,15 +96,11 @@ export interface MDXComponentContextType {
 }
 
 /**
- * 创建组件上下文
+ * 获取 MDX 组件配置（不使用 Context）
  */
-export const MDXComponentContext = React.createContext<MDXComponentContextType>({
-  components: MDXComponentsMapping,
-  defaultProps: defaultComponentProps,
-});
-
-/**
- * 组件上下文 Hook
- */
-export const useMDXComponents = (): MDXComponentContextType =>
-  React.useContext(MDXComponentContext);
+export const useMDXComponents = (): MDXComponentContextType => {
+  return {
+    components: MDXComponentsMapping,
+    defaultProps: defaultComponentProps,
+  };
+};

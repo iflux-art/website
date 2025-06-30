@@ -5,7 +5,10 @@ export type CategoryId =
   | 'audio'
   | 'video'
   | 'office'
-  | 'productivity';
+  | 'productivity'
+  | 'operation'
+  | 'profile'
+  | 'friends';
 
 export interface Category {
   id: CategoryId;
@@ -90,7 +93,7 @@ export const links = {
       description: '合作伙伴和友情链接',
       order: 10,
     },
-  ] as Category[],
+  ],
 
   items: [
     {
@@ -18658,18 +18661,18 @@ export const links = {
       updatedAt: '2025-06-10T08:17:16.093Z',
     },
     {
-      title: 'W3Schools.com',
+      title: 'W3Schools',
       description:
         'W3Schools offers free online tutorials, references and exercises in all the major languages of the web. Covering popular subjects like HTML, CSS, JavaScript, Python, SQL, Java, and many, many more.',
       url: 'https://www.w3schools.com/',
       icon: 'https://www.w3schools.com/favicon.ico',
-      iconType: 'emoji',
+      iconType: 'image',
       tags: ['在线教程', 'W3Schools'],
       featured: false,
       category: 'development',
       id: 'mbq90nc2kw3qiqg1h7p',
       createdAt: '2025-06-10T08:18:03.170Z',
-      updatedAt: '2025-06-10T08:18:03.170Z',
+      updatedAt: '2025-06-29T18:17:00.600Z',
     },
     {
       title: 'W3Schools 在线教程',
@@ -21351,13 +21354,13 @@ export const links = {
       description: '良心到难以置信的网站推荐',
       url: 'https://lkssite.vip/',
       icon: 'https://lkssite.vip/favicon.ico',
-      iconType: 'emoji',
+      iconType: 'image',
       tags: ['网址导航', '工具导航'],
       featured: false,
       category: 'productivity',
       id: 'mbtr5xxryo4vbt16xjq',
       createdAt: '2025-06-12T19:09:21.807Z',
-      updatedAt: '2025-06-12T19:09:21.807Z',
+      updatedAt: '2025-06-29T18:17:16.914Z',
     },
     {
       title: 'Pagtive',
@@ -21400,19 +21403,101 @@ export const links = {
       createdAt: '2025-06-13T09:03:49.854Z',
       updatedAt: '2025-06-13T09:03:49.854Z',
     },
-  ] as Item[],
-};
-
-// 辅助函数
-export const getItemsByCategory = (categoryId: CategoryId) =>
-  links.items.filter(item => item.category === categoryId);
-
-export const getFeaturedItems = () => links.items.filter(item => item.featured);
-
-export const searchItems = (query: string) =>
-  links.items.filter(
-    item =>
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      item.description.toLowerCase().includes(query.toLowerCase()) ||
-      item.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-  );
+    {
+      title: 'Claudia - The Elegant Desktop Companion for Claude Code',
+      description:
+        'Transform your AI coding workflow with a beautiful GUI that makes managing Claude sessions, creating custom agents, and tracking usage effortless.',
+      url: 'https://claudia.asterisk.so/',
+      icon: 'https://claudia.asterisk.so/claudia-icon.svg',
+      iconType: 'image',
+      tags: [],
+      featured: true,
+      category: 'development',
+      id: 'mchzvxqy83pxobismai',
+      createdAt: '2025-06-29T18:19:59.770Z',
+      updatedAt: '2025-06-29T18:19:59.770Z',
+    },
+    {
+      title: 'Telegram',
+      description: 'a new era of messaging',
+      url: 'https://telegram.org/',
+      icon: 'https://telegram.org/favicon.ico',
+      iconType: 'image',
+      tags: ['即时通讯'],
+      featured: false,
+      category: 'productivity',
+      id: 'mciims93d6dyp9yucsu',
+      createdAt: '2025-06-30T03:04:45.447Z',
+      updatedAt: '2025-06-30T03:04:45.447Z',
+    },
+    {
+      title: 'PromptPilot',
+      description:
+        '专为大模型开发，PromptPilot为你提供更精准，专业，可持续迭代提示词！\nPromptPilot 是一款面向大模型应用的全链路优化平台，覆盖大模型开发从构想、开发部署到迭代优化的全过程。平台提供从创意落地的 Prompt 生成，到基于用户意图与评测数据的智能调优能力，确保大模型输出更贴合真实业务需求。通过 API 接入，用户可低成本获取高质量的实时反馈数据，自动优化 Prompt，构建AI应用与真实数据间的反馈闭环。始于Prompt，PromptPilot助力用户打造可自我进化的大模型应用，加速 AI 能力在实际业务场景中的落地',
+      url: 'https://promptpilot.volcengine.com/home',
+      icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/lm_sth/ljhwZthlaukjlkulzlp/autope/logo/prompt-pilot.png',
+      iconType: 'image',
+      tags: ['提示词工程'],
+      featured: true,
+      category: 'ai',
+      id: 'mciquio6n9vde34gz6t',
+      createdAt: '2025-06-30T06:54:43.206Z',
+      updatedAt: '2025-06-30T06:54:43.206Z',
+    },
+    {
+      title: 'Firecrawl Tools - AI-Powered Web Scraping & Data Enrichment',
+      description:
+        "Transform websites into structured data with Firecrawl's suite of AI tools. Create chatbots, enrich CSVs, search intelligently, and generate images from URLs.",
+      url: 'https://tools.firecrawl.dev/firesearch',
+      icon: 'https://tools.firecrawl.dev/favicon.ico',
+      iconType: 'image',
+      tags: ['AI搜索', '智能体'],
+      featured: false,
+      category: 'ai',
+      id: 'mcir38hu8ddfa2rmecg',
+      createdAt: '2025-06-30T07:01:29.922Z',
+      updatedAt: '2025-06-30T07:01:29.922Z',
+    },
+    {
+      title: 'Komiko',
+      description: '将您的动漫和漫画创意化为现实',
+      url: 'https://komiko.app/zh-CN/',
+      icon: 'https://komiko.app/favicon.ico',
+      iconType: 'image',
+      tags: ['AI生图'],
+      featured: false,
+      category: 'ai',
+      id: 'mcir5sbn17bwxxcx9mh',
+      createdAt: '2025-06-30T07:03:28.931Z',
+      updatedAt: '2025-06-30T07:03:28.931Z',
+    },
+    {
+      title: 'Tally',
+      description:
+        "The simplest way to create forms. Say goodbye to boring forms. Meet Tally — the free, intuitive form builder you've been looking for.",
+      url: 'https://tally.so/',
+      icon: 'https://tally.so/favicon.svg',
+      iconType: 'image',
+      tags: ['表单'],
+      featured: true,
+      category: 'office',
+      id: 'mcir9ssntref1qiyex',
+      createdAt: '2025-06-30T07:06:36.167Z',
+      updatedAt: '2025-06-30T07:07:03.263Z',
+    },
+    {
+      title: 'Opera Neon | Agentic AI browser | Opera',
+      description:
+        'Neon is an agentic AI browser that turns complex prompts into full-scale results. Automate tasks, turn intent into output, and get context-aware assistance all in one browser.',
+      url: 'https://www.operaneon.com/',
+      icon: 'https://www.operaneon.com/favicon.ico',
+      iconType: 'image',
+      tags: ['浏览器'],
+      featured: false,
+      category: 'productivity',
+      id: 'mcireizxj4qjw3qjb5',
+      createdAt: '2025-06-30T07:10:16.749Z',
+      updatedAt: '2025-06-30T07:10:16.749Z',
+    },
+  ],
+} as { categories: Category[]; items: Item[] };

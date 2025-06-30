@@ -7,14 +7,16 @@ import { ToolActions } from '@/components/layout/tools/tool-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { calculatorUtils } from '@/components/layout/tools/tool-utils';
+import { useSafeTool } from '@/hooks/use-safe-state';
 import Link from 'next/link';
 
 export default function CalculatorPage() {
   const [display, setDisplay] = useState('0');
   const [expression, setExpression] = useState('');
-  const [history, setHistory] = useState<string[]>([]);
-  // const [error, setError] = useState(''); // Unused variable
   const [mode, setMode] = useState<'simple' | 'scientific'>('simple');
+
+  // 使用安全状态管理历史记录
+  const { history, addToHistory, clearHistory: clearCalculatorHistory } = useSafeTool();
 
   const clearEntry = () => {
     setDisplay('0');
@@ -36,15 +38,17 @@ export default function CalculatorPage() {
     const result = calculatorUtils.evaluate(fullExpression);
 
     if (result.success) {
-      const calculation = `${fullExpression} = ${result.data}`;
-      setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+      addToHistory({
+        id: Date.now().toString(),
+        timestamp: Date.now(),
+        input: fullExpression,
+        output: result.data!,
+        tool: 'calculator',
+      });
       setDisplay(result.data!);
       setExpression('');
-      // setError('');
     } else {
-      // setError(result.error!);
-      // 如果需要显示错误，可以在这里处理，例如 setDisplay(result.error!) 或其他方式
-      setDisplay(result.error || 'Error'); // 临时处理，实际应有更好的错误显示
+      setDisplay(result.error || 'Error');
     }
   };
 
@@ -91,8 +95,13 @@ export default function CalculatorPage() {
     }
 
     setDisplay(String(result));
-    const calculation = `${func}(${inputValue}) = ${result}`;
-    setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+    addToHistory({
+      id: Date.now().toString(),
+      timestamp: Date.now(),
+      input: `${func}(${inputValue})`,
+      output: String(result),
+      tool: 'calculator',
+    });
     // setError('');
   };
 
@@ -111,10 +120,6 @@ export default function CalculatorPage() {
       setDisplay(display.charAt(0) === '-' ? display.slice(1) : '-' + display);
     }
     // setError('');
-  };
-
-  const clearHistory = () => {
-    setHistory([]);
   };
 
   const inputNumber = (num: string) => {
@@ -141,11 +146,15 @@ export default function CalculatorPage() {
     const result = calculatorUtils.evaluate(fullExpression);
 
     if (result.success) {
-      const calculation = `${fullExpression} = ${result.data}`;
-      setHistory(prev => [calculation, ...prev.slice(0, 9)]);
+      addToHistory({
+        id: Date.now().toString(),
+        timestamp: Date.now(),
+        input: fullExpression,
+        output: result.data!,
+        tool: 'calculator',
+      });
       setDisplay(result.data!);
       setExpression('');
-      // setError('');
     } else {
       // setError(result.error!);
       setDisplay(result.error || 'Error'); // 临时处理
@@ -189,7 +198,7 @@ export default function CalculatorPage() {
     },
     {
       label: '清空历史',
-      onClick: clearHistory,
+      onClick: clearCalculatorHistory,
       icon: RotateCcw,
       variant: 'outline' as const,
       disabled: history.length === 0,
@@ -640,7 +649,7 @@ export default function CalculatorPage() {
                 <CardTitle className="flex items-center justify-between">
                   历史记录
                   {history.length > 0 && (
-                    <Button variant="ghost" size="sm" onClick={clearHistory}>
+                    <Button variant="ghost" size="sm" onClick={clearCalculatorHistory}>
                       <RotateCcw className="h-4 w-4" />
                     </Button>
                   )}
@@ -654,10 +663,10 @@ export default function CalculatorPage() {
                     history.map((entry, index) => (
                       <div
                         key={index}
-                        className="text-sm text-muted-foreground dark:text-slate-400"
-                        onClick={() => setDisplay(entry.split(' = ')[1])}
+                        className="text-sm text-muted-foreground dark:text-slate-400 cursor-pointer hover:text-foreground"
+                        onClick={() => setDisplay(entry.output)}
                       >
-                        {entry}
+                        {entry.input} = {entry.output}
                       </div>
                     ))
                   )}

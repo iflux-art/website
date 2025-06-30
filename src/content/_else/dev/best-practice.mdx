@@ -1,14 +1,14 @@
 ---
 title: Next.js 项目最佳实践指南
 description: 全面的 Next.js 项目最佳实践指南，涵盖架构设计、组件分层、状态管理、性能优化和工程规范，帮助团队构建高质量的 Next.js 应用
-date: "2023-11-15"
-category: "开发规范"
+date: '2023-11-15'
+category: '开发规范'
 tags:
-- Next.js开发
-- React最佳实践
-- 性能优化
-- 架构设计
-- 工程规范
+  - Next.js开发
+  - React最佳实践
+  - 性能优化
+  - 架构设计
+  - 工程规范
 ---
 
 在现代前端开发中，采用最佳实践对于构建高质量、可维护和高性能的应用至关重要。本文将分享基于 Next.js 和 React 技术栈的全面最佳实践指南，帮助开发团队提升代码质量和开发效率。
@@ -28,7 +28,11 @@ tags:
 ```tsx
 // 原子组件示例
 function Button({ children, ...props }) {
-  return <button className="btn" {...props}>{children}</button>;
+  return (
+    <button className="btn" {...props}>
+      {children}
+    </button>
+  );
 }
 
 // 分子组件示例
@@ -91,7 +95,7 @@ Next.js 提供了许多性能优化工具，但需要正确使用才能发挥最
 // 动态导入重量级组件
 const DynamicChart = dynamic(() => import('@/components/Chart'), {
   loading: () => <Skeleton height={300} />,
-  ssr: false // 如果组件不需要服务器渲染
+  ssr: false, // 如果组件不需要服务器渲染
 });
 ```
 
@@ -160,22 +164,34 @@ const [state, dispatch] = useReducer(reducer, initialState);
 
 ### 全局状态管理
 
-对于跨组件共享的状态，推荐使用 Zustand：
+对于跨组件共享的状态，推荐使用安全状态管理：
 
 ```tsx
-// 创建全局状态
-import create from 'zustand';
+// 创建安全状态 Hook
+import { useState, useEffect, useCallback } from 'react';
 
-export const useStore = create((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: (userData) => set({ user: userData, isAuthenticated: true }),
-  logout: () => set({ user: null, isAuthenticated: false }),
-}));
+export function useAuthState() {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = useCallback(userData => {
+    setUser(userData);
+    setIsAuthenticated(true);
+    localStorage.setItem('user', JSON.stringify(userData));
+  }, []);
+
+  const logout = useCallback(() => {
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem('user');
+  }, []);
+
+  return { user, isAuthenticated, login, logout };
+}
 
 // 在组件中使用
 function Profile() {
-  const { user, logout } = useStore();
+  const { user, logout } = useAuthState();
   // ...
 }
 ```
@@ -186,15 +202,11 @@ function Profile() {
 
 ```tsx
 // 获取用户数据
-const { data, isLoading, error } = useQuery(
-  ['user', userId],
-  () => fetchUser(userId),
-  {
-    staleTime: 5 * 60 * 1000, // 5分钟
-    cacheTime: 30 * 60 * 1000, // 30分钟
-    retry: 3,
-  }
-);
+const { data, isLoading, error } = useQuery(['user', userId], () => fetchUser(userId), {
+  staleTime: 5 * 60 * 1000, // 5分钟
+  cacheTime: 30 * 60 * 1000, // 30分钟
+  retry: 3,
+});
 ```
 
 ## 样式与设计系统
@@ -341,7 +353,7 @@ function Modal({ isOpen, onClose, children }) {
       modalRef.current?.focus();
 
       // 捕获并限制 Tab 键
-      const handleKeyDown = (e) => {
+      const handleKeyDown = e => {
         if (e.key === 'Tab') {
           // 实现焦点陷阱
         }
@@ -353,12 +365,7 @@ function Modal({ isOpen, onClose, children }) {
   }, [isOpen]);
 
   return isOpen ? (
-    <div
-      ref={modalRef}
-      role="dialog"
-      aria-modal="true"
-      tabIndex={-1}
-    >
+    <div ref={modalRef} role="dialog" aria-modal="true" tabIndex={-1}>
       {children}
       <button onClick={onClose}>关闭</button>
     </div>
@@ -595,11 +602,11 @@ async function fetchWithErrorHandling(url, options = {}) {
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+    value: "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';",
   },
   {
     key: 'X-XSS-Protection',
-    value: '1; mode=block'
+    value: '1; mode=block',
   },
   // 其他安全头...
 ];
@@ -630,7 +637,7 @@ const contactSchema = z.object({
 });
 
 function ContactForm() {
-  const handleSubmit = (data) => {
+  const handleSubmit = data => {
     try {
       const validated = contactSchema.parse(data);
       // 处理验证通过的数据
@@ -668,6 +675,7 @@ flowchart TB
    - 模块依赖关系合理
 
 2. **代码异味检测**：
+
    ```bash
    # 使用ESLint进行静态检测
    pnpm run lint --fix

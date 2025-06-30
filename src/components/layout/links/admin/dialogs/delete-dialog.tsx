@@ -28,11 +28,21 @@ export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteD
       const response = await fetch(`/api/links?id=${item.id}`, {
         method: 'DELETE',
       });
-      if (!response.ok) throw new Error('删除网址失败');
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete item');
+      }
+
       onSuccess(item.id);
       onOpenChange(false);
-    } catch {
-      onError('删除网址失败');
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      if (error instanceof Error) {
+        onError(error.message);
+      } else {
+        onError('An unknown error occurred');
+      }
     } finally {
       setIsLoading(false);
     }

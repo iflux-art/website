@@ -1,62 +1,58 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Wrench, ExternalLink, Clock, Command, FileText, Book } from 'lucide-react';
-import { SearchDialogProps, SearchResult, APISearchResult } from '@/types';
-import { COMMANDS, SEARCH_HISTORY_KEY } from '@/components/features/search/commands';
+// Icons are now handled in SearchResults component
+import { SearchDialogProps, APISearchResult } from '@/types';
+import type { SearchResult } from '@/hooks/use-safe-state';
+import { COMMANDS } from '@/components/features/search/commands';
 import { TOOLS } from '@/components/features/search/search-data';
 import { links } from '@/components/layout/links/links-data';
 import { SearchBar } from '@/components/features/search/search-bar';
 import { SearchResults } from '@/components/features/search/search-results';
 import { KeyboardHints } from '@/components/features/search/keyboard-hints';
+import { useSafeSearch } from '@/hooks/use-safe-state';
 
 /**
  * 搜索对话框组件
  * 提供全站内容搜索、命令执行和历史记录功能
  */
 export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // 加载搜索历史
-  useEffect(() => {
-    const history = localStorage.getItem(SEARCH_HISTORY_KEY);
-    if (history) {
-      setSearchHistory(JSON.parse(history));
-    }
-  }, []);
-
-  // 保存搜索历史
-  const saveToHistory = (query: string) => {
-    if (!query.trim()) return;
-    const newHistory = [query, ...searchHistory.filter(item => item !== query)].slice(0, 10);
-    setSearchHistory(newHistory);
-    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
-  };
-
-  // 清除搜索历史
-  const clearHistory = () => {
-    setSearchHistory([]);
-    localStorage.removeItem(SEARCH_HISTORY_KEY);
-  };
+  // 使用安全状态管理
+  const {
+    query: searchQuery,
+    results,
+    isLoading,
+    selectedIndex,
+    history: searchHistory,
+    setQuery: setSearchQuery,
+    setResults,
+    setLoading: setIsLoading,
+    setSelectedIndex,
+    addToHistory: saveToHistory,
+    clearHistory,
+    // resetSearch 功能暂时不需要
+  } = useSafeSearch();
 
   // 处理结果选择
   const handleSelect = (result: SearchResult) => {
-    if (result.action) {
-      result.action();
-    } else if (result.isExternal) {
-      window.open(result.path, '_blank');
-    } else {
-      router.push(result.path);
-      if (result.type !== 'history' && result.type !== 'command') {
+    if (result.type === 'link') {
+      window.open(result.url, '_blank');
+    } else if (result.url && result.url !== '#') {
+      router.push(result.url);
+      if (result.type !== 'command') {
         saveToHistory(searchQuery);
+      }
+    } else if (result.type === 'command') {
+      // 处理命令类型的结果
+      if (result.title.includes('切换主题')) {
+        document.documentElement.classList.toggle('dark');
+      } else if (result.title.includes('查看文档')) {
+        router.push('/docs');
       }
     }
     onOpenChangeAction(false);
@@ -66,10 +62,10 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex(prev => (prev > 0 ? prev - 1 : results.length - 1));
+      setSelectedIndex(selectedIndex > 0 ? selectedIndex - 1 : results.length - 1);
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex(prev => (prev < results.length - 1 ? prev + 1 : 0));
+      setSelectedIndex(selectedIndex < results.length - 1 ? selectedIndex + 1 : 0);
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       handleSelect(results[selectedIndex]);
     }
@@ -81,23 +77,21 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
     if (!query) {
       // 显示搜索历史和快捷命令
       const historyResults: SearchResult[] = searchHistory
-        .filter(item => item.toLowerCase().includes(query))
-        .map(item => ({
+        .filter((item: string) => item.toLowerCase().includes(query))
+        .map((item: string, index: number) => ({
+          id: `history-${index}`,
           title: item,
-          path: '#',
-          excerpt: '最近搜索',
-          type: 'history' as const,
-          icon: <Clock className="h-4 w-4" />,
-          action: () => setSearchQuery(item),
+          url: '#',
+          description: '最近搜索',
+          type: 'command' as const,
         }));
 
-      const commandResults: SearchResult[] = COMMANDS.map(cmd => ({
+      const commandResults: SearchResult[] = COMMANDS.map((cmd, index) => ({
+        id: `command-${index}`,
         title: cmd.title,
-        path: '',
-        excerpt: cmd.description,
-        type: 'command',
-        icon: <Command className="h-4 w-4" />,
-        action: cmd.action,
+        url: '',
+        description: cmd.description,
+        type: 'command' as const,
       }));
 
       setResults([...commandResults, ...historyResults]);
@@ -118,13 +112,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         docResults.push(
           ...data.results
             .filter((result: APISearchResult) => result.type === 'doc')
-            .map((doc: APISearchResult) => ({
+            .map((doc: APISearchResult, index: number) => ({
+              id: `doc-${index}`,
               title: doc.title,
-              path: doc.path,
-              excerpt: doc.excerpt,
-              type: 'doc' as const,
-              icon: <FileText className="h-4 w-4" />,
-              highlights: doc.highlights,
+              url: doc.path,
+              description: doc.excerpt,
+              type: 'docs' as const,
             }))
         );
 
@@ -132,13 +125,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         blogResults.push(
           ...data.results
             .filter((result: APISearchResult) => result.type === 'blog')
-            .map((blog: APISearchResult) => ({
+            .map((blog: APISearchResult, index: number) => ({
+              id: `blog-${index}`,
               title: blog.title,
-              path: blog.path,
-              excerpt: blog.excerpt,
+              url: blog.path,
+              description: blog.excerpt,
               type: 'blog' as const,
-              icon: <Book className="h-4 w-4" />,
-              highlights: blog.highlights,
             }))
         );
       } catch (error) {
@@ -147,14 +139,13 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
       // 处理历史记录
       const historyResults: SearchResult[] = searchHistory
-        .filter(item => item.toLowerCase().includes(query))
-        .map(item => ({
+        .filter((item: string) => item.toLowerCase().includes(query))
+        .map((item: string, index: number) => ({
+          id: `history-search-${index}`,
           title: item,
-          path: '#',
-          excerpt: '最近搜索',
-          type: 'history' as const,
-          icon: <Clock className="h-4 w-4" />,
-          action: () => setSearchQuery(item),
+          url: '#',
+          description: '最近搜索',
+          type: 'command' as const,
         }));
 
       // 处理工具结果
@@ -163,12 +154,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
           tool.name.toLowerCase().includes(query) ||
           tool.description.toLowerCase().includes(query) ||
           tool.tags.some(tag => tag.toLowerCase().includes(query))
-      ).map(tool => ({
+      ).map((tool, index) => ({
+        id: `tool-${index}`,
         title: tool.name,
-        path: tool.path,
-        excerpt: tool.description,
+        url: tool.path,
+        description: tool.description,
         type: 'tool' as const,
-        icon: <Wrench className="h-4 w-4" />,
       }));
 
       // 处理命令结果
@@ -176,13 +167,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         command =>
           command.title.toLowerCase().includes(query) ||
           command.description.toLowerCase().includes(query)
-      ).map(command => ({
+      ).map((command, index) => ({
+        id: `command-search-${index}`,
         title: command.title,
-        path: '#',
-        excerpt: command.description,
+        url: '#',
+        description: command.description,
         type: 'command' as const,
-        icon: <Command className="h-4 w-4" />,
-        action: command.action,
       }));
 
       // 处理链接导航搜索结果
@@ -193,13 +183,12 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
             item.description.toLowerCase().includes(query) ||
             item.tags.some(tag => tag.toLowerCase().includes(query))
         )
-        .map(item => ({
+        .map((item, index) => ({
+          id: `link-${index}`,
           title: item.title,
-          path: item.url,
-          excerpt: item.description,
-          type: 'navigation' as const,
-          icon: <ExternalLink className="h-4 w-4" />,
-          isExternal: true,
+          url: item.url,
+          description: item.description,
+          type: 'link' as const,
         }));
 
       const allResults: SearchResult[] = [

@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useSafeFilter } from '@/hooks/use-safe-state';
 
 interface FilterableItem {
   tags?: string[];
@@ -6,8 +7,13 @@ interface FilterableItem {
 }
 
 export function useFilterState<T extends FilterableItem>(items: T[]) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const {
+    selectedCategory,
+    selectedTag,
+    setCategory: setSelectedCategory,
+    setTag: setSelectedTag,
+    reset,
+  } = useSafeFilter();
 
   // 过滤数据
   const filteredItems = useMemo(() => {
@@ -59,5 +65,6 @@ export function useFilterState<T extends FilterableItem>(items: T[]) {
     handleCategoryChange,
     handleTagChange,
     filteredTags,
+    reset, // 添加重置功能
   };
 }

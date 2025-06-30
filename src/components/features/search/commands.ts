@@ -16,15 +16,18 @@ export const COMMANDS: Command[] = [
   },
 ];
 
-// 本地存储键
-export const SEARCH_HISTORY_KEY = 'search-history';
+// 本地存储键 - 已迁移到安全状态管理
+export const SEARCH_HISTORY_KEY = 'iflux-search-history';
 
 // 搜索结果分类显示文本
 export const TYPE_LABELS = {
   tool: '工具',
-  navigation: '网址导航',
-  doc: '文档',
+  link: '网址导航',
+  docs: '文档',
   blog: '博客',
   command: '命令',
+  // 保持向后兼容
+  navigation: '网址导航',
+  doc: '文档',
   history: '历史记录',
 } as const;

@@ -92,6 +92,7 @@ C. 长期优化建议：
 pnpm format 格式化所有文件
 pnpm format:check 检查格式但不修改
 pnpm lint 运行 ESLint 检查
+npx tsc --noEmit 运行 TypeScript 检查
 
 现在你的 Git 仓库已经配置好了自动代码格式化。每次你执行 git commit 时：
 

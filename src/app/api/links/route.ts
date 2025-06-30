@@ -1,12 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  readLinksData,
-  addLinksItem,
-  updateLinksItem,
-  deleteLinksItem,
-  getCategories,
-  getAllTags,
-} from '@/components/layout/links/admin/links-manage';
+import { linksService } from '@/lib/links-service';
 import { LinksFormData } from '@/types';
 
 // GET - 获取导航数据
@@ -16,16 +9,16 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type');
 
     if (type === 'categories') {
-      const categories = getCategories();
+      const categories = await linksService.getCategories();
       return NextResponse.json(categories);
     }
 
     if (type === 'tags') {
-      const tags = getAllTags();
+      const tags = await linksService.getAllTags();
       return NextResponse.json(tags);
     }
 
-    const data = readLinksData();
+    const data = await linksService.getData();
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error getting links data:', error);
@@ -38,19 +31,26 @@ export async function POST(request: NextRequest) {
   try {
     const formData: LinksFormData = await request.json();
 
-    // 验证必填字段
-    if (!formData.title || !formData.url || !formData.category) {
-      return NextResponse.json({ error: 'Title, URL, and category are required' }, { status: 400 });
+    // 使用服务层验证
+    const validation = linksService.validateLinkData(formData);
+    if (!validation.valid) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validation.errors,
+        },
+        { status: 400 }
+      );
     }
 
-    const newItem = addLinksItem({
+    const newItem = await linksService.addLink({
       title: formData.title,
-      description: formData.description,
+      description: formData.description || '',
       url: formData.url,
-      icon: formData.icon,
-      iconType: formData.iconType,
-      tags: formData.tags,
-      featured: formData.featured,
+      icon: formData.icon || '',
+      iconType: formData.iconType || 'image',
+      tags: formData.tags || [],
+      featured: formData.featured || false,
       category: formData.category,
     });
 
@@ -77,7 +77,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const updates = await request.json();
-    const updatedItem = updateLinksItem(id, updates);
+    const updatedItem = await linksService.updateLink(id, updates);
 
     return NextResponse.json(updatedItem);
   } catch (error) {
@@ -105,7 +105,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    deleteLinksItem(id);
+    await linksService.deleteLink(id);
 
     return NextResponse.json({ success: true });
   } catch (error) {

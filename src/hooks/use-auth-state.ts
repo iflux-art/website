@@ -1,50 +1,33 @@
-import { useState, useEffect } from 'react';
-
-const LOGIN_TIMEOUT = 24 * 60 * 60 * 1000; // 24小时
+import { useEffect } from 'react';
+import { useSafeAuth } from '@/hooks/use-safe-state';
 
 /**
  * 用户认证状态管理 Hook
  *
- * 负责：
+ * 使用安全状态管理，提供：
  * 1. 检查用户是否已登录
  * 2. 处理登录过期
- * 3. 监听存储变化
+ * 3. 自动状态同步
  *
- * @returns 当前的登录状态
+ * @returns 当前的登录状态和相关操作
  */
 export function useAuthState() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, checkLoginExpiry } = useSafeAuth();
 
   useEffect(() => {
-    const checkAuth = () => {
-      const loggedIn = localStorage.getItem('isLoggedIn');
-      const loginTime = localStorage.getItem('loginTime');
+    // 初始检查登录状态
+    checkLoginExpiry();
 
-      if (loggedIn === 'true' && loginTime) {
-        // 检查登录是否过期
-        const now = Date.now();
-        const loginTimestamp = parseInt(loginTime);
-        const isExpired = now - loginTimestamp > LOGIN_TIMEOUT;
-
-        if (!isExpired) {
-          setIsLoggedIn(true);
-          return;
-        }
+    // 监听存储变化（跨标签页同步）
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'iflux-auth') {
+        checkLoginExpiry();
       }
-      setIsLoggedIn(false);
-    };
-
-    // 初始检查
-    checkAuth();
-
-    // 监听存储变化
-    const handleStorageChange = () => {
-      checkAuth();
     };
 
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  }, [checkLoginExpiry]);
 
   return isLoggedIn;
 }

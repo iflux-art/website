@@ -14,7 +14,6 @@ export { typographyConfig, MDXStyles } from './styles';
 export {
   MDXComponentsMapping,
   defaultComponentProps,
-  MDXComponentContext,
   useMDXComponents,
   type MDXComponentContextType,
 } from './components';

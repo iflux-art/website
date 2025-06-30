@@ -24,19 +24,19 @@ export function EditDialog({ item, onOpenChange, onSuccess, onError }: EditDialo
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to update item');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update item');
       }
 
-      const updatedItem = await response.json();
+      const updatedItem: LinksItem = await response.json();
       onSuccess(updatedItem);
       onOpenChange(false);
     } catch (error) {
       console.error('Error updating item:', error);
-      if (error instanceof Error && error.message === 'URL already exists') {
-        onError('该网址已存在');
+      if (error instanceof Error) {
+        onError(error.message);
       } else {
-        onError('更新网址失败');
+        onError('An unknown error occurred');
       }
     } finally {
       setIsSubmitting(false);

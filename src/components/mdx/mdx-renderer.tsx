@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXComponentsMapping, useMDXComponents, type MDXComponents } from '@/config/mdx';
+import { MDXComponentsMapping, type MDXComponents } from '@/config/mdx';
 
 interface MDXRendererProps {
   content: MDXRemoteSerializeResult;
@@ -21,13 +21,9 @@ interface MDXRendererProps {
  * 4. 错误处理和降级显示
  */
 export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
-  // 使用上下文中的组件配置
-  const { components: contextComponents } = useMDXComponents();
-
-  // 合并配置优先级：组件自定义 > 上下文 > 默认配置
+  // 直接使用默认组件配置，避免 SSR 问题
   const components = {
     ...MDXComponentsMapping,
-    ...contextComponents,
     ...(options.components || {}),
   };
 
