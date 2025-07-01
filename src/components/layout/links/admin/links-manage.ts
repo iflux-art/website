@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs';
 import path from 'path';
-import type { LinksCategory, LinksItem, LinksData } from '@/types';
-import { links } from '@/components/layout/links/links-data';
+import type { Category, Item } from '@/types/links';
 
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'categories.json');
-const ITEMS_FILE_PATH = path.join(process.cwd(), 'data', 'links', 'items.json');
+const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'links', 'categories.json');
+const ITEMS_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'links', 'items.json');
 /**
  * 确保数据目录存在
  */
@@ -19,7 +18,7 @@ function ensureDataDirectory() {
  * 读取分类数据
  * @internal 内部函数，用于底层数据读取操作
  */
-function readCategories(): LinksCategory[] {
+function readCategories(): Category[] {
   if (!fs.existsSync(CATEGORIES_FILE_PATH)) {
     fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
     return [];
@@ -38,7 +37,7 @@ function readCategories(): LinksCategory[] {
  * 读取项目数据
  * @internal 内部函数，用于底层数据读取操作
  */
-function readItems(): LinksItem[] {
+function readItems(): Item[] {
   if (!fs.existsSync(ITEMS_FILE_PATH)) {
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
     return [];
@@ -58,7 +57,7 @@ function readItems(): LinksItem[] {
  * @internal 内部函数，用于底层数据写入操作
  * @param items - 要写入的导航项数组
  */
-function writeItems(items: LinksItem[]): void {
+function writeItems(items: Item[]): void {
   try {
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify(items, null, 2), 'utf-8');
   } catch (error) {
@@ -70,27 +69,22 @@ function writeItems(items: LinksItem[]): void {
 /**
  * 读取完整导航数据
  */
-export function readLinksData(): LinksData {
+export function readLinksData(): { categories: Category[]; items: Item[] } {
+  const categories = readCategories().map(cat => ({
+    ...cat,
+    title: cat.name,
+  }));
+  const items = readItems();
   return {
-    categories: links.categories.map(cat => ({
-      ...cat,
-      title: cat.name,
-      description: cat.description,
-      count: links.items.filter(item => item.category === cat.id).length,
-    })),
-    items: links.items.map(item => ({
-      ...item,
-      createdAt: item.createdAt,
-      updatedAt: item.updatedAt,
-    })),
+    categories,
+    items,
   };
 }
 /**
  * 写入导航数据
  */
-export function writeLinksData(data: LinksData): void {
+export function writeLinksData(data: { categories: Category[]; items: Item[] }): void {
   ensureDataDirectory();
-
   try {
     fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify(data.categories, null, 2), 'utf-8');
     fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify(data.items, null, 2), 'utf-8');
@@ -102,81 +96,52 @@ export function writeLinksData(data: LinksData): void {
 /**
  * 添加导航项
  */
-export function addLinksItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updatedAt'>): LinksItem {
+export function addLinksItem(item: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Item {
+  const items = readItems();
   // 检查 URL 是否已存在
-  const existingItem = links.items.find(existing => existing.url === item.url);
+  const existingItem = items.find(existing => existing.url === item.url);
   if (existingItem) {
     throw new Error('URL already exists');
   }
 
-  const newItem = {
-    title: item.title,
-    description: item.description || '',
-    url: item.url,
-    icon: item.icon || '',
-    iconType: item.iconType || 'image',
-    tags: item.tags || [],
-    featured: item.featured || false,
-    category: item.category,
+  const newItem: Item = {
+    ...item,
     id: generateId(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 
-  // 添加到内存中的数据
-  (links.items as LinksItem[]).push(newItem);
-
-  // 持久化到文件系统
-  try {
-    updateLinksDataFile();
-  } catch (error) {
-    // 如果文件写入失败，从内存中移除
-    const index = links.items.findIndex(i => i.id === newItem.id);
-    if (index > -1) {
-      links.items.splice(index, 1);
-    }
-    throw error;
-  }
+  items.push(newItem);
+  writeItems(items);
 
   return newItem;
 }
 /**
  * 更新导航项
  */
-export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksItem {
-  const itemIndex = links.items.findIndex(item => item.id === id);
+export function updateLinksItem(id: string, updates: Partial<Item>): Item {
+  const items = readItems();
+  const itemIndex = items.findIndex(item => item.id === id);
   if (itemIndex === -1) {
     throw new Error('Links item not found');
   }
 
   // 如果更新 URL，检查是否与其他项目冲突
-  if (updates.url && updates.url !== links.items[itemIndex].url) {
-    const existingItem = links.items.find(item => item.url === updates.url && item.id !== id);
+  if (updates.url && updates.url !== items[itemIndex].url) {
+    const existingItem = items.find(item => item.url === updates.url && item.id !== id);
     if (existingItem) {
       throw new Error('URL already exists');
     }
   }
 
-  const currentItem = links.items[itemIndex];
-  const updatedItem = {
-    title: updates.title ?? currentItem.title,
-    description: updates.description ?? currentItem.description,
-    url: updates.url ?? currentItem.url,
-    icon: updates.icon ?? currentItem.icon ?? '',
-    iconType: updates.iconType ?? currentItem.iconType,
-    tags: updates.tags ?? currentItem.tags,
-    featured: updates.featured ?? currentItem.featured,
-    category: updates.category ?? currentItem.category,
-    id, // 确保 ID 不被更改
-    createdAt: currentItem.createdAt,
+  const updatedItem: Item = {
+    ...items[itemIndex],
+    ...updates,
     updatedAt: new Date().toISOString(),
   };
 
-  // 更新内存中的数据
-  (links.items as LinksItem[])[itemIndex] = updatedItem;
-
-  // 持久化到文件系统
-  updateLinksDataFile();
+  items[itemIndex] = updatedItem;
+  writeItems(items);
 
   return updatedItem;
 }
@@ -184,99 +149,36 @@ export function updateLinksItem(id: string, updates: Partial<LinksItem>): LinksI
  * 删除导航项
  */
 export function deleteLinksItem(id: string): void {
-  const itemIndex = links.items.findIndex(item => item.id === id);
+  const items = readItems();
+  const itemIndex = items.findIndex(item => item.id === id);
   if (itemIndex === -1) {
     throw new Error('Links item not found');
   }
 
-  // 从内存中删除
-  links.items.splice(itemIndex, 1);
-
-  // 持久化到文件系统
-  updateLinksDataFile();
+  items.splice(itemIndex, 1);
+  writeItems(items);
 }
 /**
  * 获取所有分类
  */
-export function getCategories(): LinksCategory[] {
-  return links.categories.map(cat => ({
+export function getCategories(): Category[] {
+  const categories = readCategories();
+  const items = readItems();
+  return categories.map(cat => ({
     ...cat,
-    title: cat.name,
-    description: cat.description,
-    count: links.items.filter(item => item.category === cat.id).length,
+    count: items.filter(item => item.category === cat.id).length,
   }));
 }
 /**
  * 获取所有标签
  */
 export function getAllTags(): string[] {
+  const items = readItems();
   const tags = new Set<string>();
-  links.items.forEach(item => {
-    item.tags.forEach(tag => tags.add(tag));
+  items.forEach(item => {
+    item.tags?.forEach(tag => tags.add(tag));
   });
   return Array.from(tags).sort();
-}
-/**
- * 更新 links-data.ts 文件
- * @internal 将内存中的数据写入到源文件
- */
-function updateLinksDataFile(): void {
-  const linksDataPath = path.join(
-    process.cwd(),
-    'src',
-    'components',
-    'layout',
-    'links',
-    'links-data.ts'
-  );
-
-  try {
-    // 生成新的文件内容
-    const fileContent = `export type CategoryId =
-  | 'ai'
-  | 'development'
-  | 'design'
-  | 'audio'
-  | 'video'
-  | 'office'
-  | 'productivity'
-  | 'operation'
-  | 'profile'
-  | 'friends';
-
-export interface Category {
-  id: CategoryId;
-  name: string;
-  description: string;
-  order: number;
-}
-
-export interface Item {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon: string;
-  iconType: 'image' | 'emoji';
-  tags: string[];
-  featured: boolean;
-  category: CategoryId;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export const links = {
-  categories: ${JSON.stringify(links.categories, null, 4)},
-
-  items: ${JSON.stringify(links.items, null, 4)},
-} as { categories: Category[]; items: Item[] };
-`;
-
-    fs.writeFileSync(linksDataPath, fileContent, 'utf-8');
-  } catch (error) {
-    console.error('Error updating links-data.ts:', error);
-    throw new Error('Failed to update links data file');
-  }
 }
 
 /**

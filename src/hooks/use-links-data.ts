@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFilterState } from '@/components/common/filter/use-filter-state';
-import { LinksItem, LinksCategory } from '@/types';
+import { Item, Category } from '@/types/links';
+import itemsData from '@/data/links/items.json';
+import categoriesData from '@/data/links/categories.json';
 
 export const useLinksData = () => {
-  const [items, setItems] = useState<LinksItem[]>([]);
-  const [categories, setCategories] = useState<LinksCategory[]>([]);
+  const [items] = useState<Item[]>(itemsData as Item[]);
+  const [categories] = useState<Category[]>(
+    (categoriesData as Category[]).sort((a, b) => a.order - b.order)
+  );
 
   const {
     filteredItems,
@@ -15,29 +19,14 @@ export const useLinksData = () => {
     filteredTags: sortedTags,
   } = useFilterState(items);
 
-  const loadData = async (_categoryId?: string) => {
-    const [linksData, categoriesData] = await Promise.all([
-      fetch('/api/links').then(res => res.json()),
-      fetch('/api/links?type=categories').then(res => res.json()),
-    ]);
-
-    setItems(linksData.items || []);
-    setCategories(categoriesData || []);
-  };
-
-  const handleCategoryClick = async (categoryId: string) => {
+  const handleCategoryClick = (categoryId: string) => {
     handleCategoryChange(categoryId);
-    await loadData(categoryId);
   };
 
   const getCategoryName = (categoryId: string) => {
     const category = categories.find(cat => cat.id === categoryId);
     return category?.name || categoryId;
   };
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   return {
     items,

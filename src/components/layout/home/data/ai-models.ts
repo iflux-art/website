@@ -25,7 +25,7 @@ export const AI_MODELS: AIModel[] = [
     id: 'none',
     name: '选择模型',
     provider: 'None',
-    description: '仅使用本地和网络搜索',
+    description: '本地搜索，不使用AI回答',
     icon: 'Bot',
     color: 'from-gray-400 to-gray-600',
     apiUrl: '',

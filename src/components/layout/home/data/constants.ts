@@ -4,14 +4,13 @@
  */
 
 import {
-  Code,
-  Palette,
-  Lightbulb,
-  Pencil,
-  BookOpen,
-  FileText,
-  Compass,
   Github,
+  BotMessageSquare,
+  Paintbrush,
+  Presentation,
+  Search,
+  Languages,
+  Sparkles,
 } from 'lucide-react';
 
 // 根据时间段的问候语数据
@@ -27,16 +26,16 @@ export const GREETINGS_BY_TIME: Record<TimeOfDay, string[]> = {
 // 推荐标签数据
 export const RECOMMENDATION_TAGS = {
   initial: [
-    { icon: Code, text: '网页开发', href: '/docs/web-development' },
-    { icon: Palette, text: '深入研究', href: '/docs/research' },
-    { icon: Lightbulb, text: '项目模式', href: '/docs/project-patterns' },
-    { icon: Pencil, text: '图像生成', href: '/docs/image-generation' },
+    { icon: BotMessageSquare, text: 'ChatGPT', href: 'https://chat.openai.com' },
+    { icon: Paintbrush, text: 'Midjourney', href: 'https://www.midjourney.com' },
+    { icon: Presentation, text: 'Gamma', href: 'https://gamma.app' },
+    { icon: Search, text: 'Perplexity', href: 'https://www.perplexity.ai' },
   ],
   more: [
-    { icon: BookOpen, text: '文档中心', href: '/docs' },
-    { icon: FileText, text: '博客文章', href: '/blog' },
-    { icon: Compass, text: '网址导航', href: '/navigation' },
-    { icon: Github, text: 'GitHub', href: 'https://github.com/iflux-art/web' },
+    { icon: Sparkles, text: 'Poe', href: 'https://poe.com' },
+    { icon: Languages, text: 'DeepL', href: 'https://www.deepl.com/translator' },
+    { icon: BotMessageSquare, text: 'Claude', href: 'https://claude.ai/' },
+    { icon: Github, text: 'GitHub Copilot', href: 'https://github.com/features/copilot' },
   ],
 } as const;
 

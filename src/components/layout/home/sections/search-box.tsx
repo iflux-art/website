@@ -10,43 +10,29 @@ import {
   FileText,
   Wrench,
   User,
-  Copy,
-  Globe,
   HardDrive,
   ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/utils';
 import { AI_MODELS, type AIModel } from '@/components/layout/home/data/ai-models';
-import { TOOLS, NAVIGATION_SITES } from '@/components/layout/home/data/constants';
-
-// 搜索引擎配置
-const SEARCH_ENGINES = [
-  { id: 'local', name: '本地搜索', icon: 'HardDrive', url: '' },
-  { id: 'google', name: 'Google', icon: 'Globe', url: 'https://www.google.com/search?q=' },
-  { id: 'bing', name: 'Bing', icon: 'Globe', url: 'https://www.bing.com/search?q=' },
-  { id: 'baidu', name: '百度', icon: 'Globe', url: 'https://www.baidu.com/s?wd=' },
-  { id: 'duckduckgo', name: 'DuckDuckGo', icon: 'Globe', url: 'https://duckduckgo.com/?q=' },
-  { id: 'yandex', name: 'Yandex', icon: 'Globe', url: 'https://yandex.com/search/?text=' },
-] as const;
-
-type SearchEngine = (typeof SEARCH_ENGINES)[number];
+import { TOOLS } from '@/components/layout/home/data/constants';
 
 interface Message {
   id: string;
-  type: 'user' | 'ai' | 'local' | 'web' | 'hybrid';
+  type: 'user' | 'ai' | 'local';
   content: string;
   timestamp: Date;
   results?: SearchResult[];
   aiResponse?: string;
-  searchMode?: 'ai' | 'local' | 'web';
+  searchMode?: 'ai' | 'local';
 }
 
 interface SearchResult {
   title: string;
   description: string;
   url: string;
-  type: 'doc' | 'tool' | 'blog' | 'web';
+  type: 'doc' | 'tool' | 'blog';
   highlights?: {
     title?: string;
     content?: string[];
@@ -71,8 +57,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
   const [selectedModel, setSelectedModel] = useState<AIModel>(AI_MODELS[0]);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedSearchEngine, setSelectedSearchEngine] = useState<SearchEngine>(SEARCH_ENGINES[0]);
-  const [showSearchEngineSelector, setShowSearchEngineSelector] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
     left: number;
@@ -83,29 +67,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modelSelectorRef = useRef<HTMLDivElement>(null);
-  const searchEngineSelectorRef = useRef<HTMLDivElement>(null);
-
-  // 模拟联网搜索数据
-  const mockWebResults: SearchResult[] = [
-    {
-      title: 'React 官方文档',
-      description: 'React 是一个用于构建用户界面的 JavaScript 库',
-      url: 'https://react.dev',
-      type: 'doc',
-    },
-    {
-      title: 'Next.js 官方网站',
-      description: 'Next.js 是一个用于生产环境的 React 框架',
-      url: 'https://nextjs.org',
-      type: 'doc',
-    },
-    {
-      title: 'MDN Web 文档',
-      description: 'MDN Web 文档提供开放网络技术信息',
-      url: 'https://developer.mozilla.org',
-      type: 'doc',
-    },
-  ];
 
   // 自动调整文本区域高度
   const adjustTextareaHeight = () => {
@@ -167,18 +128,17 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
 
       // 关闭所有选择器
       setShowModelSelector(false);
-      setShowSearchEngineSelector(false);
       setDropdownPosition(null);
     };
 
-    if (showModelSelector || showSearchEngineSelector) {
+    if (showModelSelector) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showModelSelector, showSearchEngineSelector]);
+  }, [showModelSelector]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
@@ -219,11 +179,18 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
 
       // 搜索工具
       TOOLS.forEach(tool => {
-        if (
-          tool.name.toLowerCase().includes(lowerQuery) ||
-          tool.description.toLowerCase().includes(lowerQuery) ||
-          tool.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
-        ) {
+        // Defensive check to ensure tool and its properties are valid
+        if (!tool || !tool.name || !tool.description || !tool.path) {
+          return; // Skip malformed tool objects
+        }
+
+        const nameMatch = tool.name.toLowerCase().includes(lowerQuery);
+        const descMatch = tool.description.toLowerCase().includes(lowerQuery);
+        const tagsMatch =
+          Array.isArray(tool.tags) &&
+          tool.tags.some(tag => typeof tag === 'string' && tag.toLowerCase().includes(lowerQuery));
+
+        if (nameMatch || descMatch || tagsMatch) {
           results.push({
             title: tool.name,
             description: tool.description,
@@ -233,107 +200,14 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
         }
       });
 
-      // 搜索网址导航
-      NAVIGATION_SITES.forEach(site => {
-        if (
-          site.name.toLowerCase().includes(lowerQuery) ||
-          site.description.toLowerCase().includes(lowerQuery) ||
-          site.category.toLowerCase().includes(lowerQuery)
-        ) {
-          results.push({
-            title: site.name,
-            description: `${site.description} - ${site.category}`,
-            url: site.url,
-            type: 'web',
-          });
-        }
-      });
-
       return results.slice(0, 8);
     }
-  };
-
-  // 联网搜索功能
-  const performWebSearch = async (query: string): Promise<SearchResult[]> => {
-    // 模拟搜索延迟
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    // 模拟不同搜索引擎的结果
-    const engineSpecificResults = {
-      google: [
-        {
-          title: `Google: ${query} - 搜索结果`,
-          description: `来自Google的${query}相关信息`,
-          url: `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-        {
-          title: `${query} - 维基百科`,
-          description: `维基百科关于${query}的详细介绍`,
-          url: `https://zh.wikipedia.org/wiki/${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-      ],
-      bing: [
-        {
-          title: `Bing: ${query} - 搜索结果`,
-          description: `来自Bing的${query}相关信息`,
-          url: `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-        {
-          title: `${query} - 必应百科`,
-          description: `必应百科关于${query}的详细介绍`,
-          url: `https://www.bing.com/knows/search?q=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-      ],
-      baidu: [
-        {
-          title: `百度: ${query} - 搜索结果`,
-          description: `来自百度的${query}相关信息`,
-          url: `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-        {
-          title: `${query} - 百度百科`,
-          description: `百度百科关于${query}的详细介绍`,
-          url: `https://baike.baidu.com/item/${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-      ],
-      duckduckgo: [
-        {
-          title: `DuckDuckGo: ${query} - 搜索结果`,
-          description: `来自DuckDuckGo的${query}相关信息`,
-          url: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-      ],
-      yandex: [
-        {
-          title: `Yandex: ${query} - 搜索结果`,
-          description: `来自Yandex的${query}相关信息`,
-          url: `https://yandex.com/search/?text=${encodeURIComponent(query)}`,
-          type: 'web' as const,
-        },
-      ],
-    };
-
-    return (
-      engineSpecificResults[selectedSearchEngine.id as keyof typeof engineSpecificResults] ||
-      mockWebResults.filter(
-        result =>
-          result.title.toLowerCase().includes(query.toLowerCase()) ||
-          result.description.toLowerCase().includes(query.toLowerCase())
-      )
-    );
   };
 
   // AI对话功能 - 接入DeepSeek API
   const performAIChat = async (
     query: string,
-    mode: 'ai' | 'local' | 'web' = 'ai',
+    mode: 'ai' | 'local' = 'ai',
     results?: SearchResult[]
   ): Promise<string> => {
     try {
@@ -392,7 +266,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
       type: 'user',
       content: inputValue.trim(),
       timestamp: new Date(),
-      searchMode: 'ai', // 默认为AI模式
+      searchMode: 'local', // 默认为本地搜索模式
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -409,23 +283,16 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
     try {
       // 如果选择的是"无"模型，只执行搜索
       if (selectedModel.id === 'none') {
-        // 根据选择的搜索引擎执行搜索
-        let searchResults: SearchResult[] = [];
-
-        if (selectedSearchEngine.id === 'local') {
-          searchResults = await performLocalSearch(userMessage.content);
-        } else {
-          searchResults = await performWebSearch(userMessage.content);
-        }
+        const searchResults = await performLocalSearch(userMessage.content);
 
         // 添加搜索结果消息
         const searchMessage: Message = {
           id: (Date.now() + 1).toString(),
-          type: selectedSearchEngine.id === 'local' ? 'local' : 'web',
+          type: 'local',
           content: `找到 ${searchResults.length} 个相关结果`,
           timestamp: new Date(),
           results: searchResults,
-          searchMode: selectedSearchEngine.id === 'local' ? 'local' : 'web',
+          searchMode: 'local',
         };
 
         setMessages(prev => [...prev, searchMessage]);
@@ -472,10 +339,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
     }
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
-
   return (
     <div
       className={cn(
@@ -503,11 +366,10 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                     <div className="flex-1 flex justify-end pr-0">
                       <div className="w-fit max-w-[100%] bg-background border rounded-lg p-3">
                         <p className="text-sm">{message.content}</p>
-                        {message.searchMode !== 'ai' && (
+                        {message.searchMode === 'local' && (
                           <div className="flex items-center gap-1 mt-1 text-xs opacity-70">
-                            {message.searchMode === 'local' && <HardDrive className="h-3 w-3" />}
-                            {message.searchMode === 'web' && <Globe className="h-3 w-3" />}
-                            <span>{message.searchMode === 'local' ? '本地搜索' : '联网搜索'}</span>
+                            <HardDrive className="h-3 w-3" />
+                            <span>本地搜索</span>
                           </div>
                         )}
                       </div>
@@ -540,14 +402,10 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                 )}
 
                 {/* 搜索结果 */}
-                {(message.type === 'local' || message.type === 'web') && (
+                {message.type === 'local' && (
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-8 h-8 bg-card border rounded-full flex items-center justify-center">
-                      {message.type === 'local' ? (
-                        <HardDrive className="h-4 w-4" />
-                      ) : (
-                        <Globe className="h-4 w-4" />
-                      )}
+                      <HardDrive className="h-4 w-4" />
                     </div>
                     <div className="flex-1 space-y-3">
                       <div className="w-fit max-w-[calc(100%-4rem)] bg-background border rounded-lg p-3">
@@ -558,8 +416,8 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                               <a
                                 key={index}
                                 href={result.url}
-                                target={result.type === 'web' ? '_blank' : '_self'}
-                                rel={result.type === 'web' ? 'noopener noreferrer' : undefined}
+                                target="_self"
+                                rel={undefined}
                                 className="block p-3 bg-muted/30 rounded-md hover:bg-muted/50 transition-colors group"
                               >
                                 <div className="flex items-start gap-2">
@@ -608,113 +466,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                     </div>
                   </div>
                 )}
-
-                {/* 混合搜索结果（AI + 本地/联网搜索） - 左侧对齐 */}
-                {message.type === 'hybrid' && (
-                  <div className="space-y-4">
-                    {/* AI回答部分 */}
-                    {message.aiResponse && (
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 bg-card border rounded-full flex items-center justify-center">
-                          <BotMessageSquare className="h-4 w-4" />
-                        </div>
-                        <div className="flex-1 w-fit max-w-[calc(100%-4rem)] bg-background border rounded-lg p-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Sparkles className="h-4 w-4 text-purple-500" />
-                            <span className="text-sm font-medium">AI 解答</span>
-                          </div>
-                          <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                            {message.aiResponse}
-                          </p>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => copyToClipboard(message.aiResponse!)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )}
-
-                    {/* 搜索结果部分 */}
-                    {message.results && message.results.length > 0 && (
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                          {message.searchMode === 'local' ? (
-                            <HardDrive className="h-4 w-4 text-white" />
-                          ) : (
-                            <Globe className="h-4 w-4 text-white" />
-                          )}
-                        </div>
-                        <div className="flex-1 space-y-3">
-                          <div className="w-fit max-w-[calc(100%-4rem)] bg-background border rounded-lg p-3">
-                            <div className="flex items-center gap-2 mb-2">
-                              <FileText className="h-4 w-4 text-blue-500" />
-                              <span className="text-sm font-medium">
-                                {message.searchMode === 'local' ? '本地内容' : '网络内容'}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                ({message.results.length} 个结果)
-                              </span>
-                            </div>
-                            <div className="space-y-2">
-                              {message.results.map((result, index) => (
-                                <a
-                                  key={index}
-                                  href={result.url}
-                                  target={result.type === 'web' ? '_blank' : '_self'}
-                                  rel={result.type === 'web' ? 'noopener noreferrer' : undefined}
-                                  className="block p-3 bg-muted/30 rounded-md hover:bg-muted/50 transition-colors group"
-                                >
-                                  <div className="flex items-start gap-2">
-                                    <div className="flex-shrink-0 mt-0.5">
-                                      {result.type === 'doc' && (
-                                        <FileText className="h-4 w-4 text-blue-500" />
-                                      )}
-                                      {result.type === 'tool' && (
-                                        <Wrench className="h-4 w-4 text-green-500" />
-                                      )}
-                                      {result.type === 'blog' && (
-                                        <Sparkles className="h-4 w-4 text-purple-500" />
-                                      )}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <h4
-                                        className="text-sm font-medium group-hover:text-primary transition-colors"
-                                        dangerouslySetInnerHTML={{
-                                          __html: result.highlights?.title || result.title,
-                                        }}
-                                      />
-                                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                        {result.description}
-                                      </p>
-                                      {result.highlights?.content &&
-                                        result.highlights.content.length > 0 && (
-                                          <div className="mt-1 space-y-1">
-                                            {result.highlights.content
-                                              .slice(0, 2)
-                                              .map((highlight, idx) => (
-                                                <p
-                                                  key={idx}
-                                                  className="text-xs text-muted-foreground/80 line-clamp-1"
-                                                  dangerouslySetInnerHTML={{ __html: highlight }}
-                                                />
-                                              ))}
-                                          </div>
-                                        )}
-                                    </div>
-                                  </div>
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
             ))}
 
@@ -724,10 +475,8 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                 <div className="flex-shrink-0 w-8 h-8 bg-card border rounded-full flex items-center justify-center">
                   {selectedModel.id !== 'none' ? (
                     <BotMessageSquare className="h-4 w-4" />
-                  ) : selectedSearchEngine.id === 'local' ? (
-                    <HardDrive className="h-4 w-4" />
                   ) : (
-                    <Globe className="h-4 w-4" />
+                    <HardDrive className="h-4 w-4" />
                   )}
                 </div>
                 <div className="flex-1">
@@ -745,9 +494,7 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                         ></div>
                       </div>
                       <span className="text-sm text-muted-foreground">
-                        {selectedModel.id === 'none'
-                          ? `正在${selectedSearchEngine.name}搜索...`
-                          : '正在处理您的请求...'}
+                        {selectedModel.id === 'none' ? '正在本地搜索...' : '正在处理您的请求...'}
                       </span>
                     </div>
                   </div>
@@ -793,32 +540,8 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
 
         {/* 下面一行：功能图标 */}
         <div className="flex items-center justify-between px-3 py-2.5">
-          {/* 左侧按钮组 - 搜索引擎、大模型、开启新对话 */}
+          {/* 左侧按钮组 - 大模型、开启新对话 */}
           <div className="flex items-center gap-1.5">
-            {/* 搜索引擎选择器 */}
-            <div className="relative" ref={searchEngineSelectorRef}>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  const isShowing = !showSearchEngineSelector;
-                  // 关闭模型选择器
-                  setShowModelSelector(false);
-                  setShowSearchEngineSelector(isShowing);
-                  if (isShowing) {
-                    const position = calculateDropdownPosition();
-                    setDropdownPosition(position);
-                  } else {
-                    setDropdownPosition(null);
-                  }
-                }}
-                className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 px-2 py-1 h-8"
-              >
-                <span className="hidden sm:inline">{selectedSearchEngine.name}</span>
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </div>
-
             {/* 模型选择器 */}
             <div className="relative" ref={modelSelectorRef}>
               <Button
@@ -826,8 +549,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                 size="sm"
                 onClick={() => {
                   const isShowing = !showModelSelector;
-                  // 关闭搜索引擎选择器
-                  setShowSearchEngineSelector(false);
                   setShowModelSelector(isShowing);
                   if (isShowing) {
                     const position = calculateDropdownPosition();
@@ -878,7 +599,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
       {/* 使用 Portal 渲染下拉菜单，避免被父容器的 overflow 限制 */}
       {typeof window !== 'undefined' && (
         <>
-          {/* 模型选择下拉菜单 */}
           {showModelSelector &&
             dropdownPosition &&
             createPortal(
@@ -890,10 +610,12 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                   left: dropdownPosition.left,
                   width: dropdownPosition.width,
                   maxHeight: dropdownPosition.maxHeight,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <div
-                  className="p-2 space-y-1 overflow-y-auto scrollbar-hide"
+                  className="p-2 space-y-1 overflow-y-auto scrollbar-hide w-full flex flex-col items-center"
                   style={{ maxHeight: dropdownPosition.maxHeight - 16 }}
                 >
                   <div className="text-xs font-medium text-muted-foreground px-2 py-1">
@@ -917,49 +639,6 @@ export function SearchBox({ className, onSearchModeChange }: SearchBoxProps) {
                         <div className="font-medium">{model.name}</div>
                         <div className="text-xs text-muted-foreground">{model.description}</div>
                       </div>
-                    </button>
-                  ))}
-                </div>
-              </div>,
-              document.body
-            )}
-
-          {/* 搜索引擎选择下拉菜单 */}
-          {showSearchEngineSelector &&
-            dropdownPosition &&
-            createPortal(
-              <div
-                data-dropdown
-                className="fixed bg-background border rounded-lg shadow-lg z-[9999]"
-                style={{
-                  top: dropdownPosition.top,
-                  left: dropdownPosition.left,
-                  width: dropdownPosition.width,
-                  maxHeight: dropdownPosition.maxHeight,
-                }}
-              >
-                <div
-                  className="p-2 space-y-1 overflow-y-auto scrollbar-hide"
-                  style={{ maxHeight: dropdownPosition.maxHeight - 16 }}
-                >
-                  <div className="text-xs font-medium text-muted-foreground px-2 py-1">
-                    选择搜索引擎
-                  </div>
-                  {SEARCH_ENGINES.map(engine => (
-                    <button
-                      key={engine.id}
-                      onClick={() => {
-                        setSelectedSearchEngine(engine);
-                        setShowSearchEngineSelector(false);
-                        setDropdownPosition(null);
-                      }}
-                      className={cn(
-                        'w-full text-left px-2 py-2 rounded-md text-sm transition-colors',
-                        'hover:bg-accent hover:text-accent-foreground',
-                        selectedSearchEngine.id === engine.id && 'bg-accent text-accent-foreground'
-                      )}
-                    >
-                      <span className="font-medium">{engine.name}</span>
                     </button>
                   ))}
                 </div>

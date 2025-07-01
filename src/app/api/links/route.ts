@@ -1,120 +1,104 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { linksService } from '@/lib/links-service';
-import { LinksFormData } from '@/types';
+import fs from 'fs/promises';
+import path from 'path';
+import { nanoid } from 'nanoid';
+import type { LinksItem, LinksFormData } from '@/types/links-types';
 
-// GET - 获取导航数据
-export async function GET(request: NextRequest) {
+const filePath = path.join(process.cwd(), 'src/data/links/items.json');
+
+// 读取全部 items
+async function readItems(): Promise<LinksItem[]> {
+  const data = await fs.readFile(filePath, 'utf-8');
+  return JSON.parse(data);
+}
+
+// 写入全部 items
+async function writeItems(items: LinksItem[]) {
+  await fs.writeFile(filePath, JSON.stringify(items, null, 2), 'utf-8');
+}
+
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type');
-
-    if (type === 'categories') {
-      const categories = await linksService.getCategories();
-      return NextResponse.json(categories);
-    }
-
-    if (type === 'tags') {
-      const tags = await linksService.getAllTags();
-      return NextResponse.json(tags);
-    }
-
-    const data = await linksService.getData();
-    return NextResponse.json(data);
+    const items = await readItems();
+    return NextResponse.json(items);
   } catch (error) {
-    console.error('Error getting links data:', error);
-    return NextResponse.json({ error: 'Failed to get links data' }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to read items' }, { status: 500 });
   }
 }
 
-// POST - 添加导航项
 export async function POST(request: NextRequest) {
   try {
     const formData: LinksFormData = await request.json();
-
-    // 使用服务层验证
-    const validation = linksService.validateLinkData(formData);
-    if (!validation.valid) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          details: validation.errors,
-        },
-        { status: 400 }
-      );
-    }
-
-    const newItem = await linksService.addLink({
-      title: formData.title,
-      description: formData.description || '',
-      url: formData.url,
-      icon: formData.icon || '',
-      iconType: formData.iconType || 'image',
-      tags: formData.tags || [],
-      featured: formData.featured || false,
-      category: formData.category,
-    });
-
-    return NextResponse.json(newItem, { status: 201 });
-  } catch (error) {
-    console.error('Error adding links item:', error);
-
-    if (error instanceof Error && error.message === 'URL already exists') {
+    const items = await readItems();
+    if (items.some(item => item.url === formData.url)) {
       return NextResponse.json({ error: 'URL already exists' }, { status: 409 });
     }
-
-    return NextResponse.json({ error: 'Failed to add links item' }, { status: 500 });
+    const now = new Date().toISOString();
+    const newItem: LinksItem = {
+      ...formData,
+      id: nanoid(),
+      createdAt: now,
+      updatedAt: now,
+    };
+    items.push(newItem);
+    await writeItems(items);
+    return NextResponse.json(newItem, { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to add item' }, { status: 500 });
   }
 }
 
-// PUT - 更新导航项
 export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-
     if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
-
-    const updates = await request.json();
-    const updatedItem = await linksService.updateLink(id, updates);
-
-    return NextResponse.json(updatedItem);
-  } catch (error) {
-    console.error('Error updating links item:', error);
-
-    if (error instanceof Error && error.message === 'Links item not found') {
-      return NextResponse.json({ error: 'Links item not found' }, { status: 404 });
+    const updates: Partial<LinksFormData> = await request.json();
+    const items = await readItems();
+    const idx = items.findIndex(item => item.id === id);
+    if (idx === -1) {
+      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
     }
-
-    if (error instanceof Error && error.message === 'URL already exists') {
+    // 检查 url 是否重复
+    if (updates.url && items.some(item => item.url === updates.url && item.id !== id)) {
       return NextResponse.json({ error: 'URL already exists' }, { status: 409 });
     }
-
-    return NextResponse.json({ error: 'Failed to update links item' }, { status: 500 });
+    const now = new Date().toISOString();
+    const updatedItem: LinksItem = {
+      ...items[idx],
+      ...updates,
+      updatedAt: now,
+    };
+    items[idx] = updatedItem;
+    await writeItems(items);
+    return NextResponse.json(updatedItem);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to update item' }, { status: 500 });
   }
 }
 
-// DELETE - 删除导航项
 export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-
     if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
-
-    await linksService.deleteLink(id);
-
+    const items = await readItems();
+    const idx = items.findIndex(item => item.id === id);
+    if (idx === -1) {
+      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+    }
+    items.splice(idx, 1);
+    await writeItems(items);
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error deleting links item:', error);
-
-    if (error instanceof Error && error.message === 'Links item not found') {
-      return NextResponse.json({ error: 'Links item not found' }, { status: 404 });
-    }
-
-    return NextResponse.json({ error: 'Failed to delete links item' }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to delete item' }, { status: 500 });
   }
 }

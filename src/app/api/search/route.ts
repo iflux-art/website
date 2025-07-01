@@ -3,7 +3,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import { TOOLS } from '@/components/layout/tools/tools-data';
-import { links } from '@/components/layout/links/links-data';
+import items from '@/data/links/items.json';
+import type { Item } from '@/types/links';
 
 // 辅助函数
 function escapeRegExp(string: string): string {
@@ -68,41 +69,47 @@ async function searchDocs(query: string): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
 
   for (const file of files) {
-    const content = await fs.readFile(file, 'utf-8');
-    const { data, content: markdown } = matter(content);
-    const relativePath = path.relative(docsDir, file);
-    const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+    try {
+      const content = await fs.readFile(file, 'utf-8');
+      const { data, content: markdown } = matter(content);
+      const relativePath = path.relative(docsDir, file);
+      const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, '')}`;
 
-    let score = 0;
-    const highlights: { title?: string; content?: string[] } = {};
+      let score = 0;
+      const highlights: { title?: string; content?: string[] } = {};
 
-    // 搜索标题
-    if (data.title?.toLowerCase().includes(query.toLowerCase())) {
-      score += 10;
-      highlights.title = highlightText(data.title, query);
-    }
+      // 搜索标题
+      if (data.title?.toLowerCase().includes(query.toLowerCase())) {
+        score += 10;
+        highlights.title = highlightText(data.title, query);
+      }
 
-    // 搜索描述
-    if (data.description?.toLowerCase().includes(query.toLowerCase())) {
-      score += 5;
-    }
+      // 搜索描述
+      if (data.description?.toLowerCase().includes(query.toLowerCase())) {
+        score += 5;
+      }
 
-    // 搜索内容
-    const contentMatches = findContentMatches(markdown, query);
-    if (contentMatches.length > 0) {
-      score += contentMatches.length;
-      highlights.content = contentMatches;
-    }
+      // 搜索内容
+      const contentMatches = findContentMatches(markdown, query);
+      if (contentMatches.length > 0) {
+        score += contentMatches.length;
+        highlights.content = contentMatches;
+      }
 
-    if (score > 0) {
-      results.push({
-        title: data.title || '',
-        path: url,
-        excerpt: data.description || markdown.slice(0, 160) + '...',
-        type: 'doc',
-        score,
-        highlights,
-      });
+      if (score > 0) {
+        results.push({
+          title: data.title || '',
+          path: url,
+          excerpt: data.description || markdown.slice(0, 160) + '...',
+          type: 'doc',
+          score,
+          highlights,
+        });
+      }
+    } catch (error) {
+      console.error(`Error parsing frontmatter for file: ${file}`, error);
+      // Skip this file and continue with the next one
+      continue;
     }
   }
 
@@ -115,46 +122,52 @@ async function searchBlog(query: string): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
 
   for (const file of files) {
-    const content = await fs.readFile(file, 'utf-8');
-    const { data, content: markdown } = matter(content);
-    const relativePath = path.relative(blogDir, file);
-    const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+    try {
+      const content = await fs.readFile(file, 'utf-8');
+      const { data, content: markdown } = matter(content);
+      const relativePath = path.relative(blogDir, file);
+      const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, '')}`;
 
-    let score = 0;
-    const highlights: { title?: string; content?: string[] } = {};
+      let score = 0;
+      const highlights: { title?: string; content?: string[] } = {};
 
-    // 搜索标题
-    if (data.title?.toLowerCase().includes(query.toLowerCase())) {
-      score += 10;
-      highlights.title = highlightText(data.title, query);
-    }
+      // 搜索标题
+      if (data.title?.toLowerCase().includes(query.toLowerCase())) {
+        score += 10;
+        highlights.title = highlightText(data.title, query);
+      }
 
-    // 搜索描述
-    if (data.description?.toLowerCase().includes(query.toLowerCase())) {
-      score += 5;
-    }
+      // 搜索描述
+      if (data.description?.toLowerCase().includes(query.toLowerCase())) {
+        score += 5;
+      }
 
-    // 搜索标签
-    if (data.tags?.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))) {
-      score += 3;
-    }
+      // 搜索标签
+      if (data.tags?.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))) {
+        score += 3;
+      }
 
-    // 搜索内容
-    const contentMatches = findContentMatches(markdown, query);
-    if (contentMatches.length > 0) {
-      score += contentMatches.length;
-      highlights.content = contentMatches;
-    }
+      // 搜索内容
+      const contentMatches = findContentMatches(markdown, query);
+      if (contentMatches.length > 0) {
+        score += contentMatches.length;
+        highlights.content = contentMatches;
+      }
 
-    if (score > 0) {
-      results.push({
-        title: data.title || '',
-        path: url,
-        excerpt: data.description || markdown.slice(0, 160) + '...',
-        type: 'blog',
-        score,
-        highlights,
-      });
+      if (score > 0) {
+        results.push({
+          title: data.title || '',
+          path: url,
+          excerpt: data.description || markdown.slice(0, 160) + '...',
+          type: 'blog',
+          score,
+          highlights,
+        });
+      }
+    } catch (error) {
+      console.error(`Error parsing frontmatter for file: ${file}`, error);
+      // Skip this file and continue with the next one
+      continue;
     }
   }
 
@@ -203,7 +216,7 @@ function searchTools(query: string): SearchResult[] {
 function searchLinks(query: string): SearchResult[] {
   const results: SearchResult[] = [];
 
-  for (const item of links.items) {
+  for (const item of items as Item[]) {
     let score = 0;
     const highlights: { title?: string; content?: string[] } = {};
 

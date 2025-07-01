@@ -4,6 +4,7 @@
  */
 
 import type { LinksData, LinksItem, LinksCategory } from '@/types';
+import type { CategoryId } from '@/types/links';
 
 // 存储类型
 export type StorageType = 'file' | 'memory' | 'database';
@@ -19,27 +20,151 @@ export interface LinksStorage {
   getAllTags(): Promise<string[]>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isCategoryId(id: string | unknown): id is CategoryId {
+  return [
+    'ai',
+    'development',
+    'design',
+    'audio',
+    'video',
+    'office',
+    'productivity',
+    'operation',
+    'profile',
+    'friends',
+  ].includes(id as string);
+}
+
 // 文件存储实现
 export class FileLinksStorage implements LinksStorage {
   async read(): Promise<LinksData> {
-    // 动态导入以避免 SSR 问题
     const { readLinksData } = await import('@/components/layout/links/admin/links-manage');
-    return readLinksData();
+    const raw = readLinksData();
+    const validCategoryIds = [
+      'ai',
+      'development',
+      'design',
+      'audio',
+      'video',
+      'office',
+      'productivity',
+      'operation',
+      'profile',
+      'friends',
+    ];
+    const categories: LinksCategory[] = raw.categories.map(cat => ({
+      ...cat,
+      title: cat.name,
+      id: String(cat.id),
+    }));
+    const items: LinksItem[] = raw.items.map(item => ({
+      ...item,
+      icon: item.icon || '',
+      iconType: item.iconType || 'image',
+      category: validCategoryIds.includes(item.category) ? item.category : 'ai',
+      featured: typeof item.featured === 'boolean' ? item.featured : false,
+    }));
+    return { categories, items };
   }
 
   async write(data: LinksData): Promise<void> {
     const { writeLinksData } = await import('@/components/layout/links/admin/links-manage');
-    writeLinksData(data);
+    const validCategoryIds = [
+      'ai',
+      'development',
+      'design',
+      'audio',
+      'video',
+      'office',
+      'productivity',
+      'operation',
+      'profile',
+      'friends',
+    ];
+    const categoriesToWrite = data.categories.map(cat => ({
+      id: validCategoryIds.includes(cat.id) ? (cat.id as CategoryId) : 'ai',
+      name: cat.title || cat.name,
+      description: cat.description,
+      order: typeof cat.order === 'number' ? cat.order : 0,
+      icon: cat.icon,
+      color: cat.color,
+    }));
+    const itemsToWrite = data.items.map(item => {
+      const cat = isCategoryId(String(item.category))
+        ? (item.category as CategoryId)
+        : ('ai' as CategoryId);
+      return {
+        ...item,
+        icon: item.icon || '',
+        iconType: item.iconType || 'image',
+        category: cat,
+        featured: typeof item.featured === 'boolean' ? item.featured : false,
+        createdAt:
+          typeof item.createdAt === 'string'
+            ? item.createdAt
+            : item.createdAt instanceof Date
+              ? item.createdAt.toISOString()
+              : String(item.createdAt),
+        updatedAt:
+          typeof item.updatedAt === 'string'
+            ? item.updatedAt
+            : item.updatedAt instanceof Date
+              ? item.updatedAt.toISOString()
+              : String(item.updatedAt),
+      };
+    });
+    writeLinksData({ categories: categoriesToWrite, items: itemsToWrite });
   }
 
   async addItem(item: Omit<LinksItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<LinksItem> {
     const { addLinksItem } = await import('@/components/layout/links/admin/links-manage');
-    return addLinksItem(item);
+    return addLinksItem({
+      ...item,
+      icon: item.icon || '',
+      iconType: item.iconType || 'image',
+      category: isCategoryId(String(item.category))
+        ? (item.category as CategoryId)
+        : ('ai' as CategoryId),
+      featured: typeof item.featured === 'boolean' ? item.featured : false,
+    });
   }
 
   async updateItem(id: string, updates: Partial<LinksItem>): Promise<LinksItem> {
     const { updateLinksItem } = await import('@/components/layout/links/admin/links-manage');
-    return updateLinksItem(id, updates);
+    const validCategoryIds = [
+      'ai',
+      'development',
+      'design',
+      'audio',
+      'video',
+      'office',
+      'productivity',
+      'operation',
+      'profile',
+      'friends',
+    ];
+    return updateLinksItem(id, {
+      ...updates,
+      icon: updates.icon ?? '',
+      iconType: updates.iconType ?? 'image',
+      category:
+        updates.category && validCategoryIds.includes(updates.category)
+          ? (updates.category as CategoryId)
+          : undefined,
+      createdAt:
+        updates.createdAt && typeof updates.createdAt === 'string'
+          ? updates.createdAt
+          : updates.createdAt instanceof Date
+            ? updates.createdAt.toISOString()
+            : undefined,
+      updatedAt:
+        updates.updatedAt && typeof updates.updatedAt === 'string'
+          ? updates.updatedAt
+          : updates.updatedAt instanceof Date
+            ? updates.updatedAt.toISOString()
+            : undefined,
+    });
   }
 
   async deleteItem(id: string): Promise<void> {
@@ -49,7 +174,8 @@ export class FileLinksStorage implements LinksStorage {
 
   async getCategories(): Promise<LinksCategory[]> {
     const { getCategories } = await import('@/components/layout/links/admin/links-manage');
-    return getCategories();
+    const raw = getCategories();
+    return raw.map(cat => ({ ...cat, title: cat.name, id: String(cat.id) }));
   }
 
   async getAllTags(): Promise<string[]> {

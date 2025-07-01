@@ -71,10 +71,10 @@ export default function LinksAdminPage() {
 
   const loadData = async () => {
     const [linksData, categoriesData] = await Promise.all([
-      fetch('/api/links').then(res => res.json()),
-      fetch('/api/links?type=categories').then(res => res.json()),
+      fetch('/api/links', { cache: 'no-store' }).then(res => res.json()),
+      fetch('/api/links?type=categories', { cache: 'no-store' }).then(res => res.json()),
     ]);
-    setItems(linksData.items || []);
+    setItems(Array.isArray(linksData) ? linksData : linksData.items || []);
     setCategories(categoriesData || []);
   };
 
@@ -87,22 +87,22 @@ export default function LinksAdminPage() {
 
   // 配置已移至 table-config.ts
 
-  const handleAddSuccess = (newItem: LinksItem) => {
-    setItems(prev => [...prev, newItem]);
+  const handleAddSuccess = () => {
+    loadData();
     setShowAddDialog(false);
   };
   const handleAddError = () => {};
 
   // 编辑成功/失败回调
-  const handleEditSuccess = (updatedItem: LinksItem) => {
-    setItems(prev => prev.map(item => (item.id === updatedItem.id ? updatedItem : item)));
+  const handleEditSuccess = () => {
+    loadData();
     setEditingItem(null);
   };
   const handleEditError = () => {};
 
   // 删除成功/失败回调
-  const handleDeleteSuccess = (deletedId: string) => {
-    setItems(prev => prev.filter(item => item.id !== deletedId));
+  const handleDeleteSuccess = () => {
+    loadData();
     setDeletingItem(null);
   };
   const handleDeleteError = () => {};

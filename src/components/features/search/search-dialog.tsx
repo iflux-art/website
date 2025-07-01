@@ -8,7 +8,8 @@ import { SearchDialogProps, APISearchResult } from '@/types';
 import type { SearchResult } from '@/hooks/use-safe-state';
 import { COMMANDS } from '@/components/features/search/commands';
 import { TOOLS } from '@/components/features/search/search-data';
-import { links } from '@/components/layout/links/links-data';
+import items from '@/data/links/items.json';
+import type { Item } from '@/types/links';
 import { SearchBar } from '@/components/features/search/search-bar';
 import { SearchResults } from '@/components/features/search/search-results';
 import { KeyboardHints } from '@/components/features/search/keyboard-hints';
@@ -176,14 +177,14 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
       }));
 
       // 处理链接导航搜索结果
-      const linkResults: SearchResult[] = links.items
+      const linkResults: SearchResult[] = (items as Item[])
         .filter(
-          item =>
+          (item: Item) =>
             item.title.toLowerCase().includes(query) ||
             item.description.toLowerCase().includes(query) ||
-            item.tags.some(tag => tag.toLowerCase().includes(query))
+            item.tags.some((tag: string) => tag.toLowerCase().includes(query))
         )
-        .map((item, index) => ({
+        .map((item: Item, index: number) => ({
           id: `link-${index}`,
           title: item.title,
           url: item.url,

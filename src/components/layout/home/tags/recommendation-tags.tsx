@@ -2,15 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { MoreHorizontal } from 'lucide-react';
 import { RECOMMENDATION_TAGS } from '@/components/layout/home/data/constants';
-
-const DynamicMoreRecommendationTags = dynamic(() =>
-  import('@/components/layout/home/tags/more-recommendation-tags').then(
-    mod => mod.MoreRecommendationTags
-  )
-);
+import { MoreRecommendationTags } from '@/components/layout/home/tags/more-recommendation-tags';
 
 interface RecommendationTagsProps {
   className?: string;
@@ -38,7 +32,13 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
           {RECOMMENDATION_TAGS.initial.map((tag, index) => {
             const IconComponent = tag.icon;
             return (
-              <Link href={tag.href} key={index} className="flex-shrink-0">
+              <Link
+                href={tag.href}
+                key={index}
+                className="flex-shrink-0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-accent/30 hover:border-primary/20 transition-all text-sm text-muted-foreground hover:text-foreground whitespace-nowrap">
                   <IconComponent className="size-4" />
                   <span>{tag.text}</span>
@@ -59,7 +59,7 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
       </div>
 
       {/* 展开的更多标签 */}
-      {showMoreTags && <DynamicMoreRecommendationTags />}
+      {showMoreTags && <MoreRecommendationTags />}
     </div>
   );
 }

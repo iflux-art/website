@@ -285,3 +285,11 @@ body.home-page {
   --tw-prose-links: var(--mdx-link-color);
   --tw-prose-bold: var(--foreground);
 }
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

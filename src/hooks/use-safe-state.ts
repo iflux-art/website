@@ -148,10 +148,10 @@ export function useSafeNavbar() {
       };
 
       // 根据滚动方向和位置决定是否显示标题
-      if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
-        newState.showTitle = true;
-      } else if (newDirection === 'up' && position < STATE_CONFIG.SHOW_THRESHOLD) {
-        newState.showTitle = false;
+      if (newDirection === 'up') {
+        newState.showTitle = false; // 向上滚动始终显示菜单
+      } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
+        newState.showTitle = true; // 向下且滚动较多时收起菜单
       }
 
       return newState;

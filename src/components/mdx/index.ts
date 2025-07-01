@@ -5,7 +5,6 @@
 
 // 导出渲染器和提供者
 export { MDXRenderer } from './mdx-renderer';
-export { MDXProvider } from './mdx-provider';
 
 // 从配置中心重新导出核心功能
 export {
