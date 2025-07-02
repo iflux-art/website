@@ -6,6 +6,8 @@ import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ServiceWorkerProvider } from '@/components/providers/service-worker-provider';
+import { StagewiseToolbar } from '@stagewise/toolbar-next';
+import { ReactPlugin } from '@stagewise-plugins/react';
 
 /**
  * 导入集中管理的元数据配置
@@ -57,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>
+        <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
       </body>
     </html>
   );

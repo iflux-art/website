@@ -40,6 +40,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   });
 
   const [categories, setCategories] = useState<LinksCategory[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
   // TODO: availableTags 将用于实现标签建议和自动完成功能
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [availableTags, setAvailableTags] = useState<string[]>([]);
@@ -50,17 +51,15 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   const [parseSuccess, setParseSuccess] = useState(false);
   const [urlError, setUrlError] = useState('');
 
-  // 加载分类和标签
+  // 加载分类
   useEffect(() => {
-    Promise.all([
-      fetch('/api/links?type=categories').then(res => res.json()),
-      fetch('/api/links?type=tags').then(res => res.json()),
-    ])
-      .then(([categoriesData, tagsData]) => {
-        setCategories(categoriesData);
-        setAvailableTags(tagsData);
+    fetch('/api/links/categories')
+      .then(res => res.json())
+      .then(data => {
+        setCategories(data);
+        setCategoriesLoading(false);
       })
-      .catch(console.error);
+      .catch(() => setCategoriesLoading(false));
   }, []);
 
   // URL 变化时验证格式
@@ -254,9 +253,10 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           value={formData.category}
           onValueChange={value => handleInputChange('category', value)}
           required
+          disabled={categoriesLoading}
         >
           <SelectTrigger>
-            <SelectValue placeholder="选择分类" />
+            <SelectValue placeholder={categoriesLoading ? '加载中...' : '选择分类'} />
           </SelectTrigger>
           <SelectContent>
             {categories.map(category => (

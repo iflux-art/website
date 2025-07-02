@@ -72,7 +72,7 @@ export default function LinksAdminPage() {
   const loadData = async () => {
     const [linksData, categoriesData] = await Promise.all([
       fetch('/api/links', { cache: 'no-store' }).then(res => res.json()),
-      fetch('/api/links?type=categories', { cache: 'no-store' }).then(res => res.json()),
+      fetch('/api/links/categories', { cache: 'no-store' }).then(res => res.json()),
     ]);
     setItems(Array.isArray(linksData) ? linksData : linksData.items || []);
     setCategories(categoriesData || []);

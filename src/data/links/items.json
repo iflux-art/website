@@ -18591,12 +18591,12 @@
     "url": "https://deepmind.google/models/lyria/",
     "icon": "https://deepmind.google/static/icons/google_deepmind_32dp.c67bb05568f4.ico",
     "iconType": "image",
-    "tags": [],
+    "tags": ["音乐生成"],
     "featured": true,
     "category": "audio",
     "id": "mbr0m94b8gf5i8zuk9",
     "createdAt": "2025-06-10T21:10:40.811Z",
-    "updatedAt": "2025-06-10T21:10:40.811Z"
+    "updatedAt": "2025-07-02T05:31:40.158Z"
   },
   {
     "title": "Markdown 教程",
@@ -18604,12 +18604,12 @@
     "url": "https://markdown.com.cn/",
     "icon": "https://markdown.com.cn/favicon.ico",
     "iconType": "image",
-    "tags": [],
+    "tags": ["Markdown"],
     "featured": true,
     "category": "development",
     "id": "mbr0sow1comv7wj7vnf",
     "createdAt": "2025-06-10T21:15:41.185Z",
-    "updatedAt": "2025-06-10T21:15:41.185Z"
+    "updatedAt": "2025-07-02T08:45:52.842Z"
   },
   {
     "title": "Editor.md",
@@ -18617,12 +18617,12 @@
     "url": "https://pandao.github.io/editor.md/index.html",
     "icon": "https://pandao.github.io/favicon.ico",
     "iconType": "image",
-    "tags": [],
+    "tags": ["Markdown"],
     "featured": true,
     "category": "development",
     "id": "mbr0uy2jd41fzn9rm2e",
     "createdAt": "2025-06-10T21:17:26.395Z",
-    "updatedAt": "2025-06-10T21:17:26.395Z"
+    "updatedAt": "2025-07-02T08:46:11.039Z"
   },
   {
     "title": "Table Convert Online",
@@ -20567,12 +20567,12 @@
     "url": "https://claudia.asterisk.so/",
     "icon": "https://claudia.asterisk.so/claudia-icon.svg",
     "iconType": "image",
-    "tags": [],
+    "tags": ["AI编程助手"],
     "featured": true,
     "category": "development",
     "id": "mchzvxqy83pxobismai",
     "createdAt": "2025-06-29T18:19:59.770Z",
-    "updatedAt": "2025-06-29T18:19:59.770Z"
+    "updatedAt": "2025-07-02T05:32:08.399Z"
   },
   {
     "title": "Telegram",
@@ -20651,5 +20651,70 @@
     "id": "mcireizxj4qjw3qjb5",
     "createdAt": "2025-06-30T07:10:16.749Z",
     "updatedAt": "2025-06-30T07:10:16.749Z"
+  },
+  {
+    "title": "ComfyUI 智能错误诊断",
+    "description": "基于海量错误数据库，为您提供精准的 ComfyUI 错误解决方案。 集成 AI 智能分析，让错误排查变得更加简单高效。 ",
+    "url": "https://bug.aix.ink/",
+    "icon": "https://bug.aix.ink/favicon.ico",
+    "iconType": "image",
+    "tags": ["ComfyUI"],
+    "featured": false,
+    "category": "ai",
+    "id": "gh3txAJm7sxbaV4QnCZzX",
+    "createdAt": "2025-07-02T05:26:12.051Z",
+    "updatedAt": "2025-07-02T05:26:12.051Z"
+  },
+  {
+    "title": "Fitten Code",
+    "description": "AI编程加速器",
+    "url": "https://code.fittentech.com/",
+    "icon": "https://code.fittentech.com/favicon.ico",
+    "iconType": "image",
+    "tags": ["AI编程助手", "IDE插件"],
+    "featured": false,
+    "category": "development",
+    "id": "1x1HqW8MkuHbNWzuUFFMw",
+    "createdAt": "2025-07-02T05:39:29.346Z",
+    "updatedAt": "2025-07-02T05:39:29.346Z"
+  },
+  {
+    "title": "Awesome",
+    "description": "😎 Awesome lists about all kinds of interesting topics - sindresorhus/awesome",
+    "url": "https://github.com/sindresorhus/awesome",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "iconType": "image",
+    "tags": ["教程"],
+    "featured": true,
+    "category": "development",
+    "id": "Kze0-HRu5r2yLIQclVT2M",
+    "createdAt": "2025-07-02T08:47:41.398Z",
+    "updatedAt": "2025-07-02T08:47:41.398Z"
+  },
+  {
+    "title": "Audiio - Music Licensing for Creatives",
+    "description": "Discover and license music from top independent artists, bands and composers",
+    "url": "https://audiio.com/",
+    "icon": "https://audiio.com/favicon.ico",
+    "iconType": "image",
+    "tags": ["版权音乐", "版权音效"],
+    "featured": false,
+    "category": "audio",
+    "id": "lXXPlPLk32dPTdKnNLw-U",
+    "createdAt": "2025-07-02T08:50:16.468Z",
+    "updatedAt": "2025-07-02T08:50:16.468Z"
+  },
+  {
+    "title": "stagewise | Visually prompt your dev agent - right on localhost.",
+    "description": "Our toolbar connects your app frontend to your favorite code agent and lets you edit your web app UI with prompts.",
+    "url": "https://stagewise.io/",
+    "icon": "https://stagewise.io/icon.png?e58f759334fae5f7",
+    "iconType": "image",
+    "tags": ["AI编程助手", "IDE插件"],
+    "featured": true,
+    "category": "development",
+    "id": "xzaCAPLrFhT7n-P1psp3R",
+    "createdAt": "2025-07-02T09:05:20.382Z",
+    "updatedAt": "2025-07-02T09:05:20.382Z"
   }
 ]

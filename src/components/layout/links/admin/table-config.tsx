@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, ExternalLink, Search } from 'lucide-react';
+import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from 'lucide-react';
 import type { TableColumn } from '@/components/layout/links/admin/data-table';
 import type { LinksItem } from '@/types';
 
@@ -112,7 +112,7 @@ export const getPageActions = (onAdd: () => void, onRefresh: () => void) => [
   {
     label: '刷新数据',
     onClick: onRefresh,
-    icon: Search,
+    icon: RefreshCw,
     variant: 'outline' as const,
   },
 ];
