@@ -1,8 +1,8 @@
 'use client';
 
 import { UnifiedFilter, type Category } from '@/components/common/filter/unified-filter';
-import { UnifiedCard } from '@/components/common/unified-card';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { BlogCard } from '@/components/common/cards/blog-card';
+import { AppGrid } from '@/components/layout/app-grid';
 import { useFilterState } from '@/components/common/filter/use-filter-state';
 import { useBlogPosts } from '@/hooks/use-blog';
 import { useMemo } from 'react';
@@ -76,26 +76,20 @@ function BlogContent() {
             className="mb-6"
           />
 
-          <UnifiedGrid columns={3} className="mt-8 gap-6">
+          <AppGrid columns={4} className="mt-8 gap-6">
             {filteredPosts.map((post: BlogPost) => (
-              <UnifiedCard
+              <BlogCard
                 key={post.slug}
                 title={post.title}
                 description={post.description}
                 href={`/blog/${post.slug}`}
                 image={post.image}
                 tags={post.tags}
+                date={formatDate(post.date?.toString())}
                 onTagClick={handleTagChange}
-              >
-                <div className="flex justify-between items-center mt-6">
-                  <span className="text-sm text-muted-foreground">
-                    {formatDate(post.date?.toString())}
-                  </span>
-                  <span className="text-sm text-primary font-medium">阅读全文 →</span>
-                </div>
-              </UnifiedCard>
+              />
             ))}
-          </UnifiedGrid>
+          </AppGrid>
         </div>
       </div>
     </div>

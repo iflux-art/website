@@ -103,8 +103,6 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
-    contentSecurityPolicy:
-      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com; sandbox;",
   },
 
   // 启用压缩
@@ -128,7 +126,7 @@ const nextConfig = {
         {
           key: 'Content-Security-Policy',
           value:
-            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com; sandbox;",
+            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com;",
         },
       ],
     },

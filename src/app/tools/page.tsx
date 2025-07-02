@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
-import { UnifiedCard } from '@/components/common/unified-card';
+import { AppGrid } from '@/components/layout/app-grid';
+import { ToolCard } from '@/components/common/cards/tool-card';
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { TOOLS, TOOL_CATEGORIES } from '@/components/layout/tools/tools-data';
 import { ToolLayout } from '@/components/layout/tools/tool-layout';
@@ -12,11 +12,15 @@ import type { Tool } from '@/components/layout/tools/tools-data';
 /**
  * 工具卡片组件
  */
-function ToolCard({ tool, onTagClick }: { tool: Tool; onTagClick: (tag: string) => void }) {
+function ToolCardComponent({
+  tool,
+  onTagClick,
+}: {
+  tool: Tool;
+  onTagClick: (tag: string) => void;
+}) {
   return (
-    <UnifiedCard
-      type="resource"
-      variant="default"
+    <ToolCard
       title={tool.name}
       description={tool.description}
       href={tool.path}
@@ -69,11 +73,11 @@ export default function ToolsPage() {
       />
 
       {/* 工具卡片网格 */}
-      <UnifiedGrid columns={4} className="mt-8">
+      <AppGrid columns={4} className="mt-8">
         {filteredTools.map(tool => (
-          <ToolCard key={tool.name} tool={tool} onTagClick={handleTagChange} />
+          <ToolCardComponent key={tool.name} tool={tool} onTagClick={handleTagChange} />
         ))}
-      </UnifiedGrid>
+      </AppGrid>
     </ToolLayout>
   );
 }

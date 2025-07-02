@@ -41,8 +41,8 @@ function LinksHeader({
     </div>
   );
 }
-import { UnifiedGrid } from '@/components/layout/unified-grid';
-import { UnifiedCard } from '@/components/common/unified-card';
+import { AppGrid } from '@/components/layout/app-grid';
+import { LinkCard } from '@/components/common/cards/link-card';
 import { UnifiedFilter } from '@/components/common/filter/unified-filter';
 import { useLinksData } from '@/hooks/use-links-data';
 export default function LinksPage() {
@@ -85,24 +85,20 @@ export default function LinksPage() {
         className="mb-6"
       />
 
-      <UnifiedGrid columns={5} className="items-stretch">
+      <AppGrid columns={5} className="items-stretch">
         {filteredItems.map(item => (
-          <UnifiedCard
+          <LinkCard
             key={item.id}
-            type="category"
-            variant="compact"
             title={item.title}
             description={item.description || item.url}
             href={item.url}
             icon={item.icon}
             iconType={item.iconType === 'text' ? 'component' : item.iconType}
             isExternal={true}
-            tags={item.tags}
-            onTagClick={handleTagClick}
             className="h-full"
           />
         ))}
-      </UnifiedGrid>
+      </AppGrid>
     </div>
   );
 }

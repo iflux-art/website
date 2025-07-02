@@ -2,9 +2,9 @@
 
 import React from 'react';
 import AdminPageContentLayout from '@/components/layout/admin/admin-page-content-layout';
-import { UnifiedCard } from '@/components/common/unified-card';
+import { LinkCard } from '@/components/common/cards/link-card';
 import { Globe, BarChart3 } from 'lucide-react';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { AppGrid } from '@/components/layout/app-grid';
 
 export default function AdminDashboard() {
   const stats = [
@@ -25,12 +25,10 @@ export default function AdminDashboard() {
       backLabel="返回首页"
     >
       {/* 统计卡片 */}
-      <UnifiedGrid columns={4} className="mb-8">
+      <AppGrid columns={4} className="mb-8">
         {stats.map(stat => (
-          <UnifiedCard
+          <LinkCard
             key={stat.title}
-            type="navigation"
-            variant="compact"
             title={stat.title}
             description={stat.description}
             href="/admin/links"
@@ -38,7 +36,7 @@ export default function AdminDashboard() {
             iconType="component"
           />
         ))}
-      </UnifiedGrid>
+      </AppGrid>
     </AdminPageContentLayout>
   );
 }

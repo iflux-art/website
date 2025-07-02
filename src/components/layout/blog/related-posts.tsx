@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from '@/components/ui/nav-link';
 import { ArrowRightLeft } from 'lucide-react';
 

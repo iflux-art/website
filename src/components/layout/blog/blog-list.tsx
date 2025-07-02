@@ -3,8 +3,8 @@
 import React from 'react';
 import { useBlogPosts } from '@/hooks/use-blog';
 import type { BlogPost } from '@/types';
-import { UnifiedCard } from '@/components/common/unified-card';
-import { UnifiedGrid } from '@/components/layout/unified-grid';
+import { BlogCard } from '@/components/common/cards/blog-card';
+import { AppGrid } from '@/components/layout/app-grid';
 /**
  * 博客列表组件属性
  *
@@ -77,22 +77,19 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction 
   };
 
   return (
-    <UnifiedGrid columns={4}>
+    <AppGrid columns={4}>
       {displayPosts.map((post: BlogPost) => (
-        <UnifiedCard
+        <BlogCard
           key={post.slug}
-          type="blog"
-          variant="default"
           title={post.title}
           description={post.description}
           href={`/blog/${post.slug}`}
           date={post.date ? new Date(post.date).toLocaleDateString('zh-CN') : undefined}
           tags={post.tags}
-          featured={post.featured ?? false}
           onTagClick={handleTagClick}
           image={post.image}
         />
       ))}
-    </UnifiedGrid>
+    </AppGrid>
   );
 }
