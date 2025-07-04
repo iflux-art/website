@@ -1,5 +1,5 @@
 /**
- * MDX Typography 配置类型
+ * TypographyConfig 类型定义，适配 Tailwind Typography 插件
  */
 export interface TypographyConfig {
   css: {
@@ -18,7 +18,6 @@ export interface TypographyConfig {
     '--tw-prose-captions': string;
     '--tw-prose-th-borders': string;
     '--tw-prose-td-borders': string;
-
     // 表格样式
     table: {
       width: string;
@@ -48,7 +47,6 @@ export interface TypographyConfig {
       padding: string;
       verticalAlign: string;
     };
-
     // 列表样式
     ul: {
       listStyleType: string;
@@ -62,7 +60,6 @@ export interface TypographyConfig {
       marginTop: string;
       marginBottom: string;
     };
-
     // 引用样式
     blockquote: {
       borderLeftWidth: string;
@@ -74,7 +71,11 @@ export interface TypographyConfig {
   };
 }
 
-export const typographyConfig: { DEFAULT: TypographyConfig } = {
+/**
+ * typographyConfig: 适配 Tailwind Typography 插件的自定义配置
+ * 只需导出 DEFAULT 层级，Tailwind 会自动识别
+ */
+export const typographyConfig = {
   DEFAULT: {
     css: {
       maxWidth: 'none',
@@ -91,11 +92,11 @@ export const typographyConfig: { DEFAULT: TypographyConfig } = {
       '--tw-prose-captions': 'var(--muted-foreground)',
       '--tw-prose-th-borders': 'var(--border)',
       '--tw-prose-td-borders': 'var(--border)',
-
+      // 表格样式
       table: {
         width: '100%',
-        marginTop: '2rem',
-        marginBottom: '2rem',
+        marginTop: '1.5em',
+        marginBottom: '1.5em',
         borderCollapse: 'collapse',
       },
       thead: {
@@ -104,9 +105,9 @@ export const typographyConfig: { DEFAULT: TypographyConfig } = {
       },
       'thead th': {
         color: 'var(--foreground)',
-        fontWeight: '600',
-        backgroundColor: 'var(--muted)',
-        padding: '0.75rem',
+        fontWeight: 'bold',
+        backgroundColor: 'transparent',
+        padding: '0.5em 1em',
         textAlign: 'left',
       },
       'tbody tr': {
@@ -117,30 +118,30 @@ export const typographyConfig: { DEFAULT: TypographyConfig } = {
         },
       },
       'tbody td': {
-        padding: '0.75rem',
-        verticalAlign: 'baseline',
+        padding: '0.5em 1em',
+        verticalAlign: 'top',
       },
-
+      // 列表样式
       ul: {
         listStyleType: 'disc',
-        paddingLeft: '1.625rem',
+        paddingLeft: '1.5em',
       },
       ol: {
         listStyleType: 'decimal',
-        paddingLeft: '1.625rem',
+        paddingLeft: '1.5em',
       },
       li: {
-        marginTop: '0.5rem',
-        marginBottom: '0.5rem',
+        marginTop: '0.25em',
+        marginBottom: '0.25em',
       },
-
+      // 引用样式
       blockquote: {
-        borderLeftWidth: '2px',
+        borderLeftWidth: '4px',
         borderLeftColor: 'var(--border)',
-        paddingLeft: '1rem',
+        paddingLeft: '1em',
         fontStyle: 'italic',
         color: 'var(--muted-foreground)',
       },
     },
   },
-} as const;
+} as const satisfies Record<string, TypographyConfig>;

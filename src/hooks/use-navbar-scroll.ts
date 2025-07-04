@@ -2,8 +2,40 @@
 
 import { useEffect, useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { default as throttle } from 'lodash/throttle';
 import { ThrottledScrollHandler } from '@/types';
+
+function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  fn: T,
+  delay: number
+): T & { cancel: () => void } {
+  let lastCall = 0;
+  let timeoutId: NodeJS.Timeout | null = null;
+
+  const throttled = ((...args: Parameters<T>) => {
+    const now = Date.now();
+    const timeSinceLastCall = now - lastCall;
+
+    if (timeSinceLastCall >= delay) {
+      lastCall = now;
+      fn(...args);
+    } else {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        lastCall = Date.now();
+        fn(...args);
+      }, delay - timeSinceLastCall);
+    }
+  }) as T;
+
+  (throttled as T & { cancel: () => void }).cancel = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  };
+
+  return throttled as T & { cancel: () => void };
+}
 import { useSafeNavbar } from '@/hooks/use-safe-state';
 
 const THROTTLE_DELAY = 50; // 更快的节流响应

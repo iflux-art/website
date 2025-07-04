@@ -1,60 +1,10 @@
-/**
- * Next.js 配置文件
- */
-import createMDX from '@next/mdx';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import remarkGfm from 'remark-gfm';
-import rehypePrettyCode from 'rehype-pretty-code';
-
-// MDX 配置
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      rehypeSlug,
-      rehypeAutolinkHeadings,
-      [
-        rehypePrettyCode,
-        {
-          // 使用 Atom One Dark Pro 主题，拥有更丰富的语法高亮色彩
-          theme: 'one-dark-pro',
-          keepBackground: false,
-          // 支持行号显示
-          showLineNumbers: true,
-          // 确保空行显示正确
-          onVisitLine(node) {
-            if (node.children.length === 0) {
-              node.children = [{ type: 'text', value: ' ' }];
-            }
-          },
-          // 高亮行样式
-          onVisitHighlightedLine(node) {
-            node.properties.className.push('line--highlighted');
-          },
-          // 高亮词样式
-          onVisitHighlightedWord(node) {
-            node.properties.className = ['word--highlighted'];
-          },
-          // 格式化选项
-          defaultLang: 'plaintext',
-          // 支持的语言
-          filterMetaString: string => string.replace(/\:\/\/.+/, ''),
-        },
-      ],
-    ],
-    jsx: true,
-    format: 'mdx',
-  },
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 基本配置
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 
   // 配置外部包
-  serverExternalPackages: ['@mdx-js/react'],
+  serverExternalPackages: [],
 
   // ESLint 和 TypeScript 错误检查配置
   eslint: {
@@ -134,4 +84,4 @@ const nextConfig = {
 };
 
 // 导出配置
-export default withMDX(nextConfig);
+export default nextConfig;

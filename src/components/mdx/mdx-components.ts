@@ -1,13 +1,37 @@
 'use client';
 
-import type { MDXComponents as MDXComponentsType } from '@/config/mdx';
-import { MDXComponentsMapping } from '@/config/mdx';
+import { MDXImage } from './mdx-image';
+import { MDXLink } from './mdx-link';
+import { MDXCodeBlock } from './mdx-code-block';
+import { MDXCallout } from './mdx-callout';
+import { MDXTable } from './mdx-table';
+import { MDXVideo } from './mdx-video';
+import { MDXFigure } from './mdx-figure';
+import { MDXCard } from './mdx-card';
+import { MDXTabs } from './mdx-tabs';
+import { MDXAccordion } from './mdx-accordion';
+import { MDXBlockquote } from './mdx-blockquote';
+import { MDXCodeInline } from './mdx-codeInline';
 
-/**
- * 重新导出 MDX 组件映射
- * 从统一配置中导入，确保配置一致性
- */
-export const MDXComponents: MDXComponentsType = MDXComponentsMapping;
+export const MDXComponents = {
+  img: MDXImage,
+  a: MDXLink,
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h6',
+  pre: MDXCodeBlock,
+  Callout: MDXCallout,
+  table: MDXTable,
+  video: MDXVideo,
+  Figure: MDXFigure,
+  Card: MDXCard,
+  Tabs: MDXTabs,
+  Accordion: MDXAccordion,
+  blockquote: MDXBlockquote,
+  code: MDXCodeInline,
+};
 
-// 为了向后兼容，保留类型导出
-export type { MDXComponentsType };
+export type MDXComponentsType = typeof MDXComponents;

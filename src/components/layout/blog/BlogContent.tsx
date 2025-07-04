@@ -1,12 +1,10 @@
-'use client';
-
-import { MDXRenderer } from '@/components/mdx';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRenderer } from '@/components/mdx/mdx-renderer';
 
 interface BlogContentProps {
-  content: MDXRemoteSerializeResult;
+  content: string;
+  frontmatter?: Record<string, unknown>;
 }
 
-export function BlogContent({ content }: BlogContentProps) {
+export function BlogContent({ content, frontmatter: _frontmatter }: BlogContentProps) {
   return <MDXRenderer content={content} />;
 }

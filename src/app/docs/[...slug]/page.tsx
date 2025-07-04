@@ -5,7 +5,6 @@ import React from 'react';
 
 // 第三方依赖
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
 
 // 布局组件
 import { DocsContent } from '@/components/layout/docs/DocsContent';
@@ -105,8 +104,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const { headings } = extractHeadings(originalContent);
 
   // 直接使用原始内容进行渲染
-  const mdxSource = await serialize(originalContent);
-  const mdxContent = <DocsContent content={mdxSource} />;
+  const mdxContent = <DocsContent content={originalContent} />;
 
   const topLevelCategorySlug = slug[0];
 

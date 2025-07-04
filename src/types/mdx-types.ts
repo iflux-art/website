@@ -2,7 +2,6 @@
  * MDX 核心类型定义
  * 统一管理所有 MDX 相关类型
  */
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import type { ComponentType, ReactNode } from 'react';
 import type { ImageProps } from 'next/image';
 import type { BaseComponentProps, BaseFrontmatter } from './common';
@@ -36,14 +35,12 @@ export interface MDXContent {
   source: string;
   /** frontmatter 数据 */
   frontmatter?: MDXFrontmatter;
-  /** 编译后的 MDX 结果 */
-  compiled?: MDXRemoteSerializeResult;
 }
 
 /** MDX渲染器属性 */
 export interface MDXRendererProps {
   /** MDX内容 */
-  content: MDXRemoteSerializeResult;
+  content: string;
   /** MDX配置选项 */
   options?: MDXOptions;
 }

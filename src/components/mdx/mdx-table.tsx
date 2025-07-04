@@ -3,7 +3,7 @@
 import { type HTMLAttributes } from 'react';
 import { cn } from '@/utils';
 
-export const MDXTableComponents = {
+const MDXTableComponents = {
   // 表格容器
   table: ({ className, ...props }: HTMLAttributes<HTMLTableElement>) => (
     <table
@@ -35,3 +35,9 @@ export const MDXTableComponents = {
     <td className={cn('', className)} {...props} />
   ),
 };
+
+export const MDXTable = {
+  ...MDXTableComponents,
+};
+
+export { MDXTableComponents };

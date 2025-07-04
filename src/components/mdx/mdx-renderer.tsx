@@ -1,11 +1,9 @@
-'use client';
-
 import React from 'react';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { MDXComponentsMapping, type MDXComponents } from '@/config/mdx';
 
 interface MDXRendererProps {
-  content: MDXRemoteSerializeResult;
+  content: string;
   options?: {
     components?: Partial<MDXComponents>;
   };
@@ -21,7 +19,6 @@ interface MDXRendererProps {
  * 4. 错误处理和降级显示
  */
 export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
-  // 直接使用默认组件配置，避免 SSR 问题
   const components = {
     ...MDXComponentsMapping,
     ...(options.components || {}),
@@ -34,7 +31,7 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
   try {
     return (
       <div className="prose dark:prose-invert max-w-none">
-        <MDXRemote {...content} components={components} />
+        <MDXRemote source={content} components={components} />
       </div>
     );
   } catch (error) {

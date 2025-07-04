@@ -1,6 +1,6 @@
 'use client';
 
-import { MDXRenderer } from '@/components/mdx';
+import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 interface JournalContentProps {
@@ -8,5 +8,5 @@ interface JournalContentProps {
 }
 
 export function JournalContent({ content }: JournalContentProps) {
-  return <MDXRenderer content={content} />;
+  return <MDXRemote {...content} />;
 }

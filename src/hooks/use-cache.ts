@@ -5,7 +5,17 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { default as debounce } from 'lodash/debounce';
+
+function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(fn: T, delay: number): T {
+  let timer: NodeJS.Timeout | null = null;
+  return ((...args: Parameters<T>) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+      timer = null;
+    }, delay);
+  }) as T;
+}
 
 interface CacheOptions {
   /** 缓存键前缀 */
