@@ -8,6 +8,8 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ServiceWorkerProvider } from '@/components/providers/service-worker-provider';
 import { StagewiseToolbar } from '@stagewise/toolbar-next';
 import { ReactPlugin } from '@stagewise-plugins/react';
+import { ErrorBoundary } from '@/components/providers/error-boundary';
+import { GlobalErrorHandler } from '@/components/providers/error-boundary';
 
 /**
  * 导入集中管理的元数据配置
@@ -47,17 +49,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider {...themeConfig}>
-          {/* 页面主体布局容器 */}
-          <div className="min-h-screen flex flex-col">
-            <ServiceWorkerProvider />
-            <MainNavbar className="flex-shrink-0" />
-            {/* 主内容区域 - 自动填充剩余空间 */}
-            <main className="flex-auto">{children}</main>
-            <Footer />
-          </div>
-          {/* 性能分析工具 */}
-          <Analytics />
-          <SpeedInsights />
+          <ErrorBoundary>
+            <GlobalErrorHandler />
+            {/* 页面主体布局容器 */}
+            <div className="min-h-screen flex flex-col">
+              <ServiceWorkerProvider />
+              <MainNavbar className="flex-shrink-0" />
+              {/* 主内容区域 - 自动填充剩余空间 */}
+              <main className="flex-auto">{children}</main>
+              <Footer />
+            </div>
+            {/* 性能分析工具 */}
+            <Analytics />
+            <SpeedInsights />
+          </ErrorBoundary>
         </ThemeProvider>
         <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
       </body>

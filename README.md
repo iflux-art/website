@@ -1,29 +1,71 @@
-## 项目优化
+# Project Name
 
-基于 React + Next.js + Typescript + Tailwind CSS + Shadcn/ui + Zod + Zustand + next-mdx-remote/rsc 技术栈最佳实践，对 config、hooks、lib、stores、types、utils 等目录进行优化和重构，移除重复、冗余、冲突、没被实际使用的文件、组件、函数、代码等，尽可能精简项目
+基于Next.js的应用框架，采用现代化架构和最佳实践。
 
-## 常用命令：
+## 技术栈
 
-pnpm format 格式化所有文件
-pnpm format:check 检查格式但不修改
-pnpm lint 运行 ESLint 检查
-npx tsc --noEmit 运行 TypeScript 检查
+Next.js (App Router) + React + TypeScript + Tailwind CSS + Shadcn-ui + Zustand + Zod + TanStack Query + next-mdx-remote/rsc
 
-现在你的 Git 仓库已经配置好了自动代码格式化。每次你执行 git commit 时：
+## 项目结构
 
-husky 会拦截commit命令
-运行 lint-staged
-lint-staged 会使用 Prettier 格式化所有暂存的文件
-如果格式化成功，提交会继续进行；如果失败，提交会被阻止
-你可以通过以下步骤测试配置是否生效：
+```
+src/
+├── app/                # 应用路由
+├── components/         # 组件库
+├── config/            # 配置
+├── content/           # 内容文件(MDX)
+├── hooks/             # 自定义Hook
+├── lib/               # 工具库
+├── public/            # 静态资源
+├── styles/            # 全局样式
+├── types/             # 类型定义
+└── utils/             # 工具函数
+```
 
-修改任意文件
-使用 git add 添加修改
-使用 git commit 提交
-当你执行 commit 时，应该会看到 lint-staged 运行并格式化文件。
+## 主要特性
 
-## 问题
+### 架构设计
+- 模块化组件结构
+- 类型安全的API设计
+- 集中式状态管理
+- 全局错误处理
 
-- next-mdx-remote/rsc 和 next-mdx-remote 有区别吗？
-- @mdx-js/mdx 和 @mdx-js/react 是一样的吗？
-- @next/mdx 、next-mdx-remote/rsc 和  @mdx-js/mdx  这三个依赖有什么区别？
+### 性能优化
+- 代码分割
+- 按需加载
+- 图片优化
+- 服务端渲染
+
+## 开发指南
+
+### 环境要求
+- Node.js 18+
+- pnpm 8+
+
+### 安装依赖
+```bash
+pnpm install
+```
+
+### 开发模式
+```bash
+pnpm dev
+```
+
+### 生产构建
+```bash
+pnpm build
+```
+
+### 代码检查
+```bash
+pnpm lint
+```
+
+## 最佳实践
+
+1. 组件开发遵循原子设计原则
+2. 所有API响应统一格式
+3. 状态管理使用Zustand
+4. 错误处理使用ErrorBoundary
+5. 严格类型检查

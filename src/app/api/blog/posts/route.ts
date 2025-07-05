@@ -2,14 +2,15 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { BlogPost } from '@/types';
+import { BlogPostsArraySchema, BlogPostSchema } from '@/lib/schemas/blog';
+import { z } from 'zod';
 
 // 获取所有博客文章
-function getAllPosts(): BlogPost[] {
+async function getAllPosts() {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 
-  const posts: BlogPost[] = [];
+  const posts: Array<z.infer<typeof BlogPostSchema>> = [];
 
   // 递归函数来查找所有博客文件
   const findPosts = (dir: string) => {
@@ -57,17 +58,20 @@ function getAllPosts(): BlogPost[] {
   findPosts(blogDir);
 
   // 按日期排序
-  return posts.sort((a, b) => {
+  const sortedPosts = posts.sort((a, b) => {
     if (a.date && b.date) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     }
     return 0;
   });
+
+  // 使用zod验证数据
+  return BlogPostsArraySchema.parse(sortedPosts);
 }
 
 export async function GET() {
   try {
-    const posts = getAllPosts();
+    const posts = await getAllPosts();
     // 设置缓存控制头，避免浏览器缓存
     return NextResponse.json(posts, {
       headers: {
@@ -76,6 +80,12 @@ export async function GET() {
     });
   } catch (error) {
     console.error('获取博客文章列表失败:', error);
-    return NextResponse.json({ error: '获取博客文章列表失败' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: '获取博客文章列表失败',
+        details: error instanceof Error ? error.message : '未知错误',
+      },
+      { status: 500 }
+    );
   }
 }

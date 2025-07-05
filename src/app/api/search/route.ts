@@ -5,6 +5,8 @@ import matter from 'gray-matter';
 import { TOOLS } from '@/components/layout/tools/tools-data';
 import items from '@/data/links/items.json';
 import type { Item } from '@/types/links';
+import { SearchRequestSchema, SearchResponseSchema } from '@/lib/schemas/search';
+import { z } from 'zod';
 
 // 辅助函数
 function escapeRegExp(string: string): string {
@@ -255,13 +257,13 @@ function searchLinks(query: string): SearchResult[] {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q');
-    const type = searchParams.get('type');
-    const limit = parseInt(searchParams.get('limit') || '8');
+    const params = SearchRequestSchema.parse({
+      q: searchParams.get('q'),
+      type: searchParams.get('type'),
+      limit: parseInt(searchParams.get('limit') || '8'),
+    });
 
-    if (!query) {
-      return NextResponse.json({ results: [] });
-    }
+    const { q: query, type, limit } = params;
 
     let results: SearchResult[] = [];
 
@@ -288,12 +290,34 @@ export async function GET(request: NextRequest) {
         ...result,
       }));
 
-    return NextResponse.json({
-      results,
-      total: results.length,
-    });
+    return NextResponse.json(
+      SearchResponseSchema.parse({
+        success: true,
+        results,
+        count: results.length,
+      })
+    );
   } catch (error) {
     console.error('Search API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        SearchResponseSchema.parse({
+          success: false,
+          results: [],
+          count: 0,
+          error: 'Invalid request parameters',
+        }),
+        { status: 400 }
+      );
+    }
+    return NextResponse.json(
+      SearchResponseSchema.parse({
+        success: false,
+        results: [],
+        count: 0,
+        error: 'Internal server error',
+      }),
+      { status: 500 }
+    );
   }
 }

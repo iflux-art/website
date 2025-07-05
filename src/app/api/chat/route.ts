@@ -1,36 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getModelById, generateDemoResponse } from '@/components/layout/home/data/ai-models';
-import { SearchResult as WebSearchResult } from '@/types/search-types';
+import { z } from 'zod';
+import { ChatMessageSchema, ApiRequestBodySchema } from '@/lib/schemas/chat';
 import type { SearchResult as AISearchResult } from '@/components/layout/home/data/ai-models';
 
-interface ChatMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-
-interface ApiRequestBody {
-  messages: ChatMessage[];
-  temperature: number;
-  max_tokens: number;
-  stream: boolean;
-  model?: string;
-}
+// 定义ChatMessage类型
+type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
 export async function POST(request: NextRequest) {
   try {
+    // 验证请求体
+    const requestBody = await request.json();
     const {
       message,
       searchMode,
       searchResults,
       modelId = 'deepseek-chat',
       messages: conversationHistory,
-    }: {
-      message: string;
-      searchMode: 'ai' | 'local' | 'web';
-      searchResults?: WebSearchResult[];
-      modelId?: string;
-      messages?: ChatMessage[];
-    } = await request.json();
+    } = z
+      .object({
+        message: z.string().min(1),
+        searchMode: z.enum(['ai', 'local', 'web']),
+        searchResults: z
+          .array(
+            z.object({
+              title: z.string(),
+              excerpt: z.string(),
+              path: z.string(),
+              type: z.string(),
+              icon: z.string().optional(),
+            })
+          )
+          .optional(),
+        modelId: z.string().optional(),
+        messages: z.array(ChatMessageSchema).optional(),
+      })
+      .parse(requestBody);
 
     // 获取模型配置
     const model = getModelById(modelId);
@@ -43,11 +48,13 @@ export async function POST(request: NextRequest) {
     if (!apiKey || apiKey === `your_${model.apiKeyEnv.toLowerCase()}_here`) {
       // 转换搜索结果类型
       const convertedResults = searchResults?.map(
-        (result: WebSearchResult) =>
+        result =>
           ({
             title: result.title,
-            content: result.excerpt, // 使用 excerpt 代替 description
-            url: result.path, // 使用 path 代替 url
+            content: result.excerpt,
+            url: result.path,
+            score: 0, // 默认分数
+            icon: '🔍', // 默认搜索图标
           }) as AISearchResult
       );
 
@@ -78,45 +85,21 @@ export async function POST(request: NextRequest) {
 5. 回答要有逻辑性和条理性`;
     } else if (searchMode === 'local') {
       // 本地搜索模式
-      systemPrompt = `你是一个智能助手，用户正在搜索本地内容。请基于以下搜索结果回答用户的问题：
-
-搜索结果：
-${
-  searchResults
-    ?.map(
-      (result: WebSearchResult, index: number) => `${index + 1}. ${result.title}: ${result.excerpt}`
-    )
-    .join('\n') || '暂无搜索结果'
-}
-
-请结合这些搜索结果，用中文为用户提供准确、有用的回答。如果搜索结果与问题相关，请引用相关内容；如果搜索结果不够充分，请基于你的知识补充回答。
-
-回答格式要求：
-1. 使用清晰的段落结构
-2. 重要信息用**粗体**标记
-3. 列表使用数字或项目符号
-4. 适当使用换行保持可读性`;
+      systemPrompt = `你是一个智能助手，用户正在搜索本地内容。请基于以下搜索结果回答用户的问题：\n\n搜索结果：\n$${
+        searchResults
+          ?.map((result, index) => `${index + 1}. ${result.title}: ${result.excerpt}`)
+          .join('\n') || '暂无搜索结果'
+      }\n\n请结合这些搜索结果，用中文为用户提供准确、有用的回答。如果搜索结果与问题相关，请引用相关内容；如果搜索结果不够充分，请基于你的知识补充回答。\n\n回答格式要求：\n1. 使用清晰的段落结构\n2. 重要信息用**粗体**标记\n3. 列表使用数字或项目符号\n4. 适当使用换行保持可读性`;
     } else if (searchMode === 'web') {
       // 联网搜索模式
-      systemPrompt = `你是一个智能助手，用户正在搜索网络内容。请基于以下网络搜索结果回答用户的问题：
-
-网络搜索结果：
-${
-  searchResults
-    ?.map(
-      (result: WebSearchResult, index: number) =>
-        `${index + 1}. ${result.title}: ${result.excerpt} (来源: ${result.path})`
-    )
-    .join('\n') || '暂无搜索结果'
-}
-
-请结合这些网络搜索结果，用中文为用户提供准确、有用的回答。如果搜索结果与问题相关，请引用相关内容和来源；如果搜索结果不够充分，请基于你的知识补充回答。
-
-回答格式要求：
-1. 使用清晰的段落结构
-2. 重要信息用**粗体**标记
-3. 列表使用数字或项目符号
-4. 适当使用换行保持可读性`;
+      systemPrompt = `你是一个智能助手，用户正在搜索网络内容。请基于以下网络搜索结果回答用户的问题：\n\n网络搜索结果：\n$${
+        searchResults
+          ?.map(
+            (result, index) =>
+              `${index + 1}. ${result.title}: ${result.excerpt} (来源: ${result.path})`
+          )
+          .join('\n') || '暂无搜索结果'
+      }\n\n请结合这些网络搜索结果，用中文为用户提供准确、有用的回答。如果搜索结果与问题相关，请引用相关内容和来源；如果搜索结果不够充分，请基于你的知识补充回答。\n\n回答格式要求：\n1. 使用清晰的段落结构\n2. 重要信息用**粗体**标记\n3. 列表使用数字或项目符号\n4. 适当使用换行保持可读性`;
     }
 
     // 构建消息历史，包含系统提示和对话历史
@@ -142,38 +125,38 @@ ${
     }
 
     // 构建请求体
-    const requestBody: ApiRequestBody = {
+    const apiRequestPayload = ApiRequestBodySchema.parse({
       messages,
       temperature: model.temperature,
       max_tokens: model.maxTokens,
       stream: false,
-    };
+    });
 
     // 根据不同的模型设置不同的参数
     if (model.id.includes('deepseek')) {
-      requestBody.model = 'deepseek-chat';
+      apiRequestPayload.model = 'deepseek-chat';
     } else if (model.id === 'silicon-flow-qwen') {
-      requestBody.model = 'Qwen/Qwen2.5-7B-Instruct';
+      apiRequestPayload.model = 'Qwen/Qwen2.5-7B-Instruct';
     } else if (model.id === 'silicon-flow-deepseek') {
-      requestBody.model = 'deepseek-ai/DeepSeek-V2.5';
+      apiRequestPayload.model = 'deepseek-ai/DeepSeek-V2.5';
     } else if (model.id === 'silicon-flow-llama') {
-      requestBody.model = 'meta-llama/Meta-Llama-3.1-8B-Instruct';
+      apiRequestPayload.model = 'meta-llama/Meta-Llama-3.1-8B-Instruct';
     } else if (model.id === 'openrouter-gpt4') {
-      requestBody.model = 'openai/gpt-4-turbo';
+      apiRequestPayload.model = 'openai/gpt-4-turbo';
     } else if (model.id === 'openrouter-claude') {
-      requestBody.model = 'anthropic/claude-3.5-sonnet';
+      apiRequestPayload.model = 'anthropic/claude-3.5-sonnet';
     } else if (model.id === 'openrouter-gemini') {
-      requestBody.model = 'google/gemini-pro-1.5';
+      apiRequestPayload.model = 'google/gemini-pro-1.5';
     } else if (model.id.includes('github')) {
-      requestBody.model = 'gpt-4';
+      apiRequestPayload.model = 'gpt-4';
     } else if (model.id === 'moonshot-v1') {
-      requestBody.model = 'moonshot-v1-8k';
+      apiRequestPayload.model = 'moonshot-v1-8k';
     } else if (model.id === 'zhipu-glm') {
-      requestBody.model = 'glm-4';
+      apiRequestPayload.model = 'glm-4';
     } else if (model.id === 'baichuan-chat') {
-      requestBody.model = 'Baichuan2-Turbo';
+      apiRequestPayload.model = 'Baichuan2-Turbo';
     } else if (model.id === 'minimax-chat') {
-      requestBody.model = 'abab6.5s-chat';
+      apiRequestPayload.model = 'abab6.5s-chat';
     }
 
     // 构建请求头
@@ -204,7 +187,7 @@ ${
     const response = await fetch(model.apiUrl, {
       method: 'POST',
       headers,
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify(apiRequestPayload),
     });
 
     if (!response.ok) {
@@ -224,7 +207,7 @@ ${
 
             // 转换搜索结果类型
             const convertedResults = searchResults?.map(
-              (result: WebSearchResult) =>
+              result =>
                 ({
                   title: result.title,
                   content: result.excerpt, // 使用 excerpt 代替 description
