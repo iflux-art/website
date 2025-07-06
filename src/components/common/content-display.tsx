@@ -1,12 +1,17 @@
-import React from 'react';
-import { Calendar, Calculator, FolderKanban, Tag as TagIcon } from 'lucide-react';
-import Link from 'next/link';
-import { cn } from '@/utils';
+import React from "react";
+import {
+  Calendar,
+  Calculator,
+  FolderKanban,
+  Tag as TagIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 /**
  * 内容显示组件的类型
  */
-export type ContentType = 'blog' | 'docs';
+export type ContentType = "blog" | "docs";
 
 /**
  * 内容显示组件属性
@@ -84,25 +89,27 @@ export function ContentDisplay({
 }: ContentDisplayProps) {
   // 获取标签链接基础路径
   const getTagLink = (tag: string) => {
-    const base = contentType === 'blog' ? '/blog' : '/docs';
+    const base = contentType === "blog" ? "/blog" : "/docs";
     return `${base}?tag=${encodeURIComponent(tag)}`;
   };
 
   // 获取分类链接
   const getCategoryLink = () => {
-    const base = contentType === 'blog' ? '/blog' : '/docs';
-    return `${base}?category=${encodeURIComponent(category || '')}`;
+    const base = contentType === "blog" ? "/blog" : "/docs";
+    return `${base}?category=${encodeURIComponent(category || "")}`;
   };
 
   return (
-    <article className={cn('prose-container', className)}>
+    <article className={cn("prose-container", className)}>
       <header className="mb-8">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-8">{title}</h1>
-        <div className="flex flex-wrap items-center gap-y-2 text-sm text-muted-foreground font-medium">
+        <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+          {title}
+        </h1>
+        <div className="flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground">
           {/* 发布日期 */}
           {date && (
             <div className="flex items-center">
-              <Calendar className="h-4 w-4 mr-1" />
+              <Calendar className="mr-1 h-4 w-4" />
               <time>{date}</time>
             </div>
           )}
@@ -113,9 +120,9 @@ export function ContentDisplay({
               <div className="mx-2 text-muted-foreground/50">|</div>
               <Link
                 href={getCategoryLink()}
-                className="flex items-center hover:text-primary transition-colors"
+                className="flex items-center transition-colors hover:text-primary"
               >
-                <FolderKanban className="h-4 w-4 mr-1" />
+                <FolderKanban className="mr-1 h-4 w-4" />
                 <span>{category}</span>
               </Link>
             </>
@@ -131,9 +138,7 @@ export function ContentDisplay({
                   <Link
                     key={index}
                     href={getTagLink(tag)}
-                    className="px-3 py-1.5 bg-muted rounded-xl text-xs font-medium 
-                             hover:bg-primary/10 hover:text-primary transition-all 
-                             shadow-sm hover:shadow-md"
+                    className="rounded-xl bg-muted px-3 py-1.5 text-xs font-medium shadow-sm transition-all hover:bg-primary/10 hover:text-primary hover:shadow-md"
                   >
                     {tag}
                   </Link>
@@ -147,7 +152,7 @@ export function ContentDisplay({
             <>
               <div className="mx-2 text-muted-foreground/50">|</div>
               <div className="flex items-center">
-                <Calculator className="h-4 w-4 mr-1" />
+                <Calculator className="mr-1 h-4 w-4" />
                 <span>{wordCount} 字</span>
               </div>
             </>
@@ -155,7 +160,7 @@ export function ContentDisplay({
         </div>
       </header>
 
-      <div className="prose prose-zinc dark:prose-invert max-w-none prose-img:rounded-xl">
+      <div className="prose max-w-none prose-zinc dark:prose-invert prose-img:rounded-xl">
         {children}
       </div>
     </article>

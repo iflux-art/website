@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { BaseContentSchema } from './base';
+import { z } from "zod";
+import { BaseContentSchema } from "./base";
 
 // Blog post schema
 export const BlogPostSchema = BaseContentSchema.extend({

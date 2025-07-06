@@ -1,12 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
 export interface ContentItem {
   title: string;
   description: string;
   url: string;
-  type: 'doc' | 'blog' | 'tool' | 'web';
+  type: "doc" | "blog" | "tool" | "web";
   content?: string;
   excerpt?: string;
   tags?: string[];
@@ -21,10 +21,10 @@ export interface ContentItem {
 
 // 获取所有内容文件
 export function getAllContentFiles(): ContentItem[] {
-  const contentDir = path.join(process.cwd(), 'src/content');
+  const contentDir = path.join(process.cwd(), "src/content");
   const items: ContentItem[] = [];
 
-  function scanDirectory(dir: string, baseType: 'doc' | 'blog' = 'doc') {
+  function scanDirectory(dir: string, baseType: "doc" | "blog" = "doc") {
     if (!fs.existsSync(dir)) return;
 
     const files = fs.readdirSync(dir);
@@ -36,41 +36,43 @@ export function getAllContentFiles(): ContentItem[] {
       if (stat.isDirectory()) {
         // 递归扫描子目录
         scanDirectory(filePath, baseType);
-      } else if (file.endsWith('.mdx') && !file.startsWith('_')) {
+      } else if (file.endsWith(".mdx") && !file.startsWith("_")) {
         try {
-          const fileContent = fs.readFileSync(filePath, 'utf-8');
+          const fileContent = fs.readFileSync(filePath, "utf-8");
           const { data: frontmatter, content } = matter(fileContent);
 
           // 生成URL路径
           const relativePath = path.relative(contentDir, filePath);
           const urlPath = relativePath
-            .replace(/\\/g, '/')
-            .replace(/\.mdx$/, '')
-            .replace(/\/index$/, '');
+            .replace(/\\/g, "/")
+            .replace(/\.mdx$/, "")
+            .replace(/\/index$/, "");
 
           // 确定内容类型
-          let type: 'doc' | 'blog' | 'tool' | 'web' = 'doc';
-          if (relativePath.startsWith('blog')) {
-            type = 'blog';
-          } else if (relativePath.startsWith('docs')) {
-            type = 'doc';
+          let type: "doc" | "blog" | "tool" | "web" = "doc";
+          if (relativePath.startsWith("blog")) {
+            type = "blog";
+          } else if (relativePath.startsWith("docs")) {
+            type = "doc";
           }
 
           // 生成摘要（取前200个字符）
           const plainContent = content
-            .replace(/#{1,6}\s+/g, '') // 移除标题标记
-            .replace(/\*\*([^*]+)\*\*/g, '$1') // 移除粗体标记
-            .replace(/\*([^*]+)\*/g, '$1') // 移除斜体标记
-            .replace(/`([^`]+)`/g, '$1') // 移除代码标记
-            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除链接标记
-            .replace(/\n+/g, ' ') // 替换换行为空格
+            .replace(/#{1,6}\s+/g, "") // 移除标题标记
+            .replace(/\*\*([^*]+)\*\*/g, "$1") // 移除粗体标记
+            .replace(/\*([^*]+)\*/g, "$1") // 移除斜体标记
+            .replace(/`([^`]+)`/g, "$1") // 移除代码标记
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // 移除链接标记
+            .replace(/\n+/g, " ") // 替换换行为空格
             .trim();
 
           const excerpt =
-            plainContent.length > 200 ? plainContent.substring(0, 200) + '...' : plainContent;
+            plainContent.length > 200
+              ? plainContent.substring(0, 200) + "..."
+              : plainContent;
 
           items.push({
-            title: frontmatter.title || path.basename(file, '.mdx'),
+            title: frontmatter.title || path.basename(file, ".mdx"),
             description: frontmatter.excerpt || excerpt,
             url: `/${urlPath}`,
             type,
@@ -78,7 +80,7 @@ export function getAllContentFiles(): ContentItem[] {
             excerpt: frontmatter.excerpt || excerpt,
             tags: frontmatter.tags || [],
             date: frontmatter.date,
-            slug: path.basename(file, '.mdx'),
+            slug: path.basename(file, ".mdx"),
             filePath: relativePath,
           });
         } catch (error) {
@@ -89,10 +91,10 @@ export function getAllContentFiles(): ContentItem[] {
   }
 
   // 扫描docs目录
-  scanDirectory(path.join(contentDir, 'docs'), 'doc');
+  scanDirectory(path.join(contentDir, "docs"), "doc");
 
   // 扫描blog目录
-  scanDirectory(path.join(contentDir, 'blog'), 'blog');
+  scanDirectory(path.join(contentDir, "blog"), "blog");
 
   return items;
 }
@@ -123,13 +125,15 @@ export function searchContent(query: string, limit: number = 8): ContentItem[] {
     }
 
     // 搜索标签
-    const tagMatch = item.tags?.some(tag => tag.toLowerCase().includes(lowerQuery));
+    const tagMatch = item.tags?.some((tag) =>
+      tag.toLowerCase().includes(lowerQuery),
+    );
     if (tagMatch) {
       score += 3;
     }
 
     // 搜索内容
-    const contentMatches = findContentMatches(item.content || '', query);
+    const contentMatches = findContentMatches(item.content || "", query);
     if (contentMatches.length > 0) {
       score += contentMatches.length;
       highlights.content = contentMatches;
@@ -153,12 +157,16 @@ export function searchContent(query: string, limit: number = 8): ContentItem[] {
 
 // 高亮文本
 function highlightText(text: string, query: string): string {
-  const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  const regex = new RegExp(`(${escapeRegExp(query)})`, "gi");
+  return text.replace(regex, "<mark>$1</mark>");
 }
 
 // 查找内容匹配项
-function findContentMatches(content: string, query: string, maxMatches: number = 3): string[] {
+function findContentMatches(
+  content: string,
+  query: string,
+  maxMatches: number = 3,
+): string[] {
   const lowerContent = content.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const matches: string[] = [];
@@ -175,8 +183,8 @@ function findContentMatches(content: string, query: string, maxMatches: number =
     let context = content.substring(start, end);
 
     // 如果不是从开头开始，添加省略号
-    if (start > 0) context = '...' + context;
-    if (end < content.length) context = context + '...';
+    if (start > 0) context = "..." + context;
+    if (end < content.length) context = context + "...";
 
     // 高亮匹配的文本
     const highlightedContext = highlightText(context, query);
@@ -190,5 +198,5 @@ function findContentMatches(content: string, query: string, maxMatches: number =
 
 // 转义正则表达式特殊字符
 function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

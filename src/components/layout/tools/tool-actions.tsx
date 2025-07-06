@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { LucideIcon } from 'lucide-react';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { LucideIcon } from "lucide-react";
 
 interface ActionButton {
   label: string;
   onClick: () => void;
   icon?: LucideIcon;
-  variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive';
+  variant?:
+    | "default"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "destructive";
   disabled?: boolean;
 }
 
@@ -17,7 +23,7 @@ interface ToolActionsProps {
   className?: string;
 }
 
-export function ToolActions({ actions, className = '' }: ToolActionsProps) {
+export function ToolActions({ actions, className = "" }: ToolActionsProps) {
   return (
     <div className={`flex flex-wrap gap-2 ${className}`}>
       {actions.map((action, index) => {
@@ -26,7 +32,7 @@ export function ToolActions({ actions, className = '' }: ToolActionsProps) {
           <Button
             key={index}
             onClick={action.onClick}
-            variant={action.variant || 'default'}
+            variant={action.variant || "default"}
             disabled={action.disabled}
             className="flex items-center gap-2"
           >

@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // 搜索请求参数schema
 export const SearchRequestSchema = z.object({
-  q: z.string().min(1, '搜索内容不能为空'),
-  type: z.enum(['doc', 'blog', 'tool', 'link']).optional(),
+  q: z.string().min(1, "搜索内容不能为空"),
+  type: z.enum(["doc", "blog", "tool", "link"]).optional(),
   limit: z.number().int().min(1).max(50).optional().default(8),
 });
 
@@ -12,7 +12,7 @@ export const SearchResultItemSchema = z.object({
   title: z.string(),
   path: z.string(),
   excerpt: z.string(),
-  type: z.enum(['doc', 'blog', 'tool', 'link']),
+  type: z.enum(["doc", "blog", "tool", "link"]),
   score: z.number().min(0),
   highlights: z
     .object({

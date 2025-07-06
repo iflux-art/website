@@ -2,8 +2,8 @@
  * 导航相关类型定义
  */
 
-import { ReactNode } from 'react';
-import { ClickableProps, URL } from './common';
+import { ReactNode } from "react";
+import { ClickableProps, URL } from "./common";
 
 /**
  * 导航链接组件属性

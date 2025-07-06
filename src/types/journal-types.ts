@@ -2,14 +2,14 @@
  * 日志相关类型定义
  */
 
-import { BaseContent, BaseFrontmatter, LoadingState, URL, ID } from './common';
+import { BaseContent, BaseFrontmatter, LoadingState, URL, ID } from "./common";
 
 /** 日志 Frontmatter */
 export interface JournalFrontmatter extends BaseFrontmatter {
   /** 内容类型 */
-  type?: 'blog' | 'doc' | 'note' | 'idea';
+  type?: "blog" | "doc" | "note" | "idea";
   /** 心情标签 */
-  mood?: 'happy' | 'sad' | 'excited' | 'calm' | 'frustrated' | 'inspired';
+  mood?: "happy" | "sad" | "excited" | "calm" | "frustrated" | "inspired";
   /** 天气 */
   weather?: string;
   /** 位置 */
@@ -31,7 +31,7 @@ export interface JournalEntry extends BaseContent {
   /** 唯一标识 */
   id: ID;
   /** 内容类型 */
-  type: 'blog' | 'doc' | 'note' | 'idea';
+  type: "blog" | "doc" | "note" | "idea";
   /** 访问链接 */
   url: URL;
   /** 心情标签 */

@@ -2,8 +2,8 @@
  * 网址导航数据类型定义
  */
 
-import type { ComponentType } from 'react';
-import { BaseCategory, URL, ID, Timestamp } from './common';
+import type { ComponentType } from "react";
+import { BaseCategory, URL, ID, Timestamp } from "./common";
 
 /** 导航链接项 */
 export interface LinksItem {
@@ -18,7 +18,7 @@ export interface LinksItem {
   /** 图标 */
   icon?: string;
   /** 图标类型 */
-  iconType?: 'image' | 'text';
+  iconType?: "image" | "text";
   /** 标签列表 */
   tags: string[];
   /** 是否为特色链接 */
@@ -62,7 +62,7 @@ export interface LinksFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: 'image' | 'text';
+  iconType: "image" | "text";
   tags: string[];
   featured: boolean;
   category: string;

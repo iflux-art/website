@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import { ContentOptions, BaseContent, BaseCategory } from '@/types';
-import { useCache } from './use-cache';
-import { CACHE_CONFIG, HookResult } from '../lib/constants';
+import { usePathname } from "next/navigation";
+import { ContentOptions, BaseContent, BaseCategory } from "@/types";
+import { useCache } from "./use-cache";
+import { CACHE_CONFIG, HookResult } from "../lib/constants";
 export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
 
@@ -30,14 +30,14 @@ export function useContentData<T>({
 
   // 生成缓存key
   const getCacheKey = () => {
-    return `${type}:${category || 'all'}:${pathname}`;
+    return `${type}:${category || "all"}:${pathname}`;
   };
 
   // 数据获取函数
   const fetchData = async () => {
-    const apiUrl = url || path || '';
+    const apiUrl = url || path || "";
     if (!apiUrl) {
-      throw new Error('URL or path is required');
+      throw new Error("URL or path is required");
     }
 
     const requestKey = `${apiUrl}:${JSON.stringify(params)}`;
@@ -51,7 +51,7 @@ export function useContentData<T>({
       try {
         const response = await fetch(apiUrl, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             ...headers,
           },
           ...(params || {}),
@@ -64,7 +64,7 @@ export function useContentData<T>({
         const result = await response.json();
         return result as T;
       } catch (error) {
-        console.error('Error fetching content:', error);
+        console.error("Error fetching content:", error);
         throw error;
       } finally {
         // 请求完成后移除
@@ -77,10 +77,14 @@ export function useContentData<T>({
     return request;
   };
 
-  const { data, error, loading, refetch } = useCache<T>(getCacheKey(), fetchData, {
-    expiry: disableCache ? 0 : cacheTime,
-    useMemoryCache: true,
-  });
+  const { data, error, loading, refetch } = useCache<T>(
+    getCacheKey(),
+    fetchData,
+    {
+      expiry: disableCache ? 0 : cacheTime,
+      useMemoryCache: true,
+    },
+  );
 
   return {
     data: data || null,
@@ -93,7 +97,9 @@ export function useContentData<T>({
 }
 
 // 分类数据获取hook
-export function useCategories(type: 'blog' | 'docs'): HookResult<ContentCategory[]> {
+export function useCategories(
+  type: "blog" | "docs",
+): HookResult<ContentCategory[]> {
   return useContentData<ContentCategory[]>({
     type,
     path: `/api/${type}/categories`,
@@ -102,8 +108,8 @@ export function useCategories(type: 'blog' | 'docs'): HookResult<ContentCategory
 
 // 分类内容获取hook
 export function useCategoryItems(
-  type: 'blog' | 'docs',
-  category: string
+  type: "blog" | "docs",
+  category: string,
 ): HookResult<ContentItem[]> {
   return useContentData<ContentItem[]>({
     type,

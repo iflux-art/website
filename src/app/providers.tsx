@@ -1,20 +1,17 @@
-'use client';
+"use client";
 
-import { ThemeProvider } from 'next-themes';
-import { ServiceWorkerProvider } from '@/components/providers/service-worker-provider';
-import React from 'react';
-
-const themeConfig = {
-  attribute: 'class',
-  defaultTheme: 'system',
-  enableSystem: true,
-  storageKey: 'iflux-theme-preference',
-  disableTransitionOnChange: true,
-} as const;
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ServiceWorkerProvider } from "@/components/providers/service-worker-provider";
+import React from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider {...themeConfig}>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <ServiceWorkerProvider />
       {children}
     </ThemeProvider>

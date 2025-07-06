@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image, { type ImageProps } from 'next/image';
-import { cn } from '@/utils';
+import React from "react";
+import Image, { type ImageProps } from "next/image";
+import { cn } from "@/lib/utils";
 
 /**
  * MDX 图片组件属性
  */
-export interface MDXImageProps extends Omit<ImageProps, 'src' | 'alt'> {
+export interface MDXImageProps extends Omit<ImageProps, "src" | "alt"> {
   /** 图片源地址 */
   src: string;
   /** 图片描述文本 */
@@ -29,7 +29,7 @@ const DEFAULT_QUALITY = 85;
 
 export const MDXImage: React.FC<MDXImageProps> = ({
   src,
-  alt = '',
+  alt = "",
   caption,
   width,
   height,
@@ -50,7 +50,7 @@ export const MDXImage: React.FC<MDXImageProps> = ({
           height={Number(height) || DEFAULT_HEIGHT}
           priority={priority}
           quality={quality}
-          className={cn('bg-muted object-cover w-full max-w-full', className)}
+          className={cn("w-full max-w-full bg-muted object-cover", className)}
           {...props}
         />
       </div>

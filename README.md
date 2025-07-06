@@ -21,12 +21,13 @@
 - 主题切换：Next Themes
 - TypeScript
 - 样式系统：Tailwind CSS
-- CSS 类名管理和合并：Class Variants Authority + clsx + Tailwind Merge
-- UI 组件：Radix UI + Shadcn/UI
+- CSS 类名管理和合并：Class Variants Authority + clsx + Tailwind Merge + Shadcn/ui
+- UI 组件：Radix UI + shadcn/ui
 - 图标：lucide-react
 - 状态管理：Zustand + TanStack Query
 - 数据验证：Zod
 - MDX处理：next-mdx-remote/rsc（MDX 渲染） + gray-matter（解析 frontmatter 元数据） + remark-gfm（扩展 Markdown 语法）
+- MDX样式：Tailwind CSS + @tailwindcss/typography（prose 类） + shadcn/ui
 - 代码质量：ESLint + Prettier
 - Git 提交前检查：Git Hooks
 - 工具函数：immer

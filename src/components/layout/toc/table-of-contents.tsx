@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { cn } from '@/utils';
-import { Text } from 'lucide-react';
-import { useHeadingObserver } from '@/hooks/use-heading-observer';
-import { NAVBAR_HEIGHT, SCROLL_OFFSET } from '@/config/layout';
-import { scrollToElement } from '@/utils/route-utils';
+import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { Text } from "lucide-react";
+import { useHeadingObserver } from "@/hooks/use-heading-observer";
+import { NAVBAR_HEIGHT, SCROLL_OFFSET } from "@/config/layout";
+import { scrollToElement } from "@/lib/utils/route-utils";
 
 /**
  * 标题项类型
@@ -77,7 +77,7 @@ export interface TableOfContentsProps {
 export function TableOfContents({
   headings,
   className,
-  title = '目录',
+  title = "目录",
   adaptive = false,
   adaptiveOffset = NAVBAR_HEIGHT,
 }: TableOfContentsProps) {
@@ -102,13 +102,16 @@ export function TableOfContents({
 
       timeoutId = window.setTimeout(() => {
         if (activeId && tocRef.current) {
-          const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
+          const activeElement = tocRef.current.querySelector(
+            `a[href="#${activeId}"]`,
+          );
           if (activeElement) {
             const containerRect = tocRef.current.getBoundingClientRect();
             const activeRect = activeElement.getBoundingClientRect();
 
             const isInView =
-              activeRect.top >= containerRect.top && activeRect.bottom <= containerRect.bottom;
+              activeRect.top >= containerRect.top &&
+              activeRect.bottom <= containerRect.bottom;
 
             if (!isInView) {
               const scrollTop =
@@ -118,7 +121,7 @@ export function TableOfContents({
                 activeRect.height / 2;
               tocRef.current.scrollTo({
                 top: tocRef.current.scrollTop + scrollTop,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
             }
           }
@@ -137,7 +140,9 @@ export function TableOfContents({
   // 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
   // 过滤掉h1标题，只显示h2-h4
-  const filteredHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
+  const filteredHeadings = headings.filter(
+    (heading) => heading.level >= 2 && heading.level <= 4,
+  );
 
   // 根据标题级别对目录进行分组和嵌套
   const organizeHeadings = (headings: Heading[]) => {
@@ -147,8 +152,8 @@ export function TableOfContents({
       if (!heading.id) {
         heading.id = `heading-${heading.text
           .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/[^\w-]/g, '')}-${index}`;
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "")}-${index}`;
       }
       return heading;
     });
@@ -178,32 +183,32 @@ export function TableOfContents({
       }, 150);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
     handleScroll();
 
     return () => {
       if (scrollTimeoutId) {
         clearTimeout(scrollTimeoutId);
       }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, [adaptive, adaptiveOffset]);
 
   return (
-    <div className={cn('pl-0 overflow-hidden', className)}>
+    <div className={cn("overflow-hidden pl-0", className)}>
       <div
         ref={tocRef}
         className={cn(
-          'pb-4 pr-2',
-          adaptive && 'transition-all duration-200',
-          adaptive && 'fixed overflow-y-auto'
+          "pr-2 pb-4",
+          adaptive && "transition-all duration-200",
+          adaptive && "fixed overflow-y-auto",
         )}
         style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >
-        <h3 className="text-sm font-medium mb-2 px-2 text-foreground flex items-center">
-          <Text className="h-4 w-4 mr-1.5 text-primary/80" />
+        <h3 className="mb-2 flex items-center px-2 text-sm font-medium text-foreground">
+          <Text className="mr-1.5 h-4 w-4 text-primary/80" />
           <span>{title}</span>
         </h3>
         <div className="space-y-1">
@@ -214,33 +219,37 @@ export function TableOfContents({
             // 根据标题级别设置不同的样式
             const headingSize =
               {
-                2: 'font-medium',
-                3: 'font-normal',
-                4: 'text-xs',
-              }[heading.level] || '';
+                2: "font-medium",
+                3: "font-normal",
+                4: "text-xs",
+              }[heading.level] || "";
 
             return (
               <a
                 key={index}
                 href={`#${heading.id}`}
                 className={cn(
-                  'flex items-start py-1.5 text-sm transition-colors group min-w-0',
+                  "group flex min-w-0 items-start py-1.5 text-sm transition-colors",
                   headingSize,
                   {
-                    'text-primary font-medium bg-accent/50 rounded-md': activeId === heading.id,
-                    'text-muted-foreground hover:text-primary/80 hover:bg-accent/20 rounded-md':
+                    "rounded-md bg-accent/50 font-medium text-primary":
+                      activeId === heading.id,
+                    "rounded-md text-muted-foreground hover:bg-accent/20 hover:text-primary/80":
                       activeId !== heading.id,
-                  }
+                  },
                 )}
                 style={{
-                  paddingLeft: heading.level > 2 ? `calc(${indent}rem + 0.5rem)` : '0.5rem',
+                  paddingLeft:
+                    heading.level > 2
+                      ? `calc(${indent}rem + 0.5rem)`
+                      : "0.5rem",
                 }}
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
                   scrollToElement(heading.id, SCROLL_OFFSET);
                 }}
               >
-                <span className="break-words whitespace-normal min-w-0 w-full block">
+                <span className="block w-full min-w-0 break-words whitespace-normal">
                   {heading.text}
                 </span>
               </a>

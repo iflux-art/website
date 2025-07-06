@@ -2,9 +2,9 @@
  * MDX 核心类型定义
  * 统一管理所有 MDX 相关类型
  */
-import type { ComponentType, ReactNode } from 'react';
-import type { ImageProps } from 'next/image';
-import type { BaseComponentProps, BaseFrontmatter } from './common';
+import type { ComponentType, ReactNode } from "react";
+import type { ImageProps } from "next/image";
+import type { BaseComponentProps, BaseFrontmatter } from "./common";
 
 // ==================== MDX 特定类型 ====================
 
@@ -71,7 +71,7 @@ export interface MDXOptions {
     /** 是否优先加载 */
     priority: boolean;
     /** 占位符类型 */
-    placeholder: 'blur' | 'empty';
+    placeholder: "blur" | "empty";
     /** 允许的图片域名 */
     domains: string[];
   };
@@ -98,7 +98,7 @@ export interface MDXOptions {
 // ==================== MDX 组件类型 ====================
 
 /** 图片组件属性 */
-export interface MDXImageProps extends Omit<ImageProps, 'src' | 'alt'> {
+export interface MDXImageProps extends Omit<ImageProps, "src" | "alt"> {
   /** 图片源地址 */
   src: string;
   /** 图片描述文本 */
@@ -114,7 +114,8 @@ export interface MDXImageProps extends Omit<ImageProps, 'src' | 'alt'> {
 }
 
 /** 链接组件属性 */
-export interface MDXLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface MDXLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** 链接地址 */
   href: string;
   /** 是否为外部链接 */
@@ -134,10 +135,10 @@ export interface CodeBlockProps extends BaseComponentProps {
 }
 
 /** 列表类型 */
-export type ListType = 'unordered' | 'ordered' | 'checklist' | 'stepper';
+export type ListType = "unordered" | "ordered" | "checklist" | "stepper";
 
 /** 列表图标类型 */
-export type ListIconType = 'bullet' | 'check' | 'chevron' | 'circle' | 'none';
+export type ListIconType = "bullet" | "check" | "chevron" | "circle" | "none";
 
 /** 列表通用样式属性 */
 export interface MDXListStyleProps {
@@ -146,7 +147,7 @@ export interface MDXListStyleProps {
   /** 图标颜色 */
   iconColor?: string;
   /** 间距大小 */
-  gap?: 'sm' | 'md' | 'lg';
+  gap?: "sm" | "md" | "lg";
   /** 是否为嵌套列表 */
   nested?: boolean;
   /** 自定义类名 */
@@ -162,11 +163,13 @@ export type MDXListProps =
       })
   | (MDXListStyleProps &
       React.OlHTMLAttributes<HTMLOListElement> & {
-        type: 'ordered';
+        type: "ordered";
       });
 
 /** 列表项组件属性 */
-export interface MDXListItemProps extends MDXListStyleProps, React.HTMLAttributes<HTMLLIElement> {
+export interface MDXListItemProps
+  extends MDXListStyleProps,
+    React.HTMLAttributes<HTMLLIElement> {
   /** 列表项序号 */
   step?: number;
   /** 列表类型 */
@@ -225,7 +228,7 @@ export interface TypographyConfig {
 
 /** 检查值是否为有效的 MDX 内容 */
 export const isMDXContent = (value: unknown): value is MDXContent => {
-  if (!value || typeof value !== 'object') return false;
+  if (!value || typeof value !== "object") return false;
   const content = value as Partial<MDXContent>;
-  return typeof content.source === 'string';
+  return typeof content.source === "string";
 };

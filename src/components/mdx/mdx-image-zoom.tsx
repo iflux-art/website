@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useCallback } from 'react';
-import { XCircle, ZoomIn, ZoomOut, Move } from 'lucide-react';
+import React, { useState, useRef, useCallback } from "react";
+import { XCircle, ZoomIn, ZoomOut, Move } from "lucide-react";
 
 export interface MDXImageZoomProps {
   src: string;
@@ -24,10 +24,10 @@ export interface MDXImageZoomProps {
  */
 export const MDXImageZoom = ({
   src,
-  alt = '',
-  className = '',
-  width = 'auto',
-  height = 'auto',
+  alt = "",
+  className = "",
+  width = "auto",
+  height = "auto",
   zoomFactor = 1.2,
   maxZoom = 4,
   minZoom = 1,
@@ -44,12 +44,12 @@ export const MDXImageZoom = ({
   // 处理缩放
   const handleZoom = useCallback(
     (factor: number) => {
-      setScale(currentScale => {
+      setScale((currentScale) => {
         const newScale = currentScale * factor;
         return Math.min(Math.max(newScale, minZoom), maxZoom);
       });
     },
-    [maxZoom, minZoom]
+    [maxZoom, minZoom],
   );
 
   // 处理拖动开始
@@ -102,15 +102,10 @@ export const MDXImageZoom = ({
   };
 
   return (
-    <div className="my-6 relative">
+    <div className="relative my-6">
       {/* 缩略图 */}
       <div
-        className={`
-          relative overflow-hidden
-          cursor-zoom-in
-          ${isZoomed ? 'hidden' : 'block'}
-          ${className}
-        `}
+        className={`relative cursor-zoom-in overflow-hidden ${isZoomed ? "hidden" : "block"} ${className} `}
         onClick={toggleZoom}
       >
         <img
@@ -118,17 +113,9 @@ export const MDXImageZoom = ({
           alt={alt}
           width={width}
           height={height}
-          className="w-full h-full object-contain"
+          className="h-full w-full object-contain"
         />
-        <div
-          className="
-          absolute bottom-4 right-4
-          p-2 rounded-full
-          bg-black/50 text-white
-          opacity-0 hover:opacity-100
-          transition-opacity
-        "
-        >
+        <div className="absolute right-4 bottom-4 rounded-full bg-black/50 p-2 text-white opacity-0 transition-opacity hover:opacity-100">
           <ZoomIn className="h-5 w-5" />
         </div>
       </div>
@@ -137,11 +124,7 @@ export const MDXImageZoom = ({
       {isZoomed && (
         <div
           ref={containerRef}
-          className="
-            fixed inset-0 z-50
-            bg-black/90
-            cursor-move
-          "
+          className="fixed inset-0 z-50 cursor-move bg-black/90"
           onMouseDown={handleDragStart}
           onMouseMove={handleDrag}
           onMouseUp={handleDragEnd}
@@ -149,29 +132,24 @@ export const MDXImageZoom = ({
           onWheel={handleWheel}
         >
           {/* 工具栏 */}
-          <div
-            className="
-            absolute top-4 right-4
-            flex items-center gap-2
-          "
-          >
+          <div className="absolute top-4 right-4 flex items-center gap-2">
             <button
               onClick={() => handleZoom(zoomFactor)}
-              className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70"
+              className="rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
               aria-label="放大"
             >
               <ZoomIn className="h-5 w-5" />
             </button>
             <button
               onClick={() => handleZoom(1 / zoomFactor)}
-              className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70"
+              className="rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
               aria-label="缩小"
             >
               <ZoomOut className="h-5 w-5" />
             </button>
             <button
               onClick={resetZoom}
-              className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70"
+              className="rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
               aria-label="关闭"
             >
               <XCircle className="h-5 w-5" />
@@ -179,14 +157,7 @@ export const MDXImageZoom = ({
           </div>
 
           {/* 缩放提示 */}
-          <div
-            className="
-            absolute bottom-4 left-4
-            flex items-center gap-2
-            px-4 py-2 rounded-full
-            bg-black/50 text-white text-sm
-          "
-          >
+          <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/50 px-4 py-2 text-sm text-white">
             <Move className="h-4 w-4" />
             <span>拖动移动 | 滚轮缩放 | 双击还原</span>
           </div>
@@ -195,7 +166,7 @@ export const MDXImageZoom = ({
           <div
             style={{
               transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-              transition: isDragging ? 'none' : 'transform 0.2s',
+              transition: isDragging ? "none" : "transform 0.2s",
             }}
             className="absolute inset-0 flex items-center justify-center"
             onDoubleClick={resetZoom}
@@ -204,7 +175,7 @@ export const MDXImageZoom = ({
               ref={imageRef}
               src={src}
               alt={alt}
-              className="max-w-none pointer-events-none"
+              className="pointer-events-none max-w-none"
               style={{ width, height }}
             />
           </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * 注册 Service Worker
@@ -7,23 +7,23 @@
  */
 export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | null> {
   if (
-    typeof window === 'undefined' ||
-    !('serviceWorker' in navigator) ||
-    process.env.NODE_ENV !== 'production'
+    typeof window === "undefined" ||
+    !("serviceWorker" in navigator) ||
+    process.env.NODE_ENV !== "production"
   ) {
     return null;
   }
 
   try {
-    const registration = await navigator.serviceWorker.register('/sw.js', {
-      scope: '/',
+    const registration = await navigator.serviceWorker.register("/sw.js", {
+      scope: "/",
     });
 
-    console.log('Service Worker 注册成功:', registration.scope);
+    console.log("Service Worker 注册成功:", registration.scope);
 
     return registration;
   } catch (error) {
-    console.error('Service Worker 注册失败:', error);
+    console.error("Service Worker 注册失败:", error);
     return null;
   }
 }
@@ -35,9 +35,9 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
  */
 export async function updateServiceWorker(): Promise<ServiceWorkerRegistration | null> {
   if (
-    typeof window === 'undefined' ||
-    !('serviceWorker' in navigator) ||
-    process.env.NODE_ENV !== 'production'
+    typeof window === "undefined" ||
+    !("serviceWorker" in navigator) ||
+    process.env.NODE_ENV !== "production"
   ) {
     return null;
   }
@@ -47,11 +47,11 @@ export async function updateServiceWorker(): Promise<ServiceWorkerRegistration |
 
     await registration.update();
 
-    console.log('Service Worker 更新成功');
+    console.log("Service Worker 更新成功");
 
     return registration;
   } catch (error) {
-    console.error('Service Worker 更新失败:', error);
+    console.error("Service Worker 更新失败:", error);
     return null;
   }
 }
@@ -63,9 +63,9 @@ export async function updateServiceWorker(): Promise<ServiceWorkerRegistration |
  */
 export async function unregisterServiceWorker(): Promise<boolean> {
   if (
-    typeof window === 'undefined' ||
-    !('serviceWorker' in navigator) ||
-    process.env.NODE_ENV !== 'production'
+    typeof window === "undefined" ||
+    !("serviceWorker" in navigator) ||
+    process.env.NODE_ENV !== "production"
   ) {
     return false;
   }
@@ -75,11 +75,11 @@ export async function unregisterServiceWorker(): Promise<boolean> {
 
     const result = await registration.unregister();
 
-    console.log('Service Worker 卸载成功:', result);
+    console.log("Service Worker 卸载成功:", result);
 
     return result;
   } catch (error) {
-    console.error('Service Worker 卸载失败:', error);
+    console.error("Service Worker 卸载失败:", error);
     return false;
   }
 }
@@ -91,12 +91,12 @@ export async function unregisterServiceWorker(): Promise<boolean> {
  * @returns 清理函数
  */
 export function checkForServiceWorkerUpdates(
-  callback: (registration: ServiceWorkerRegistration) => void
+  callback: (registration: ServiceWorkerRegistration) => void,
 ): () => void {
   if (
-    typeof window === 'undefined' ||
-    !('serviceWorker' in navigator) ||
-    process.env.NODE_ENV !== 'production'
+    typeof window === "undefined" ||
+    !("serviceWorker" in navigator) ||
+    process.env.NODE_ENV !== "production"
   ) {
     return () => {};
   }
@@ -116,10 +116,13 @@ export function checkForServiceWorkerUpdates(
   };
 
   // 添加监听器
-  navigator.serviceWorker.addEventListener('controllerchange', updateListener);
+  navigator.serviceWorker.addEventListener("controllerchange", updateListener);
 
   // 返回清理函数
   return () => {
-    navigator.serviceWorker.removeEventListener('controllerchange', updateListener);
+    navigator.serviceWorker.removeEventListener(
+      "controllerchange",
+      updateListener,
+    );
   };
 }

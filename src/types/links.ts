@@ -1,14 +1,14 @@
 export type CategoryId =
-  | 'ai'
-  | 'development'
-  | 'design'
-  | 'audio'
-  | 'video'
-  | 'office'
-  | 'productivity'
-  | 'operation'
-  | 'profile'
-  | 'friends';
+  | "ai"
+  | "development"
+  | "design"
+  | "audio"
+  | "video"
+  | "office"
+  | "productivity"
+  | "operation"
+  | "profile"
+  | "friends";
 
 export interface Category {
   id: CategoryId;
@@ -23,7 +23,7 @@ export interface Item {
   description: string;
   url: string;
   icon: string;
-  iconType: 'image' | 'text';
+  iconType: "image" | "text";
   tags: string[];
   featured: boolean;
   category: CategoryId;

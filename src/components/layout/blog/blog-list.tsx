@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useBlogPosts } from '@/hooks/use-blog';
-import type { BlogPost } from '@/types';
-import { BlogCard } from '@/components/common/cards/blog-card';
-import { AppGrid } from '@/components/layout/app-grid';
+import React from "react";
+import { useBlogPosts } from "@/hooks/use-blog";
+import type { BlogPost } from "@/types";
+import { BlogCard } from "@/components/common/cards/blog-card";
+import { AppGrid } from "@/components/layout/app-grid";
 /**
  * 博客列表组件属性
  *
@@ -43,23 +43,32 @@ interface BlogListProps {
  * <BlogList limit={10} />
  * ```
  */
-export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction }: BlogListProps) {
+export function BlogList({
+  limit = Infinity,
+  filterTag = null,
+  onTagClickAction,
+}: BlogListProps) {
   const { posts } = useBlogPosts();
 
   // 筛选文章
   const filteredPosts = filterTag
-    ? posts.filter((post: BlogPost) => post.tags && post.tags.includes(filterTag))
+    ? posts.filter(
+        (post: BlogPost) => post.tags && post.tags.includes(filterTag),
+      )
     : posts;
 
   // 限制显示数量
-  const displayPosts = limit < Infinity ? filteredPosts.slice(0, limit) : filteredPosts;
+  const displayPosts =
+    limit < Infinity ? filteredPosts.slice(0, limit) : filteredPosts;
 
   // 筛选后没有文章
   if (displayPosts.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-muted-foreground font-medium text-lg">
-          没有找到包含标签 "<span className="text-primary font-semibold">{filterTag}</span>" 的文章
+      <div className="py-12 text-center">
+        <p className="text-lg font-medium text-muted-foreground">
+          没有找到包含标签 "
+          <span className="font-semibold text-primary">{filterTag}</span>"
+          的文章
         </p>
       </div>
     );
@@ -84,7 +93,11 @@ export function BlogList({ limit = Infinity, filterTag = null, onTagClickAction 
           title={post.title}
           description={post.description}
           href={`/blog/${post.slug}`}
-          date={post.date ? new Date(post.date).toLocaleDateString('zh-CN') : undefined}
+          date={
+            post.date
+              ? new Date(post.date).toLocaleDateString("zh-CN")
+              : undefined
+          }
           tags={post.tags}
           onTagClick={handleTagClick}
           image={post.image}

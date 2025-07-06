@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useSafeAuth } from '@/hooks/use-safe-state';
+import { useEffect } from "react";
+import { useSafeAuth } from "@/hooks/use-safe-state";
 
 /**
  * 用户认证状态管理 Hook
@@ -20,13 +20,13 @@ export function useAuthState() {
 
     // 监听存储变化（跨标签页同步）
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'iflux-auth') {
+      if (e.key === "iflux-auth") {
         checkLoginExpiry();
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, [checkLoginExpiry]);
 
   return isLoggedIn;

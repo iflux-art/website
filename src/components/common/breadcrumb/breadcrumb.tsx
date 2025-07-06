@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { cn } from '@/utils';
-import type { BreadcrumbItem } from '@/components/common/breadcrumb/breadcrumb-utils';
+import React from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import type { BreadcrumbItem } from "@/components/common/breadcrumb/breadcrumb-utils";
 
 /**
  * 面包屑导航组件属性
@@ -39,21 +39,32 @@ export interface BreadcrumbProps {
  *   ]}
  * />
  */
-export function Breadcrumb({ items, separator = '/', className }: BreadcrumbProps) {
+export function Breadcrumb({
+  items,
+  separator = "/",
+  className,
+}: BreadcrumbProps) {
   return (
-    <nav className={cn('text-sm text-muted-foreground font-medium', className)}>
+    <nav className={cn("text-sm font-medium text-muted-foreground", className)}>
       <ol className="flex flex-wrap items-center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
 
           return (
             <li key={index} className="flex items-center">
-              {index > 0 && <span className="mx-2 text-muted-foreground/70">{separator}</span>}
+              {index > 0 && (
+                <span className="mx-2 text-muted-foreground/70">
+                  {separator}
+                </span>
+              )}
 
               {isLast || !item.href ? (
                 <span className="text-foreground">{item.label}</span>
               ) : (
-                <Link href={item.href} className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href={item.href}
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   {item.label}
                 </Link>
               )}

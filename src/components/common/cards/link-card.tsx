@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { forwardRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/utils';
+import React, { forwardRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export interface LinkCardProps {
   title: string;
@@ -13,7 +13,7 @@ export interface LinkCardProps {
   href: string;
   isExternal?: boolean;
   icon?: React.ReactNode; // 支持字符串或React元素
-  iconType?: 'image' | 'text';
+  iconType?: "image" | "text";
   color?: string;
   className?: string;
   children?: React.ReactNode;
@@ -27,7 +27,19 @@ export interface LinkCardProps {
  * 2. 图片无效时显示标题首个汉字或字母
  */
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
-  ({ title, description, href, isExternal = false, icon, color, className, children }, ref) => {
+  (
+    {
+      title,
+      description,
+      href,
+      isExternal = false,
+      icon,
+      color,
+      className,
+      children,
+    },
+    ref,
+  ) => {
     const renderIcon = () => {
       // 获取标题首个字符
       const firstChar = title.charAt(0);
@@ -35,20 +47,22 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       // 如果没有icon，直接返回标题首个字符
       if (!icon) {
         return (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-lg font-medium text-primary">{firstChar}</span>
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="text-lg font-medium text-primary">
+              {firstChar}
+            </span>
           </div>
         );
       }
 
       // 如果是React元素，直接渲染
-      if (typeof icon !== 'string') {
+      if (typeof icon !== "string") {
         return icon;
       }
 
       // 尝试显示图片
       return (
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+        <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full">
           <Image
             src={icon}
             alt={title}
@@ -57,7 +71,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
             className="object-cover"
             unoptimized
             loading="lazy"
-            onError={e => {
+            onError={(e) => {
               // 图片加载失败时显示标题首个字符
               const parent = e.currentTarget.parentElement;
               if (parent) {
@@ -72,27 +86,33 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     const cardContent = (
       <Card
         className={cn(
-          'group h-full transition-all duration-300 hover:bg-accent/30 hover:border-primary/50 hover:scale-[1.01]',
-          className
+          "group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30",
+          className,
         )}
         style={{
-          ...(color && color.startsWith('#')
+          ...(color && color.startsWith("#")
             ? {
                 background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
               }
             : {}),
         }}
       >
-        <CardContent className="p-4 flex items-center h-full">
-          <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-muted mr-4">
+        <CardContent className="flex h-full items-center p-4">
+          <div className="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted">
             {renderIcon()}
           </div>
-          <div className="flex flex-col flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-lg font-semibold truncate">{title}</h3>
-              {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
+          <div className="flex min-w-0 flex-1 flex-col">
+            <div className="mb-1 flex items-center gap-2">
+              <h3 className="truncate text-lg font-semibold">{title}</h3>
+              {isExternal && (
+                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+              )}
             </div>
-            {description && <p className="text-muted-foreground text-sm truncate">{description}</p>}
+            {description && (
+              <p className="truncate text-sm text-muted-foreground">
+                {description}
+              </p>
+            )}
             {children && <div className="mt-2">{children}</div>}
           </div>
         </CardContent>
@@ -101,7 +121,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
 
     const commonProps = {
       ref,
-      className: 'block h-full',
+      className: "block h-full",
       href,
     };
 
@@ -114,7 +134,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     }
 
     return <Link {...commonProps}>{cardContent}</Link>;
-  }
+  },
 );
 
-LinkCard.displayName = 'LinkCard';
+LinkCard.displayName = "LinkCard";

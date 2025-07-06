@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { forwardRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/utils';
+import React, { forwardRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export interface BlogCardProps {
   title: string;
@@ -24,16 +24,29 @@ export interface BlogCardProps {
  * 用于在列表页或首页展示博客文章摘要。
  */
 export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
-  ({ title, description, href, tags = [], image, date, author, className, onTagClick }, ref) => {
+  (
+    {
+      title,
+      description,
+      href,
+      tags = [],
+      image,
+      date,
+      author,
+      className,
+      onTagClick,
+    },
+    ref,
+  ) => {
     const cardContent = (
       <Card
         className={cn(
-          'group h-full transition-all duration-300 hover:bg-accent/30 hover:border-primary/50 hover:scale-[1.01] p-5 border border-muted-foreground/10',
-          className
+          "group h-full border border-muted-foreground/10 p-5 transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30",
+          className,
         )}
       >
         {image && (
-          <div className="relative h-40 w-full mb-3 overflow-hidden rounded-lg">
+          <div className="relative mb-3 h-40 w-full overflow-hidden rounded-lg">
             <Image
               src={image}
               alt={title}
@@ -45,19 +58,23 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
             />
           </div>
         )}
-        <div className="flex-1 flex flex-col">
-          <h2 className="text-xl font-bold leading-tight mb-1 line-clamp-2">{title}</h2>
+        <div className="flex flex-1 flex-col">
+          <h2 className="mb-1 line-clamp-2 text-xl leading-tight font-bold">
+            {title}
+          </h2>
           {description && (
-            <p className="text-muted-foreground text-sm mb-2 line-clamp-2">{description}</p>
+            <p className="mb-2 line-clamp-2 text-sm text-muted-foreground">
+              {description}
+            </p>
           )}
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-2">
-              {tags.map(tag => (
+            <div className="mb-2 flex flex-wrap gap-2">
+              {tags.map((tag) => (
                 <Badge
                   key={tag}
                   variant="outline"
-                  className="text-xs border-muted-foreground/20"
-                  onClick={e => {
+                  className="border-muted-foreground/20 text-xs"
+                  onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onTagClick?.(tag);
@@ -69,7 +86,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
             </div>
           )}
         </div>
-        <div className="flex items-center text-xs text-muted-foreground mt-2">
+        <div className="mt-2 flex items-center text-xs text-muted-foreground">
           {date && <span>{date}</span>}
           {author && <span className="ml-2 truncate">· {author}</span>}
         </div>
@@ -81,7 +98,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
         {cardContent}
       </Link>
     );
-  }
+  },
 );
 
-BlogCard.displayName = 'BlogCard';
+BlogCard.displayName = "BlogCard";

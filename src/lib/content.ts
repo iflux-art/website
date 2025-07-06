@@ -3,10 +3,10 @@
  * 提供博客和文档相关的辅助功能
  */
 
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { BlogPost, SidebarItem, DocMetaItem } from '@/types';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { BlogPost, SidebarItem, DocMetaItem } from "@/types";
 
 // ==================== 博客相关函数 ====================
 
@@ -15,7 +15,7 @@ import { BlogPost, SidebarItem, DocMetaItem } from '@/types';
  * @returns 所有标签数组
  */
 export function getAllTags(): string[] {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return [];
 
   const allTags = new Set<string>();
@@ -29,8 +29,11 @@ export function getAllTags(): string[] {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
+      } else if (
+        item.isFile() &&
+        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+      ) {
+        const fileContent = fs.readFileSync(itemPath, "utf8");
         const { data } = matter(fileContent);
 
         // 只收集已发布文章的标签
@@ -50,7 +53,7 @@ export function getAllTags(): string[] {
  * @returns 标签及其文章数量的记录
  */
 export function getAllTagsWithCount(): Record<string, number> {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return {};
 
   const tagCounts: Record<string, number> = {};
@@ -64,8 +67,11 @@ export function getAllTagsWithCount(): Record<string, number> {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
+      } else if (
+        item.isFile() &&
+        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+      ) {
+        const fileContent = fs.readFileSync(itemPath, "utf8");
         const { data } = matter(fileContent);
 
         // 只收集已发布文章的标签
@@ -88,7 +94,7 @@ export function getAllTagsWithCount(): Record<string, number> {
  * @returns 文章数组
  */
 export function getPostsByTag(tag: string): BlogPost[] {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return [];
 
   const posts: BlogPost[] = [];
@@ -102,8 +108,11 @@ export function getPostsByTag(tag: string): BlogPost[] {
 
       if (item.isDirectory()) {
         findPostsWithTag(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
+      } else if (
+        item.isFile() &&
+        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+      ) {
+        const fileContent = fs.readFileSync(itemPath, "utf8");
         const { data } = matter(fileContent);
 
         // 检查是否包含指定标签
@@ -114,24 +123,24 @@ export function getPostsByTag(tag: string): BlogPost[] {
           data.tags.includes(tag)
         ) {
           // 计算slug
-          let slug = '';
+          let slug = "";
           const relativePath = path.relative(blogDir, itemPath);
           const pathParts = relativePath.split(path.sep);
 
           if (pathParts.length === 1) {
             // 直接在blog目录下的文件
-            slug = pathParts[0].replace(/\.(mdx|md)$/, '');
+            slug = pathParts[0].replace(/\.(mdx|md)$/, "");
           } else {
             // 在子目录中的文件
-            const fileName = pathParts.pop() || '';
-            slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
+            const fileName = pathParts.pop() || "";
+            slug = `${pathParts.join("/")}/${fileName.replace(/\.(mdx|md)$/, "")}`;
           }
 
           posts.push({
             slug,
             title: data.title || slug,
-            description: data.description || data.excerpt || '点击阅读全文',
-            excerpt: data.excerpt || '点击阅读全文',
+            description: data.description || data.excerpt || "点击阅读全文",
+            excerpt: data.excerpt || "点击阅读全文",
             date: data.date,
             tags: data.tags,
           });
@@ -189,17 +198,20 @@ function countDocsRecursively(dir: string): number {
     const itemPath = path.join(dir, item.name);
 
     if (
-      item.name.startsWith('_') ||
-      item.name.startsWith('.') ||
-      item.name === 'index.mdx' ||
-      item.name === 'index.md'
+      item.name.startsWith("_") ||
+      item.name.startsWith(".") ||
+      item.name === "index.mdx" ||
+      item.name === "index.md"
     ) {
       continue;
     }
 
     if (item.isDirectory()) {
       count += countDocsRecursively(itemPath);
-    } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+    } else if (
+      item.isFile() &&
+      (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+    ) {
       count += 1;
     }
   }
@@ -210,18 +222,18 @@ function countDocsRecursively(dir: string): number {
  * 获取文档分类
  */
 export function getDocCategories(): DocCategory[] {
-  const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  const docsDir = path.join(process.cwd(), "src", "content", "docs");
   if (!fs.existsSync(docsDir)) return [];
 
   const categories: DocCategory[] = [];
-  const rootMetaPath = path.join(docsDir, '_meta.json');
+  const rootMetaPath = path.join(docsDir, "_meta.json");
   let rootMeta: Record<string, DocMetaItem | string> = {};
 
   if (fs.existsSync(rootMetaPath)) {
     try {
-      rootMeta = JSON.parse(fs.readFileSync(rootMetaPath, 'utf8'));
+      rootMeta = JSON.parse(fs.readFileSync(rootMetaPath, "utf8"));
     } catch (error) {
-      console.error('解析根目录 _meta.json 文件失败:', error);
+      console.error("解析根目录 _meta.json 文件失败:", error);
     }
   }
 
@@ -229,18 +241,18 @@ export function getDocCategories(): DocCategory[] {
   const orderedCategoryNames: string[] = [];
 
   // Add categories from rootMeta first, in their defined order
-  Object.keys(rootMeta).forEach(key => {
-    if (dirs.some(dir => dir.name === key && dir.isDirectory())) {
+  Object.keys(rootMeta).forEach((key) => {
+    if (dirs.some((dir) => dir.name === key && dir.isDirectory())) {
       orderedCategoryNames.push(key);
     }
   });
 
   // Add remaining directories not in rootMeta, sorted alphabetically
-  dirs.forEach(dir => {
+  dirs.forEach((dir) => {
     if (
       dir.isDirectory() &&
-      !dir.name.startsWith('_') &&
-      !dir.name.startsWith('.') &&
+      !dir.name.startsWith("_") &&
+      !dir.name.startsWith(".") &&
       !orderedCategoryNames.includes(dir.name)
     ) {
       orderedCategoryNames.push(dir.name);
@@ -248,35 +260,36 @@ export function getDocCategories(): DocCategory[] {
   });
   // Sort the ones not in meta alphabetically if needed, but they are added after meta ones
   const nonMetaDirs = orderedCategoryNames.slice(
-    Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)).length
+    Object.keys(rootMeta).filter((k) => orderedCategoryNames.includes(k))
+      .length,
   );
   nonMetaDirs.sort((a, b) => a.localeCompare(b));
   const finalOrderedCategoryNames = [
-    ...Object.keys(rootMeta).filter(k => orderedCategoryNames.includes(k)),
+    ...Object.keys(rootMeta).filter((k) => orderedCategoryNames.includes(k)),
     ...nonMetaDirs,
   ];
 
-  finalOrderedCategoryNames.forEach(categoryId => {
+  finalOrderedCategoryNames.forEach((categoryId) => {
     const categoryDir = path.join(docsDir, categoryId);
     const docCount = countDocsRecursively(categoryDir);
     let title = categoryId;
-    let description = '';
+    let description = "";
 
     const rootMetaEntry = rootMeta[categoryId];
     if (rootMetaEntry) {
-      if (typeof rootMetaEntry === 'string') {
+      if (typeof rootMetaEntry === "string") {
         title = rootMetaEntry;
       } else {
         title = rootMetaEntry.title || categoryId;
-        description = (rootMetaEntry as DocMetaItem).description || '';
+        description = (rootMetaEntry as DocMetaItem).description || "";
       }
     }
 
     // Category-level _meta.json can override title/description
-    const categoryMetaPath = path.join(categoryDir, '_meta.json');
+    const categoryMetaPath = path.join(categoryDir, "_meta.json");
     if (fs.existsSync(categoryMetaPath)) {
       try {
-        const catMetaContent = fs.readFileSync(categoryMetaPath, 'utf8');
+        const catMetaContent = fs.readFileSync(categoryMetaPath, "utf8");
         const catMeta = JSON.parse(catMetaContent) as DocMetaItem;
         if (catMeta.title) title = catMeta.title;
         if (catMeta.description) description = catMeta.description;
@@ -287,7 +300,7 @@ export function getDocCategories(): DocCategory[] {
 
     categories.push({
       id: categoryId,
-      title: title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, ' '),
+      title: title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " "),
       description: description || `${title} 相关文档和教程`,
       count: docCount,
     });
@@ -300,41 +313,41 @@ export function getDocCategories(): DocCategory[] {
  * 获取最新文档
  */
 export function getRecentDocs(limit: number = 4): DocItem[] {
-  const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  const docsDir = path.join(process.cwd(), "src", "content", "docs");
   if (!fs.existsSync(docsDir)) return [];
 
   const allDocs: DocItem[] = [];
   const categories = fs.readdirSync(docsDir, { withFileTypes: true });
 
-  categories.forEach(category => {
+  categories.forEach((category) => {
     if (
       category.isDirectory() &&
-      !category.name.startsWith('_') &&
-      !category.name.startsWith('.')
+      !category.name.startsWith("_") &&
+      !category.name.startsWith(".")
     ) {
       const categoryId = category.name;
       const categoryDir = path.join(docsDir, categoryId);
       const items = fs.readdirSync(categoryDir, { withFileTypes: true });
 
-      items.forEach(item => {
+      items.forEach((item) => {
         if (
           item.isFile() &&
-          (item.name.endsWith('.mdx') || item.name.endsWith('.md')) &&
-          !item.name.startsWith('_') &&
-          item.name !== 'index.mdx' &&
-          item.name !== 'index.md'
+          (item.name.endsWith(".mdx") || item.name.endsWith(".md")) &&
+          !item.name.startsWith("_") &&
+          item.name !== "index.mdx" &&
+          item.name !== "index.md"
         ) {
           const filePath = path.join(categoryDir, item.name);
-          const fileContent = fs.readFileSync(filePath, 'utf8');
+          const fileContent = fs.readFileSync(filePath, "utf8");
           const { data } = matter(fileContent);
-          const slug = item.name.replace(/\.(mdx|md)$/, '');
+          const slug = item.name.replace(/\.(mdx|md)$/, "");
 
           if (data.published !== false) {
             allDocs.push({
               slug,
               category: categoryId,
               title: data.title || slug,
-              description: data.description || data.excerpt || '',
+              description: data.description || data.excerpt || "",
               date: data.date,
             });
           }
@@ -361,35 +374,43 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
  */
 export function getDocDirectoryStructure(
   rootDocsDir: string,
-  currentRelativePath: string = ''
+  currentRelativePath: string = "",
 ): SidebarItem[] {
   const currentAbsolutePath = path.join(rootDocsDir, currentRelativePath);
 
-  if (!fs.existsSync(currentAbsolutePath) || !fs.statSync(currentAbsolutePath).isDirectory()) {
+  if (
+    !fs.existsSync(currentAbsolutePath) ||
+    !fs.statSync(currentAbsolutePath).isDirectory()
+  ) {
     return [];
   }
 
-  const itemsInDir = fs.readdirSync(currentAbsolutePath, { withFileTypes: true });
-  const metaFilePath = path.join(currentAbsolutePath, '_meta.json');
+  const itemsInDir = fs.readdirSync(currentAbsolutePath, {
+    withFileTypes: true,
+  });
+  const metaFilePath = path.join(currentAbsolutePath, "_meta.json");
   let metaConfig: Record<string, DocMetaItem | string> = {};
   const metaExists = fs.existsSync(metaFilePath);
 
   if (metaExists) {
     try {
-      metaConfig = JSON.parse(fs.readFileSync(metaFilePath, 'utf8'));
+      metaConfig = JSON.parse(fs.readFileSync(metaFilePath, "utf8"));
     } catch (error) {
-      console.error(`Error parsing _meta.json in ${currentAbsolutePath}:`, error);
+      console.error(
+        `Error parsing _meta.json in ${currentAbsolutePath}:`,
+        error,
+      );
     }
   }
 
   const collectedItems: { name: string; isDir: boolean }[] = [];
-  itemsInDir.forEach(dirItem => {
+  itemsInDir.forEach((dirItem) => {
     // Skip system files/dirs and index files (Requirement 4 for sidebar)
     if (
-      dirItem.name.startsWith('_') ||
-      dirItem.name.startsWith('.') ||
-      dirItem.name === 'index.mdx' ||
-      dirItem.name === 'index.md'
+      dirItem.name.startsWith("_") ||
+      dirItem.name.startsWith(".") ||
+      dirItem.name === "index.mdx" ||
+      dirItem.name === "index.md"
     ) {
       return;
     }
@@ -398,9 +419,12 @@ export function getDocDirectoryStructure(
       collectedItems.push({ name: dirItem.name, isDir: true });
     } else if (
       dirItem.isFile() &&
-      (dirItem.name.endsWith('.md') || dirItem.name.endsWith('.mdx'))
+      (dirItem.name.endsWith(".md") || dirItem.name.endsWith(".mdx"))
     ) {
-      collectedItems.push({ name: dirItem.name.replace(/\.(md|mdx)$/, ''), isDir: false });
+      collectedItems.push({
+        name: dirItem.name.replace(/\.(md|mdx)$/, ""),
+        isDir: false,
+      });
     }
   });
 
@@ -409,31 +433,33 @@ export function getDocDirectoryStructure(
   if (metaExists) {
     // Requirement 3: Strict order by _meta.json if it exists.
     // Filter collectedItems to only those present in metaConfig keys.
-    sortedItemNames = Object.keys(metaConfig).filter(key => {
+    sortedItemNames = Object.keys(metaConfig).filter((key) => {
       const metaEntry = metaConfig[key];
       // Exclude items marked as hidden in meta
-      if (typeof metaEntry === 'object' && metaEntry.display === 'hidden') {
+      if (typeof metaEntry === "object" && metaEntry.display === "hidden") {
         return false;
       }
-      return collectedItems.some(ci => ci.name === key);
+      return collectedItems.some((ci) => ci.name === key);
     });
     // Requirement 1: Sidebar 顺序严格按 _meta.json 内容的先后排序.
     // The .sort() based on 'order' property is removed.
     // The order from Object.keys(metaConfig) (after filtering) is preserved.
   } else {
     // Requirement 3: Filename ascending order if no _meta.json
-    sortedItemNames = collectedItems.map(ci => ci.name).sort((a, b) => a.localeCompare(b));
+    sortedItemNames = collectedItems
+      .map((ci) => ci.name)
+      .sort((a, b) => a.localeCompare(b));
   }
 
   return sortedItemNames
-    .map(itemName => {
+    .map((itemName) => {
       const itemMetaEntry = metaConfig[itemName];
       const itemSpecificConfig =
-        typeof itemMetaEntry === 'string'
+        typeof itemMetaEntry === "string"
           ? { title: itemMetaEntry }
           : (itemMetaEntry as DocMetaItem) || {};
 
-      const actualItem = collectedItems.find(ci => ci.name === itemName);
+      const actualItem = collectedItems.find((ci) => ci.name === itemName);
       if (!actualItem) return null; // Should not happen
 
       const itemFsRelativePath = path.join(currentRelativePath, itemName); // Relative to rootDocsDir
@@ -441,34 +467,45 @@ export function getDocDirectoryStructure(
 
       let title = itemSpecificConfig.title || itemName;
       const defaultHref = `/docs/${
-        currentRelativePath ? currentRelativePath + '/' : ''
+        currentRelativePath ? currentRelativePath + "/" : ""
       }${itemName}`;
 
       if (isDirectory) {
-        const children = getDocDirectoryStructure(rootDocsDir, itemFsRelativePath);
+        const children = getDocDirectoryStructure(
+          rootDocsDir,
+          itemFsRelativePath,
+        );
         return {
           title,
           href: itemSpecificConfig.href, // Use href from meta if present (could be external or custom internal for a category link)
           items: children,
           collapsed: itemSpecificConfig.collapsed,
-          type: itemSpecificConfig.type || 'menu',
+          type: itemSpecificConfig.type || "menu",
           isExternal:
             !!itemSpecificConfig.href &&
-            (itemSpecificConfig.href.startsWith('http://') ||
-              itemSpecificConfig.href.startsWith('https://')),
+            (itemSpecificConfig.href.startsWith("http://") ||
+              itemSpecificConfig.href.startsWith("https://")),
           filePath: itemFsRelativePath,
         };
       } else {
         // It's a file
         if (!itemSpecificConfig.title) {
           // Only read frontmatter if title not in meta
-          let mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.mdx`);
+          let mdFilePath = path.join(
+            rootDocsDir,
+            currentRelativePath,
+            `${itemName}.mdx`,
+          );
           if (!fs.existsSync(mdFilePath)) {
-            mdFilePath = path.join(rootDocsDir, currentRelativePath, `${itemName}.md`);
+            mdFilePath = path.join(
+              rootDocsDir,
+              currentRelativePath,
+              `${itemName}.md`,
+            );
           }
           if (fs.existsSync(mdFilePath)) {
             try {
-              const fileContent = fs.readFileSync(mdFilePath, 'utf8');
+              const fileContent = fs.readFileSync(mdFilePath, "utf8");
               const { data: frontmatter } = matter(fileContent);
               if (frontmatter.title) {
                 title = frontmatter.title;
@@ -481,11 +518,11 @@ export function getDocDirectoryStructure(
         return {
           title,
           href: itemSpecificConfig.href || defaultHref,
-          type: itemSpecificConfig.type || 'page',
+          type: itemSpecificConfig.type || "page",
           isExternal:
             !!itemSpecificConfig.href &&
-            (itemSpecificConfig.href.startsWith('http://') ||
-              itemSpecificConfig.href.startsWith('https://')),
+            (itemSpecificConfig.href.startsWith("http://") ||
+              itemSpecificConfig.href.startsWith("https://")),
           filePath: itemFsRelativePath,
         };
       }
@@ -500,7 +537,7 @@ export function getDocDirectoryStructure(
  * @returns An array of SidebarItem objects for the specified category.
  */
 export function getDocSidebar(category: string): SidebarItem[] {
-  const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  const docsContentDir = path.join(process.cwd(), "src", "content", "docs");
   // The initial call to getDocDirectoryStructure uses the category name as the currentRelativePath
   return getDocDirectoryStructure(docsContentDir, category);
 }
@@ -527,7 +564,7 @@ export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
 
   function recurse(items: SidebarItem[]) {
     for (const item of items) {
-      if (item.type === 'separator' || item.isExternal || !item.href) {
+      if (item.type === "separator" || item.isExternal || !item.href) {
         // Skip separators, external links, or items without href for navigation list
         // However, if a menu item (category) has an href, it might be a link to its own overview page (not index.mdx)
         // and its children should still be processed.
@@ -538,26 +575,26 @@ export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
       }
 
       // Process page items and menu items that are also pages
-      if (item.type === 'page' || (item.type === 'menu' && item.href)) {
+      if (item.type === "page" || (item.type === "menu" && item.href)) {
         // Ensure path starts with /docs/ and normalize
         let itemPath = item.href;
-        if (!itemPath.startsWith('/docs/')) {
+        if (!itemPath.startsWith("/docs/")) {
           // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
-          itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
+          itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, "")}`;
         }
-        itemPath = itemPath.replace(/\\/g, '/');
+        itemPath = itemPath.replace(/\\/g, "/");
 
         // Ensure it's not an accidental link to an index page that should be hidden from prev/next
         // (getDocDirectoryStructure already filters index.mdx from items for sidebar)
         // This check might be redundant if getDocDirectoryStructure is perfect.
-        if (!itemPath.endsWith('/index')) {
+        if (!itemPath.endsWith("/index")) {
           // A simple check, might need refinement
           flatList.push({ title: item.title, path: itemPath });
         }
       }
 
       // Recursively process children of a menu
-      if (item.items && item.items.length > 0 && item.type === 'menu') {
+      if (item.items && item.items.length > 0 && item.type === "menu") {
         recurse(item.items);
       }
     }

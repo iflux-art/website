@@ -11,13 +11,13 @@
 export function countWords(text: string): number {
   // 移除 Markdown 语法和 HTML 标签
   const cleanText = text
-    .replace(/```[\s\S]*?```/g, '') // 移除代码块
-    .replace(/`[^`]*`/g, '') // 移除行内代码
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // 替换链接为链接文本
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1') // 替换图片为图片描述
-    .replace(/<[^>]*>/g, '') // 移除 HTML 标签
-    .replace(/[#*_~>|-]/g, '') // 移除 Markdown 标记符号
-    .replace(/\s+/g, ' ') // 将多个空白字符替换为单个空格
+    .replace(/```[\s\S]*?```/g, "") // 移除代码块
+    .replace(/`[^`]*`/g, "") // 移除行内代码
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // 替换链接为链接文本
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1") // 替换图片为图片描述
+    .replace(/<[^>]*>/g, "") // 移除 HTML 标签
+    .replace(/[#*_~>|-]/g, "") // 移除 Markdown 标记符号
+    .replace(/\s+/g, " ") // 将多个空白字符替换为单个空格
     .trim();
 
   // 中文字符计数
@@ -25,9 +25,9 @@ export function countWords(text: string): number {
 
   // 英文单词计数（简单的按空格分割）
   const englishWords = cleanText
-    .replace(/[\u4e00-\u9fa5]/g, '') // 移除中文字符
+    .replace(/[\u4e00-\u9fa5]/g, "") // 移除中文字符
     .split(/\s+/)
-    .filter(word => word.length > 0);
+    .filter((word) => word.length > 0);
 
   // 返回中文字符数和英文单词数之和
   return chineseChars.length + englishWords.length;
@@ -42,9 +42,9 @@ export const slugify = (text: string): string => {
   return text
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '') // 移除特殊字符
-    .replace(/[\s_-]+/g, '-') // 替换空格和下划线为连字符
-    .replace(/^-+|-+$/g, ''); // 移除开头和结尾的连字符
+    .replace(/[^\w\s-]/g, "") // 移除特殊字符
+    .replace(/[\s_-]+/g, "-") // 替换空格和下划线为连字符
+    .replace(/^-+|-+$/g, ""); // 移除开头和结尾的连字符
 };
 
 /**
@@ -54,7 +54,7 @@ export const slugify = (text: string): string => {
  */
 export function formatReadingTime(minutes: number): string {
   if (minutes < 1) {
-    return '少于 1 分钟';
+    return "少于 1 分钟";
   } else if (minutes < 60) {
     return `${Math.ceil(minutes)} 分钟`;
   } else {

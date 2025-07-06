@@ -3,10 +3,10 @@
  * 整合所有MDX组件配置和映射
  */
 
-import type { MDXComponents } from '@/types';
-import { baseMDXComponents } from './mdx-base-components';
-import { extendedMDXComponents } from './mdx-extended-components';
-import { defaultComponentProps, MDXComponentContextType } from './mdx-config';
+import type { MDXComponents } from "@/types";
+import { baseMDXComponents } from "./mdx-base-components";
+import { extendedMDXComponents } from "./mdx-extended-components";
+import { defaultComponentProps, MDXComponentContextType } from "./mdx-config";
 
 /**
  * 合并后的MDX组件映射
@@ -26,4 +26,4 @@ export const useMDXComponents = (): MDXComponentContextType => {
   };
 };
 
-export * from './mdx-config';
+export * from "./mdx-config";

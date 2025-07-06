@@ -1,7 +1,7 @@
-import React from 'react';
-import { LucideIcon } from 'lucide-react';
-import Link from 'next/link';
-import { cn } from '@/utils';
+import React from "react";
+import { LucideIcon } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface AdminPageContentLayoutProps {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ export default function AdminPageContentLayout({
 }: AdminPageContentLayoutProps) {
   return (
     <div
-      className={cn('min-h-screen p-4 sm:p-6 md:p-8', className)}
+      className={cn("min-h-screen p-4 sm:p-6 md:p-8", className)}
       role="region"
       aria-label="管理页面内容"
     >
@@ -36,17 +36,21 @@ export default function AdminPageContentLayout({
         {(title || description || backUrl) && (
           <header
             className={cn(
-              'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8',
-              headerClassName
+              "mb-6 flex flex-col items-start justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center",
+              headerClassName,
             )}
           >
             {(title || description) && (
               <div>
                 {title && (
-                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>
+                  <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                    {title}
+                  </h1>
                 )}
                 {description && (
-                  <p className="mt-1 text-sm sm:text-base text-muted-foreground">{description}</p>
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                    {description}
+                  </p>
                 )}
               </div>
             )}
@@ -54,24 +58,24 @@ export default function AdminPageContentLayout({
               <div className="flex items-center space-x-3">
                 {Icon && (
                   <Icon
-                    className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground"
+                    className="h-5 w-5 text-muted-foreground sm:h-6 sm:w-6"
                     aria-hidden="true"
                   />
                 )}
                 {backUrl && (
                   <Link
                     href={backUrl}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label={backLabel || '返回'}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    aria-label={backLabel || "返回"}
                   >
-                    {backLabel || '返回'}
+                    {backLabel || "返回"}
                   </Link>
                 )}
               </div>
             )}
           </header>
         )}
-        <main className={cn('w-full', contentClassName)} role="main">
+        <main className={cn("w-full", contentClassName)} role="main">
           {children}
         </main>
       </div>

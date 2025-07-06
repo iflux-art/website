@@ -36,8 +36,8 @@ export function extractHeadings(content: string): {
       customId ||
       `heading-${finalText
         .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '')}-${match.index}`;
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "")}-${match.index}`;
 
     if (level >= 1 && level <= 4) {
       headings.push({ id, text: finalText, level });
@@ -45,13 +45,16 @@ export function extractHeadings(content: string): {
   }
 
   // 确保所有标题都有唯一ID
-  headings.forEach(heading => {
-    const escapedText = heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+  headings.forEach((heading) => {
+    const escapedText = heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,
-      'gm'
+      "gm",
     );
-    processedContent = processedContent.replace(headingRegex, `$1 $2 {#${heading.id}}`);
+    processedContent = processedContent.replace(
+      headingRegex,
+      `$1 $2 {#${heading.id}}`,
+    );
   });
 
   return {

@@ -1,13 +1,13 @@
-import { Metadata } from 'next';
-import { SITE_METADATA } from '@/lib/constants';
+import { Metadata } from "next";
+import { SITE_METADATA } from "@/lib/constants";
 
 /**
  * 页面类型常量
  */
 export const PAGE_TYPES = {
-  WEBSITE: 'website',
-  ARTICLE: 'article',
-  PROFILE: 'profile',
+  WEBSITE: "website",
+  ARTICLE: "article",
+  PROFILE: "profile",
 } as const;
 
 export type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];
@@ -147,12 +147,12 @@ export interface GenerateMetadataOptions {
  */
 export function generateViewport() {
   return {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
     maximumScale: 2,
     themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-      { media: '(prefers-color-scheme: dark)', color: '#000000' },
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#000000" },
     ],
   };
 }
@@ -165,15 +165,15 @@ const metadataCache = new Map<string, Metadata>();
  */
 function generateJsonLd(config: JsonLdConfig): string {
   return JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': config.type,
+    "@context": "https://schema.org",
+    "@type": config.type,
     name: config.name,
     description: config.description,
     url: config.url,
     image: config.image,
     author: config.author
       ? {
-          '@type': 'Person',
+          "@type": "Person",
           name: config.author,
         }
       : undefined,
@@ -182,7 +182,9 @@ function generateJsonLd(config: JsonLdConfig): string {
     ...config,
   });
 }
-export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
+export function generateMetadata(
+  options: GenerateMetadataOptions = {},
+): Metadata {
   const cacheKey = JSON.stringify(options);
   if (metadataCache.has(cacheKey)) {
     return metadataCache.get(cacheKey)!;
@@ -193,11 +195,11 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     description = SITE_METADATA.description,
     keywords = SITE_METADATA.keywords,
     image = SITE_METADATA.image,
-    type = 'website',
+    type = "website",
     author = SITE_METADATA.author,
     date,
     modified,
-    locale = 'zh_CN',
+    locale = "zh_CN",
     url,
     noindex = false,
     nofollow = false,
@@ -207,9 +209,13 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     social,
   } = options;
 
-  const fullTitle = title ? `${title} | ${SITE_METADATA.title}` : SITE_METADATA.title;
+  const fullTitle = title
+    ? `${title} | ${SITE_METADATA.title}`
+    : SITE_METADATA.title;
   const fullUrl = url || SITE_METADATA.url;
-  const fullImage = image.startsWith('http') ? image : `${SITE_METADATA.url}${image}`;
+  const fullImage = image.startsWith("http")
+    ? image
+    : `${SITE_METADATA.url}${image}`;
 
   const metadata: Metadata = {
     title: fullTitle,
@@ -221,9 +227,9 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
       googleBot: {
         index: !noindex,
         follow: !nofollow,
-        'max-image-preview': 'large',
-        'max-video-preview': -1,
-        'max-snippet': -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+        "max-snippet": -1,
       },
     },
 
@@ -235,14 +241,14 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
       images: [
         {
           url: fullImage,
-          width: type === 'article' ? 1200 : 800,
-          height: type === 'article' ? 630 : 600,
+          width: type === "article" ? 1200 : 800,
+          height: type === "article" ? 630 : 600,
           alt: fullTitle,
         },
       ],
       locale,
       type,
-      ...(type === 'article' && {
+      ...(type === "article" && {
         article: {
           authors: [author],
           publishedTime: date,
@@ -252,14 +258,14 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     },
 
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: fullTitle,
       description,
       images: [fullImage],
       creator: social?.twitter || SITE_METADATA.twitter,
     },
 
-    keywords: keywords.join(', '),
+    keywords: keywords.join(", "),
     authors: [{ name: author, url: SITE_METADATA.url }],
     creator: author,
     publisher: SITE_METADATA.title,
@@ -269,29 +275,29 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     },
 
     icons: {
-      icon: icons?.icon || '/favicon.ico',
-      shortcut: icons?.shortcut || '/favicon-16x16.png',
-      apple: icons?.apple || '/apple-touch-icon.png',
+      icon: icons?.icon || "/favicon.ico",
+      shortcut: icons?.shortcut || "/favicon-16x16.png",
+      apple: icons?.apple || "/apple-touch-icon.png",
       other: [
         {
-          rel: 'mask-icon',
-          url: icons?.mask || '/safari-pinned-tab.svg',
+          rel: "mask-icon",
+          url: icons?.mask || "/safari-pinned-tab.svg",
         },
         {
-          rel: 'manifest',
-          url: icons?.manifest || '/manifest.json',
+          rel: "manifest",
+          url: icons?.manifest || "/manifest.json",
         },
       ],
     },
 
     verification: {
-      google: verification?.google || 'google-site-verification',
-      yandex: verification?.yandex || 'yandex-verification',
-      yahoo: verification?.yahoo || 'yahoo-verification',
+      google: verification?.google || "google-site-verification",
+      yandex: verification?.yandex || "yandex-verification",
+      yahoo: verification?.yahoo || "yahoo-verification",
       other: {
         ...(verification?.other || {
-          me: ['hello@iflux.art'],
-          'msvalidate.01': ['msvalidate.01'],
+          me: ["hello@iflux.art"],
+          "msvalidate.01": ["msvalidate.01"],
         }),
       },
     },
@@ -301,7 +307,7 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
   if (jsonLd) {
     const ldJson = generateJsonLd(jsonLd);
     const newOther: { [key: string]: string | number | (string | number)[] } = {
-      'script:ld+json': ldJson,
+      "script:ld+json": ldJson,
     };
 
     if (metadata.other) {
@@ -322,13 +328,17 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
 /**
  * 生成文章页面的元数据
  */
-export function generateArticleMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
+export function generateArticleMetadata(
+  options: Omit<GenerateMetadataOptions, "type">,
+): Metadata {
   return generateMetadata({ ...options, type: PAGE_TYPES.ARTICLE });
 }
 
 /**
  * 生成个人资料页面的元数据
  */
-export function generateProfileMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
+export function generateProfileMetadata(
+  options: Omit<GenerateMetadataOptions, "type">,
+): Metadata {
   return generateMetadata({ ...options, type: PAGE_TYPES.PROFILE });
 }

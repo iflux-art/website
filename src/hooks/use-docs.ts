@@ -3,11 +3,17 @@
  * @module hooks/use-docs
  */
 
-'use client';
+"use client";
 
-import { useContentData } from '@/hooks/use-content-data';
-import { API_PATHS, HookResult } from '../lib/constants';
-import { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarItem } from '@/types';
+import { useContentData } from "@/hooks/use-content-data";
+import { API_PATHS, HookResult } from "../lib/constants";
+import {
+  DocItem,
+  DocCategory,
+  DocListItem,
+  UseDocSidebarResult,
+  SidebarItem,
+} from "@/types";
 
 /**
  * 使用文档分类
@@ -16,7 +22,7 @@ import { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarItem } f
  */
 export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
-    type: 'docs',
+    type: "docs",
     path: API_PATHS.DOCS.CATEGORIES,
   });
 }
@@ -29,7 +35,7 @@ export function useDocCategories(): HookResult<DocCategory[]> {
  */
 export function useCategoryDocs(category: string): HookResult<DocListItem[]> {
   return useContentData<DocListItem[]>({
-    type: 'docs',
+    type: "docs",
     path: API_PATHS.DOCS.CATEGORY(category),
   });
 }
@@ -42,7 +48,7 @@ export function useCategoryDocs(category: string): HookResult<DocListItem[]> {
  */
 export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
   return useContentData<Record<string, unknown>>({
-    type: 'docs',
+    type: "docs",
     path: API_PATHS.DOCS.META(path),
   });
 }
@@ -54,7 +60,7 @@ export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
  */
 export function useDocSidebar(category: string): UseDocSidebarResult {
   const { data, loading, refresh, error } = useContentData<SidebarItem[]>({
-    type: 'docs',
+    type: "docs",
     path: API_PATHS.DOCS.SIDEBAR(category),
     disableCache: true,
   });
@@ -70,7 +76,13 @@ export function useDocSidebar(category: string): UseDocSidebarResult {
 }
 
 // 导出类型
-export type { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarItem };
+export type {
+  DocItem,
+  DocCategory,
+  DocListItem,
+  UseDocSidebarResult,
+  SidebarItem,
+};
 
 /**
  * 获取所有文档
@@ -84,7 +96,7 @@ export type { DocItem, DocCategory, DocListItem, UseDocSidebarResult, SidebarIte
  */
 export function useDocContent(path: string): HookResult<DocItem> {
   return useContentData<DocItem>({
-    type: 'docs',
+    type: "docs",
     path: API_PATHS.DOCS.CONTENT(path),
   });
 }

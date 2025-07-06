@@ -20,7 +20,7 @@ export interface NavMenuProps extends NavProps {
   /**
    * 显示模式：links 为链接列表，cards 为卡片模式
    */
-  mode: 'links' | 'cards';
+  mode: "links" | "cards";
 }
 
 /**

@@ -5,10 +5,10 @@
  */
 
 // 导出所有基础类型
-export type { MDXOptions, MDXComponents } from '@/types';
+export type { MDXOptions, MDXComponents } from "@/types";
 
 // 导出样式相关配置
-export { typographyConfig, MDXStyles } from './styles';
+export { typographyConfig, MDXStyles } from "./styles";
 
 // 导出组件相关配置
 export {
@@ -16,57 +16,59 @@ export {
   defaultComponentProps,
   useMDXComponents,
   type MDXComponentContextType,
-} from './components';
+} from "./components";
 
 // 导入核心配置
-import { typographyConfig } from './styles';
-import { MDXComponentsMapping } from './components';
+import { typographyConfig } from "./styles";
+import { MDXComponentsMapping } from "./components";
 
 // === 直接补充 parser.ts 的核心常量 ===
-import type { MDXOptions } from '@/types';
+import type { MDXOptions } from "@/types";
 
 export const frontmatterConfig = {
-  required: ['title'] as const,
+  required: ["title"] as const,
   optional: [
-    'description',
-    'date',
-    'tags',
-    'draft',
-    'category',
-    'author',
-    'image',
-    'slug',
-    'lastModified',
-    'wordCount',
-    'seo',
+    "description",
+    "date",
+    "tags",
+    "draft",
+    "category",
+    "author",
+    "image",
+    "slug",
+    "lastModified",
+    "wordCount",
+    "seo",
   ] as const,
   validate: {
-    title: (v: unknown): v is string => typeof v === 'string' && v.length > 0,
+    title: (v: unknown): v is string => typeof v === "string" && v.length > 0,
     date: (v: unknown): v is string | Date =>
-      v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
-    tags: (v: unknown): v is string[] => Array.isArray(v) && v.every(t => typeof t === 'string'),
-    draft: (v: unknown): v is boolean => typeof v === 'boolean',
-    category: (v: unknown): v is string => typeof v === 'string',
-    author: (v: unknown): v is string => typeof v === 'string',
-    image: (v: unknown): v is string => typeof v === 'string',
-    slug: (v: unknown): v is string => typeof v === 'string',
+      v instanceof Date || (typeof v === "string" && !isNaN(Date.parse(v))),
+    tags: (v: unknown): v is string[] =>
+      Array.isArray(v) && v.every((t) => typeof t === "string"),
+    draft: (v: unknown): v is boolean => typeof v === "boolean",
+    category: (v: unknown): v is string => typeof v === "string",
+    author: (v: unknown): v is string => typeof v === "string",
+    image: (v: unknown): v is string => typeof v === "string",
+    slug: (v: unknown): v is string => typeof v === "string",
     lastModified: (v: unknown): v is string | Date =>
-      v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
-    wordCount: (v: unknown): v is number => typeof v === 'number' && v >= 0,
-    seo: (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null,
+      v instanceof Date || (typeof v === "string" && !isNaN(Date.parse(v))),
+    wordCount: (v: unknown): v is number => typeof v === "number" && v >= 0,
+    seo: (v: unknown): v is Record<string, unknown> =>
+      typeof v === "object" && v !== null,
   },
 } as const;
 
 export const MDXBaseOptions: MDXOptions = {
   compile: {
     parseFrontmatter: true,
-    development: process.env.NODE_ENV === 'development',
+    development: process.env.NODE_ENV === "development",
   },
   image: {
     defaultWidth: 1200,
     defaultHeight: 800,
     priority: false,
-    placeholder: 'empty',
+    placeholder: "empty",
     domains: [],
   },
   link: {
@@ -76,7 +78,7 @@ export const MDXBaseOptions: MDXOptions = {
   },
   code: {
     showLineNumbers: false,
-    defaultLanguage: 'text',
+    defaultLanguage: "text",
     wrap: true,
   },
 };
@@ -99,13 +101,13 @@ export default MDXConfig;
  */
 export const MDX_ENV = {
   /** 是否为开发环境 */
-  isDevelopment: process.env.NODE_ENV === 'development',
+  isDevelopment: process.env.NODE_ENV === "development",
   /** 是否为生产环境 */
-  isProduction: process.env.NODE_ENV === 'production',
+  isProduction: process.env.NODE_ENV === "production",
   /** 默认语言环境 */
-  defaultLocale: 'zh-CN',
+  defaultLocale: "zh-CN",
   /** 支持的语言列表 */
-  supportedLocales: ['zh-CN', 'en-US'] as const,
+  supportedLocales: ["zh-CN", "en-US"] as const,
 } as const;
 
 /**
@@ -119,7 +121,9 @@ export const MDXValidators = {
    * @returns 是否包含所有必需字段
    */
   validateRequired: (frontmatter: Record<string, unknown>) => {
-    return frontmatterConfig.required.every((field: string) => field in frontmatter);
+    return frontmatterConfig.required.every(
+      (field: string) => field in frontmatter,
+    );
   },
 
   /**
@@ -129,16 +133,19 @@ export const MDXValidators = {
    */
   validateFieldTypes: (frontmatter: Record<string, unknown>) => {
     const typeChecks = {
-      title: (v: unknown): v is string => typeof v === 'string',
+      title: (v: unknown): v is string => typeof v === "string",
       date: (v: unknown): v is string | Date =>
-        v instanceof Date || (typeof v === 'string' && !isNaN(Date.parse(v))),
-      tags: (v: unknown): v is string[] => Array.isArray(v) && v.every(t => typeof t === 'string'),
-      draft: (v: unknown): v is boolean => typeof v === 'boolean',
+        v instanceof Date || (typeof v === "string" && !isNaN(Date.parse(v))),
+      tags: (v: unknown): v is string[] =>
+        Array.isArray(v) && v.every((t) => typeof t === "string"),
+      draft: (v: unknown): v is boolean => typeof v === "boolean",
     } as const;
 
-    return Object.entries(typeChecks).every(([field, check]: [string, (v: unknown) => boolean]) => {
-      return !(field in frontmatter) || check(frontmatter[field]);
-    });
+    return Object.entries(typeChecks).every(
+      ([field, check]: [string, (v: unknown) => boolean]) => {
+        return !(field in frontmatter) || check(frontmatter[field]);
+      },
+    );
   },
 };
 
@@ -154,9 +161,9 @@ export const MDXUtils = {
    */
   formatDate: (date: string | Date) => {
     return new Date(date).toLocaleDateString(MDX_ENV.defaultLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   },
 

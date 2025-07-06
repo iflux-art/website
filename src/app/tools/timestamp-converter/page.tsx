@@ -1,28 +1,35 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Clock, Calendar, RefreshCw } from 'lucide-react';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  ArrowLeft,
+  Copy,
+  Check,
+  Clock,
+  Calendar,
+  RefreshCw,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function TimestampConverterPage() {
-  const [activeTab, setActiveTab] = useState('converter');
-  const [timestamp, setTimestamp] = useState('');
-  const [datetime, setDatetime] = useState('');
+  const [activeTab, setActiveTab] = useState("converter");
+  const [timestamp, setTimestamp] = useState("");
+  const [datetime, setDatetime] = useState("");
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
 
   // 时区转换相关状态
-  const [sourceTimezone, setSourceTimezone] = useState('Asia/Shanghai');
-  const [targetTimezone, setTargetTimezone] = useState('America/New_York');
-  const [sourceDateTime, setSourceDateTime] = useState('');
+  const [sourceTimezone, setSourceTimezone] = useState("Asia/Shanghai");
+  const [targetTimezone, setTargetTimezone] = useState("America/New_York");
+  const [sourceDateTime, setSourceDateTime] = useState("");
 
   // 日期计算相关状态
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [addDays, setAddDays] = useState('0');
-  const [baseDate, setBaseDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [addDays, setAddDays] = useState("0");
+  const [baseDate, setBaseDate] = useState("");
 
   // 更新当前时间
   useEffect(() => {
@@ -41,30 +48,31 @@ export default function TimestampConverterPage() {
     try {
       const ts = parseInt(timestamp);
       if (isNaN(ts)) {
-        alert('请输入有效的时间戳');
+        alert("请输入有效的时间戳");
         return;
       }
 
       // 判断是秒级还是毫秒级时间戳
-      const date = ts.toString().length === 10 ? new Date(ts * 1000) : new Date(ts);
+      const date =
+        ts.toString().length === 10 ? new Date(ts * 1000) : new Date(ts);
 
       if (isNaN(date.getTime())) {
-        alert('无效的时间戳');
+        alert("无效的时间戳");
         return;
       }
 
       // 格式化为本地时间
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      const seconds = String(date.getSeconds()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
 
       setDatetime(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
     } catch {
       // 忽略具体错误信息，仅显示通用提示
-      alert('转换失败，请检查时间戳格式');
+      alert("转换失败，请检查时间戳格式");
     }
   };
 
@@ -74,7 +82,7 @@ export default function TimestampConverterPage() {
       const date = new Date(datetime);
 
       if (isNaN(date.getTime())) {
-        alert('请输入有效的日期时间格式');
+        alert("请输入有效的日期时间格式");
         return;
       }
 
@@ -82,7 +90,7 @@ export default function TimestampConverterPage() {
       setTimestamp(ts.toString());
     } catch {
       // 忽略具体错误信息，仅显示通用提示
-      alert('转换失败，请检查日期时间格式');
+      alert("转换失败，请检查日期时间格式");
     }
   };
 
@@ -96,11 +104,11 @@ export default function TimestampConverterPage() {
   const getCurrentDatetime = () => {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
 
     setDatetime(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
   };
@@ -112,19 +120,23 @@ export default function TimestampConverterPage() {
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);
     } catch (err) {
-      console.error('复制失败:', err);
+      console.error("复制失败:", err);
     }
   };
 
   // 时区转换
-  const convertTimezone = (dateTimeStr: string, fromTz: string, toTz: string) => {
+  const convertTimezone = (
+    dateTimeStr: string,
+    fromTz: string,
+    toTz: string,
+  ) => {
     try {
       const date = new Date(dateTimeStr);
       if (isNaN(date.getTime())) return null;
 
       return {
-        original: date.toLocaleString('zh-CN', { timeZone: fromTz }),
-        converted: date.toLocaleString('zh-CN', { timeZone: toTz }),
+        original: date.toLocaleString("zh-CN", { timeZone: fromTz }),
+        converted: date.toLocaleString("zh-CN", { timeZone: toTz }),
         timestamp: Math.floor(date.getTime() / 1000),
         iso: date.toISOString(),
       };
@@ -169,8 +181,8 @@ export default function TimestampConverterPage() {
 
       date.setDate(date.getDate() + days);
       return {
-        result: date.toISOString().split('T')[0],
-        formatted: date.toLocaleDateString('zh-CN'),
+        result: date.toISOString().split("T")[0],
+        formatted: date.toLocaleDateString("zh-CN"),
         timestamp: Math.floor(date.getTime() / 1000),
       };
     } catch {
@@ -181,27 +193,27 @@ export default function TimestampConverterPage() {
 
   // 常用时区列表
   const timezones = [
-    { value: 'Asia/Shanghai', label: '北京时间 (UTC+8)' },
-    { value: 'America/New_York', label: '纽约时间 (UTC-5/-4)' },
-    { value: 'America/Los_Angeles', label: '洛杉矶时间 (UTC-8/-7)' },
-    { value: 'Europe/London', label: '伦敦时间 (UTC+0/+1)' },
-    { value: 'Europe/Paris', label: '巴黎时间 (UTC+1/+2)' },
-    { value: 'Asia/Tokyo', label: '东京时间 (UTC+9)' },
-    { value: 'Asia/Seoul', label: '首尔时间 (UTC+9)' },
-    { value: 'Australia/Sydney', label: '悉尼时间 (UTC+10/+11)' },
-    { value: 'UTC', label: 'UTC 时间' },
+    { value: "Asia/Shanghai", label: "北京时间 (UTC+8)" },
+    { value: "America/New_York", label: "纽约时间 (UTC-5/-4)" },
+    { value: "America/Los_Angeles", label: "洛杉矶时间 (UTC-8/-7)" },
+    { value: "Europe/London", label: "伦敦时间 (UTC+0/+1)" },
+    { value: "Europe/Paris", label: "巴黎时间 (UTC+1/+2)" },
+    { value: "Asia/Tokyo", label: "东京时间 (UTC+9)" },
+    { value: "Asia/Seoul", label: "首尔时间 (UTC+9)" },
+    { value: "Australia/Sydney", label: "悉尼时间 (UTC+10/+11)" },
+    { value: "UTC", label: "UTC 时间" },
   ];
 
   // 清空所有
   const clearAll = () => {
-    setTimestamp('');
-    setDatetime('');
+    setTimestamp("");
+    setDatetime("");
   };
 
   // 格式化当前时间显示
   const formatCurrentTime = (date: Date) => {
     return {
-      datetime: date.toISOString().replace('T', ' ').split('.')[0],
+      datetime: date.toISOString().replace("T", " ").split(".")[0],
       timestamp: Math.floor(date.getTime() / 1000),
       timestampMs: date.getTime(),
       iso: date.toISOString(),
@@ -214,7 +226,7 @@ export default function TimestampConverterPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
@@ -234,19 +246,19 @@ export default function TimestampConverterPage() {
         <CardContent className="p-0">
           <div className="flex border-b">
             {[
-              { key: 'converter', name: '时间戳转换', icon: Clock },
-              { key: 'timezone', name: '时区转换', icon: RefreshCw },
-              { key: 'calculator', name: '日期计算', icon: Calendar },
-            ].map(tab => {
+              { key: "converter", name: "时间戳转换", icon: Clock },
+              { key: "timezone", name: "时区转换", icon: RefreshCw },
+              { key: "calculator", name: "日期计算", icon: Calendar },
+            ].map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                  className={`flex flex-1 items-center justify-center gap-2 border-b-2 p-4 text-center transition-colors ${
                     activeTab === tab.key
-                      ? 'border-primary text-primary bg-primary/5'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                      ? "border-primary bg-primary/5 text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
@@ -259,7 +271,7 @@ export default function TimestampConverterPage() {
       </Card>
 
       {/* 时间戳转换标签页 */}
-      {activeTab === 'converter' && (
+      {activeTab === "converter" && (
         <>
           {/* 当前时间显示 */}
           <Card className="mb-6">
@@ -271,23 +283,32 @@ export default function TimestampConverterPage() {
             </CardHeader>
             <CardContent>
               {currentTimeInfo ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">本地时间</div>
-                    <div className="font-mono text-lg">{currentTimeInfo.datetime}</div>
+                    <div className="text-sm text-muted-foreground">
+                      本地时间
+                    </div>
+                    <div className="font-mono text-lg">
+                      {currentTimeInfo.datetime}
+                    </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">时间戳（秒）</div>
-                    <div className="font-mono text-lg flex items-center gap-2">
+                    <div className="text-sm text-muted-foreground">
+                      时间戳（秒）
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-lg">
                       {currentTimeInfo.timestamp}
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() =>
-                          copyToClipboard(currentTimeInfo.timestamp.toString(), 'current-timestamp')
+                          copyToClipboard(
+                            currentTimeInfo.timestamp.toString(),
+                            "current-timestamp",
+                          )
                         }
                       >
-                        {copied === 'current-timestamp' ? (
+                        {copied === "current-timestamp" ? (
                           <Check className="h-4 w-4" />
                         ) : (
                           <Copy className="h-4 w-4" />
@@ -296,8 +317,10 @@ export default function TimestampConverterPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">时间戳（毫秒）</div>
-                    <div className="font-mono text-lg flex items-center gap-2">
+                    <div className="text-sm text-muted-foreground">
+                      时间戳（毫秒）
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-lg">
                       {currentTimeInfo.timestampMs}
                       <Button
                         variant="ghost"
@@ -305,11 +328,11 @@ export default function TimestampConverterPage() {
                         onClick={() =>
                           copyToClipboard(
                             currentTimeInfo.timestampMs.toString(),
-                            'current-timestamp-ms'
+                            "current-timestamp-ms",
                           )
                         }
                       >
-                        {copied === 'current-timestamp-ms' ? (
+                        {copied === "current-timestamp-ms" ? (
                           <Check className="h-4 w-4" />
                         ) : (
                           <Copy className="h-4 w-4" />
@@ -319,12 +342,14 @@ export default function TimestampConverterPage() {
                   </div>
                 </div>
               ) : (
-                <div className="text-center text-muted-foreground">正在加载当前时间...</div>
+                <div className="text-center text-muted-foreground">
+                  正在加载当前时间...
+                </div>
               )}
             </CardContent>
           </Card>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* 时间戳转日期时间 */}
             <Card>
               <CardHeader>
@@ -332,13 +357,15 @@ export default function TimestampConverterPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">时间戳</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    时间戳
+                  </label>
                   <input
                     type="text"
                     value={timestamp}
-                    onChange={e => setTimestamp(e.target.value)}
+                    onChange={(e) => setTimestamp(e.target.value)}
                     placeholder="输入时间戳（支持秒级和毫秒级）"
-                    className="w-full p-3 border border-border rounded-lg bg-background font-mono focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full rounded-lg border border-border bg-background p-3 font-mono focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </div>
 
@@ -353,20 +380,22 @@ export default function TimestampConverterPage() {
 
                 {datetime && (
                   <div>
-                    <label className="block text-sm font-medium mb-2">转换结果</label>
+                    <label className="mb-2 block text-sm font-medium">
+                      转换结果
+                    </label>
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={datetime}
                         readOnly
-                        className="flex-1 p-3 border border-border rounded-lg bg-muted/50 font-mono"
+                        className="flex-1 rounded-lg border border-border bg-muted/50 p-3 font-mono"
                       />
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => copyToClipboard(datetime, 'datetime')}
+                        onClick={() => copyToClipboard(datetime, "datetime")}
                       >
-                        {copied === 'datetime' ? (
+                        {copied === "datetime" ? (
                           <Check className="h-4 w-4" />
                         ) : (
                           <Copy className="h-4 w-4" />
@@ -385,13 +414,15 @@ export default function TimestampConverterPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">日期时间</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    日期时间
+                  </label>
                   <input
                     type="text"
                     value={datetime}
-                    onChange={e => setDatetime(e.target.value)}
+                    onChange={(e) => setDatetime(e.target.value)}
                     placeholder="YYYY-MM-DD HH:mm:ss"
-                    className="w-full p-3 border border-border rounded-lg bg-background font-mono focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full rounded-lg border border-border bg-background p-3 font-mono focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </div>
 
@@ -406,20 +437,22 @@ export default function TimestampConverterPage() {
 
                 {timestamp && (
                   <div>
-                    <label className="block text-sm font-medium mb-2">转换结果</label>
+                    <label className="mb-2 block text-sm font-medium">
+                      转换结果
+                    </label>
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={timestamp}
                         readOnly
-                        className="flex-1 p-3 border border-border rounded-lg bg-muted/50 font-mono"
+                        className="flex-1 rounded-lg border border-border bg-muted/50 p-3 font-mono"
                       />
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => copyToClipboard(timestamp, 'timestamp')}
+                        onClick={() => copyToClipboard(timestamp, "timestamp")}
                       >
-                        {copied === 'timestamp' ? (
+                        {copied === "timestamp" ? (
                           <Check className="h-4 w-4" />
                         ) : (
                           <Copy className="h-4 w-4" />
@@ -442,22 +475,24 @@ export default function TimestampConverterPage() {
       )}
 
       {/* 时区转换标签页 */}
-      {activeTab === 'timezone' && (
+      {activeTab === "timezone" && (
         <div className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>时区转换</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">源时区</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    源时区
+                  </label>
                   <select
                     value={sourceTimezone}
-                    onChange={e => setSourceTimezone(e.target.value)}
-                    className="w-full p-2 border border-border rounded-lg bg-background"
+                    onChange={(e) => setSourceTimezone(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-2"
                   >
-                    {timezones.map(tz => (
+                    {timezones.map((tz) => (
                       <option key={tz.value} value={tz.value}>
                         {tz.label}
                       </option>
@@ -465,13 +500,15 @@ export default function TimestampConverterPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">目标时区</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    目标时区
+                  </label>
                   <select
                     value={targetTimezone}
-                    onChange={e => setTargetTimezone(e.target.value)}
-                    className="w-full p-2 border border-border rounded-lg bg-background"
+                    onChange={(e) => setTargetTimezone(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-2"
                   >
-                    {timezones.map(tz => (
+                    {timezones.map((tz) => (
                       <option key={tz.value} value={tz.value}>
                         {tz.label}
                       </option>
@@ -481,51 +518,67 @@ export default function TimestampConverterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">输入时间</label>
+                <label className="mb-2 block text-sm font-medium">
+                  输入时间
+                </label>
                 <input
                   type="datetime-local"
                   value={sourceDateTime}
-                  onChange={e => setSourceDateTime(e.target.value)}
-                  className="w-full p-3 border border-border rounded-lg bg-background"
+                  onChange={(e) => setSourceDateTime(e.target.value)}
+                  className="w-full rounded-lg border border-border bg-background p-3"
                 />
               </div>
 
               {sourceDateTime &&
                 (() => {
-                  const result = convertTimezone(sourceDateTime, sourceTimezone, targetTimezone);
-                  if (!result) return <p className="text-red-500">时间格式错误</p>;
+                  const result = convertTimezone(
+                    sourceDateTime,
+                    sourceTimezone,
+                    targetTimezone,
+                  );
+                  if (!result)
+                    return <p className="text-red-500">时间格式错误</p>;
 
                   return (
                     <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                          <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
+                          <h4 className="mb-2 font-medium text-blue-700 dark:text-blue-300">
                             源时间
                           </h4>
                           <p className="font-mono">{result.original}</p>
-                          <p className="text-sm text-muted-foreground">{sourceTimezone}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {sourceTimezone}
+                          </p>
                         </div>
-                        <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-                          <h4 className="font-medium text-green-700 dark:text-green-300 mb-2">
+                        <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
+                          <h4 className="mb-2 font-medium text-green-700 dark:text-green-300">
                             转换后
                           </h4>
                           <p className="font-mono">{result.converted}</p>
-                          <p className="text-sm text-muted-foreground">{targetTimezone}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {targetTimezone}
+                          </p>
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-3 bg-muted/50 rounded-lg">
-                          <div className="text-sm text-muted-foreground">时间戳</div>
-                          <div className="font-mono flex items-center gap-2">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div className="rounded-lg bg-muted/50 p-3">
+                          <div className="text-sm text-muted-foreground">
+                            时间戳
+                          </div>
+                          <div className="flex items-center gap-2 font-mono">
                             {result.timestamp}
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() =>
-                                copyToClipboard(result.timestamp.toString(), 'tz-timestamp')
+                                copyToClipboard(
+                                  result.timestamp.toString(),
+                                  "tz-timestamp",
+                                )
                               }
                             >
-                              {copied === 'tz-timestamp' ? (
+                              {copied === "tz-timestamp" ? (
                                 <Check className="h-3 w-3" />
                               ) : (
                                 <Copy className="h-3 w-3" />
@@ -533,16 +586,20 @@ export default function TimestampConverterPage() {
                             </Button>
                           </div>
                         </div>
-                        <div className="p-3 bg-muted/50 rounded-lg">
-                          <div className="text-sm text-muted-foreground">ISO格式</div>
-                          <div className="font-mono flex items-center gap-2">
+                        <div className="rounded-lg bg-muted/50 p-3">
+                          <div className="text-sm text-muted-foreground">
+                            ISO格式
+                          </div>
+                          <div className="flex items-center gap-2 font-mono">
                             {result.iso}
                             <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => copyToClipboard(result.iso, 'tz-iso')}
+                              onClick={() =>
+                                copyToClipboard(result.iso, "tz-iso")
+                              }
                             >
-                              {copied === 'tz-iso' ? (
+                              {copied === "tz-iso" ? (
                                 <Check className="h-3 w-3" />
                               ) : (
                                 <Copy className="h-3 w-3" />
@@ -560,30 +617,34 @@ export default function TimestampConverterPage() {
       )}
 
       {/* 日期计算标签页 */}
-      {activeTab === 'calculator' && (
+      {activeTab === "calculator" && (
         <div className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>日期差计算</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">开始日期</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    开始日期
+                  </label>
                   <input
                     type="date"
                     value={startDate}
-                    onChange={e => setStartDate(e.target.value)}
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-3"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">结束日期</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    结束日期
+                  </label>
                   <input
                     type="date"
                     value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-3"
                   />
                 </div>
               </div>
@@ -592,24 +653,37 @@ export default function TimestampConverterPage() {
                 endDate &&
                 (() => {
                   const diff = calculateDateDiff(startDate, endDate);
-                  if (!diff) return <p className="text-red-500">日期格式错误</p>;
+                  if (!diff)
+                    return <p className="text-red-500">日期格式错误</p>;
 
                   return (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="text-2xl font-bold">{Math.abs(diff.days)}</div>
+                    <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                      <div className="rounded-lg bg-muted/50 p-3 text-center">
+                        <div className="text-2xl font-bold">
+                          {Math.abs(diff.days)}
+                        </div>
                         <div className="text-sm text-muted-foreground">天</div>
                       </div>
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="text-2xl font-bold">{Math.abs(diff.hours)}</div>
-                        <div className="text-sm text-muted-foreground">小时</div>
+                      <div className="rounded-lg bg-muted/50 p-3 text-center">
+                        <div className="text-2xl font-bold">
+                          {Math.abs(diff.hours)}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          小时
+                        </div>
                       </div>
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="text-2xl font-bold">{Math.abs(diff.minutes)}</div>
-                        <div className="text-sm text-muted-foreground">分钟</div>
+                      <div className="rounded-lg bg-muted/50 p-3 text-center">
+                        <div className="text-2xl font-bold">
+                          {Math.abs(diff.minutes)}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          分钟
+                        </div>
                       </div>
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="text-2xl font-bold">{Math.abs(diff.seconds)}</div>
+                      <div className="rounded-lg bg-muted/50 p-3 text-center">
+                        <div className="text-2xl font-bold">
+                          {Math.abs(diff.seconds)}
+                        </div>
                         <div className="text-sm text-muted-foreground">秒</div>
                       </div>
                     </div>
@@ -623,36 +697,44 @@ export default function TimestampConverterPage() {
               <CardTitle>日期加减</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">基准日期</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    基准日期
+                  </label>
                   <input
                     type="date"
                     value={baseDate}
-                    onChange={e => setBaseDate(e.target.value)}
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    onChange={(e) => setBaseDate(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-3"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">增减天数</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    增减天数
+                  </label>
                   <input
                     type="number"
                     value={addDays}
-                    onChange={e => setAddDays(e.target.value)}
+                    onChange={(e) => setAddDays(e.target.value)}
                     placeholder="正数为增加，负数为减少"
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    className="w-full rounded-lg border border-border bg-background p-3"
                   />
                 </div>
               </div>
 
               {baseDate &&
                 (() => {
-                  const result = addDaysToDate(baseDate, parseInt(addDays) || 0);
-                  if (!result) return <p className="text-red-500">日期格式错误</p>;
+                  const result = addDaysToDate(
+                    baseDate,
+                    parseInt(addDays) || 0,
+                  );
+                  if (!result)
+                    return <p className="text-red-500">日期格式错误</p>;
 
                   return (
-                    <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-                      <h4 className="font-medium text-green-700 dark:text-green-300 mb-2">
+                    <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
+                      <h4 className="mb-2 font-medium text-green-700 dark:text-green-300">
                         计算结果
                       </h4>
                       <div className="space-y-2">
@@ -684,8 +766,8 @@ export default function TimestampConverterPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="font-medium mb-2">时间戳格式</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <h4 className="mb-2 font-medium">时间戳格式</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               <li>
                 • <strong>秒级时间戳</strong>：10位数字，如 1640995200
               </li>
@@ -696,8 +778,8 @@ export default function TimestampConverterPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">日期时间格式</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <h4 className="mb-2 font-medium">日期时间格式</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               <li>• 标准格式：YYYY-MM-DD HH:mm:ss</li>
               <li>• 支持格式：2024-01-01 12:00:00</li>
               <li>• 也支持：2024/01/01 12:00:00</li>
@@ -705,8 +787,8 @@ export default function TimestampConverterPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">常见用途</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <h4 className="mb-2 font-medium">常见用途</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               <li>• 数据库时间字段转换</li>
               <li>• API 接口时间参数处理</li>
               <li>• 日志文件时间分析</li>

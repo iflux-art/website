@@ -18,17 +18,22 @@
  * ```
  */
 
-import { Metadata } from 'next';
-import { PWA_CONFIG, IOS_CONFIG, WINDOWS_CONFIG, ICONS_CONFIG } from '@/lib/constants';
+import { Metadata } from "next";
+import {
+  PWA_CONFIG,
+  IOS_CONFIG,
+  WINDOWS_CONFIG,
+  ICONS_CONFIG,
+} from "@/lib/constants";
 
 /**
  * 基础站点元数据配置
  * @description 包含网站的基本信息
  */
 const siteMetadata = {
-  title: 'iFluxArt · 斐流艺创',
+  title: "iFluxArt · 斐流艺创",
   description:
-    '“斐流艺创” 是 “iFluxArt” 的中文翻译，代表智能技术与艺术创作的有机融合，“斐然成章” 的创作力与 “川流不息” 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。',
+    "“斐流艺创” 是 “iFluxArt” 的中文翻译，代表智能技术与艺术创作的有机融合，“斐然成章” 的创作力与 “川流不息” 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。",
 };
 
 /**
@@ -37,7 +42,7 @@ const siteMetadata = {
  */
 const viewportConfig = {
   viewport: {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
     maximumScale: 1,
   },
@@ -51,7 +56,7 @@ const viewportConfig = {
 const pwaConfig = {
   manifest: PWA_CONFIG.manifestPath,
   apple: {
-    mobileWebAppCapable: 'yes',
+    mobileWebAppCapable: "yes",
     applicationName: PWA_CONFIG.applicationName,
   },
 };
@@ -66,11 +71,11 @@ const pwaConfig = {
  * @property {Array} splashScreens - 启动画面配置
  */
 const iosConfig = {
-  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === 'yes',
+  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === "yes",
   appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle as
-    | 'default'
-    | 'black'
-    | 'black-translucent',
+    | "default"
+    | "black"
+    | "black-translucent",
   appleMobileWebAppTitle: IOS_CONFIG.appTitle as string,
   touchIcon: IOS_CONFIG.icons.touchIcon as string,
   splashScreens: IOS_CONFIG.splashScreens as Array<{
@@ -93,15 +98,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: ICONS_CONFIG.favicon16, sizes: '16x16', type: 'image/png' },
-      { url: ICONS_CONFIG.favicon32, sizes: '32x32', type: 'image/png' },
+      { url: ICONS_CONFIG.favicon16, sizes: "16x16", type: "image/png" },
+      { url: ICONS_CONFIG.favicon32, sizes: "32x32", type: "image/png" },
     ],
     shortcut: [{ url: ICONS_CONFIG.favicon }],
-    apple: [{ url: iosConfig.touchIcon, sizes: '180x180' }],
+    apple: [{ url: iosConfig.touchIcon, sizes: "180x180" }],
   },
   other: {
-    'msapplication-TileColor': WINDOWS_CONFIG.msapplicationTileColor,
-    'msapplication-TileImage': WINDOWS_CONFIG.msapplicationTileImage,
+    "msapplication-TileColor": WINDOWS_CONFIG.msapplicationTileColor,
+    "msapplication-TileImage": WINDOWS_CONFIG.msapplicationTileImage,
   },
 };
 

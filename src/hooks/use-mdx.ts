@@ -1,9 +1,9 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
-import type { MDXOptions } from '@/types';
-import { debounce } from '@/utils/helpers';
-import { MDX_CONFIG } from '@/utils/config';
+import { useState, useMemo, useCallback, useEffect } from "react";
+import type { MDXOptions } from "@/types";
+import { debounce } from "@/lib/utils/helpers";
+import { MDX_CONFIG } from "@/lib/utils/config";
 
-type MDXComponents = NonNullable<MDXOptions['components']>;
+type MDXComponents = NonNullable<MDXOptions["components"]>;
 type DebouncedFunction<T> = T & { cancel: () => void };
 
 interface UseMDXOptions {
@@ -17,7 +17,7 @@ interface UseMDXOptions {
  * 提供内容管理和更新功能
  */
 export function useMDX({
-  initialContent = '',
+  initialContent = "",
   debounceDelay = MDX_CONFIG.DEBOUNCE_DELAY,
   components = {},
 }: UseMDXOptions = {}) {
@@ -34,7 +34,7 @@ export function useMDX({
         setContent(value);
         return Promise.resolve();
       }, debounceDelay) as DebouncedFunction<(value: string) => Promise<void>>,
-    [debounceDelay, setContent]
+    [debounceDelay, setContent],
   );
 
   // 清理防抖函数
@@ -49,7 +49,7 @@ export function useMDX({
     (value: string) => {
       return debouncedFn(value);
     },
-    [debouncedFn]
+    [debouncedFn],
   );
 
   return {

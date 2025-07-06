@@ -1,21 +1,23 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Copy, Check, Code, Download, Upload } from 'lucide-react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Copy, Check, Code, Download, Upload } from "lucide-react";
+import Link from "next/link";
 
 export default function CodeToolkitPage() {
-  const [activeTab, setActiveTab] = useState<'format' | 'minify' | 'convert' | 'encode'>('format');
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
-  const [language, setLanguage] = useState<'javascript' | 'html' | 'css' | 'json' | 'xml' | 'sql'>(
-    'javascript'
-  );
+  const [activeTab, setActiveTab] = useState<
+    "format" | "minify" | "convert" | "encode"
+  >("format");
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [language, setLanguage] = useState<
+    "javascript" | "html" | "css" | "json" | "xml" | "sql"
+  >("javascript");
   const [indentSize, setIndentSize] = useState(2);
-  const [indentType, setIndentType] = useState<'spaces' | 'tabs'>('spaces');
-  const [error, setError] = useState('');
+  const [indentType, setIndentType] = useState<"spaces" | "tabs">("spaces");
+  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
   // 格式化JavaScript/TypeScript
@@ -23,32 +25,32 @@ export default function CodeToolkitPage() {
     try {
       // 简化的JavaScript格式化
       const formatted = code
-        .replace(/\s*{\s*/g, ' {\n')
-        .replace(/\s*}\s*/g, '\n}\n')
-        .replace(/;\s*/g, ';\n')
-        .replace(/,\s*/g, ',\n')
-        .replace(/\s*\(\s*/g, '(')
-        .replace(/\s*\)\s*/g, ')')
-        .replace(/\s*=\s*/g, ' = ')
-        .replace(/\s*\+\s*/g, ' + ')
-        .replace(/\s*-\s*/g, ' - ')
-        .replace(/\s*\*\s*/g, ' * ')
-        .replace(/\s*\/\s*/g, ' / ');
+        .replace(/\s*{\s*/g, " {\n")
+        .replace(/\s*}\s*/g, "\n}\n")
+        .replace(/;\s*/g, ";\n")
+        .replace(/,\s*/g, ",\n")
+        .replace(/\s*\(\s*/g, "(")
+        .replace(/\s*\)\s*/g, ")")
+        .replace(/\s*=\s*/g, " = ")
+        .replace(/\s*\+\s*/g, " + ")
+        .replace(/\s*-\s*/g, " - ")
+        .replace(/\s*\*\s*/g, " * ")
+        .replace(/\s*\/\s*/g, " / ");
 
       return addIndentation(formatted);
     } catch {
-      throw new Error('JavaScript格式化失败');
+      throw new Error("JavaScript格式化失败");
     }
   };
 
   // 格式化HTML
   const formatHTML = (code: string): string => {
     try {
-      const formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
+      const formatted = code.replace(/></g, ">\n<").replace(/^\s+|\s+$/g, "");
 
       return addIndentation(formatted);
     } catch {
-      throw new Error('HTML格式化失败');
+      throw new Error("HTML格式化失败");
     }
   };
 
@@ -56,15 +58,15 @@ export default function CodeToolkitPage() {
   const formatCSS = (code: string): string => {
     try {
       const formatted = code
-        .replace(/\s*{\s*/g, ' {\n')
-        .replace(/\s*}\s*/g, '\n}\n')
-        .replace(/;\s*/g, ';\n')
-        .replace(/:\s*/g, ': ')
-        .replace(/,\s*/g, ',\n');
+        .replace(/\s*{\s*/g, " {\n")
+        .replace(/\s*}\s*/g, "\n}\n")
+        .replace(/;\s*/g, ";\n")
+        .replace(/:\s*/g, ": ")
+        .replace(/,\s*/g, ",\n");
 
       return addIndentation(formatted);
     } catch {
-      throw new Error('CSS格式化失败');
+      throw new Error("CSS格式化失败");
     }
   };
 
@@ -72,20 +74,24 @@ export default function CodeToolkitPage() {
   const formatJSON = (code: string): string => {
     try {
       const parsed = JSON.parse(code);
-      return JSON.stringify(parsed, null, indentType === 'spaces' ? indentSize : '\t');
+      return JSON.stringify(
+        parsed,
+        null,
+        indentType === "spaces" ? indentSize : "\t",
+      );
     } catch {
-      throw new Error('JSON格式错误，请检查语法');
+      throw new Error("JSON格式错误，请检查语法");
     }
   };
 
   // 格式化XML
   const formatXML = (code: string): string => {
     try {
-      const formatted = code.replace(/></g, '>\n<').replace(/^\s+|\s+$/g, '');
+      const formatted = code.replace(/></g, ">\n<").replace(/^\s+|\s+$/g, "");
 
       return addIndentation(formatted);
     } catch {
-      throw new Error('XML格式化失败');
+      throw new Error("XML格式化失败");
     }
   };
 
@@ -93,56 +99,60 @@ export default function CodeToolkitPage() {
   const formatSQL = (code: string): string => {
     try {
       const keywords = [
-        'SELECT',
-        'FROM',
-        'WHERE',
-        'JOIN',
-        'INNER JOIN',
-        'LEFT JOIN',
-        'RIGHT JOIN',
-        'ORDER BY',
-        'GROUP BY',
-        'HAVING',
-        'INSERT',
-        'UPDATE',
-        'DELETE',
-        'CREATE',
-        'ALTER',
-        'DROP',
+        "SELECT",
+        "FROM",
+        "WHERE",
+        "JOIN",
+        "INNER JOIN",
+        "LEFT JOIN",
+        "RIGHT JOIN",
+        "ORDER BY",
+        "GROUP BY",
+        "HAVING",
+        "INSERT",
+        "UPDATE",
+        "DELETE",
+        "CREATE",
+        "ALTER",
+        "DROP",
       ];
 
       let formatted = code.toUpperCase();
 
-      keywords.forEach(keyword => {
-        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+      keywords.forEach((keyword) => {
+        const regex = new RegExp(`\\b${keyword}\\b`, "gi");
         formatted = formatted.replace(regex, `\n${keyword}`);
       });
 
       formatted = formatted
-        .replace(/,/g, ',\n')
-        .replace(/\(/g, '(\n')
-        .replace(/\)/g, '\n)')
-        .replace(/^\s+|\s+$/g, '');
+        .replace(/,/g, ",\n")
+        .replace(/\(/g, "(\n")
+        .replace(/\)/g, "\n)")
+        .replace(/^\s+|\s+$/g, "");
 
       return addIndentation(formatted);
     } catch {
-      throw new Error('SQL格式化失败');
+      throw new Error("SQL格式化失败");
     }
   };
 
   // 添加缩进
   const addIndentation = (code: string): string => {
-    const lines = code.split('\n');
+    const lines = code.split("\n");
     let indentLevel = 0;
-    const indent = indentType === 'spaces' ? ' '.repeat(indentSize) : '\t';
+    const indent = indentType === "spaces" ? " ".repeat(indentSize) : "\t";
 
     return lines
-      .map(line => {
+      .map((line) => {
         const trimmed = line.trim();
-        if (!trimmed) return '';
+        if (!trimmed) return "";
 
         // 减少缩进
-        if (trimmed.includes('}') || trimmed.includes('</') || trimmed.includes(')')) {
+        if (
+          trimmed.includes("}") ||
+          trimmed.includes("</") ||
+          trimmed.includes(")")
+        ) {
           indentLevel = Math.max(0, indentLevel - 1);
         }
 
@@ -150,51 +160,51 @@ export default function CodeToolkitPage() {
 
         // 增加缩进
         if (
-          trimmed.includes('{') ||
-          (trimmed.includes('<') && !trimmed.includes('</')) ||
-          trimmed.includes('(')
+          trimmed.includes("{") ||
+          (trimmed.includes("<") && !trimmed.includes("</")) ||
+          trimmed.includes("(")
         ) {
           indentLevel++;
         }
 
         return indentedLine;
       })
-      .join('\n');
+      .join("\n");
   };
 
   // 执行格式化
   const formatCode = () => {
     if (!input.trim()) {
-      setOutput('');
-      setError('');
+      setOutput("");
+      setError("");
       return;
     }
 
     try {
-      let formatted = '';
+      let formatted = "";
 
       switch (language) {
-        case 'javascript': {
+        case "javascript": {
           formatted = formatJavaScript(input);
           break;
         }
-        case 'html': {
+        case "html": {
           formatted = formatHTML(input);
           break;
         }
-        case 'css': {
+        case "css": {
           formatted = formatCSS(input);
           break;
         }
-        case 'json': {
+        case "json": {
           formatted = formatJSON(input);
           break;
         }
-        case 'xml': {
+        case "xml": {
           formatted = formatXML(input);
           break;
         }
-        case 'sql': {
+        case "sql": {
           formatted = formatSQL(input);
           break;
         }
@@ -204,10 +214,10 @@ export default function CodeToolkitPage() {
       }
 
       setOutput(formatted);
-      setError('');
+      setError("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : '格式化失败');
-      setOutput('');
+      setError(err instanceof Error ? err.message : "格式化失败");
+      setOutput("");
     }
   };
 
@@ -216,47 +226,47 @@ export default function CodeToolkitPage() {
     if (!input.trim()) return;
 
     try {
-      let minified = '';
+      let minified = "";
 
       switch (language) {
-        case 'javascript': {
+        case "javascript": {
           minified = input
-            .replace(/\/\*[\s\S]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
-            .replace(/\s+/g, ' ')
-            .replace(/;\s*}/g, '}')
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/\/\/.*$/gm, "")
+            .replace(/\s+/g, " ")
+            .replace(/;\s*}/g, "}")
             .trim();
           break;
         }
-        case 'css': {
+        case "css": {
           minified = input
-            .replace(/\/\*[\s\S]*?\*\//g, '')
-            .replace(/\s+/g, ' ')
-            .replace(/;\s*}/g, '}')
-            .replace(/{\s*/g, '{')
-            .replace(/}\s*/g, '}')
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/\s+/g, " ")
+            .replace(/;\s*}/g, "}")
+            .replace(/{\s*/g, "{")
+            .replace(/}\s*/g, "}")
             .trim();
           break;
         }
-        case 'json': {
+        case "json": {
           const parsed = JSON.parse(input);
           minified = JSON.stringify(parsed);
           break;
         }
-        case 'html':
-        case 'xml': {
-          minified = input.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
+        case "html":
+        case "xml": {
+          minified = input.replace(/>\s+</g, "><").replace(/\s+/g, " ").trim();
           break;
         }
         default: {
-          minified = input.replace(/\s+/g, ' ').trim();
+          minified = input.replace(/\s+/g, " ").trim();
         }
       }
 
       setOutput(minified);
-      setError('');
+      setError("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : '压缩失败');
+      setError(err instanceof Error ? err.message : "压缩失败");
     }
   };
 
@@ -267,7 +277,7 @@ export default function CodeToolkitPage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('复制失败:', err);
+      console.error("复制失败:", err);
     }
   };
 
@@ -276,17 +286,17 @@ export default function CodeToolkitPage() {
     if (!output) return;
 
     const extensions: { [key: string]: string } = {
-      javascript: 'js',
-      html: 'html',
-      css: 'css',
-      json: 'json',
-      xml: 'xml',
-      sql: 'sql',
+      javascript: "js",
+      html: "html",
+      css: "css",
+      json: "json",
+      xml: "xml",
+      sql: "sql",
     };
 
-    const blob = new Blob([output], { type: 'text/plain' });
+    const blob = new Blob([output], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `formatted.${extensions[language]}`;
     a.click();
@@ -299,18 +309,18 @@ export default function CodeToolkitPage() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = e => {
+    reader.onload = (e) => {
       setInput(e.target?.result as string);
     };
     reader.readAsText(file);
-    event.target.value = '';
+    event.target.value = "";
   };
 
   // 清空
   const clearAll = () => {
-    setInput('');
-    setOutput('');
-    setError('');
+    setInput("");
+    setOutput("");
+    setError("");
   };
 
   // 加载示例
@@ -324,7 +334,7 @@ export default function CodeToolkitPage() {
       sql: `select u.name,u.email,p.title from users u inner join posts p on u.id=p.user_id where u.active=1 order by p.created_at desc`,
     };
 
-    setInput(examples[language] || '');
+    setInput(examples[language] || "");
   };
 
   // 实时格式化
@@ -335,25 +345,25 @@ export default function CodeToolkitPage() {
   }, [input, language, indentSize, indentType]);
 
   const tabsData = [
-    { key: 'format', name: '代码格式化', icon: Code },
-    { key: 'minify', name: '代码压缩', icon: Code },
-    { key: 'convert', name: 'JSON/CSV转换', icon: Code },
-    { key: 'encode', name: 'HTML编解码', icon: Code },
+    { key: "format", name: "代码格式化", icon: Code },
+    { key: "minify", name: "代码压缩", icon: Code },
+    { key: "convert", name: "JSON/CSV转换", icon: Code },
+    { key: "encode", name: "HTML编解码", icon: Code },
   ] as const;
 
   const languages = [
-    { value: 'javascript', name: 'JavaScript/TypeScript' },
-    { value: 'html', name: 'HTML' },
-    { value: 'css', name: 'CSS' },
-    { value: 'json', name: 'JSON' },
-    { value: 'xml', name: 'XML' },
-    { value: 'sql', name: 'SQL' },
+    { value: "javascript", name: "JavaScript/TypeScript" },
+    { value: "html", name: "HTML" },
+    { value: "css", name: "CSS" },
+    { value: "json", name: "JSON" },
+    { value: "xml", name: "XML" },
+    { value: "sql", name: "SQL" },
   ];
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
@@ -372,7 +382,7 @@ export default function CodeToolkitPage() {
       <Card className="mb-6">
         <CardContent className="p-0">
           <div className="flex border-b">
-            {tabsData.map(tab => {
+            {tabsData.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
@@ -380,8 +390,8 @@ export default function CodeToolkitPage() {
                   onClick={() => setActiveTab(tab.key)}
                   className={
                     activeTab === tab.key
-                      ? 'px-4 py-2 rounded-md bg-primary text-primary-foreground dark:bg-slate-700'
-                      : 'px-4 py-2 rounded-md hover:bg-accent dark:hover:bg-slate-800'
+                      ? "rounded-md bg-primary px-4 py-2 text-primary-foreground dark:bg-slate-700"
+                      : "rounded-md px-4 py-2 hover:bg-accent dark:hover:bg-slate-800"
                   }
                 >
                   <IconComponent className="h-4 w-4" />
@@ -394,23 +404,27 @@ export default function CodeToolkitPage() {
       </Card>
 
       {/* 设置面板 */}
-      {(activeTab === 'format' || activeTab === 'minify') && (
+      {(activeTab === "format" || activeTab === "minify") && (
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>{activeTab === 'format' ? '格式化设置' : '压缩设置'}</CardTitle>
+            <CardTitle>
+              {activeTab === "format" ? "格式化设置" : "压缩设置"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
                   语言
                 </label>
                 <select
                   value={language}
-                  onChange={e => setLanguage(e.target.value as typeof language)}
-                  className="w-full p-2 border border-border rounded-lg bg-background"
+                  onChange={(e) =>
+                    setLanguage(e.target.value as typeof language)
+                  }
+                  className="w-full rounded-lg border border-border bg-background p-2"
                 >
-                  {languages.map(lang => (
+                  {languages.map((lang) => (
                     <option key={lang.value} value={lang.value}>
                       {lang.name}
                     </option>
@@ -418,16 +432,18 @@ export default function CodeToolkitPage() {
                 </select>
               </div>
 
-              {activeTab === 'format' && (
+              {activeTab === "format" && (
                 <>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
                       缩进类型
                     </label>
                     <select
                       value={indentType}
-                      onChange={e => setIndentType(e.target.value as typeof indentType)}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
+                      onChange={(e) =>
+                        setIndentType(e.target.value as typeof indentType)
+                      }
+                      className="w-full rounded-lg border border-border bg-background p-2"
                     >
                       <option value="spaces">空格</option>
                       <option value="tabs">制表符</option>
@@ -435,14 +451,14 @@ export default function CodeToolkitPage() {
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
                       缩进大小
                     </label>
                     <select
                       value={indentSize}
-                      onChange={e => setIndentSize(Number(e.target.value))}
-                      className="w-full p-2 border border-border rounded-lg bg-background"
-                      disabled={indentType === 'tabs'}
+                      onChange={(e) => setIndentSize(Number(e.target.value))}
+                      className="w-full rounded-lg border border-border bg-background p-2"
+                      disabled={indentType === "tabs"}
                     >
                       <option value={2}>2</option>
                       <option value={4}>4</option>
@@ -453,8 +469,12 @@ export default function CodeToolkitPage() {
               )}
 
               <div className="flex items-end">
-                <label className="cursor-pointer w-full">
-                  <Button variant="outline" className="w-full flex items-center gap-2" asChild>
+                <label className="w-full cursor-pointer">
+                  <Button
+                    variant="outline"
+                    className="flex w-full items-center gap-2"
+                    asChild
+                  >
                     <span>
                       <Upload className="h-4 w-4" />
                       上传文件
@@ -475,7 +495,7 @@ export default function CodeToolkitPage() {
 
       {/* 操作按钮 */}
       <div className="mb-6 flex flex-wrap gap-2">
-        {activeTab === 'format' && (
+        {activeTab === "format" && (
           <>
             <Button onClick={formatCode} className="flex items-center gap-2">
               <Code className="h-4 w-4" />
@@ -486,57 +506,62 @@ export default function CodeToolkitPage() {
             </Button>
           </>
         )}
-        {activeTab === 'minify' && (
+        {activeTab === "minify" && (
           <Button onClick={minifyCode} className="flex items-center gap-2">
             <Code className="h-4 w-4" />
             压缩代码
           </Button>
         )}
-        {activeTab === 'convert' && (
+        {activeTab === "convert" && (
           <Button
             onClick={() => {
               if (!input.trim()) {
-                setError('请输入数据');
+                setError("请输入数据");
                 return;
               }
-              setError('');
+              setError("");
               try {
-                if (input.trim().startsWith('[') || input.trim().startsWith('{')) {
+                if (
+                  input.trim().startsWith("[") ||
+                  input.trim().startsWith("{")
+                ) {
                   // JSON to CSV
                   const data = JSON.parse(input);
                   if (Array.isArray(data) && data.length > 0) {
                     const headers = Object.keys(data[0]);
-                    const csvRows = [headers.join(',')];
-                    data.forEach(row => {
-                      const values = headers.map(header => {
+                    const csvRows = [headers.join(",")];
+                    data.forEach((row) => {
+                      const values = headers.map((header) => {
                         const value = row[header];
-                        return typeof value === 'string' && value.includes(',')
+                        return typeof value === "string" && value.includes(",")
                           ? `"${value}"`
                           : value;
                       });
-                      csvRows.push(values.join(','));
+                      csvRows.push(values.join(","));
                     });
-                    setOutput(csvRows.join('\n'));
+                    setOutput(csvRows.join("\n"));
                   } else {
-                    setError('JSON数据格式不正确');
+                    setError("JSON数据格式不正确");
                   }
                 } else {
                   // CSV to JSON
-                  const lines = input.trim().split('\n');
-                  const headers = lines[0].split(',').map(h => h.trim());
+                  const lines = input.trim().split("\n");
+                  const headers = lines[0].split(",").map((h) => h.trim());
                   const result = [];
                   for (let i = 1; i < lines.length; i++) {
-                    const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                    const values = lines[i]
+                      .split(",")
+                      .map((v) => v.trim().replace(/^"|"$/g, ""));
                     const obj: Record<string, string> = {};
                     headers.forEach((header, index) => {
-                      obj[header] = values[index] || '';
+                      obj[header] = values[index] || "";
                     });
                     result.push(obj);
                   }
                   setOutput(JSON.stringify(result, null, 2));
                 }
               } catch {
-                setError('数据转换失败，请检查格式');
+                setError("数据转换失败，请检查格式");
               }
             }}
             className="flex items-center gap-2"
@@ -545,38 +570,42 @@ export default function CodeToolkitPage() {
             转换数据
           </Button>
         )}
-        {activeTab === 'encode' && (
+        {activeTab === "encode" && (
           <Button
             onClick={() => {
               if (!input.trim()) {
-                setError('请输入内容');
+                setError("请输入内容");
                 return;
               }
-              setError('');
+              setError("");
               try {
-                if (input.includes('&lt;') || input.includes('&gt;') || input.includes('&amp;')) {
+                if (
+                  input.includes("&lt;") ||
+                  input.includes("&gt;") ||
+                  input.includes("&amp;")
+                ) {
                   // HTML解码
                   const decoded = input
-                    .replace(/&lt;/g, '<')
-                    .replace(/&gt;/g, '>')
-                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, "<")
+                    .replace(/&gt;/g, ">")
+                    .replace(/&amp;/g, "&")
                     .replace(/&quot;/g, '"')
                     .replace(/&#39;/g, "'")
-                    .replace(/&nbsp;/g, ' ');
+                    .replace(/&nbsp;/g, " ");
                   setOutput(decoded);
                 } else {
                   // HTML编码
                   const encoded = input
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#39;')
-                    .replace(/ /g, '&nbsp;');
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#39;")
+                    .replace(/ /g, "&nbsp;");
                   setOutput(encoded);
                 }
               } catch {
-                setError('编解码失败');
+                setError("编解码失败");
               }
             }}
             className="flex items-center gap-2"
@@ -591,33 +620,33 @@ export default function CodeToolkitPage() {
       </div>
 
       {/* 主要内容区域 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* 输入区域 */}
         <Card>
           <CardHeader>
             <CardTitle>
-              {activeTab === 'format' && '输入代码'}
-              {activeTab === 'minify' && '输入代码'}
-              {activeTab === 'convert' && '输入数据 (JSON/CSV)'}
-              {activeTab === 'encode' && '输入HTML内容'}
+              {activeTab === "format" && "输入代码"}
+              {activeTab === "minify" && "输入代码"}
+              {activeTab === "convert" && "输入数据 (JSON/CSV)"}
+              {activeTab === "encode" && "输入HTML内容"}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <textarea
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
               placeholder={
-                activeTab === 'format'
-                  ? `输入${languages.find(l => l.value === language)?.name}代码...`
-                  : activeTab === 'minify'
-                    ? `输入${languages.find(l => l.value === language)?.name}代码...`
-                    : activeTab === 'convert'
+                activeTab === "format"
+                  ? `输入${languages.find((l) => l.value === language)?.name}代码...`
+                  : activeTab === "minify"
+                    ? `输入${languages.find((l) => l.value === language)?.name}代码...`
+                    : activeTab === "convert"
                       ? 'JSON格式: [{"name":"张三","age":25}]\nCSV格式: name,age\n张三,25'
-                      : activeTab === 'encode'
-                        ? '输入HTML内容进行编码或解码...'
-                        : '输入内容...'
+                      : activeTab === "encode"
+                        ? "输入HTML内容进行编码或解码..."
+                        : "输入内容..."
               }
-              className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
+              className="min-h-[200px] w-full rounded-md border bg-background p-4 font-mono text-sm dark:bg-slate-900 dark:text-slate-50"
             />
           </CardContent>
         </Card>
@@ -626,10 +655,10 @@ export default function CodeToolkitPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              {activeTab === 'format' && '格式化结果'}
-              {activeTab === 'minify' && '压缩结果'}
-              {activeTab === 'convert' && '转换结果'}
-              {activeTab === 'encode' && '编解码结果'}
+              {activeTab === "format" && "格式化结果"}
+              {activeTab === "minify" && "压缩结果"}
+              {activeTab === "convert" && "转换结果"}
+              {activeTab === "encode" && "编解码结果"}
               <div className="flex gap-2">
                 {output && (
                   <>
@@ -670,16 +699,18 @@ export default function CodeToolkitPage() {
               value={output}
               readOnly
               placeholder="格式化后的代码将显示在这里..."
-              className="w-full h-96 p-3 border border-border rounded-lg bg-muted/50 font-mono text-sm resize-none"
+              className="h-96 w-full resize-none rounded-lg border border-border bg-muted/50 p-3 font-mono text-sm"
             />
 
             {error && (
-              <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>
+              <div className="mt-2 rounded bg-red-50 p-2 text-sm text-red-600">
+                {error}
+              </div>
             )}
 
             {output && !error && (
               <div className="mt-2 text-xs text-muted-foreground">
-                行数: {output.split('\n').length} | 字符数: {output.length}
+                行数: {output.split("\n").length} | 字符数: {output.length}
               </div>
             )}
           </CardContent>
@@ -693,8 +724,8 @@ export default function CodeToolkitPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="font-medium mb-2">支持的语言</h4>
-            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
+            <h4 className="mb-2 font-medium">支持的语言</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-300">
               <li>
                 • <strong>JavaScript/TypeScript</strong>：格式化JS/TS代码
               </li>
@@ -716,10 +747,11 @@ export default function CodeToolkitPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">功能特点</h4>
-            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
+            <h4 className="mb-2 font-medium">功能特点</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-300">
               <li>
-                • <strong>代码格式化</strong>：统一代码风格和缩进，支持多种编程语言
+                • <strong>代码格式化</strong>
+                ：统一代码风格和缩进，支持多种编程语言
               </li>
               <li>
                 • <strong>代码压缩</strong>：移除空白和注释，减小文件大小
@@ -739,8 +771,8 @@ export default function CodeToolkitPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">注意事项</h4>
-            <ul className="text-sm text-muted-foreground space-y-1 dark:text-slate-300">
+            <h4 className="mb-2 font-medium">注意事项</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-300">
               <li>• 这是简化版的代码处理工具，复杂代码可能需要专业工具</li>
               <li>• 压缩功能会移除注释，请注意备份原始代码</li>
               <li>• JSON/CSV转换要求数据格式正确，错误时会显示提示</li>

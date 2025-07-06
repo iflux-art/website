@@ -67,89 +67,89 @@ interface IconsConfig {
 
 // 导航菜单项配置
 export const NAV_ITEMS: NavItem[] = [
-  { key: 'blog', label: '博客' },
-  { key: 'docs', label: '文档' },
-  { key: 'tools', label: '工具' },
-  { key: 'navigation', label: '导航' },
+  { key: "blog", label: "博客" },
+  { key: "docs", label: "文档" },
+  { key: "tools", label: "工具" },
+  { key: "navigation", label: "导航" },
 ];
 // 网站元数据
 export const SITE_METADATA: SiteMetadata = {
   // 基本信息
-  title: 'iFluxArt · 斐流艺创',
-  description: '斐启智境 · 流韵新生',
-  author: 'iFluxArt Team',
+  title: "iFluxArt · 斐流艺创",
+  description: "斐启智境 · 流韵新生",
+  author: "iFluxArt Team",
 
   // SEO 相关
-  url: 'https://iflux.art',
-  image: '/images/og-image.png',
-  keywords: ['iFluxArt', '斐流艺创', '人工智能', 'AI', '艺术创作', '数字艺术'],
+  url: "https://iflux.art",
+  image: "/images/og-image.png",
+  keywords: ["iFluxArt", "斐流艺创", "人工智能", "AI", "艺术创作", "数字艺术"],
 
   // 社交媒体
-  twitter: '@ifluxart',
-  github: 'iflux-art',
+  twitter: "@ifluxart",
+  github: "iflux-art",
 
   // 联系方式
-  email: 'hello@iflux.art',
+  email: "hello@iflux.art",
 
   // 版权信息
   copyright: `© ${new Date().getFullYear()} iFluxArt · 斐流艺创`,
 };
 // PWA 配置
 export const PWA_CONFIG: PwaConfig = {
-  manifestPath: '/manifest.json',
-  applicationName: 'iFluxArt · 斐流艺创',
+  manifestPath: "/manifest.json",
+  applicationName: "iFluxArt · 斐流艺创",
 
-  themeColor: '#000000',
-  mobileWebAppCapable: 'yes',
+  themeColor: "#000000",
+  mobileWebAppCapable: "yes",
 };
 // 移动设备配置
 export const MOBILE_CONFIG: MobileConfig = {
   viewport:
-    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
-  formatDetection: 'telephone=no',
-  msapplicationTapHighlight: 'no',
+    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
+  formatDetection: "telephone=no",
+  msapplicationTapHighlight: "no",
 };
 // iOS 设备配置
 export const IOS_CONFIG: IosConfig = {
-  mobileWebAppCapable: 'yes',
-  statusBarStyle: 'black-translucent',
-  appTitle: 'iFluxArt · 斐流艺创',
+  mobileWebAppCapable: "yes",
+  statusBarStyle: "black-translucent",
+  appTitle: "iFluxArt · 斐流艺创",
   icons: {
-    touchIcon: '/images/icons/apple-touch-icon.png',
+    touchIcon: "/images/icons/apple-touch-icon.png",
   },
   splashScreens: [
     {
-      href: '/images/splash/apple-splash-2048-2732.png',
+      href: "/images/splash/apple-splash-2048-2732.png",
       media:
-        '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+        "(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
     },
     {
-      href: '/images/splash/apple-splash-1668-2388.png',
+      href: "/images/splash/apple-splash-1668-2388.png",
       media:
-        '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+        "(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
     },
     {
-      href: '/images/splash/apple-splash-1536-2048.png',
+      href: "/images/splash/apple-splash-1536-2048.png",
       media:
-        '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+        "(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
     },
     {
-      href: '/images/splash/apple-splash-1125-2436.png',
+      href: "/images/splash/apple-splash-1125-2436.png",
       media:
-        '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+        "(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
     },
   ],
 };
 // Windows 设备配置
 export const WINDOWS_CONFIG: WindowsConfig = {
-  msapplicationTileColor: '#000000',
-  msapplicationTileImage: '/images/icons/ms-icon-144x144.png',
+  msapplicationTileColor: "#000000",
+  msapplicationTileImage: "/images/icons/ms-icon-144x144.png",
 };
 // 图标配置
 export const ICONS_CONFIG: IconsConfig = {
-  favicon32: '/images/icons/favicon-32x32.png',
-  favicon16: '/images/icons/favicon-16x16.png',
-  favicon: '/favicon.ico',
+  favicon32: "/images/icons/favicon-32x32.png",
+  favicon16: "/images/icons/favicon-16x16.png",
+  favicon: "/favicon.ico",
 };
 
 /**
@@ -185,16 +185,18 @@ export interface HookResult<T> {
  */
 export const API_PATHS = {
   BLOG: {
-    POSTS: '/api/blog/posts',
-    TAGS_COUNT: '/api/blog/tags/count',
-    CATEGORIES: '/api/blog/categories',
-    TIMELINE: '/api/blog/timeline',
+    POSTS: "/api/blog/posts",
+    TAGS_COUNT: "/api/blog/tags/count",
+    CATEGORIES: "/api/blog/categories",
+    TIMELINE: "/api/blog/timeline",
   },
   DOCS: {
-    CATEGORIES: '/api/docs/categories',
-    CATEGORY: (category: string) => `/api/docs/categories/${encodeURIComponent(category)}`,
+    CATEGORIES: "/api/docs/categories",
+    CATEGORY: (category: string) =>
+      `/api/docs/categories/${encodeURIComponent(category)}`,
     META: (path: string) => `/api/docs/${encodeURIComponent(path)}/meta`,
-    SIDEBAR: (category: string) => `/api/docs/sidebar/${encodeURIComponent(category)}`,
+    SIDEBAR: (category: string) =>
+      `/api/docs/sidebar/${encodeURIComponent(category)}`,
     CONTENT: (path: string) => `/api/docs/${encodeURIComponent(path)}`,
   },
 } as const;

@@ -2,7 +2,7 @@
  * 工具相关类型定义
  */
 
-import { LoadingState, ID } from './common';
+import { LoadingState, ID } from "./common";
 
 /**
  * 工具状态接口

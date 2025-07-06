@@ -1,9 +1,9 @@
-import path from 'path';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { LRUCache } from 'lru-cache';
-import { BlogPost } from '@/types';
-import chokidar from 'chokidar';
+import path from "path";
+import fs from "fs";
+import matter from "gray-matter";
+import { LRUCache } from "lru-cache";
+import { BlogPost } from "@/types";
+import chokidar from "chokidar";
 
 // 博客文章缓存
 const postsCache = new LRUCache<string, BlogPost[]>({
@@ -12,13 +12,13 @@ const postsCache = new LRUCache<string, BlogPost[]>({
 });
 
 // 缓存键
-const ALL_POSTS_CACHE_KEY = 'all-posts';
+const ALL_POSTS_CACHE_KEY = "all-posts";
 
 /**
  * 从文件系统读取所有博客文章
  */
 function getAllPostsFromFS(): BlogPost[] {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return [];
 
   const posts: BlogPost[] = [];
@@ -31,8 +31,11 @@ function getAllPostsFromFS(): BlogPost[] {
 
       if (item.isDirectory()) {
         findPosts(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
+      } else if (
+        item.isFile() &&
+        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+      ) {
+        const fileContent = fs.readFileSync(itemPath, "utf8");
         const { data } = matter(fileContent);
 
         if (data.published !== false) {
@@ -40,17 +43,17 @@ function getAllPostsFromFS(): BlogPost[] {
           const pathParts = relativePath.split(path.sep);
           const slug =
             pathParts.length === 1
-              ? pathParts[0].replace(/\.(mdx|md)$/, '')
-              : `${pathParts.slice(0, -1).join('/')}/${pathParts.pop()?.replace(/\.(mdx|md)$/, '')}`;
+              ? pathParts[0].replace(/\.(mdx|md)$/, "")
+              : `${pathParts.slice(0, -1).join("/")}/${pathParts.pop()?.replace(/\.(mdx|md)$/, "")}`;
 
           posts.push({
             slug,
             title: data.title || slug,
-            description: data.description || '暂无描述',
-            excerpt: data.excerpt || '点击阅读全文',
+            description: data.description || "暂无描述",
+            excerpt: data.excerpt || "点击阅读全文",
             date: data.date,
             tags: data.tags || [],
-            category: data.category || '未分类',
+            category: data.category || "未分类",
           });
         }
       }
@@ -91,7 +94,7 @@ export function getPaginatedPosts(
   filters?: {
     tag?: string;
     category?: string;
-  }
+  },
 ): {
   posts: BlogPost[];
   total: number;
@@ -102,10 +105,12 @@ export function getPaginatedPosts(
   // 应用过滤
   if (filters) {
     if (filters.tag) {
-      posts = posts.filter(post => post.tags?.includes(filters.tag as string));
+      posts = posts.filter((post) =>
+        post.tags?.includes(filters.tag as string),
+      );
     }
     if (filters.category) {
-      posts = posts.filter(post => post.category === filters.category);
+      posts = posts.filter((post) => post.category === filters.category);
     }
   }
 
@@ -129,9 +134,9 @@ export function clearPostsCache() {
 }
 
 // 在开发环境中监听文件变化
-if (process.env.NODE_ENV === 'development') {
-  const watcher = chokidar.watch('src/content/blog/**/*.{md,mdx}');
-  watcher.on('change', () => {
+if (process.env.NODE_ENV === "development") {
+  const watcher = chokidar.watch("src/content/blog/**/*.{md,mdx}");
+  watcher.on("change", () => {
     clearPostsCache();
   });
 }
@@ -143,8 +148,8 @@ export function getAllTagsWithStats(): Array<{ name: string; count: number }> {
   const posts = getAllPosts();
   const tagStats = new Map<string, number>();
 
-  posts.forEach(post => {
-    post.tags?.forEach(tag => {
+  posts.forEach((post) => {
+    post.tags?.forEach((tag) => {
       tagStats.set(tag, (tagStats.get(tag) || 0) + 1);
     });
   });
@@ -157,7 +162,9 @@ export function getAllTagsWithStats(): Array<{ name: string; count: number }> {
 /**
  * 获取热门标签
  */
-export function getPopularTags(limit: number = 10): Array<{ name: string; count: number }> {
+export function getPopularTags(
+  limit: number = 10,
+): Array<{ name: string; count: number }> {
   return getAllTagsWithStats().slice(0, limit);
 }
 
@@ -167,13 +174,13 @@ export function getPopularTags(limit: number = 10): Array<{ name: string; count:
  */
 export function getRelatedTags(
   tag: string,
-  limit: number = 5
+  limit: number = 5,
 ): Array<{ name: string; count: number }> {
-  const posts = getAllPosts().filter(post => post.tags?.includes(tag));
+  const posts = getAllPosts().filter((post) => post.tags?.includes(tag));
   const relatedTagStats = new Map<string, number>();
 
-  posts.forEach(post => {
-    post.tags?.forEach(t => {
+  posts.forEach((post) => {
+    post.tags?.forEach((t) => {
       if (t !== tag) {
         relatedTagStats.set(t, (relatedTagStats.get(t) || 0) + 1);
       }
@@ -206,15 +213,23 @@ export interface TimelineResult {
   };
 }
 
-export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResult {
-  const { startYear, endYear, limit, tag, excludeYearsWithNoPosts = true } = options;
+export function getPostsByTimeline(
+  options: TimelineOptions = {},
+): TimelineResult {
+  const {
+    startYear,
+    endYear,
+    limit,
+    tag,
+    excludeYearsWithNoPosts = true,
+  } = options;
 
   // 获取所有文章
   let posts = getAllPosts();
 
   // 应用标签过滤
   if (tag) {
-    posts = posts.filter(post => post.tags?.includes(tag));
+    posts = posts.filter((post) => post.tags?.includes(tag));
   }
 
   // 按年份分组
@@ -222,7 +237,7 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
   let minYear = Infinity;
   let maxYear = -Infinity;
 
-  posts.forEach(post => {
+  posts.forEach((post) => {
     if (post.date) {
       const year = new Date(post.date).getFullYear();
 
@@ -240,7 +255,11 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
   });
 
   // 确保所有年份都有条目（如果需要）
-  if (!excludeYearsWithNoPosts && minYear !== Infinity && maxYear !== -Infinity) {
+  if (
+    !excludeYearsWithNoPosts &&
+    minYear !== Infinity &&
+    maxYear !== -Infinity
+  ) {
     for (let year = minYear; year <= maxYear; year++) {
       if (!postsByYear[year]) {
         postsByYear[year] = [];
@@ -249,9 +268,10 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
   }
 
   // 对每个年份内的文章按日期排序
-  Object.keys(postsByYear).forEach(year => {
+  Object.keys(postsByYear).forEach((year) => {
     postsByYear[year].sort(
-      (a, b) => new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
+      (a, b) =>
+        new Date(b.date || "").getTime() - new Date(a.date || "").getTime(),
     );
 
     // 应用每年的文章数限制
@@ -262,7 +282,10 @@ export function getPostsByTimeline(options: TimelineOptions = {}): TimelineResul
 
   return {
     years: postsByYear,
-    totalPosts: Object.values(postsByYear).reduce((sum, posts) => sum + posts.length, 0),
+    totalPosts: Object.values(postsByYear).reduce(
+      (sum, posts) => sum + posts.length,
+      0,
+    ),
     yearRange: {
       start: minYear === Infinity ? 0 : minYear,
       end: maxYear === -Infinity ? 0 : maxYear,

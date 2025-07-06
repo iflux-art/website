@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import * as cheerio from 'cheerio';
+import { NextRequest, NextResponse } from "next/server";
+import * as cheerio from "cheerio";
 
 // 缓存配置
 const CACHE_DURATION = 30 * 60 * 1000; // 30分钟
@@ -30,20 +30,20 @@ const metadataCache = new Map<string, CacheItem>();
 function isValidUrl(urlString: string): boolean {
   try {
     const url = new URL(urlString);
-    return ['http:', 'https:'].includes(url.protocol);
+    return ["http:", "https:"].includes(url.protocol);
   } catch {
     return false;
   }
 }
 
 // 延时函数
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // 创建带重试的 fetch 函数
 async function fetchWithRetry(
   url: string,
   options: RequestInit,
-  retries = MAX_RETRIES
+  retries = MAX_RETRIES,
 ): Promise<Response> {
   try {
     const response = await fetch(url, options);
@@ -73,34 +73,37 @@ function getFromCache(url: string): WebsiteMetadata | null {
 function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
   // 基本元数据
   const title =
-    $('meta[property="og:title"]').attr('content') ||
-    $('meta[name="twitter:title"]').attr('content') ||
-    $('title').text() ||
-    '';
+    $('meta[property="og:title"]').attr("content") ||
+    $('meta[name="twitter:title"]').attr("content") ||
+    $("title").text() ||
+    "";
 
   const description =
-    $('meta[property="og:description"]').attr('content') ||
-    $('meta[name="twitter:description"]').attr('content') ||
-    $('meta[name="description"]').attr('content') ||
-    '';
+    $('meta[property="og:description"]').attr("content") ||
+    $('meta[name="twitter:description"]').attr("content") ||
+    $('meta[name="description"]').attr("content") ||
+    "";
 
   // 作者信息
   const author =
-    $('meta[name="author"]').attr('content') ||
-    $('meta[property="article:author"]').attr('content') ||
-    '';
+    $('meta[name="author"]').attr("content") ||
+    $('meta[property="article:author"]').attr("content") ||
+    "";
 
   // 网站名称
-  const siteName = $('meta[property="og:site_name"]').attr('content') || '';
+  const siteName = $('meta[property="og:site_name"]').attr("content") || "";
 
   // 内容类型
-  const type = $('meta[property="og:type"]').attr('content') || '';
+  const type = $('meta[property="og:type"]').attr("content") || "";
 
   // 语言
-  const language = $('html').attr('lang') || $('meta[property="og:locale"]').attr('content') || '';
+  const language =
+    $("html").attr("lang") ||
+    $('meta[property="og:locale"]').attr("content") ||
+    "";
 
   // 图标处理
-  let icon = '';
+  let icon = "";
   const iconSelectors = [
     'link[rel="icon"][sizes="32x32"]',
     'link[rel="icon"][sizes="192x192"]',
@@ -111,7 +114,7 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
   ];
 
   for (const selector of iconSelectors) {
-    const iconHref = $(selector).attr('href');
+    const iconHref = $(selector).attr("href");
     if (iconHref) {
       icon = new URL(iconHref, url).href;
       break;
@@ -126,16 +129,16 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
 
   // 图片处理
   const image =
-    $('meta[property="og:image"]').attr('content') ||
-    $('meta[property="og:image:url"]').attr('content') ||
-    $('meta[name="twitter:image"]').attr('content') ||
-    '';
+    $('meta[property="og:image"]').attr("content") ||
+    $('meta[property="og:image:url"]').attr("content") ||
+    $('meta[name="twitter:image"]').attr("content") ||
+    "";
 
   return {
     title: title.trim(),
     description: description.trim(),
     icon,
-    image: image ? new URL(image, url).href : '',
+    image: image ? new URL(image, url).href : "",
     author: author.trim(),
     siteName: siteName.trim(),
     type: type.trim(),
@@ -146,11 +149,14 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const url = searchParams.get('url');
+  const url = searchParams.get("url");
 
   // URL 验证
   if (!url || !isValidUrl(url)) {
-    return NextResponse.json({ error: 'Invalid or missing URL' }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid or missing URL" },
+      { status: 400 },
+    );
   }
 
   try {
@@ -163,14 +169,15 @@ export async function GET(request: NextRequest) {
     // 请求配置
     const options = {
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        DNT: '1',
-        Connection: 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        DNT: "1",
+        Connection: "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
       },
       signal: AbortSignal.timeout(10000),
     };
@@ -191,17 +198,17 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metadata);
   } catch (error) {
-    console.error('Error parsing website:', error);
+    console.error("Error parsing website:", error);
 
     // 构建基础返回数据
     const urlObj = new URL(url);
     const fallbackData = {
-      title: urlObj.hostname.replace('www.', ''),
-      description: '',
+      title: urlObj.hostname.replace("www.", ""),
+      description: "",
       icon: `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`,
-      image: '',
+      image: "",
       url,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
 
     return NextResponse.json(fallbackData, { status: 200 });

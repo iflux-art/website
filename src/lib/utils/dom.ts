@@ -12,7 +12,7 @@
 export function scrollToElement(
   elementId: string,
   offset: number = 0,
-  updateHash: boolean = false
+  updateHash: boolean = false,
 ): void {
   const element = document.getElementById(elementId);
   if (!element) return;
@@ -22,12 +22,12 @@ export function scrollToElement(
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, '', `#${elementId}`);
+    history.pushState(null, "", `#${elementId}`);
   }
 }
 
@@ -37,13 +37,17 @@ export function scrollToElement(
  * @param offset 视口偏移量（默认为0）
  * @returns 元素是否在视口中
  */
-export function isElementInViewport(element: HTMLElement, offset: number = 0): boolean {
+export function isElementInViewport(
+  element: HTMLElement,
+  offset: number = 0,
+): boolean {
   const rect = element.getBoundingClientRect();
 
   return (
     rect.top >= 0 - offset &&
     rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + offset &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) + offset &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 }
@@ -53,7 +57,10 @@ export function isElementInViewport(element: HTMLElement, offset: number = 0): b
  * @param element 要获取位置的元素
  * @returns 元素的绝对位置
  */
-export function getElementPosition(element: HTMLElement): { top: number; left: number } {
+export function getElementPosition(element: HTMLElement): {
+  top: number;
+  left: number;
+} {
   const rect = element.getBoundingClientRect();
   return {
     top: rect.top + window.pageYOffset,

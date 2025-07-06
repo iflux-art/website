@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { cn } from '@/utils';
-import { MDXStyles } from '@/config/mdx/styles';
+import React from "react";
+import { cn } from "@/lib/utils";
+import { MDXStyles } from "@/config/mdx/styles";
 
 interface MDXCardProps {
   children: React.ReactNode;
@@ -10,8 +10,8 @@ interface MDXCardProps {
   description?: React.ReactNode;
   icon?: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'outline' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "default" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
   hoverable?: boolean;
 }
 
@@ -29,45 +29,59 @@ export const MDXCard = ({
   description,
   icon,
   className,
-  variant = 'default',
-  size = 'md',
+  variant = "default",
+  size = "md",
   hoverable = false,
 }: MDXCardProps) => {
   // 基础样式
-  const baseStyles = 'rounded-lg transition-all duration-200';
+  const baseStyles = "rounded-lg transition-all duration-200";
 
   // 变体样式
   const variantStyles = {
-    default: 'bg-white dark:bg-gray-800 shadow-sm',
-    outline: 'border border-gray-200 dark:border-gray-700',
-    ghost: 'bg-transparent',
+    default: "bg-white dark:bg-gray-800 shadow-sm",
+    outline: "border border-gray-200 dark:border-gray-700",
+    ghost: "bg-transparent",
   };
 
   // 尺寸样式
   const sizeStyles = {
-    sm: 'p-4',
-    md: 'p-6',
-    lg: 'p-8',
+    sm: "p-4",
+    md: "p-6",
+    lg: "p-8",
   };
 
   // 悬停效果
-  const hoverStyles = hoverable ? 'hover:shadow-md hover:transform hover:-translate-y-1' : '';
+  const hoverStyles = hoverable
+    ? "hover:shadow-md hover:transform hover:-translate-y-1"
+    : "";
 
   return (
     <div
-      className={cn(baseStyles, variantStyles[variant], sizeStyles[size], hoverStyles, className)}
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        sizeStyles[size],
+        hoverStyles,
+        className,
+      )}
     >
       {/* 卡片头部 */}
       {(title || icon || description) && (
         <div className="mb-4">
           <div className="flex items-center gap-3">
-            {icon && <div className="flex-shrink-0 text-primary-500">{icon}</div>}
+            {icon && (
+              <div className="text-primary-500 flex-shrink-0">{icon}</div>
+            )}
             {title && (
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{title}</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {title}
+              </h3>
             )}
           </div>
           {description && (
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">{description}</div>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              {description}
+            </div>
           )}
         </div>
       )}

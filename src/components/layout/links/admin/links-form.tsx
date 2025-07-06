@@ -1,23 +1,26 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Plus, X, AlertCircle, CheckCircle } from 'lucide-react';
-import { LinksFormData, LinksCategory } from '@/types';
-import { parseWebsiteMetadata, isValidUrl } from '@/components/layout/links/website-parser';
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
+import { LinksFormData, LinksCategory } from "@/types";
+import {
+  parseWebsiteMetadata,
+  isValidUrl,
+} from "@/components/layout/links/website-parser";
 
 interface LinksFormProps {
   submitAction: (data: LinksFormData) => Promise<void>;
@@ -26,16 +29,21 @@ interface LinksFormProps {
   isLoading?: boolean;
 }
 
-export function LinksForm({ submitAction, onCancel, initialData, isLoading }: LinksFormProps) {
+export function LinksForm({
+  submitAction,
+  onCancel,
+  initialData,
+  isLoading,
+}: LinksFormProps) {
   const [formData, setFormData] = useState<LinksFormData>({
-    title: '',
-    description: '',
-    url: '',
-    icon: '',
-    iconType: 'image',
+    title: "",
+    description: "",
+    url: "",
+    icon: "",
+    iconType: "image",
     tags: [],
     featured: false,
-    category: '',
+    category: "",
     ...initialData,
   });
 
@@ -45,17 +53,17 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   /* eslint-enable @typescript-eslint/no-unused-vars */
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState("");
   const [isParsing, setIsParsing] = useState(false);
-  const [parseError, setParseError] = useState('');
+  const [parseError, setParseError] = useState("");
   const [parseSuccess, setParseSuccess] = useState(false);
-  const [urlError, setUrlError] = useState('');
+  const [urlError, setUrlError] = useState("");
 
   // 加载分类
   useEffect(() => {
-    fetch('/api/links/categories')
-      .then(res => res.json())
-      .then(data => {
+    fetch("/api/links/categories")
+      .then((res) => res.json())
+      .then((data) => {
         setCategories(data);
         setCategoriesLoading(false);
       })
@@ -65,39 +73,39 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   // URL 变化时验证格式
   useEffect(() => {
     if (formData.url && !isValidUrl(formData.url)) {
-      setUrlError('请输入有效的 URL 格式');
+      setUrlError("请输入有效的 URL 格式");
     } else {
-      setUrlError('');
+      setUrlError("");
     }
   }, [formData.url]);
 
   const handleInputChange = (
     field: keyof LinksFormData,
-    value: LinksFormData[keyof LinksFormData]
+    value: LinksFormData[keyof LinksFormData],
   ) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
     // 清除解析状态
-    if (field === 'url') {
-      setParseError('');
+    if (field === "url") {
+      setParseError("");
       setParseSuccess(false);
     }
   };
 
   const handleParseWebsite = async () => {
     if (!formData.url || !isValidUrl(formData.url)) {
-      setParseError('请先输入有效的 URL');
+      setParseError("请先输入有效的 URL");
       return;
     }
 
     setIsParsing(true);
-    setParseError('');
+    setParseError("");
     setParseSuccess(false);
 
     try {
       const metadata = await parseWebsiteMetadata(formData.url);
 
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         title: metadata.title || prev.title,
         description: metadata.description || prev.description,
@@ -106,7 +114,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
 
       setParseSuccess(true);
     } catch {
-      setParseError('解析网站信息失败，请手动填写');
+      setParseError("解析网站信息失败，请手动填写");
     } finally {
       setIsParsing(false);
     }
@@ -114,18 +122,18 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
 
   const handleAddTag = () => {
     if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         tags: [...prev.tags, newTag.trim()],
       }));
-      setNewTag('');
+      setNewTag("");
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove),
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
@@ -144,7 +152,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
   };
 
   return (
-    <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-6">
       {/* URL 输入和解析 */}
       <div className="space-y-2">
         <Label htmlFor="url">网址 *</Label>
@@ -154,8 +162,8 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
             type="url"
             placeholder="https://example.com"
             value={formData.url}
-            onChange={e => handleInputChange('url', e.target.value)}
-            className={urlError ? 'border-destructive' : ''}
+            onChange={(e) => handleInputChange("url", e.target.value)}
+            className={urlError ? "border-destructive" : ""}
             required
           />
           <Button
@@ -164,7 +172,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
             onClick={handleParseWebsite}
             disabled={isParsing || !formData.url || !!urlError}
           >
-            {isParsing ? <Loader2 className="h-4 w-4 animate-spin" /> : '解析'}
+            {isParsing ? <Loader2 className="h-4 w-4 animate-spin" /> : "解析"}
           </Button>
         </div>
         {urlError && (
@@ -194,7 +202,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           id="title"
           placeholder="网站标题"
           value={formData.title}
-          onChange={e => handleInputChange('title', e.target.value)}
+          onChange={(e) => handleInputChange("title", e.target.value)}
           required
         />
       </div>
@@ -206,7 +214,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           id="description"
           placeholder="网站描述"
           value={formData.description}
-          onChange={e => handleInputChange('description', e.target.value)}
+          onChange={(e) => handleInputChange("description", e.target.value)}
           rows={3}
         />
       </div>
@@ -217,7 +225,9 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <div className="flex gap-2">
           <Select
             value={formData.iconType}
-            onValueChange={(value: 'image' | 'text') => handleInputChange('iconType', value)}
+            onValueChange={(value: "image" | "text") =>
+              handleInputChange("iconType", value)
+            }
           >
             <SelectTrigger className="w-32">
               <SelectValue />
@@ -229,9 +239,13 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           </Select>
           <Input
             id="icon"
-            placeholder={formData.iconType === 'image' ? 'https://example.com/icon.png' : 'A'}
+            placeholder={
+              formData.iconType === "image"
+                ? "https://example.com/icon.png"
+                : "A"
+            }
             value={formData.icon}
-            onChange={e => handleInputChange('icon', e.target.value)}
+            onChange={(e) => handleInputChange("icon", e.target.value)}
             className="flex-1"
           />
         </div>
@@ -242,15 +256,17 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <Label htmlFor="category">分类 *</Label>
         <Select
           value={formData.category}
-          onValueChange={value => handleInputChange('category', value)}
+          onValueChange={(value) => handleInputChange("category", value)}
           required
           disabled={categoriesLoading}
         >
           <SelectTrigger>
-            <SelectValue placeholder={categoriesLoading ? '加载中...' : '选择分类'} />
+            <SelectValue
+              placeholder={categoriesLoading ? "加载中..." : "选择分类"}
+            />
           </SelectTrigger>
           <SelectContent>
-            {categories.map(category => (
+            {categories.map((category) => (
               <SelectItem key={category.id} value={category.id}>
                 {category.name}
               </SelectItem>
@@ -266,8 +282,10 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
           <Input
             placeholder="添加标签"
             value={newTag}
-            onChange={e => setNewTag(e.target.value)}
-            onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyPress={(e) =>
+              e.key === "Enter" && (e.preventDefault(), handleAddTag())
+            }
           />
           <Button type="button" variant="outline" onClick={handleAddTag}>
             <Plus className="h-4 w-4" />
@@ -275,10 +293,17 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         </div>
         {formData.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {formData.tags.map(tag => (
-              <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+            {formData.tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="secondary"
+                className="flex items-center gap-1"
+              >
                 {tag}
-                <X className="h-3 w-3 cursor-pointer" onClick={() => handleRemoveTag(tag)} />
+                <X
+                  className="h-3 w-3 cursor-pointer"
+                  onClick={() => handleRemoveTag(tag)}
+                />
               </Badge>
             ))}
           </div>
@@ -290,7 +315,7 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <Switch
           id="featured"
           checked={formData.featured}
-          onCheckedChange={checked => handleInputChange('featured', checked)}
+          onCheckedChange={(checked) => handleInputChange("featured", checked)}
         />
         <Label htmlFor="featured">设为精选</Label>
       </div>
@@ -298,8 +323,8 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
       {/* 操作按钮 */}
       <div className="flex gap-2 pt-4">
         <Button type="submit" disabled={isLoading || !!urlError}>
-          {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-          {initialData ? '更新' : '添加'}
+          {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {initialData ? "更新" : "添加"}
         </Button>
         {onCancel && (
           <Button type="button" variant="outline" onClick={onCancel}>

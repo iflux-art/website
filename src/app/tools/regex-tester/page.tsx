@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Search,
   Copy,
@@ -10,34 +10,34 @@ import {
   RotateCcw,
   FileDown,
   ArrowLeft,
-} from 'lucide-react';
-import { ToolLayout } from '@/components/layout/tools/tool-layout';
-import { ToolActions } from '@/components/layout/tools/tool-actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+} from "lucide-react";
+import { ToolLayout } from "@/components/layout/tools/tool-layout";
+import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function RegexTesterPage() {
-  const [pattern, setPattern] = useState('');
-  const [flags, setFlags] = useState('g');
-  const [testString, setTestString] = useState('');
+  const [pattern, setPattern] = useState("");
+  const [flags, setFlags] = useState("g");
+  const [testString, setTestString] = useState("");
   const [matches, setMatches] = useState<RegExpMatchArray[]>([]);
   const [isValid, setIsValid] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
   const testRegex = () => {
     if (!pattern) {
       setMatches([]);
       setIsValid(true);
-      setError('');
+      setError("");
       return;
     }
 
     try {
       const regex = new RegExp(pattern, flags);
       setIsValid(true);
-      setError('');
+      setError("");
 
       if (!testString) {
         setMatches([]);
@@ -47,7 +47,7 @@ export default function RegexTesterPage() {
       const allMatches: RegExpMatchArray[] = [];
       let match;
 
-      if (flags.includes('g')) {
+      if (flags.includes("g")) {
         // 全局匹配
         const globalRegex = new RegExp(pattern, flags);
         while ((match = globalRegex.exec(testString)) !== null) {
@@ -67,7 +67,7 @@ export default function RegexTesterPage() {
       setMatches(allMatches);
     } catch (err) {
       setIsValid(false);
-      setError(err instanceof Error ? err.message : '正则表达式语法错误');
+      setError(err instanceof Error ? err.message : "正则表达式语法错误");
       setMatches([]);
     }
   };
@@ -82,62 +82,64 @@ export default function RegexTesterPage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('复制失败:', err);
+      console.error("复制失败:", err);
     }
   };
 
   const loadExample = () => {
-    setPattern('\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b');
-    setFlags('gi');
-    setTestString('联系我们：admin@example.com 或 support@test.org\n技术支持：tech@company.net');
+    setPattern("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b");
+    setFlags("gi");
+    setTestString(
+      "联系我们：admin@example.com 或 support@test.org\n技术支持：tech@company.net",
+    );
   };
 
   const clearAll = () => {
-    setPattern('');
-    setFlags('g');
-    setTestString('');
+    setPattern("");
+    setFlags("g");
+    setTestString("");
     setMatches([]);
-    setError('');
+    setError("");
   };
 
   const commonPatterns = [
     {
-      name: '邮箱地址',
-      pattern: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
-      flags: 'gi',
-      example: 'user@example.com, admin@test.org',
+      name: "邮箱地址",
+      pattern: "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b",
+      flags: "gi",
+      example: "user@example.com, admin@test.org",
     },
     {
-      name: '手机号码',
-      pattern: '1[3-9]\\d{9}',
-      flags: 'g',
-      example: '13812345678, 15987654321',
+      name: "手机号码",
+      pattern: "1[3-9]\\d{9}",
+      flags: "g",
+      example: "13812345678, 15987654321",
     },
     {
-      name: 'URL 链接',
+      name: "URL 链接",
       pattern:
-        'https?://[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?',
-      flags: 'gi',
-      example: 'https://www.example.com, http://test.org/path',
+        "https?://[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?",
+      flags: "gi",
+      example: "https://www.example.com, http://test.org/path",
     },
     {
-      name: 'IPv4 地址',
+      name: "IPv4 地址",
       pattern:
-        '\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b',
-      flags: 'g',
-      example: '192.168.1.1, 10.0.0.1, 255.255.255.255',
+        "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b",
+      flags: "g",
+      example: "192.168.1.1, 10.0.0.1, 255.255.255.255",
     },
     {
-      name: '中文字符',
-      pattern: '[\\u4e00-\\u9fa5]+',
-      flags: 'g',
-      example: '这是中文字符，包含汉字',
+      name: "中文字符",
+      pattern: "[\\u4e00-\\u9fa5]+",
+      flags: "g",
+      example: "这是中文字符，包含汉字",
     },
     {
-      name: '日期格式',
-      pattern: '\\d{4}-\\d{2}-\\d{2}',
-      flags: 'g',
-      example: '2024-01-15, 2023-12-31',
+      name: "日期格式",
+      pattern: "\\d{4}-\\d{2}-\\d{2}",
+      flags: "g",
+      example: "2024-01-15, 2023-12-31",
     },
   ];
 
@@ -162,31 +164,31 @@ export default function RegexTesterPage() {
 
   const actions = [
     {
-      label: '加载示例',
+      label: "加载示例",
       onClick: loadExample,
       icon: FileDown,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
     {
-      label: '复制匹配项',
-      onClick: () => copyToClipboard(matches.map(m => m[0]).join('\n')),
+      label: "复制匹配项",
+      onClick: () => copyToClipboard(matches.map((m) => m[0]).join("\n")),
       icon: copied ? Check : Copy,
-      variant: 'outline' as const,
+      variant: "outline" as const,
       disabled: matches.length === 0,
     },
     {
-      label: '清空',
+      label: "清空",
       onClick: clearAll,
       icon: RotateCcw,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
   ];
 
   const helpContent = (
     <div className="space-y-4">
       <div>
-        <h4 className="font-medium mb-2">正则表达式语法</h4>
-        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
+        <h4 className="mb-2 font-medium">正则表达式语法</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-400">
           <li>
             • <strong>.</strong> - 匹配任意字符（除换行符）
           </li>
@@ -214,8 +216,8 @@ export default function RegexTesterPage() {
         </ul>
       </div>
       <div>
-        <h4 className="font-medium mb-2">标志位说明</h4>
-        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
+        <h4 className="mb-2 font-medium">标志位说明</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-400">
           <li>
             • <strong>g</strong> - 全局匹配，查找所有匹配项
           </li>
@@ -236,14 +238,16 @@ export default function RegexTesterPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">正则表达式工具</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              正则表达式工具
+            </h1>
             <p className="text-muted-foreground">
               强大的正则表达式测试工具，支持实时匹配、模式验证、语法高亮、常用模式库
             </p>
@@ -257,9 +261,9 @@ export default function RegexTesterPage() {
         actions={<ToolActions actions={actions} />}
         helpContent={helpContent}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* 正则表达式输入 */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             {/* 正则表达式 */}
             <Card>
               <CardHeader>
@@ -278,12 +282,12 @@ export default function RegexTesterPage() {
                   <input
                     type="text"
                     value={pattern}
-                    onChange={e => setPattern(e.target.value)}
+                    onChange={(e) => setPattern(e.target.value)}
                     placeholder="输入正则表达式..."
-                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
                   />
                   {error && (
-                    <div className="mt-2 text-sm text-destructive dark:text-red-400 p-2 rounded">
+                    <div className="mt-2 rounded p-2 text-sm text-destructive dark:text-red-400">
                       {error}
                     </div>
                   )}
@@ -291,13 +295,19 @@ export default function RegexTesterPage() {
 
                 {/* 标志位 */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">标志位</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    标志位
+                  </label>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { flag: 'g', name: '全局匹配', desc: '查找所有匹配项' },
-                      { flag: 'i', name: '忽略大小写', desc: '不区分大小写' },
-                      { flag: 'm', name: '多行模式', desc: '^和$匹配每行的开始和结束' },
-                      { flag: 's', name: '单行模式', desc: '.匹配换行符' },
+                      { flag: "g", name: "全局匹配", desc: "查找所有匹配项" },
+                      { flag: "i", name: "忽略大小写", desc: "不区分大小写" },
+                      {
+                        flag: "m",
+                        name: "多行模式",
+                        desc: "^和$匹配每行的开始和结束",
+                      },
+                      { flag: "s", name: "单行模式", desc: ".匹配换行符" },
                     ].map(({ flag, name, desc }) => (
                       <label
                         key={flag}
@@ -306,11 +316,11 @@ export default function RegexTesterPage() {
                         <input
                           type="checkbox"
                           checked={flags.includes(flag)}
-                          onChange={e => {
+                          onChange={(e) => {
                             if (e.target.checked) {
                               setFlags(flags + flag);
                             } else {
-                              setFlags(flags.replace(flag, ''));
+                              setFlags(flags.replace(flag, ""));
                             }
                           }}
                           className="rounded"
@@ -333,9 +343,9 @@ export default function RegexTesterPage() {
               <CardContent>
                 <textarea
                   value={testString}
-                  onChange={e => setTestString(e.target.value)}
+                  onChange={(e) => setTestString(e.target.value)}
                   placeholder="输入要测试的字符串..."
-                  className="w-full min-h-[200px] p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="min-h-[200px] w-full resize-none rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
                 />
               </CardContent>
             </Card>
@@ -347,7 +357,9 @@ export default function RegexTesterPage() {
                   匹配结果 ({matches.length} 个匹配)
                   {matches.length > 0 && (
                     <Button
-                      onClick={() => copyToClipboard(matches.map(m => m[0]).join('\n'))}
+                      onClick={() =>
+                        copyToClipboard(matches.map((m) => m[0]).join("\n"))
+                      }
                       variant="outline"
                       size="sm"
                       className="flex items-center gap-2"
@@ -369,16 +381,18 @@ export default function RegexTesterPage() {
               </CardHeader>
               <CardContent>
                 {matches.length === 0 ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    {pattern && testString ? '没有找到匹配项' : '请输入正则表达式和测试字符串'}
+                  <div className="py-8 text-center text-muted-foreground">
+                    {pattern && testString
+                      ? "没有找到匹配项"
+                      : "请输入正则表达式和测试字符串"}
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {/* 高亮显示 */}
                     <div>
-                      <h4 className="text-sm font-medium mb-2">高亮显示</h4>
+                      <h4 className="mb-2 text-sm font-medium">高亮显示</h4>
                       <div
-                        className="p-3 border border-border rounded-lg bg-muted/50 text-sm whitespace-pre-wrap"
+                        className="rounded-lg border border-border bg-muted/50 p-3 text-sm whitespace-pre-wrap"
                         dangerouslySetInnerHTML={{
                           __html: highlightMatches(testString, matches),
                         }}
@@ -387,20 +401,26 @@ export default function RegexTesterPage() {
 
                     {/* 匹配详情 */}
                     <div>
-                      <h4 className="text-sm font-medium mb-2">匹配详情</h4>
-                      <div className="space-y-2 p-4 rounded-lg border bg-background dark:bg-slate-900 max-h-48 overflow-y-auto">
+                      <h4 className="mb-2 text-sm font-medium">匹配详情</h4>
+                      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg border bg-background p-4 dark:bg-slate-900">
                         {matches.map((match, index) => (
-                          <div key={index} className="p-2 border border-border rounded text-sm">
-                            <div className="font-mono font-medium">{match[0]}</div>
-                            <div className="text-muted-foreground dark:text-slate-400 text-xs">
-                              位置: {match.index} - {(match.index || 0) + match[0].length - 1}
+                          <div
+                            key={index}
+                            className="rounded border border-border p-2 text-sm"
+                          >
+                            <div className="font-mono font-medium">
+                              {match[0]}
+                            </div>
+                            <div className="text-xs text-muted-foreground dark:text-slate-400">
+                              位置: {match.index} -{" "}
+                              {(match.index || 0) + match[0].length - 1}
                               {match.length > 1 && (
                                 <span className="ml-2">
-                                  分组:{' '}
+                                  分组:{" "}
                                   {match
                                     .slice(1)
                                     .map((group, i) => `$${i + 1}="${group}"`)
-                                    .join(', ')}
+                                    .join(", ")}
                                 </span>
                               )}
                             </div>
@@ -425,18 +445,18 @@ export default function RegexTesterPage() {
                   {commonPatterns.map((item, index) => (
                     <div
                       key={index}
-                      className="p-3 border border-border rounded-lg hover:bg-muted/50 cursor-pointer"
+                      className="cursor-pointer rounded-lg border border-border p-3 hover:bg-muted/50"
                       onClick={() => {
                         setPattern(item.pattern);
                         setFlags(item.flags);
                         setTestString(item.example);
                       }}
                     >
-                      <div className="font-medium text-sm">{item.name}</div>
-                      <div className="font-mono text-xs text-muted-foreground dark:text-slate-400 mt-1 break-all">
+                      <div className="text-sm font-medium">{item.name}</div>
+                      <div className="mt-1 font-mono text-xs break-all text-muted-foreground dark:text-slate-400">
                         {item.pattern}
                       </div>
-                      <div className="text-xs text-muted-foreground dark:text-slate-400 mt-1">
+                      <div className="mt-1 text-xs text-muted-foreground dark:text-slate-400">
                         示例: {item.example}
                       </div>
                     </div>

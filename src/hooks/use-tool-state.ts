@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useSafeTool } from '@/hooks/use-safe-state';
+import { useSafeTool } from "@/hooks/use-safe-state";
 
 /**
  * 工具状态管理 Hook

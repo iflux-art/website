@@ -1,7 +1,7 @@
-import React from 'react';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { MDXStyles } from '@/config/mdx/styles';
-import { MDXComponentsMapping, type MDXComponents } from '@/config/mdx';
+import React from "react";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXStyles } from "@/config/mdx/styles";
+import { MDXComponentsMapping, type MDXComponents } from "@/config/mdx";
 
 interface MDXRendererProps {
   content: string;
@@ -23,7 +23,7 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
   // 合并并过滤掉 undefined 的组件
   const merged = { ...MDXComponentsMapping, ...(options.components || {}) };
   const components = Object.fromEntries(
-    Object.entries(merged).filter(([, comp]) => typeof comp === 'function')
+    Object.entries(merged).filter(([, comp]) => typeof comp === "function"),
   ) as Record<string, React.ComponentType<Record<string, unknown>>>;
 
   if (!content) {
@@ -37,11 +37,13 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
       </div>
     );
   } catch (error) {
-    console.error('Error rendering MDX:', error);
+    console.error("Error rendering MDX:", error);
     return (
-      <div className="text-destructive p-4 rounded-md bg-destructive/10">
-        <h3 className="font-semibold mb-2">Render Error</h3>
-        <p>{error instanceof Error ? error.message : 'Failed to render content'}</p>
+      <div className="rounded-md bg-destructive/10 p-4 text-destructive">
+        <h3 className="mb-2 font-semibold">Render Error</h3>
+        <p>
+          {error instanceof Error ? error.message : "Failed to render content"}
+        </p>
       </div>
     );
   }

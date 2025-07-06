@@ -3,7 +3,10 @@
  * 统一管理首页的各种工具函数
  */
 
-import { GREETINGS_BY_TIME, type TimeOfDay } from '@/components/layout/home/data/constants';
+import {
+  GREETINGS_BY_TIME,
+  type TimeOfDay,
+} from "@/components/layout/home/data/constants";
 
 /**
  * 获取当前时间段
@@ -12,10 +15,10 @@ import { GREETINGS_BY_TIME, type TimeOfDay } from '@/components/layout/home/data
 export const getTimeOfDay = (): TimeOfDay => {
   const hour = new Date().getHours();
 
-  if (hour >= 5 && hour <= 11) return 'morning';
-  if (hour >= 12 && hour <= 17) return 'afternoon';
-  if (hour >= 18 && hour <= 22) return 'evening';
-  return 'night'; // 23-4点
+  if (hour >= 5 && hour <= 11) return "morning";
+  if (hour >= 12 && hour <= 17) return "afternoon";
+  if (hour >= 18 && hour <= 22) return "evening";
+  return "night"; // 23-4点
 };
 
 /**
@@ -63,7 +66,10 @@ export const getRandomPercentage = (): string => {
  * @param max 最大透明度
  * @returns 透明度值
  */
-export const getRandomOpacity = (min: number = 0.05, max: number = 0.15): number => {
+export const getRandomOpacity = (
+  min: number = 0.05,
+  max: number = 0.15,
+): number => {
   return Math.random() * (max - min) + min;
 };
 
@@ -82,7 +88,10 @@ export const getRandomDelay = (maxDelay: number = 5): string => {
  * @param max 最大持续时间（秒）
  * @returns 持续时间字符串
  */
-export const getRandomDuration = (min: number = 10, max: number = 30): string => {
+export const getRandomDuration = (
+  min: number = 10,
+  max: number = 30,
+): string => {
   return `${Math.random() * (max - min) + min}s`;
 };
 
@@ -94,7 +103,7 @@ export const getRandomDuration = (min: number = 10, max: number = 30): string =>
  */
 export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
-  wait: number
+  wait: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
 
@@ -112,7 +121,7 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
  */
 export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
-  limit: number
+  limit: number,
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
 
@@ -137,20 +146,20 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
       return true;
     } else {
       // 降级方案
-      const textArea = document.createElement('textarea');
+      const textArea = document.createElement("textarea");
       textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-      const result = document.execCommand('copy');
+      const result = document.execCommand("copy");
       textArea.remove();
       return result;
     }
   } catch (error) {
-    console.error('复制失败:', error);
+    console.error("复制失败:", error);
     return false;
   }
 };
@@ -161,13 +170,13 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
  * @returns 格式化后的文件大小字符串
  */
 export const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
 
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 
 /**
@@ -175,7 +184,7 @@ export const formatFileSize = (bytes: number): string => {
  * @returns 是否为移动设备
  */
 export const isMobile = (): boolean => {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === "undefined") return false;
   return window.innerWidth <= 768;
 };
 
@@ -184,6 +193,6 @@ export const isMobile = (): boolean => {
  * @returns 是否为暗色主题
  */
 export const isDarkMode = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  return document.documentElement.classList.contains('dark');
+  if (typeof window === "undefined") return false;
+  return document.documentElement.classList.contains("dark");
 };

@@ -2,14 +2,14 @@
  * Hooks 相关类型定义
  */
 
-import { AsyncResult, URL } from './common';
+import { AsyncResult, URL } from "./common";
 
 /**
  * 内容数据获取配置选项
  */
 export interface ContentOptions {
   /** 内容类型 */
-  type?: 'blog' | 'docs' | 'journal' | 'tools' | 'links';
+  type?: "blog" | "docs" | "journal" | "tools" | "links";
 
   /** API请求的基础路径 */
   path?: string;

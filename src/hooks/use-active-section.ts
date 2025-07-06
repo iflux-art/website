@@ -1,4 +1,4 @@
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
 /**
  * 活动路径检查配置项
@@ -36,7 +36,7 @@ export function useActiveSection() {
 
     // 构建要比较的路径
     const targetPath = `/${key}`;
-    const currentPath = ignoreQuery ? pathname.split('?')[0] : pathname;
+    const currentPath = ignoreQuery ? pathname.split("?")[0] : pathname;
 
     // 精确匹配模式
     if (exact) {

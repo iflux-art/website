@@ -2,7 +2,7 @@
  * 文档数据相关类型定义
  */
 
-import { BaseContent, BaseCategory, URL } from './common';
+import { BaseContent, BaseCategory, URL } from "./common";
 
 /**
  * 文档元数据项接口 (_meta.json)
@@ -17,9 +17,9 @@ export interface DocMetaItem {
   /** 嵌套结构项 */
   items?: string[] | Record<string, DocMetaItem | string>;
   /** 项目类型 */
-  type?: 'separator' | 'page' | 'menu';
+  type?: "separator" | "page" | "menu";
   /** 显示模式 */
-  display?: 'hidden' | 'normal';
+  display?: "hidden" | "normal";
   /** 显式排序序号 */
   order?: number;
   /** 分类描述 */
@@ -69,7 +69,10 @@ export interface DocItem extends BaseContent {
  * 文档列表项（用于侧边栏）
  */
 export interface DocListItem
-  extends Pick<DocItem, 'slug' | 'title' | 'description' | 'path' | 'category'> {
+  extends Pick<
+    DocItem,
+    "slug" | "title" | "description" | "path" | "category"
+  > {
   /** 是否为当前页面 */
   isActive?: boolean;
   /** 是否为父级页面 */
@@ -113,7 +116,7 @@ export interface SidebarItem {
   /** 是否默认折叠 */
   collapsed?: boolean;
   /** 项目类型 */
-  type?: 'separator' | 'page' | 'menu';
+  type?: "separator" | "page" | "menu";
   /** 是否为外部链接 */
   isExternal?: boolean;
   /** 文件路径（用于匹配当前页面） */

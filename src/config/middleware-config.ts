@@ -26,29 +26,35 @@ export const CACHE_CONFIG = {
  * 内容安全策略配置
  */
 export const CSP_CONFIG = {
-  'default-src': ["'self'"],
-  'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://cdn.jsdelivr.net'],
-  'style-src': ["'self'", "'unsafe-inline'"],
-  'img-src': ["'self'", 'data:', 'https:'],
-  'font-src': ["'self'", 'data:'],
-  'connect-src': ["'self'", 'https:'],
-  'frame-ancestors': ["'none'"],
-  'form-action': ["'self'"],
-  'base-uri': ["'self'"],
-  'upgrade-insecure-requests': [],
+  "default-src": ["'self'"],
+  "script-src": [
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    "https://cdn.jsdelivr.net",
+  ],
+  "style-src": ["'self'", "'unsafe-inline'"],
+  "img-src": ["'self'", "data:", "https:"],
+  "font-src": ["'self'", "data:"],
+  "connect-src": ["'self'", "https:"],
+  "frame-ancestors": ["'none'"],
+  "form-action": ["'self'"],
+  "base-uri": ["'self'"],
+  "upgrade-insecure-requests": [],
 } as const;
 
 /**
  * 安全头配置
  */
 export const SECURITY_HEADERS = {
-  'X-DNS-Prefetch-Control': 'on',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-  'X-Frame-Options': 'SAMEORIGIN',
-  'X-Content-Type-Options': 'nosniff',
-  'X-XSS-Protection': '1; mode=block',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  "X-DNS-Prefetch-Control": "on",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-Content-Type-Options": "nosniff",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy":
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
 } as const;
 
 /**
@@ -56,6 +62,6 @@ export const SECURITY_HEADERS = {
  */
 export const buildCSP = (config: typeof CSP_CONFIG) => {
   return Object.entries(config)
-    .map(([key, values]) => `${key} ${values.join(' ')}`)
-    .join('; ');
+    .map(([key, values]) => `${key} ${values.join(" ")}`)
+    .join("; ");
 };

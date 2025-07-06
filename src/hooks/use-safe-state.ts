@@ -3,9 +3,9 @@
  * 完全避免 SSR 问题的状态管理解决方案
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 // ==================== 类型定义 ====================
 
@@ -14,14 +14,22 @@ export interface SearchResult {
   title: string;
   description: string;
   url: string;
-  type: 'tool' | 'link' | 'docs' | 'blog' | 'command' | 'navigation' | 'doc' | 'history';
+  type:
+    | "tool"
+    | "link"
+    | "docs"
+    | "blog"
+    | "command"
+    | "navigation"
+    | "doc"
+    | "history";
   icon?: string;
   category?: string;
   tags?: string[];
 }
 
 interface NavbarState {
-  direction: 'up' | 'down';
+  direction: "up" | "down";
   position: number;
   showTitle: boolean;
   pageTitle: string;
@@ -43,7 +51,7 @@ interface AuthState {
 }
 
 interface ThemeState {
-  theme: 'light' | 'dark' | 'system';
+  theme: "light" | "dark" | "system";
 }
 
 interface FilterState {
@@ -71,10 +79,10 @@ interface ToolState {
 // ==================== 常量 ====================
 
 const STORAGE_KEYS = {
-  THEME: 'iflux-theme',
-  AUTH: 'iflux-auth',
-  SEARCH_HISTORY: 'iflux-search-history',
-  TOOL_HISTORY: 'iflux-tool-history',
+  THEME: "iflux-theme",
+  AUTH: "iflux-auth",
+  SEARCH_HISTORY: "iflux-search-history",
+  TOOL_HISTORY: "iflux-tool-history",
 } as const;
 
 const STATE_CONFIG = {
@@ -89,7 +97,7 @@ const STATE_CONFIG = {
 // ==================== 工具函数 ====================
 
 function getStorageItem<T>(key: string, defaultValue: T): T {
-  if (typeof window === 'undefined') return defaultValue;
+  if (typeof window === "undefined") return defaultValue;
   try {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
@@ -99,7 +107,7 @@ function getStorageItem<T>(key: string, defaultValue: T): T {
 }
 
 function setStorageItem(key: string, value: unknown): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
@@ -111,27 +119,29 @@ function setStorageItem(key: string, value: unknown): void {
 
 export function useSafeNavbar() {
   const [state, setState] = useState<NavbarState>({
-    direction: 'up',
+    direction: "up",
     position: 0,
     showTitle: false,
-    pageTitle: '',
+    pageTitle: "",
     lastDirectionChange: 0,
   });
 
   const setScrollPosition = useCallback((position: number) => {
-    setState(prev => {
+    setState((prev) => {
       const now = Date.now();
-      const newDirection = position > prev.position ? 'down' : 'up';
+      const newDirection = position > prev.position ? "down" : "up";
       const directionChanged = newDirection !== prev.direction;
 
       // 首页始终显示导航菜单
-      if (prev.pageTitle === '首页') {
+      if (prev.pageTitle === "首页") {
         return {
           ...prev,
           direction: newDirection,
           position,
           showTitle: false,
-          lastDirectionChange: directionChanged ? now : prev.lastDirectionChange,
+          lastDirectionChange: directionChanged
+            ? now
+            : prev.lastDirectionChange,
         };
       }
 
@@ -148,9 +158,12 @@ export function useSafeNavbar() {
       };
 
       // 根据滚动方向和位置决定是否显示标题
-      if (newDirection === 'up') {
+      if (newDirection === "up") {
         newState.showTitle = false; // 向上滚动始终显示菜单
-      } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
+      } else if (
+        newDirection === "down" &&
+        position > STATE_CONFIG.HIDE_THRESHOLD
+      ) {
         newState.showTitle = true; // 向下且滚动较多时收起菜单
       }
 
@@ -159,12 +172,12 @@ export function useSafeNavbar() {
   }, []);
 
   const setPageTitle = useCallback((title: string) => {
-    setState(prev => ({ ...prev, pageTitle: title }));
+    setState((prev) => ({ ...prev, pageTitle: title }));
   }, []);
 
   const scrollToTop = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, []);
 
@@ -181,7 +194,7 @@ export function useSafeNavbar() {
 export function useSafeSearch() {
   const [state, setState] = useState<SearchState>({
     isOpen: false,
-    query: '',
+    query: "",
     results: [],
     isLoading: false,
     history: [],
@@ -191,31 +204,31 @@ export function useSafeSearch() {
   // 加载搜索历史
   useEffect(() => {
     const history = getStorageItem(STORAGE_KEYS.SEARCH_HISTORY, []);
-    setState(prev => ({ ...prev, history }));
+    setState((prev) => ({ ...prev, history }));
   }, []);
 
   const setOpen = useCallback((open: boolean) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       isOpen: open,
-      ...(open ? {} : { query: '', results: [], selectedIndex: 0 }),
+      ...(open ? {} : { query: "", results: [], selectedIndex: 0 }),
     }));
   }, []);
 
   const setQuery = useCallback((query: string) => {
-    setState(prev => ({ ...prev, query, selectedIndex: 0 }));
+    setState((prev) => ({ ...prev, query, selectedIndex: 0 }));
   }, []);
 
   const setResults = useCallback((results: SearchResult[]) => {
-    setState(prev => ({ ...prev, results, selectedIndex: 0 }));
+    setState((prev) => ({ ...prev, results, selectedIndex: 0 }));
   }, []);
 
   const setLoading = useCallback((loading: boolean) => {
-    setState(prev => ({ ...prev, isLoading: loading }));
+    setState((prev) => ({ ...prev, isLoading: loading }));
   }, []);
 
   const setSelectedIndex = useCallback((index: number) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       selectedIndex: Math.max(0, Math.min(index, prev.results.length - 1)),
     }));
@@ -223,25 +236,25 @@ export function useSafeSearch() {
 
   const addToHistory = useCallback((query: string) => {
     if (!query.trim()) return;
-    setState(prev => {
-      const newHistory = [query, ...prev.history.filter(item => item !== query)].slice(
-        0,
-        STATE_CONFIG.MAX_SEARCH_HISTORY
-      );
+    setState((prev) => {
+      const newHistory = [
+        query,
+        ...prev.history.filter((item) => item !== query),
+      ].slice(0, STATE_CONFIG.MAX_SEARCH_HISTORY);
       setStorageItem(STORAGE_KEYS.SEARCH_HISTORY, newHistory);
       return { ...prev, history: newHistory };
     });
   }, []);
 
   const clearHistory = useCallback(() => {
-    setState(prev => ({ ...prev, history: [] }));
+    setState((prev) => ({ ...prev, history: [] }));
     setStorageItem(STORAGE_KEYS.SEARCH_HISTORY, []);
   }, []);
 
   const resetSearch = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      query: '',
+      query: "",
       results: [],
       isLoading: false,
       selectedIndex: 0,
@@ -271,18 +284,24 @@ export function useSafeAuth() {
 
   // 加载认证状态
   useEffect(() => {
-    const authData = getStorageItem(STORAGE_KEYS.AUTH, { isLoggedIn: false, loginTime: null });
+    const authData = getStorageItem(STORAGE_KEYS.AUTH, {
+      isLoggedIn: false,
+      loginTime: null,
+    });
     setState(authData);
   }, []);
 
-  const setLoginState = useCallback((isLoggedIn: boolean, loginTime?: number) => {
-    const newState = {
-      isLoggedIn,
-      loginTime: loginTime || Date.now(),
-    };
-    setState(newState);
-    setStorageItem(STORAGE_KEYS.AUTH, newState);
-  }, []);
+  const setLoginState = useCallback(
+    (isLoggedIn: boolean, loginTime?: number) => {
+      const newState = {
+        isLoggedIn,
+        loginTime: loginTime || Date.now(),
+      };
+      setState(newState);
+      setStorageItem(STORAGE_KEYS.AUTH, newState);
+    },
+    [],
+  );
 
   const logout = useCallback(() => {
     const newState = { isLoggedIn: false, loginTime: null };
@@ -312,15 +331,15 @@ export function useSafeAuth() {
 // ==================== 主题状态 ====================
 
 export function useSafeTheme() {
-  const [theme, setThemeState] = useState<ThemeState['theme']>('system');
+  const [theme, setThemeState] = useState<ThemeState["theme"]>("system");
 
   // 加载主题设置
   useEffect(() => {
-    const savedTheme = getStorageItem(STORAGE_KEYS.THEME, 'system');
+    const savedTheme = getStorageItem(STORAGE_KEYS.THEME, "system");
     setThemeState(savedTheme);
   }, []);
 
-  const setTheme = useCallback((newTheme: ThemeState['theme']) => {
+  const setTheme = useCallback((newTheme: ThemeState["theme"]) => {
     setThemeState(newTheme);
     setStorageItem(STORAGE_KEYS.THEME, newTheme);
   }, []);
@@ -335,28 +354,28 @@ export function useSafeTheme() {
 
 export function useSafeFilter() {
   const [state, setState] = useState<FilterState>({
-    selectedCategory: '',
+    selectedCategory: "",
     selectedTag: null,
-    searchTerm: '',
+    searchTerm: "",
   });
 
   const setCategory = useCallback((category: string) => {
-    setState(prev => ({ ...prev, selectedCategory: category }));
+    setState((prev) => ({ ...prev, selectedCategory: category }));
   }, []);
 
   const setTag = useCallback((tag: string | null) => {
-    setState(prev => ({ ...prev, selectedTag: tag }));
+    setState((prev) => ({ ...prev, selectedTag: tag }));
   }, []);
 
   const setSearchTerm = useCallback((term: string) => {
-    setState(prev => ({ ...prev, searchTerm: term }));
+    setState((prev) => ({ ...prev, searchTerm: term }));
   }, []);
 
   const reset = useCallback(() => {
     setState({
-      selectedCategory: '',
+      selectedCategory: "",
       selectedTag: null,
-      searchTerm: '',
+      searchTerm: "",
     });
   }, []);
 
@@ -373,8 +392,8 @@ export function useSafeFilter() {
 
 export function useSafeTool() {
   const [state, setState] = useState<ToolState>({
-    input: '',
-    output: '',
+    input: "",
+    output: "",
     loading: false,
     error: null,
     history: [],
@@ -383,33 +402,39 @@ export function useSafeTool() {
   // 加载工具历史
   useEffect(() => {
     const history = getStorageItem(STORAGE_KEYS.TOOL_HISTORY, []);
-    setState(prev => ({ ...prev, history }));
+    setState((prev) => ({ ...prev, history }));
   }, []);
 
   const setInput = useCallback((input: string) => {
-    setState(prev => ({ ...prev, input, error: null }));
+    setState((prev) => ({ ...prev, input, error: null }));
   }, []);
 
   const setOutput = useCallback((output: string) => {
-    setState(prev => ({ ...prev, output }));
+    setState((prev) => ({ ...prev, output }));
   }, []);
 
   const setLoading = useCallback((loading: boolean) => {
-    setState(prev => ({ ...prev, loading }));
+    setState((prev) => ({ ...prev, loading }));
   }, []);
 
   const setError = useCallback((error: string | null) => {
-    setState(prev => ({ ...prev, error, output: error ? '' : prev.output }));
+    setState((prev) => ({ ...prev, error, output: error ? "" : prev.output }));
   }, []);
 
   const addToHistory = useCallback((item: ToolHistoryItem) => {
-    setState(prev => {
+    setState((prev) => {
       const exists = prev.history.some(
-        h => h.input === item.input && h.output === item.output && h.tool === item.tool
+        (h) =>
+          h.input === item.input &&
+          h.output === item.output &&
+          h.tool === item.tool,
       );
 
       if (!exists) {
-        const newHistory = [item, ...prev.history].slice(0, STATE_CONFIG.MAX_TOOL_HISTORY);
+        const newHistory = [item, ...prev.history].slice(
+          0,
+          STATE_CONFIG.MAX_TOOL_HISTORY,
+        );
         setStorageItem(STORAGE_KEYS.TOOL_HISTORY, newHistory);
         return { ...prev, history: newHistory };
       }
@@ -418,15 +443,15 @@ export function useSafeTool() {
   }, []);
 
   const clearHistory = useCallback(() => {
-    setState(prev => ({ ...prev, history: [] }));
+    setState((prev) => ({ ...prev, history: [] }));
     setStorageItem(STORAGE_KEYS.TOOL_HISTORY, []);
   }, []);
 
   const reset = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      input: '',
-      output: '',
+      input: "",
+      output: "",
       loading: false,
       error: null,
     }));

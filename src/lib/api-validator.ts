@@ -1,16 +1,19 @@
-import { z } from 'zod';
-import { NextResponse } from 'next/server';
-import { ApiResponse } from '@/types';
+import { z } from "zod";
+import { NextResponse } from "next/server";
+import { ApiResponse } from "@/types";
 
-export function validateRequest<T extends z.ZodTypeAny>(schema: T, data: unknown): z.infer<T> {
+export function validateRequest<T extends z.ZodTypeAny>(
+  schema: T,
+  data: unknown,
+): z.infer<T> {
   try {
     return schema.parse(data);
   } catch {
-    throw new Error('Invalid request data');
+    throw new Error("Invalid request data");
   }
 }
 
-export function createApiResponse<T>(data?: T, error?: ApiResponse['error']) {
+export function createApiResponse<T>(data?: T, error?: ApiResponse["error"]) {
   return NextResponse.json({ data, error } satisfies ApiResponse<T>);
 }
 

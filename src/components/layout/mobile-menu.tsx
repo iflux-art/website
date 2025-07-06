@@ -1,14 +1,19 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
-import { ThemeToggle } from '@/components/features/theme-toggle';
-import { TravelButton } from '@/components/common/button/travel-button';
-import { Logo } from '@/components/common/logo';
-import { NavMenu } from '@/components/layout/navbar/nav-menu';
-import { SearchIcon } from '@/components/common/button/search-button';
+import React from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/common/button/theme-toggle";
+import { TravelButton } from "@/components/common/button/travel-button";
+import { Logo } from "@/components/common/logo";
+import { NavMenu } from "@/components/layout/navbar/nav-menu";
+import { SearchIcon } from "@/components/common/button/search-button";
 
 /**
  * 移动端菜单组件属性接口
@@ -51,19 +56,19 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
               variant="ghost"
               size="icon"
               className="lg:hidden"
-              aria-label={isOpen ? '关闭菜单' : '打开菜单'}
-              title={isOpen ? '关闭菜单' : '打开菜单'}
+              aria-label={isOpen ? "关闭菜单" : "打开菜单"}
+              title={isOpen ? "关闭菜单" : "打开菜单"}
             >
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="fullscreen" className="lg:hidden p-0 border-none">
+          <SheetContent side="fullscreen" className="border-none p-0 lg:hidden">
             {/* 添加 SheetTitle 以满足无障碍性要求，但使用 sr-only 类隐藏它 */}
             <SheetTitle className="sr-only">导航菜单</SheetTitle>
 
             {/* 复刻导航栏样式 */}
-            <div className="w-full h-16 sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="container mx-auto px-4 h-full flex items-center justify-between">
+            <div className="sticky top-0 z-40 h-16 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="container mx-auto flex h-full items-center justify-between px-4">
                 {/* 左侧部分 - Logo */}
                 <div className="flex items-center">
                   <Logo />

@@ -1,116 +1,120 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from 'lucide-react';
-import { ToolLayout } from '@/components/layout/tools/tool-layout';
-import { ToolActions } from '@/components/layout/tools/tool-actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from "lucide-react";
+import { ToolLayout } from "@/components/layout/tools/tool-layout";
+import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function UnitConverterPage() {
-  const [category, setCategory] = useState('length');
-  const [fromUnit, setFromUnit] = useState('');
-  const [toUnit, setToUnit] = useState('');
-  const [fromValue, setFromValue] = useState('');
-  const [toValue, setToValue] = useState('');
+  const [category, setCategory] = useState("length");
+  const [fromUnit, setFromUnit] = useState("");
+  const [toUnit, setToUnit] = useState("");
+  const [fromValue, setFromValue] = useState("");
+  const [toValue, setToValue] = useState("");
 
   // 单位转换配置
   const unitCategories = {
     length: {
-      name: '长度',
+      name: "长度",
       units: {
-        mm: { name: '毫米', factor: 0.001 },
-        cm: { name: '厘米', factor: 0.01 },
-        m: { name: '米', factor: 1 },
-        km: { name: '千米', factor: 1000 },
-        inch: { name: '英寸', factor: 0.0254 },
-        ft: { name: '英尺', factor: 0.3048 },
-        yard: { name: '码', factor: 0.9144 },
-        mile: { name: '英里', factor: 1609.344 },
+        mm: { name: "毫米", factor: 0.001 },
+        cm: { name: "厘米", factor: 0.01 },
+        m: { name: "米", factor: 1 },
+        km: { name: "千米", factor: 1000 },
+        inch: { name: "英寸", factor: 0.0254 },
+        ft: { name: "英尺", factor: 0.3048 },
+        yard: { name: "码", factor: 0.9144 },
+        mile: { name: "英里", factor: 1609.344 },
       },
     },
     weight: {
-      name: '重量',
+      name: "重量",
       units: {
-        mg: { name: '毫克', factor: 0.000001 },
-        g: { name: '克', factor: 0.001 },
-        kg: { name: '千克', factor: 1 },
-        ton: { name: '吨', factor: 1000 },
-        oz: { name: '盎司', factor: 0.0283495 },
-        lb: { name: '磅', factor: 0.453592 },
-        stone: { name: '英石', factor: 6.35029 },
+        mg: { name: "毫克", factor: 0.000001 },
+        g: { name: "克", factor: 0.001 },
+        kg: { name: "千克", factor: 1 },
+        ton: { name: "吨", factor: 1000 },
+        oz: { name: "盎司", factor: 0.0283495 },
+        lb: { name: "磅", factor: 0.453592 },
+        stone: { name: "英石", factor: 6.35029 },
       },
     },
     temperature: {
-      name: '温度',
+      name: "温度",
       units: {
-        celsius: { name: '摄氏度 (°C)', factor: 1 },
-        fahrenheit: { name: '华氏度 (°F)', factor: 1 },
-        kelvin: { name: '开尔文 (K)', factor: 1 },
+        celsius: { name: "摄氏度 (°C)", factor: 1 },
+        fahrenheit: { name: "华氏度 (°F)", factor: 1 },
+        kelvin: { name: "开尔文 (K)", factor: 1 },
       },
     },
     area: {
-      name: '面积',
+      name: "面积",
       units: {
-        mm2: { name: '平方毫米', factor: 0.000001 },
-        cm2: { name: '平方厘米', factor: 0.0001 },
-        m2: { name: '平方米', factor: 1 },
-        km2: { name: '平方千米', factor: 1000000 },
-        inch2: { name: '平方英寸', factor: 0.00064516 },
-        ft2: { name: '平方英尺', factor: 0.092903 },
-        acre: { name: '英亩', factor: 4046.86 },
+        mm2: { name: "平方毫米", factor: 0.000001 },
+        cm2: { name: "平方厘米", factor: 0.0001 },
+        m2: { name: "平方米", factor: 1 },
+        km2: { name: "平方千米", factor: 1000000 },
+        inch2: { name: "平方英寸", factor: 0.00064516 },
+        ft2: { name: "平方英尺", factor: 0.092903 },
+        acre: { name: "英亩", factor: 4046.86 },
       },
     },
     volume: {
-      name: '体积',
+      name: "体积",
       units: {
-        ml: { name: '毫升', factor: 0.001 },
-        l: { name: '升', factor: 1 },
-        m3: { name: '立方米', factor: 1000 },
-        inch3: { name: '立方英寸', factor: 0.0163871 },
-        ft3: { name: '立方英尺', factor: 28.3168 },
-        gallon: { name: '加仑', factor: 3.78541 },
-        cup: { name: '杯', factor: 0.236588 },
+        ml: { name: "毫升", factor: 0.001 },
+        l: { name: "升", factor: 1 },
+        m3: { name: "立方米", factor: 1000 },
+        inch3: { name: "立方英寸", factor: 0.0163871 },
+        ft3: { name: "立方英尺", factor: 28.3168 },
+        gallon: { name: "加仑", factor: 3.78541 },
+        cup: { name: "杯", factor: 0.236588 },
       },
     },
     speed: {
-      name: '速度',
+      name: "速度",
       units: {
-        mps: { name: '米/秒', factor: 1 },
-        kmh: { name: '千米/小时', factor: 0.277778 },
-        mph: { name: '英里/小时', factor: 0.44704 },
-        knot: { name: '节', factor: 0.514444 },
-        fps: { name: '英尺/秒', factor: 0.3048 },
+        mps: { name: "米/秒", factor: 1 },
+        kmh: { name: "千米/小时", factor: 0.277778 },
+        mph: { name: "英里/小时", factor: 0.44704 },
+        knot: { name: "节", factor: 0.514444 },
+        fps: { name: "英尺/秒", factor: 0.3048 },
       },
     },
     number: {
-      name: '进制',
+      name: "进制",
       units: {
-        binary: { name: '二进制', base: 2 },
-        octal: { name: '八进制', base: 8 },
-        decimal: { name: '十进制', base: 10 },
-        hexadecimal: { name: '十六进制', base: 16 },
+        binary: { name: "二进制", base: 2 },
+        octal: { name: "八进制", base: 8 },
+        decimal: { name: "十进制", base: 10 },
+        hexadecimal: { name: "十六进制", base: 16 },
       },
     },
   };
 
   // 温度转换特殊处理
-  const convertTemperature = (value: number, from: string, to: string): number => {
+  const convertTemperature = (
+    value: number,
+    from: string,
+    to: string,
+  ): number => {
     if (from === to) return value;
 
     // 先转换为摄氏度
     let celsius = value;
-    if (from === 'fahrenheit') {
+    if (from === "fahrenheit") {
       celsius = ((value - 32) * 5) / 9;
-    } else if (from === 'kelvin') {
+    } else if (from === "kelvin") {
       celsius = value - 273.15;
     }
 
     // 再转换为目标单位
-    if (to === 'fahrenheit') {
+    if (to === "fahrenheit") {
       return (celsius * 9) / 5 + 32;
-    } else if (to === 'kelvin') {
+    } else if (to === "kelvin") {
       return celsius + 273.15;
     }
     return celsius;
@@ -127,40 +131,48 @@ export default function UnitConverterPage() {
     try {
       // 先转换为十进制
       const decimalValue = parseInt(value, fromBase);
-      if (isNaN(decimalValue)) return '';
+      if (isNaN(decimalValue)) return "";
 
       // 再转换为目标进制
       return decimalValue.toString(toBase).toUpperCase();
     } catch {
-      return '';
+      return "";
     }
   };
 
   // 通用单位转换
   const convertUnit = (value: number, from: string, to: string): number => {
-    if (category === 'temperature') {
+    if (category === "temperature") {
       return convertTemperature(value, from, to);
     }
     // When convertUnit is called, category is not 'number' or 'temperature'.
     // These categories in unitCategories all have units with a 'factor' property.
 
     const currentCategoryData =
-      unitCategories[category as keyof Omit<typeof unitCategories, 'number' | 'temperature'>];
+      unitCategories[
+        category as keyof Omit<typeof unitCategories, "number" | "temperature">
+      ];
     const units = currentCategoryData.units;
 
     // Assert that 'from' and 'to' are valid keys and their values have 'factor'.
     // This relies on the structure of unitCategories for non-number/non-temperature types.
-    const fromUnit = units[from as keyof typeof units] as { name: string; factor: number };
-    const toUnit = units[to as keyof typeof units] as { name: string; factor: number };
+    const fromUnit = units[from as keyof typeof units] as {
+      name: string;
+      factor: number;
+    };
+    const toUnit = units[to as keyof typeof units] as {
+      name: string;
+      factor: number;
+    };
 
     if (
       !fromUnit ||
-      typeof fromUnit.factor !== 'number' ||
+      typeof fromUnit.factor !== "number" ||
       !toUnit ||
-      typeof toUnit.factor !== 'number'
+      typeof toUnit.factor !== "number"
     ) {
       console.error(
-        `Unit or factor not found for category '${category}': from='${from}', to='${to}'`
+        `Unit or factor not found for category '${category}': from='${from}', to='${to}'`,
       );
       return NaN;
     }
@@ -177,40 +189,40 @@ export default function UnitConverterPage() {
   const handleFromValueChange = (value: string) => {
     setFromValue(value);
     if (value && fromUnit && toUnit) {
-      if (category === 'number') {
+      if (category === "number") {
         const converted = convertNumber(value, fromUnit, toUnit);
         setToValue(converted);
       } else {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
           const converted = convertUnit(numValue, fromUnit, toUnit);
-          setToValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+          setToValue(converted.toFixed(6).replace(/\.?0+$/, ""));
         } else {
-          setToValue('');
+          setToValue("");
         }
       }
     } else {
-      setToValue('');
+      setToValue("");
     }
   };
 
   const handleToValueChange = (value: string) => {
     setToValue(value);
     if (value && fromUnit && toUnit) {
-      if (category === 'number') {
+      if (category === "number") {
         const converted = convertNumber(value, toUnit, fromUnit);
         setFromValue(converted);
       } else {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
           const converted = convertUnit(numValue, toUnit, fromUnit);
-          setFromValue(converted.toFixed(6).replace(/\.?0+$/, ''));
+          setFromValue(converted.toFixed(6).replace(/\.?0+$/, ""));
         } else {
-          setFromValue('');
+          setFromValue("");
         }
       }
     } else {
-      setFromValue('');
+      setFromValue("");
     }
   };
 
@@ -226,41 +238,44 @@ export default function UnitConverterPage() {
 
   // 清空
   const clearAll = () => {
-    setFromValue('');
-    setToValue('');
+    setFromValue("");
+    setToValue("");
   };
 
   // 初始化默认单位
   useEffect(() => {
-    const units = Object.keys(unitCategories[category as keyof typeof unitCategories].units);
-    setFromUnit(units[0] || '');
-    setToUnit(units[1] || units[0] || '');
-    setFromValue('');
-    setToValue('');
+    const units = Object.keys(
+      unitCategories[category as keyof typeof unitCategories].units,
+    );
+    setFromUnit(units[0] || "");
+    setToUnit(units[1] || units[0] || "");
+    setFromValue("");
+    setToValue("");
   }, [category]);
 
-  const currentUnits = unitCategories[category as keyof typeof unitCategories].units;
+  const currentUnits =
+    unitCategories[category as keyof typeof unitCategories].units;
 
   const actions = [
     {
-      label: '交换单位',
+      label: "交换单位",
       onClick: swapUnits,
       icon: ArrowUpDown,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
     {
-      label: '清空',
+      label: "清空",
       onClick: clearAll,
       icon: RotateCcw,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
   ];
 
   const helpContent = (
     <div className="space-y-4">
       <div>
-        <h4 className="font-medium mb-2">支持的转换类型</h4>
-        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
+        <h4 className="mb-2 font-medium">支持的转换类型</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-400">
           <li>
             • <strong>长度</strong>：毫米、厘米、米、千米、英寸、英尺、码、英里
           </li>
@@ -285,8 +300,8 @@ export default function UnitConverterPage() {
         </ul>
       </div>
       <div>
-        <h4 className="font-medium mb-2">使用说明</h4>
-        <ul className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
+        <h4 className="mb-2 font-medium">使用说明</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground dark:text-slate-400">
           <li>• 选择转换类型，然后选择源单位和目标单位</li>
           <li>• 在任一输入框中输入数值，另一个会自动计算</li>
           <li>• 点击交换按钮可以快速交换源单位和目标单位</li>
@@ -299,7 +314,7 @@ export default function UnitConverterPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
@@ -328,8 +343,8 @@ export default function UnitConverterPage() {
                 key={key}
                 className={`rounded-full ${
                   category === key
-                    ? 'px-4 py-2 bg-primary text-primary-foreground dark:bg-slate-700'
-                    : 'px-4 py-2 hover:bg-accent dark:hover:bg-slate-800'
+                    ? "bg-primary px-4 py-2 text-primary-foreground dark:bg-slate-700"
+                    : "px-4 py-2 hover:bg-accent dark:hover:bg-slate-800"
                 }`}
                 onClick={() => setCategory(key)}
               >
@@ -340,24 +355,24 @@ export default function UnitConverterPage() {
         </div>
 
         {/* 转换器主体 */}
-        <Card className="p-4 rounded-lg border bg-background dark:bg-slate-900 mb-6">
+        <Card className="mb-6 rounded-lg border bg-background p-4 dark:bg-slate-900">
           <CardHeader>
             <CardTitle>
               {unitCategories[category as keyof typeof unitCategories].name}转换
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* 源单位 */}
               <div className="space-y-4">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
                     从
                   </label>
                   <select
                     value={fromUnit}
-                    onChange={e => setFromUnit(e.target.value)}
-                    className="relative w-full bg-background dark:bg-slate-900 rounded-md border dark:border-slate-700"
+                    onChange={(e) => setFromUnit(e.target.value)}
+                    className="relative w-full rounded-md border bg-background dark:border-slate-700 dark:bg-slate-900"
                   >
                     {Object.entries(currentUnits).map(([key, unit]) => (
                       <option key={key} value={key}>
@@ -368,13 +383,15 @@ export default function UnitConverterPage() {
                 </div>
                 <div>
                   <input
-                    type={category === 'number' ? 'text' : 'number'}
+                    type={category === "number" ? "text" : "number"}
                     value={fromValue}
-                    onChange={e => handleFromValueChange(e.target.value)}
+                    onChange={(e) => handleFromValueChange(e.target.value)}
                     placeholder={
-                      category === 'number' ? '输入数值（如：FF, 255, 377）' : '输入数值'
+                      category === "number"
+                        ? "输入数值（如：FF, 255, 377）"
+                        : "输入数值"
                     }
-                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
+                    className="w-full rounded-md border bg-background p-4 font-mono text-sm dark:bg-slate-900 dark:text-slate-50"
                   />
                 </div>
               </div>
@@ -395,13 +412,13 @@ export default function UnitConverterPage() {
               {/* 目标单位 */}
               <div className="space-y-4 md:order-3">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
                     到
                   </label>
                   <select
                     value={toUnit}
-                    onChange={e => setToUnit(e.target.value)}
-                    className="w-full p-3 border border-border rounded-lg bg-background"
+                    onChange={(e) => setToUnit(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background p-3"
                   >
                     {Object.entries(currentUnits).map(([key, unit]) => (
                       <option key={key} value={key}>
@@ -412,11 +429,11 @@ export default function UnitConverterPage() {
                 </div>
                 <div>
                   <input
-                    type={category === 'number' ? 'text' : 'number'}
+                    type={category === "number" ? "text" : "number"}
                     value={toValue}
-                    onChange={e => handleToValueChange(e.target.value)}
+                    onChange={(e) => handleToValueChange(e.target.value)}
                     placeholder="转换结果"
-                    className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50"
+                    className="w-full rounded-md border bg-background p-4 font-mono text-sm dark:bg-slate-900 dark:text-slate-50"
                   />
                 </div>
               </div>
@@ -437,44 +454,78 @@ export default function UnitConverterPage() {
             <CardTitle>常用转换参考</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-              {category === 'length' && (
+            <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2 lg:grid-cols-3">
+              {category === "length" && (
                 <>
-                  <div className="p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono">
+                  <div className="rounded-lg border bg-background p-4 font-mono dark:bg-slate-900 dark:text-slate-50">
                     1 米 = 100 厘米
                   </div>
-                  <div className="p-3 bg-muted/50 rounded">1 千米 = 1000 米</div>
-                  <div className="p-3 bg-muted/50 rounded">1 英寸 = 2.54 厘米</div>
-                  <div className="p-3 bg-muted/50 rounded">1 英尺 = 30.48 厘米</div>
-                  <div className="p-3 bg-muted/50 rounded">1 码 = 0.9144 米</div>
-                  <div className="p-3 bg-muted/50 rounded">1 英里 = 1.609 千米</div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 千米 = 1000 米
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 英寸 = 2.54 厘米
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 英尺 = 30.48 厘米
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 码 = 0.9144 米
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 英里 = 1.609 千米
+                  </div>
                 </>
               )}
-              {category === 'weight' && (
+              {category === "weight" && (
                 <>
-                  <div className="p-3 bg-muted/50 rounded">1 千克 = 1000 克</div>
-                  <div className="p-3 bg-muted/50 rounded">1 吨 = 1000 千克</div>
-                  <div className="p-3 bg-muted/50 rounded">1 磅 = 0.454 千克</div>
-                  <div className="p-3 bg-muted/50 rounded">1 盎司 = 28.35 克</div>
-                  <div className="p-3 bg-muted/50 rounded">1 英石 = 6.35 千克</div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 千克 = 1000 克
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 吨 = 1000 千克
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 磅 = 0.454 千克
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 盎司 = 28.35 克
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    1 英石 = 6.35 千克
+                  </div>
                 </>
               )}
-              {category === 'temperature' && (
+              {category === "temperature" && (
                 <>
-                  <div className="p-3 bg-muted/50 rounded">0°C = 32°F = 273.15K</div>
-                  <div className="p-3 bg-muted/50 rounded">100°C = 212°F = 373.15K</div>
-                  <div className="p-3 bg-muted/50 rounded">37°C = 98.6°F (体温)</div>
-                  <div className="p-3 bg-muted/50 rounded">-40°C = -40°F</div>
+                  <div className="rounded bg-muted/50 p-3">
+                    0°C = 32°F = 273.15K
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    100°C = 212°F = 373.15K
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    37°C = 98.6°F (体温)
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">-40°C = -40°F</div>
                 </>
               )}
-              {category === 'number' && (
+              {category === "number" && (
                 <>
-                  <div className="p-3 bg-muted/50 rounded">255 = FF = 377 = 11111111</div>
-                  <div className="p-3 bg-muted/50 rounded">16 = 10 = 20 = 10000</div>
-                  <div className="p-3 bg-muted/50 rounded">8 = 8 = 10 = 1000</div>
-                  <div className="p-3 bg-muted/50 rounded">1 = 1 = 1 = 1</div>
-                  <div className="p-3 bg-muted/50 rounded">0 = 0 = 0 = 0</div>
-                  <div className="p-3 bg-muted/50 rounded">十进制 = 十六进制 = 八进制 = 二进制</div>
+                  <div className="rounded bg-muted/50 p-3">
+                    255 = FF = 377 = 11111111
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    16 = 10 = 20 = 10000
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">
+                    8 = 8 = 10 = 1000
+                  </div>
+                  <div className="rounded bg-muted/50 p-3">1 = 1 = 1 = 1</div>
+                  <div className="rounded bg-muted/50 p-3">0 = 0 = 0 = 0</div>
+                  <div className="rounded bg-muted/50 p-3">
+                    十进制 = 十六进制 = 八进制 = 二进制
+                  </div>
                 </>
               )}
             </div>

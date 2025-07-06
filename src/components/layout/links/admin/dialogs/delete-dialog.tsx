@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import type { LinksItem } from '@/types';
+} from "@/components/ui/alert-dialog";
+import type { LinksItem } from "@/types";
 
 interface DeleteDialogProps {
   item: LinksItem | null;
@@ -18,7 +18,12 @@ interface DeleteDialogProps {
   onError: (message: string) => void;
 }
 
-export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) {
+export function DeleteDialog({
+  item,
+  onOpenChange,
+  onSuccess,
+  onError,
+}: DeleteDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -26,22 +31,22 @@ export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteD
     setIsLoading(true);
     try {
       const response = await fetch(`/api/links?id=${item.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to delete item');
+        throw new Error(errorData.error || "Failed to delete item");
       }
 
       onSuccess(item.id);
       onOpenChange(false);
     } catch (error) {
-      console.error('Error deleting item:', error);
+      console.error("Error deleting item:", error);
       if (error instanceof Error) {
         onError(error.message);
       } else {
-        onError('An unknown error occurred');
+        onError("An unknown error occurred");
       }
     } finally {
       setIsLoading(false);
@@ -60,7 +65,7 @@ export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteD
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>取消</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading ? '删除中...' : '删除'}
+            {isLoading ? "删除中..." : "删除"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

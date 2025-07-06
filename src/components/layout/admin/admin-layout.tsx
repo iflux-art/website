@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { cn } from '@/utils';
-import { Button } from '@/components/ui/button';
-import { Globe, LogOut, Home } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Globe, LogOut, Home } from "lucide-react";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -13,16 +13,16 @@ interface AdminLayoutProps {
 
 const adminMenuItems = [
   {
-    key: 'dashboard',
-    label: '仪表板',
+    key: "dashboard",
+    label: "仪表板",
     icon: Home,
-    href: '/admin',
+    href: "/admin",
   },
   {
-    key: 'navigation',
-    label: '网址管理',
+    key: "navigation",
+    label: "网址管理",
     icon: Globe,
-    href: '/admin/navigation',
+    href: "/admin/navigation",
   },
 ];
 
@@ -34,10 +34,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   // 检查登录状态
   useEffect(() => {
     const checkAuth = () => {
-      const loggedIn = localStorage.getItem('isLoggedIn');
-      const loginTime = localStorage.getItem('loginTime');
+      const loggedIn = localStorage.getItem("isLoggedIn");
+      const loginTime = localStorage.getItem("loginTime");
 
-      if (loggedIn === 'true' && loginTime) {
+      if (loggedIn === "true" && loginTime) {
         // 检查登录是否过期（24小时）
         const now = Date.now();
         const loginTimestamp = parseInt(loginTime);
@@ -49,7 +49,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           setIsLoggedIn(true);
         }
       } else {
-        router.push('/');
+        router.push("/");
       }
     };
 
@@ -57,24 +57,24 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('loginTime');
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loginTime");
     setIsLoggedIn(false);
-    router.push('/');
+    router.push("/");
   };
 
   const isActiveRoute = (href: string) => {
-    if (href === '/admin') {
-      return pathname === '/admin';
+    if (href === "/admin") {
+      return pathname === "/admin";
     }
     return pathname.startsWith(href);
   };
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
           <p className="text-muted-foreground">验证登录状态...</p>
         </div>
       </div>
@@ -88,11 +88,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <div className="container mx-auto px-4 py-6">
           {/* 页面标题和导航 */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold tracking-tight mb-6">管理后台</h1>
+            <h1 className="mb-6 text-3xl font-bold tracking-tight">管理后台</h1>
 
             {/* 简化的导航 */}
-            <div className="flex items-center gap-2 mb-6">
-              {adminMenuItems.map(item => {
+            <div className="mb-6 flex items-center gap-2">
+              {adminMenuItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActiveRoute(item.href);
 
@@ -101,10 +101,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     key={item.key}
                     href={item.href}
                     className={cn(
-                      'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                      "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors",
                       isActive
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground",
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -114,8 +114,13 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               })}
 
               {/* 退出登录按钮 */}
-              <Button variant="outline" size="sm" onClick={handleLogout} className="ml-auto">
-                <LogOut className="h-4 w-4 mr-2" />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="ml-auto"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
                 退出登录
               </Button>
             </div>

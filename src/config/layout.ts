@@ -16,6 +16,6 @@ export const SCROLL_OFFSET = NAVBAR_HEIGHT;
  * 内容类型及其对应的基础路由
  */
 export const CONTENT_BASE_ROUTES = {
-  blog: '/blog',
-  docs: '/docs',
+  blog: "/blog",
+  docs: "/docs",
 } as const;

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface LinksHeaderProps {
   totalItems: number;
@@ -19,7 +19,7 @@ function LinksHeader({
 }: LinksHeaderProps) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold tracking-tight mb-2">网址</h1>
+      <h1 className="mb-2 text-3xl font-bold tracking-tight">网址</h1>
       {selectedCategory || selectedTag ? (
         <p className="text-muted-foreground">
           显示 {filteredCount} 个网址
@@ -41,10 +41,10 @@ function LinksHeader({
     </div>
   );
 }
-import { AppGrid } from '@/components/layout/app-grid';
-import { LinkCard } from '@/components/common/cards/link-card';
-import { UnifiedFilter } from '@/components/common/filter/unified-filter';
-import { useLinksData } from '@/hooks/use-links-data';
+import { AppGrid } from "@/components/layout/app-grid";
+import { LinkCard } from "@/components/common/cards/link-card";
+import { UnifiedFilter } from "@/components/common/filter/unified-filter";
+import { useLinksData } from "@/hooks/use-links-data";
 export default function LinksPage() {
   const {
     items,
@@ -70,7 +70,7 @@ export default function LinksPage() {
       />
 
       <UnifiedFilter
-        categories={categories.map(cat => ({
+        categories={categories.map((cat) => ({
           id: cat.id,
           name: cat.name,
           icon: undefined, // LinksCategory 的 icon 是 string，不是 LucideIcon
@@ -86,14 +86,14 @@ export default function LinksPage() {
       />
 
       <AppGrid columns={5} className="items-stretch">
-        {filteredItems.map(item => (
+        {filteredItems.map((item) => (
           <LinkCard
             key={item.id}
             title={item.title}
             description={item.description || item.url}
             href={item.url}
             icon={item.icon}
-            iconType={item.iconType as 'image' | 'text' | undefined}
+            iconType={item.iconType as "image" | "text" | undefined}
             isExternal={true}
             className="h-full"
           />

@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 /**
  * 格式化日期
  * @param date 要格式化的日期
@@ -7,14 +14,14 @@
 export function formatDate(date: string | Date, format?: string): string {
   const d = new Date(date);
 
-  if (format === 'MM月dd日') {
+  if (format === "MM月dd日") {
     return `${d.getMonth() + 1}月${d.getDate()}日`;
   }
 
-  return d.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return d.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 }
 
@@ -25,7 +32,7 @@ export function formatDate(date: string | Date, format?: string): string {
  */
 export function debounce<TArgs extends unknown[], TReturn>(
   func: (...args: TArgs) => Promise<TReturn>,
-  wait: number
+  wait: number,
 ): (...args: TArgs) => Promise<TReturn> {
   let timeoutId: NodeJS.Timeout;
 

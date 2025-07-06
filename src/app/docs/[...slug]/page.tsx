@@ -1,42 +1,51 @@
 // Node.js 核心模块
-import fs from 'fs';
-import path from 'path';
-import React from 'react';
+import fs from "fs";
+import path from "path";
+import React from "react";
 
 // 第三方依赖
-import matter from 'gray-matter';
+import matter from "gray-matter";
 
 // 布局组件
-import { DocsContent } from '@/components/layout/docs/DocsContent';
-import { Breadcrumb } from '@/components/common/breadcrumb/breadcrumb';
-import { createDocBreadcrumbs } from '@/components/common/breadcrumb/breadcrumb-utils';
-import { ContentDisplay } from '@/components/common/content-display';
-import { DocPagination } from '@/components/layout/docs/pagination';
-import { Sidebar } from '@/components/layout/docs/sidebar';
-import { TableOfContents } from '@/components/layout/toc/table-of-contents';
+import { DocsContent } from "@/components/layout/docs/DocsContent";
+import { Breadcrumb } from "@/components/common/breadcrumb/breadcrumb";
+import { createDocBreadcrumbs } from "@/components/common/breadcrumb/breadcrumb-utils";
+import { ContentDisplay } from "@/components/common/content-display";
+import { DocPagination } from "@/components/layout/docs/pagination";
+import { Sidebar } from "@/components/layout/docs/sidebar";
+import { TableOfContents } from "@/components/layout/toc/table-of-contents";
 
 // 内容渲染
-import { extractHeadings } from '@/components/layout/toc/extract-headings';
-import { getFlattenedDocsOrder, type NavDocItem } from '@/lib/content';
-import type { DocMetaItem } from '@/types';
-import { countWords } from '@/utils';
-export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
+import { extractHeadings } from "@/components/layout/toc/extract-headings";
+import { getFlattenedDocsOrder, type NavDocItem } from "@/lib/content";
+import type { DocMetaItem } from "@/types";
+import { countWords } from "@/lib/utils";
+export default async function DocPage({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
   const resolvedParams = await params;
-  const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
+  const slug = Array.isArray(resolvedParams.slug)
+    ? resolvedParams.slug
+    : [resolvedParams.slug];
 
-  const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
-  const requestedPath = slug.join('/');
+  const docsContentDir = path.join(process.cwd(), "src", "content", "docs");
+  const requestedPath = slug.join("/");
   const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
 
   let filePath: string | undefined;
-  let actualSlugForNav = slug.join('/'); // Represents the logical path for navigation and breadcrumbs
+  let actualSlugForNav = slug.join("/"); // Represents the logical path for navigation and breadcrumbs
   let isIndexPage = false;
   // let isDirectoryRequest = false; // 未使用的变量
 
-  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
+  if (
+    fs.existsSync(absoluteRequestedPath) &&
+    fs.statSync(absoluteRequestedPath).isDirectory()
+  ) {
     // isDirectoryRequest = true; // Unused variable
-    const indexMdxPath = path.join(absoluteRequestedPath, 'index.mdx');
-    const indexMdPath = path.join(absoluteRequestedPath, 'index.md');
+    const indexMdxPath = path.join(absoluteRequestedPath, "index.mdx");
+    const indexMdPath = path.join(absoluteRequestedPath, "index.md");
 
     if (fs.existsSync(indexMdxPath)) {
       filePath = indexMdxPath;
@@ -57,7 +66,10 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
       // We can use getFlattenedDocsOrder for the *specific directory* to find its first item.
       const dirSpecificFlattenedDocs = getFlattenedDocsOrder(requestedPath); // Pass the dir path itself
       if (dirSpecificFlattenedDocs.length > 0) {
-        const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(/^\/docs\//, '');
+        const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(
+          /^\/docs\//,
+          "",
+        );
         filePath = path.join(docsContentDir, `${firstDocRelativePath}.mdx`);
         if (!fs.existsSync(filePath)) {
           filePath = path.join(docsContentDir, `${firstDocRelativePath}.md`);
@@ -78,22 +90,23 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         filePath = possiblePathMd;
       }
     }
-    actualSlugForNav = slug.join('/'); // If it's a direct file request, actualSlugForNav is the slug itself
-    isIndexPage = path.basename(filePath || '', path.extname(filePath || '')) === 'index';
+    actualSlugForNav = slug.join("/"); // If it's a direct file request, actualSlugForNav is the slug itself
+    isIndexPage =
+      path.basename(filePath || "", path.extname(filePath || "")) === "index";
   }
 
   if (!filePath || !fs.existsSync(filePath)) {
     throw new Error();
   }
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const fileContent = fs.readFileSync(filePath, "utf8");
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
   // 格式化日期
   const date = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+    ? new Date(frontmatter.date).toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       })
     : null;
 
@@ -111,8 +124,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   // 确定 docNameForSidebar：从顶级分类计算相对路径，用于高亮显示
   const relativePathFromTopCategory = path
     .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-    .replace(/\\/g, '/')
-    .replace(/\.(mdx|md)$/, '');
+    .replace(/\\/g, "/")
+    .replace(/\.(mdx|md)$/, "");
 
   // 使用顶级分类 slug 计算前后页面逻辑
   const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
@@ -127,38 +140,43 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
     nextDoc =
       flattenedDocs.find(
-        doc =>
-          doc.path.startsWith(indexDirNavPath + '/') ||
+        (doc) =>
+          doc.path.startsWith(indexDirNavPath + "/") ||
           (doc.path.startsWith(indexDirNavPath) &&
             doc.path !== indexDirNavPath &&
-            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+            !doc.path.substring(indexDirNavPath.length + 1).includes("/")),
       ) || null;
   } else {
     const currentNavPath = `/docs/${actualSlugForNav}`;
-    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
+    const currentIndex = flattenedDocs.findIndex(
+      (doc) => doc.path === currentNavPath,
+    );
     if (currentIndex !== -1) {
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
-      nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
+      nextDoc =
+        currentIndex < flattenedDocs.length - 1
+          ? flattenedDocs[currentIndex + 1]
+          : null;
     }
   }
 
   // 根目录元数据，用于分类标题
-  const rootMetaFilePath = path.join(docsContentDir, '_meta.json');
+  const rootMetaFilePath = path.join(docsContentDir, "_meta.json");
   let rootMeta: Record<string, DocMetaItem | string> | null = null;
   if (fs.existsSync(rootMetaFilePath)) {
-    rootMeta = JSON.parse(fs.readFileSync(rootMetaFilePath, 'utf8'));
+    rootMeta = JSON.parse(fs.readFileSync(rootMetaFilePath, "utf8"));
   }
 
   // 辅助函数：将元数据转换为仅标题的格式
   function convertMetaToTitleOnly(
-    meta: Record<string, DocMetaItem | string> | null
+    meta: Record<string, DocMetaItem | string> | null,
   ): Record<string, { title?: string }> | undefined {
     if (!meta) return undefined;
     return Object.fromEntries(
       Object.entries(meta).map(([key, value]) => [
         key,
-        { title: typeof value === 'string' ? value : value.title },
-      ])
+        { title: typeof value === "string" ? value : value.title },
+      ]),
     );
   }
 
@@ -167,8 +185,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
-        <div className="flex gap-10 justify-center">
-          <aside className="hidden lg:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4">
+        <div className="flex justify-center gap-10">
+          <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 lg:block">
             <Sidebar
               category={topLevelCategorySlug}
               currentDoc={
@@ -179,12 +197,12 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             />
           </aside>
 
-          <main className="flex-1 min-w-0 max-w-4xl">
+          <main className="max-w-4xl min-w-0 flex-1">
             <div className="mx-auto">
               <div className="mb-6">
                 <Breadcrumb
                   items={createDocBreadcrumbs({
-                    slug: actualSlugForNav.split('/'),
+                    slug: actualSlugForNav.split("/"),
                     title: frontmatter.title,
                     meta: convertedRootMeta,
                   })}
@@ -204,8 +222,12 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </main>
 
-          <aside className="hidden xl:block w-72 max-w-72 shrink-0 self-start sticky top-20 max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal]">
-            <TableOfContents headings={headings} adaptive={true} adaptiveOffset={80} />
+          <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
+            <TableOfContents
+              headings={headings}
+              adaptive={true}
+              adaptiveOffset={80}
+            />
           </aside>
         </div>
       </div>

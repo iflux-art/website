@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { getAllTagsWithCount } from '@/lib/content';
-import { TagCountSchema } from '@/lib/schemas/blog';
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { getAllTagsWithCount } from "@/lib/content";
+import { TagCountSchema } from "@/lib/schemas/blog";
 
 /**
  * 获取所有标签及其计数的 API 路由
@@ -20,13 +20,13 @@ export async function GET() {
     const validatedTags = z.array(TagCountSchema).parse(tagCounts);
     return NextResponse.json(validatedTags);
   } catch (error) {
-    console.error('获取标签列表失败:', error);
+    console.error("获取标签列表失败:", error);
     return NextResponse.json(
       {
-        error: '获取标签列表失败',
-        details: error instanceof Error ? error.message : '未知错误',
+        error: "获取标签列表失败",
+        details: error instanceof Error ? error.message : "未知错误",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

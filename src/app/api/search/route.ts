@@ -1,24 +1,31 @@
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
-import { TOOLS } from '@/components/layout/tools/tools-data';
-import items from '@/data/links/items.json';
-import type { Item } from '@/types/links';
-import { SearchRequestSchema, SearchResponseSchema } from '@/lib/schemas/search';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from "next/server";
+import fs from "fs/promises";
+import path from "path";
+import matter from "gray-matter";
+import { TOOLS } from "@/components/layout/tools/tools-data";
+import items from "@/data/links/items.json";
+import type { Item } from "@/types/links";
+import {
+  SearchRequestSchema,
+  SearchResponseSchema,
+} from "@/lib/schemas/search";
+import { z } from "zod";
 
 // 辅助函数
 function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function highlightText(text: string, query: string): string {
-  const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  const regex = new RegExp(`(${escapeRegExp(query)})`, "gi");
+  return text.replace(regex, "<mark>$1</mark>");
 }
 
-function findContentMatches(content: string, query: string, maxMatches: number = 3): string[] {
+function findContentMatches(
+  content: string,
+  query: string,
+  maxMatches: number = 3,
+): string[] {
   const lowerContent = content.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const matches: string[] = [];
@@ -32,8 +39,8 @@ function findContentMatches(content: string, query: string, maxMatches: number =
     const end = Math.min(content.length, index + query.length + 50);
     let context = content.substring(start, end);
 
-    if (start > 0) context = '...' + context;
-    if (end < content.length) context = context + '...';
+    if (start > 0) context = "..." + context;
+    if (end < content.length) context = context + "...";
 
     matches.push(highlightText(context, query));
     startIndex = index + query.length;
@@ -45,7 +52,7 @@ interface SearchResult {
   title: string;
   path: string;
   excerpt: string;
-  type: 'doc' | 'blog' | 'tool' | 'link';
+  type: "doc" | "blog" | "tool" | "link";
   score: number;
   highlights?: {
     title?: string;
@@ -57,25 +64,25 @@ interface SearchResult {
 async function getAllFiles(dirPath: string): Promise<string[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const files = await Promise.all(
-    entries.map(entry => {
+    entries.map((entry) => {
       const res = path.resolve(dirPath, entry.name);
       return entry.isDirectory() ? getAllFiles(res) : res;
-    })
+    }),
   );
-  return files.flat().filter(file => /\.(md|mdx)$/.test(file));
+  return files.flat().filter((file) => /\.(md|mdx)$/.test(file));
 }
 
 async function searchDocs(query: string): Promise<SearchResult[]> {
-  const docsDir = path.join(process.cwd(), 'src/content/docs');
+  const docsDir = path.join(process.cwd(), "src/content/docs");
   const files = await getAllFiles(docsDir);
   const results: SearchResult[] = [];
 
   for (const file of files) {
     try {
-      const content = await fs.readFile(file, 'utf-8');
+      const content = await fs.readFile(file, "utf-8");
       const { data, content: markdown } = matter(content);
       const relativePath = path.relative(docsDir, file);
-      const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+      const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, "")}`;
 
       let score = 0;
       const highlights: { title?: string; content?: string[] } = {};
@@ -100,10 +107,10 @@ async function searchDocs(query: string): Promise<SearchResult[]> {
 
       if (score > 0) {
         results.push({
-          title: data.title || '',
+          title: data.title || "",
           path: url,
-          excerpt: data.description || markdown.slice(0, 160) + '...',
-          type: 'doc',
+          excerpt: data.description || markdown.slice(0, 160) + "...",
+          type: "doc",
           score,
           highlights,
         });
@@ -119,16 +126,16 @@ async function searchDocs(query: string): Promise<SearchResult[]> {
 }
 
 async function searchBlog(query: string): Promise<SearchResult[]> {
-  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const blogDir = path.join(process.cwd(), "src/content/blog");
   const files = await getAllFiles(blogDir);
   const results: SearchResult[] = [];
 
   for (const file of files) {
     try {
-      const content = await fs.readFile(file, 'utf-8');
+      const content = await fs.readFile(file, "utf-8");
       const { data, content: markdown } = matter(content);
       const relativePath = path.relative(blogDir, file);
-      const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+      const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, "")}`;
 
       let score = 0;
       const highlights: { title?: string; content?: string[] } = {};
@@ -145,7 +152,11 @@ async function searchBlog(query: string): Promise<SearchResult[]> {
       }
 
       // 搜索标签
-      if (data.tags?.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))) {
+      if (
+        data.tags?.some((tag: string) =>
+          tag.toLowerCase().includes(query.toLowerCase()),
+        )
+      ) {
         score += 3;
       }
 
@@ -158,10 +169,10 @@ async function searchBlog(query: string): Promise<SearchResult[]> {
 
       if (score > 0) {
         results.push({
-          title: data.title || '',
+          title: data.title || "",
           path: url,
-          excerpt: data.description || markdown.slice(0, 160) + '...',
-          type: 'blog',
+          excerpt: data.description || markdown.slice(0, 160) + "...",
+          type: "blog",
           score,
           highlights,
         });
@@ -196,7 +207,11 @@ function searchTools(query: string): SearchResult[] {
     }
 
     // 搜索标签
-    if (tool.tags.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))) {
+    if (
+      tool.tags.some((tag: string) =>
+        tag.toLowerCase().includes(query.toLowerCase()),
+      )
+    ) {
       score += 3;
     }
 
@@ -205,7 +220,7 @@ function searchTools(query: string): SearchResult[] {
         title: tool.name,
         path: tool.path,
         excerpt: tool.description,
-        type: 'tool',
+        type: "tool",
         score,
         highlights,
       });
@@ -235,7 +250,11 @@ function searchLinks(query: string): SearchResult[] {
     }
 
     // 搜索标签
-    if (item.tags.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))) {
+    if (
+      item.tags.some((tag: string) =>
+        tag.toLowerCase().includes(query.toLowerCase()),
+      )
+    ) {
       score += 3;
     }
 
@@ -244,7 +263,7 @@ function searchLinks(query: string): SearchResult[] {
         title: item.title,
         path: item.url,
         excerpt: item.description,
-        type: 'link',
+        type: "link",
         score,
         highlights,
       });
@@ -258,9 +277,9 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const params = SearchRequestSchema.parse({
-      q: searchParams.get('q'),
-      type: searchParams.get('type'),
-      limit: parseInt(searchParams.get('limit') || '8'),
+      q: searchParams.get("q"),
+      type: searchParams.get("type"),
+      limit: parseInt(searchParams.get("limit") || "8"),
     });
 
     const { q: query, type, limit } = params;
@@ -268,16 +287,16 @@ export async function GET(request: NextRequest) {
     let results: SearchResult[] = [];
 
     // 根据类型参数决定搜索范围
-    if (!type || type === 'doc') {
+    if (!type || type === "doc") {
       results = results.concat(await searchDocs(query));
     }
-    if (!type || type === 'blog') {
+    if (!type || type === "blog") {
       results = results.concat(await searchBlog(query));
     }
-    if (!type || type === 'tool') {
+    if (!type || type === "tool") {
       results = results.concat(searchTools(query));
     }
-    if (!type || type === 'link') {
+    if (!type || type === "link") {
       results = results.concat(searchLinks(query));
     }
 
@@ -286,7 +305,7 @@ export async function GET(request: NextRequest) {
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
       // 确保保留 score 属性
-      .map(result => ({
+      .map((result) => ({
         ...result,
       }));
 
@@ -295,19 +314,19 @@ export async function GET(request: NextRequest) {
         success: true,
         results,
         count: results.length,
-      })
+      }),
     );
   } catch (error) {
-    console.error('Search API error:', error);
+    console.error("Search API error:", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         SearchResponseSchema.parse({
           success: false,
           results: [],
           count: 0,
-          error: 'Invalid request parameters',
+          error: "Invalid request parameters",
         }),
-        { status: 400 }
+        { status: 400 },
       );
     }
     return NextResponse.json(
@@ -315,9 +334,9 @@ export async function GET(request: NextRequest) {
         success: false,
         results: [],
         count: 0,
-        error: 'Internal server error',
+        error: "Internal server error",
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

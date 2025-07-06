@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { MDXStyles } from '@/config/mdx/styles';
+import React, { useState } from "react";
+import { MDXStyles } from "@/config/mdx/styles";
 
 export interface Tab {
   id: string;
@@ -14,8 +14,8 @@ export interface MDXTabsProps {
   tabs: Tab[];
   defaultTab?: string;
   className?: string;
-  variant?: 'line' | 'pill' | 'enclosed';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "line" | "pill" | "enclosed";
+  size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
   onChange?: (tabId: string) => void;
 }
@@ -31,9 +31,9 @@ export interface MDXTabsProps {
 export const MDXTabs = ({
   tabs,
   defaultTab,
-  className = '',
-  variant = 'line',
-  size = 'md',
+  className = "",
+  variant = "line",
+  size = "md",
   fullWidth = false,
   onChange,
 }: MDXTabsProps) => {
@@ -49,28 +49,18 @@ export const MDXTabs = ({
     <div className={`${MDXStyles.tabs.base} ${className}`}>
       {/* 标签导航 */}
       <nav
-        className={`
-          ${MDXStyles.tabs.nav}
-          ${fullWidth ? 'w-full' : ''}
-          ${MDXStyles.tabs.variants[variant].nav}
-          ${MDXStyles.tabs.sizes[size]}
-        `}
+        className={` ${MDXStyles.tabs.nav} ${fullWidth ? "w-full" : ""} ${MDXStyles.tabs.variants[variant].nav} ${MDXStyles.tabs.sizes[size]} `}
         role="tablist"
       >
-        {tabs.map(tab => (
+        {tabs.map((tab) => (
           <button
             key={tab.id}
             role="tab"
             aria-selected={activeTab === tab.id}
             aria-controls={`tabpanel-${tab.id}`}
             disabled={tab.disabled}
-            className={`
-              ${MDXStyles.tabs.tab}
-              ${fullWidth ? 'flex-1 text-center' : ''}
-              ${MDXStyles.tabs.variants[variant].tab}
-              ${tab.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-            `}
-            data-state={activeTab === tab.id ? 'active' : 'inactive'}
+            className={` ${MDXStyles.tabs.tab} ${fullWidth ? "flex-1 text-center" : ""} ${MDXStyles.tabs.variants[variant].tab} ${tab.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"} `}
+            data-state={activeTab === tab.id ? "active" : "inactive"}
             onClick={() => !tab.disabled && handleTabChange(tab.id)}
           >
             {tab.label}
@@ -79,17 +69,14 @@ export const MDXTabs = ({
       </nav>
 
       {/* 内容面板 */}
-      {tabs.map(tab => (
+      {tabs.map((tab) => (
         <div
           key={tab.id}
           role="tabpanel"
           id={`tabpanel-${tab.id}`}
           aria-labelledby={tab.id}
           hidden={activeTab !== tab.id}
-          className={`
-            ${MDXStyles.tabs.panel}
-            ${activeTab === tab.id ? 'block' : 'hidden'}
-          `}
+          className={` ${MDXStyles.tabs.panel} ${activeTab === tab.id ? "block" : "hidden"} `}
         >
           {tab.content}
         </div>

@@ -1,6 +1,9 @@
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { WebVitalsRequestSchema, WebVitalsResponseSchema } from '@/lib/schemas/web-vitals';
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import {
+  WebVitalsRequestSchema,
+  WebVitalsResponseSchema,
+} from "@/lib/schemas/web-vitals";
 
 /**
  * Web Vitals API 路由
@@ -17,7 +20,7 @@ export async function POST(request: Request) {
     const { metric } = WebVitalsRequestSchema.parse(requestBody);
 
     // 记录指标
-    console.log('[Web Vitals]', metric);
+    console.log("[Web Vitals]", metric);
 
     // 在实际项目中，可以将指标存储到数据库或发送到分析服务
     // 例如：
@@ -28,19 +31,19 @@ export async function POST(request: Request) {
     return NextResponse.json(
       WebVitalsResponseSchema.parse({
         success: true,
-      })
+      }),
     );
   } catch (error) {
     // 记录错误
-    console.error('[Web Vitals] 处理指标失败:', error);
+    console.error("[Web Vitals] 处理指标失败:", error);
 
     // 返回错误响应
     return NextResponse.json(
       WebVitalsResponseSchema.parse({
         success: false,
-        error: error instanceof z.ZodError ? '无效的指标数据' : '处理指标失败',
+        error: error instanceof z.ZodError ? "无效的指标数据" : "处理指标失败",
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

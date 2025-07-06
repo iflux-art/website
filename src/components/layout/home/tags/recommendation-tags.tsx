@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { MoreHorizontal } from 'lucide-react';
-import { RECOMMENDATION_TAGS } from '@/components/layout/home/data/constants';
-import { MoreRecommendationTags } from '@/components/layout/home/tags/more-recommendation-tags';
+import React, { useState } from "react";
+import Link from "next/link";
+import { MoreHorizontal } from "lucide-react";
+import { RECOMMENDATION_TAGS } from "@/components/layout/home/data/constants";
+import { MoreRecommendationTags } from "@/components/layout/home/tags/more-recommendation-tags";
 
 interface RecommendationTagsProps {
   className?: string;
@@ -24,10 +24,10 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
 
   return (
     <div
-      className={`flex flex-col items-center gap-2 mt-4 mb-4 max-w-3xl mx-auto ${className || ''}`}
+      className={`mx-auto mt-4 mb-4 flex max-w-3xl flex-col items-center gap-2 ${className || ""}`}
     >
       {/* 第一行标签 */}
-      <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-hide pb-1 w-full max-w-full">
+      <div className="scrollbar-hide flex w-full max-w-full items-center justify-center gap-2.5 overflow-x-auto pb-1">
         <div className="flex items-center gap-2.5 px-1 md:px-0">
           {RECOMMENDATION_TAGS.initial.map((tag, index) => {
             const IconComponent = tag.icon;
@@ -39,7 +39,7 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-accent/30 hover:border-primary/20 transition-all text-sm text-muted-foreground hover:text-foreground whitespace-nowrap">
+                <div className="flex items-center gap-1.5 rounded-md border border-border/50 bg-background/80 px-3.5 py-2 text-sm whitespace-nowrap text-muted-foreground backdrop-blur-sm transition-all hover:border-primary/20 hover:bg-accent/30 hover:text-foreground">
                   <IconComponent className="size-4" />
                   <span>{tag.text}</span>
                 </div>
@@ -50,7 +50,7 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
           {/* 更多按钮 */}
           <button
             onClick={toggleMoreTags}
-            className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-accent/30 hover:border-primary/20 transition-all text-sm text-muted-foreground hover:text-foreground whitespace-nowrap"
+            className="flex flex-shrink-0 items-center gap-1.5 rounded-md border border-border/50 bg-background/80 px-3.5 py-2 text-sm whitespace-nowrap text-muted-foreground backdrop-blur-sm transition-all hover:border-primary/20 hover:bg-accent/30 hover:text-foreground"
           >
             <MoreHorizontal className="size-4" />
             <span>更多</span>

@@ -1,7 +1,7 @@
-import { LucideIcon, Tag, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { useState } from 'react';
+import { LucideIcon, Tag, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 interface TagType {
   name: string;
@@ -43,12 +43,12 @@ export function UnifiedFilter({
   tags,
   selectedTag,
   onTagChange,
-  categoryButtonClassName = '',
-  className = '',
+  categoryButtonClassName = "",
+  className = "",
   showAllCategoryButton = true,
-  allCategoryText = '全部',
+  allCategoryText = "全部",
   showTagCount = true,
-  tagTitle = '按标签筛选',
+  tagTitle = "按标签筛选",
   maxVisibleTags = 8,
   onCardTagClick,
 }: UnifiedFilterProps) {
@@ -56,14 +56,16 @@ export function UnifiedFilter({
 
   // 按计数排序标签
   const sortedTags = [...tags].sort((a, b) => b.count - a.count);
-  const visibleTags = tagsExpanded ? sortedTags : sortedTags.slice(0, maxVisibleTags);
+  const visibleTags = tagsExpanded
+    ? sortedTags
+    : sortedTags.slice(0, maxVisibleTags);
   const hasMoreTags = sortedTags.length > maxVisibleTags;
 
   // 处理分类点击
   const handleCategoryClick = (categoryId: string) => {
     // 如果点击当前选中的分类，则切换到全部状态
     if (categoryId === selectedCategory) {
-      onCategoryChange('');
+      onCategoryChange("");
     } else {
       onCategoryChange(categoryId);
     }
@@ -89,23 +91,23 @@ export function UnifiedFilter({
       <div className="flex flex-wrap gap-2">
         {showAllCategoryButton && (
           <Button
-            variant={selectedCategory === '' ? 'default' : 'outline'}
-            onClick={() => handleCategoryClick('')}
+            variant={selectedCategory === "" ? "default" : "outline"}
+            onClick={() => handleCategoryClick("")}
             className={categoryButtonClassName}
           >
             {allCategoryText}
           </Button>
         )}
-        {categories.map(category => {
+        {categories.map((category) => {
           const Icon = category.icon;
           return (
             <Button
               key={category.id}
-              variant={selectedCategory === category.id ? 'default' : 'outline'}
+              variant={selectedCategory === category.id ? "default" : "outline"}
               onClick={() => handleCategoryClick(category.id)}
               className={`flex items-center gap-2 ${categoryButtonClassName}`}
             >
-              {Icon && <Icon className="w-4 h-4" />}
+              {Icon && <Icon className="h-4 w-4" />}
               {category.name}
             </Button>
           );
@@ -116,7 +118,7 @@ export function UnifiedFilter({
       {tags.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+            <h2 className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
               <Tag className="h-4 w-4" />
               {tagTitle}
             </h2>
@@ -125,18 +127,18 @@ export function UnifiedFilter({
                 variant="ghost"
                 size="sm"
                 onClick={() => onTagChange(null)}
-                className="text-muted-foreground hover:text-foreground rounded-xl shadow-sm hover:shadow-md transition-all"
+                className="rounded-xl text-muted-foreground shadow-sm transition-all hover:text-foreground hover:shadow-md"
               >
                 清除筛选 <X className="ml-1 h-3 w-3" />
               </Button>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
-            {visibleTags.map(tag => (
+            {visibleTags.map((tag) => (
               <Badge
                 key={tag.name}
-                variant={selectedTag === tag.name ? 'default' : 'outline'}
-                className="cursor-pointer hover:bg-accent transition-colors"
+                variant={selectedTag === tag.name ? "default" : "outline"}
+                className="cursor-pointer transition-colors hover:bg-accent"
                 onClick={() => handleTagClick(tag.name)}
               >
                 {tag.name}
@@ -146,10 +148,12 @@ export function UnifiedFilter({
             {hasMoreTags && (
               <Badge
                 variant="secondary"
-                className="cursor-pointer hover:bg-accent transition-colors"
+                className="cursor-pointer transition-colors hover:bg-accent"
                 onClick={() => setTagsExpanded(!tagsExpanded)}
               >
-                {tagsExpanded ? '收起' : `显示更多 (${sortedTags.length - maxVisibleTags})`}
+                {tagsExpanded
+                  ? "收起"
+                  : `显示更多 (${sortedTags.length - maxVisibleTags})`}
               </Badge>
             )}
           </div>

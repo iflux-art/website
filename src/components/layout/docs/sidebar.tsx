@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { ChevronRight } from "lucide-react";
 
-import { cn } from '@/utils';
-import * as Collapsible from '@radix-ui/react-collapsible';
-import { useDocSidebar } from '@/hooks/use-docs';
-import { NavLink } from '@/components/ui/nav-link';
-import { SidebarItem } from '@/types';
+import { cn } from "@/lib/utils";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { useDocSidebar } from "@/hooks/use-docs";
+import { NavLink } from "@/components/ui/nav-link";
+import { SidebarItem } from "@/types";
 
 // 检查是否在客户端环境
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = typeof window !== "undefined";
 
 /**
  * 侧边栏组件属性
@@ -29,7 +29,9 @@ interface SidebarProps {
  */
 export function Sidebar({ category, currentDoc }: SidebarProps) {
   const { items, loading } = useDocSidebar(category);
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
+    {},
+  );
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const isInitialized = useRef(false);
@@ -41,7 +43,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories(prev => {
+      setOpenCategories((prev) => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
@@ -50,7 +52,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
         return newState;
       });
     },
-    [localStorageKey]
+    [localStorageKey],
   );
 
   // 处理鼠标悬停
@@ -60,21 +62,21 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
 
   // 渲染侧边栏项目
   const renderItems = useCallback(
-    (items: SidebarItem[], level: number = 0, parentPath: string = '') => {
+    (items: SidebarItem[], level: number = 0, parentPath: string = "") => {
       return items.map((item, index) => {
         const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
         const hasItems = item.items && item.items.length > 0;
 
-        const isSeparator = item.type === 'separator';
+        const isSeparator = item.type === "separator";
         const isExternal = item.isExternal;
 
         // 分隔符
         if (isSeparator) {
           return (
             <li key={itemId} className="my-3">
-              <div className="h-px bg-border/60 w-full" />
+              <div className="h-px w-full bg-border/60" />
               {item.title && (
-                <div className="text-xs text-muted-foreground mt-2 px-2 uppercase font-medium">
+                <div className="mt-2 px-2 text-xs font-medium text-muted-foreground uppercase">
                   {item.title}
                 </div>
               )}
@@ -88,27 +90,34 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
               <div>
                 <Collapsible.Root
                   open={openCategories[itemId]}
-                  onOpenChange={(open: boolean) => handleOpenChange(itemId, open)}
+                  onOpenChange={(open: boolean) =>
+                    handleOpenChange(itemId, open)
+                  }
                 >
                   <div className="flex items-center">
-                    <Collapsible.Trigger className="flex items-center justify-between w-full py-2 px-3 rounded-md text-sm group hover:bg-accent/50 transition-colors">
+                    <Collapsible.Trigger className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent/50">
                       <span
                         className={cn(
-                          'font-medium',
-                          isHovering === itemId ? 'text-foreground' : 'text-muted-foreground'
+                          "font-medium",
+                          isHovering === itemId
+                            ? "text-foreground"
+                            : "text-muted-foreground",
                         )}
                       >
                         {item.title}
                       </span>
                       <span className="ml-1 text-muted-foreground">
                         <ChevronRight
-                          className={cn('h-4 w-4', openCategories[itemId] && 'rotate-90')}
+                          className={cn(
+                            "h-4 w-4",
+                            openCategories[itemId] && "rotate-90",
+                          )}
                         />
                       </span>
                     </Collapsible.Trigger>
                   </div>
                   <Collapsible.Content>
-                    <ul className="mt-2 space-y-2 pl-4 pt-1 border-l border-border/40 ml-2">
+                    <ul className="mt-2 ml-2 space-y-2 border-l border-border/40 pt-1 pl-4">
                       {renderItems(item.items || [], level + 1, itemId)}
                     </ul>
                   </Collapsible.Content>
@@ -116,10 +125,10 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
               </div>
             ) : (
               <NavLink
-                href={item.href || '#'}
+                href={item.href || "#"}
                 currentDoc={currentDoc}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
                 onMouseEnter={() => handleHover(itemId)}
                 onMouseLeave={() => handleHover(null)}
               >
@@ -148,7 +157,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
         );
       });
     },
-    [openCategories, isHovering, handleOpenChange, currentDoc]
+    [openCategories, isHovering, handleOpenChange, currentDoc],
   );
 
   // 使用 React.memo 包装渲染函数，避免不必要的重新渲染
@@ -164,8 +173,8 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
   const initializeState = (
     items: SidebarItem[],
     currentDoc: string | undefined,
-    parentPath: string = '',
-    result: Record<string, boolean> = {}
+    parentPath: string = "",
+    result: Record<string, boolean> = {},
   ) => {
     items.forEach((item, index) => {
       const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
@@ -185,7 +194,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
         let current = parentPath;
         while (current) {
           result[current] = true;
-          const lastDash = current.lastIndexOf('-');
+          const lastDash = current.lastIndexOf("-");
           if (lastDash === -1) break;
           current = current.substring(0, lastDash);
         }
@@ -216,7 +225,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
             isInitialized.current = true;
             return;
           } catch {
-            console.warn('Failed to parse saved sidebar state');
+            console.warn("Failed to parse saved sidebar state");
           }
         }
       }

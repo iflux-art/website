@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { TramFront } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import { TramFront } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const ICON_SIZE = {
-  height: '1rem',
-  width: '1rem',
+  height: "1rem",
+  width: "1rem",
 } as const;
 
-const BUTTON_CLASSES = 'h-9 w-9 text-muted-foreground hover:text-foreground';
+const BUTTON_CLASSES = "h-9 w-9";
 
-const DEFAULT_TRAVEL_URL = 'https://www.travellings.cn/go.html';
+const DEFAULT_TRAVEL_URL = "https://www.travellings.cn/go.html";
 
 /**
  * 开往按钮组件属性
@@ -61,7 +61,7 @@ export interface TravelButtonProps {
  */
 export function TravelButton({
   href = DEFAULT_TRAVEL_URL,
-  title = '开往',
+  title = "开往",
   loading = false,
   onClick,
 }: TravelButtonProps = {}) {
@@ -74,12 +74,12 @@ export function TravelButton({
       if (loading || event.defaultPrevented) return;
 
       try {
-        window.open(href, '_blank', 'noopener,noreferrer');
+        window.open(href, "_blank", "noopener,noreferrer");
       } catch (error) {
-        console.error('Failed to open travel link:', error);
+        console.error("Failed to open travel link:", error);
       }
     },
-    [href, loading, onClick]
+    [href, loading, onClick],
   );
 
   return (

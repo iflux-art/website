@@ -1,29 +1,32 @@
-'use client';
+"use client";
 
-import { UnifiedFilter, type Category } from '@/components/common/filter/unified-filter';
-import { BlogCard } from '@/components/common/cards/blog-card';
-import { AppGrid } from '@/components/layout/app-grid';
-import { useFilterState } from '@/components/common/filter/use-filter-state';
-import { useBlogPosts } from '@/hooks/use-blog';
-import { useMemo } from 'react';
-import type { BlogPost } from '@/types/blog-types';
+import {
+  UnifiedFilter,
+  type Category,
+} from "@/components/common/filter/unified-filter";
+import { BlogCard } from "@/components/common/cards/blog-card";
+import { AppGrid } from "@/components/layout/app-grid";
+import { useFilterState } from "@/components/common/filter/use-filter-state";
+import { useBlogPosts } from "@/hooks/use-blog";
+import { useMemo } from "react";
+import type { BlogPost } from "@/types/blog-types";
 
 function formatDate(dateStr: string | undefined) {
-  if (!dateStr) return '';
+  if (!dateStr) return "";
 
   try {
     const date = new Date(dateStr);
     if (isNaN(date.getTime())) {
-      return '';
+      return "";
     }
 
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    return `${year}年${month.toString().padStart(2, '0')}月${day.toString().padStart(2, '0')}日`;
+    return `${year}年${month.toString().padStart(2, "0")}月${day.toString().padStart(2, "0")}日`;
   } catch {
-    return '';
+    return "";
   }
 }
 function BlogContent() {
@@ -32,11 +35,11 @@ function BlogContent() {
   // 转换分类数据格式
   const categories = useMemo<Category[]>(
     () =>
-      rawCategories.map(cat => ({
+      rawCategories.map((cat) => ({
         id: cat,
         name: cat,
       })),
-    [rawCategories]
+    [rawCategories],
   );
 
   // 使用统一的过滤状态管理
@@ -60,7 +63,7 @@ function BlogContent() {
       <div className="container mx-auto px-4 py-6">
         <div className="mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">博客文章</h1>
+            <h1 className="mb-2 text-3xl font-bold">博客文章</h1>
             <p className="text-muted-foreground">分享技术见解和经验</p>
           </div>
 

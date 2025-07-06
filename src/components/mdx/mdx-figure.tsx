@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { MDXImage } from '@/components/mdx/mdx-image';
-import type { MDXImageProps } from '@/types';
-import { cn } from '@/utils';
+import React from "react";
+import { MDXImage } from "@/components/mdx/mdx-image";
+import type { MDXImageProps } from "@/types";
+import { cn } from "@/lib/utils";
 
 interface MDXFigureProps extends MDXImageProps {
   caption?: React.ReactNode;
   bordered?: boolean;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
 }
 
 /**
@@ -23,28 +23,30 @@ export const MDXFigure: React.FC<MDXFigureProps> = ({
   alt,
   caption,
   bordered = false,
-  align = 'center',
+  align = "center",
   className,
   ...imageProps
 }) => {
   const alignmentClasses = {
-    left: 'items-start',
-    center: 'items-center',
-    right: 'items-end',
+    left: "items-start",
+    center: "items-center",
+    right: "items-end",
   } as const;
 
   return (
-    <figure className={cn('my-8 flex flex-col', alignmentClasses[align], className)}>
+    <figure
+      className={cn("my-8 flex flex-col", alignmentClasses[align], className)}
+    >
       <div
         className={cn(
-          'overflow-hidden rounded-lg',
-          bordered && 'border border-gray-200 dark:border-gray-800'
+          "overflow-hidden rounded-lg",
+          bordered && "border border-gray-200 dark:border-gray-800",
         )}
       >
         <MDXImage src={src} alt={alt} {...imageProps} />
       </div>
       {caption && (
-        <figcaption className="mt-2 text-sm text-center text-muted-foreground">
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
           {caption}
         </figcaption>
       )}

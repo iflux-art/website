@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Chat message schema
 export const ChatMessageSchema = z.object({
-  role: z.enum(['system', 'user', 'assistant']),
+  role: z.enum(["system", "user", "assistant"]),
   content: z.string(),
 });
 

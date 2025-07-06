@@ -3,19 +3,19 @@
  * 包含默认属性配置和类型定义
  */
 
-import type { MDXComponents } from '@/types';
+import type { MDXComponents } from "@/types";
 
 /**
  * 默认组件属性配置
  */
 export const defaultComponentProps = {
   img: {
-    loading: 'lazy' as const,
-    decoding: 'async' as const,
+    loading: "lazy" as const,
+    decoding: "async" as const,
   },
   a: {
-    target: '_blank' as const,
-    rel: 'noopener noreferrer' as const,
+    target: "_blank" as const,
+    rel: "noopener noreferrer" as const,
   },
   pre: {
     showLineNumbers: true,

@@ -6,13 +6,13 @@
 // 首页基础配置
 export const HOME_CONFIG = {
   // 页面标题和描述
-  title: '智能搜索与AI对话',
-  subtitle: '探索知识，创造可能',
-  description: '集成本地搜索、联网搜索和AI对话的智能平台',
+  title: "智能搜索与AI对话",
+  subtitle: "探索知识，创造可能",
+  description: "集成本地搜索、联网搜索和AI对话的智能平台",
 
   // 搜索配置
   search: {
-    placeholder: '有什么可以帮助您的吗？',
+    placeholder: "有什么可以帮助您的吗？",
     maxResults: 8,
     debounceDelay: 300,
     minQueryLength: 1,
@@ -20,7 +20,7 @@ export const HOME_CONFIG = {
 
   // AI对话配置
   ai: {
-    defaultModel: 'none',
+    defaultModel: "none",
     maxMessageHistory: 50,
     typingDelay: 50,
     maxTokens: 2000,
@@ -28,9 +28,9 @@ export const HOME_CONFIG = {
 
   // 背景效果配置
   background: {
-    defaultStyle: 'default',
+    defaultStyle: "default",
     particleCount: 50,
-    animationSpeed: 'slow',
+    animationSpeed: "slow",
     enableParallax: true,
   },
 
@@ -52,7 +52,7 @@ export const HOME_CONFIG = {
   // 主题配置
   theme: {
     enableSystemTheme: true,
-    defaultTheme: 'system',
+    defaultTheme: "system",
     enableThemeTransition: true,
   },
 
@@ -60,7 +60,7 @@ export const HOME_CONFIG = {
   performance: {
     enableVirtualization: true,
     enableServiceWorker: false,
-    cacheStrategy: 'networkFirst',
+    cacheStrategy: "networkFirst",
   },
 
   // 功能开关
@@ -75,16 +75,16 @@ export const HOME_CONFIG = {
 
   // 键盘快捷键
   shortcuts: {
-    focusSearch: 'cmd+k',
-    clearSearch: 'escape',
-    submitSearch: 'enter',
-    toggleTheme: 'cmd+shift+t',
+    focusSearch: "cmd+k",
+    clearSearch: "escape",
+    submitSearch: "enter",
+    toggleTheme: "cmd+shift+t",
   },
 
   // API配置
   api: {
-    searchEndpoint: '/api/search',
-    chatEndpoint: '/api/chat',
+    searchEndpoint: "/api/search",
+    chatEndpoint: "/api/chat",
     timeout: 10000,
     retryAttempts: 3,
   },
@@ -104,10 +104,10 @@ export const HOME_CONFIG = {
 
 // 开发环境配置
 export const DEV_CONFIG = {
-  enableDebugMode: process.env.NODE_ENV === 'development',
+  enableDebugMode: process.env.NODE_ENV === "development",
   showPerformanceMetrics: false,
   enableMockData: false,
-  logLevel: 'info',
+  logLevel: "info",
 } as const;
 
 // 生产环境配置
@@ -115,11 +115,12 @@ export const PROD_CONFIG = {
   enableAnalytics: true,
   enableErrorReporting: true,
   enablePerformanceMonitoring: true,
-  compressionLevel: 'high',
+  compressionLevel: "high",
 } as const;
 
 // 根据环境选择配置
-export const ENV_CONFIG = process.env.NODE_ENV === 'production' ? PROD_CONFIG : DEV_CONFIG;
+export const ENV_CONFIG =
+  process.env.NODE_ENV === "production" ? PROD_CONFIG : DEV_CONFIG;
 
 // 合并配置
 export const FINAL_CONFIG = {

@@ -2,11 +2,14 @@
  * 数据缓存管理 Hook
  */
 
-'use client';
+"use client";
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from "react";
 
-function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(fn: T, delay: number): T {
+function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  fn: T,
+  delay: number,
+): T {
   let timer: NodeJS.Timeout | null = null;
   return ((...args: Parameters<T>) => {
     if (timer) clearTimeout(timer);
@@ -113,15 +116,19 @@ const cleanExpiredCache = (expiry: number): void => {
   for (let i = 0; i < length; i++) {
     const key = localStorage.key(i);
     // 处理空值和类型检查
-    if (typeof key !== 'string') continue;
-    if (!key.startsWith('app-cache:')) continue;
+    if (typeof key !== "string") continue;
+    if (!key.startsWith("app-cache:")) continue;
 
     try {
       const stored = localStorage.getItem(key);
       if (!stored) continue;
 
       const cached = JSON.parse(stored);
-      if (!cached || typeof cached.timestamp !== 'number' || now - cached.timestamp > expiry) {
+      if (
+        !cached ||
+        typeof cached.timestamp !== "number" ||
+        now - cached.timestamp > expiry
+      ) {
         localStorage.removeItem(key);
       }
     } catch {
@@ -138,9 +145,13 @@ const cleanExpiredCache = (expiry: number): void => {
  * @param options 缓存选项
  * @returns 缓存的数据和控制函数
  */
-export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: CacheOptions = {}) {
+export function useCache<T>(
+  key: string,
+  fetchFn: () => Promise<T>,
+  options: CacheOptions = {},
+) {
   const {
-    prefix = 'app-cache:',
+    prefix = "app-cache:",
     expiry = 30 * 60 * 1000, // 默认30分钟
     useMemoryCache = true,
     useLocalStorage = true,
@@ -165,7 +176,7 @@ export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: Cac
         console.error(`Failed to save cache for key ${key}:`, err);
       }
     }, 1000),
-    []
+    [],
   );
 
   // 从缓存获取数据
@@ -211,7 +222,7 @@ export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: Cac
   const updateCache = useCallback(
     (newData: T) => {
       if (!validator(newData)) {
-        throw new Error('Invalid data format');
+        throw new Error("Invalid data format");
       }
 
       const timestamp = Date.now();
@@ -233,7 +244,13 @@ export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: Cac
 
       setData(newData);
     },
-    [fullKey, useMemoryCache, useLocalStorage, validator, debouncedUpdateStorage]
+    [
+      fullKey,
+      useMemoryCache,
+      useLocalStorage,
+      validator,
+      debouncedUpdateStorage,
+    ],
   );
 
   // 获取新数据
@@ -269,7 +286,7 @@ export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: Cac
         setLoading(false);
       }
     },
-    [fullKey, fetchFn, getFromCache, updateCache, maxRetries, retryDelay]
+    [fullKey, fetchFn, getFromCache, updateCache, maxRetries, retryDelay],
   );
 
   // 初始加载

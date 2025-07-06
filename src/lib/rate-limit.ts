@@ -1,5 +1,5 @@
-import { LRUCache } from 'lru-cache';
-import { NextResponse } from 'next/server';
+import { LRUCache } from "lru-cache";
+import { NextResponse } from "next/server";
 
 interface RateLimitOptions {
   maxRequests?: number; // 最大请求数
@@ -26,12 +26,12 @@ export class RateLimiter {
 
   getIP(request: Request): string {
     if (this.trustProxy) {
-      const forwardedFor = request.headers.get('x-forwarded-for');
+      const forwardedFor = request.headers.get("x-forwarded-for");
       if (forwardedFor) {
-        return forwardedFor.split(',')[0].trim();
+        return forwardedFor.split(",")[0].trim();
       }
     }
-    return '127.0.0.1'; // 本地开发时的默认值
+    return "127.0.0.1"; // 本地开发时的默认值
   }
 
   async check(request: Request): Promise<boolean> {
@@ -59,21 +59,21 @@ const defaultLimiter = new RateLimiter();
  */
 export async function rateLimit(
   request: Request,
-  options?: RateLimitOptions
+  options?: RateLimitOptions,
 ): Promise<Response | null> {
   const limiter = options ? new RateLimiter(options) : defaultLimiter;
 
   if (!(await limiter.check(request))) {
     return NextResponse.json(
-      { error: 'Too many requests' },
+      { error: "Too many requests" },
       {
         status: 429,
         headers: {
-          'Retry-After': '60',
-          'X-RateLimit-Limit': String(limiter.limit),
-          'X-RateLimit-Remaining': '0',
+          "Retry-After": "60",
+          "X-RateLimit-Limit": String(limiter.limit),
+          "X-RateLimit-Remaining": "0",
         },
-      }
+      },
     );
   }
 

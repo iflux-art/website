@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { cn } from '@/utils';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ToolLayoutProps {
   // 通用布局属性
@@ -34,8 +34,8 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
   showBackButton = false,
 }) => {
   return (
-    <div className={cn('min-h-screen bg-background', className)}>
-      <div className={cn('container mx-auto px-4 py-8', containerClassName)}>
+    <div className={cn("min-h-screen bg-background", className)}>
+      <div className={cn("container mx-auto px-4 py-8", containerClassName)}>
         {/* 返回按钮 */}
         {showBackButton && (
           <div className="mb-6">
@@ -51,11 +51,13 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
         {/* 页面标题 */}
         {(title || Icon) && (
           <div className="mb-8">
-            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+            <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
               {Icon && <Icon className="h-8 w-8" />}
               {title}
             </h1>
-            {description && <p className="text-muted-foreground mt-2">{description}</p>}
+            {description && (
+              <p className="mt-2 text-muted-foreground">{description}</p>
+            )}
           </div>
         )}
 

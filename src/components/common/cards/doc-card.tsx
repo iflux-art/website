@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { forwardRef } from 'react';
-import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/utils';
+import React, { forwardRef } from "react";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export interface DocCardProps {
   title: string;
@@ -21,14 +21,14 @@ export const DocCard = forwardRef<HTMLAnchorElement, DocCardProps>(
     const cardContent = (
       <Card
         className={cn(
-          'group h-full transition-all duration-300 hover:bg-accent/30 hover:border-primary/50 hover:scale-[1.01]',
-          className
+          "group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30",
+          className,
         )}
       >
-        <CardContent className="p-4 flex flex-col h-full">
-          <h3 className="text-xl font-semibold mb-1">{title}</h3>
+        <CardContent className="flex h-full flex-col p-4">
+          <h3 className="mb-1 text-xl font-semibold">{title}</h3>
           {description && (
-            <p className="text-muted-foreground text-sm flex-grow whitespace-pre-wrap">
+            <p className="flex-grow text-sm whitespace-pre-wrap text-muted-foreground">
               {description}
             </p>
           )}
@@ -42,7 +42,7 @@ export const DocCard = forwardRef<HTMLAnchorElement, DocCardProps>(
         {cardContent}
       </Link>
     );
-  }
+  },
 );
 
-DocCard.displayName = 'DocCard';
+DocCard.displayName = "DocCard";

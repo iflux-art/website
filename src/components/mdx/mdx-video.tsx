@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { SyntheticEvent } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
-import { cn } from '@/utils/styles';
-import { MDXStyles, commonStyles } from '@/config/mdx/styles';
+import React, { SyntheticEvent } from "react";
+import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import { cn } from "@/lib/utils/styles";
+import { MDXStyles, commonStyles } from "@/config/mdx/styles";
 
 export interface MDXVideoProps {
   src: string;
@@ -38,9 +38,9 @@ export const MDXVideo = ({
   controls = true,
   loop = false,
   muted = false,
-  className = '',
-  width = '100%',
-  height = 'auto',
+  className = "",
+  width = "100%",
+  height = "auto",
   onPlay,
   onPause,
   onEnded,
@@ -95,14 +95,14 @@ export const MDXVideo = ({
       setIsFullscreen(!!document.fullscreenElement);
     };
 
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 
   return (
-    <div className={cn(MDXStyles.media.base, 'bg-black', className)}>
+    <div className={cn(MDXStyles.media.base, "bg-black", className)}>
       <video
         ref={videoRef}
         src={src}
@@ -113,7 +113,7 @@ export const MDXVideo = ({
         loop={loop}
         muted={muted}
         playsInline
-        className="w-full h-full"
+        className="h-full w-full"
         onEnded={onEnded}
         onError={onError}
       />
@@ -122,19 +122,19 @@ export const MDXVideo = ({
       {controls && (
         <div
           className={cn(
-            'absolute bottom-0 left-0 right-0',
-            'flex items-center justify-between',
-            'px-4 py-2',
-            'bg-gradient-to-t from-black/60 to-transparent',
-            commonStyles.transition.opacity
+            "absolute right-0 bottom-0 left-0",
+            "flex items-center justify-between",
+            "px-4 py-2",
+            "bg-gradient-to-t from-black/60 to-transparent",
+            commonStyles.transition.opacity,
           )}
         >
           {/* 左侧控件 */}
           <div className="flex items-center gap-4">
             <button
               onClick={togglePlay}
-              className="p-1 rounded-full hover:bg-white/20"
-              aria-label={isPlaying ? '暂停' : '播放'}
+              className="rounded-full p-1 hover:bg-white/20"
+              aria-label={isPlaying ? "暂停" : "播放"}
             >
               {isPlaying ? (
                 <Pause className="h-5 w-5 text-white" />
@@ -145,8 +145,8 @@ export const MDXVideo = ({
 
             <button
               onClick={toggleMute}
-              className="p-1 rounded-full hover:bg-white/20"
-              aria-label={isMuted ? '取消静音' : '静音'}
+              className="rounded-full p-1 hover:bg-white/20"
+              aria-label={isMuted ? "取消静音" : "静音"}
             >
               {isMuted ? (
                 <VolumeX className="h-5 w-5 text-white" />
@@ -160,8 +160,8 @@ export const MDXVideo = ({
           <div className="flex items-center gap-4">
             <button
               onClick={toggleFullscreen}
-              className="p-1 rounded-full hover:bg-white/20"
-              aria-label={isFullscreen ? '退出全屏' : '全屏'}
+              className="rounded-full p-1 hover:bg-white/20"
+              aria-label={isFullscreen ? "退出全屏" : "全屏"}
             >
               <Maximize2 className="h-5 w-5 text-white" />
             </button>
@@ -173,13 +173,13 @@ export const MDXVideo = ({
       {title && (
         <div
           className={cn(
-            'absolute top-0 left-0 right-0',
-            'px-4 py-2',
-            'bg-gradient-to-b from-black/60 to-transparent',
-            commonStyles.transition.opacity
+            "absolute top-0 right-0 left-0",
+            "px-4 py-2",
+            "bg-gradient-to-b from-black/60 to-transparent",
+            commonStyles.transition.opacity,
           )}
         >
-          <h3 className="text-white text-sm font-medium">{title}</h3>
+          <h3 className="text-sm font-medium text-white">{title}</h3>
         </div>
       )}
     </div>

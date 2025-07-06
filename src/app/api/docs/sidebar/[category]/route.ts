@@ -1,12 +1,12 @@
-import { z } from 'zod';
-import { getDocSidebar } from '@/lib/content';
-import { SidebarItemSchema } from '@/lib/schemas/doc';
+import { z } from "zod";
+import { getDocSidebar } from "@/lib/content";
+import { SidebarItemSchema } from "@/lib/schemas/doc";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ category: string }> }
+  { params }: { params: Promise<{ category: string }> },
 ): Promise<Response> {
   try {
     const resolvedParams = await params;
@@ -15,13 +15,13 @@ export async function GET(
     const validatedItems = z.array(SidebarItemSchema).parse(items);
     return Response.json(validatedItems);
   } catch (err) {
-    console.error('Error fetching sidebar structure:', err);
+    console.error("Error fetching sidebar structure:", err);
     return Response.json(
       {
-        error: 'Failed to fetch sidebar structure',
-        details: err instanceof Error ? err.message : 'Unknown error',
+        error: "Failed to fetch sidebar structure",
+        details: err instanceof Error ? err.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,4 +1,4 @@
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 interface CacheEntry {
   serialized: MDXRemoteSerializeResult;
@@ -39,8 +39,11 @@ class MDXCache {
 export const mdxCache = new MDXCache();
 
 // Generate a cache key based on content and options
-export function generateMdxCacheKey(content: string, options?: Record<string, unknown>): string {
-  const optionsString = options ? JSON.stringify(options) : '';
+export function generateMdxCacheKey(
+  content: string,
+  options?: Record<string, unknown>,
+): string {
+  const optionsString = options ? JSON.stringify(options) : "";
   return `${content}:${optionsString}`;
 }
 
@@ -50,7 +53,10 @@ export function getMdxCache(key: string): MDXRemoteSerializeResult | null {
 }
 
 // Convenience function to set cached MDX
-export function setMdxCache(key: string, value: MDXRemoteSerializeResult): void {
+export function setMdxCache(
+  key: string,
+  value: MDXRemoteSerializeResult,
+): void {
   mdxCache.set(key, value);
 }
 
@@ -67,6 +73,6 @@ export function setCachedMDX(content: string, rendered: string): void {
     const value = JSON.parse(rendered) as MDXRemoteSerializeResult;
     setMdxCache(key, value);
   } catch (e) {
-    console.error('Failed to parse rendered MDX content:', e);
+    console.error("Failed to parse rendered MDX content:", e);
   }
 }

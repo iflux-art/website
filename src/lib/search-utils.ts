@@ -1,4 +1,4 @@
-import { LRUCache } from 'lru-cache';
+import { LRUCache } from "lru-cache";
 
 interface SearchResult {
   id: string;
@@ -32,7 +32,11 @@ export function getCachedSearchResults(query: string, limit: number) {
 /**
  * 缓存搜索结果
  */
-export function cacheSearchResults(query: string, limit: number, results: SearchResult[]) {
+export function cacheSearchResults(
+  query: string,
+  limit: number,
+  results: SearchResult[],
+) {
   searchCache.set(getSearchCacheKey(query, limit), results);
 }
 

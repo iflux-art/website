@@ -45,7 +45,7 @@ interface GenerateBreadcrumbsOptions {
   segmentProcessor?: (
     segment: string,
     index: number,
-    meta?: Record<string, { title?: string }>
+    meta?: Record<string, { title?: string }>,
   ) => string;
 }
 
@@ -61,7 +61,7 @@ export function generateBreadcrumbs({
   segmentProcessor,
 }: GenerateBreadcrumbsOptions): BreadcrumbItem[] {
   const items: BreadcrumbItem[] = [{ label: startLabel, href: `/${basePath}` }];
-  let currentPath = '';
+  let currentPath = "";
 
   slug.forEach((segment, index) => {
     const isLastSegment = index === slug.length - 1;
@@ -88,12 +88,15 @@ interface BlogBreadcrumbProps {
   title: string;
 }
 
-export function createBlogBreadcrumbs({ slug, title }: BlogBreadcrumbProps): BreadcrumbItem[] {
+export function createBlogBreadcrumbs({
+  slug,
+  title,
+}: BlogBreadcrumbProps): BreadcrumbItem[] {
   return generateBreadcrumbs({
-    basePath: 'blog',
+    basePath: "blog",
     slug,
     currentTitle: title,
-    startLabel: '博客',
+    startLabel: "博客",
   });
 }
 
@@ -103,13 +106,17 @@ interface DocBreadcrumbProps {
   meta?: Record<string, { title?: string }>;
 }
 
-export function createDocBreadcrumbs({ slug, title, meta }: DocBreadcrumbProps): BreadcrumbItem[] {
+export function createDocBreadcrumbs({
+  slug,
+  title,
+  meta,
+}: DocBreadcrumbProps): BreadcrumbItem[] {
   return generateBreadcrumbs({
-    basePath: 'docs',
+    basePath: "docs",
     slug,
     currentTitle: title,
     meta,
-    startLabel: '文档',
+    startLabel: "文档",
     segmentProcessor: (segment, index, meta) => {
       if (meta?.[segment]?.title) {
         return meta[segment].title;

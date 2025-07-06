@@ -1,19 +1,21 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, BookOpen, Shuffle, Copy, Download } from 'lucide-react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, BookOpen, Shuffle, Copy, Download } from "lucide-react";
+import Link from "next/link";
 
 export default function NonsenseGeneratorPage() {
-  const [activeTab, setActiveTab] = useState<'poetry' | 'prose' | 'novel' | 'speech'>('poetry');
-  const [generatedText, setGeneratedText] = useState('');
+  const [activeTab, setActiveTab] = useState<
+    "poetry" | "prose" | "novel" | "speech"
+  >("poetry");
+  const [generatedText, setGeneratedText] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   // 废话诗歌生成器
   const PoetryGenerator = () => {
-    const [theme, setTheme] = useState('爱情');
+    const [theme, setTheme] = useState("爱情");
     const [lines, setLines] = useState(8);
 
     const generatePoetry = () => {
@@ -38,24 +40,43 @@ export default function NonsenseGeneratorPage() {
       ];
 
       const adjectives = [
-        '美丽的',
-        '忧伤的',
-        '快乐的',
-        '神秘的',
-        '温柔的',
-        '激情的',
-        '深邃的',
-        '纯真的',
+        "美丽的",
+        "忧伤的",
+        "快乐的",
+        "神秘的",
+        "温柔的",
+        "激情的",
+        "深邃的",
+        "纯真的",
       ];
-      const nouns = ['心灵', '梦想', '时光', '回忆', '希望', '眼泪', '微笑', '拥抱'];
-      const verbs = ['飞翔', '流淌', '绽放', '消逝', '闪耀', '沉睡', '苏醒', '歌唱'];
+      const nouns = [
+        "心灵",
+        "梦想",
+        "时光",
+        "回忆",
+        "希望",
+        "眼泪",
+        "微笑",
+        "拥抱",
+      ];
+      const verbs = [
+        "飞翔",
+        "流淌",
+        "绽放",
+        "消逝",
+        "闪耀",
+        "沉睡",
+        "苏醒",
+        "歌唱",
+      ];
 
       let poetry = `《${theme}之歌》\n\n`;
 
       for (let i = 0; i < lineCount; i++) {
         if (Math.random() > 0.5) {
-          const template = poetryTemplates[Math.floor(Math.random() * poetryTemplates.length)];
-          poetry += template + '\n';
+          const template =
+            poetryTemplates[Math.floor(Math.random() * poetryTemplates.length)];
+          poetry += template + "\n";
         } else {
           const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
           const noun = nouns[Math.floor(Math.random() * nouns.length)];
@@ -68,7 +89,16 @@ export default function NonsenseGeneratorPage() {
       return poetry;
     };
 
-    const themes = ['爱情', '友情', '青春', '梦想', '时光', '自然', '生命', '希望'];
+    const themes = [
+      "爱情",
+      "友情",
+      "青春",
+      "梦想",
+      "时光",
+      "自然",
+      "生命",
+      "希望",
+    ];
 
     return (
       <Card>
@@ -77,20 +107,20 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
               诗歌主题
             </label>
             <input
               type="text"
               value={theme}
-              onChange={e => setTheme(e.target.value)}
+              onChange={(e) => setTheme(e.target.value)}
               placeholder="输入诗歌主题..."
-              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
             />
           </div>
 
           <div>
-            <label className="block text-sm mb-2">预设主题</label>
+            <label className="mb-2 block text-sm">预设主题</label>
             <div className="grid grid-cols-4 gap-2">
               {themes.map((t, index) => (
                 <Button
@@ -107,13 +137,13 @@ export default function NonsenseGeneratorPage() {
           </div>
 
           <div>
-            <label className="block text-sm mb-2">诗歌行数: {lines}</label>
+            <label className="mb-2 block text-sm">诗歌行数: {lines}</label>
             <input
               type="range"
               min="4"
               max="16"
               value={lines}
-              onChange={e => setLines(Number(e.target.value))}
+              onChange={(e) => setLines(Number(e.target.value))}
               className="w-full"
             />
           </div>
@@ -121,10 +151,10 @@ export default function NonsenseGeneratorPage() {
           <Button
             onClick={generatePoetry}
             disabled={isGenerating}
-            className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600 w-full"
+            className="flex w-full items-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
-            <Shuffle className="h-4 w-4 mr-2" />
-            {isGenerating ? '创作中...' : '生成诗歌'}
+            <Shuffle className="mr-2 h-4 w-4" />
+            {isGenerating ? "创作中..." : "生成诗歌"}
           </Button>
         </CardContent>
       </Card>
@@ -133,7 +163,7 @@ export default function NonsenseGeneratorPage() {
 
   // 废话散文生成器
   const ProseGenerator = () => {
-    const [topic, setTopic] = useState('人生感悟');
+    const [topic, setTopic] = useState("人生感悟");
     const [length, setLength] = useState(300);
 
     const generateProse = () => {
@@ -155,22 +185,22 @@ export default function NonsenseGeneratorPage() {
       ];
 
       const philosophicalWords = [
-        '存在',
-        '本质',
-        '意义',
-        '价值',
-        '真理',
-        '美好',
-        '永恒',
-        '瞬间',
-        '深刻',
-        '浅薄',
-        '复杂',
-        '简单',
-        '真实',
-        '虚幻',
-        '光明',
-        '黑暗',
+        "存在",
+        "本质",
+        "意义",
+        "价值",
+        "真理",
+        "美好",
+        "永恒",
+        "瞬间",
+        "深刻",
+        "浅薄",
+        "复杂",
+        "简单",
+        "真实",
+        "虚幻",
+        "光明",
+        "黑暗",
       ];
 
       let prose = `关于${topic}的思考\n\n`;
@@ -178,14 +208,21 @@ export default function NonsenseGeneratorPage() {
 
       while (currentLength < targetLength) {
         if (Math.random() > 0.6) {
-          const template = proseTemplates[Math.floor(Math.random() * proseTemplates.length)];
-          prose += template + ' ';
+          const template =
+            proseTemplates[Math.floor(Math.random() * proseTemplates.length)];
+          prose += template + " ";
           currentLength += template.length + 1;
         } else {
-          const word1 = philosophicalWords[Math.floor(Math.random() * philosophicalWords.length)];
-          const word2 = philosophicalWords[Math.floor(Math.random() * philosophicalWords.length)];
+          const word1 =
+            philosophicalWords[
+              Math.floor(Math.random() * philosophicalWords.length)
+            ];
+          const word2 =
+            philosophicalWords[
+              Math.floor(Math.random() * philosophicalWords.length)
+            ];
           const sentence = `${topic}的${word1}体现在${word2}之中，而${word2}又反映了${topic}的${word1}。`;
-          prose += sentence + ' ';
+          prose += sentence + " ";
           currentLength += sentence.length + 1;
         }
       }
@@ -194,7 +231,14 @@ export default function NonsenseGeneratorPage() {
       return prose;
     };
 
-    const topics = ['人生感悟', '时间哲学', '存在意义', '生命价值', '爱的真谛', '美的本质'];
+    const topics = [
+      "人生感悟",
+      "时间哲学",
+      "存在意义",
+      "生命价值",
+      "爱的真谛",
+      "美的本质",
+    ];
 
     return (
       <Card>
@@ -203,18 +247,18 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm mb-2">散文主题</label>
+            <label className="mb-2 block text-sm">散文主题</label>
             <input
               type="text"
               value={topic}
-              onChange={e => setTopic(e.target.value)}
+              onChange={(e) => setTopic(e.target.value)}
               placeholder="输入散文主题..."
-              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
             />
           </div>
 
           <div>
-            <label className="block text-sm mb-2">预设主题</label>
+            <label className="mb-2 block text-sm">预设主题</label>
             <div className="grid grid-cols-3 gap-2">
               {topics.map((t, index) => (
                 <Button
@@ -231,21 +275,25 @@ export default function NonsenseGeneratorPage() {
           </div>
 
           <div>
-            <label className="block text-sm mb-2">文章长度: {length} 字</label>
+            <label className="mb-2 block text-sm">文章长度: {length} 字</label>
             <input
               type="range"
               min="200"
               max="800"
               step="50"
               value={length}
-              onChange={e => setLength(Number(e.target.value))}
+              onChange={(e) => setLength(Number(e.target.value))}
               className="w-full"
             />
           </div>
 
-          <Button onClick={generateProse} disabled={isGenerating} className="w-full">
-            <Shuffle className="h-4 w-4 mr-2" />
-            {isGenerating ? '创作中...' : '生成散文'}
+          <Button
+            onClick={generateProse}
+            disabled={isGenerating}
+            className="w-full"
+          >
+            <Shuffle className="mr-2 h-4 w-4" />
+            {isGenerating ? "创作中..." : "生成散文"}
           </Button>
         </CardContent>
       </Card>
@@ -254,8 +302,8 @@ export default function NonsenseGeneratorPage() {
 
   // 废话小说生成器
   const NovelGenerator = () => {
-    const [protagonist, setProtagonist] = useState('小明');
-    const [setting, setSetting] = useState('学校');
+    const [protagonist, setProtagonist] = useState("小明");
+    const [setting, setSetting] = useState("学校");
 
     const generateNovel = () => {
       setIsGenerating(true);
@@ -284,8 +332,9 @@ export default function NonsenseGeneratorPage() {
 
       novel += `第二章：${setting}的秘密\n\n`;
       for (let i = 0; i < 3; i++) {
-        const template = novelTemplates[Math.floor(Math.random() * novelTemplates.length)];
-        novel += template + ' ';
+        const template =
+          novelTemplates[Math.floor(Math.random() * novelTemplates.length)];
+        novel += template + " ";
       }
       novel += `${protagonist}终于明白了${setting}的真正含义。\n\n`;
 
@@ -298,8 +347,8 @@ export default function NonsenseGeneratorPage() {
       return novel;
     };
 
-    const protagonists = ['小明', '小红', '小李', '小王', '小张', '阿强'];
-    const settings = ['学校', '公司', '家里', '公园', '咖啡厅', '图书馆'];
+    const protagonists = ["小明", "小红", "小李", "小王", "小张", "阿强"];
+    const settings = ["学校", "公司", "家里", "公园", "咖啡厅", "图书馆"];
 
     return (
       <Card>
@@ -308,30 +357,30 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm mb-2">主人公姓名</label>
+            <label className="mb-2 block text-sm">主人公姓名</label>
             <input
               type="text"
               value={protagonist}
-              onChange={e => setProtagonist(e.target.value)}
+              onChange={(e) => setProtagonist(e.target.value)}
               placeholder="输入主人公姓名..."
-              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
             />
           </div>
 
           <div>
-            <label className="block text-sm mb-2">故事场景</label>
+            <label className="mb-2 block text-sm">故事场景</label>
             <input
               type="text"
               value={setting}
-              onChange={e => setSetting(e.target.value)}
+              onChange={(e) => setSetting(e.target.value)}
               placeholder="输入故事场景..."
-              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm mb-2">预设主人公</label>
+              <label className="mb-2 block text-sm">预设主人公</label>
               <div className="grid grid-cols-3 gap-1">
                 {protagonists.map((p, index) => (
                   <Button
@@ -348,7 +397,7 @@ export default function NonsenseGeneratorPage() {
             </div>
 
             <div>
-              <label className="block text-sm mb-2">预设场景</label>
+              <label className="mb-2 block text-sm">预设场景</label>
               <div className="grid grid-cols-3 gap-1">
                 {settings.map((s, index) => (
                   <Button
@@ -365,9 +414,13 @@ export default function NonsenseGeneratorPage() {
             </div>
           </div>
 
-          <Button onClick={generateNovel} disabled={isGenerating} className="w-full">
-            <Shuffle className="h-4 w-4 mr-2" />
-            {isGenerating ? '创作中...' : '生成小说'}
+          <Button
+            onClick={generateNovel}
+            disabled={isGenerating}
+            className="w-full"
+          >
+            <Shuffle className="mr-2 h-4 w-4" />
+            {isGenerating ? "创作中..." : "生成小说"}
           </Button>
         </CardContent>
       </Card>
@@ -376,7 +429,7 @@ export default function NonsenseGeneratorPage() {
 
   // 废话演讲生成器
   const SpeechGenerator = () => {
-    const [speechTopic, setSpeechTopic] = useState('成功的秘诀');
+    const [speechTopic, setSpeechTopic] = useState("成功的秘诀");
     const [duration, setDuration] = useState(5);
 
     const generateSpeech = () => {
@@ -411,12 +464,14 @@ export default function NonsenseGeneratorPage() {
       let speech = `《${topic}》演讲稿\n\n`;
 
       // 开场
-      speech += speechOpeners[Math.floor(Math.random() * speechOpeners.length)] + '\n\n';
+      speech +=
+        speechOpeners[Math.floor(Math.random() * speechOpeners.length)] +
+        "\n\n";
 
       // 主体（根据时长调整内容）
       const pointsCount = Math.max(3, Math.floor(minutes * 0.8));
       for (let i = 0; i < pointsCount; i++) {
-        speech += speechPoints[i % speechPoints.length] + '\n\n';
+        speech += speechPoints[i % speechPoints.length] + "\n\n";
 
         // 添加一些废话填充
         speech += `正如古人所说，${topic}者，${topic}也。这句话虽然简单，但却蕴含着深刻的道理。`;
@@ -430,7 +485,13 @@ export default function NonsenseGeneratorPage() {
       return speech;
     };
 
-    const speechTopics = ['成功的秘诀', '幸福的真谛', '梦想的力量', '坚持的意义', '创新的价值'];
+    const speechTopics = [
+      "成功的秘诀",
+      "幸福的真谛",
+      "梦想的力量",
+      "坚持的意义",
+      "创新的价值",
+    ];
 
     return (
       <Card>
@@ -439,18 +500,18 @@ export default function NonsenseGeneratorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm mb-2">演讲主题</label>
+            <label className="mb-2 block text-sm">演讲主题</label>
             <input
               type="text"
               value={speechTopic}
-              onChange={e => setSpeechTopic(e.target.value)}
+              onChange={(e) => setSpeechTopic(e.target.value)}
               placeholder="输入演讲主题..."
-              className="w-full p-4 font-mono text-sm rounded-md border bg-background dark:bg-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-md border bg-background p-4 font-mono text-sm focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-900 dark:text-slate-50"
             />
           </div>
 
           <div>
-            <label className="block text-sm mb-2">预设主题</label>
+            <label className="mb-2 block text-sm">预设主题</label>
             <div className="grid grid-cols-2 gap-2">
               {speechTopics.map((t, index) => (
                 <Button
@@ -467,20 +528,26 @@ export default function NonsenseGeneratorPage() {
           </div>
 
           <div>
-            <label className="block text-sm mb-2">演讲时长: {duration} 分钟</label>
+            <label className="mb-2 block text-sm">
+              演讲时长: {duration} 分钟
+            </label>
             <input
               type="range"
               min="3"
               max="15"
               value={duration}
-              onChange={e => setDuration(Number(e.target.value))}
+              onChange={(e) => setDuration(Number(e.target.value))}
               className="w-full"
             />
           </div>
 
-          <Button onClick={generateSpeech} disabled={isGenerating} className="w-full">
-            <Shuffle className="h-4 w-4 mr-2" />
-            {isGenerating ? '创作中...' : '生成演讲稿'}
+          <Button
+            onClick={generateSpeech}
+            disabled={isGenerating}
+            className="w-full"
+          >
+            <Shuffle className="mr-2 h-4 w-4" />
+            {isGenerating ? "创作中..." : "生成演讲稿"}
           </Button>
         </CardContent>
       </Card>
@@ -490,16 +557,18 @@ export default function NonsenseGeneratorPage() {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(generatedText);
-      alert('内容已复制到剪贴板');
+      alert("内容已复制到剪贴板");
     } catch (err) {
-      console.error('复制失败:', err);
+      console.error("复制失败:", err);
     }
   };
 
   const downloadText = () => {
-    const blob = new Blob([generatedText], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([generatedText], {
+      type: "text/plain;charset=utf-8",
+    });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = `废话文学作品.txt`;
     link.click();
@@ -507,23 +576,25 @@ export default function NonsenseGeneratorPage() {
   };
 
   const tabs = [
-    { key: 'poetry', name: '废话诗歌', icon: BookOpen },
-    { key: 'prose', name: '废话散文', icon: BookOpen },
-    { key: 'novel', name: '废话小说', icon: BookOpen },
-    { key: 'speech', name: '废话演讲', icon: BookOpen },
+    { key: "poetry", name: "废话诗歌", icon: BookOpen },
+    { key: "prose", name: "废话散文", icon: BookOpen },
+    { key: "novel", name: "废话小说", icon: BookOpen },
+    { key: "speech", name: "废话演讲", icon: BookOpen },
   ];
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">废话文学生成器</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              废话文学生成器
+            </h1>
             <p className="text-muted-foreground">
               智能废话文学创作工具，支持多种风格生成，包括学术风、商业风、哲学风
             </p>
@@ -531,24 +602,26 @@ export default function NonsenseGeneratorPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* 左侧：生成器选择和配置 */}
         <div className="space-y-6">
           <Card>
             <CardContent className="p-0">
               <div className="flex border-b">
-                {tabs.map(tab => {
+                {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   return (
                     <button
                       key={tab.key}
                       onClick={() =>
-                        setActiveTab(tab.key as 'poetry' | 'prose' | 'novel' | 'speech')
+                        setActiveTab(
+                          tab.key as "poetry" | "prose" | "novel" | "speech",
+                        )
                       }
-                      className={`flex-1 p-3 text-center border-b-2 transition-colors flex items-center justify-center gap-2 text-sm ${
+                      className={`flex flex-1 items-center justify-center gap-2 border-b-2 p-3 text-center text-sm transition-colors ${
                         activeTab === tab.key
-                          ? 'border-primary text-primary bg-primary/5'
-                          : 'border-transparent text-muted-foreground hover:text-foreground'
+                          ? "border-primary bg-primary/5 text-primary"
+                          : "border-transparent text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       <IconComponent className="h-4 w-4" />
@@ -560,10 +633,10 @@ export default function NonsenseGeneratorPage() {
             </CardContent>
           </Card>
 
-          {activeTab === 'poetry' && <PoetryGenerator />}
-          {activeTab === 'prose' && <ProseGenerator />}
-          {activeTab === 'novel' && <NovelGenerator />}
-          {activeTab === 'speech' && <SpeechGenerator />}
+          {activeTab === "poetry" && <PoetryGenerator />}
+          {activeTab === "prose" && <ProseGenerator />}
+          {activeTab === "novel" && <NovelGenerator />}
+          {activeTab === "speech" && <SpeechGenerator />}
         </div>
 
         {/* 右侧：生成结果 */}
@@ -595,18 +668,20 @@ export default function NonsenseGeneratorPage() {
           </CardHeader>
           <CardContent>
             {isGenerating ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              <div className="flex h-64 items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
                 <span className="ml-2">正在创作废话文学...</span>
               </div>
             ) : generatedText ? (
-              <div className="w-full min-h-[200px] p-4 rounded-lg border bg-background dark:bg-slate-900 dark:text-slate-50 font-mono text-sm max-h-96 overflow-y-auto">
-                <div className="whitespace-pre-wrap text-sm leading-relaxed">{generatedText}</div>
+              <div className="max-h-96 min-h-[200px] w-full overflow-y-auto rounded-lg border bg-background p-4 font-mono text-sm dark:bg-slate-900 dark:text-slate-50">
+                <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                  {generatedText}
+                </div>
               </div>
             ) : (
-              <div className="text-center text-muted-foreground h-64 flex items-center justify-center">
+              <div className="flex h-64 items-center justify-center text-center text-muted-foreground">
                 <div>
-                  <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <BookOpen className="mx-auto mb-4 h-12 w-12 opacity-50" />
                   <p>选择文学类型并开始创作</p>
                 </div>
               </div>
@@ -615,9 +690,9 @@ export default function NonsenseGeneratorPage() {
         </Card>
       </div>
 
-      <div className="mt-8 space-y-4 p-4 rounded-lg border bg-background dark:bg-slate-900">
-        <h4 className="font-medium mb-2 text-purple-800">创作说明</h4>
-        <div className="text-sm text-muted-foreground dark:text-slate-400 space-y-1">
+      <div className="mt-8 space-y-4 rounded-lg border bg-background p-4 dark:bg-slate-900">
+        <h4 className="mb-2 font-medium text-purple-800">创作说明</h4>
+        <div className="space-y-1 text-sm text-muted-foreground dark:text-slate-400">
           <div>• 废话文学是一种特殊的文学形式，以循环论证和同义反复为特色</div>
           <div>• 生成的作品仅供娱乐和创意启发，请勿用于正式场合</div>
           <div>• 可以作为幽默素材或创意写作的灵感来源</div>

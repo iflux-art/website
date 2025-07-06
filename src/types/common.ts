@@ -3,7 +3,7 @@
  * 所有其他类型文件的基础类型来源
  */
 
-import type { ReactNode, ComponentType, CSSProperties } from 'react';
+import type { ReactNode, ComponentType, CSSProperties } from "react";
 
 // ==================== 基础值类型 ====================
 
@@ -198,7 +198,7 @@ export interface CacheConfig {
 /** 主题配置 */
 export interface ThemeConfig {
   /** 默认主题 */
-  defaultTheme: 'light' | 'dark' | 'system';
+  defaultTheme: "light" | "dark" | "system";
   /** 是否启用主题切换 */
   enableToggle: boolean;
   /** 主题存储键名 */

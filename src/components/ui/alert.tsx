@@ -1,29 +1,30 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from '@/utils';
+import { cn } from "@/lib/utils";
 
 /**
  * Alert 组件变体定义
  * 定义了警告框的不同样式变体
  */
 const alertVariants = cva(
-  'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
+        default: "bg-background text-foreground",
         destructive:
-          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
-        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+        success:
+          "border-success/50 text-success dark:border-success [&>svg]:text-success",
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: "default",
     },
-  }
+  },
 );
 
 /**
@@ -61,10 +62,15 @@ export type AlertDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
  */
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   ({ className, variant, ...props }, ref) => (
-    <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
-  )
+    <div
+      ref={ref}
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    />
+  ),
 );
-Alert.displayName = 'Alert';
+Alert.displayName = "Alert";
 
 /**
  * AlertTitle 组件
@@ -74,22 +80,30 @@ const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
   ({ className, ...props }, ref) => (
     <h5
       ref={ref}
-      className={cn('mb-2 font-semibold leading-none tracking-tight text-lg', className)}
+      className={cn(
+        "mb-2 text-lg leading-none font-semibold tracking-tight",
+        className,
+      )}
       {...props}
     />
-  )
+  ),
 );
-AlertTitle.displayName = 'AlertTitle';
+AlertTitle.displayName = "AlertTitle";
 
 /**
  * AlertDescription 组件
  * 用于显示警告框的详细描述
  */
-const AlertDescription = React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('text-sm [&_p]:leading-relaxed mt-1', className)} {...props} />
-  )
-);
-AlertDescription.displayName = 'AlertDescription';
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  AlertDescriptionProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("mt-1 text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+));
+AlertDescription.displayName = "AlertDescription";
 
 export { Alert, AlertTitle, AlertDescription, alertVariants };

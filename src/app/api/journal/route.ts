@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { JournalEntry } from '@/types/journal-types';
+import { NextResponse } from "next/server";
+import path from "path";
+import fs from "fs";
+import matter from "gray-matter";
+import { JournalEntry } from "@/types/journal-types";
 
 function getMdxFiles(): JournalEntry[] {
-  console.log('Starting to fetch MDX files...');
+  console.log("Starting to fetch MDX files...");
   const entries: JournalEntry[] = [];
-  const contentTypes = ['blog', 'docs'] as const;
+  const contentTypes = ["blog", "docs"] as const;
 
   for (const type of contentTypes) {
-    const dir = path.join(process.cwd(), 'src', 'content', type);
+    const dir = path.join(process.cwd(), "src", "content", type);
     console.log(`Checking ${type} directory: ${dir}`);
     if (!fs.existsSync(dir)) {
       console.warn(`Directory not found: ${dir}`);
@@ -27,10 +27,13 @@ function getMdxFiles(): JournalEntry[] {
 
           if (item.isDirectory()) {
             findMdxInDirectory(itemPath);
-          } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+          } else if (
+            item.isFile() &&
+            (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
+          ) {
             try {
               console.log(`Processing file: ${itemPath}`);
-              const fileContent = fs.readFileSync(itemPath, 'utf8');
+              const fileContent = fs.readFileSync(itemPath, "utf8");
               const { data } = matter(fileContent);
 
               // 确保文档有日期
@@ -38,12 +41,16 @@ function getMdxFiles(): JournalEntry[] {
                 // 获取文档相对路径
                 // 构建文章路径和URL
                 const relativeDir = path.relative(
-                  path.join(process.cwd(), 'src', 'content'),
-                  itemPath
+                  path.join(process.cwd(), "src", "content"),
+                  itemPath,
                 );
-                const fileName = path.basename(relativeDir).replace(/\.(mdx|md)$/, '');
-                const urlPath = relativeDir.replace(/\.(mdx|md)$/, '').replace(/\\/g, '/');
-                console.log('Building URL:', {
+                const fileName = path
+                  .basename(relativeDir)
+                  .replace(/\.(mdx|md)$/, "");
+                const urlPath = relativeDir
+                  .replace(/\.(mdx|md)$/, "")
+                  .replace(/\\/g, "/");
+                console.log("Building URL:", {
                   type,
                   relativeDir,
                   fileName,
@@ -54,10 +61,10 @@ function getMdxFiles(): JournalEntry[] {
                   id: `${type}:${fileName}`,
                   slug: fileName,
                   title: data.title || fileName,
-                  description: data.description || data.excerpt || '',
+                  description: data.description || data.excerpt || "",
                   date: data.date,
                   url: `/${urlPath}`,
-                  type: type === 'docs' ? 'doc' : 'blog',
+                  type: type === "docs" ? "doc" : "blog",
                 };
 
                 console.log(`Found entry: ${entry.id}`);
@@ -85,7 +92,7 @@ function getMdxFiles(): JournalEntry[] {
 }
 
 export async function GET() {
-  console.log('Received GET request to /api/journal');
+  console.log("Received GET request to /api/journal");
 
   try {
     const entries = getMdxFiles();
@@ -94,17 +101,20 @@ export async function GET() {
     return new NextResponse(JSON.stringify(entries), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   } catch (error) {
-    console.error('Error in /api/journal:', error);
+    console.error("Error in /api/journal:", error);
 
-    return new NextResponse(JSON.stringify({ error: 'Failed to fetch journal entries' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
+    return new NextResponse(
+      JSON.stringify({ error: "Failed to fetch journal entries" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
   }
 }

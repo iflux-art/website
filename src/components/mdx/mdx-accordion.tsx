@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export interface AccordionItem {
   id: string;
@@ -15,8 +15,8 @@ export interface MDXAccordionProps {
   defaultExpanded?: string[];
   allowMultiple?: boolean;
   className?: string;
-  variant?: 'default' | 'bordered' | 'separated';
-  iconPosition?: 'left' | 'right';
+  variant?: "default" | "bordered" | "separated";
+  iconPosition?: "left" | "right";
   onChange?: (expandedItems: string[]) => void;
 }
 
@@ -32,9 +32,9 @@ export const MDXAccordion = ({
   items,
   defaultExpanded = [],
   allowMultiple = false,
-  className = '',
-  variant = 'default',
-  iconPosition = 'right',
+  className = "",
+  variant = "default",
+  iconPosition = "right",
   onChange,
 }: MDXAccordionProps) => {
   const [expandedItems, setExpandedItems] = useState<string[]>(defaultExpanded);
@@ -42,17 +42,17 @@ export const MDXAccordion = ({
   // 变体样式配置
   const variantStyles = {
     default: {
-      wrapper: 'divide-y divide-gray-200 dark:divide-gray-700',
-      item: '',
+      wrapper: "divide-y divide-gray-200 dark:divide-gray-700",
+      item: "",
     },
     bordered: {
       wrapper:
-        'border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700',
-      item: 'first:rounded-t-lg last:rounded-b-lg',
+        "border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700",
+      item: "first:rounded-t-lg last:rounded-b-lg",
     },
     separated: {
-      wrapper: 'space-y-2',
-      item: 'border border-gray-200 dark:border-gray-700 rounded-lg',
+      wrapper: "space-y-2",
+      item: "border border-gray-200 dark:border-gray-700 rounded-lg",
     },
   };
 
@@ -62,7 +62,7 @@ export const MDXAccordion = ({
 
     if (allowMultiple) {
       newExpanded = expandedItems.includes(itemId)
-        ? expandedItems.filter(id => id !== itemId)
+        ? expandedItems.filter((id) => id !== itemId)
         : [...expandedItems, itemId];
     } else {
       newExpanded = expandedItems.includes(itemId) ? [] : [itemId];
@@ -73,57 +73,32 @@ export const MDXAccordion = ({
   };
 
   return (
-    <div
-      className={`
-      my-6
-      ${variantStyles[variant].wrapper}
-      ${className}
-    `}
-    >
-      {items.map(item => {
+    <div className={`my-6 ${variantStyles[variant].wrapper} ${className} `}>
+      {items.map((item) => {
         const isExpanded = expandedItems.includes(item.id);
 
         return (
           <div key={item.id} className={variantStyles[variant].item}>
             {/* 标题按钮 */}
             <button
-              className={`
-                w-full flex items-center justify-between
-                px-4 py-4 text-left text-gray-900 dark:text-gray-100
-                hover:bg-gray-50 dark:hover:bg-gray-800
-                disabled:opacity-50 disabled:cursor-not-allowed
-                transition-colors
-              `}
+              className={`flex w-full items-center justify-between px-4 py-4 text-left text-gray-900 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-100 dark:hover:bg-gray-800`}
               onClick={() => !item.disabled && toggleItem(item.id)}
               disabled={item.disabled}
               aria-expanded={isExpanded}
               aria-controls={`accordion-content-${item.id}`}
             >
               <div
-                className={`
-                flex items-center gap-3
-                ${iconPosition === 'right' ? 'flex-1' : ''}
-              `}
+                className={`flex items-center gap-3 ${iconPosition === "right" ? "flex-1" : ""} `}
               >
-                {iconPosition === 'left' && (
+                {iconPosition === "left" && (
                   <ChevronDown
-                    className={`
-                      h-5 w-5 flex-shrink-0
-                      text-gray-500 dark:text-gray-400
-                      transition-transform duration-200
-                      ${isExpanded ? 'transform rotate-180' : ''}
-                    `}
+                    className={`h-5 w-5 flex-shrink-0 text-gray-500 transition-transform duration-200 dark:text-gray-400 ${isExpanded ? "rotate-180 transform" : ""} `}
                   />
                 )}
                 <span className="flex-1 font-medium">{item.title}</span>
-                {iconPosition === 'right' && (
+                {iconPosition === "right" && (
                   <ChevronDown
-                    className={`
-                      h-5 w-5 flex-shrink-0
-                      text-gray-500 dark:text-gray-400
-                      transition-transform duration-200
-                      ${isExpanded ? 'transform rotate-180' : ''}
-                    `}
+                    className={`h-5 w-5 flex-shrink-0 text-gray-500 transition-transform duration-200 dark:text-gray-400 ${isExpanded ? "rotate-180 transform" : ""} `}
                   />
                 )}
               </div>
@@ -132,10 +107,7 @@ export const MDXAccordion = ({
             {/* 内容面板 */}
             <div
               id={`accordion-content-${item.id}`}
-              className={`
-                overflow-hidden transition-all duration-200
-                ${isExpanded ? 'max-h-screen' : 'max-h-0'}
-              `}
+              className={`overflow-hidden transition-all duration-200 ${isExpanded ? "max-h-screen" : "max-h-0"} `}
             >
               <div className="px-4 pb-4">{item.content}</div>
             </div>

@@ -2,7 +2,7 @@
  * 博客相关类型定义
  */
 
-import { BaseContent, BaseCategory, URL } from './common';
+import { BaseContent, BaseCategory, URL } from "./common";
 
 /**
  * 博客文章
@@ -44,7 +44,10 @@ export interface BlogCategory extends BaseCategory {
  * 相关文章
  */
 export interface RelatedPost
-  extends Pick<BlogPost, 'slug' | 'title' | 'description' | 'excerpt' | 'date' | 'category'> {
+  extends Pick<
+    BlogPost,
+    "slug" | "title" | "description" | "excerpt" | "date" | "category"
+  > {
   /** 相关度评分 */
   relevanceScore?: number;
 }

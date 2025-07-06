@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Links form data schema
 export const LinksFormDataSchema = z.object({

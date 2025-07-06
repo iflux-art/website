@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 // 定义请求体schema
 const LoginRequestSchema = z.object({
@@ -20,46 +20,47 @@ export async function POST(request: NextRequest) {
   try {
     // 验证请求体
     const requestBody = await request.json();
-    const { username, password, rememberMe } = LoginRequestSchema.parse(requestBody);
+    const { username, password, rememberMe } =
+      LoginRequestSchema.parse(requestBody);
 
     // 模拟认证逻辑 - 实际项目中替换为真实认证
-    if (username === 'admin' && password === 'password') {
+    if (username === "admin" && password === "password") {
       const expiresIn = rememberMe ? 30 * 24 * 60 * 60 : 2 * 60 * 60; // 30天或2小时
-      const token = 'demo-token-' + Math.random().toString(36).substring(2);
+      const token = "demo-token-" + Math.random().toString(36).substring(2);
 
       return NextResponse.json(
         LoginResponseSchema.parse({
           success: true,
           token,
           expiresIn,
-        })
+        }),
       );
     }
 
     return NextResponse.json(
       LoginResponseSchema.parse({
         success: false,
-        error: '用户名或密码错误',
+        error: "用户名或密码错误",
       }),
-      { status: 401 }
+      { status: 401 },
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         LoginResponseSchema.parse({
           success: false,
-          error: '请求数据格式错误',
+          error: "请求数据格式错误",
         }),
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       LoginResponseSchema.parse({
         success: false,
-        error: '服务器内部错误',
+        error: "服务器内部错误",
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

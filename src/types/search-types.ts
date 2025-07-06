@@ -2,8 +2,8 @@
  * 搜索相关类型定义
  */
 
-import { ReactNode } from 'react';
-import { BaseSearchResult, ID } from './common';
+import { ReactNode } from "react";
+import { BaseSearchResult, ID } from "./common";
 
 /** 搜索对话框属性 */
 export interface SearchDialogProps {
@@ -16,7 +16,7 @@ export interface SearchDialogProps {
 /** 搜索结果 */
 export interface SearchResult extends BaseSearchResult {
   /** 结果类型 */
-  type: 'doc' | 'blog' | 'navigation' | 'tool' | 'command' | 'history';
+  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history";
   /** 图标 */
   icon: ReactNode;
   /** 是否为外部链接 */
@@ -60,5 +60,5 @@ export interface SearchHistoryProps {
 /** API 搜索结果 */
 export interface APISearchResult extends BaseSearchResult {
   /** 结果类型 */
-  type: 'doc' | 'blog' | 'tool' | 'link';
+  type: "doc" | "blog" | "tool" | "link";
 }

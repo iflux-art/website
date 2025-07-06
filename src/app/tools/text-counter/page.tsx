@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   FileText,
   Clock,
@@ -13,17 +13,17 @@ import {
   RotateCcw,
   FileDown,
   ArrowLeft,
-} from 'lucide-react';
-import { ToolLayout } from '@/components/layout/tools/tool-layout';
-import { ToolActions } from '@/components/layout/tools/tool-actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+} from "lucide-react";
+import { ToolLayout } from "@/components/layout/tools/tool-layout";
+import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function TextCounterPage() {
-  const [activeTab, setActiveTab] = useState('counter');
-  const [text, setText] = useState('');
-  const [text2, setText2] = useState('');
+  const [activeTab, setActiveTab] = useState("counter");
+  const [text, setText] = useState("");
+  const [text2, setText2] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [stats, setStats] = useState({
     characters: 0,
@@ -40,28 +40,32 @@ export default function TextCounterPage() {
     const characters = inputText.length;
 
     // 字符数（不包含空格）
-    const charactersNoSpaces = inputText.replace(/\s/g, '').length;
+    const charactersNoSpaces = inputText.replace(/\s/g, "").length;
 
     // 单词数（中英文混合计算）
     const words =
-      inputText.trim() === ''
+      inputText.trim() === ""
         ? 0
         : inputText
             .trim()
             .split(/\s+/)
-            .filter(word => word.length > 0).length;
+            .filter((word) => word.length > 0).length;
 
     // 句子数（按句号、问号、感叹号分割）
     const sentences =
-      inputText.trim() === ''
+      inputText.trim() === ""
         ? 0
-        : inputText.split(/[.!?。！？]+/).filter(sentence => sentence.trim().length > 0).length;
+        : inputText
+            .split(/[.!?。！？]+/)
+            .filter((sentence) => sentence.trim().length > 0).length;
 
     // 段落数（按换行符分割）
     const paragraphs =
-      inputText.trim() === ''
+      inputText.trim() === ""
         ? 0
-        : inputText.split(/\n\s*\n/).filter(paragraph => paragraph.trim().length > 0).length;
+        : inputText
+            .split(/\n\s*\n/)
+            .filter((paragraph) => paragraph.trim().length > 0).length;
 
     // 阅读时间（假设每分钟阅读200个中文字符或250个英文单词）
     const chineseChars = (inputText.match(/[\u4e00-\u9fa5]/g) || []).length;
@@ -87,7 +91,7 @@ export default function TextCounterPage() {
   }, [text]);
 
   const clearText = () => {
-    setText('');
+    setText("");
   };
 
   const loadExample = () => {
@@ -132,7 +136,7 @@ The tool can count:
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);
     } catch (err) {
-      console.error('复制失败:', err);
+      console.error("复制失败:", err);
     }
   };
 
@@ -140,20 +144,22 @@ The tool can count:
   const textTransforms = {
     uppercase: (text: string) => text.toUpperCase(),
     lowercase: (text: string) => text.toLowerCase(),
-    capitalize: (text: string) => text.replace(/\b\w/g, l => l.toUpperCase()),
-    reverse: (text: string) => text.split('').reverse().join(''),
-    removeSpaces: (text: string) => text.replace(/\s+/g, ''),
-    removeLineBreaks: (text: string) => text.replace(/\n/g, ' ').replace(/\s+/g, ' '),
-    sortLines: (text: string) => text.split('\n').sort().join('\n'),
+    capitalize: (text: string) => text.replace(/\b\w/g, (l) => l.toUpperCase()),
+    reverse: (text: string) => text.split("").reverse().join(""),
+    removeSpaces: (text: string) => text.replace(/\s+/g, ""),
+    removeLineBreaks: (text: string) =>
+      text.replace(/\n/g, " ").replace(/\s+/g, " "),
+    sortLines: (text: string) => text.split("\n").sort().join("\n"),
     shuffleLines: (text: string) => {
-      const lines = text.split('\n');
+      const lines = text.split("\n");
       for (let i = lines.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [lines[i], lines[j]] = [lines[j], lines[i]];
       }
-      return lines.join('\n');
+      return lines.join("\n");
     },
-    removeDuplicateLines: (text: string) => [...new Set(text.split('\n'))].join('\n'),
+    removeDuplicateLines: (text: string) =>
+      [...new Set(text.split("\n"))].join("\n"),
   };
 
   // 文本转换功能
@@ -166,14 +172,14 @@ The tool can count:
 
   // 文本比较
   const compareTexts = () => {
-    const lines1 = text.split('\n');
-    const lines2 = text2.split('\n');
+    const lines1 = text.split("\n");
+    const lines2 = text2.split("\n");
     const maxLines = Math.max(lines1.length, lines2.length);
 
     const differences = [];
     for (let i = 0; i < maxLines; i++) {
-      const line1 = lines1[i] || '';
-      const line2 = lines2[i] || '';
+      const line1 = lines1[i] || "";
+      const line2 = lines2[i] || "";
       if (line1 !== line2) {
         differences.push({
           line: i + 1,
@@ -187,24 +193,24 @@ The tool can count:
 
   const actions = [
     {
-      label: '加载示例',
+      label: "加载示例",
       onClick: loadExample,
       icon: FileDown,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
     {
-      label: '清空',
+      label: "清空",
       onClick: clearText,
       icon: RotateCcw,
-      variant: 'outline' as const,
+      variant: "outline" as const,
     },
   ];
 
   const helpContent = (
     <div className="space-y-4">
       <div>
-        <h4 className="font-medium mb-2">功能介绍</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <h4 className="mb-2 font-medium">功能介绍</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground">
           <li>
             • <strong>文字统计</strong>：统计字符数、单词数、句子数、段落数
           </li>
@@ -220,8 +226,8 @@ The tool can count:
         </ul>
       </div>
       <div>
-        <h4 className="font-medium mb-2">适用场景</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
+        <h4 className="mb-2 font-medium">适用场景</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground">
           <li>• 写作时控制文章长度</li>
           <li>• 准备演讲稿时估算时间</li>
           <li>• 社交媒体发布时控制字数</li>
@@ -229,10 +235,14 @@ The tool can count:
         </ul>
       </div>
       <div>
-        <h4 className="font-medium mb-2">统计说明</h4>
-        <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• 阅读时间：基于平均阅读速度（中文200字/分钟，英文250词/分钟）</li>
-          <li>• 演讲时间：基于平均演讲速度（中文150字/分钟，英文180词/分钟）</li>
+        <h4 className="mb-2 font-medium">统计说明</h4>
+        <ul className="space-y-1 text-sm text-muted-foreground">
+          <li>
+            • 阅读时间：基于平均阅读速度（中文200字/分钟，英文250词/分钟）
+          </li>
+          <li>
+            • 演讲时间：基于平均演讲速度（中文150字/分钟，英文180词/分钟）
+          </li>
           <li>• 实际时间可能因个人习惯和文本复杂度而有所差异</li>
           <li>• 支持中英文混合文本统计</li>
           <li>• 自动识别句子和段落分隔符</li>
@@ -244,7 +254,7 @@ The tool can count:
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="mb-4 flex items-center gap-4">
           <Link href="/tools">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
@@ -270,20 +280,20 @@ The tool can count:
           <CardContent className="p-0">
             <div className="flex border-b">
               {[
-                { key: 'counter', name: '文字统计', icon: Type },
-                { key: 'transform', name: '文本转换', icon: ArrowUpDown },
-                { key: 'compare', name: '文本比较', icon: FileText },
-                { key: 'format', name: '格式化', icon: Shuffle },
-              ].map(tab => {
+                { key: "counter", name: "文字统计", icon: Type },
+                { key: "transform", name: "文本转换", icon: ArrowUpDown },
+                { key: "compare", name: "文本比较", icon: FileText },
+                { key: "format", name: "格式化", icon: Shuffle },
+              ].map((tab) => {
                 const IconComponent = tab.icon;
                 return (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
-                    className={`flex-1 p-4 text-center border-b-2 transition-colors flex items-center justify-center gap-2 ${
+                    className={`flex flex-1 items-center justify-center gap-2 border-b-2 p-4 text-center transition-colors ${
                       activeTab === tab.key
-                        ? 'border-primary text-primary bg-primary/5'
-                        : 'border-transparent text-muted-foreground hover:text-foreground'
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <IconComponent className="h-4 w-4" />
@@ -296,9 +306,9 @@ The tool can count:
         </Card>
 
         {/* 文字统计标签页 */}
-        {activeTab === 'counter' && (
+        {activeTab === "counter" && (
           <>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* 文本输入区域 */}
               <div className="lg:col-span-2">
                 <Card>
@@ -308,9 +318,9 @@ The tool can count:
                   <CardContent>
                     <textarea
                       value={text}
-                      onChange={e => setText(e.target.value)}
+                      onChange={(e) => setText(e.target.value)}
                       placeholder="在此输入要统计的文本..."
-                      className="w-full h-96 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="h-96 w-full resize-none rounded-lg border border-border bg-background p-3 text-sm focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                     />
                   </CardContent>
                 </Card>
@@ -327,30 +337,42 @@ The tool can count:
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">字符数（含空格）</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        字符数（含空格）
+                      </span>
                       <span className="font-mono font-medium">
                         {stats.characters.toLocaleString()}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">字符数（不含空格）</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        字符数（不含空格）
+                      </span>
                       <span className="font-mono font-medium">
                         {stats.charactersNoSpaces.toLocaleString()}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">单词数</span>
-                      <span className="font-mono font-medium">{stats.words.toLocaleString()}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        单词数
+                      </span>
+                      <span className="font-mono font-medium">
+                        {stats.words.toLocaleString()}
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">句子数</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        句子数
+                      </span>
                       <span className="font-mono font-medium">
                         {stats.sentences.toLocaleString()}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">段落数</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        段落数
+                      </span>
                       <span className="font-mono font-medium">
                         {stats.paragraphs.toLocaleString()}
                       </span>
@@ -367,13 +389,21 @@ The tool can count:
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">阅读时间</span>
-                      <span className="font-medium">{formatTime(stats.readingTime)}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        阅读时间
+                      </span>
+                      <span className="font-medium">
+                        {formatTime(stats.readingTime)}
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">演讲时间</span>
-                      <span className="font-medium">{formatTime(stats.speakingTime)}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        演讲时间
+                      </span>
+                      <span className="font-medium">
+                        {formatTime(stats.speakingTime)}
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -387,23 +417,36 @@ The tool can count:
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">平均句长</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        平均句长
+                      </span>
                       <span className="font-mono font-medium">
-                        {stats.sentences > 0 ? Math.round(stats.words / stats.sentences) : 0} 词
+                        {stats.sentences > 0
+                          ? Math.round(stats.words / stats.sentences)
+                          : 0}{" "}
+                        词
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">平均段长</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        平均段长
+                      </span>
                       <span className="font-mono font-medium">
-                        {stats.paragraphs > 0 ? Math.round(stats.sentences / stats.paragraphs) : 0}{' '}
+                        {stats.paragraphs > 0
+                          ? Math.round(stats.sentences / stats.paragraphs)
+                          : 0}{" "}
                         句
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">字符密度</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        字符密度
+                      </span>
                       <span className="font-mono font-medium">
-                        {stats.words > 0 ? Math.round(stats.charactersNoSpaces / stats.words) : 0}{' '}
+                        {stats.words > 0
+                          ? Math.round(stats.charactersNoSpaces / stats.words)
+                          : 0}{" "}
                         字符/词
                       </span>
                     </div>
@@ -415,7 +458,7 @@ The tool can count:
         )}
 
         {/* 文本转换标签页 */}
-        {activeTab === 'transform' && (
+        {activeTab === "transform" && (
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -423,58 +466,88 @@ The tool can count:
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">输入文本</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    输入文本
+                  </label>
                   <textarea
                     value={text}
-                    onChange={e => setText(e.target.value)}
+                    onChange={(e) => setText(e.target.value)}
                     placeholder="在此输入要转换的文本..."
-                    className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="h-32 w-full resize-none rounded-lg border border-border bg-background p-3 text-sm focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                  <Button onClick={() => transformText('uppercase')} variant="outline" size="sm">
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+                  <Button
+                    onClick={() => transformText("uppercase")}
+                    variant="outline"
+                    size="sm"
+                  >
                     转大写
                   </Button>
-                  <Button onClick={() => transformText('lowercase')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("lowercase")}
+                    variant="outline"
+                    size="sm"
+                  >
                     转小写
                   </Button>
-                  <Button onClick={() => transformText('capitalize')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("capitalize")}
+                    variant="outline"
+                    size="sm"
+                  >
                     首字母大写
                   </Button>
-                  <Button onClick={() => transformText('reverse')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("reverse")}
+                    variant="outline"
+                    size="sm"
+                  >
                     反转文本
                   </Button>
-                  <Button onClick={() => transformText('removeSpaces')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("removeSpaces")}
+                    variant="outline"
+                    size="sm"
+                  >
                     移除空格
                   </Button>
                   <Button
-                    onClick={() => transformText('removeLineBreaks')}
+                    onClick={() => transformText("removeLineBreaks")}
                     variant="outline"
                     size="sm"
                   >
                     移除换行
                   </Button>
-                  <Button onClick={() => transformText('sortLines')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("sortLines")}
+                    variant="outline"
+                    size="sm"
+                  >
                     行排序
                   </Button>
-                  <Button onClick={() => transformText('shuffleLines')} variant="outline" size="sm">
+                  <Button
+                    onClick={() => transformText("shuffleLines")}
+                    variant="outline"
+                    size="sm"
+                  >
                     行随机
                   </Button>
                   <Button
-                    onClick={() => transformText('removeDuplicateLines')}
+                    onClick={() => transformText("removeDuplicateLines")}
                     variant="outline"
                     size="sm"
                   >
                     去重复行
                   </Button>
                   <Button
-                    onClick={() => copyToClipboard(text, 'transform')}
+                    onClick={() => copyToClipboard(text, "transform")}
                     variant="outline"
                     size="sm"
                     className="flex items-center gap-1"
                   >
-                    {copied === 'transform' ? (
+                    {copied === "transform" ? (
                       <Check className="h-3 w-3" />
                     ) : (
                       <Copy className="h-3 w-3" />
@@ -484,11 +557,13 @@ The tool can count:
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">转换结果</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    转换结果
+                  </label>
                   <textarea
                     value={text}
                     readOnly
-                    className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
+                    className="h-32 w-full resize-none rounded-lg border border-border bg-muted/50 p-3 text-sm"
                   />
                 </div>
               </CardContent>
@@ -497,9 +572,9 @@ The tool can count:
         )}
 
         {/* 文本比较标签页 */}
-        {activeTab === 'compare' && (
+        {activeTab === "compare" && (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card>
                 <CardHeader>
                   <CardTitle>文本1</CardTitle>
@@ -507,9 +582,9 @@ The tool can count:
                 <CardContent>
                   <textarea
                     value={text}
-                    onChange={e => setText(e.target.value)}
+                    onChange={(e) => setText(e.target.value)}
                     placeholder="输入第一个文本..."
-                    className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="h-64 w-full resize-none rounded-lg border border-border bg-background p-3 text-sm focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </CardContent>
               </Card>
@@ -521,9 +596,9 @@ The tool can count:
                 <CardContent>
                   <textarea
                     value={text2}
-                    onChange={e => setText2(e.target.value)}
+                    onChange={(e) => setText2(e.target.value)}
                     placeholder="输入第二个文本..."
-                    className="w-full h-64 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="h-64 w-full resize-none rounded-lg border border-border bg-background p-3 text-sm focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </CardContent>
               </Card>
@@ -538,7 +613,9 @@ The tool can count:
                   const differences = compareTexts();
                   if (differences.length === 0) {
                     return (
-                      <p className="text-muted-foreground">两个文本相同或请输入文本进行比较</p>
+                      <p className="text-muted-foreground">
+                        两个文本相同或请输入文本进行比较
+                      </p>
                     );
                   }
                   return (
@@ -547,20 +624,25 @@ The tool can count:
                         发现 {differences.length} 处差异：
                       </p>
                       {differences.slice(0, 10).map((diff, index) => (
-                        <div key={index} className="p-3 border border-border rounded-lg">
-                          <div className="text-sm font-medium mb-2">第 {diff.line} 行</div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                            <div className="p-2 bg-red-50 dark:bg-red-950 rounded">
-                              <div className="text-red-600 dark:text-red-400 font-medium mb-1">
+                        <div
+                          key={index}
+                          className="rounded-lg border border-border p-3"
+                        >
+                          <div className="mb-2 text-sm font-medium">
+                            第 {diff.line} 行
+                          </div>
+                          <div className="grid grid-cols-1 gap-2 text-sm md:grid-cols-2">
+                            <div className="rounded bg-red-50 p-2 dark:bg-red-950">
+                              <div className="mb-1 font-medium text-red-600 dark:text-red-400">
                                 文本1:
                               </div>
-                              <div>{diff.text1 || '(空行)'}</div>
+                              <div>{diff.text1 || "(空行)"}</div>
                             </div>
-                            <div className="p-2 bg-green-50 dark:bg-green-950 rounded">
-                              <div className="text-green-600 dark:text-green-400 font-medium mb-1">
+                            <div className="rounded bg-green-50 p-2 dark:bg-green-950">
+                              <div className="mb-1 font-medium text-green-600 dark:text-green-400">
                                 文本2:
                               </div>
-                              <div>{diff.text2 || '(空行)'}</div>
+                              <div>{diff.text2 || "(空行)"}</div>
                             </div>
                           </div>
                         </div>
@@ -579,7 +661,7 @@ The tool can count:
         )}
 
         {/* 格式化标签页 */}
-        {activeTab === 'format' && (
+        {activeTab === "format" && (
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -587,35 +669,43 @@ The tool can count:
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">输入文本</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    输入文本
+                  </label>
                   <textarea
                     value={text}
-                    onChange={e => setText(e.target.value)}
+                    onChange={(e) => setText(e.target.value)}
                     placeholder="在此输入要格式化的文本..."
-                    className="w-full h-32 p-3 border border-border rounded-lg bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="h-32 w-full resize-none rounded-lg border border-border bg-background p-3 text-sm focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  <Button onClick={() => setText(text.trim())} variant="outline" size="sm">
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+                  <Button
+                    onClick={() => setText(text.trim())}
+                    variant="outline"
+                    size="sm"
+                  >
                     去除首尾空格
                   </Button>
                   <Button
-                    onClick={() => setText(text.replace(/\s+/g, ' '))}
+                    onClick={() => setText(text.replace(/\s+/g, " "))}
                     variant="outline"
                     size="sm"
                   >
                     合并空格
                   </Button>
                   <Button
-                    onClick={() => setText(text.replace(/\n\s*\n/g, '\n\n'))}
+                    onClick={() => setText(text.replace(/\n\s*\n/g, "\n\n"))}
                     variant="outline"
                     size="sm"
                   >
                     规范段落
                   </Button>
                   <Button
-                    onClick={() => setText(text.replace(/[^\w\s\u4e00-\u9fa5]/g, ''))}
+                    onClick={() =>
+                      setText(text.replace(/[^\w\s\u4e00-\u9fa5]/g, ""))
+                    }
                     variant="outline"
                     size="sm"
                   >
@@ -624,11 +714,13 @@ The tool can count:
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">格式化结果</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    格式化结果
+                  </label>
                   <textarea
                     value={text}
                     readOnly
-                    className="w-full h-32 p-3 border border-border rounded-lg bg-muted/50 text-sm resize-none"
+                    className="h-32 w-full resize-none rounded-lg border border-border bg-muted/50 p-3 text-sm"
                   />
                 </div>
               </CardContent>
