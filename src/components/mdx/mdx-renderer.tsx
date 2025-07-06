@@ -1,5 +1,6 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { MDXStyles } from '@/config/mdx/styles';
 import { MDXComponentsMapping, type MDXComponents } from '@/config/mdx';
 
 interface MDXRendererProps {
@@ -19,10 +20,11 @@ interface MDXRendererProps {
  * 4. 错误处理和降级显示
  */
 export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
-  const components = {
-    ...MDXComponentsMapping,
-    ...(options.components || {}),
-  };
+  // 合并并过滤掉 undefined 的组件
+  const merged = { ...MDXComponentsMapping, ...(options.components || {}) };
+  const components = Object.fromEntries(
+    Object.entries(merged).filter(([, comp]) => typeof comp === 'function')
+  ) as Record<string, React.ComponentType<Record<string, unknown>>>;
 
   if (!content) {
     return null;
@@ -30,7 +32,7 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
 
   try {
     return (
-      <div className="prose dark:prose-invert max-w-none">
+      <div className={MDXStyles.prose}>
         <MDXRemote source={content} components={components} />
       </div>
     );

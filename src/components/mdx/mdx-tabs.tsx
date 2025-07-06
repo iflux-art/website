@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { MDXStyles } from '@/config/mdx/styles';
 
 export interface Tab {
   id: string;
@@ -38,42 +39,6 @@ export const MDXTabs = ({
 }: MDXTabsProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
 
-  // 尺寸样式配置
-  const sizeStyles = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg',
-  };
-
-  // 变体样式配置
-  const variantStyles = {
-    line: {
-      nav: 'border-b border-gray-200 dark:border-gray-700',
-      tab: `
-        border-b-2 border-transparent
-        hover:border-gray-300 dark:hover:border-gray-600
-        data-[state=active]:border-primary-500
-      `,
-    },
-    pill: {
-      nav: 'space-x-2',
-      tab: `
-        rounded-full
-        hover:bg-gray-100 dark:hover:bg-gray-800
-        data-[state=active]:bg-primary-500 data-[state=active]:text-white
-      `,
-    },
-    enclosed: {
-      nav: 'space-x-1',
-      tab: `
-        rounded-t-lg border-t border-l border-r border-transparent
-        hover:bg-gray-50 dark:hover:bg-gray-800
-        data-[state=active]:border-gray-200 dark:data-[state=active]:border-gray-700
-        data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900
-      `,
-    },
-  };
-
   // 处理标签切换
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
@@ -81,13 +46,14 @@ export const MDXTabs = ({
   };
 
   return (
-    <div className={`my-6 ${className}`}>
+    <div className={`${MDXStyles.tabs.base} ${className}`}>
       {/* 标签导航 */}
       <nav
         className={`
-          flex ${fullWidth ? 'w-full' : ''}
-          ${variantStyles[variant].nav}
-          ${sizeStyles[size]}
+          ${MDXStyles.tabs.nav}
+          ${fullWidth ? 'w-full' : ''}
+          ${MDXStyles.tabs.variants[variant].nav}
+          ${MDXStyles.tabs.sizes[size]}
         `}
         role="tablist"
       >
@@ -99,9 +65,9 @@ export const MDXTabs = ({
             aria-controls={`tabpanel-${tab.id}`}
             disabled={tab.disabled}
             className={`
-              px-4 py-2 font-medium transition-colors
+              ${MDXStyles.tabs.tab}
               ${fullWidth ? 'flex-1 text-center' : ''}
-              ${variantStyles[variant].tab}
+              ${MDXStyles.tabs.variants[variant].tab}
               ${tab.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
             `}
             data-state={activeTab === tab.id ? 'active' : 'inactive'}
@@ -121,7 +87,7 @@ export const MDXTabs = ({
           aria-labelledby={tab.id}
           hidden={activeTab !== tab.id}
           className={`
-            mt-4 focus:outline-none
+            ${MDXStyles.tabs.panel}
             ${activeTab === tab.id ? 'block' : 'hidden'}
           `}
         >

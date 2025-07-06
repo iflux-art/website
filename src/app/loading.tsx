@@ -41,10 +41,12 @@ export default function Loading() {
     <div className="fixed top-16 left-0 right-0 z-50">
       <div className="h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
         <div
-          className="h-full bg-blue-600 dark:bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)] transition-all duration-300 ease-out"
+          className="h-full bg-blue-600 dark:bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]"
           style={{
             width: `${progress}%`,
             opacity: opacity,
+            transition: 'width 300ms ease-out',
+            transform: 'translateZ(0)',
           }}
         />
       </div>

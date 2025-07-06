@@ -51,16 +51,12 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-intersection-observer": "^9.16.0",
-    "rehype-autolink-headings": "^7.1.0",
-    "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.0",
     "zod": "^3.25.72",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
-    "@stagewise-plugins/react": "^0.4.9",
-    "@stagewise/toolbar-next": "^0.4.9",
     "@tailwindcss/postcss": "^4.1.8",
     "@tailwindcss/typography": "^0.5.16",
     "@types/chokidar": "^2.1.7",
@@ -79,9 +75,7 @@
     "lint-staged": "^16.1.2",
     "madge": "^8.0.0",
     "prettier": "^3.2.5",
-    "rehype-pretty-code": "^0.14.1",
     "rimraf": "^6.0.1",
-    "shiki": "^3.6.0",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3"
   },

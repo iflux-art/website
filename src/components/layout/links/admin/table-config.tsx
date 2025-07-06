@@ -13,13 +13,10 @@ export const getTableColumns = (
     render: (value, record, _index) => {
       const icon = record.icon;
       const iconType = record.iconType;
-      const isEmoji = typeof icon === 'string' && icon.length <= 3 && /[\p{Emoji}]/u.test(icon);
       const isImage = typeof icon === 'string' && /^https?:\/\//.test(icon);
       return (
         <div className="w-10 h-10 flex items-center justify-center mx-auto">
-          {iconType === 'emoji' || isEmoji ? (
-            <span className="text-xl">{icon}</span>
-          ) : iconType === 'image' || isImage ? (
+          {iconType === 'image' || isImage ? (
             <img src={icon} alt="" className="w-6 h-6 object-contain" />
           ) : (
             <span className="text-sm font-bold">{icon}</span>

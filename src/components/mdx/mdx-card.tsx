@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { cn } from '@/utils';
+import { MDXStyles } from '@/config/mdx/styles';
 
 interface MDXCardProps {
   children: React.ReactNode;
@@ -72,7 +73,7 @@ export const MDXCard = ({
       )}
 
       {/* 卡片内容 */}
-      <div className="prose dark:prose-invert max-w-none">{children}</div>
+      <div className={MDXStyles.prose}>{children}</div>
     </div>
   );
 };

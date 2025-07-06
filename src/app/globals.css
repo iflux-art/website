@@ -242,11 +242,6 @@
       monospace;
   }
 }
-/* 首页特殊处理 - 隐藏滚动条和页脚样式 */
-body.home-page {
-  overflow: hidden;
-}
-
 /* ===== MDX 颜色系统 ===== */
 :root {
   /* MDX 专用颜色变量 */
@@ -264,28 +259,6 @@ body.home-page {
 .dark {
   --mdx-code-bg: var(--muted-dark);
   --mdx-image-shadow: none;
-}
-
-/* MDX Typography 主题变量映射 */
-.prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-links: var(--mdx-link-color);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-counters: var(--muted-foreground);
-  --tw-prose-bullets: var(--muted-foreground);
-  --tw-prose-hr: var(--border);
-  --tw-prose-quotes: var(--mdx-blockquote-color);
-  --tw-prose-quote-borders: var(--mdx-blockquote-border);
-  --tw-prose-captions: var(--muted-foreground);
-  --tw-prose-th-borders: var(--mdx-table-border);
-  --tw-prose-td-borders: var(--mdx-table-border);
-}
-
-/* 深色模式覆盖 */
-.dark .prose {
-  --tw-prose-links: var(--mdx-link-color);
-  --tw-prose-bold: var(--foreground);
 }
 
 .scrollbar-hide {

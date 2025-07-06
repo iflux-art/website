@@ -453,9 +453,7 @@ export function InlineCode({
 ```tsx
 // src/components/ui/markdown/code-block.tsx
 import React from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
 import { cn } from '@/utils';
-import { useTheme } from 'next-themes';
 
 export function CodeBlock({
   code,
@@ -466,9 +464,6 @@ export function CodeBlock({
   language: string;
   className?: string;
 }) {
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === 'dark' ? themes.vsDark : themes.vsLight;
-
   return (
     <div className={cn('relative my-6 overflow-hidden rounded-lg', className)}>
       <div className="flex items-center justify-between px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
@@ -482,22 +477,11 @@ export function CodeBlock({
           复制
         </button>
       </div>
-      <Highlight theme={theme} code={code} language={language}>
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={cn(className, 'p-4 overflow-auto')} style={style}>
-            {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
-                <span className="inline-block w-8 text-right mr-4 text-zinc-400 select-none">
-                  {i + 1}
-                </span>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token })} />
-                ))}
-              </div>
-            ))}
-          </pre>
-        )}
-      </Highlight>
+      <pre className="p-4 overflow-auto bg-zinc-50 dark:bg-zinc-900">
+        <code className={`language-${language}`}>
+          {code}
+        </code>
+      </pre>
     </div>
   );
 }

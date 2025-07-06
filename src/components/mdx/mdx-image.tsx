@@ -22,27 +22,6 @@ export interface MDXImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   height?: number;
 }
 
-const imageStyles = {
-  wrapper: cn('my-6 w-full', 'inline-flex flex-col items-center', 'not-prose'),
-
-  image: cn(
-    'rounded-xl',
-    'shadow-md dark:shadow-none',
-    'dark:border dark:border-neutral-800',
-    'w-full',
-    'max-w-[1200px]',
-    'h-auto',
-    'object-contain',
-    'sm:max-w-[600px]',
-    'md:max-w-[800px]',
-    'lg:max-w-[1000px]',
-    'xl:max-w-[1200px]',
-    'hover:shadow-lg dark:hover:shadow-md',
-    'transition-shadow duration-200'
-  ),
-  caption: cn('text-center text-sm', 'text-muted-foreground', 'mt-3 px-4', 'max-w-prose', 'block'),
-};
-
 const DEFAULT_WIDTH = 1200;
 const DEFAULT_HEIGHT = 800;
 const DEFAULT_PRIORITY = false;
@@ -62,22 +41,24 @@ export const MDXImage: React.FC<MDXImageProps> = ({
   if (!src) return null;
 
   return (
-    <span className={imageStyles.wrapper}>
-      <Image
-        src={src}
-        alt={alt}
-        width={Number(width) || DEFAULT_WIDTH}
-        height={Number(height) || DEFAULT_HEIGHT}
-        priority={priority}
-        quality={quality}
-        className={cn(imageStyles.image, className)}
-        {...props}
-      />
+    <figure className="not-prose my-6">
+      <div className="overflow-hidden rounded-lg">
+        <Image
+          src={src}
+          alt={alt}
+          width={Number(width) || DEFAULT_WIDTH}
+          height={Number(height) || DEFAULT_HEIGHT}
+          priority={priority}
+          quality={quality}
+          className={cn('bg-muted object-cover w-full max-w-full', className)}
+          {...props}
+        />
+      </div>
       {(caption || alt) && (
-        <span className={imageStyles.caption} role="caption">
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
           {caption || alt}
-        </span>
+        </figcaption>
       )}
-    </span>
+    </figure>
   );
 };

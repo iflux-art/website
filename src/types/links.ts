@@ -23,7 +23,7 @@ export interface Item {
   description: string;
   url: string;
   icon: string;
-  iconType: 'image' | 'emoji' | 'text';
+  iconType: 'image' | 'text';
   tags: string[];
   featured: boolean;
   category: CategoryId;

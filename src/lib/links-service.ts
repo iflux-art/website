@@ -61,7 +61,7 @@ export class FileLinksStorage implements LinksStorage {
     const items: LinksItem[] = raw.items.map(item => ({
       ...item,
       icon: item.icon || '',
-      iconType: item.iconType || 'image',
+      iconType: item.icon ? 'image' : 'text',
       category: validCategoryIds.includes(item.category) ? item.category : 'ai',
       featured: typeof item.featured === 'boolean' ? item.featured : false,
     }));

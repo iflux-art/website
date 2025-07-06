@@ -5,7 +5,13 @@ import itemsData from '@/data/links/items.json';
 import categoriesData from '@/data/links/categories.json';
 
 export const useLinksData = () => {
-  const [items] = useState<Item[]>(itemsData as Item[]);
+  const [items] = useState<Item[]>(
+    (itemsData as Item[]).map(item => ({
+      ...item,
+      // Ensure no emoji types remain
+      iconType: item.icon ? 'image' : ('text' as const),
+    }))
+  );
   const [categories] = useState<Category[]>(
     (categoriesData as Category[]).sort((a, b) => a.order - b.order)
   );

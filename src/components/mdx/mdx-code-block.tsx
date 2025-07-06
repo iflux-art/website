@@ -3,6 +3,7 @@
 import { type HTMLAttributes, useState, useEffect } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { cn } from '@/utils';
+import { MDXStyles } from '@/config/mdx/styles';
 
 /**
  * MDX 代码块组件属性
@@ -68,8 +69,8 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
   return (
     <div
       className={cn(
-        // 外层容器
-        'my-6 overflow-hidden rounded-lg border',
+        MDXStyles.code.container,
+        // 特殊样式
         'bg-transparent',
         '[&_code]:!text-current',
         '[&_pre]:!bg-transparent [&_code]:!bg-transparent',
@@ -80,26 +81,14 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
         '[&_pre::-webkit-scrollbar-track]:bg-transparent',
         '[&_pre::-webkit-scrollbar-thumb]:bg-border hover:[&_pre::-webkit-scrollbar-thumb]:bg-muted-foreground/50',
         '[&_pre::-webkit-scrollbar-thumb]:rounded-full',
-        // 代码高亮样式
-        '[&_.line]:px-4 [&_.line]:min-h-6 [&_.line]:py-0.5',
-        '[&_.line--highlighted]:bg-muted-foreground/10 [&_.line--highlighted]:shadow-[2px_0_currentColor_inset]',
-        '[&_.word--highlighted]:bg-muted-foreground/10 [&_.word--highlighted]:rounded',
-        // 语法高亮基础样式
+        // 基础代码样式
         'prose-pre:bg-transparent',
         '[&_pre]:overflow-x-auto',
-        '[&_code]:grid',
-        // 行号样式
-        '[&_[data-line-numbers]>.line]:pl-2 [&_[data-line-numbers]>.line]:before:text-muted-foreground/40',
-        '[&_[data-line-numbers]>.line]:before:mr-4 [&_[data-line-numbers]>.line]:before:content-[counter(line)] [&_[data-line-numbers]>.line]:before:counter-increment-[line]'
+        '[&_code]:block'
       )}
     >
       {/* 头部：文件名和复制按钮 */}
-      <div
-        className={cn(
-          'flex items-center justify-between border-b px-4 py-2',
-          'bg-muted/50 text-xs text-muted-foreground'
-        )}
-      >
+      <div className={cn(MDXStyles.code.header, 'text-xs text-muted-foreground')}>
         <span className="font-medium">{filename || displayLanguage}</span>
         <button
           onClick={copyToClipboard}
@@ -126,7 +115,7 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
       </div>
 
       {/* 代码内容区域 */}
-      <div className={cn('overflow-x-auto p-4')}>
+      <div className={MDXStyles.code.content}>
         <pre
           className={cn(
             'not-prose',
@@ -138,14 +127,7 @@ export const MDXCodeBlock = ({ children, className, filename }: MDXCodeBlockProp
             '[&>code]:border-0'
           )}
         >
-          <code
-            className={cn(
-              'syntax-highlighting',
-              `language-${language}`,
-              'block font-inherit',
-              'border-0'
-            )}
-          >
+          <code className={cn(`language-${language}`, 'block font-inherit', 'border-0')}>
             {typeof children === 'string' ? children.trim() : children}
           </code>
         </pre>

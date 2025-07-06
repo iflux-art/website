@@ -75,9 +75,8 @@ export const MDXBaseOptions: MDXOptions = {
     underline: true,
   },
   code: {
-    showLineNumbers: true,
-    defaultLanguage: 'typescript',
-    theme: 'github-dark',
+    showLineNumbers: false,
+    defaultLanguage: 'text',
     wrap: true,
   },
 };

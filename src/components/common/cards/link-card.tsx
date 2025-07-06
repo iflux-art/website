@@ -12,8 +12,8 @@ export interface LinkCardProps {
   description?: string;
   href: string;
   isExternal?: boolean;
-  icon?: string | React.ReactNode;
-  iconType?: 'emoji' | 'image' | 'component';
+  icon?: React.ReactNode; // 支持字符串或React元素
+  iconType?: 'image' | 'text';
   color?: string;
   className?: string;
   children?: React.ReactNode;
@@ -22,44 +22,51 @@ export interface LinkCardProps {
 /**
  * 链接卡片组件
  * 用于显示外部或内部链接，如资源、导航、友链等。
+ * 图标显示规则：
+ * 1. 优先显示icon图片
+ * 2. 图片无效时显示标题首个汉字或字母
  */
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
-  (
-    {
-      title,
-      description,
-      href,
-      isExternal = false,
-      icon,
-      iconType = 'emoji',
-      color,
-      className,
-      children,
-    },
-    ref
-  ) => {
+  ({ title, description, href, isExternal = false, icon, color, className, children }, ref) => {
     const renderIcon = () => {
-      if (!icon) return null;
+      // 获取标题首个字符
+      const firstChar = title.charAt(0);
 
-      if (iconType === 'image' && typeof icon === 'string') {
+      // 如果没有icon，直接返回标题首个字符
+      if (!icon) {
         return (
-          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-            <Image
-              src={icon}
-              alt={title}
-              width={40}
-              height={40}
-              className="object-cover"
-              unoptimized
-              loading="lazy"
-            />
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-lg font-medium text-primary">{firstChar}</span>
           </div>
         );
-      } else if (iconType === 'emoji') {
-        return <div className="text-3xl text-primary">{icon}</div>;
-      } else {
+      }
+
+      // 如果是React元素，直接渲染
+      if (typeof icon !== 'string') {
         return icon;
       }
+
+      // 尝试显示图片
+      return (
+        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+          <Image
+            src={icon}
+            alt={title}
+            width={40}
+            height={40}
+            className="object-cover"
+            unoptimized
+            loading="lazy"
+            onError={e => {
+              // 图片加载失败时显示标题首个字符
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                parent.innerHTML = `<div class="w-full h-full flex items-center justify-center"><span class="text-lg font-medium text-primary">${firstChar}</span></div>`;
+              }
+            }}
+          />
+        </div>
+      );
     };
 
     const cardContent = (

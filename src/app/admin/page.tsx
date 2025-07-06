@@ -33,7 +33,7 @@ export default function AdminDashboard() {
             description={stat.description}
             href="/admin/links"
             icon={<stat.icon className={stat.color} />}
-            iconType="component"
+            iconType="text"
           />
         ))}
       </AppGrid>

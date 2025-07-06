@@ -217,28 +217,19 @@ export function LinksForm({ submitAction, onCancel, initialData, isLoading }: Li
         <div className="flex gap-2">
           <Select
             value={formData.iconType}
-            onValueChange={(value: 'emoji' | 'image' | 'text') =>
-              handleInputChange('iconType', value)
-            }
+            onValueChange={(value: 'image' | 'text') => handleInputChange('iconType', value)}
           >
             <SelectTrigger className="w-32">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="image">图片链接</SelectItem>
-              <SelectItem value="emoji">表情符号</SelectItem>
               <SelectItem value="text">文字</SelectItem>
             </SelectContent>
           </Select>
           <Input
             id="icon"
-            placeholder={
-              formData.iconType === 'emoji'
-                ? '🌐'
-                : formData.iconType === 'image'
-                  ? 'https://example.com/icon.png'
-                  : 'A'
-            }
+            placeholder={formData.iconType === 'image' ? 'https://example.com/icon.png' : 'A'}
             value={formData.icon}
             onChange={e => handleInputChange('icon', e.target.value)}
             className="flex-1"

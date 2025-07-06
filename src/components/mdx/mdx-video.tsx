@@ -2,6 +2,8 @@
 
 import React, { SyntheticEvent } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
+import { cn } from '@/utils/styles';
+import { MDXStyles, commonStyles } from '@/config/mdx/styles';
 
 export interface MDXVideoProps {
   src: string;
@@ -100,14 +102,7 @@ export const MDXVideo = ({
   }, []);
 
   return (
-    <div
-      className={`
-      relative group
-      my-6 rounded-lg overflow-hidden
-      bg-black
-      ${className}
-    `}
-    >
+    <div className={cn(MDXStyles.media.base, 'bg-black', className)}>
       <video
         ref={videoRef}
         src={src}
@@ -126,14 +121,13 @@ export const MDXVideo = ({
       {/* 自定义控件 */}
       {controls && (
         <div
-          className="
-          absolute bottom-0 left-0 right-0
-          flex items-center justify-between
-          px-4 py-2
-          bg-gradient-to-t from-black/60 to-transparent
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-200
-        "
+          className={cn(
+            'absolute bottom-0 left-0 right-0',
+            'flex items-center justify-between',
+            'px-4 py-2',
+            'bg-gradient-to-t from-black/60 to-transparent',
+            commonStyles.transition.opacity
+          )}
         >
           {/* 左侧控件 */}
           <div className="flex items-center gap-4">
@@ -178,13 +172,12 @@ export const MDXVideo = ({
       {/* 视频标题 */}
       {title && (
         <div
-          className="
-          absolute top-0 left-0 right-0
-          px-4 py-2
-          bg-gradient-to-b from-black/60 to-transparent
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-200
-        "
+          className={cn(
+            'absolute top-0 left-0 right-0',
+            'px-4 py-2',
+            'bg-gradient-to-b from-black/60 to-transparent',
+            commonStyles.transition.opacity
+          )}
         >
           <h3 className="text-white text-sm font-medium">{title}</h3>
         </div>

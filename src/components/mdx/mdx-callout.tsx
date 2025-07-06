@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from 'lucide-react';
+import { MDXStyles } from '@/config/mdx/styles';
 
 type CalloutType = 'info' | 'success' | 'warning' | 'error';
 
@@ -57,19 +58,17 @@ export const MDXCallout = ({ type = 'info', title, children, className = '' }: M
   return (
     <div
       className={`
-      my-6 rounded-lg border p-4
+      ${MDXStyles.callout.base}
       ${config.bgColor}
       ${config.borderColor}
       ${config.textColor}
       ${className}
     `}
     >
-      <div className="flex items-start space-x-3">
-        <Icon className="h-5 w-5 mt-0.5 flex-shrink-0" />
-        <div className="flex-1">
-          {title && <h4 className={`font-medium mb-2 ${config.titleColor}`}>{title}</h4>}
-          <div className="prose-sm">{children}</div>
-        </div>
+      <Icon className={MDXStyles.callout.icon} />
+      <div className={MDXStyles.callout.content}>
+        {title && <h4 className={`${MDXStyles.callout.title} ${config.titleColor}`}>{title}</h4>}
+        <div className={MDXStyles.callout.body}>{children}</div>
       </div>
     </div>
   );

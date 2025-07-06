@@ -18,7 +18,7 @@ export interface LinksItem {
   /** 图标 */
   icon?: string;
   /** 图标类型 */
-  iconType?: 'image' | 'emoji' | 'text';
+  iconType?: 'image' | 'text';
   /** 标签列表 */
   tags: string[];
   /** 是否为特色链接 */
@@ -62,7 +62,7 @@ export interface LinksFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: 'image' | 'emoji' | 'text';
+  iconType: 'image' | 'text';
   tags: string[];
   featured: boolean;
   category: string;

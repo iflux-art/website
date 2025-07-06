@@ -1,43 +1,54 @@
-/**
- * MDX 样式配置
- * 统一管理所有 MDX 相关样式
- */
-
-// 类型定义移动到了 @/types 中
-interface TypographyConfig {
-  [key: string]: {
-    css: Record<string, string>;
-  };
-}
+import type { TypographyConfig } from '@/types/mdx-types';
 
 /**
- * Typography 配置
- * 用于 Tailwind Typography 插件
+ * 基于@tailwindcss/typography优化的MDX样式配置
+ * 需要确保tailwind.config.js中已配置typography插件
+ *
+ * 示例配置:
+ * plugins: [
+ *   require('@tailwindcss/typography')({
+ *     className: 'prose'
+ *   })
+ * ]
+ *
+ * 保留必要自定义样式，移除冗余定义
  */
-export const typographyConfig: TypographyConfig = {
+export const typographyConfig = {
   DEFAULT: {
     css: {
-      // 基础设置
-      maxWidth: 'none',
-      color: 'var(--foreground)',
-
-      // Prose 变量设置
       '--tw-prose-body': 'var(--foreground)',
       '--tw-prose-headings': 'var(--foreground)',
       '--tw-prose-lead': 'var(--muted-foreground)',
       '--tw-prose-links': 'var(--primary)',
       '--tw-prose-bold': 'var(--foreground)',
-      '--tw-prose-counters': 'var(--foreground)',
-      '--tw-prose-bullets': 'var(--foreground)',
+      '--tw-prose-counters': 'var(--muted-foreground)',
+      '--tw-prose-bullets': 'var(--muted-foreground)',
       '--tw-prose-hr': 'var(--border)',
       '--tw-prose-quotes': 'var(--foreground)',
       '--tw-prose-quote-borders': 'var(--border)',
       '--tw-prose-captions': 'var(--muted-foreground)',
       '--tw-prose-code': 'var(--primary)',
-      '--tw-prose-pre-code': 'var(--primary)',
+      '--tw-prose-pre-code': 'var(--foreground)',
       '--tw-prose-pre-bg': 'var(--muted)',
       '--tw-prose-th-borders': 'var(--border)',
       '--tw-prose-td-borders': 'var(--border)',
+
+      // 关键组件覆盖样式
+      pre: {
+        borderRadius: '0.5rem',
+        padding: '1rem',
+        overflowX: 'auto',
+      },
+      code: {
+        padding: '0.2em 0.4em',
+        borderRadius: '0.25rem',
+        backgroundColor: 'var(--muted)',
+      },
+      img: {
+        borderRadius: '0.5rem',
+        marginTop: '1.5em',
+        marginBottom: '1.5em',
+      },
     },
   },
   dark: {
@@ -47,69 +58,102 @@ export const typographyConfig: TypographyConfig = {
       '--tw-prose-lead': 'var(--dark-muted-foreground)',
       '--tw-prose-links': 'var(--dark-primary)',
       '--tw-prose-bold': 'var(--dark-foreground)',
-      '--tw-prose-counters': 'var(--dark-foreground)',
-      '--tw-prose-bullets': 'var(--dark-foreground)',
+      '--tw-prose-counters': 'var(--dark-muted-foreground)',
+      '--tw-prose-bullets': 'var(--dark-muted-foreground)',
       '--tw-prose-hr': 'var(--dark-border)',
       '--tw-prose-quotes': 'var(--dark-foreground)',
       '--tw-prose-quote-borders': 'var(--dark-border)',
       '--tw-prose-captions': 'var(--dark-muted-foreground)',
       '--tw-prose-code': 'var(--dark-primary)',
-      '--tw-prose-pre-code': 'var(--dark-primary)',
+      '--tw-prose-pre-code': 'var(--dark-foreground)',
       '--tw-prose-pre-bg': 'var(--dark-muted)',
       '--tw-prose-th-borders': 'var(--dark-border)',
       '--tw-prose-td-borders': 'var(--dark-border)',
     },
   },
+} as const satisfies Record<string, TypographyConfig>;
+
+/**
+ * 精简后的公共样式工具类
+ */
+export const commonStyles = {
+  rounded: {
+    sm: 'rounded-sm',
+    md: 'rounded-md',
+    lg: 'rounded-lg',
+  },
+  shadow: {
+    sm: 'shadow-sm',
+    md: 'shadow-md',
+  },
+  transition: {
+    opacity: 'transition-opacity duration-200',
+  },
 };
 
 /**
- * MDX 内联样式配置
+ * 精简后的MDX组件样式
  */
 export const MDXStyles = {
-  // 基础样式
   prose: 'prose dark:prose-invert max-w-none',
 
-  // 链接样式
-  link: {
-    base: 'relative inline-flex items-center gap-1 text-primary transition-colors hover:text-primary/80',
-    external: 'cursor-alias',
-    icon: 'h-3 w-3',
-    underline:
-      'after:absolute after:left-1/2 after:bottom-0 after:h-px after:w-0 after:bg-current after:transition-all hover:after:left-0 hover:after:w-full',
-  },
+  // 关键组件样式
+  codeBlock: 'relative rounded-lg overflow-hidden',
+  image: 'rounded-lg shadow-md',
+  card: 'rounded-lg border bg-card shadow-sm',
 
   // 代码块样式
-  codeBlock: [
-    'relative font-mono text-sm',
-    'p-4 my-4',
-    'rounded-lg',
-    'bg-muted/50 dark:bg-muted/20',
-    'border border-border',
-    'overflow-x-auto',
-    'scrollbar-thin scrollbar-thumb-border',
-  ].join(' '),
-
-  // 行内代码样式
-  codeInline: {
-    base: 'rounded bg-muted px-1 py-0.5 font-mono text-sm before:content-[""] after:content-[""]',
-    primary: 'text-primary',
-    secondary: 'text-secondary',
-    success: 'text-success',
-    warning: 'text-warning',
-    error: 'text-error',
+  code: {
+    container: 'relative rounded-lg border bg-muted overflow-hidden',
+    header: 'flex items-center justify-between px-4 py-2 border-b',
+    content: 'p-4 overflow-auto',
   },
 
-  // 图片样式
-  image: {
-    wrapper: ['my-6 w-full', 'flex flex-col items-center', 'not-prose'].join(' '),
-    img: [
-      'rounded-xl',
-      'shadow-md dark:shadow-none',
-      'dark:border dark:border-neutral-800',
-      'w-full max-w-[1200px] h-auto object-contain',
-      'hover:shadow-lg dark:hover:shadow-md',
-      'transition-shadow duration-200',
-    ].join(' '),
-    caption: ['text-center text-sm', 'text-muted-foreground', 'mt-3 px-4', 'max-w-prose'].join(' '),
+  // 提示框样式
+  callout: {
+    base: 'flex rounded-lg border p-4 gap-3',
+    icon: 'h-5 w-5 mt-0.5 flex-shrink-0',
+    content: 'flex-1',
+    title: 'mb-2 font-semibold',
+    body: 'prose-sm [&>p]:m-0',
+  },
+
+  // 表格样式
+  table: {
+    container: 'w-full border-collapse',
+    header: 'bg-muted',
+    row: 'border-b border-border hover:bg-muted/50',
+  },
+
+  // 标签页样式
+  tabs: {
+    base: 'space-y-4',
+    nav: 'flex gap-1 border-b border-border',
+    tab: 'relative px-4 py-2 text-sm font-medium transition-colors',
+    panel: 'pt-4',
+    variants: {
+      line: {
+        nav: '',
+        tab: 'border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary',
+      },
+      pill: {
+        nav: 'gap-2',
+        tab: 'rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground',
+      },
+      enclosed: {
+        nav: 'border rounded-t-lg overflow-hidden',
+        tab: 'border-r last:border-r-0 data-[state=active]:bg-muted',
+      },
+    },
+    sizes: {
+      sm: 'text-xs',
+      md: 'text-sm',
+      lg: 'text-base',
+    },
+  },
+
+  // 媒体样式
+  media: {
+    base: 'relative rounded-lg overflow-hidden',
   },
 };

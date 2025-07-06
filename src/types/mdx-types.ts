@@ -90,8 +90,6 @@ export interface MDXOptions {
     showLineNumbers: boolean;
     /** 默认语言 */
     defaultLanguage: string;
-    /** 主题 */
-    theme: string;
     /** 是否自动换行 */
     wrap: boolean;
   };
@@ -133,8 +131,6 @@ export interface CodeBlockProps extends BaseComponentProps {
   language?: string;
   /** 是否显示行号 */
   showLineNumbers?: boolean;
-  /** 高亮的行号 */
-  highlightedLines?: number[];
 }
 
 /** 列表类型 */
@@ -213,6 +209,15 @@ export interface MDXStyleConfig {
     success: string;
     warning: string;
     error: string;
+  };
+}
+
+// ==================== MDX 样式类型 ====================
+
+/** 排版配置类型 */
+export interface TypographyConfig {
+  css: {
+    [key: string]: string | number | Record<string, string | number>;
   };
 }
 

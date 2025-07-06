@@ -93,7 +93,7 @@ export default function LinksPage() {
             description={item.description || item.url}
             href={item.url}
             icon={item.icon}
-            iconType={item.iconType === 'text' ? 'component' : item.iconType}
+            iconType={item.iconType as 'image' | 'text' | undefined}
             isExternal={true}
             className="h-full"
           />

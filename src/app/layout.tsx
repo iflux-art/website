@@ -6,8 +6,6 @@ import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ServiceWorkerProvider } from '@/components/providers/service-worker-provider';
-import { StagewiseToolbar } from '@stagewise/toolbar-next';
-import { ReactPlugin } from '@stagewise-plugins/react';
 import { ErrorBoundary } from '@/components/providers/error-boundary';
 import { GlobalErrorHandler } from '@/components/providers/error-boundary';
 
@@ -64,7 +62,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <SpeedInsights />
           </ErrorBoundary>
         </ThemeProvider>
-        <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
       </body>
     </html>
   );

@@ -1,63 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
-/**
- * 缓存配置
- */
-const CACHE_CONFIG = {
-  // 静态资源缓存时间（1年）
-  staticAssets: 60 * 60 * 24 * 365,
-
-  // 字体缓存时间（1年）
-  fonts: 60 * 60 * 24 * 365,
-
-  // 图片缓存时间（1周）
-  images: 60 * 60 * 24 * 7,
-
-  // API 缓存时间（1小时）
-  api: 60 * 60,
-
-  // 页面缓存时间（1天）
-  pages: 60 * 60 * 24,
-};
-
-/**
- * 内容安全策略配置
- */
-const CSP_CONFIG = {
-  'default-src': ["'self'"],
-  'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://cdn.jsdelivr.net'],
-  'style-src': ["'self'", "'unsafe-inline'"],
-  'img-src': ["'self'", 'data:', 'https:'],
-  'font-src': ["'self'", 'data:'],
-  'connect-src': ["'self'", 'https:'],
-  'frame-ancestors': ["'none'"],
-  'form-action': ["'self'"],
-  'base-uri': ["'self'"],
-  'upgrade-insecure-requests': [],
-};
-
-/**
- * 安全头配置
- */
-const SECURITY_HEADERS = {
-  'X-DNS-Prefetch-Control': 'on',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-  'X-Frame-Options': 'SAMEORIGIN',
-  'X-Content-Type-Options': 'nosniff',
-  'X-XSS-Protection': '1; mode=block',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
-};
-
-/**
- * 构建 CSP 字符串
- */
-const buildCSP = (config: Record<string, string[]>) => {
-  return Object.entries(config)
-    .map(([key, values]) => `${key} ${values.join(' ')}`)
-    .join('; ');
-};
+import { CACHE_CONFIG, CSP_CONFIG, SECURITY_HEADERS, buildCSP } from '@/config/middleware-config';
 
 /**
  * 获取缓存策略
@@ -111,16 +54,11 @@ const getCacheControl = (pathname: string): string => {
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const response = NextResponse.next();
 
-  // 内容安全策略
-  response.headers.set('Content-Security-Policy', buildCSP(CSP_CONFIG));
-
-  // 缓存策略
-  response.headers.set('Cache-Control', getCacheControl(pathname));
-
   // 设置安全头
+  response.headers.set('Content-Security-Policy', buildCSP(CSP_CONFIG));
+  response.headers.set('Cache-Control', getCacheControl(pathname));
   Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
@@ -128,15 +66,9 @@ export function middleware(request: NextRequest) {
   return response;
 }
 
-/**
- * 中间件配置
- */
 export const config = {
   matcher: [
-    // 排除不需要处理的路径
     '/((?!_next/static|_next/image|favicon.ico).*)',
-
-    // 包含需要处理的静态资源
     '/images/:path*',
     '/fonts/:path*',
     '/(api|app/api)/:path*',

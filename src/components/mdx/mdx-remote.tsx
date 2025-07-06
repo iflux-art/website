@@ -1,6 +1,7 @@
 import { compileMDX } from 'next-mdx-remote/rsc';
 import { cn } from '@/utils';
-import { MDXComponents } from './mdx-components';
+import { MDXStaticComponents } from './mdx-static-components';
+import { MDXInteractiveComponents } from './mdx-interactive-components';
 import { MDXCodeBlock } from './mdx-code-block';
 import { MDXCodeInline } from './mdx-codeInline';
 import { MDXTableComponents } from './mdx-table';
@@ -16,12 +17,23 @@ export async function MDXRemoteRenderer({ source }: MDXRemoteRendererProps) {
     options: {
       parseFrontmatter: true,
       mdxOptions: {
-        remarkPlugins: [],
+        remarkPlugins: [
+          () => tree => {
+            if (tree.children) {
+              tree.children.forEach((node: { type: string; value?: string }) => {
+                if (node.type === 'code' && node.value) {
+                  // 保留原始代码内容
+                }
+              });
+            }
+          },
+        ],
         rehypePlugins: [],
       },
     },
     components: {
-      ...MDXComponents,
+      ...MDXStaticComponents,
+      ...MDXInteractiveComponents,
       ...MDXTableComponents,
       pre: (props: ComponentProps<typeof MDXCodeBlock>) => (
         <MDXCodeBlock {...props} className={props.className || ''} filename={props.filename} />

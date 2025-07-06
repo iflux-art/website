@@ -14,14 +14,6 @@ export interface MDXLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorEleme
   showExternalIcon?: boolean;
 }
 
-const styles = {
-  base: 'relative inline-flex items-center gap-1 text-primary no-underline transition-colors hover:text-primary/80',
-  external: 'cursor-alias',
-  icon: 'h-3 w-3',
-  underline:
-    'after:absolute after:left-1/2 after:bottom-0 after:h-px after:w-0 after:bg-current after:transition-all hover:after:left-0 hover:after:w-full',
-} as const;
-
 const isExternalLink = (href: string): boolean => {
   return href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');
 };
@@ -37,7 +29,15 @@ export const MDXLink: React.FC<MDXLinkProps> = ({
   if (!href) return null;
 
   const isExternal = external ?? isExternalLink(href);
-  const linkClasses = cn(styles.base, isExternal && styles.external, styles.underline, className);
+  const linkClasses = cn(
+    'not-prose font-medium text-primary relative',
+    'hover:text-primary/80',
+    'after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-px',
+    'after:bg-current after:transition-all after:duration-300 after:ease-out',
+    'hover:after:left-0 hover:after:w-full hover:after:right-0',
+    isExternal && 'text-primary-dark dark:text-primary-light',
+    className
+  );
 
   if (isExternal) {
     return (
@@ -48,7 +48,7 @@ export const MDXLink: React.FC<MDXLinkProps> = ({
         rel="noopener noreferrer"
       >
         {children}
-        {showExternalIcon && <ExternalLinkIcon className={styles.icon} />}
+        {showExternalIcon && <ExternalLinkIcon className="ml-1 inline-block h-3 w-3" />}
       </a>
     );
   }
