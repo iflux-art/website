@@ -1,12 +1,19 @@
 import React from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { MDXStyles } from "@/config/mdx/styles";
-import { MDXComponentsMapping, type MDXComponents } from "@/config/mdx";
+import { MDXComponentsMapping, type MDXComponentsType } from "@/config/mdx";
+import rehypePrettyCode, {
+  type Options as PrettyCodeOptions,
+} from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
+
+const prettyCodeOptions: PrettyCodeOptions = {
+  theme: "github-dark",
+};
 
 interface MDXRendererProps {
   content: string;
   options?: {
-    components?: Partial<MDXComponents>;
+    components?: Partial<MDXComponentsType>;
   };
 }
 
@@ -24,7 +31,7 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
   const merged = { ...MDXComponentsMapping, ...(options.components || {}) };
   const components = Object.fromEntries(
     Object.entries(merged).filter(([, comp]) => typeof comp === "function"),
-  ) as Record<string, React.ComponentType<Record<string, unknown>>>;
+  ) as Record<string, React.ComponentType<any>>;
 
   if (!content) {
     return null;
@@ -32,20 +39,22 @@ export const MDXRenderer = ({ content, options = {} }: MDXRendererProps) => {
 
   try {
     return (
-      <div className={MDXStyles.prose}>
-        <MDXRemote source={content} components={components} />
+      <div className="prose w-full max-w-full dark:prose-invert">
+        <MDXRemote
+          source={content}
+          components={components}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+              rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+            },
+          }}
+        />
       </div>
     );
   } catch (error) {
     console.error("Error rendering MDX:", error);
-    return (
-      <div className="rounded-md bg-destructive/10 p-4 text-destructive">
-        <h3 className="mb-2 font-semibold">Render Error</h3>
-        <p>
-          {error instanceof Error ? error.message : "Failed to render content"}
-        </p>
-      </div>
-    );
+    return null;
   }
 };
 

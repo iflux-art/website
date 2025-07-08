@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react";
-import { MDXStyles } from "@/config/mdx/styles";
+import { cn } from "@/lib/utils";
 
 type CalloutType = "info" | "success" | "warning" | "error";
 
@@ -16,62 +15,66 @@ interface MDXCalloutProps {
 const CALLOUT_CONFIG = {
   info: {
     icon: Info,
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-200",
-    textColor: "text-blue-800",
-    titleColor: "text-blue-900",
+    bgColor: "bg-blue-50 dark:bg-blue-900/20",
+    borderColor: "border-blue-200 dark:border-blue-800",
+    textColor: "text-blue-800 dark:text-blue-200",
+    titleColor: "text-blue-900 dark:text-blue-100",
   },
   success: {
     icon: CheckCircle,
-    bgColor: "bg-green-50",
-    borderColor: "border-green-200",
-    textColor: "text-green-800",
-    titleColor: "text-green-900",
+    bgColor: "bg-green-50 dark:bg-green-900/20",
+    borderColor: "border-green-200 dark:border-green-800",
+    textColor: "text-green-800 dark:text-green-200",
+    titleColor: "text-green-900 dark:text-green-100",
   },
   warning: {
     icon: AlertTriangle,
-    bgColor: "bg-yellow-50",
-    borderColor: "border-yellow-200",
-    textColor: "text-yellow-800",
-    titleColor: "text-yellow-900",
+    bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
+    borderColor: "border-yellow-200 dark:border-yellow-800",
+    textColor: "text-yellow-800 dark:text-yellow-200",
+    titleColor: "text-yellow-900 dark:text-yellow-100",
   },
   error: {
     icon: AlertCircle,
-    bgColor: "bg-red-50",
-    borderColor: "border-red-200",
-    textColor: "text-red-800",
-    titleColor: "text-red-900",
+    bgColor: "bg-red-50 dark:bg-red-900/20",
+    borderColor: "border-red-200 dark:border-red-800",
+    textColor: "text-red-800 dark:text-red-200",
+    titleColor: "text-red-900 dark:text-red-100",
   },
 };
 
-/**
- * MDX 提示框组件
- * - 支持多种类型：info, success, warning, error
- * - 自动配色方案
- * - 支持标题和内容
- * - 响应式设计
- */
 export const MDXCallout = ({
   type = "info",
   title,
   children,
-  className = "",
+  className,
 }: MDXCalloutProps) => {
-  const config = CALLOUT_CONFIG[type];
-  const Icon = config.icon;
+  const {
+    icon: Icon,
+    bgColor,
+    borderColor,
+    textColor,
+    titleColor,
+  } = CALLOUT_CONFIG[type];
 
   return (
     <div
-      className={` ${MDXStyles.callout.base} ${config.bgColor} ${config.borderColor} ${config.textColor} ${className} `}
+      className={cn(
+        "rounded-lg border p-4",
+        bgColor,
+        borderColor,
+        textColor,
+        className,
+      )}
     >
-      <Icon className={MDXStyles.callout.icon} />
-      <div className={MDXStyles.callout.content}>
-        {title && (
-          <h4 className={`${MDXStyles.callout.title} ${config.titleColor}`}>
-            {title}
-          </h4>
-        )}
-        <div className={MDXStyles.callout.body}>{children}</div>
+      <div className="flex items-start gap-3">
+        <Icon className="mt-0.5 h-5 w-5 flex-shrink-0" />
+        <div className="flex-1">
+          {title && (
+            <h4 className={cn("mb-2 font-semibold", titleColor)}>{title}</h4>
+          )}
+          <div className="prose-sm [&>p]:m-0">{children}</div>
+        </div>
       </div>
     </div>
   );

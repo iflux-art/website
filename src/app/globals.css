@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -93,7 +92,7 @@
   /* ===== 主题变量 - 深色模式 ===== */
   /* 主要界面颜色 - neutral 基础色 */
   --background: oklch(0.12 0 0);
-  --foreground: oklch(0.98 0 0);
+  --foreground: oklch(1 0 0);
 
   /* 卡片颜色 - 轻微区分于背景 */
   --card: oklch(0.16 0 0);
@@ -113,7 +112,7 @@
 
   /* 柔和颜色 */
   --muted: oklch(0.18 0 0);
-  --muted-foreground: oklch(0.7 0 0);
+  --muted-foreground: oklch(0.9 0 0);
 
   /* 强调颜色 */
   --accent: oklch(0.2 0 0);
@@ -238,24 +237,6 @@
       "Liberation Mono", "Courier New", monospace;
   }
 }
-/* ===== MDX 颜色系统 ===== */
-:root {
-  /* MDX 专用颜色变量 */
-  --mdx-link-color: var(--primary);
-  --mdx-link-hover: var(--primary-hover);
-  --mdx-code-bg: var(--muted);
-  --mdx-code-color: var(--foreground);
-  --mdx-blockquote-color: var(--muted-foreground);
-  --mdx-blockquote-border: var(--border);
-  --mdx-table-border: var(--border);
-  --mdx-table-header-bg: var(--muted);
-  --mdx-image-shadow: var(--shadow-md);
-}
-
-.dark {
-  --mdx-code-bg: var(--muted-dark);
-  --mdx-image-shadow: none;
-}
 
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
@@ -263,4 +244,20 @@
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.prose code::before,
+.prose code::after {
+  content: none !important;
+}
+
+.prose :not(pre) > code {
+  background-color: #f3f4f6;
+  color: #111827;
+  border-radius: 0.375rem;
+  padding: 0.2em 0.4em;
+  font-size: 0.95em;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }

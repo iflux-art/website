@@ -1,4 +1,4 @@
-import { MDXRenderer } from "@/components/mdx";
+import { MDXRenderer } from "@/components/mdx/mdx-renderer";
 
 interface DocsContentProps {
   content: string;

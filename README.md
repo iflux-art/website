@@ -1,19 +1,14 @@
-# Project Name
+## 待办
 
-符合Next.js + next-mdx-remote/rsc最佳实践：Next.js 社区和官方都推荐的
+第一步：创建shadcn/ui风格的组件目录结构
+第二步：实现组件时直接使用Tailwind类名
+第三步：移除config/mdx/styles.ts文件
+第四步：优化组件注册逻辑
+第三步：优化src/mdx-components.tsx的组件注册
+第四步：清理类型定义
 
-充分利用RSC特性
-合理拆分组件
-优化了性能
-
-基于Next.js的应用框架，采用现代化架构和最佳实践。
-
-最佳实践通常包括：单一职责原则，合理的模块划分，避免过度拆分或过度合并
-
-职责单一
-内容不重复
-大小适中
-易于维护
+可以将部分重复的内联样式提取为Tailwind插件
+考虑将常用类组合定义为@apply指令
 
 ## 技术栈
 
@@ -23,10 +18,12 @@
 - 样式系统：Tailwind CSS
 - CSS 类名管理和合并：Class Variants Authority + clsx + Tailwind Merge + Shadcn/ui
 - UI 组件：Radix UI + shadcn/ui
+- 组件库开发：Storybook
+- 表单组件：react-hook-form + zod
 - 图标：lucide-react
 - 状态管理：Zustand + TanStack Query
 - 数据验证：Zod
-- MDX处理：next-mdx-remote/rsc（MDX 渲染） + gray-matter（解析 frontmatter 元数据） + remark-gfm（扩展 Markdown 语法）
+- MDX处理：next-mdx-remote/rsc（MDX 渲染） + gray-matter（解析 frontmatter 元数据） + remark-gfm（扩展 Markdown 语法）+ rehype-pretty-code + Shiki
 - MDX样式：Tailwind CSS + @tailwindcss/typography（prose 类） + shadcn/ui
 - 代码质量：ESLint + Prettier
 - Git 提交前检查：Git Hooks
@@ -34,19 +31,34 @@
 - 网页解析：cheerio
 - 文件监听：chokidar
 - 开发工具：madge
+- pwa：next-pwa
 
-基础MDX样式在多处重复定义
-变体样式管理混乱
-缺少统一的样式扩展点
+## MDX 组件整理
 
-集中管理样式变量：
+### 用 prose 替代（tailwindcss/typography + gfm）
 
-保留src/config/mdx/styles.ts作为唯一定义源
-移除其他文件中的重复定义
-创建统一样式工具：
+- mdx-heading
+- mdx-table
+- mdx-image.tsx
+- mdx-codeInline
 
-在MDXStyles中提供完整样式组合
-组件通过MDXStyles.prose使用统一样式
+### 自定义组件
+
+- mdx-link.tsx
+- mdx-blockquote 引用块
+- mdx-callout.tsx 提示/警告/信息块
+- mdx-code-block
+
+---
+
+- mdx-code-group.tsx
+- mdx-video.tsx
+- mdx-card.tsx
+
+### 设置
+
+- mdx-renderer.tsx
+- mdx-components.ts 组件映射聚合
 
 ## 项目结构
 

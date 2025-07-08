@@ -9,7 +9,7 @@ import { RECOMMENDATION_TAGS } from "@/components/layout/home/data/constants"; /
  */
 export function MoreRecommendationTags() {
   return (
-    <div className="flex w-full animate-in flex-wrap justify-center gap-2.5 duration-300 fade-in slide-in-from-top-2">
+    <div className="animate-in fade-in slide-in-from-top-2 flex w-full flex-wrap justify-center gap-2.5 duration-300">
       {RECOMMENDATION_TAGS.more.map((tag, index) => {
         const IconComponent = tag.icon;
         return (

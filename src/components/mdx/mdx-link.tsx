@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { ExternalLinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -23,23 +22,22 @@ const isExternalLink = (href: string): boolean => {
   );
 };
 
-export const MDXLink: React.FC<MDXLinkProps> = ({
+export const MDXLink = ({
   href,
   children,
   className,
   external,
   openInNewTab = true,
   showExternalIcon = true,
-}) => {
+}: MDXLinkProps) => {
   if (!href) return null;
 
   const isExternal = external ?? isExternalLink(href);
   const linkClasses = cn(
-    "not-prose font-medium text-primary relative",
-    "hover:text-primary/80",
-    'after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-px',
+    "not-prose font-medium text-primary hover:text-primary/80",
+    "relative after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0",
     "after:bg-current after:transition-all after:duration-300 after:ease-out",
-    "hover:after:left-0 hover:after:w-full hover:after:right-0",
+    "hover:after:left-0 hover:after:w-full",
     isExternal && "text-primary-dark dark:text-primary-light",
     className,
   );

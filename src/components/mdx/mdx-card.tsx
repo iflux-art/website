@@ -2,7 +2,6 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { MDXStyles } from "@/config/mdx/styles";
 
 interface MDXCardProps {
   children: React.ReactNode;
@@ -15,14 +14,6 @@ interface MDXCardProps {
   hoverable?: boolean;
 }
 
-/**
- * MDX 卡片容器组件
- * - 支持标题和描述
- * - 可选图标
- * - 多种变体样式
- * - 可选悬停效果
- * - 响应式设计
- */
 export const MDXCard = ({
   children,
   title,
@@ -33,39 +24,28 @@ export const MDXCard = ({
   size = "md",
   hoverable = false,
 }: MDXCardProps) => {
-  // 基础样式
-  const baseStyles = "rounded-lg transition-all duration-200";
-
-  // 变体样式
   const variantStyles = {
     default: "bg-white dark:bg-gray-800 shadow-sm",
     outline: "border border-gray-200 dark:border-gray-700",
     ghost: "bg-transparent",
   };
 
-  // 尺寸样式
   const sizeStyles = {
     sm: "p-4",
     md: "p-6",
     lg: "p-8",
   };
 
-  // 悬停效果
-  const hoverStyles = hoverable
-    ? "hover:shadow-md hover:transform hover:-translate-y-1"
-    : "";
-
   return (
     <div
       className={cn(
-        baseStyles,
+        "rounded-lg transition-all duration-200",
         variantStyles[variant],
         sizeStyles[size],
-        hoverStyles,
+        hoverable && "hover:-translate-y-1 hover:shadow-md",
         className,
       )}
     >
-      {/* 卡片头部 */}
       {(title || icon || description) && (
         <div className="mb-4">
           <div className="flex items-center gap-3">
@@ -85,9 +65,7 @@ export const MDXCard = ({
           )}
         </div>
       )}
-
-      {/* 卡片内容 */}
-      <div className={MDXStyles.prose}>{children}</div>
+      <div className="prose max-w-none">{children}</div>
     </div>
   );
 };

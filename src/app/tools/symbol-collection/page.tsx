@@ -541,7 +541,7 @@ export default function SymbolCollectionPage() {
                 {symbol}
               </Button>
               {copied === symbol && (
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 transform animate-in rounded bg-green-500 px-2 py-1 text-xs text-white shadow-lg duration-200 fade-in-0 zoom-in-95">
+                <div className="animate-in fade-in-0 zoom-in-95 absolute -top-8 left-1/2 -translate-x-1/2 transform rounded bg-green-500 px-2 py-1 text-xs text-white shadow-lg duration-200">
                   已复制
                 </div>
               )}

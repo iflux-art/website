@@ -1,7 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ServiceWorkerProvider } from "@/components/providers/service-worker-provider";
+import { ThemeProvider } from "@/components/features/theme-provider";
 import React from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -12,7 +11,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <ServiceWorkerProvider />
       {children}
     </ThemeProvider>
   );

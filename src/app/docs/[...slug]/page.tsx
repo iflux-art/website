@@ -20,6 +20,8 @@ import { extractHeadings } from "@/components/layout/toc/extract-headings";
 import { getFlattenedDocsOrder, type NavDocItem } from "@/lib/content";
 import type { DocMetaItem } from "@/types";
 import { countWords } from "@/lib/utils";
+import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
+
 export default async function DocPage({
   params,
 }: {
@@ -96,7 +98,8 @@ export default async function DocPage({
   }
 
   if (!filePath || !fs.existsSync(filePath)) {
-    throw new Error();
+    console.error(`Document not found at path: ${absoluteRequestedPath}`);
+    throw new Error(`Document not found at path: ${requestedPath}`);
   }
   const fileContent = fs.readFileSync(filePath, "utf8");
   const { content: originalContent, data: frontmatter } = matter(fileContent);
@@ -184,6 +187,7 @@ export default async function DocPage({
 
   return (
     <div className="min-h-screen bg-background">
+      <MDXCodeEnhance />
       <div className="container mx-auto px-6 py-8">
         <div className="flex justify-center gap-10">
           <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 lg:block">

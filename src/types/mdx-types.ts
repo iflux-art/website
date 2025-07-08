@@ -178,7 +178,7 @@ export interface MDXListItemProps
   nested?: boolean;
 }
 
-/** MDX样式配置 */
+/** MDX样式配置类型 */
 export interface MDXStyleConfig {
   prose: string;
   table: {
@@ -188,11 +188,11 @@ export interface MDXStyleConfig {
     wrapper: string;
     img: string;
     caption: string;
-    group: {
+    group?: {
       wrapper: string;
       item: string;
     };
-    zoom: {
+    zoom?: {
       overlay: string;
       content: string;
       img: string;
@@ -200,18 +200,18 @@ export interface MDXStyleConfig {
   };
   link: {
     base: string;
-    external: string;
-    icon: string;
-    underline: string;
+    external?: string;
+    icon?: string;
+    underline?: string;
   };
   codeBlock: string;
-  codeInline: {
+  codeInline?: {
     base: string;
-    primary: string;
-    secondary: string;
-    success: string;
-    warning: string;
-    error: string;
+    primary?: string;
+    secondary?: string;
+    success?: string;
+    warning?: string;
+    error?: string;
   };
 }
 
