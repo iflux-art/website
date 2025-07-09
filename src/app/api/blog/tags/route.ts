@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAllTagsWithCount } from "@/lib/content";
+import { getAllTagsWithCount } from "@/lib/blog-content";
 import { TagCountSchema } from "@/lib/schemas/blog";
 
 /**

@@ -6,6 +6,25 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * 生成随机数
+ * @param min 最小值
+ * @param max 最大值
+ * @param isInt 是否返回整数
+ * @param suffix 后缀字符串(如'%'或's')
+ * @returns 随机数
+ */
+export const getRandom = (
+  min: number,
+  max: number,
+  isInt: boolean = false,
+  suffix: string = "",
+): number | string => {
+  const value = Math.random() * (max - min) + min;
+  const result = isInt ? Math.floor(value) : value;
+  return suffix ? `${result}${suffix}` : result;
+};
+
+/**
  * 格式化日期
  * @param date 要格式化的日期
  * @param format 可选的日期格式，支持 'MM月dd日' 格式

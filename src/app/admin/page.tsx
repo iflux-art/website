@@ -2,7 +2,7 @@
 
 import React from "react";
 import AdminPageContentLayout from "@/components/layout/admin/admin-page-content-layout";
-import { LinkCard } from "@/components/common/cards/link-card";
+import { LinkCard } from "@/components/common/card/link-card";
 import { Globe, BarChart3 } from "lucide-react";
 import { AppGrid } from "@/components/layout/app-grid";
 

@@ -1,13 +1,13 @@
 import { MDXRenderer } from "@/components/mdx/mdx-renderer";
 
-interface BlogContentProps {
+interface ContentRendererProps {
   content: string;
   frontmatter?: Record<string, unknown>;
 }
 
-export function BlogContent({
+export function ContentRenderer({
   content,
   frontmatter: _frontmatter,
-}: BlogContentProps) {
+}: ContentRendererProps) {
   return <MDXRenderer content={content} />;
 }

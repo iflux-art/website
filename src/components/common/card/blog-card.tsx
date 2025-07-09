@@ -73,7 +73,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
                 <Badge
                   key={tag}
                   variant="outline"
-                  className="border-muted-foreground/20 text-xs"
+                  className="border-muted-foreground/20 text-xs hover:bg-accent/50"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

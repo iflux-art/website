@@ -5,6 +5,18 @@
 import type { ComponentType } from "react";
 import { BaseCategory, URL, ID, Timestamp } from "./common";
 
+export type CategoryId =
+  | "ai"
+  | "development"
+  | "design"
+  | "audio"
+  | "video"
+  | "office"
+  | "productivity"
+  | "operation"
+  | "profile"
+  | "friends";
+
 /** 导航链接项 */
 export interface LinksItem {
   /** 唯一标识 */
@@ -24,7 +36,7 @@ export interface LinksItem {
   /** 是否为特色链接 */
   featured?: boolean;
   /** 所属分类 */
-  category: string;
+  category: CategoryId;
   /** 创建时间 */
   createdAt: Timestamp;
   /** 更新时间 */
@@ -37,8 +49,14 @@ export interface LinksItem {
 
 /** 导航分类 */
 export interface LinksCategory extends BaseCategory {
+  /** 分类ID */
+  id: CategoryId;
   /** 分类名称 */
   name: string;
+  /** 分类描述 */
+  description: string;
+  /** 排序序号 */
+  order: number;
   /** 分类图标 */
   icon?: string;
   /** 分类颜色 */

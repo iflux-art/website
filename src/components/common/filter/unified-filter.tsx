@@ -50,7 +50,6 @@ export function UnifiedFilter({
   showTagCount = true,
   tagTitle = "按标签筛选",
   maxVisibleTags = 8,
-  onCardTagClick,
 }: UnifiedFilterProps) {
   const [tagsExpanded, setTagsExpanded] = useState(false);
 
@@ -72,16 +71,12 @@ export function UnifiedFilter({
     onTagChange(null); // 清除已选标签
   };
 
-  // 处理卡片标签点击
-  const handleTagClick = (tagName: string, fromCard?: boolean) => {
-    if (fromCard && onCardTagClick) {
-      onCardTagClick(tagName);
+  // 统一处理标签点击
+  const handleTagClick = (tagName: string) => {
+    if (selectedTag === tagName) {
+      onTagChange(null);
     } else {
-      if (selectedTag === tagName) {
-        onTagChange(null);
-      } else {
-        onTagChange(tagName);
-      }
+      onTagChange(tagName);
     }
   };
 

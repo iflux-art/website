@@ -4,7 +4,7 @@ import {
   UnifiedFilter,
   type Category,
 } from "@/components/common/filter/unified-filter";
-import { BlogCard } from "@/components/common/cards/blog-card";
+import { BlogCard } from "@/components/common/card/blog-card";
 import { AppGrid } from "@/components/layout/app-grid";
 import { useFilterState } from "@/components/common/filter/use-filter-state";
 import { useBlogPosts } from "@/hooks/use-blog";

@@ -3,11 +3,11 @@ import { ContentLoader } from "@/lib/content-loader";
 import { Breadcrumb } from "@/components/common/breadcrumb/breadcrumb";
 import { createBlogBreadcrumbs } from "@/components/common/breadcrumb/breadcrumb-utils";
 import { ContentDisplay } from "@/components/common/content-display";
-import { RelatedPosts } from "@/components/layout/blog/related-posts";
+import { RelatedPosts } from "@/components/layout/common/related-posts";
 import { TableOfContents } from "@/components/layout/toc/table-of-contents";
 import { extractHeadings } from "@/components/layout/toc/extract-headings";
 import { NAVBAR_HEIGHT } from "@/config/layout";
-import { BlogContent } from "@/components/layout/blog/BlogContent";
+import { ContentRenderer } from "@/components/layout/common/ContentRenderer";
 import { countWords } from "@/lib/utils";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 
@@ -116,7 +116,7 @@ export default async function BlogPostPage({
                   tags={safeFrontmatter.tags || []}
                   wordCount={countWords(content)}
                 >
-                  <BlogContent content={content} frontmatter={frontmatter} />
+                  <ContentRenderer content={content} />
                 </ContentDisplay>
               </div>
             </main>

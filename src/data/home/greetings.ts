@@ -1,9 +1,9 @@
-"use client";
+/**
+ * 问候语数据
+ * 按时间段分类的问候语集合
+ */
 
-import React, { useState, useEffect } from "react";
-
-// 不同时段的问候语数据
-const GREETINGS_BY_TIME = {
+export const GREETINGS_BY_TIME = {
   morning: [
     "美好的一天开始啦！",
     "早安打工人！",
@@ -141,8 +141,13 @@ const GREETINGS_BY_TIME = {
   ],
 } as const;
 
-// 获取当前时间段
-const getCurrentTimeSlot = (): keyof typeof GREETINGS_BY_TIME => {
+export type TimeSlot = keyof typeof GREETINGS_BY_TIME;
+
+/**
+ * 获取当前时间段
+ * @returns 当前时间段key
+ */
+export const getCurrentTimeSlot = (): TimeSlot => {
   const hour = new Date().getHours();
   if (hour >= 6 && hour <= 10) return "morning";
   if (hour >= 11 && hour <= 13) return "noon";
@@ -151,44 +156,13 @@ const getCurrentTimeSlot = (): keyof typeof GREETINGS_BY_TIME => {
   return "lateNight";
 };
 
-// 获取随机问候语
-const getRandomGreeting = (): string => {
+/**
+ * 获取随机问候语
+ * @returns 随机问候语
+ */
+export const getRandomGreeting = (): string => {
   const timeSlot = getCurrentTimeSlot();
   const greetings = GREETINGS_BY_TIME[timeSlot];
   const randomIndex = Math.floor(Math.random() * greetings.length);
   return greetings[randomIndex];
 };
-
-interface GreetingProps {
-  className?: string;
-}
-
-/**
- * 问候语组件
- * 根据当前时间显示不同的问候语
- */
-export function Greeting({ className }: GreetingProps) {
-  const [greeting, setGreeting] = useState("");
-
-  // 刷新问候语的函数
-  const refreshGreeting = () => {
-    setGreeting(getRandomGreeting());
-  };
-
-  // 在组件挂载时设置随机问候语
-  useEffect(() => {
-    refreshGreeting();
-  }, []);
-
-  return (
-    <h1
-      className={`mb-5 cursor-pointer text-xl font-normal text-muted-foreground transition-colors hover:text-muted-foreground/70 md:text-2xl ${
-        className || ""
-      }`}
-      onClick={refreshGreeting}
-      title="点击刷新问候语"
-    >
-      {greeting}
-    </h1>
-  );
-}

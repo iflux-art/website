@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useFilterState } from "@/components/common/filter/use-filter-state";
-import { Item, Category } from "@/types/links";
+import type {
+  LinksItem as Item,
+  LinksCategory as Category,
+} from "@/types/links-types";
 import itemsData from "@/data/links/items.json";
 import categoriesData from "@/data/links/categories.json";
 

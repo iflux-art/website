@@ -2,7 +2,7 @@
 
 import { useDocCategories } from "@/hooks/use-docs";
 import { AppGrid } from "@/components/layout/app-grid";
-import { DocCard } from "@/components/common/cards/doc-card";
+import { DocCard } from "@/components/common/card/doc-card";
 
 export default function DocsPage() {
   const { data: categories = [] } = useDocCategories();

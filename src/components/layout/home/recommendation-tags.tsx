@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
-import { RECOMMENDATION_TAGS } from "@/components/layout/home/data/constants";
-import { MoreRecommendationTags } from "@/components/layout/home/tags/more-recommendation-tags";
+import { RECOMMENDATION_TAGS } from "@/data/home/recommendation-tags";
 
 interface RecommendationTagsProps {
   className?: string;
@@ -59,7 +58,21 @@ export function RecommendationTags({ className }: RecommendationTagsProps) {
       </div>
 
       {/* 展开的更多标签 */}
-      {showMoreTags && <MoreRecommendationTags />}
+      {showMoreTags && (
+        <div className="animate-in fade-in slide-in-from-top-2 flex w-full flex-wrap justify-center gap-2.5 duration-300">
+          {RECOMMENDATION_TAGS.more.map((tag, index) => {
+            const IconComponent = tag.icon;
+            return (
+              <Link href={tag.href} key={index}>
+                <div className="flex items-center gap-1.5 rounded-md border border-border/50 bg-background/80 px-3.5 py-2 text-sm whitespace-nowrap text-muted-foreground backdrop-blur-sm transition-all hover:border-primary/20 hover:bg-accent/30 hover:text-foreground">
+                  <IconComponent className="size-4" />
+                  <span>{tag.text}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

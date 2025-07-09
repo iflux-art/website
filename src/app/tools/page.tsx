@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { ToolCard } from "@/components/common/cards/tool-card";
+import { ToolCard } from "@/components/common/card/tool-card";
 import { UnifiedFilter } from "@/components/common/filter/unified-filter";
 import { TOOLS, TOOL_CATEGORIES } from "@/components/layout/tools/tools-data";
 import { ToolLayout } from "@/components/layout/tools/tool-layout";

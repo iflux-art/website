@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
-import type { Category, Item } from "@/types/links";
+import type {
+  LinksCategory as Category,
+  LinksItem as Item,
+} from "@/types/links-types";
 
 const CATEGORIES_FILE_PATH = path.join(
   process.cwd(),

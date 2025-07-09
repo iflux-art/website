@@ -6,14 +6,7 @@ import { NAV_ITEMS, NAV_DESCRIPTIONS } from "@/config/nav-config";
 import { useAuthState } from "@/hooks/use-auth-state";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { AdminMenu as AdminMenuComponent } from "@/components/layout/admin/admin-menu";
-interface NavProps {
-  onClose?: () => void;
-  className?: string;
-}
-
-interface NavMenuProps extends NavProps {
-  mode: "links" | "cards";
-}
+import type { NavProps, NavMenuProps } from "@/types/nav-types";
 
 function NavLinks({ onClose, className }: NavProps) {
   const isActiveSection = useActiveSection();

@@ -1,0 +1,140 @@
+# Next.js 技术栈推荐清单与最佳实践
+
+现在 lib 目录下的文件太杂乱了，我想这样重构，你觉得怎么样：
+1. 基础的常量放在 utils.ts 中
+2. 创建 blog、docs、journal、tools、links、admin 文件夹，与这些页面实现有关的工具，放在对应的文件夹中，具体的工具可加文件夹的前缀，如 blog-content.ts 等
+3. 其他工具直接放在 lib 根目录下
+基础常量放utils.ts，按功能模块创建子目录(blog/docs/journal/tools/links/admin)，其他工具放根目
+如果文件中有多个函数或行数较多，可以拆分成多个文件放在同一目录下统一导出
+需要为函数添加中文注释
+
+## 核心框架与基础
+
+- Next.js (App Router)：React 生态全栈框架，支持 SSR/SSG/ISR，推荐新项目采用 App Router。
+- React + React DOM：现代 Web 应用开发基础。
+- TypeScript：类型安全，提升开发效率和可维护性。
+
+---
+
+## 样式与 UI
+
+- Tailwind CSS：原子化 CSS 框架，快速构建响应式 UI。
+- Shadcn/ui：基于 Radix UI 的可定制组件库，官方推荐。
+- Radix UI：无样式、可访问性强的 UI 组件基元。
+- Next Themes：无闪烁的暗/亮主题切换方案。
+- lucide-react：统一风格的 React 图标库。
+- Class Variants Authority / clsx / tailwind-merge：高效管理和合并 CSS 类名。
+
+---
+
+## 表单与数据校验
+
+- react-hook-form：高性能表单管理，适合复杂表单场景。
+- Zod：TypeScript 优先的数据校验库，前后端类型一致。
+
+---
+
+## 状态管理与数据获取
+
+- Zustand：轻量级全局状态管理，API 简洁。
+- TanStack Query (React Query)：数据获取与缓存，适合内容型和后台管理系统。
+- SWR：轻量级数据获取，适合实时数据场景。
+
+---
+
+## 内容与文档
+
+- next-mdx-remote/rsc：MDX 渲染，支持 Markdown 与 React 组件混用。
+- gray-matter：解析 Markdown frontmatter 元数据。
+- remark-gfm / rehype-pretty-code / Shiki：扩展 Markdown 语法与代码高亮。
+- @tailwindcss/typography：prose 类，优化 MDX 样式。
+- Storybook：组件开发与文档，提升协作效率。
+
+---
+
+## 代码规范与质量
+
+- ESLint + Prettier：代码规范与自动格式化，推荐 Airbnb Style Guide。
+- Husky + lint-staged：Git 提交前自动检查，保证代码质量。
+
+---
+
+## 工具与开发体验
+
+- immer：简化不可变数据操作。
+- cheerio：服务端网页解析。
+- chokidar：高效文件监听。
+- madge：依赖关系可视化，辅助重构。
+- Bundle Analyzer：分析打包体积，优化性能。
+
+---
+
+## 安全与环境配置
+
+- Zod 校验环境变量：保证配置安全与类型一致。
+- .env.local：本地环境变量管理，敏感信息不入库。
+
+---
+
+## 认证与安全
+
+- Next-Auth：全栈认证解决方案，支持多种登录方式。
+- Clerk：现代化认证平台，适合高级认证需求。
+
+---
+
+## 国际化
+
+- next-i18next：Next.js 国际化解决方案，支持多语言网站。
+- react-intl：复杂本地化需求的 React 国际化库。
+
+---
+
+## SEO 与元数据
+
+- next-seo：SEO 优化工具，集中管理元数据。
+- next-sitemap：自动生成站点地图，提升搜索引擎收录。
+
+---
+
+## PWA 与离线支持
+
+- next-pwa：一键为 Next.js 项目添加 PWA 能力，支持离线访问。
+
+---
+
+## 字体与资源优化
+
+- next/font：内置字体优化，提升加载性能。
+
+---
+
+## 性能监控与分析
+
+- Vercel Analytics & Speed Insights：官方性能监控与分析。
+- Sentry：错误监控平台，追踪线上异常。
+
+---
+
+## 内容管理
+
+- next-mdx：MDX 支持，适合内容驱动网站。
+- Contentlayer：本地 Markdown 内容自动转型，适合静态内容站点。
+
+---
+
+## 测试
+
+- Jest + React Testing Library：单元测试，验证组件逻辑。
+- Cypress / Playwright：端到端测试，保障关键业务流程。
+
+---
+
+## 部署与运维
+
+- Vercel：Next.js 官方推荐部署平台，支持零配置和边缘能力。
+- Turborepo：Monorepo 构建系统，适合多包和大型项目。
+
+---
+
+> 建议：根据项目实际需求渐进引入工具，统一团队技术栈，定期评估和优化。

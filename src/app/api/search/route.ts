@@ -4,7 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 import { TOOLS } from "@/components/layout/tools/tools-data";
 import items from "@/data/links/items.json";
-import type { Item } from "@/types/links";
+import type { LinksItem as Item } from "@/types/links-types";
 import {
   SearchRequestSchema,
   SearchResponseSchema,

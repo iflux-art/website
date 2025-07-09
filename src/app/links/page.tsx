@@ -42,7 +42,7 @@ function LinksHeader({
   );
 }
 import { AppGrid } from "@/components/layout/app-grid";
-import { LinkCard } from "@/components/common/cards/link-card";
+import { LinkCard } from "@/components/common/card/link-card";
 import { UnifiedFilter } from "@/components/common/filter/unified-filter";
 import { useLinksData } from "@/hooks/use-links-data";
 export default function LinksPage() {

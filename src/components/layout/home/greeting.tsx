@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getRandomGreeting } from "@/components/layout/home/utils";
+import { getRandomGreeting } from "@/data/home/greetings";
 
 interface GreetingProps {
   className?: string;
@@ -26,9 +26,7 @@ export function Greeting({ className }: GreetingProps) {
 
   return (
     <h1
-      className={`mb-5 cursor-pointer text-xl font-normal text-muted-foreground transition-colors hover:text-muted-foreground/70 md:text-2xl ${
-        className || ""
-      }`}
+      className={`mb-5 cursor-pointer text-xl font-normal text-muted-foreground transition-colors hover:text-muted-foreground/70 md:text-2xl ${className || ""}`}
       onClick={refreshGreeting}
       title="点击刷新问候语"
     >

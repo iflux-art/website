@@ -9,7 +9,7 @@ import type { SearchResult } from "@/hooks/use-safe-state";
 import { COMMANDS } from "@/components/features/search/commands";
 import { TOOLS } from "@/components/features/search/search-data";
 import items from "@/data/links/items.json";
-import type { Item } from "@/types/links";
+import type { LinksItem as Item } from "@/types/links-types";
 import { SearchBar } from "@/components/features/search/search-bar";
 import { SearchResults } from "@/components/features/search/search-results";
 import { KeyboardHints } from "@/components/features/search/keyboard-hints";
