@@ -3,19 +3,12 @@
 import React from "react";
 import AdminPageContentLayout from "@/components/layout/admin/admin-page-content-layout";
 import { LinkCard } from "@/components/common/card/link-card";
-import { Globe, BarChart3 } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 import { AppGrid } from "@/components/layout/app-grid";
+import { ADMIN_STATS } from "@/config/admin";
+import type { AdminStatItem } from "@/types/admin-types";
 
 export default function AdminDashboard() {
-  const stats = [
-    {
-      title: "网址管理",
-      description: "添加、编辑、删除网址信息。",
-      icon: Globe,
-      color: "text-blue-600",
-    },
-  ];
-
   return (
     <AdminPageContentLayout
       title="管理仪表板"
@@ -24,14 +17,13 @@ export default function AdminDashboard() {
       backUrl="/"
       backLabel="返回首页"
     >
-      {/* 统计卡片 */}
       <AppGrid columns={4} className="mb-8">
-        {stats.map((stat) => (
+        {ADMIN_STATS.map((stat: AdminStatItem) => (
           <LinkCard
             key={stat.title}
             title={stat.title}
             description={stat.description}
-            href="/admin/links"
+            href={stat.href}
             icon={<stat.icon className={stat.color} />}
             iconType="text"
           />

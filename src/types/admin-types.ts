@@ -49,3 +49,12 @@ export interface AdminActionsProps {
   actions: AdminAction[];
   className?: string;
 }
+
+// 管理后台统计卡片类型归档
+export interface AdminStatItem {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  color: string;
+  href: string;
+}

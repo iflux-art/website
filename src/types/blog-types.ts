@@ -41,16 +41,19 @@ export interface BlogCategory extends BaseCategory {
   icon?: string;
 }
 
-/**
- * 相关文章
- */
-export interface RelatedPost
-  extends Pick<
-    BlogPost,
-    "slug" | "title" | "description" | "excerpt" | "date" | "category"
-  > {
-  /** 相关度评分 */
-  relevanceScore?: number;
+// 博客相关类型归档
+export interface BlogFrontmatter {
+  title?: string;
+  description?: string;
+  date?: string | Date;
+  category?: string;
+  tags?: string[];
+}
+
+export interface RelatedPost {
+  title: string;
+  href: string;
+  category?: string;
 }
 
 /**

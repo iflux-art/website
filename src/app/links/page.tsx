@@ -1,14 +1,8 @@
 "use client";
 
 import React from "react";
-
-interface LinksHeaderProps {
-  totalItems: number;
-  filteredCount: number;
-  selectedCategory?: string;
-  selectedTag?: string | null;
-  getCategoryName: (categoryId: string) => string;
-}
+import type { LinksHeaderProps } from "@/types/links-types";
+import { FRIEND_LINK_FORM_URL } from "@/config/links";
 
 function LinksHeader({
   totalItems,
@@ -29,11 +23,7 @@ function LinksHeader({
       ) : (
         <p className="text-muted-foreground">
           共收录 {totalItems} 个优质网站，欢迎
-          <a
-            href="https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={FRIEND_LINK_FORM_URL} target="_blank" rel="noreferrer">
             互换友链
           </a>
         </p>

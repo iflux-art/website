@@ -99,3 +99,11 @@ export interface Subcategory {
   title: string;
   links: Link[];
 }
+
+export interface LinksHeaderProps {
+  totalItems: number;
+  filteredCount: number;
+  selectedCategory?: string;
+  selectedTag?: string | null;
+  getCategoryName: (categoryId: string) => string;
+}

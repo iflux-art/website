@@ -10,25 +10,8 @@ import { useFilterState } from "@/components/common/filter/use-filter-state";
 import { useBlogPosts } from "@/hooks";
 import { useMemo } from "react";
 import type { BlogPost } from "@/types/blog-types";
+import { formatDate } from "@/lib/utils/date";
 
-function formatDate(dateStr: string | undefined) {
-  if (!dateStr) return "";
-
-  try {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) {
-      return "";
-    }
-
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    return `${year}年${month.toString().padStart(2, "0")}月${day.toString().padStart(2, "0")}日`;
-  } catch {
-    return "";
-  }
-}
 function BlogContent() {
   const { posts, categories: rawCategories } = useBlogPosts();
 

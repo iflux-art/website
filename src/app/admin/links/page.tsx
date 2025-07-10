@@ -16,7 +16,7 @@ import {
   getTableActions,
   getPageActions,
 } from "@/components/layout/links/admin/table-config";
-import type { LinksItem, LinksCategory } from "@/types";
+import type { LinksItem, LinksCategory } from "@/types/links-types";
 import {
   Select,
   SelectContent,
@@ -24,6 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  fetchLinksData,
+  fetchLinksCategories,
+} from "@/lib/admin/get-links-data";
 export default function LinksAdminPage() {
   const [items, setItems] = useState<LinksItem[]>([]);
   const [categories, setCategories] = useState<LinksCategory[]>([]);
@@ -72,13 +76,11 @@ export default function LinksAdminPage() {
 
   const loadData = async () => {
     const [linksData, categoriesData] = await Promise.all([
-      fetch("/api/links", { cache: "no-store" }).then((res) => res.json()),
-      fetch("/api/links/categories", { cache: "no-store" }).then((res) =>
-        res.json(),
-      ),
+      fetchLinksData(),
+      fetchLinksCategories(),
     ]);
-    setItems(Array.isArray(linksData) ? linksData : linksData.items || []);
-    setCategories(categoriesData || []);
+    setItems(linksData);
+    setCategories(categoriesData);
   };
 
   const getCategoryName = (categoryId: string) => {

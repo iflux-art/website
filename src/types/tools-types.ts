@@ -60,3 +60,13 @@ export interface ToolConfig {
   /** 工具图标 */
   icon?: string;
 }
+
+export interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+  tags: string[];
+  isInternal?: boolean;
+}

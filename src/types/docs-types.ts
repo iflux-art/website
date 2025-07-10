@@ -4,7 +4,6 @@
 
 import { BaseContent, BaseCategory } from "@/types/data-types";
 import { URL } from "@/types/base-types";
-import type { NavDocItem } from "@/types/content";
 
 /**
  * 文档元数据项接口 (_meta.json)
@@ -30,15 +29,6 @@ export interface DocMetaItem {
   index?: boolean;
   /** 是否隐藏 */
   hidden?: boolean;
-}
-
-/**
- * 标题数据类型
- */
-export interface Heading {
-  id: string;
-  text: string;
-  level: number;
 }
 
 /**
@@ -161,3 +151,44 @@ export interface DocPaginationProps {
 }
 
 // 重新导出组件类型
+
+// 文档页面相关类型归档
+
+export interface DocPageParams {
+  slug: string[];
+}
+
+export interface DocFrontmatter {
+  title: string;
+  date?: string;
+  category?: string;
+  tags?: string[];
+  [key: string]: any;
+}
+
+export interface Heading {
+  level: number;
+  text: string;
+  id: string;
+}
+
+export interface NavDocItem {
+  path: string;
+  title: string;
+  [key: string]: any;
+}
+
+export interface DocContentResult {
+  content: string;
+  frontmatter: DocFrontmatter;
+  headings: Heading[];
+  prevDoc: NavDocItem | null;
+  nextDoc: NavDocItem | null;
+  breadcrumbs: any[];
+  mdxContent: React.ReactNode;
+  wordCount: number;
+  date: string | null;
+  relativePathFromTopCategory: string;
+  topLevelCategorySlug: string;
+  isIndexPage: boolean;
+}

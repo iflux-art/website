@@ -3,14 +3,6 @@
  */
 
 /**
- * 导航文档项目接口
- */
-export interface NavDocItem {
-  title: string;
-  path: string; // Full path, e.g., /docs/category/doc-name
-}
-
-/**
  * 内容加载选项类型
  */
 export interface ContentLoadOptions {

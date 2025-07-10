@@ -2,34 +2,11 @@
 
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { ToolCard } from "@/components/common/card/tool-card";
 import { UnifiedFilter } from "@/components/common/filter/unified-filter";
-import { TOOLS, TOOL_CATEGORIES } from "@/components/layout/tools/tools-data";
+import { TOOLS, TOOL_CATEGORIES } from "@/config/tools";
 import { ToolLayout } from "@/components/layout/tools/tool-layout";
 import { useFilterState } from "@/components/common/filter/use-filter-state";
-import type { Tool } from "@/components/layout/tools/tools-data";
-
-/**
- * 工具卡片组件
- */
-function ToolCardComponent({
-  tool,
-  onTagClick,
-}: {
-  tool: Tool;
-  onTagClick: (tag: string) => void;
-}) {
-  return (
-    <ToolCard
-      title={tool.name}
-      description={tool.description}
-      href={tool.path}
-      tags={tool.tags}
-      isExternal={!tool.isInternal}
-      onTagClick={onTagClick}
-    />
-  );
-}
+import { ToolCardComponent } from "@/components/common/card/tool-card-component";
 
 /**
  * 工具页面组件

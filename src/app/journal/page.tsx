@@ -3,50 +3,16 @@ import Link from "next/link";
 
 import { useJournalEntries } from "@/hooks";
 import { formatDate, cn } from "@/lib/utils";
+import { groupEntriesByYear, type GroupedEntries } from "@/lib/utils/date";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { JournalEntry } from "@/types/journal-types";
 import { useState, useEffect, useMemo } from "react";
-type GroupedEntries = [string, JournalEntry[]][];
-
-function groupEntriesByYear(entries: JournalEntry[]): GroupedEntries {
-  const groups = entries.reduce<Record<string, JournalEntry[]>>(
-    (acc, entry) => {
-      const year = entry.date
-        ? new Date(entry.date).getFullYear().toString()
-        : "未知";
-      if (!acc[year]) {
-        acc[year] = [];
-      }
-      acc[year].push(entry);
-      return acc;
-    },
-    {},
-  );
-
-  return Object.entries(groups).sort(
-    ([yearA], [yearB]) => Number(yearB) - Number(yearA),
-  );
-}
-
-// 类型标签样式映射
-const typeColors: Record<JournalEntry["type"], string> = {
-  blog: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
-  doc: "bg-purple-500/10 text-purple-700 dark:text-purple-300",
-  note: "bg-green-500/10 text-green-700 dark:text-green-300",
-  idea: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
-} as const;
-
-const typeLabels: Record<JournalEntry["type"], string> = {
-  blog: "博客",
-  doc: "文档",
-  note: "笔记",
-  idea: "想法",
-} as const;
+import { typeColors, typeLabels } from "@/config/journal";
 
 export default function JournalPage() {
   const { entries } = useJournalEntries();
-  const groupedEntries = groupEntriesByYear(entries);
+  const groupedEntries: GroupedEntries = groupEntriesByYear(entries);
 
   const allYears = useMemo(() => {
     return entries
