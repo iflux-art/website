@@ -1,7 +1,7 @@
 ---
-title: 'Tailwind CSS 动画完全指南：实用技巧与最佳实践'
-excerpt: '探索 Tailwind CSS 的动画功能，从内置动画类到自定义配置，轻松实现优雅的 UI 动效'
-date: '2024-05-25'
+title: "Tailwind CSS 动画完全指南：实用技巧与最佳实践"
+excerpt: "探索 Tailwind CSS 的动画功能，从内置动画类到自定义配置，轻松实现优雅的 UI 动效"
+date: "2024-05-25"
 tags:
   - Tailwind CSS
   - 动画
@@ -26,16 +26,20 @@ Tailwind CSS 默认提供了几个内置的动画类：
 
 ```html
 <!-- 旋转动画 -->
-<div class="animate-spin h-5 w-5 rounded-full border-2 border-border border-t-primary"></div>
+<div
+  class="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-primary"
+></div>
 
 <!-- 缩放淡出动画 -->
-<span class="animate-ping absolute h-3 w-3 rounded-full bg-[oklch(0.6_0.2_20)] opacity-75"></span>
+<span
+  class="absolute h-3 w-3 animate-ping rounded-full bg-[oklch(0.6_0.2_20)] opacity-75"
+></span>
 
 <!-- 淡入淡出动画 -->
-<div class="animate-pulse bg-muted rounded h-10 w-full"></div>
+<div class="h-10 w-full animate-pulse rounded bg-muted"></div>
 
 <!-- 弹跳动画 -->
-<div class="animate-bounce w-10 h-10 bg-primary rounded-full"></div>
+<div class="h-10 w-10 animate-bounce rounded-full bg-primary"></div>
 ```
 
 ### 内置动画的实现
@@ -114,31 +118,31 @@ module.exports = {
     extend: {
       // 定义关键帧
       keyframes: {
-        'fade-in-down': {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(-10px)',
+        "fade-in-down": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
           },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)',
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
           },
         },
-        'fade-out-up': {
+        "fade-out-up": {
           from: {
-            opacity: '1',
-            transform: 'translateY(0px)',
+            opacity: "1",
+            transform: "translateY(0px)",
           },
           to: {
-            opacity: '0',
-            transform: 'translateY(-10px)',
+            opacity: "0",
+            transform: "translateY(-10px)",
           },
         },
       },
       // 定义动画
       animation: {
-        'fade-in-down': 'fade-in-down 0.5s ease-out',
-        'fade-out-up': 'fade-out-up 0.5s ease-out',
+        "fade-in-down": "fade-in-down 0.5s ease-out",
+        "fade-out-up": "fade-out-up 0.5s ease-out",
       },
     },
   },
@@ -196,8 +200,8 @@ Tailwind CSS 还提供了用于控制动画持续时间和时间函数的工具�
 #### 动画迭代次数
 
 ```html
-<div class="animate-bounce iteration-count-1"><!-- 1次 --></div>
-<div class="animate-bounce iteration-count-infinite"><!-- 无限次 --></div>
+<div class="iteration-count-1 animate-bounce"><!-- 1次 --></div>
+<div class="iteration-count-infinite animate-bounce"><!-- 无限次 --></div>
 ```
 
 注意：`iteration-count-*` 类默认不包含在 Tailwind 中，你需要在配置中添加它们：
@@ -213,11 +217,11 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {
-        '.iteration-count-1': {
-          'animation-iteration-count': '1',
+        ".iteration-count-1": {
+          "animation-iteration-count": "1",
         },
-        '.iteration-count-infinite': {
-          'animation-iteration-count': 'infinite',
+        ".iteration-count-infinite": {
+          "animation-iteration-count": "infinite",
         },
       };
       addUtilities(newUtilities);
@@ -239,12 +243,12 @@ module.exports = {
     extend: {
       keyframes: {
         wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg) scale(1.1)' },
-          '50%': { transform: 'rotate(3deg) scale(0.9)' },
+          "0%, 100%": { transform: "rotate(-3deg) scale(1.1)" },
+          "50%": { transform: "rotate(3deg) scale(0.9)" },
         },
       },
       animation: {
-        wiggle: 'wiggle 1s ease-in-out infinite',
+        wiggle: "wiggle 1s ease-in-out infinite",
       },
     },
   },
@@ -267,7 +271,7 @@ Tailwind 的响应式前缀也适用于动画类：
 
 ```html
 <div class="group hover:bg-blue-500">
-  <div class="opacity-0 group-hover:opacity-100 group-hover:animate-bounce">
+  <div class="opacity-0 group-hover:animate-bounce group-hover:opacity-100">
     <!-- 当父元素悬停时显示并播放动画 -->
   </div>
 </div>
@@ -288,17 +292,17 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {
-        '.animate-fill-none': {
-          'animation-fill-mode': 'none',
+        ".animate-fill-none": {
+          "animation-fill-mode": "none",
         },
-        '.animate-fill-forwards': {
-          'animation-fill-mode': 'forwards',
+        ".animate-fill-forwards": {
+          "animation-fill-mode": "forwards",
         },
-        '.animate-fill-backwards': {
-          'animation-fill-mode': 'backwards',
+        ".animate-fill-backwards": {
+          "animation-fill-mode": "backwards",
         },
-        '.animate-fill-both': {
-          'animation-fill-mode': 'both',
+        ".animate-fill-both": {
+          "animation-fill-mode": "both",
         },
       };
       addUtilities(newUtilities);
@@ -325,19 +329,20 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        'fade-in-delay': {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(var(--offset, 10px))',
+        "fade-in-delay": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(var(--offset, 10px))",
           },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)',
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
           },
         },
       },
       animation: {
-        'fade-in-delay': 'fade-in-delay var(--duration, 0.5s) var(--delay, 0s) ease-out forwards',
+        "fade-in-delay":
+          "fade-in-delay var(--duration, 0.5s) var(--delay, 0s) ease-out forwards",
       },
     },
   },
@@ -347,7 +352,10 @@ module.exports = {
 在 HTML 中使用：
 
 ```html
-<div class="animate-fade-in-delay" style="--offset: 20px; --duration: 0.8s; --delay: 0.2s;">
+<div
+  class="animate-fade-in-delay"
+  style="--offset: 20px; --duration: 0.8s; --delay: 0.2s;"
+>
   自定义动画参数
 </div>
 ```
@@ -357,8 +365,10 @@ module.exports = {
 ### 1. 加载指示器
 
 ```html
-<div class="flex justify-center items-center">
-  <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+<div class="flex items-center justify-center">
+  <div
+    class="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"
+  ></div>
 </div>
 ```
 
@@ -368,11 +378,16 @@ module.exports = {
 <div class="relative">
   <span class="absolute top-0 right-0 block h-2 w-2">
     <span
-      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+      class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"
     ></span>
-    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+    <span class="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
   </span>
-  <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg
+    class="h-6 w-6 text-gray-500"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -386,13 +401,13 @@ module.exports = {
 ### 3. 内容加载骨架屏
 
 ```html
-<div class="animate-pulse flex space-x-4">
-  <div class="rounded-full bg-gray-300 h-12 w-12"></div>
+<div class="flex animate-pulse space-x-4">
+  <div class="h-12 w-12 rounded-full bg-gray-300"></div>
   <div class="flex-1 space-y-4 py-1">
-    <div class="h-4 bg-gray-300 rounded w-3/4"></div>
+    <div class="h-4 w-3/4 rounded bg-gray-300"></div>
     <div class="space-y-2">
-      <div class="h-4 bg-gray-300 rounded"></div>
-      <div class="h-4 bg-gray-300 rounded w-5/6"></div>
+      <div class="h-4 rounded bg-gray-300"></div>
+      <div class="h-4 w-5/6 rounded bg-gray-300"></div>
     </div>
   </div>
 </div>
@@ -402,7 +417,7 @@ module.exports = {
 
 ```html
 <button
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 transform active:scale-95"
+  class="transform rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-blue-700 active:scale-95"
 >
   点击我
 </button>
@@ -412,7 +427,7 @@ module.exports = {
 
 ```html
 <div
-  class="transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg bg-white rounded-lg p-6"
+  class="transform rounded-lg bg-white p-6 transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
 >
   <h3 class="text-lg font-semibold">卡片标题</h3>
   <p class="text-gray-600">卡片内容</p>
@@ -447,12 +462,12 @@ export default {
   plugins: [
     function ({ addBase }) {
       addBase({
-        '@media (prefers-reduced-motion: reduce)': {
-          '*': {
-            'animation-duration': '0.01ms !important',
-            'animation-iteration-count': '1 !important',
-            'transition-duration': '0.01ms !important',
-            'scroll-behavior': 'auto !important',
+        "@media (prefers-reduced-motion: reduce)": {
+          "*": {
+            "animation-duration": "0.01ms !important",
+            "animation-iteration-count": "1 !important",
+            "transition-duration": "0.01ms !important",
+            "scroll-behavior": "auto !important",
           },
         },
       });

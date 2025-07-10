@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
-import { getAllTagsWithCount } from "@/lib/blog-content";
-import { TagCountSchema } from "@/lib/schemas/blog";
+
+import { getAllTagsWithCount } from "@/lib/content";
 
 /**
  * 获取所有标签及其计数的 API 路由
@@ -16,9 +15,7 @@ export async function GET() {
       tag,
       count,
     }));
-    // 使用zod验证数据
-    const validatedTags = z.array(TagCountSchema).parse(tagCounts);
-    return NextResponse.json(validatedTags);
+    return NextResponse.json(tagCounts);
   } catch (error) {
     console.error("获取标签列表失败:", error);
     return NextResponse.json(

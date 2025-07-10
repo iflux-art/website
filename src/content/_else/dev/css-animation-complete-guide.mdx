@@ -4,11 +4,11 @@ description: 全面深入的 CSS 动画教程，涵盖过渡效果、关键帧�
 date: "2024-05-24"
 category: "前端开发"
 tags:
-- CSS动画
-- 交互设计
-- 性能优化
-- 动效开发
-- 用户体验
+  - CSS动画
+  - 交互设计
+  - 性能优化
+  - 动效开发
+  - 用户体验
 ---
 
 CSS 动画是实现 Web 动效的基础技术，它不需要任何外部依赖，浏览器原生支持，性能优秀，适用于各种项目。本文将带你全面了解 CSS 动画的各个方面，从基础概念到高级技巧，帮助你掌握这一强大的工具。
@@ -29,9 +29,11 @@ CSS 过渡允许属性值在指定的持续时间内平滑地变化，通常用�
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
   transition-delay: 0.1s;
-  
+
   /* 简写形式 */
-  transition: opacity 0.3s ease-in-out 0.1s, transform 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out 0.1s,
+    transform 0.3s ease-in-out;
 }
 ```
 
@@ -59,7 +61,9 @@ CSS 过渡允许属性值在指定的持续时间内平滑地变化，通常用�
   color: white;
   padding: 10px 20px;
   border-radius: 4px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .button:hover {
@@ -95,7 +99,7 @@ CSS 动画使用 `@keyframes` 规则，可以创建更复杂的动画序列，�
   animation-direction: normal;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  
+
   /* 简写形式 */
   animation: animationName 1s ease-out 0.5s 1 normal forwards running;
 }
@@ -186,20 +190,20 @@ CSS 变换允许你修改元素的形状、大小和位置，是创建动画效�
   transform: translateX(20px) translateY(10px);
   /* 或简写为 */
   transform: translate(20px, 10px);
-  
+
   /* 缩放 */
   transform: scaleX(1.5) scaleY(0.8);
   /* 或简写为 */
   transform: scale(1.5, 0.8);
-  
+
   /* 旋转 */
   transform: rotate(45deg);
-  
+
   /* 倾斜 */
   transform: skewX(10deg) skewY(5deg);
   /* 或简写为 */
   transform: skew(10deg, 5deg);
-  
+
   /* 组合变换 */
   transform: translate(20px, 10px) rotate(45deg) scale(1.5);
 }
@@ -211,15 +215,15 @@ CSS 变换允许你修改元素的形状、大小和位置，是创建动画效�
 .element {
   /* 3D 平移 */
   transform: translate3d(20px, 10px, 30px);
-  
+
   /* 3D 旋转 */
   transform: rotateX(45deg) rotateY(30deg) rotateZ(15deg);
   /* 或使用 */
   transform: rotate3d(1, 0.5, 0.2, 45deg);
-  
+
   /* 3D 缩放 */
   transform: scale3d(1.2, 0.8, 1.5);
-  
+
   /* 透视 */
   perspective: 1000px;
   transform-style: preserve-3d;
@@ -254,12 +258,17 @@ CSS 变换允许你修改元素的形状、大小和位置，是创建动画效�
 ```css
 /* 好的做法 */
 .good-animation {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 /* 避免的做法 */
 .bad-animation {
-  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    margin 0.3s ease;
 }
 ```
 
@@ -280,10 +289,18 @@ CSS 变换允许你修改元素的形状、大小和位置，是创建动画效�
 通过设置不同的延迟时间，可以创建交错动画效果：
 
 ```css
-.item:nth-child(1) { animation-delay: 0s; }
-.item:nth-child(2) { animation-delay: 0.1s; }
-.item:nth-child(3) { animation-delay: 0.2s; }
-.item:nth-child(4) { animation-delay: 0.3s; }
+.item:nth-child(1) {
+  animation-delay: 0s;
+}
+.item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.item:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.item:nth-child(4) {
+  animation-delay: 0.3s;
+}
 ```
 
 或使用 CSS 变量和 `calc()` 函数：
@@ -319,18 +336,18 @@ CSS 变换允许你修改元素的形状、大小和位置，是创建动画效�
 在 JavaScript 中，你可以监听动画的开始、结束和迭代事件：
 
 ```javascript
-const element = document.querySelector('.animated-element');
+const element = document.querySelector(".animated-element");
 
-element.addEventListener('animationstart', (e) => {
-  console.log('Animation started:', e.animationName);
+element.addEventListener("animationstart", (e) => {
+  console.log("Animation started:", e.animationName);
 });
 
-element.addEventListener('animationend', (e) => {
-  console.log('Animation ended:', e.animationName);
+element.addEventListener("animationend", (e) => {
+  console.log("Animation ended:", e.animationName);
 });
 
-element.addEventListener('animationiteration', (e) => {
-  console.log('Animation iteration:', e.animationName);
+element.addEventListener("animationiteration", (e) => {
+  console.log("Animation iteration:", e.animationName);
 });
 ```
 
@@ -340,8 +357,12 @@ element.addEventListener('animationiteration', (e) => {
 
 ```css
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-in {
@@ -372,9 +393,15 @@ element.addEventListener('animationiteration', (e) => {
 
 ```css
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .pulse {
@@ -386,9 +413,23 @@ element.addEventListener('animationiteration', (e) => {
 
 ```css
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 .shake {
@@ -400,8 +441,12 @@ element.addEventListener('animationiteration', (e) => {
 
 ```css
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {

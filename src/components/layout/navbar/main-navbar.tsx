@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Logo } from "@/components/common/logo";
 import { MobileMenu } from "@/components/layout/navbar/mobile-menu";
 import { NavMenu } from "./nav-menu";
-import { useNavbarScroll } from "@/hooks/use-navbar-scroll";
+import { useNavbarScroll } from "@/hooks";
 
 /**
  * 主站点导航栏组件

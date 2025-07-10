@@ -3,9 +3,9 @@
  */
 
 /**
- * 缓存配置
+ * 中间件缓存配置
  */
-export const CACHE_CONFIG = {
+export const MIDDLEWARE_CACHE_CONFIG = {
   // 静态资源缓存时间（1年）
   staticAssets: 60 * 60 * 24 * 365,
 

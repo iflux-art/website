@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 // Icons are now handled in SearchResults component
 import { SearchDialogProps, APISearchResult } from "@/types";
-import type { SearchResult } from "@/hooks/use-safe-state";
+import type { SearchResult } from "@/hooks/state";
 import { COMMANDS } from "@/components/features/search/commands";
 import { TOOLS } from "@/components/features/search/search-data";
 import items from "@/data/links/items.json";
@@ -13,7 +13,7 @@ import type { LinksItem as Item } from "@/types/links-types";
 import { SearchBar } from "@/components/features/search/search-bar";
 import { SearchResults } from "@/components/features/search/search-results";
 import { KeyboardHints } from "@/components/features/search/keyboard-hints";
-import { useSafeSearch } from "@/hooks/use-safe-state";
+import { useSafeSearch } from "@/hooks/state";
 
 /**
  * 搜索对话框组件

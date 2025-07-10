@@ -2,7 +2,8 @@
  * 文档数据相关类型定义
  */
 
-import { BaseContent, BaseCategory, URL } from "./common";
+import { BaseContent, BaseCategory } from "./data-types";
+import { URL } from "./base-types";
 
 /**
  * 文档元数据项接口 (_meta.json)

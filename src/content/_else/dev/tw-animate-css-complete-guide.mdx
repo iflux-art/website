@@ -49,10 +49,8 @@ pnpm add tw-animate-css
 // tailwind.config.js
 module.exports = {
   // ...其他配置
-  plugins: [
-    require('tw-animate-css')
-  ],
-}
+  plugins: [require("tw-animate-css")],
+};
 ```
 
 ### 导入样式
@@ -112,9 +110,9 @@ tw-animate-css 提供了一系列用于控制动画行为的类：
 #### 动画迭代次数
 
 ```html
-<div class="animate-pulse animate-repeat-1">播放1次</div>
-<div class="animate-pulse animate-repeat-2">播放2次</div>
-<div class="animate-pulse animate-repeat-infinite">无限播放</div>
+<div class="animate-repeat-1 animate-pulse">播放1次</div>
+<div class="animate-repeat-2 animate-pulse">播放2次</div>
+<div class="animate-repeat-infinite animate-pulse">无限播放</div>
 ```
 
 #### 动画方向
@@ -123,7 +121,9 @@ tw-animate-css 提供了一系列用于控制动画行为的类：
 <div class="animate-slideInLeft animate-direction-normal">正常方向</div>
 <div class="animate-slideInLeft animate-direction-reverse">反向</div>
 <div class="animate-slideInLeft animate-direction-alternate">交替</div>
-<div class="animate-slideInLeft animate-direction-alternate-reverse">反向交替</div>
+<div class="animate-slideInLeft animate-direction-alternate-reverse">
+  反向交替
+</div>
 ```
 
 #### 动画填充模式
@@ -277,7 +277,9 @@ tw-animate-css 包含了 Animate.css 的所有动画效果，按类别分组如�
 你可以组合多个动画控制类来精确控制动画行为：
 
 ```html
-<div class="animate-fadeInUp animate-duration-1000 animate-delay-500 animate-repeat-2 animate-fill-forwards">
+<div
+  class="animate-fadeInUp animate-duration-1000 animate-delay-500 animate-repeat-2 animate-fill-forwards"
+>
   这个元素会延迟0.5秒，然后在1秒内从下方淡入，重复2次，并保持最终状态
 </div>
 ```
@@ -297,9 +299,9 @@ tw-animate-css 包含了 Animate.css 的所有动画效果，按类别分组如�
 结合 Tailwind 的 group 功能，可以创建条件触发的动画：
 
 ```html
-<div class="group hover:bg-blue-100 p-4 rounded">
+<div class="group rounded p-4 hover:bg-blue-100">
   <h3>悬停查看更多</h3>
-  <p class="opacity-0 group-hover:opacity-100 group-hover:animate-fadeIn">
+  <p class="group-hover:animate-fadeIn opacity-0 group-hover:opacity-100">
     这段文字会在悬停时淡入显示
   </p>
 </div>
@@ -310,20 +312,20 @@ tw-animate-css 包含了 Animate.css 的所有动画效果，按类别分组如�
 你可以通过 JavaScript 动态添加或移除动画类来控制动画：
 
 ```javascript
-const element = document.querySelector('.animated-element');
+const element = document.querySelector(".animated-element");
 
 // 添加动画
-element.classList.add('animate-fadeIn');
+element.classList.add("animate-fadeIn");
 
 // 监听动画结束
-element.addEventListener('animationend', () => {
-  console.log('动画结束');
-  
+element.addEventListener("animationend", () => {
+  console.log("动画结束");
+
   // 移除动画类
-  element.classList.remove('animate-fadeIn');
-  
+  element.classList.remove("animate-fadeIn");
+
   // 添加新的动画
-  element.classList.add('animate-fadeOut');
+  element.classList.add("animate-fadeOut");
 });
 ```
 
@@ -344,9 +346,9 @@ element.addEventListener('animationend', () => {
 或者使用 JavaScript 动态设置延迟：
 
 ```javascript
-document.querySelectorAll('.staggered-item').forEach((item, index) => {
-  item.classList.add('animate-fadeInUp');
-  item.style.setProperty('--animate-delay', `${index * 0.1}s`);
+document.querySelectorAll(".staggered-item").forEach((item, index) => {
+  item.classList.add("animate-fadeInUp");
+  item.style.setProperty("--animate-delay", `${index * 0.1}s`);
 });
 ```
 
@@ -355,21 +357,21 @@ document.querySelectorAll('.staggered-item').forEach((item, index) => {
 ### 1. 页面加载动画
 
 ```html
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
   <div class="animate-fadeInUp animate-delay-100 animate-duration-800">
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="rounded-lg bg-white p-6 shadow-md">
       <h3 class="text-lg font-semibold">特性一</h3>
       <p class="text-gray-600">描述文本</p>
     </div>
   </div>
   <div class="animate-fadeInUp animate-delay-300 animate-duration-800">
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="rounded-lg bg-white p-6 shadow-md">
       <h3 class="text-lg font-semibold">特性二</h3>
       <p class="text-gray-600">描述文本</p>
     </div>
   </div>
   <div class="animate-fadeInUp animate-delay-500 animate-duration-800">
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="rounded-lg bg-white p-6 shadow-md">
       <h3 class="text-lg font-semibold">特性三</h3>
       <p class="text-gray-600">描述文本</p>
     </div>
@@ -380,7 +382,9 @@ document.querySelectorAll('.staggered-item').forEach((item, index) => {
 ### 2. 通知提示
 
 ```html
-<div class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg animate-fadeInDown animate-duration-500 animate-fill-forwards">
+<div
+  class="animate-fadeInDown animate-duration-500 animate-fill-forwards fixed top-4 right-4 rounded bg-green-500 p-4 text-white shadow-lg"
+>
   操作成功！
 </div>
 ```
@@ -388,11 +392,15 @@ document.querySelectorAll('.staggered-item').forEach((item, index) => {
 ### 3. 模态框动画
 
 ```html
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center animate-fadeIn animate-duration-300">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md animate-zoomIn animate-duration-500">
-    <h2 class="text-xl font-bold mb-4">模态框标题</h2>
+<div
+  class="bg-opacity-50 animate-fadeIn animate-duration-300 fixed inset-0 flex items-center justify-center bg-black"
+>
+  <div
+    class="animate-zoomIn animate-duration-500 w-full max-w-md rounded-lg bg-white p-6"
+  >
+    <h2 class="mb-4 text-xl font-bold">模态框标题</h2>
     <p class="mb-4">模态框内容</p>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded">确定</button>
+    <button class="rounded bg-blue-500 px-4 py-2 text-white">确定</button>
   </div>
 </div>
 ```
@@ -400,11 +408,18 @@ document.querySelectorAll('.staggered-item').forEach((item, index) => {
 ### 4. 图片库悬停效果
 
 ```html
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
   <div class="group relative overflow-hidden rounded">
-    <img src="image1.jpg" class="w-full h-auto transition-transform duration-500 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-      <span class="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 group-hover:animate-fadeIn">
+    <img
+      src="image1.jpg"
+      class="h-auto w-full transition-transform duration-500 group-hover:scale-110"
+    />
+    <div
+      class="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+    >
+      <span
+        class="group-hover:animate-fadeIn text-lg font-semibold text-white opacity-0 group-hover:opacity-100"
+      >
         图片标题
       </span>
     </div>
@@ -419,19 +434,22 @@ document.querySelectorAll('.staggered-item').forEach((item, index) => {
 
 ```javascript
 // 创建观察器
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // 元素进入视口，添加动画类
-      entry.target.classList.add('animate-fadeInUp');
-      // 停止观察该元素
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 }); // 当元素有10%进入视口时触发
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // 元素进入视口，添加动画类
+        entry.target.classList.add("animate-fadeInUp");
+        // 停止观察该元素
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.1 },
+); // 当元素有10%进入视口时触发
 
 // 观察所有带有 .scroll-animate 类的元素
-document.querySelectorAll('.scroll-animate').forEach(el => {
+document.querySelectorAll(".scroll-animate").forEach((el) => {
   observer.observe(el);
 });
 ```
@@ -439,7 +457,7 @@ document.querySelectorAll('.scroll-animate').forEach(el => {
 HTML:
 
 ```html
-<div class="my-16 scroll-animate opacity-0">
+<div class="scroll-animate my-16 opacity-0">
   <h2 class="text-2xl font-bold">滚动到这里时会显示动画</h2>
   <p>内容...</p>
 </div>
@@ -457,10 +475,7 @@ HTML:
 // tailwind.config.js
 module.exports = {
   purge: {
-    content: [
-      './src/**/*.{js,jsx,ts,tsx,vue}',
-      './public/index.html',
-    ],
+    content: ["./src/**/*.{js,jsx,ts,tsx,vue}", "./public/index.html"],
     options: {
       safelist: [
         // 保留特定的动画类
@@ -469,7 +484,7 @@ module.exports = {
     },
   },
   // ...其他配置
-}
+};
 ```
 
 ### 2. 避免过度使用动画

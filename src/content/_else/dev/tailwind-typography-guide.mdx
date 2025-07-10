@@ -1,7 +1,7 @@
 ---
-title: 'Tailwind CSS Typography 插件完全指南'
-excerpt: '深入了解 Tailwind CSS Typography 插件的使用方法、样式定制和最佳实践，让你的内容排版更加精美'
-date: '2024-05-21'
+title: "Tailwind CSS Typography 插件完全指南"
+excerpt: "深入了解 Tailwind CSS Typography 插件的使用方法、样式定制和最佳实践，让你的内容排版更加精美"
+date: "2024-05-21"
 tags:
   - Tailwind CSS
   - Typography
@@ -46,12 +46,12 @@ yarn add -D @tailwindcss/typography
 ```js
 // tailwind.config.mjs
 export default {
-  content: ['./src/**/*.{js,jsx,ts,tsx,md,mdx}'],
+  content: ["./src/**/*.{js,jsx,ts,tsx,md,mdx}"],
   theme: {
     // ...
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
     // 其他插件...
   ],
 };
@@ -109,7 +109,9 @@ Typography 插件为各种 HTML 元素提供了精心设计的默认样式。以
   这是一个段落示例。Typography 插件为段落设置了合适的行高和间距，
   使得长文本阅读更加舒适。段落之间有适当的间距，避免文本过于拥挤。
 </p>
-<p>这是第二个段落，你可以看到段落之间的间距很合适，既不会太紧凑也不会太松散。</p>
+<p>
+  这是第二个段落，你可以看到段落之间的间距很合适，既不会太紧凑也不会太松散。
+</p>
 ```
 
 #### 列表 (ul, ol, li)
@@ -275,30 +277,30 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            color: '#333',
-            maxWidth: '65ch',
+            color: "#333",
+            maxWidth: "65ch",
 
             h1: {
-              color: '#111',
-              fontWeight: '800',
+              color: "#111",
+              fontWeight: "800",
             },
             h2: {
-              color: '#111',
-              fontWeight: '700',
+              color: "#111",
+              fontWeight: "700",
             },
 
-            'code::before': {
+            "code::before": {
               content: '""',
             },
-            'code::after': {
+            "code::after": {
               content: '""',
             },
 
             a: {
-              color: '#3182ce',
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline',
+              color: "#3182ce",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
               },
             },
 
@@ -308,7 +310,7 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require("@tailwindcss/typography")],
 };
 ```
 
@@ -321,7 +323,7 @@ export default {
 export default {
   theme: {
     extend: {
-      typography: theme => ({
+      typography: (theme) => ({
         DEFAULT: {
           css: {
             // 默认样式...
@@ -330,12 +332,12 @@ export default {
         // 自定义变体
         custom: {
           css: {
-            '--tw-prose-body': theme('colors.zinc.700'),
-            '--tw-prose-headings': theme('colors.zinc.900'),
-            '--tw-prose-links': theme('colors.blue.500'),
-            '--tw-prose-code': theme('colors.indigo.500'),
-            '--tw-prose-pre-code': theme('colors.indigo.100'),
-            '--tw-prose-pre-bg': theme('colors.indigo.900'),
+            "--tw-prose-body": theme("colors.zinc.700"),
+            "--tw-prose-headings": theme("colors.zinc.900"),
+            "--tw-prose-links": theme("colors.blue.500"),
+            "--tw-prose-code": theme("colors.indigo.500"),
+            "--tw-prose-pre-code": theme("colors.indigo.100"),
+            "--tw-prose-pre-bg": theme("colors.indigo.900"),
 
             // 更多自定义...
           },
@@ -343,14 +345,14 @@ export default {
       }),
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require("@tailwindcss/typography")],
 };
 ```
 
 然后，你可以使用 `prose-custom` 类应用这个变体：
 
 ```html
-<article class="prose prose-custom">
+<article class="prose-custom prose">
   <!-- 内容 -->
 </article>
 ```
@@ -363,8 +365,8 @@ Typography 插件特别适合与 Next.js 和 MDX 结合使用，为你的内容�
 
 ```tsx
 // src/components/mdx-layout.tsx
-import React from 'react';
-import { cn } from '@/utils';
+import React from "react";
+import { cn } from "@/utils";
 
 interface MDXLayoutProps {
   children: React.ReactNode;
@@ -375,13 +377,13 @@ export function MDXLayout({ children, className }: MDXLayoutProps) {
   return (
     <article
       className={cn(
-        'prose prose-lg dark:prose-invert max-w-none',
+        "prose prose-lg max-w-none dark:prose-invert",
         // 自定义样式
-        'prose-headings:scroll-mt-20',
-        'prose-a:text-primary prose-a:no-underline hover:prose-a:underline',
+        "prose-headings:scroll-mt-20",
+        "prose-a:text-primary prose-a:no-underline hover:prose-a:underline",
         // 使用 InlineCode 组件样式，不需要在这里定义内联代码样式
-        'prose-pre:rounded-lg prose-pre:bg-muted',
-        className
+        "prose-pre:rounded-lg prose-pre:bg-muted",
+        className,
       )}
     >
       {children}
@@ -394,9 +396,9 @@ export function MDXLayout({ children, className }: MDXLayoutProps) {
 
 ```tsx
 // src/mdx-components.tsx
-import React from 'react';
-import { MDXLayout } from '@/components/mdx-layout';
-import { InlineCode } from '@/components/ui/markdown/inline-code';
+import React from "react";
+import { MDXLayout } from "@/components/mdx-layout";
+import { InlineCode } from "@/components/ui/markdown/inline-code";
 
 export function useMDXComponents(components) {
   return {
@@ -405,7 +407,7 @@ export function useMDXComponents(components) {
 
     // 自定义行内代码组件
     code: ({ className, ...props }) => {
-      const match = /language-(\w+)/.exec(className || '');
+      const match = /language-(\w+)/.exec(className || "");
 
       if (match) {
         // 代码块处理...
@@ -429,11 +431,11 @@ Typography 插件可以与自定义组件结合使用，创建更丰富的内容
 
 ```tsx
 // src/components/ui/markdown/inline-code.tsx
-import React from 'react';
-import { cn } from '@/utils';
+import React from "react";
+import { cn } from "@/utils";
 
 // 导入项目中的 InlineCode 组件
-import { InlineCode as ProjectInlineCode } from '@/components/ui/markdown/inline-code';
+import { InlineCode as ProjectInlineCode } from "@/components/ui/markdown/inline-code";
 
 // 为了演示目的，这里仍然保留一个自定义的 InlineCode 组件
 export function InlineCode({
@@ -444,7 +446,9 @@ export function InlineCode({
   className?: string;
 }) {
   // 使用项目中的 InlineCode 组件
-  return <ProjectInlineCode className={className}>{children}</ProjectInlineCode>;
+  return (
+    <ProjectInlineCode className={className}>{children}</ProjectInlineCode>
+  );
 }
 ```
 
@@ -452,8 +456,8 @@ export function InlineCode({
 
 ```tsx
 // src/components/ui/markdown/code-block.tsx
-import React from 'react';
-import { cn } from '@/utils';
+import React from "react";
+import { cn } from "@/utils";
 
 export function CodeBlock({
   code,
@@ -465,9 +469,9 @@ export function CodeBlock({
   className?: string;
 }) {
   return (
-    <div className={cn('relative my-6 overflow-hidden rounded-lg', className)}>
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
-        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase">
+    <div className={cn("relative my-6 overflow-hidden rounded-lg", className)}>
+      <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-100 px-4 py-2 dark:border-zinc-700 dark:bg-zinc-800">
+        <span className="text-xs font-medium text-zinc-500 uppercase dark:text-zinc-400">
           {language}
         </span>
         <button
@@ -477,11 +481,9 @@ export function CodeBlock({
           复制
         </button>
       </div>
-      <pre className="p-4 overflow-auto bg-zinc-50 dark:bg-zinc-900">
-        <code className={`language-${language}`}>
-          {code}
-        </code>
-          </pre>
+      <pre className="overflow-auto bg-zinc-50 p-4 dark:bg-zinc-900">
+        <code className={`language-${language}`}>{code}</code>
+      </pre>
     </div>
   );
 }
@@ -545,7 +547,7 @@ Typography 插件使用 CSS 变量控制颜色，可以在运行时修改这些�
 ```
 
 ```html
-<article class="prose custom-theme">
+<article class="custom-theme prose">
   <!-- 内容 -->
 </article>
 ```

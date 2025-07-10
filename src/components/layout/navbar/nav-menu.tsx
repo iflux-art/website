@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, NAV_DESCRIPTIONS } from "@/config/nav-config";
-import { useAuthState } from "@/hooks/use-auth-state";
+import { useAuthState } from "@/hooks";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { AdminMenu as AdminMenuComponent } from "@/components/layout/admin/admin-menu";
 import type { NavProps, NavMenuProps } from "@/types/nav-types";

@@ -1,7 +1,7 @@
 ---
-title: 'Next.js 与 MDX：理解样式优先级'
-excerpt: '深入解析 Next.js 项目中 MDX 样式的四个来源及其优先级，帮助你从源头上避免样式冲突'
-date: '2024-05-20'
+title: "Next.js 与 MDX：理解样式优先级"
+excerpt: "深入解析 Next.js 项目中 MDX 样式的四个来源及其优先级，帮助你从源头上避免样式冲突"
+date: "2024-05-20"
 tags:
   - Next.js
   - MDX
@@ -43,41 +43,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'oklch(0.6 0.2 240)',
-        secondary: 'oklch(0.9 0.1 180)',
+        primary: "oklch(0.6 0.2 240)",
+        secondary: "oklch(0.9 0.1 180)",
       },
       typography: {
         DEFAULT: {
           css: {
-            color: 'oklch(0.3 0 0)',
+            color: "oklch(0.3 0 0)",
             h1: {
-              color: 'oklch(0.2 0 0)',
-              fontWeight: '800',
+              color: "oklch(0.2 0 0)",
+              fontWeight: "800",
             },
             code: {
-              color: 'oklch(0.5 0.2 0)',
-              backgroundColor: 'oklch(0.98 0 0)',
-              borderRadius: '0.25rem',
-              padding: '0.2em 0.4em',
+              color: "oklch(0.5 0.2 0)",
+              backgroundColor: "oklch(0.98 0 0)",
+              borderRadius: "0.25rem",
+              padding: "0.2em 0.4em",
             },
           },
         },
         dark: {
           css: {
-            color: 'oklch(0.9 0 0)',
+            color: "oklch(0.9 0 0)",
             h1: {
-              color: 'oklch(0.95 0 0)',
+              color: "oklch(0.95 0 0)",
             },
             code: {
-              color: 'oklch(0.8 0.1 0)',
-              backgroundColor: 'oklch(0.2 0 0)',
+              color: "oklch(0.8 0.1 0)",
+              backgroundColor: "oklch(0.2 0 0)",
             },
           },
         },
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require("@tailwindcss/typography")],
 };
 ```
 
@@ -141,7 +141,7 @@ pre {
 }
 
 pre::before {
-  content: '';
+  content: "";
   display: block;
   height: 2rem;
   background-color: oklch(0.95 0 0);
@@ -175,11 +175,11 @@ pre::before {
 
 ```tsx
 // components/ui/markdown/inline-code.tsx
-import React from 'react';
-import { cn } from '@/utils';
+import React from "react";
+import { cn } from "@/utils";
 
 // 导入项目中的 InlineCode 组件
-import { InlineCode as ProjectInlineCode } from '@/components/ui/markdown/inline-code';
+import { InlineCode as ProjectInlineCode } from "@/components/ui/markdown/inline-code";
 
 // 为了演示目的，这里仍然保留一个自定义的 InlineCode 组件
 export function InlineCode({
@@ -190,14 +190,16 @@ export function InlineCode({
   className?: string;
 }) {
   // 使用项目中的 InlineCode 组件
-  return <ProjectInlineCode className={className}>{children}</ProjectInlineCode>;
+  return (
+    <ProjectInlineCode className={className}>{children}</ProjectInlineCode>
+  );
 }
 ```
 
 ```tsx
 // components/ui/markdown/code-block.tsx
-import React from 'react';
-import { cn } from '@/utils';
+import React from "react";
+import { cn } from "@/utils";
 
 export function CodeBlock({
   code,
@@ -209,9 +211,9 @@ export function CodeBlock({
   className?: string;
 }) {
   return (
-    <div className={cn('relative', className)}>
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
-        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase">
+    <div className={cn("relative", className)}>
+      <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-100 px-4 py-2 dark:border-zinc-700 dark:bg-zinc-800">
+        <span className="text-xs font-medium text-zinc-500 uppercase dark:text-zinc-400">
           {language}
         </span>
         <button
@@ -221,7 +223,7 @@ export function CodeBlock({
           复制
         </button>
       </div>
-      <pre className="p-4 overflow-auto bg-zinc-50 dark:bg-zinc-900">
+      <pre className="overflow-auto bg-zinc-50 p-4 dark:bg-zinc-900">
         <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
@@ -250,20 +252,20 @@ export function CodeBlock({
 
 ```tsx
 // mdx-components.tsx
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { cn } from '@/utils';
-import { mdxTypographyComponents } from '@/components/ui/markdown/mdx-typography';
-import { CodeBlock } from '@/components/ui/markdown/code-block';
-import { InlineCode } from '@/components/ui/markdown/inline-code';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/utils";
+import { mdxTypographyComponents } from "@/components/ui/markdown/mdx-typography";
+import { CodeBlock } from "@/components/ui/markdown/code-block";
+import { InlineCode } from "@/components/ui/markdown/inline-code";
 
 // 标题样式
 const headingStyles = {
-  h1: 'text-4xl font-bold tracking-tight mt-8 mb-4 scroll-m-20',
-  h2: 'text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b scroll-m-20',
-  h3: 'text-xl font-semibold tracking-tight mt-8 mb-3 scroll-m-20',
-  h4: 'text-lg font-semibold tracking-tight mt-8 mb-3 scroll-m-20',
+  h1: "text-4xl font-bold tracking-tight mt-8 mb-4 scroll-m-20",
+  h2: "text-2xl font-semibold tracking-tight mt-10 mb-4 pb-2 border-b scroll-m-20",
+  h3: "text-xl font-semibold tracking-tight mt-8 mb-3 scroll-m-20",
+  h4: "text-lg font-semibold tracking-tight mt-8 mb-3 scroll-m-20",
 };
 
 export const mdxComponents = {
@@ -274,14 +276,18 @@ export const mdxComponents = {
   h1: ({ children, id, ...props }) => {
     const headingId =
       id ||
-      (typeof children === 'string'
+      (typeof children === "string"
         ? children
             .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]/g, '')
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
         : undefined);
     return (
-      <h1 id={headingId} className={cn(headingStyles.h1, props.className)} {...props}>
+      <h1
+        id={headingId}
+        className={cn(headingStyles.h1, props.className)}
+        {...props}
+      >
         {children}
       </h1>
     );
@@ -289,14 +295,18 @@ export const mdxComponents = {
   h2: ({ children, id, ...props }) => {
     const headingId =
       id ||
-      (typeof children === 'string'
+      (typeof children === "string"
         ? children
             .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]/g, '')
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
         : undefined);
     return (
-      <h2 id={headingId} className={cn(headingStyles.h2, props.className)} {...props}>
+      <h2
+        id={headingId}
+        className={cn(headingStyles.h2, props.className)}
+        {...props}
+      >
         {children}
       </h2>
     );
@@ -304,11 +314,17 @@ export const mdxComponents = {
 
   // 行内代码
   code: ({ className, ...props }) => {
-    const match = /language-(\w+)/.exec(className || '');
+    const match = /language-(\w+)/.exec(className || "");
 
     if (match) {
       // 代码块
-      return <CodeBlock language={match[1]} code={String(props.children)} className={className} />;
+      return (
+        <CodeBlock
+          language={match[1]}
+          code={String(props.children)}
+          className={className}
+        />
+      );
     }
 
     // 行内代码
@@ -317,7 +333,7 @@ export const mdxComponents = {
 
   // 链接
   a: ({ href, children, ...props }) => {
-    if (href?.startsWith('/')) {
+    if (href?.startsWith("/")) {
       return (
         <Link href={href} {...props}>
           {children}
@@ -325,7 +341,7 @@ export const mdxComponents = {
       );
     }
 
-    if (href?.startsWith('#')) {
+    if (href?.startsWith("#")) {
       return (
         <a href={href} className="text-primary hover:underline" {...props}>
           {children}
@@ -354,13 +370,17 @@ export const mdxComponents = {
       <div className="my-6">
         <Image
           src={src}
-          alt={alt || ''}
+          alt={alt || ""}
           width={800}
           height={450}
           className="rounded-lg"
           {...props}
         />
-        {alt && <p className="text-sm text-center mt-2 text-zinc-500 dark:text-zinc-400">{alt}</p>}
+        {alt && (
+          <p className="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">
+            {alt}
+          </p>
+        )}
       </div>
     );
   },
@@ -463,9 +483,9 @@ export function InlineCode({ children, className }) {
   return (
     <code
       className={cn(
-        'rounded-md px-1.5 py-0.5 text-sm font-mono border',
-        'bg-[var(--code-bg)] border-[var(--code-border)] text-[var(--code-text)]',
-        className
+        "rounded-md border px-1.5 py-0.5 font-mono text-sm",
+        "border-[var(--code-border)] bg-[var(--code-bg)] text-[var(--code-text)]",
+        className,
       )}
     >
       {children}
@@ -481,21 +501,22 @@ export function InlineCode({ children, className }) {
 ```tsx
 // mdx-components.tsx
 code: ({ className, ...props }) => {
-  const isInline = !className?.includes('language-');
+  const isInline = !className?.includes("language-");
 
   if (isInline) {
     return (
       <InlineCode
         className={cn(
           // 基础样式
-          'px-1.5 py-0.5',
+          "px-1.5 py-0.5",
           // 条件样式
           {
-            'bg-yellow-50 text-yellow-800 border-yellow-200': props.type === 'warning',
-            'bg-red-50 text-red-800 border-red-200': props.type === 'error',
+            "border-yellow-200 bg-yellow-50 text-yellow-800":
+              props.type === "warning",
+            "border-red-200 bg-red-50 text-red-800": props.type === "error",
           },
           // 允许外部覆盖
-          className
+          className,
         )}
         {...props}
       />

@@ -6,7 +6,14 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { BlogPost, SidebarItem, DocMetaItem } from "@/types";
+import {
+  BlogPost,
+  SidebarItem,
+  DocMetaItem,
+  DocCategory,
+  DocItem,
+  NavDocItem,
+} from "@/types";
 
 // ==================== 博客相关函数 ====================
 
@@ -161,27 +168,6 @@ export function getPostsByTag(tag: string): BlogPost[] {
 }
 
 // ==================== 文档相关函数 ====================
-
-/**
- * 文档分类接口
- */
-export interface DocCategory {
-  id: string;
-  title: string;
-  description: string;
-  count: number;
-}
-
-/**
- * 文档项目接口 (用于 getRecentDocs 等)
- */
-export interface DocItem {
-  slug: string;
-  category: string;
-  title: string;
-  description: string;
-  date?: string;
-}
 
 /**
  * 递归计算目录中的文档数量 (不含 index.mdx 和 _ 开头的)
@@ -349,6 +335,7 @@ export function getRecentDocs(limit: number = 4): DocItem[] {
               title: data.title || slug,
               description: data.description || data.excerpt || "",
               date: data.date,
+              path: `${categoryId}/${slug}`,
             });
           }
         }
@@ -540,14 +527,6 @@ export function getDocSidebar(category: string): SidebarItem[] {
   const docsContentDir = path.join(process.cwd(), "src", "content", "docs");
   // The initial call to getDocDirectoryStructure uses the category name as the currentRelativePath
   return getDocDirectoryStructure(docsContentDir, category);
-}
-
-/**
- * Represents a document item for navigation (prev/next links).
- */
-export interface NavDocItem {
-  title: string;
-  path: string; // Full path, e.g., /docs/category/doc-name
 }
 
 /**

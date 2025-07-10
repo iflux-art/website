@@ -1,15 +1,15 @@
 ---
 title: Google Python 编码规范指南
 description: 详细解读 Google 官方 Python 代码规范，包含代码样式、文档标准、工程实践等全方位指导，助力开发团队构建高质量、可维护的 Python 项目
-date: '2025-06-09'
+date: "2025-06-09"
 category: "开发"
 tags:
-- Python规范
-- 代码质量
-- 工程实践
-- 文档标准
-- 团队协作
-- 谷歌标准
+  - Python规范
+  - 代码质量
+  - 工程实践
+  - 文档标准
+  - 团队协作
+  - 谷歌标准
 ---
 
 > 这是 Google 为其内部 Python 代码制定的编码规范和风格指南，目的是帮助开发者编写干净、一致且可维护的 Python 代码。英文完整版可以访问 [Google Style Guide](https://google.github.io/styleguide/pyguide.html)。
@@ -75,10 +75,10 @@ from __future__ import print_function
 以下是推荐的使用方式示例：
 
 ```python
-foo_bar(self, width, height, color='black', design=None, 
+foo_bar(self, width, height, color='black', design=None,
         x='foo', emphasis=None, highlight=0)
 
-if (width == 0 and height == 0 and 
+if (width == 0 and height == 0 and
     color == 'red' and emphasis == 'strong'):
 ```
 
@@ -265,17 +265,17 @@ class SampleClass(object):
 
 Python 之父 Guido 推荐的命名规范：
 
-| 类型         | 公共                          | 内部                          |
-|--------------|-------------------------------|-------------------------------|
-| 模块         | lower_with_under              | _lower_with_under             |
-| 包           | lower_with_under              |                               |
-| 类           | CapWords                      | _CapWords                     |
-| 异常         | CapWords                      |                               |
-| 函数         | lower_with_under()            | _lower_with_under()           |
-| 全局/类常量  | CAPS_WITH_UNDER               | _CAPS_WITH_UNDER              |
-| 全局/类变量  | lower_with_under              | _lower_with_under             |
-| 实例变量     | lower_with_under              | _lower_with_under (protected) 或 __lower_with_under (private) |
-| 方法名       | lower_with_under()            | _lower_with_under() (protected) 或 __lower_with_under() (private) |
+| 类型        | 公共               | 内部                                                                 |
+| ----------- | ------------------ | -------------------------------------------------------------------- |
+| 模块        | lower_with_under   | \_lower_with_under                                                   |
+| 包          | lower_with_under   |                                                                      |
+| 类          | CapWords           | \_CapWords                                                           |
+| 异常        | CapWords           |                                                                      |
+| 函数        | lower_with_under() | \_lower_with_under()                                                 |
+| 全局/类常量 | CAPS_WITH_UNDER    | \_CAPS_WITH_UNDER                                                    |
+| 全局/类变量 | lower_with_under   | \_lower_with_under                                                   |
+| 实例变量    | lower_with_under   | \_lower_with_under (protected) 或 \_\_lower_with_under (private)     |
+| 方法名      | lower_with_under() | \_lower_with_under() (protected) 或 \_\_lower_with_under() (private) |
 
 避免使用的命名：
 
@@ -286,7 +286,7 @@ Python 之父 Guido 推荐的命名规范：
 命名约定：
 
 1. "内部(Internal)"表示仅模块内可用，或者在类内是保护或私有的
-2. 用单下划线(_)开头表示模块变量或函数是 protected 的
-3. 用双下划线(__)开头的实例变量或方法表示类内私有
+2. 用单下划线(\_)开头表示模块变量或函数是 protected 的
+3. 用双下划线(\_\_)开头的实例变量或方法表示类内私有
 4. 将相关的类和顶级函数放在同一个模块里
 5. 对类名使用大写字母开头的单词(如 CapWords，即 Pascal 风格)，但是模块名应该用小写加下划线的方式(如 lower_with_under.py)

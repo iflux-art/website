@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { NavDocItem } from "@/lib/content";
+import type { NavDocItem } from "@/types";
 
 interface DocPaginationProps {
   prevDoc: NavDocItem | null;

@@ -1,29 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
-// 定义响应体schema
-const LogoutResponseSchema = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-  error: z.string().optional(),
-});
+// 定义响应体类型
+interface LogoutResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
 
 export async function POST(_request: NextRequest) {
   try {
     // 模拟登出逻辑 - 实际项目中清除token等
-    return NextResponse.json(
-      LogoutResponseSchema.parse({
-        success: true,
-        message: "登出成功",
-      }),
-    );
+    const response: LogoutResponse = {
+      success: true,
+      message: "登出成功",
+    };
+
+    return NextResponse.json(response);
   } catch {
-    return NextResponse.json(
-      LogoutResponseSchema.parse({
-        success: false,
-        error: "服务器内部错误",
-      }),
-      { status: 500 },
-    );
+    const response: LogoutResponse = {
+      success: false,
+      error: "服务器内部错误",
+    };
+
+    return NextResponse.json(response, { status: 500 });
   }
 }

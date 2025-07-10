@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { useJournalEntries } from "@/hooks/use-journal";
+import { useJournalEntries } from "@/hooks";
 import { formatDate, cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";

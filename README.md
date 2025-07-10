@@ -44,3 +44,9 @@ pnpm build
 ```bash
 pnpm lint
 ```
+
+### 修复格式
+
+```bash
+pnpm exec prettier --write .
+```

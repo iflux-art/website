@@ -5,11 +5,7 @@ import matter from "gray-matter";
 import { TOOLS } from "@/components/layout/tools/tools-data";
 import items from "@/data/links/items.json";
 import type { LinksItem as Item } from "@/types/links-types";
-import {
-  SearchRequestSchema,
-  SearchResponseSchema,
-} from "@/lib/schemas/search";
-import { z } from "zod";
+import type { SearchRequest, SearchResponse } from "@/types";
 
 // 辅助函数
 function escapeRegExp(string: string): string {
@@ -276,13 +272,32 @@ function searchLinks(query: string): SearchResult[] {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const params = SearchRequestSchema.parse({
-      q: searchParams.get("q"),
-      type: searchParams.get("type"),
-      limit: parseInt(searchParams.get("limit") || "8"),
-    });
 
-    const { q: query, type, limit } = params;
+    // 手动验证请求参数
+    const q = searchParams.get("q");
+    if (!q || q.trim().length === 0) {
+      return NextResponse.json(
+        { success: false, results: [], count: 0, error: "搜索内容不能为空" },
+        { status: 400 },
+      );
+    }
+
+    const type = searchParams.get("type") as SearchRequest["type"];
+    const limit = parseInt(searchParams.get("limit") || "8");
+
+    if (isNaN(limit) || limit < 1 || limit > 50) {
+      return NextResponse.json(
+        {
+          success: false,
+          results: [],
+          count: 0,
+          error: "limit 参数必须在 1-50 之间",
+        },
+        { status: 400 },
+      );
+    }
+
+    const query = q.trim();
 
     let results: SearchResult[] = [];
 
@@ -309,34 +324,21 @@ export async function GET(request: NextRequest) {
         ...result,
       }));
 
-    return NextResponse.json(
-      SearchResponseSchema.parse({
-        success: true,
-        results,
-        count: results.length,
-      }),
-    );
+    const response: SearchResponse = {
+      success: true,
+      results,
+      count: results.length,
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Search API error:", error);
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        SearchResponseSchema.parse({
-          success: false,
-          results: [],
-          count: 0,
-          error: "Invalid request parameters",
-        }),
-        { status: 400 },
-      );
-    }
-    return NextResponse.json(
-      SearchResponseSchema.parse({
-        success: false,
-        results: [],
-        count: 0,
-        error: "Internal server error",
-      }),
-      { status: 500 },
-    );
+    const response: SearchResponse = {
+      success: false,
+      results: [],
+      count: 0,
+      error: "Internal server error",
+    };
+    return NextResponse.json(response, { status: 500 });
   }
 }

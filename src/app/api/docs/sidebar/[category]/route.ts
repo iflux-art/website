@@ -1,6 +1,4 @@
-import { z } from "zod";
 import { getDocSidebar } from "@/lib/content";
-import { SidebarItemSchema } from "@/lib/schemas/doc";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +9,7 @@ export async function GET(
   try {
     const resolvedParams = await params;
     const items = getDocSidebar(resolvedParams.category);
-    // 使用zod验证数据
-    const validatedItems = z.array(SidebarItemSchema).parse(items);
-    return Response.json(validatedItems);
+    return Response.json(items);
   } catch (err) {
     console.error("Error fetching sidebar structure:", err);
     return Response.json(

@@ -2,7 +2,8 @@
  * 博客相关类型定义
  */
 
-import { BaseContent, BaseCategory, URL } from "./common";
+import { BaseContent, BaseCategory } from "./data-types";
+import { URL } from "./base-types";
 
 /**
  * 博客文章

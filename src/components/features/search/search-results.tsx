@@ -1,5 +1,5 @@
 import React from "react";
-import type { SearchResult } from "@/hooks/use-safe-state";
+import type { SearchResult } from "@/hooks/state";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TYPE_LABELS } from "@/components/features/search/commands";

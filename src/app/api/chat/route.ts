@@ -1,27 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getModelById, getApiModelName } from "@/data/home/ai-models";
 import { ModelNotFoundError } from "@/lib/errors";
-import { z } from "zod";
-import { ChatMessageSchema, ApiRequestBodySchema } from "@/lib/schemas/chat";
-
-// 定义ChatMessage类型
-type ChatMessage = z.infer<typeof ChatMessageSchema>;
+import type { ChatMessage, ApiRequestBody } from "@/types";
 
 export async function POST(request: NextRequest) {
   try {
     // 验证请求体
     const requestBody = await request.json();
-    const {
-      message,
-      modelId = "deepseek-chat",
-      messages: conversationHistory,
-    } = z
-      .object({
-        message: z.string().min(1),
-        modelId: z.string().optional(),
-        messages: z.array(ChatMessageSchema).optional(),
-      })
-      .parse(requestBody);
+
+    // 手动验证请求体
+    if (
+      !requestBody.message ||
+      typeof requestBody.message !== "string" ||
+      requestBody.message.trim().length === 0
+    ) {
+      return NextResponse.json(
+        { error: { code: "BadRequest", message: "消息内容不能为空" } },
+        { status: 400 },
+      );
+    }
+
+    const message = requestBody.message;
+    const modelId = requestBody.modelId || "deepseek-chat";
+    const conversationHistory = requestBody.messages;
 
     // 获取模型配置
     const model = getModelById(modelId);
@@ -65,12 +66,12 @@ export async function POST(request: NextRequest) {
     }
 
     // 构建请求体
-    const apiRequestPayload = ApiRequestBodySchema.parse({
+    const apiRequestPayload: ApiRequestBody = {
       messages,
       temperature: model.temperature,
       max_tokens: model.maxTokens,
       stream: false,
-    });
+    };
 
     // 根据不同的模型设置不同的参数
     apiRequestPayload.model = getApiModelName(model.id);

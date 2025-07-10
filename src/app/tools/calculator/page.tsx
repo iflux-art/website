@@ -7,7 +7,7 @@ import { ToolActions } from "@/components/layout/tools/tool-actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { calculatorUtils } from "@/components/layout/tools/tool-utils";
-import { useSafeTool } from "@/hooks/use-safe-state";
+import { useSafeTool } from "@/hooks/state";
 import Link from "next/link";
 
 export default function CalculatorPage() {
@@ -43,8 +43,6 @@ export default function CalculatorPage() {
 
     if (result.success) {
       addToHistory({
-        id: Date.now().toString(),
-        timestamp: Date.now(),
         input: fullExpression,
         output: result.data!,
         tool: "calculator",
@@ -100,8 +98,6 @@ export default function CalculatorPage() {
 
     setDisplay(String(result));
     addToHistory({
-      id: Date.now().toString(),
-      timestamp: Date.now(),
       input: `${func}(${inputValue})`,
       output: String(result),
       tool: "calculator",
@@ -151,8 +147,6 @@ export default function CalculatorPage() {
 
     if (result.success) {
       addToHistory({
-        id: Date.now().toString(),
-        timestamp: Date.now(),
         input: fullExpression,
         output: result.data!,
         tool: "calculator",

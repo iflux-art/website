@@ -2,7 +2,8 @@
  * 日志相关类型定义
  */
 
-import { BaseContent, BaseFrontmatter, LoadingState, URL, ID } from "./common";
+import { BaseContent, BaseFrontmatter, LoadingState } from "./data-types";
+import { URL, ID } from "./base-types";
 
 /** 日志 Frontmatter */
 export interface JournalFrontmatter extends BaseFrontmatter {

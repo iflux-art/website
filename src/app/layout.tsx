@@ -10,10 +10,11 @@ import React from "react";
  * 1. 先从配置文件导入 - 便于集中管理和复用
  * 2. 然后再导出 - 满足Next.js的约定要求
  */
-import { metadata, viewport, splashScreens } from "@/config/metadata";
+import { generateMetadata, generateViewport } from "@/config/metadata";
 
 // 导出元数据配置 - Next.js会在构建时处理这些导出
-export { metadata, viewport };
+export const metadata = generateMetadata();
+export const viewport = generateViewport();
 
 export default function RootLayout({
   children,
@@ -26,20 +27,7 @@ export default function RootLayout({
       // 禁用hydration warning提示 - next-themes要求
       suppressHydrationWarning
     >
-      <head>
-        {/* 
-          iOS启动屏配置
-          动态生成不同设备尺寸的启动图配置
-        */}
-        {splashScreens.map(({ href, media }, index) => (
-          <link
-            key={index}
-            rel="apple-touch-startup-image"
-            href={href}
-            media={media}
-          />
-        ))}
-      </head>
+      <head></head>
       <body>
         <ThemeProvider
           attribute="class"

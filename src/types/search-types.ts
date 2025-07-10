@@ -3,7 +3,8 @@
  */
 
 import { ReactNode } from "react";
-import { BaseSearchResult, ID } from "./common";
+import { BaseSearchResult } from "./data-types";
+import { ID } from "./base-types";
 
 /** 搜索对话框属性 */
 export interface SearchDialogProps {
@@ -61,4 +62,17 @@ export interface SearchHistoryProps {
 export interface APISearchResult extends BaseSearchResult {
   /** 结果类型 */
   type: "doc" | "blog" | "tool" | "link";
+}
+
+export interface SearchRequest {
+  q: string;
+  type?: "doc" | "blog" | "tool" | "link";
+  limit?: number;
+}
+
+export interface SearchResponse {
+  success: boolean;
+  results: APISearchResult[];
+  count: number;
+  error?: string;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useDocCategories } from "@/hooks/use-docs";
+import { useDocCategories } from "@/hooks";
 import { AppGrid } from "@/components/layout/app-grid";
 import { DocCard } from "@/components/common/card/doc-card";
 

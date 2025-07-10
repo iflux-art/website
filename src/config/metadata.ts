@@ -2,7 +2,7 @@
  * @file metadata.ts
  * @description Next.js 元数据配置文件
  *
- * 本文件集中管理网站的元数据配置，包括：
+ * 本文件聚合所有元数据配置，包括：
  * - 基础站点信息（标题、描述等）
  * - PWA相关配置
  * - iOS设备特定配置
@@ -19,119 +19,317 @@
  */
 
 import { Metadata } from "next";
-import {
-  PWA_CONFIG,
-  IOS_CONFIG,
-  WINDOWS_CONFIG,
-  ICONS_CONFIG,
-} from "@/lib/constants";
+import { SITE_METADATA } from "./site";
 
 /**
- * 基础站点元数据配置
- * @description 包含网站的基本信息
+ * 页面类型常量
  */
-const siteMetadata = {
-  title: "iFluxArt · 斐流艺创",
-  description:
-    "“斐流艺创” 是 “iFluxArt” 的中文翻译，代表智能技术与艺术创作的有机融合，“斐然成章” 的创作力与 “川流不息” 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。",
-};
+export const PAGE_TYPES = {
+  WEBSITE: "website",
+  ARTICLE: "article",
+  PROFILE: "profile",
+} as const;
+
+export type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];
 
 /**
- * 视口配置
- * @description 控制页面在移动设备上的显示
+ * 图标配置接口
  */
-const viewportConfig = {
-  viewport: {
+interface IconConfig {
+  icon?: string;
+  shortcut?: string;
+  apple?: string;
+  mask?: string;
+  manifest?: string;
+}
+
+/**
+ * 验证配置接口
+ */
+interface VerificationConfig {
+  google?: string;
+  yandex?: string;
+  yahoo?: string;
+  other?: Record<string, string[]>;
+}
+
+/**
+ * JSON-LD 配置接口
+ */
+interface JsonLdConfig {
+  type: string;
+  name?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  author?: string;
+  datePublished?: string;
+  dateModified?: string;
+  [key: string]: string | undefined;
+}
+
+/**
+ * 社交媒体配置接口
+ */
+interface SocialConfig {
+  twitter?: string;
+  facebook?: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
+/**
+ * 生成 Metadata 对象的选项
+ */
+export interface GenerateMetadataOptions {
+  /**
+   * 页面标题
+   */
+  title?: string;
+
+  /**
+   * 页面描述
+   */
+  description?: string;
+
+  /**
+   * 页面关键词
+   */
+  keywords?: string[];
+
+  /**
+   * 页面图片
+   */
+  image?: string;
+
+  /**
+   * 页面类型
+   */
+  type?: PageType;
+
+  /**
+   * 页面作者
+   */
+  author?: string;
+
+  /**
+   * 页面发布日期
+   */
+  date?: string;
+
+  /**
+   * 页面修改日期
+   */
+  modified?: string;
+
+  /**
+   * 页面语言
+   */
+  locale?: string;
+
+  /**
+   * 页面 URL
+   */
+  url?: string;
+
+  /**
+   * 是否禁用索引
+   */
+  noindex?: boolean;
+
+  /**
+   * 是否禁用跟踪
+   */
+  nofollow?: boolean;
+
+  /**
+   * 图标配置
+   */
+  icons?: IconConfig;
+
+  /**
+   * 验证配置
+   */
+  verification?: VerificationConfig;
+
+  /**
+   * JSON-LD 配置
+   */
+  jsonLd?: JsonLdConfig;
+
+  /**
+   * 社交媒体配置
+   */
+  social?: SocialConfig;
+}
+
+/**
+ * 生成视口配置
+ */
+export function generateViewport() {
+  return {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1,
-  },
-  themeColor: PWA_CONFIG.themeColor,
-};
-
-/**
- * PWA配置
- * @description Progressive Web App 相关配置
- */
-const pwaConfig = {
-  manifest: PWA_CONFIG.manifestPath,
-  apple: {
-    mobileWebAppCapable: "yes",
-    applicationName: PWA_CONFIG.applicationName,
-  },
-};
-
-/**
- * iOS设备特定配置
- * @description 包含iOS设备上的显示和行为配置
- * @property {boolean} appleMobileWebAppCapable - 是否作为独立应用运行
- * @property {string} appleMobileWebAppStatusBarStyle - 状态栏样式
- * @property {string} appleMobileWebAppTitle - iOS上显示的应用名称
- * @property {string} touchIcon - 添加到主屏幕的图标
- * @property {Array} splashScreens - 启动画面配置
- */
-const iosConfig = {
-  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === "yes",
-  appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle as
-    | "default"
-    | "black"
-    | "black-translucent",
-  appleMobileWebAppTitle: IOS_CONFIG.appTitle as string,
-  touchIcon: IOS_CONFIG.icons.touchIcon as string,
-  splashScreens: IOS_CONFIG.splashScreens as Array<{
-    href: string;
-    media: string;
-  }>,
-};
-
-/**
- * 网站元数据导出配置
- * @description 符合 Next.js Metadata API 的配置对象
- */
-export const metadata: Metadata = {
-  ...siteMetadata,
-  manifest: pwaConfig.manifest,
-  appleWebApp: {
-    capable: iosConfig.appleMobileWebAppCapable,
-    statusBarStyle: iosConfig.appleMobileWebAppStatusBarStyle,
-    title: iosConfig.appleMobileWebAppTitle,
-  },
-  icons: {
-    icon: [
-      { url: ICONS_CONFIG.favicon16, sizes: "16x16", type: "image/png" },
-      { url: ICONS_CONFIG.favicon32, sizes: "32x32", type: "image/png" },
+    maximumScale: 2,
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#000000" },
     ],
-    shortcut: [{ url: ICONS_CONFIG.favicon }],
-    apple: [{ url: iosConfig.touchIcon, sizes: "180x180" }],
-  },
-  other: {
-    "msapplication-TileColor": WINDOWS_CONFIG.msapplicationTileColor,
-    "msapplication-TileImage": WINDOWS_CONFIG.msapplicationTileImage,
-  },
-};
+  };
+}
+
+// 缓存已生成的元数据
+const metadataCache = new Map<string, Metadata>();
 
 /**
- * 视口配置导出
- * @description 用于控制页面在各种设备上的显示方式
+ * 生成 JSON-LD 结构化数据
  */
-export const viewport = {
-  ...viewportConfig.viewport,
-  themeColor: viewportConfig.themeColor,
-};
+function generateJsonLd(config: JsonLdConfig): string {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": config.type,
+    name: config.name,
+    description: config.description,
+    url: config.url,
+    image: config.image,
+    author: config.author
+      ? {
+          "@type": "Person",
+          name: config.author,
+        }
+      : undefined,
+    datePublished: config.datePublished,
+    dateModified: config.dateModified,
+    ...config,
+  });
+}
 
-/**
- * iOS启动画面配置导出
- * @description 用于自定义iOS设备上的启动画面
- * @example
- * ```tsx
- * {splashScreens.map((screen, index) => (
- *   <link
- *     key={index}
- *     rel="apple-touch-startup-image"
- *     href={screen.href}
- *     media={screen.media}
- *   />
- * ))}
- * ```
- */
-export const splashScreens = iosConfig.splashScreens;
+export function generateMetadata(
+  options: GenerateMetadataOptions = {},
+): Metadata {
+  const cacheKey = JSON.stringify(options);
+  if (metadataCache.has(cacheKey)) {
+    return metadataCache.get(cacheKey)!;
+  }
+
+  const {
+    title,
+    description = SITE_METADATA.description,
+    keywords = SITE_METADATA.keywords,
+    image = SITE_METADATA.image,
+    type = "website",
+    author = SITE_METADATA.author,
+    date,
+    modified,
+    locale = "zh-CN",
+    url = SITE_METADATA.url,
+    noindex = false,
+    nofollow = false,
+    icons,
+    verification,
+    jsonLd,
+    social,
+  } = options;
+
+  const metadata: Metadata = {
+    title: title ? `${title} | ${SITE_METADATA.title}` : SITE_METADATA.title,
+    description,
+    keywords,
+    authors: [{ name: author }],
+    creator: author,
+    publisher: SITE_METADATA.title,
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL(SITE_METADATA.url),
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: title || SITE_METADATA.title,
+      description,
+      url,
+      siteName: SITE_METADATA.title,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title || SITE_METADATA.title,
+        },
+      ],
+      locale,
+      type,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title || SITE_METADATA.title,
+      description,
+      images: [image],
+      creator: SITE_METADATA.twitter,
+    },
+    robots: {
+      index: !noindex,
+      follow: !nofollow,
+      googleBot: {
+        index: !noindex,
+        follow: !nofollow,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    verification: verification,
+    icons: icons,
+    other: {
+      ...(jsonLd && {
+        "application/ld+json": generateJsonLd(jsonLd),
+      }),
+    },
+  };
+
+  // 添加社交媒体元数据
+  if (social) {
+    if (social.twitter) {
+      metadata.twitter = {
+        ...metadata.twitter,
+        site: social.twitter,
+      };
+    }
+    if (social.facebook) {
+      metadata.openGraph = {
+        ...metadata.openGraph,
+        siteName: social.facebook,
+      };
+    }
+  }
+
+  // 添加日期信息
+  if (date || modified) {
+    const openGraphUpdate: any = {};
+    if (date) openGraphUpdate.publishedTime = date;
+    if (modified) openGraphUpdate.modifiedTime = modified;
+
+    metadata.openGraph = {
+      ...metadata.openGraph,
+      ...openGraphUpdate,
+    };
+  }
+
+  metadataCache.set(cacheKey, metadata);
+  return metadata;
+}
+
+export function generateArticleMetadata(
+  options: Omit<GenerateMetadataOptions, "type">,
+): Metadata {
+  return generateMetadata({ ...options, type: "article" });
+}
+
+export function generateProfileMetadata(
+  options: Omit<GenerateMetadataOptions, "type">,
+): Metadata {
+  return generateMetadata({ ...options, type: "profile" });
+}

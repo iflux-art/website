@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Text } from "lucide-react";
-import { useHeadingObserver } from "@/hooks/use-heading-observer";
+import { useHeadingObserver } from "@/hooks";
 import { NAVBAR_HEIGHT, SCROLL_OFFSET } from "@/config/layout";
-import { scrollToElement } from "@/lib/utils/route-utils";
+import { scrollToElement } from "@/lib/utils/route";
 
 /**
  * 标题项类型

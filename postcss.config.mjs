@@ -4,7 +4,7 @@
  */
 const config = {
   plugins: {
-    '@tailwindcss/postcss': {}, // 使用 @tailwindcss/postcss 插件
+    "@tailwindcss/postcss": {}, // 使用 @tailwindcss/postcss 插件
     // autoprefixer 通常由 Tailwind CSS v4 内部处理
   },
 };

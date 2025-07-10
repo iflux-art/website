@@ -4,12 +4,12 @@ description: 深入解析 React 核心库的设计理念、基础特性和最佳
 date: "2025-04-07"
 category: "前端开发"
 tags:
-- React
-- JavaScript
-- 组件开发
-- 状态管理
-- 虚拟DOM
-- Hooks
+  - React
+  - JavaScript
+  - 组件开发
+  - 状态管理
+  - 虚拟DOM
+  - Hooks
 ---
 
 React 是一个用于创建用户界面的 JavaScript 库。
@@ -21,22 +21,20 @@ React 是一个用于创建用户界面的 JavaScript 库。
 ## 用法
 
 ```js
-import { useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { useState } from "react";
+import { createRoot } from "react-dom/client";
 
 function Counter() {
   const [count, setCount] = useState(0);
   return (
     <>
       <h1>{count}</h1>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </>
   );
 }
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById("root"));
 root.render(<Counter />);
 ```
 
@@ -48,7 +46,6 @@ root.render(<Counter />);
 
 参考 https://react.dev/reference/react
 
-
 ## 源码
 
 ### `index.js`
@@ -59,12 +56,12 @@ root.render(<Counter />);
 - 如果 `NODE_ENV` 不是 `production`，则导入 `react.development.js`。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react.production.js");
 } else {
-  module.exports = require('./cjs/react.development.js');
+  module.exports = require("./cjs/react.development.js");
 }
 ```
 
@@ -77,12 +74,12 @@ if (process.env.NODE_ENV === 'production') {
 `compiler-runtime.js` 是 React 的编译器运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React 编译器运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react-compiler-runtime.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react-compiler-runtime.production.js");
 } else {
-  module.exports = require('./cjs/react-compiler-runtime.development.js');
+  module.exports = require("./cjs/react-compiler-runtime.development.js");
 }
 ```
 
@@ -91,12 +88,12 @@ if (process.env.NODE_ENV === 'production') {
 `jsx-runtime.js` 是 React 的 JSX 运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React JSX 运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react-jsx-runtime.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react-jsx-runtime.production.js");
 } else {
-  module.exports = require('./cjs/react-jsx-runtime.development.js');
+  module.exports = require("./cjs/react-jsx-runtime.development.js");
 }
 ```
 
@@ -105,12 +102,12 @@ if (process.env.NODE_ENV === 'production') {
 `jsx-runtime.react-server.js` 是 React 的 JSX 运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React JSX 运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react-jsx-dev-runtime.react-server.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react-jsx-dev-runtime.react-server.production.js");
 } else {
-  module.exports = require('./cjs/react-jsx-dev-runtime.react-server.development.js');
+  module.exports = require("./cjs/react-jsx-dev-runtime.react-server.development.js");
 }
 ```
 
@@ -119,12 +116,12 @@ if (process.env.NODE_ENV === 'production') {
 `jsx-dev-runtime.js` 是 React 的 JSX 运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React JSX 运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react-jsx-dev-runtime.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react-jsx-dev-runtime.production.js");
 } else {
-  module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
+  module.exports = require("./cjs/react-jsx-dev-runtime.development.js");
 }
 ```
 
@@ -133,12 +130,12 @@ if (process.env.NODE_ENV === 'production') {
 `jsx-dev-runtime.react-server.js` 是 React 的 JSX 运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React JSX 运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react-jsx-dev-runtime.react-server.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react-jsx-dev-runtime.react-server.production.js");
 } else {
-  module.exports = require('./cjs/react-jsx-dev-runtime.react-server.development.js');
+  module.exports = require("./cjs/react-jsx-dev-runtime.react-server.development.js");
 }
 ```
 
@@ -147,11 +144,11 @@ if (process.env.NODE_ENV === 'production') {
 `react.react-server.js` 是 React 的 JSX 运行时。它根据环境变量 `NODE_ENV` 来决定导入哪个版本的 React JSX 运行时。
 
 ```js
-'use strict';
+"use strict";
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/react.react-server.production.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./cjs/react.react-server.production.js");
 } else {
-  module.exports = require('./cjs/react.react-server.development.js');
+  module.exports = require("./cjs/react.react-server.development.js");
 }
 ```

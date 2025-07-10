@@ -17,7 +17,8 @@ import { TableOfContents } from "@/components/layout/toc/table-of-contents";
 
 // 内容渲染
 import { extractHeadings } from "@/components/layout/toc/extract-headings";
-import { getFlattenedDocsOrder, type NavDocItem } from "@/lib/content";
+import { getFlattenedDocsOrder } from "@/lib/content";
+import type { NavDocItem } from "@/types";
 import type { DocMetaItem } from "@/types";
 import { countWords } from "@/lib/utils";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";

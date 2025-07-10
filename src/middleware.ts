@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import {
-  CACHE_CONFIG,
+  MIDDLEWARE_CACHE_CONFIG,
   CSP_CONFIG,
   SECURITY_HEADERS,
   buildCSP,
@@ -16,26 +16,26 @@ const getCacheControl = (pathname: string): string => {
     pathname.match(/\.(js|css|json|xml|txt|ico)$/) ||
     pathname.startsWith("/_next/static/")
   ) {
-    return `public, max-age=${CACHE_CONFIG.staticAssets}, immutable`;
+    return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.staticAssets}, immutable`;
   }
 
   // 图片
   if (pathname.match(/\.(png|jpg|jpeg|gif|webp|avif|svg)$/)) {
-    return `public, max-age=${CACHE_CONFIG.images}, s-maxage=${
-      CACHE_CONFIG.images * 2
-    }, stale-while-revalidate=${CACHE_CONFIG.images * 10}`;
+    return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.images}, s-maxage=${
+      MIDDLEWARE_CACHE_CONFIG.images * 2
+    }, stale-while-revalidate=${MIDDLEWARE_CACHE_CONFIG.images * 10}`;
   }
 
   // 字体
   if (pathname.match(/\.(woff|woff2|ttf|otf)$/)) {
-    return `public, max-age=${CACHE_CONFIG.fonts}, immutable`;
+    return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.fonts}, immutable`;
   }
 
   // API 路由
   if (pathname.includes("/api/")) {
-    return `public, max-age=${CACHE_CONFIG.api}, s-maxage=${
-      CACHE_CONFIG.api * 2
-    }, stale-while-revalidate=${CACHE_CONFIG.api * 10}`;
+    return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.api}, s-maxage=${
+      MIDDLEWARE_CACHE_CONFIG.api * 2
+    }, stale-while-revalidate=${MIDDLEWARE_CACHE_CONFIG.api * 10}`;
   }
 
   // 主要页面
@@ -48,9 +48,9 @@ const getCacheControl = (pathname: string): string => {
     pathname.startsWith("/links") ||
     pathname.startsWith("/tools")
   ) {
-    return `public, max-age=${CACHE_CONFIG.pages}, s-maxage=${
-      CACHE_CONFIG.pages * 2
-    }, stale-while-revalidate=${CACHE_CONFIG.pages * 10}`;
+    return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.pages}, s-maxage=${
+      MIDDLEWARE_CACHE_CONFIG.pages * 2
+    }, stale-while-revalidate=${MIDDLEWARE_CACHE_CONFIG.pages * 10}`;
   }
 
   // 其他动态路由

@@ -4,6 +4,7 @@ import path from "path";
 import type {
   LinksCategory as Category,
   LinksItem as Item,
+  CategoryId,
 } from "@/types/links-types";
 
 const CATEGORIES_FILE_PATH = path.join(
@@ -141,6 +142,7 @@ export function addLinksItem(
     id: generateId(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    category: item.category as CategoryId,
   };
 
   items.push(newItem);
@@ -172,6 +174,7 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
     ...items[itemIndex],
     ...updates,
     updatedAt: new Date().toISOString(),
+    category: (updates.category ?? items[itemIndex].category) as CategoryId,
   };
 
   items[itemIndex] = updatedItem;

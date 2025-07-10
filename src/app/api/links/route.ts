@@ -2,20 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { nanoid } from "nanoid";
-import { z } from "zod";
-import { LinksItemSchema, LinksFormDataSchema } from "@/lib/schemas/links";
+import type { LinksItem, LinksFormData, CategoryId } from "@/types";
 
 const filePath = path.join(process.cwd(), "src/data/links/items.json");
 
 // 读取全部 items
-async function readItems() {
+async function readItems(): Promise<LinksItem[]> {
   const data = await fs.readFile(filePath, "utf-8");
   const items = JSON.parse(data);
-  return z.array(LinksItemSchema).parse(items);
+  return items as LinksItem[];
 }
 
 // 写入全部 items
-async function writeItems(items: z.infer<typeof LinksItemSchema>[]) {
+async function writeItems(items: LinksItem[]) {
   await fs.writeFile(filePath, JSON.stringify(items, null, 2), "utf-8");
 }
 
@@ -38,7 +37,43 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json();
-    const validatedFormData = LinksFormDataSchema.parse(formData);
+
+    // 手动验证表单数据
+    if (!formData.title || !formData.url || !formData.category) {
+      return NextResponse.json(
+        { error: "标题、URL和分类为必填项" },
+        { status: 400 },
+      );
+    }
+
+    // 验证category是否为有效的CategoryId
+    const validCategories = [
+      "ai",
+      "development",
+      "design",
+      "audio",
+      "video",
+      "office",
+      "productivity",
+      "operation",
+      "profile",
+      "friends",
+    ];
+    if (!validCategories.includes(formData.category)) {
+      return NextResponse.json({ error: "无效的分类ID" }, { status: 400 });
+    }
+
+    const validatedFormData = {
+      title: formData.title,
+      url: formData.url,
+      description: formData.description,
+      category: formData.category as CategoryId,
+      tags: formData.tags,
+      featured: formData.featured,
+      icon: formData.icon,
+      iconType: formData.iconType || "text",
+    };
+
     const items = await readItems();
 
     if (items.some((item) => item.url === validatedFormData.url)) {
@@ -49,12 +84,12 @@ export async function POST(request: NextRequest) {
     }
 
     const now = new Date().toISOString();
-    const newItem = LinksItemSchema.parse({
+    const newItem = {
       ...validatedFormData,
       id: nanoid(),
       createdAt: now,
       updatedAt: now,
-    });
+    } as LinksItem;
 
     items.push(newItem);
     await writeItems(items);
@@ -80,7 +115,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const updates = await request.json();
-    const validatedUpdates = LinksFormDataSchema.partial().parse(updates);
+    const validatedUpdates = updates as Partial<LinksFormData>;
     const items = await readItems();
     const idx = items.findIndex((item) => item.id === id);
 
@@ -100,11 +135,13 @@ export async function PUT(request: NextRequest) {
     }
 
     const now = new Date().toISOString();
-    const updatedItem = LinksItemSchema.parse({
+    const updatedItem: LinksItem = {
       ...items[idx],
       ...validatedUpdates,
       updatedAt: now,
-    });
+      category: (validatedUpdates.category ??
+        items[idx].category) as CategoryId,
+    };
 
     items[idx] = updatedItem;
     await writeItems(items);

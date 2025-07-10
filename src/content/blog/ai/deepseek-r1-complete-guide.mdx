@@ -3,7 +3,7 @@ title: DeepSeek-R1 全功能部署与维护指南
 description: 全面介绍DeepSeek-R1模型的部署与维护，包括硬件配置、环境准备、部署流程、运维管理和优化方案
 date: 2025-03-12
 category: AI
-tags: 
+tags:
   - DeepSeek
   - AI模型
   - 部署
@@ -21,7 +21,7 @@ tags:
   - **7 B（FP 16）**：需 14 GB 显存（如 RTX 3090+）
   - **7 B（Q 4_K_M 量化）**：显存降至 6.8 GB
 - **硬件要求**：
-  - CPU：Intel i5-8500+ 
+  - CPU：Intel i5-8500+
   - 内存：16 GB+
 
 ### 2. 中等性能版（8 B-14 B）
@@ -60,6 +60,7 @@ docker run -d -p 3000:8080 --gpus all -v open-webui:/app/backend/data --name ope
 ### 模型版本删除
 
 1. **命令行删除**：
+
    ```bash
    ollama list
    ollama rm deepseek-r1:8b

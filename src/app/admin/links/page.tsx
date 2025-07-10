@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDebouncedValue } from "@/hooks/use-debounced-value";
+import { useDebouncedValue } from "@/hooks";
 import { AdminLayout } from "@/components/layout/admin/admin-layout";
 import { AdminActions } from "@/components/layout/admin/admin-actions";
 import { DataTable } from "@/components/layout/links/admin/data-table";

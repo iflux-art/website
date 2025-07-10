@@ -3,7 +3,7 @@
  */
 
 import { ReactNode } from "react";
-import { ClickableProps, URL } from "./common";
+import { ClickableProps, URL } from "./base-types";
 
 /**
  * 导航组件的基础属性接口

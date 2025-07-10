@@ -2,15 +2,13 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import { BlogPostsArraySchema, BlogPostSchema } from "@/lib/schemas/blog";
-import { z } from "zod";
-
+import type { BlogPost } from "@/types";
 // 获取所有博客文章
 async function getAllPosts() {
   const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return [];
 
-  const posts: Array<z.infer<typeof BlogPostSchema>> = [];
+  const posts: BlogPost[] = [];
 
   // 递归函数来查找所有博客文件
   const findPosts = (dir: string) => {
@@ -68,8 +66,7 @@ async function getAllPosts() {
     return 0;
   });
 
-  // 使用zod验证数据
-  return BlogPostsArraySchema.parse(sortedPosts);
+  return sortedPosts;
 }
 
 export async function GET() {
