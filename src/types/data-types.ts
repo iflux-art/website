@@ -3,7 +3,7 @@
  * 包含加载状态、分页、内容基础类型等
  */
 
-import type { ID, Timestamp, URL } from "./base-types";
+import type { ID, Timestamp, URL } from "@/types/base-types";
 
 // ==================== 数据状态类型 ====================
 

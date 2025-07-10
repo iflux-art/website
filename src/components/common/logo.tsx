@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import Link from "next/link";
+import type { LogoProps } from "@/types/common-component-types";
 
 const TRANSITION_STYLE = {
   transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
@@ -15,13 +16,6 @@ const LOGO_CLASSES = [
   "animate-in fade-in zoom-in-90",
   "hover:scale-105",
 ].join(" ");
-
-interface LogoProps {
-  /** Logo文本内容 */
-  text?: string;
-  /** 自定义类名 */
-  className?: string;
-}
 
 /**
  * Logo 组件

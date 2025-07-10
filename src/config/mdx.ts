@@ -4,13 +4,12 @@
  */
 
 import { MDXComponents } from "@/components/mdx/mdx-components";
-import type { MDXComponents as MDXComponentsType, MDXOptions } from "@/types";
+export const MDXComponentsMapping = MDXComponents;
 import rehypePrettyCode, {
   type Options as PrettyCodeOptions,
 } from "rehype-pretty-code";
 
-// 重新导出组件配置
-export { MDXComponents as mdxComponents } from "@/components/mdx/mdx-components";
+export type { MDXComponentsType } from "@/types/mdx-types";
 
 /**
  * 精简后的默认组件属性
@@ -26,10 +25,6 @@ export const useMDXComponents = () => {
     defaultProps: defaultComponentProps,
   };
 };
-
-// 导出类型和组件映射
-export type { MDXComponentsType, MDXOptions };
-export const MDXComponentsMapping = MDXComponents;
 
 /**
  * 默认配置

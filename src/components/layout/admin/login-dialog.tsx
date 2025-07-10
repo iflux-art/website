@@ -11,12 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { User, Lock } from "lucide-react";
-
-interface LoginDialogProps {
-  children: React.ReactNode;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
+import type { LoginDialogProps } from "@/types/admin-types";
 
 export function LoginDialog({
   children,

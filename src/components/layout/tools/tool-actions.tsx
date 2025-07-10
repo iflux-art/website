@@ -2,26 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
-
-interface ActionButton {
-  label: string;
-  onClick: () => void;
-  icon?: LucideIcon;
-  variant?:
-    | "default"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link"
-    | "destructive";
-  disabled?: boolean;
-}
-
-interface ToolActionsProps {
-  actions: ActionButton[];
-  className?: string;
-}
+import type { ToolActionsProps } from "@/types/layout-tools-types";
 
 export function ToolActions({ actions, className = "" }: ToolActionsProps) {
   return (

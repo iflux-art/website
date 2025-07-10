@@ -2,20 +2,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AIModel } from "./ai-config";
+import type { ModelSelectorProps } from "@/types/home-types";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-interface ModelSelectorProps {
-  selectedModelId: string;
-  onSelect: (id: string) => void;
-  AI_MODELS: AIModel[];
-  className?: string;
-}
 
 export function ModelSelector({
   selectedModelId,

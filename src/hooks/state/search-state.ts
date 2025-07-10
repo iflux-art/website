@@ -5,25 +5,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-
-export interface SearchResult {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  type:
-    | "tool"
-    | "link"
-    | "docs"
-    | "blog"
-    | "command"
-    | "navigation"
-    | "doc"
-    | "history";
-  icon?: string;
-  category?: string;
-  tags?: string[];
-}
+import type { SearchResult } from "@/types/search-types";
 
 interface SearchState {
   isOpen: boolean;

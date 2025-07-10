@@ -1,12 +1,7 @@
 import React, { forwardRef } from "react";
 import { Search, Loader2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
-
-export interface SearchBarProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  isLoading?: boolean;
-  onClear?: () => void;
-}
+import type { SearchBarProps } from "@/types/search-types";
 
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   ({ isLoading, onClear, className, value, ...props }, ref) => {

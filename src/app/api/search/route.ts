@@ -5,7 +5,11 @@ import matter from "gray-matter";
 import { TOOLS } from "@/components/layout/tools/tools-data";
 import items from "@/data/links/items.json";
 import type { LinksItem as Item } from "@/types/links-types";
-import type { SearchRequest, SearchResponse } from "@/types";
+import type {
+  SearchRequest,
+  SearchResponse,
+  APISearchResult,
+} from "@/types/search-types";
 
 // 辅助函数
 function escapeRegExp(string: string): string {
@@ -44,17 +48,7 @@ function findContentMatches(
 
   return matches;
 }
-interface SearchResult {
-  title: string;
-  path: string;
-  excerpt: string;
-  type: "doc" | "blog" | "tool" | "link";
-  score: number;
-  highlights?: {
-    title?: string;
-    content?: string[];
-  };
-}
+// 使用 APISearchResult 替代本地 SearchResult 类型
 
 // 递归读取目录下的所有 .md 和 .mdx 文件
 async function getAllFiles(dirPath: string): Promise<string[]> {
@@ -68,10 +62,10 @@ async function getAllFiles(dirPath: string): Promise<string[]> {
   return files.flat().filter((file) => /\.(md|mdx)$/.test(file));
 }
 
-async function searchDocs(query: string): Promise<SearchResult[]> {
+async function searchDocs(query: string): Promise<APISearchResult[]> {
   const docsDir = path.join(process.cwd(), "src/content/docs");
   const files = await getAllFiles(docsDir);
-  const results: SearchResult[] = [];
+  const results: APISearchResult[] = [];
 
   for (const file of files) {
     try {
@@ -121,10 +115,10 @@ async function searchDocs(query: string): Promise<SearchResult[]> {
   return results;
 }
 
-async function searchBlog(query: string): Promise<SearchResult[]> {
+async function searchBlog(query: string): Promise<APISearchResult[]> {
   const blogDir = path.join(process.cwd(), "src/content/blog");
   const files = await getAllFiles(blogDir);
-  const results: SearchResult[] = [];
+  const results: APISearchResult[] = [];
 
   for (const file of files) {
     try {
@@ -183,8 +177,8 @@ async function searchBlog(query: string): Promise<SearchResult[]> {
   return results;
 }
 
-function searchTools(query: string): SearchResult[] {
-  const results: SearchResult[] = [];
+function searchTools(query: string): APISearchResult[] {
+  const results: APISearchResult[] = [];
 
   for (const tool of TOOLS) {
     let score = 0;
@@ -226,8 +220,8 @@ function searchTools(query: string): SearchResult[] {
   return results;
 }
 
-function searchLinks(query: string): SearchResult[] {
-  const results: SearchResult[] = [];
+function searchLinks(query: string): APISearchResult[] {
+  const results: APISearchResult[] = [];
 
   for (const item of items as Item[]) {
     let score = 0;
@@ -299,7 +293,7 @@ export async function GET(request: NextRequest) {
 
     const query = q.trim();
 
-    let results: SearchResult[] = [];
+    let results: APISearchResult[] = [];
 
     // 根据类型参数决定搜索范围
     if (!type || type === "doc") {
@@ -317,7 +311,7 @@ export async function GET(request: NextRequest) {
 
     // 按分数排序并限制结果数量
     results = results
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
       .slice(0, limit)
       // 确保保留 score 属性
       .map((result) => ({

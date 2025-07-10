@@ -1,19 +1,7 @@
 import React from "react";
-import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-interface AdminPageContentLayoutProps {
-  children: React.ReactNode;
-  title?: string;
-  description?: string;
-  icon?: LucideIcon;
-  backUrl?: string;
-  backLabel?: string;
-  className?: string;
-  headerClassName?: string;
-  contentClassName?: string;
-}
+import type { AdminPageContentLayoutProps } from "@/types/admin-types";
 
 export default function AdminPageContentLayout({
   children,

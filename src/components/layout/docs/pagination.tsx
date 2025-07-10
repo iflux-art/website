@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { NavDocItem } from "@/types";
-
-interface DocPaginationProps {
-  prevDoc: NavDocItem | null;
-  nextDoc: NavDocItem | null;
-}
+import type { DocPaginationProps } from "@/types/docs-types";
 
 export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
   if (!prevDoc && !nextDoc) return null;

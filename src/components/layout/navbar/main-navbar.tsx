@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Logo } from "@/components/common/logo";
 import { MobileMenu } from "@/components/layout/navbar/mobile-menu";
-import { NavMenu } from "./nav-menu";
+import { NavMenu } from "@/components/layout/navbar/nav-menu";
 import { useNavbarScroll } from "@/hooks";
 
 /**

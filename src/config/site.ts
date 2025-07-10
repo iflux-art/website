@@ -1,20 +1,4 @@
-/**
- * 站点基础配置
- */
-
-// 站点元数据类型
-interface SiteMetadata {
-  title: string;
-  description: string;
-  author: string;
-  url: string;
-  image: string;
-  keywords: string[];
-  twitter: string;
-  github: string;
-  email: string;
-  copyright: string;
-}
+import type { SiteMetadata } from "@/types/site-types";
 
 /**
  * 网站元数据

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import type { SearchBoxProps } from "@/types/home-types";
 import {
   PlusCircle,
   SendHorizontal,
@@ -12,11 +13,6 @@ import { cn } from "@/lib/utils";
 import { AI_MODELS } from "@/data/home/ai-models";
 import { useAIChat } from "@/components/layout/home/ai/useAIChat";
 import { ModelSelector } from "@/components/layout/home/ai/ModelSelector";
-
-interface SearchBoxProps {
-  className?: string;
-  onSearchModeChange?: (isSearchMode: boolean) => void;
-}
 
 /**
  * 搜索框组件

@@ -6,14 +6,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinksForm } from "@/components/layout/links/admin/links-form";
-import type { LinksFormData, LinksItem } from "@/types";
-
-interface AddDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (newItem: LinksItem) => void;
-  onError: (message: string) => void;
-}
+import type { LinksFormData } from "@/types";
+import type { AddDialogProps } from "@/types/layout-links-types";
 
 export function AddDialog({
   open,

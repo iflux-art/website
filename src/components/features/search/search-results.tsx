@@ -1,20 +1,8 @@
 import React from "react";
-import type { SearchResult } from "@/hooks/state";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TYPE_LABELS } from "@/components/features/search/commands";
-
-interface SearchResultsProps {
-  results: SearchResult[];
-  searchQuery: string;
-  isLoading: boolean;
-  selectedIndex: number;
-  setSelectedIndex: (index: number) => void;
-  onSelect: (result: SearchResult) => void;
-  onClearHistory: () => void;
-  searchHistory: string[];
-  onHistoryClick: (query: string) => void;
-}
+import type { SearchResultsProps } from "@/types/search-types";
 
 export function SearchResults({
   results,
@@ -51,7 +39,7 @@ export function SearchResults({
             <div className="mt-1 flex-shrink-0 text-muted-foreground">
               {result.type === "tool" && "🔧"}
               {result.type === "blog" && "📝"}
-              {result.type === "docs" && "📖"}
+              {result.type === "doc" && "📖"}
               {result.type === "link" && "🔗"}
               {result.type === "command" && "⚡"}
             </div>
@@ -61,14 +49,14 @@ export function SearchResults({
                 {result.type === "link" && <ExternalLink className="h-3 w-3" />}
               </h4>
               <p className="line-clamp-2 text-xs text-muted-foreground">
-                {result.description}
+                {result.excerpt}
               </p>
               <div className="mt-1 text-xs text-muted-foreground capitalize">
                 {TYPE_LABELS[result.type as keyof typeof TYPE_LABELS] ||
                   result.type}
               </div>
             </div>
-            {result.type === "command" && result.description === "最近搜索" ? (
+            {result.type === "command" && result.excerpt === "最近搜索" ? (
               <button
                 onClick={(e) => {
                   e.stopPropagation();

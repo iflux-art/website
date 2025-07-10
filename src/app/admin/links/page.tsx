@@ -189,14 +189,14 @@ export default function LinksAdminPage() {
 
       <EditDialog
         item={editingItem}
-        onOpenChange={(open) => !open && setEditingItem(null)}
+        onOpenChange={(open: boolean) => !open && setEditingItem(null)}
         onSuccess={handleEditSuccess}
         onError={handleEditError}
       />
 
       <DeleteDialog
         item={deletingItem}
-        onOpenChange={(open) => !open && setDeletingItem(null)}
+        onOpenChange={(open: boolean) => !open && setDeletingItem(null)}
         onSuccess={handleDeleteSuccess}
         onError={handleDeleteError}
       />

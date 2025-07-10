@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 // Icons are now handled in SearchResults component
 import { SearchDialogProps, APISearchResult } from "@/types";
-import type { SearchResult } from "@/hooks/state";
+import type { SearchResult } from "@/types/search-types";
 import { COMMANDS } from "@/components/features/search/commands";
 import { TOOLS } from "@/components/features/search/search-data";
 import items from "@/data/links/items.json";
@@ -87,16 +87,22 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
           id: `history-${index}`,
           title: item,
           url: "#",
+          path: "#",
           description: "最近搜索",
+          excerpt: "最近搜索",
           type: "command" as const,
+          icon: null,
         }));
 
       const commandResults: SearchResult[] = COMMANDS.map((cmd, index) => ({
         id: `command-${index}`,
         title: cmd.title,
         url: "",
+        path: "",
         description: cmd.description,
+        excerpt: cmd.description,
         type: "command" as const,
+        icon: null,
       }));
 
       setResults([...commandResults, ...historyResults]);
@@ -123,8 +129,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
               id: `doc-${index}`,
               title: doc.title,
               url: doc.path,
+              path: doc.path,
               description: doc.excerpt,
+              excerpt: doc.excerpt,
               type: "docs" as const,
+              icon: null,
             })),
         );
 
@@ -136,8 +145,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
               id: `blog-${index}`,
               title: blog.title,
               url: blog.path,
+              path: blog.path,
               description: blog.excerpt,
+              excerpt: blog.excerpt,
               type: "blog" as const,
+              icon: null,
             })),
         );
       } catch (error) {
@@ -151,8 +163,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
           id: `history-search-${index}`,
           title: item,
           url: "#",
+          path: "#",
           description: "最近搜索",
+          excerpt: "最近搜索",
           type: "command" as const,
+          icon: null,
         }));
 
       // 处理工具结果
@@ -165,8 +180,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         id: `tool-${index}`,
         title: tool.name,
         url: tool.path,
+        path: tool.path,
         description: tool.description,
+        excerpt: tool.description,
         type: "tool" as const,
+        icon: null,
       }));
 
       // 处理命令结果
@@ -178,8 +196,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
         id: `command-search-${index}`,
         title: command.title,
         url: "#",
+        path: "#",
         description: command.description,
+        excerpt: command.description,
         type: "command" as const,
+        icon: null,
       }));
 
       // 处理链接导航搜索结果
@@ -194,8 +215,11 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
           id: `link-${index}`,
           title: item.title,
           url: item.url,
+          path: item.url,
           description: item.description,
+          excerpt: item.description,
           type: "link" as const,
+          icon: null,
         }));
 
       const allResults: SearchResult[] = [
@@ -253,8 +277,8 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
 // 导出所有子组件
 export * from "../../../types/search-types";
-export * from "./commands";
-export * from "./search-bar";
-export * from "./search-results";
-export * from "./keyboard-hints";
-export * from "./search-data";
+export * from "@/components/features/search/commands";
+export * from "@/components/features/search/search-bar";
+export * from "@/components/features/search/search-results";
+export * from "@/components/features/search/keyboard-hints";
+export * from "@/components/features/search/search-data";

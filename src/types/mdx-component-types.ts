@@ -3,36 +3,74 @@
  * 包含MDX组件相关的类型定义
  */
 
-import type { ImageProps } from "next/image";
-import type { BaseComponentProps } from "./base-types";
+import type { BaseComponentProps } from "@/types/base-types";
 
-// ==================== MDX 组件类型 ====================
-
-/** 图片组件属性 */
-export interface MDXImageProps extends Omit<ImageProps, "src" | "alt"> {
-  /** 图片源地址 */
+// MDXImgProps
+export interface MDXImgProps extends React.ComponentPropsWithoutRef<"img"> {
   src: string;
-  /** 图片描述文本 */
-  alt?: string;
-  /** 图片说明文字 */
-  caption?: React.ReactNode;
-  /** 是否优先加载 */
-  priority?: boolean;
-  /** 图片宽度 */
+  alt: string;
   width?: number;
-  /** 图片高度 */
   height?: number;
 }
 
-/** 链接组件属性 */
+// MDXLinkProps
 export interface MDXLinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  /** 链接地址 */
   href: string;
-  /** 是否为外部链接 */
+  children: React.ReactNode;
+  className?: string;
   external?: boolean;
-  /** 外部链接是否在新标签页打开 */
   openInNewTab?: boolean;
+  showExternalIcon?: boolean;
+}
+
+// Blockquote
+export type BlockquoteVariant = "default" | "info" | "elegant";
+export interface MDXBlockquoteProps
+  extends React.BlockquoteHTMLAttributes<HTMLQuoteElement> {
+  children: React.ReactNode;
+  citation?: string;
+  author?: string;
+  variant?: BlockquoteVariant;
+}
+
+// Callout
+export type CalloutType = "info" | "success" | "warning" | "error";
+export interface MDXCalloutProps {
+  type?: CalloutType;
+  title?: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+// Card
+export interface MDXCardProps {
+  children: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  icon?: React.ReactNode;
+  className?: string;
+  variant?: "default" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  hoverable?: boolean;
+}
+
+// Video
+export interface MDXVideoProps {
+  src: string;
+  title?: string;
+  poster?: string;
+  autoPlay?: boolean;
+  controls?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  className?: string;
+  width?: number | string;
+  height?: number | string;
+  onPlay?: () => void;
+  onPause?: () => void;
+  onEnded?: () => void;
+  onError?: (event: React.SyntheticEvent<HTMLVideoElement, Event>) => void;
 }
 
 /** 代码块组件属性 */

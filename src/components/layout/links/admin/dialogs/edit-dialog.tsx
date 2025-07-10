@@ -7,13 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { LinksForm } from "@/components/layout/links/admin/links-form";
 import type { LinksItem, LinksFormData } from "@/types";
-
-interface EditDialogProps {
-  item: LinksItem | null;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (updatedItem: LinksItem) => void;
-  onError: (message: string) => void;
-}
+import type { EditDialogProps } from "@/types/layout-links-types";
 
 export function EditDialog({
   item,

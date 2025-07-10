@@ -14,21 +14,7 @@ import { TravelButton } from "@/components/common/button/travel-button";
 import { Logo } from "@/components/common/logo";
 import { NavMenu } from "@/components/layout/navbar/nav-menu";
 import { SearchIcon } from "@/components/common/button/search-button";
-
-/**
- * 移动端菜单组件属性接口
- */
-export interface MobileMenuProps {
-  /**
-   * 菜单是否打开
-   */
-  isOpen: boolean;
-
-  /**
-   * 设置菜单打开状态的函数
-   */
-  setIsOpenAction: (isOpen: boolean) => void;
-}
+import type { MobileMenuProps } from "@/types/nav-types";
 
 /**
  * 移动端菜单组件

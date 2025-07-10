@@ -3,13 +3,13 @@
  */
 
 // 博客相关
-export * from "./use-blog";
+export * from "@/hooks/content/use-blog";
 
 // 文档相关
-export * from "./use-docs";
+export * from "@/hooks/content/use-docs";
 
 // 日志相关
-export * from "./use-journal";
+export * from "@/hooks/content/use-journal";
 
 // 链接相关
-export * from "./use-links-data";
+export * from "@/hooks/content/use-links-data";

@@ -1,12 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-interface MDXImgProps extends React.ComponentPropsWithoutRef<"img"> {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-}
+import type { MDXImgProps } from "@/types/mdx-component-types";
 
 /**
  * Custom MDX Image component

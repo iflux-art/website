@@ -7,56 +7,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { ContentDisplayProps } from "@/types/common-component-types";
 
-/**
- * 内容显示组件的类型
- */
-export type ContentType = "blog" | "docs";
-
-/**
- * 内容显示组件属性
- */
-export interface ContentDisplayProps {
-  /**
-   * 内容类型：博客或文档
-   */
-  contentType: ContentType;
-
-  /**
-   * 文章标题
-   */
-  title: string;
-
-  /**
-   * 发布日期
-   */
-  date?: string | null;
-
-  /**
-   * 分类
-   */
-  category?: string;
-
-  /**
-   * 标签
-   */
-  tags?: string[];
-
-  /**
-   * 字数统计
-   */
-  wordCount?: number;
-
-  /**
-   * 渲染后的 MDX 内容
-   */
-  children?: React.ReactNode;
-
-  /**
-   * 自定义根元素类名
-   */
-  className?: string;
-}
+export type { ContentType } from "@/types/common-component-types";
 
 /**
  * 内容显示组件

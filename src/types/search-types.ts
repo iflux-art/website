@@ -17,13 +17,15 @@ export interface SearchDialogProps {
 /** 搜索结果 */
 export interface SearchResult extends BaseSearchResult {
   /** 结果类型 */
-  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history";
+  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history" | "link";
   /** 图标 */
   icon: ReactNode;
   /** 是否为外部链接 */
   isExternal?: boolean;
   /** 点击动作 */
   action?: () => void;
+  /** 兼容旧用法：url 字段，等价于 path */
+  url?: string;
 }
 
 /** 命令接口 */
@@ -75,4 +77,24 @@ export interface SearchResponse {
   results: APISearchResult[];
   count: number;
   error?: string;
+}
+
+/** 搜索输入框属性 */
+export interface SearchBarProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  isLoading?: boolean;
+  onClear?: () => void;
+}
+
+/** 搜索结果列表属性 */
+export interface SearchResultsProps {
+  results: SearchResult[];
+  searchQuery: string;
+  isLoading: boolean;
+  selectedIndex: number;
+  setSelectedIndex: (index: number) => void;
+  onSelect: (result: SearchResult) => void;
+  onClearHistory: () => void;
+  searchHistory: string[];
+  onHistoryClick: (query: string) => void;
 }

@@ -3,7 +3,7 @@
  */
 
 import { ReactNode } from "react";
-import { ClickableProps, URL } from "./base-types";
+import { ClickableProps, URL } from "@/types/base-types";
 
 /**
  * 导航组件的基础属性接口
@@ -54,4 +54,36 @@ export interface NavLinkProps extends ClickableProps {
   rel?: string;
   /** 是否为导航类型链接 */
   _isNavigation?: boolean;
+}
+
+/**
+ * 移动端菜单组件属性接口
+ */
+export interface MobileMenuProps {
+  /**
+   * 菜单是否打开
+   */
+  isOpen: boolean;
+
+  /**
+   * 设置菜单打开状态的函数
+   */
+  setIsOpenAction: (isOpen: boolean) => void;
+}
+
+/**
+ * 目录组件相关类型
+ */
+export interface NavHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export interface TableOfContentsProps {
+  headings: NavHeading[];
+  className?: string;
+  title?: string;
+  adaptive?: boolean;
+  adaptiveOffset?: number;
 }

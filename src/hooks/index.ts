@@ -3,19 +3,16 @@
  */
 
 // 状态管理
-export * from "./state";
+export * from "@/hooks/state";
 
 // 缓存管理
-export * from "./cache";
+export * from "@/hooks/cache";
 
 // 内容相关
-export * from "./content";
+export * from "@/hooks/content";
 
 // UI 相关
-export * from "./ui";
+export * from "@/hooks/ui";
 
 // 核心功能
-export * from "./core";
-
-// 其他 hooks
-export * from "./use-active-section";
+export * from "@/hooks/core";

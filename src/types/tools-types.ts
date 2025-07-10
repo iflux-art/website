@@ -2,8 +2,8 @@
  * 工具相关类型定义
  */
 
-import { LoadingState } from "./data-types";
-import { ID } from "./base-types";
+import { LoadingState } from "@/types/data-types";
+import { ID } from "@/types/base-types";
 
 /**
  * 工具状态接口

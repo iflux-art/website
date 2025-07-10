@@ -19,24 +19,7 @@ export interface UseScrollOptions {
   triggerOnMount?: boolean;
 }
 
-/**
- * 滚动处理函数类型
- */
 export type ScrollHandler = () => void;
-
-/**
- * 节流后的滚动处理函数类型
- */
-export type ThrottledScrollHandler = ((this: Window, event: Event) => void) & {
-  /**
-   * Cancels any scheduled invocations of the throttled function
-   */
-  cancel(): void;
-  /**
-   * Immediately invokes any pending throttled invocations of the function
-   */
-  flush(): void;
-};
 
 /**
  * 导航栏滚动配置项

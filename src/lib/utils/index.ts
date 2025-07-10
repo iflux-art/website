@@ -3,10 +3,10 @@
  */
 
 // 样式工具
-export { cn } from "./helpers";
+export { cn } from "@/lib/utils/helpers";
 
 // 文本处理工具
-export { countWords, formatReadingTime, slugify } from "./text";
+export { countWords, formatReadingTime, slugify } from "@/lib/utils/text";
 
 // DOM 操作工具
 export {
@@ -16,13 +16,10 @@ export {
 } from "./dom";
 
 // 路由工具
-export { buildTagLink, buildCategoryLink } from "./route";
-
-// 配置导出
-export { MDX_CONFIG } from "./config";
+export { buildTagLink, buildCategoryLink } from "@/lib/utils/route";
 
 // 验证工具
-export * from "./validation";
+export * from "@/lib/utils/validation";
 
 // 现有的通用辅助函数
-export * from "./helpers";
+export * from "@/lib/utils/helpers";

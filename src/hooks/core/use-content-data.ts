@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ContentOptions } from "@/types/content";
+import { ContentLoadOptions } from "@/types/content";
 import { BaseContent, BaseCategory } from "@/types";
 import { useCache } from "@/hooks/cache";
 import { CACHE_CONFIG } from "@/config/site";
@@ -27,7 +27,7 @@ export function useContentData<T>({
   disableCache = false,
   params,
   headers,
-}: ContentOptions): HookResult<T> {
+}: ContentLoadOptions): HookResult<T> {
   const pathname = usePathname();
 
   // 生成缓存key

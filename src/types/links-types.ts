@@ -3,8 +3,8 @@
  */
 
 import type { ComponentType } from "react";
-import { BaseCategory } from "./data-types";
-import { URL, ID, Timestamp } from "./base-types";
+import { BaseCategory } from "@/types/data-types";
+import { URL, ID, Timestamp } from "@/types/base-types";
 
 export type CategoryId =
   | "ai"

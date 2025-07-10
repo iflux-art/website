@@ -3,16 +3,7 @@
 import Link from "next/link";
 import { ExternalLinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-export interface MDXLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
-  children: React.ReactNode;
-  className?: string;
-  external?: boolean;
-  openInNewTab?: boolean;
-  showExternalIcon?: boolean;
-}
+import type { MDXLinkProps } from "@/types/mdx-component-types";
 
 const isExternalLink = (href: string): boolean => {
   return (

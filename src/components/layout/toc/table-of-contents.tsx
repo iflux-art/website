@@ -6,59 +6,7 @@ import { Text } from "lucide-react";
 import { useHeadingObserver } from "@/hooks";
 import { NAVBAR_HEIGHT, SCROLL_OFFSET } from "@/config/layout";
 import { scrollToElement } from "@/lib/utils/route";
-
-/**
- * 标题项类型
- */
-export interface Heading {
-  /**
-   * 标题ID
-   */
-  id: string;
-
-  /**
-   * 标题文本
-   */
-  text: string;
-
-  /**
-   * 标题级别（1-6）
-   */
-  level: number;
-}
-
-/**
- * 目录组件属性
- */
-export interface TableOfContentsProps {
-  /**
-   * 标题项数组
-   */
-  headings: Heading[];
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 自定义标题
-   * @default "目录"
-   */
-  title?: string;
-
-  /**
-   * 是否启用自适应定位
-   * @default false
-   */
-  adaptive?: boolean;
-
-  /**
-   * 自适应定位的偏移量（单位：px）
-   * @default 80
-   */
-  adaptiveOffset?: number;
-}
+import type { TocHeading, TocProps } from "@/types/layout-toc-types";
 
 /**
  * 目录组件
@@ -80,7 +28,7 @@ export function TableOfContents({
   title = "目录",
   adaptive = false,
   adaptiveOffset = NAVBAR_HEIGHT,
-}: TableOfContentsProps) {
+}: TocProps) {
   const tocRef = useRef<HTMLDivElement>(null);
 
   // 使用自定义 hook 处理标题观察
@@ -141,11 +89,11 @@ export function TableOfContents({
 
   // 过滤掉h1标题，只显示h2-h4
   const filteredHeadings = headings.filter(
-    (heading) => heading.level >= 2 && heading.level <= 4,
+    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4,
   );
 
   // 根据标题级别对目录进行分组和嵌套
-  const organizeHeadings = (headings: Heading[]) => {
+  const organizeHeadings = (headings: TocHeading[]) => {
     // 确保标题ID唯一性
     return headings.map((heading, index) => {
       // 如果ID为空或者不存在，生成一个基于文本的ID

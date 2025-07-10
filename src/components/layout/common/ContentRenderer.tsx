@@ -1,9 +1,5 @@
 import { MDXRenderer } from "@/components/mdx/mdx-renderer";
-
-interface ContentRendererProps {
-  content: string;
-  frontmatter?: Record<string, unknown>;
-}
+import type { ContentRendererProps } from "@/types/common-component-types";
 
 export function ContentRenderer({
   content,

@@ -3,23 +3,7 @@
 import React from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-export interface MDXVideoProps {
-  src: string;
-  title?: string;
-  poster?: string;
-  autoPlay?: boolean;
-  controls?: boolean;
-  loop?: boolean;
-  muted?: boolean;
-  className?: string;
-  width?: number | string;
-  height?: number | string;
-  onPlay?: () => void;
-  onPause?: () => void;
-  onEnded?: () => void;
-  onError?: (event: React.SyntheticEvent<HTMLVideoElement, Event>) => void;
-}
+import type { MDXVideoProps } from "@/types/mdx-component-types";
 
 export const MDXVideo = ({
   src,

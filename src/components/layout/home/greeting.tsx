@@ -2,10 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { getRandomGreeting } from "@/data/home/greetings";
-
-interface GreetingProps {
-  className?: string;
-}
+import type { GreetingProps } from "@/types/home-types";
 
 /**
  * 问候语组件

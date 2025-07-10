@@ -4,8 +4,8 @@
  */
 
 import type { ComponentType } from "react";
-import type { BaseComponentProps } from "./base-types";
-import type { BaseFrontmatter } from "./data-types";
+import type { BaseComponentProps } from "@/types/base-types";
+import type { BaseFrontmatter } from "@/types/data-types";
 
 // ==================== MDX 核心类型 ====================
 

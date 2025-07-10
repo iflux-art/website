@@ -5,8 +5,12 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { LRUCache } from "./lru-cache";
-import { CacheData, CacheOptions, debouncedUpdateStorage } from "./cache-utils";
+import { LRUCache } from "@/hooks/cache/lru-cache";
+import {
+  CacheData,
+  CacheOptions,
+  debouncedUpdateStorage,
+} from "@/hooks/cache/cache-utils";
 
 // 创建内存缓存实例
 const memoryCache = new LRUCache(100); // 默认最大缓存100项

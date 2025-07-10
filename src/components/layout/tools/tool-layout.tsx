@@ -6,21 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-interface ToolLayoutProps {
-  // 通用布局属性
-  children: React.ReactNode;
-  className?: string;
-  containerClassName?: string;
-
-  // 工具特定属性
-  title?: string;
-  description?: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  actions?: React.ReactNode;
-  helpContent?: React.ReactNode;
-  showBackButton?: boolean;
-}
+import type { ToolLayoutProps } from "@/types/layout-tools-types";
 
 export const ToolLayout: React.FC<ToolLayoutProps> = ({
   children,

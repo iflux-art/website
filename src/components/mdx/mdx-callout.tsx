@@ -1,16 +1,8 @@
 "use client";
 
+import type { MDXCalloutProps } from "@/types/mdx-component-types";
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type CalloutType = "info" | "success" | "warning" | "error";
-
-interface MDXCalloutProps {
-  type?: CalloutType;
-  title?: string;
-  children: React.ReactNode;
-  className?: string;
-}
 
 const CALLOUT_CONFIG = {
   info: {

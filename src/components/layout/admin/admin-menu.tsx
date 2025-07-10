@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ADMIN_MENU_ITEMS } from "@/config/nav-config";
-import { useActiveSection } from "@/hooks/use-active-section";
+import { useActiveSection } from "@/hooks/ui/use-active-section";
 import type { NavProps } from "@/types/nav-types";
 import type { LucideIcon } from "lucide-react";
 
@@ -11,7 +11,9 @@ import type { LucideIcon } from "lucide-react";
  * 管理后台导航菜单组件
  */
 export function AdminMenu({ onClose }: NavProps) {
-  const isActiveSection = useActiveSection();
+  const isActiveSection = useActiveSection(
+    ADMIN_MENU_ITEMS.map((item) => item.key),
+  );
 
   return (
     <div>
@@ -28,7 +30,7 @@ export function AdminMenu({ onClose }: NavProps) {
               onClick={onClose}
               className={cn(
                 "group relative overflow-hidden rounded-xl border bg-card p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]",
-                isActiveSection(item.key)
+                isActiveSection === item.key
                   ? "border-primary/50 bg-primary/5"
                   : "border-border hover:border-primary/30",
               )}
@@ -39,7 +41,7 @@ export function AdminMenu({ onClose }: NavProps) {
                   <h4
                     className={cn(
                       "font-medium transition-colors",
-                      isActiveSection(item.key)
+                      isActiveSection === item.key
                         ? "text-primary"
                         : "text-foreground group-hover:text-primary",
                     )}

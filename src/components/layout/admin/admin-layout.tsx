@@ -6,10 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Globe, LogOut, Home } from "lucide-react";
-
-interface AdminLayoutProps {
-  children: React.ReactNode;
-}
+import type { AdminLayoutProps } from "@/types/admin-types";
 
 const adminMenuItems = [
   {

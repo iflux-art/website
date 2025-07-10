@@ -2,11 +2,7 @@
  * 工具页面通用处理函数
  */
 
-export interface ProcessResult {
-  success: boolean;
-  data?: string;
-  error?: string;
-}
+import type { ProcessResult } from "@/types/layout-tools-types";
 
 /**
  * 安全的 JSON 处理

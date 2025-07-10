@@ -2,8 +2,8 @@
  * 内容数据 Hooks 类型定义
  */
 
-import { AsyncResult } from "../data-types";
-import { URL } from "../base-types";
+import { AsyncResult } from "@/types/data-types";
+import { URL } from "@/types/base-types";
 
 /**
  * 内容数据获取配置选项

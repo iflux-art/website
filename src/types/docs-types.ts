@@ -2,8 +2,9 @@
  * 文档数据相关类型定义
  */
 
-import { BaseContent, BaseCategory } from "./data-types";
-import { URL } from "./base-types";
+import { BaseContent, BaseCategory } from "@/types/data-types";
+import { URL } from "@/types/base-types";
+import type { NavDocItem } from "@/types/content";
 
 /**
  * 文档元数据项接口 (_meta.json)
@@ -138,6 +139,25 @@ export interface UseDocSidebarResult {
   error: string | null;
   /** 刷新侧边栏数据的方法 */
   refetch: () => Promise<void>;
+}
+
+// 侧边栏组件 props
+export interface SidebarProps {
+  /** 文档分类名称 */
+  category: string;
+  /** 当前打开的文档路径 */
+  currentDoc?: string;
+}
+
+// DocsContent 组件 props
+export interface DocsContentProps {
+  content: string;
+}
+
+// DocPagination 组件 props
+export interface DocPaginationProps {
+  prevDoc: NavDocItem | null;
+  nextDoc: NavDocItem | null;
 }
 
 // 重新导出组件类型

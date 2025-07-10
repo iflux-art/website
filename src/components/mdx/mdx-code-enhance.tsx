@@ -67,7 +67,7 @@ export function useEnhanceCodeBlocks() {
       toolbar.style.backgroundColor = toolbarBg;
       toolbar.innerHTML = `
         <span class="font-medium">${filename || displayLanguage}</span>
-        <button class="mdx-copy-btn flex items-center gap-1 rounded px-2 py-1 transition-all duration-200 hover:bg-muted-foreground/10 bg-muted-foreground/10 text-muted-foreground hover:bg-muted-foreground/20">
+        <button class="mdx-copy-btn flex items-center gap-1 rounded px-2 py-1 transition-all duration-200 bg-muted-foreground/10 text-muted-foreground hover:bg-muted-foreground/20">
           <svg class="lucide lucide-copy h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
           <span class="sr-only md:not-sr-only">复制</span>
         </button>

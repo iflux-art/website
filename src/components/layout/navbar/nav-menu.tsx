@@ -4,12 +4,12 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, NAV_DESCRIPTIONS } from "@/config/nav-config";
 import { useAuthState } from "@/hooks";
-import { useActiveSection } from "@/hooks/use-active-section";
+import { useActiveSection } from "@/hooks/ui/use-active-section";
 import { AdminMenu as AdminMenuComponent } from "@/components/layout/admin/admin-menu";
 import type { NavProps, NavMenuProps } from "@/types/nav-types";
 
 function NavLinks({ onClose, className }: NavProps) {
-  const isActiveSection = useActiveSection();
+  const isActiveSection = useActiveSection(NAV_ITEMS.map((item) => item.key));
 
   return (
     <ul
@@ -27,7 +27,7 @@ function NavLinks({ onClose, className }: NavProps) {
             href={`/${item.key}`}
             className={cn(
               "block rounded-md px-1 py-2 transition-colors duration-300 hover:bg-accent/20 lg:py-0",
-              isActiveSection(item.key)
+              isActiveSection === item.key
                 ? "text-primary"
                 : "text-muted-foreground hover:text-primary",
             )}
@@ -42,7 +42,7 @@ function NavLinks({ onClose, className }: NavProps) {
 }
 
 function NavCards({ onClose, className }: NavProps) {
-  const isActiveSection = useActiveSection();
+  const isActiveSection = useActiveSection(NAV_ITEMS.map((item) => item.key));
 
   return (
     <div className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}>
@@ -53,7 +53,7 @@ function NavCards({ onClose, className }: NavProps) {
           onClick={onClose}
           className={cn(
             "group relative overflow-hidden rounded-xl border bg-card p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]",
-            isActiveSection(item.key)
+            isActiveSection === item.key
               ? "border-primary/50 bg-primary/5"
               : "border-border hover:border-primary/30",
           )}
@@ -62,7 +62,7 @@ function NavCards({ onClose, className }: NavProps) {
             <h3
               className={cn(
                 "text-lg font-semibold transition-colors",
-                isActiveSection(item.key)
+                isActiveSection === item.key
                   ? "text-primary"
                   : "text-foreground group-hover:text-primary",
               )}
@@ -76,7 +76,7 @@ function NavCards({ onClose, className }: NavProps) {
           <div
             className={cn(
               "absolute -top-4 -right-4 h-16 w-16 rounded-full opacity-10 transition-all duration-300 group-hover:scale-110 sm:h-20 sm:w-20",
-              isActiveSection(item.key)
+              isActiveSection === item.key
                 ? "bg-primary"
                 : "bg-primary group-hover:opacity-20",
             )}

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from "lucide-react";
-import type { TableColumn } from "@/components/layout/links/admin/data-table";
+import type { TableColumn } from "@/types/layout-links-types";
 import type { LinksItem } from "@/types";
 
 export const getTableColumns = (

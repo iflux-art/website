@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import type { MDXOptions } from "@/types";
 import { debounce } from "@/lib/utils/helpers";
-import { MDX_CONFIG } from "@/lib/utils/config";
+import { MDX_CONFIG } from "@/config/mdx-config";
 
 type MDXComponents = NonNullable<MDXOptions["components"]>;
 type DebouncedFunction<T> = T & { cancel: () => void };

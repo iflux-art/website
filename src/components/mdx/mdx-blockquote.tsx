@@ -2,16 +2,7 @@
 
 import { Quote } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type BlockquoteVariant = "default" | "info" | "elegant";
-
-export interface MDXBlockquoteProps
-  extends React.BlockquoteHTMLAttributes<HTMLQuoteElement> {
-  children: React.ReactNode;
-  citation?: string;
-  author?: string;
-  variant?: BlockquoteVariant;
-}
+import type { MDXBlockquoteProps } from "@/types/mdx-component-types";
 
 export const MDXBlockquote = ({
   children,

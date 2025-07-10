@@ -1,42 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
-
-export interface TableColumn<T extends object> {
-  key: keyof T;
-  title: string;
-  render?: (value: T[keyof T], record: T, index: number) => React.ReactNode;
-  width?: string;
-  align?: "left" | "center" | "right";
-}
-
-interface TableAction<T extends object> {
-  label: string;
-  onClick: (record: T, index: number) => void;
-  icon?: LucideIcon;
-  variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link";
-  disabled?: (record: T) => boolean;
-}
-
-interface DataTableProps<T extends object> {
-  title?: string;
-  data: T[];
-  columns: TableColumn<T>[];
-  actions?: TableAction<T>[];
-  pagination?: {
-    current: number;
-    total: number;
-    pageSize: number;
-    onChange: (page: number) => void;
-  };
-}
+import type { DataTableProps } from "@/types/layout-links-types";
 
 export function DataTable<T extends object>({
   title,

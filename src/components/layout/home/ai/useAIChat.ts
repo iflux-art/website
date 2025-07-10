@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AI_MODELS, getModelById } from "@/data/home/ai-models";
-import { performAIChat, type Message } from "./ai-service";
+import { performAIChat } from "@/components/layout/home/ai/ai-service";
+import type { Message } from "@/types/home-types";
 
 export function useAIChat() {
   const [selectedModelId, setSelectedModelId] = useState(AI_MODELS[0].id);

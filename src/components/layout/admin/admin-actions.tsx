@@ -1,26 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
-
-interface AdminAction {
-  label: string;
-  onClick: () => void;
-  icon?: LucideIcon;
-  variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link";
-  disabled?: boolean;
-  loading?: boolean;
-}
-
-interface AdminActionsProps {
-  actions: AdminAction[];
-  className?: string;
-}
+import type { AdminActionsProps } from "@/types/admin-types";
 
 export function AdminActions({ actions, className = "" }: AdminActionsProps) {
   return (

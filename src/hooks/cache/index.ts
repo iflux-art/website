@@ -3,10 +3,10 @@
  */
 
 // LRU 缓存类
-export * from "./lru-cache";
+export * from "@/hooks/cache/lru-cache";
 
 // 缓存工具函数
-export * from "./cache-utils";
+export * from "@/hooks/cache/cache-utils";
 
 // 主缓存 Hook
-export * from "./use-cache";
+export * from "@/hooks/cache/use-cache";

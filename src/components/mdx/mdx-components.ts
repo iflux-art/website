@@ -4,14 +4,14 @@
  */
 
 // ===== 静态组件 =====
-import { MDXLink } from "./mdx-link";
-import { MDXCard } from "./mdx-card";
-import { MDXBlockquote } from "./mdx-blockquote";
-import { MDXImg } from "./mdx-img";
+import { MDXLink } from "@/components/mdx/mdx-link";
+import { MDXCard } from "@/components/mdx/mdx-card";
+import { MDXBlockquote } from "@/components/mdx/mdx-blockquote";
+import { MDXImg } from "@/components/mdx/mdx-img";
 
 // ===== 交互组件 =====
-import { MDXCallout } from "./mdx-callout";
-import { MDXVideo } from "./mdx-video";
+import { MDXCallout } from "@/components/mdx/mdx-callout";
+import { MDXVideo } from "@/components/mdx/mdx-video";
 
 /**
  * 静态组件映射

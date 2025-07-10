@@ -9,14 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { LinksItem } from "@/types";
-
-interface DeleteDialogProps {
-  item: LinksItem | null;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (deletedId: string) => void;
-  onError: (message: string) => void;
-}
+import type { DeleteDialogProps } from "@/types/layout-links-types";
 
 export function DeleteDialog({
   item,

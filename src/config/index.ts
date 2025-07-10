@@ -3,16 +3,18 @@
  */
 
 // 站点配置
-export * from "./site";
+export * from "@/config/site";
 
 // 元数据配置
-export * from "./metadata";
+export * from "@/config/metadata";
 
 // 布局配置
-export * from "./layout";
+export * from "@/config/layout";
 
 // 导航配置
-export * from "./nav-config";
+export * from "@/config/nav-config";
 
 // 中间件配置
-export * from "./middleware-config";
+export * from "@/config/middleware-config";
+
+export * from "@/config/mdx-config";

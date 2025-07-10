@@ -1,17 +1,7 @@
 import React from "react";
 import { NavLink } from "@/components/ui/nav-link";
 import { ArrowRightLeft } from "lucide-react";
-
-interface RelatedPost {
-  title: string;
-  href: string;
-  category?: string;
-}
-
-interface RelatedPostsProps {
-  posts: RelatedPost[];
-  currentSlug: string[];
-}
+import type { RelatedPostsProps } from "@/types/common-component-types";
 
 export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
   if (!posts?.length) return null;
