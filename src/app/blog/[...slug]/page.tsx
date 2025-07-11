@@ -60,7 +60,7 @@ export default async function BlogPostPage({
                 </ContentDisplay>
               </div>
             </main>
-            
+
             <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
               <TableOfContents
                 headings={headings}
