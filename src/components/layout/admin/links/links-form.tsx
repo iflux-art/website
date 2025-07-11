@@ -20,7 +20,7 @@ import { LinksFormData, LinksCategory } from "@/types";
 import {
   parseWebsiteMetadata,
   isValidUrl,
-} from "@/components/layout/links/website-parser";
+} from "@/components/features/website-parser";
 
 interface LinksFormProps {
   submitAction: (data: LinksFormData) => Promise<void>;

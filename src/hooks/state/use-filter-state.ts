@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 import { useSafeFilter } from "@/hooks/state";
-
-interface FilterableItem {
-  tags?: string[];
-  category?: string;
-}
+import type { FilterableItem } from "@/types/filter-types";
 
 export function useFilterState<T extends FilterableItem>(items: T[]) {
   const {
@@ -13,7 +9,13 @@ export function useFilterState<T extends FilterableItem>(items: T[]) {
     setSelectedCategory,
     setSelectedTag,
     clearFilters,
-  } = useSafeFilter();
+  } = useSafeFilter() as {
+    selectedCategory: string;
+    selectedTag: string | null;
+    setSelectedCategory: (c: string) => void;
+    setSelectedTag: (t: string | null) => void;
+    clearFilters: () => void;
+  };
 
   // 过滤数据
   const filteredItems = useMemo(() => {
@@ -46,7 +48,7 @@ export function useFilterState<T extends FilterableItem>(items: T[]) {
         count,
       }))
       .sort((a, b) => b.count - a.count);
-  }, [items, selectedCategory]);
+  }, [items, selectedCategory, selectedTag]);
 
   // 处理分类切换
   const handleCategoryChange = (categoryId: string) => {

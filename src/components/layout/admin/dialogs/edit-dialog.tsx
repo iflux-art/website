@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LinksForm } from "@/components/layout/links/admin/links-form";
+import { LinksForm } from "@/components/layout/admin/links/links-form";
 import type { LinksItem, LinksFormData } from "@/types";
 import type { EditDialogProps } from "@/types/layout-links-types";
 

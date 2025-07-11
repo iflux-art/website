@@ -33,7 +33,7 @@ function LinksHeader({
 }
 import { AppGrid } from "@/components/layout/app-grid";
 import { LinkCard } from "@/components/common/card/link-card";
-import { UnifiedFilter } from "@/components/common/filter/unified-filter";
+import { UnifiedFilter } from "@/components/common/unified-filter";
 import { useLinksData } from "@/hooks";
 export default function LinksPage() {
   const {

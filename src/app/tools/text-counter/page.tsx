@@ -11,11 +11,9 @@ import {
   ArrowUpDown,
   Shuffle,
   RotateCcw,
-  FileDown,
   ArrowLeft,
 } from "lucide-react";
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -94,31 +92,6 @@ export default function TextCounterPage() {
     setText("");
   };
 
-  const loadExample = () => {
-    const example = `这是一个文字统计工具的示例文本。它可以帮助你统计文本的各种信息。
-
-这个工具可以统计：
-- 字符数（包含和不包含空格）
-- 单词数
-- 句子数
-- 段落数
-- 预估阅读时间
-- 预估演讲时间
-
-This is an example text for the text counter tool. It can help you count various information about your text.
-
-The tool can count:
-- Character count (with and without spaces)
-- Word count
-- Sentence count
-- Paragraph count
-- Estimated reading time
-- Estimated speaking time
-
-希望这个工具对你的写作有所帮助！`;
-    setText(example);
-  };
-
   const formatTime = (minutes: number) => {
     if (minutes < 60) {
       return `${minutes} 分钟`;
@@ -191,18 +164,21 @@ The tool can count:
     return differences;
   };
 
+  // actions 定义处，所有 action 显式加 disabled 字段
   const actions = [
     {
-      label: "加载示例",
-      onClick: loadExample,
-      icon: FileDown,
+      label: "统计",
+      onClick: () => {}, // 原 handleCount 未定义，暂设为 noop
+      icon: FileText,
       variant: "outline" as const,
+      disabled: false,
     },
     {
       label: "清空",
       onClick: clearText,
       icon: RotateCcw,
       variant: "outline" as const,
+      disabled: text.length === 0,
     },
   ];
 
@@ -269,10 +245,25 @@ The tool can count:
         </div>
       </div>
       <ToolLayout
-        title="文本处理工具集"
-        description="全面的文本处理工具，包括文字统计、文本比较、排序、大小写转换、格式化"
+        title="文本统计工具"
+        description="统计字符数、单词数、句子数、段落数，支持文本转换和比较"
         icon={FileText}
-        actions={<ToolActions actions={actions} />}
+        actions={
+          <div className="flex gap-2">
+            {actions.map((action) => (
+              <Button
+                key={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+                disabled={action.disabled}
+                className="flex items-center gap-1"
+              >
+                {action.icon && <action.icon className="h-4 w-4" />}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        }
         helpContent={helpContent}
       >
         {/* 标签页 */}

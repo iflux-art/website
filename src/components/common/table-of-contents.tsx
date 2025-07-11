@@ -180,9 +180,8 @@ export function TableOfContents({
                   "group flex min-w-0 items-start py-1.5 text-sm transition-colors",
                   headingSize,
                   {
-                    "rounded-md bg-accent/50 font-medium text-primary":
-                      activeId === heading.id,
-                    "rounded-md text-muted-foreground hover:bg-accent/20 hover:text-primary/80":
+                    "font-medium text-primary": activeId === heading.id,
+                    "text-muted-foreground hover:text-primary/80":
                       activeId !== heading.id,
                   },
                 )}

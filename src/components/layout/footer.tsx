@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 const LoginDialog = dynamic(
   () =>
-    import("@/components/layout/admin/login-dialog").then((mod) => ({
+    import("@/components/layout/admin/dialogs/login-dialog").then((mod) => ({
       default: mod.LoginDialog,
     })),
   { ssr: false },

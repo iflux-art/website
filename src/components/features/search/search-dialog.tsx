@@ -6,8 +6,8 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 // Icons are now handled in SearchResults component
 import { SearchDialogProps, APISearchResult } from "@/types";
 import type { SearchResult } from "@/types/search-types";
-import { COMMANDS } from "@/components/features/search/commands";
-import { TOOLS } from "@/components/features/search/search-data";
+import { COMMANDS } from "@/data/search/commands";
+import { TOOLS } from "@/data/search/search-data";
 import items from "@/data/links/items.json";
 import type { LinksItem as Item } from "@/types/links-types";
 import { SearchBar } from "@/components/features/search/search-bar";
@@ -277,8 +277,8 @@ export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
 
 // 导出所有子组件
 export * from "../../../types/search-types";
-export * from "@/components/features/search/commands";
+export * from "@/data/search/commands";
 export * from "@/components/features/search/search-bar";
 export * from "@/components/features/search/search-results";
 export * from "@/components/features/search/keyboard-hints";
-export * from "@/components/features/search/search-data";
+export * from "@/data/search/search-data";

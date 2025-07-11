@@ -4,18 +4,18 @@ import React, { useState, useEffect } from "react";
 import { useDebouncedValue } from "@/hooks";
 import { AdminLayout } from "@/components/layout/admin/admin-layout";
 import { AdminActions } from "@/components/layout/admin/admin-actions";
-import { DataTable } from "@/components/layout/links/admin/data-table";
+import { DataTable } from "@/components/layout/admin/links/data-table";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Globe } from "lucide-react";
-import { AddDialog } from "@/components/layout/links/admin/dialogs/add-dialog";
-import { EditDialog } from "@/components/layout/links/admin/dialogs/edit-dialog";
-import { DeleteDialog } from "@/components/layout/links/admin/dialogs/delete-dialog";
+import { AddDialog } from "@/components/layout/admin/dialogs/add-dialog";
+import { EditDialog } from "@/components/layout/admin/dialogs/edit-dialog";
+import { DeleteDialog } from "@/components/layout/admin/dialogs/delete-dialog";
 import {
   getTableColumns,
   getTableActions,
   getPageActions,
-} from "@/components/layout/links/admin/table-config";
+} from "@/components/layout/admin/links/table-config";
 import type { LinksItem, LinksCategory } from "@/types/links-types";
 import {
   Select,

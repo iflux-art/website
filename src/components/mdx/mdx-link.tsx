@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { MDXLinkProps } from "@/types/mdx-component-types";
 
@@ -43,7 +43,7 @@ export const MDXLink = ({
       >
         {children}
         {showExternalIcon && (
-          <ExternalLinkIcon className="ml-1 inline-block h-3 w-3" />
+          <ExternalLink className="ml-1 inline-block h-3 w-3" />
         )}
       </a>
     );

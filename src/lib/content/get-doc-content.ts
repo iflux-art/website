@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { getFlattenedDocsOrder } from "@/lib/content";
-import { extractHeadings } from "@/components/layout/toc/extract-headings";
+import { extractHeadings } from "@/components/common/extract-headings";
 import { countWords } from "@/lib/utils";
 import type {
   DocContentResult,
@@ -67,6 +67,10 @@ export function getDocContent(slug: string[]): DocContentResult {
     throw new Error(`Document not found at path: ${requestedPath}`);
   }
   const fileContent = fs.readFileSync(filePath, "utf8");
+  // 调试：打印读取到的内容片段和 slug
+  console.log("[getDocContent] slug:", slug);
+  console.log("[getDocContent] filePath:", filePath);
+  console.log("[getDocContent] content preview:", fileContent.slice(0, 300));
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
   const date = frontmatter.date

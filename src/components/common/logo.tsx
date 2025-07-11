@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import Link from "next/link";
-import type { LogoProps } from "@/types/common-component-types";
+import type { LogoProps } from "@/types";
 
 const TRANSITION_STYLE = {
   transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",

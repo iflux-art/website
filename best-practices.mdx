@@ -1,35 +1,42 @@
 # Next.js 技术栈推荐清单与最佳实践
 
+## pnpm 命令
+
+pnpm add -g pnpm@latest
+
 ## node 命令
 
 pnpm view @types/node version 查看版本
 pnpm update @types/node --latest 升级最新版
 
+## 格式修复
+
 本地运行 pnpm format 或 pnpm lint --fix，以自动修复所有格式问题
 
 npx prettier --write
 
-彻底梳理并重构 @/config、@/types、@/lib、@/hooks 四个目录下的所有文件，
-类型、配置、工具函数、hook 各归其位，
-合并/拆分/迁移所有不规范内容，
-并实时更新所有引用路径和统一导出文件，确保全局无引用错误。
-操作原则（严格遵循你的规范）：
+## 启用 Turbopack
 
-config 只放静态配置对象和常量，不放类型和工具函数。
-types 只放类型定义，所有 interface/type 归一。类型全部通过 @/types 引用，lib/、hooks/ 只 import 不定义。
-lib 只放工具函数/通用逻辑，不混杂类型、配置、hook 实现。
-hooks 只放自定义 hook，不混杂类型、工具函数。
-统一导出文件（如 index.ts）需同步维护。
-所有引用路径、import/export 必须同步更新，保证全局可用。引用路径清晰，避免重复、冗余、实现混杂。
-构建 100% 通过，无 warning、无 error
+pnpm next dev --turbo
+
+npx next dev --turbo
+
+---
+
+1. 梳理并重构，让 @/types、@/lib/utils、@/lib、@/data、@/config、@/hooks 文件各归其位
+2. 全局修正 index.ts 统一导出文件、引用路径、import/export，保证引用唯一、无冗余
+3. 构建 100% 通过，无 warning、无 error
+
+config：只放静态配置对象和常量，不放类型和工具函数。
+types：只放类型定义，所有 interface/type 归一。类型全部通过 @/types 引用，lib/、hooks/ 只 import 不定义。
+lib：只放工具函数/通用逻辑，不混杂类型、配置、hook 实现。
+hooks：只放自定义 hook，不混杂类型、工具函数。
 
 梳理步骤：
 检查 lib 目录下是否有类型定义、配置、hook 实现混杂，若有则迁移/拆分。
 检查 hooks 目录下是否有工具函数、类型定义混杂，若有则迁移/拆分。
 检查 lib/utils/ 下内容，确认是否有与 hooks、types、config 职责重叠的内容。
 检查 hooks/ 各子目录（ui、core、state、content、cache）是否有职责不清、可合并/拆分的内容。
-统一维护 lib/index.ts、hooks/index.ts 导出。
-全局修正 import 路径，保证引用唯一、无冗余。
 
 ## 核心框架与基础
 
@@ -143,6 +150,8 @@ hooks 只放自定义 hook，不混杂类型、工具函数。
 
 - next-mdx：MDX 支持，适合内容驱动网站。
 - Contentlayer：本地 Markdown 内容自动转型，适合静态内容站点。
+
+ @mdx-js/mdx + @mdx-js/react，支持 MDX 语法。
 
 ---
 

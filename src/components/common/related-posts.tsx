@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "@/components/ui/nav-link";
 import { ArrowRightLeft } from "lucide-react";
-import type { RelatedPostsProps } from "@/types/common-component-types";
+import type { RelatedPostsProps } from "@/types";
 
 export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
   if (!posts?.length) return null;

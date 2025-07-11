@@ -33,7 +33,7 @@
   --foreground: oklch(var(--light-fg) 0 0);
 
   /* 卡片颜色 - 轻微区分于背景 */
-  --card: oklch(0.98 0 0);
+  --card: oklch(0.99 0 0);
   --card-foreground: var(--foreground);
 
   /* 弹出层颜色 */

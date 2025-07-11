@@ -1,16 +1,14 @@
 "use client";
 
-import {
-  UnifiedFilter,
-  type Category,
-} from "@/components/common/filter/unified-filter";
+import { UnifiedFilter } from "@/components/common/unified-filter";
 import { BlogCard } from "@/components/common/card/blog-card";
 import { AppGrid } from "@/components/layout/app-grid";
-import { useFilterState } from "@/components/common/filter/use-filter-state";
+import { useFilterState } from "@/hooks/state/use-filter-state";
 import { useBlogPosts } from "@/hooks";
 import { useMemo } from "react";
 import type { BlogPost } from "@/types/blog-types";
 import { formatDate } from "@/lib/utils/date";
+import type { Category } from "@/types/filter-types";
 
 function BlogContent() {
   const { posts, categories: rawCategories } = useBlogPosts();

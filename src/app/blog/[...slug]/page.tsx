@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/common/breadcrumb/breadcrumb";
-import { createBlogBreadcrumbs } from "@/components/common/breadcrumb/breadcrumb-utils";
+import { Breadcrumb } from "@/components/common/breadcrumb";
+import { createBlogBreadcrumbs } from "@/lib/utils/breadcrumb";
 import { ContentDisplay } from "@/components/common/content-display";
-import { RelatedPosts } from "@/components/layout/common/related-posts";
-import { TableOfContents } from "@/components/layout/toc/table-of-contents";
+import { RelatedPosts } from "@/components/common/related-posts";
+import { TableOfContents } from "@/components/common/table-of-contents";
 import { NAVBAR_HEIGHT } from "@/config/layout";
-import { ContentRenderer } from "@/components/layout/common/ContentRenderer";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import { getBlogContent } from "@/lib/content/get-blog-content";
 import React from "react";
+import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 
 // 如需 generateMetadata，可用 getBlogContent 获取 frontmatter
 
@@ -56,7 +56,7 @@ export default async function BlogPostPage({
                   tags={frontmatter.tags || []}
                   wordCount={content.length}
                 >
-                  <ContentRenderer content={content} />
+                  <ClientMDXRenderer content={content} />
                 </ContentDisplay>
               </div>
             </main>

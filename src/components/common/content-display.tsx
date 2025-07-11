@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { ContentDisplayProps } from "@/types/common-component-types";
+import type { ContentDisplayProps } from "@/types";
 
-export type { ContentType } from "@/types/common-component-types";
+export type { ContentType } from "@/types";
 
 /**
  * 内容显示组件
@@ -91,7 +91,7 @@ export function ContentDisplay({
                   <Link
                     key={index}
                     href={getTagLink(tag)}
-                    className="rounded-xl bg-muted px-3 py-1.5 text-xs font-medium shadow-sm transition-all hover:bg-primary/10 hover:text-primary hover:shadow-md"
+                    className="rounded-xl bg-muted px-3 py-1.5 text-xs font-medium transition-all hover:bg-primary/10 hover:text-primary hover:shadow-md"
                   >
                     {tag}
                   </Link>

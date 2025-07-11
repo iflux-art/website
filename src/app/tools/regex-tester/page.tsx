@@ -11,8 +11,7 @@ import {
   FileDown,
   ArrowLeft,
 } from "lucide-react";
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -258,7 +257,22 @@ export default function RegexTesterPage() {
         title="正则表达式测试器"
         description="测试和验证正则表达式，查看匹配结果和分组信息"
         icon={Search}
-        actions={<ToolActions actions={actions} />}
+        actions={
+          <div className="flex gap-2">
+            {actions.map((action) => (
+              <Button
+                key={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+                disabled={action.disabled}
+                className="flex items-center gap-1"
+              >
+                {action.icon && <action.icon className="h-4 w-4" />}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        }
         helpContent={helpContent}
       >
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

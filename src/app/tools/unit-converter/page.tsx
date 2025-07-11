@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -256,18 +255,45 @@ export default function UnitConverterPage() {
   const currentUnits =
     unitCategories[category as keyof typeof unitCategories].units;
 
+  // actions 定义处，所有 action 显式加 disabled 字段
+  const handleConvert = () => {
+    if (fromValue && fromUnit && toUnit) {
+      if (category === "number") {
+        const converted = convertNumber(fromValue, fromUnit, toUnit);
+        setToValue(converted);
+      } else {
+        const numValue = parseFloat(fromValue);
+        if (!isNaN(numValue)) {
+          const converted = convertUnit(numValue, fromUnit, toUnit);
+          setToValue(converted.toFixed(6).replace(/\.?0+$/, ""));
+        } else {
+          setToValue("");
+        }
+      }
+    }
+  };
+
   const actions = [
     {
-      label: "交换单位",
-      onClick: swapUnits,
-      icon: ArrowUpDown,
+      label: "换算",
+      onClick: handleConvert, // 保证是 () => void
+      icon: Ruler,
       variant: "outline" as const,
+      disabled: !fromValue || !fromUnit || !toUnit,
     },
     {
       label: "清空",
       onClick: clearAll,
       icon: RotateCcw,
       variant: "outline" as const,
+      disabled: !fromValue && !toValue,
+    },
+    {
+      label: "交换单位",
+      onClick: swapUnits,
+      icon: ArrowUpDown,
+      variant: "outline" as const,
+      disabled: false,
     },
   ];
 
@@ -329,10 +355,25 @@ export default function UnitConverterPage() {
         </div>
       </div>
       <ToolLayout
-        title="单位转换器"
-        description="长度、重量、温度、面积、体积、速度等单位转换"
+        title="单位换算工具"
+        description="支持长度、重量、温度、面积、体积、速度、进制等多种单位换算"
         icon={Ruler}
-        actions={<ToolActions actions={actions} />}
+        actions={
+          <div className="flex gap-2">
+            {actions.map((action) => (
+              <Button
+                key={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+                disabled={action.disabled}
+                className="flex items-center gap-1"
+              >
+                {action.icon && <action.icon className="h-4 w-4" />}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        }
         helpContent={helpContent}
       >
         {/* 分类选择 */}

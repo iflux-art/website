@@ -174,10 +174,11 @@
     "category": "friends",
     "tags": ["前端", "随笔"],
     "featured": false,
-    "icon": "https://blog.webjing.cn/upload/sitelogo.png",
+    "icon": "https://blog.webjing.cn/favicon.ico",
     "id": "mb6tdod821i9ooe4h4y",
     "createdAt": "2025-05-27T17:52:39.836Z",
-    "updatedAt": "2025-05-27T18:12:30.030Z"
+    "updatedAt": "2025-07-11T20:34:32.811Z",
+    "iconType": "image"
   },
   {
     "title": "虹墨空间站",

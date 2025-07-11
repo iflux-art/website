@@ -1,38 +1,23 @@
-import { LucideIcon, Tag, X } from "lucide-react";
+import { Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-
-interface TagType {
-  name: string;
-  count: number;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  icon?: LucideIcon;
-}
+import type { Category, TagType } from "@/types/filter-types";
 
 interface UnifiedFilterProps {
-  // 分类相关
   categories: Category[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  // 标签相关
   tags: TagType[];
   selectedTag: string | null;
   onTagChange: (tag: string | null) => void;
-  // 样式相关
   categoryButtonClassName?: string;
   className?: string;
-  // 显示设置
   showAllCategoryButton?: boolean;
   allCategoryText?: string;
   showTagCount?: boolean;
   tagTitle?: string;
   maxVisibleTags?: number;
-  // 标签点击回调
   onCardTagClick?: (tag: string) => void;
 }
 
@@ -53,25 +38,21 @@ export function UnifiedFilter({
 }: UnifiedFilterProps) {
   const [tagsExpanded, setTagsExpanded] = useState(false);
 
-  // 按计数排序标签
   const sortedTags = [...tags].sort((a, b) => b.count - a.count);
   const visibleTags = tagsExpanded
     ? sortedTags
     : sortedTags.slice(0, maxVisibleTags);
   const hasMoreTags = sortedTags.length > maxVisibleTags;
 
-  // 处理分类点击
   const handleCategoryClick = (categoryId: string) => {
-    // 如果点击当前选中的分类，则切换到全部状态
     if (categoryId === selectedCategory) {
       onCategoryChange("");
     } else {
       onCategoryChange(categoryId);
     }
-    onTagChange(null); // 清除已选标签
+    onTagChange(null);
   };
 
-  // 统一处理标签点击
   const handleTagClick = (tagName: string) => {
     if (selectedTag === tagName) {
       onTagChange(null);
@@ -88,7 +69,10 @@ export function UnifiedFilter({
           <Button
             variant={selectedCategory === "" ? "default" : "outline"}
             onClick={() => handleCategoryClick("")}
-            className={categoryButtonClassName}
+            className={
+              categoryButtonClassName +
+              (selectedCategory === "" ? " font-medium" : "")
+            }
           >
             {allCategoryText}
           </Button>
@@ -100,7 +84,7 @@ export function UnifiedFilter({
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
               onClick={() => handleCategoryClick(category.id)}
-              className={`flex items-center gap-2 ${categoryButtonClassName}`}
+              className={`flex items-center gap-2${selectedCategory === category.id ? "font-medium" : ""} ${categoryButtonClassName}`}
             >
               {Icon && <Icon className="h-4 w-4" />}
               {category.name}
@@ -133,7 +117,12 @@ export function UnifiedFilter({
               <Badge
                 key={tag.name}
                 variant={selectedTag === tag.name ? "default" : "outline"}
-                className="cursor-pointer transition-colors hover:bg-accent"
+                className={
+                  "cursor-pointer transition-colors " +
+                  (selectedTag === tag.name
+                    ? "font-medium text-primary"
+                    : "hover:text-primary")
+                }
                 onClick={() => handleTagClick(tag.name)}
               >
                 {tag.name}
@@ -143,7 +132,7 @@ export function UnifiedFilter({
             {hasMoreTags && (
               <Badge
                 variant="secondary"
-                className="cursor-pointer transition-colors hover:bg-accent"
+                className="cursor-pointer transition-colors hover:text-primary"
                 onClick={() => setTagsExpanded(!tagsExpanded)}
               >
                 {tagsExpanded

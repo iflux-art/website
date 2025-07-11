@@ -2,11 +2,11 @@
 
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { UnifiedFilter } from "@/components/common/filter/unified-filter";
+import { UnifiedFilter } from "@/components/common/unified-filter";
 import { TOOLS, TOOL_CATEGORIES } from "@/config/tools";
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { useFilterState } from "@/components/common/filter/use-filter-state";
-import { ToolCardComponent } from "@/components/common/card/tool-card-component";
+import { ToolLayout } from "@/components/layout/tool-layout";
+import { useFilterState } from "@/hooks/state/use-filter-state";
+import { ToolCard } from "@/components/common/card/tool-card";
 
 /**
  * 工具页面组件
@@ -54,9 +54,13 @@ export default function ToolsPage() {
       {/* 工具卡片网格 */}
       <AppGrid columns={4} className="mt-8">
         {filteredTools.map((tool) => (
-          <ToolCardComponent
+          <ToolCard
             key={tool.name}
-            tool={tool}
+            title={tool.name}
+            description={tool.description}
+            href={tool.path}
+            tags={tool.tags}
+            isExternal={!tool.isInternal}
             onTagClick={handleTagChange}
           />
         ))}

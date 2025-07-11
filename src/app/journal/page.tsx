@@ -74,9 +74,9 @@ export default function JournalPage() {
               {/* 时间轴垂直线 */}
               <div className="absolute left-[12rem] h-full w-px bg-border"></div>
 
-              {yearEntries.map((entry: JournalEntry) => (
+              {yearEntries.map((entry: JournalEntry, idx) => (
                 <div
-                  key={entry.id}
+                  key={`${entry.id}-${entry.date || ""}-${idx}`}
                   className="group relative mb-8 flex items-start"
                 >
                   {/* 左侧日期 */}

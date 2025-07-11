@@ -41,7 +41,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
     const cardContent = (
       <Card
         className={cn(
-          "group h-full border border-muted-foreground/10 p-5 transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30",
+          "group h-full border p-5 transition-all duration-300 hover:scale-[1.01] hover:border-primary/50",
           className,
         )}
       >

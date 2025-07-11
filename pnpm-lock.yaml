@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@mdx-js/mdx':
+        specifier: ^3.1.0
+        version: 3.1.0(acorn@8.15.0)
+      '@mdx-js/react':
+        specifier: ^3.1.0
+        version: 3.1.0(@types/react@19.1.8)(react@19.1.0)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.14
         version: 1.1.14(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -54,14 +60,11 @@ importers:
         specifier: ^10.1.1
         version: 10.1.1
       lucide-react:
-        specifier: ^0.510.0
-        version: 0.510.0(react@19.1.0)
+        specifier: ^0.525.0
+        version: 0.525.0(react@19.1.0)
       next:
         specifier: ^15.3.5
         version: 15.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      next-mdx-remote:
-        specifier: ^5.0.0
-        version: 5.0.0(@types/react@19.1.8)(acorn@8.15.0)(react@19.1.0)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -118,14 +121,14 @@ importers:
         specifier: ^9.30.1
         version: 9.30.1(jiti@2.4.2)
       eslint-config-next:
-        specifier: 15.3.2
-        version: 15.3.2(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
+        specifier: 15.3.5
+        version: 15.3.5(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
       eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.30.1(jiti@2.4.2))
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@9.30.1(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: ^5.5.1
-        version: 5.5.1(eslint-config-prettier@9.1.0(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))(prettier@3.6.2)
+        version: 5.5.1(eslint-config-prettier@10.1.5(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))(prettier@3.6.2)
       eslint-plugin-react:
         specifier: ^7.37.5
         version: 7.37.5(eslint@9.30.1(jiti@2.4.2))
@@ -160,14 +163,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@babel/code-frame@7.27.1':
-    resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-validator-identifier@7.27.1':
-    resolution: {integrity: sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==}
-    engines: {node: '>=6.9.0'}
 
   '@emnapi/core@1.4.4':
     resolution: {integrity: sha512-A9CnAbC6ARNMKcIcrQwq6HeHCjpcBZ5wSx4U01WXCqEKlrzB9F9315WDNHkrs2xbx7YjjSxbUYxuN6EQzpcY2g==}
@@ -435,8 +430,8 @@ packages:
   '@next/env@15.3.5':
     resolution: {integrity: sha512-7g06v8BUVtN2njAX/r8gheoVffhiKFVt4nx74Tt6G4Hqw9HCLYQVx/GkH2qHvPtAHZaUNZ0VXAa0pQP6v1wk7g==}
 
-  '@next/eslint-plugin-next@15.3.2':
-    resolution: {integrity: sha512-ijVRTXBgnHT33aWnDtmlG+LJD+5vhc9AKTJPquGG5NKXjpKNjc62woIhFtrAcWdBobt8kqjCoaJ0q6sDQoX7aQ==}
+  '@next/eslint-plugin-next@15.3.5':
+    resolution: {integrity: sha512-BZwWPGfp9po/rAnJcwUBaM+yT/+yTWIkWdyDwc74G9jcfTrNrmsHe+hXHljV066YNdVs8cxROxX5IgMQGX190w==}
 
   '@next/swc-darwin-arm64@15.3.5':
     resolution: {integrity: sha512-lM/8tilIsqBq+2nq9kbTW19vfwFve0NR7MxfkuSUbRSgXlMQoJYg+31+++XwKVSXk4uT23G2eF/7BRIKdn8t8w==}
@@ -1640,8 +1635,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-config-next@15.3.2:
-    resolution: {integrity: sha512-FerU4DYccO4FgeYFFglz0SnaKRe1ejXQrDb8kWUkTAg036YWi+jUsgg4sIGNCDhAsDITsZaL4MzBWKB6f4G1Dg==}
+  eslint-config-next@15.3.5:
+    resolution: {integrity: sha512-oQdvnIgP68wh2RlR3MdQpvaJ94R6qEFl+lnu8ZKxPj5fsAHrSF/HlAOZcsimLw3DT6bnEQIUdbZC2Ab6sWyptg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -1649,8 +1644,8 @@ packages:
       typescript:
         optional: true
 
-  eslint-config-prettier@9.1.0:
-    resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
+  eslint-config-prettier@10.1.5:
+    resolution: {integrity: sha512-zc1UmCpNltmVY34vuLRV61r1K27sWuX39E+uyUnY8xS2Bex88VV9cugG+UZbRSRGtGyFboj+D8JODyme1plMpw==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -2323,8 +2318,8 @@ packages:
     resolution: {integrity: sha512-QIXZUBJUx+2zHUdQujWejBkcD9+cs94tLn0+YL8UrCh+D5sCXZ4c7LaEH48pNwRY3MLDgqUFyhlCyjJPf1WP0A==}
     engines: {node: 20 || >=22}
 
-  lucide-react@0.510.0:
-    resolution: {integrity: sha512-p8SQRAMVh7NhsAIETokSqDrc5CHnDLbV29mMnzaXx+Vc/hnqQzwI2r0FMWCcoTXnbw2KEjy48xwpGdEL+ck06Q==}
+  lucide-react@0.525.0:
+    resolution: {integrity: sha512-Tm1txJ2OkymCGkvwoHt33Y2JpN5xucVq1slHcgE6Lk0WjDfjgKWor5CdVER8U6DvcfMwh4M8XxmpTiyzfmfDYQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -2553,12 +2548,6 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
-
-  next-mdx-remote@5.0.0:
-    resolution: {integrity: sha512-RNNbqRpK9/dcIFZs/esQhuLA8jANqlH694yqoDBK8hkVdJUndzzGmnPHa2nyi90N4Z9VmzuSWNRpr5ItT3M7xQ==}
-    engines: {node: '>=14', npm: '>=7'}
-    peerDependencies:
-      react: '>=16'
 
   next-themes@0.4.6:
     resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
@@ -3236,9 +3225,6 @@ packages:
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
 
-  unist-util-is@5.2.1:
-    resolution: {integrity: sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==}
-
   unist-util-is@6.0.0:
     resolution: {integrity: sha512-2qCTHimwdxLfz+YzdGfkqNlH0tLi9xjTnHddPmJwtIG9MGsdbutfTc4P+haPD7l7Cjxf/WZj+we5qfVPvvxfYw==}
 
@@ -3248,14 +3234,8 @@ packages:
   unist-util-position@5.0.0:
     resolution: {integrity: sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==}
 
-  unist-util-remove@3.1.1:
-    resolution: {integrity: sha512-kfCqZK5YVY5yEa89tvpl7KnBBHu2c6CzMkqHUrlOqaRgGOMp0sMvwWOVrbAtj03KhovQB7i96Gda72v/EFE0vw==}
-
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
-
-  unist-util-visit-parents@5.1.3:
-    resolution: {integrity: sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==}
 
   unist-util-visit-parents@6.0.1:
     resolution: {integrity: sha512-L/PqWzfTP9lzzEa6CKs0k2nARxTdZduw3zyh8d2NVBnsyvHjSX4TWse388YrrQKbvI8w20fGjGlhgT96WwKykw==}
@@ -3294,9 +3274,6 @@ packages:
 
   vfile-location@5.0.3:
     resolution: {integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==}
-
-  vfile-matter@5.0.1:
-    resolution: {integrity: sha512-o6roP82AiX0XfkyTHyRCMXgHfltUNlXSEqCIS80f+mbAyiQBE2fxtDVMtseyytGx75sihiJFo/zR6r/4LTs2Cw==}
 
   vfile-message@4.0.2:
     resolution: {integrity: sha512-jRDZ1IMLttGj41KcZvlrYAaI3CfqpLpfpf+Mfig13viT6NKvRzWZ+lXz0Y5D60w6uJIBAOGq9mSHf0gktF0duw==}
@@ -3376,14 +3353,6 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
-
-  '@babel/code-frame@7.27.1':
-    dependencies:
-      '@babel/helper-validator-identifier': 7.27.1
-      js-tokens: 4.0.0
-      picocolors: 1.1.1
-
-  '@babel/helper-validator-identifier@7.27.1': {}
 
   '@emnapi/core@1.4.4':
     dependencies:
@@ -3643,7 +3612,7 @@ snapshots:
 
   '@next/env@15.3.5': {}
 
-  '@next/eslint-plugin-next@15.3.2':
+  '@next/eslint-plugin-next@15.3.5':
     dependencies:
       fast-glob: 3.3.1
 
@@ -4894,9 +4863,9 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-config-next@15.3.2(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3):
+  eslint-config-next@15.3.5(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3):
     dependencies:
-      '@next/eslint-plugin-next': 15.3.2
+      '@next/eslint-plugin-next': 15.3.5
       '@rushstack/eslint-patch': 1.12.0
       '@typescript-eslint/eslint-plugin': 8.36.0(@typescript-eslint/parser@8.36.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/parser': 8.36.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
@@ -4913,7 +4882,7 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
-  eslint-config-prettier@9.1.0(eslint@9.30.1(jiti@2.4.2)):
+  eslint-config-prettier@10.1.5(eslint@9.30.1(jiti@2.4.2)):
     dependencies:
       eslint: 9.30.1(jiti@2.4.2)
 
@@ -4986,14 +4955,14 @@ snapshots:
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-prettier@5.5.1(eslint-config-prettier@9.1.0(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))(prettier@3.6.2):
     dependencies:
       eslint: 9.30.1(jiti@2.4.2)
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.8
     optionalDependencies:
-      eslint-config-prettier: 9.1.0(eslint@9.30.1(jiti@2.4.2))
+      eslint-config-prettier: 10.1.5(eslint@9.30.1(jiti@2.4.2))
 
   eslint-plugin-react-hooks@5.2.0(eslint@9.30.1(jiti@2.4.2)):
     dependencies:
@@ -5725,7 +5694,7 @@ snapshots:
 
   lru-cache@11.1.0: {}
 
-  lucide-react@0.510.0(react@19.1.0):
+  lucide-react@0.525.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
@@ -6206,20 +6175,6 @@ snapshots:
   napi-postinstall@0.3.0: {}
 
   natural-compare@1.4.0: {}
-
-  next-mdx-remote@5.0.0(@types/react@19.1.8)(acorn@8.15.0)(react@19.1.0):
-    dependencies:
-      '@babel/code-frame': 7.27.1
-      '@mdx-js/mdx': 3.1.0(acorn@8.15.0)
-      '@mdx-js/react': 3.1.0(@types/react@19.1.8)(react@19.1.0)
-      react: 19.1.0
-      unist-util-remove: 3.1.1
-      vfile: 6.0.3
-      vfile-matter: 5.0.1
-    transitivePeerDependencies:
-      - '@types/react'
-      - acorn
-      - supports-color
 
   next-themes@0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
@@ -7004,10 +6959,6 @@ snapshots:
       trough: 2.2.0
       vfile: 6.0.3
 
-  unist-util-is@5.2.1:
-    dependencies:
-      '@types/unist': 2.0.11
-
   unist-util-is@6.0.0:
     dependencies:
       '@types/unist': 3.0.3
@@ -7020,20 +6971,9 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
 
-  unist-util-remove@3.1.1:
-    dependencies:
-      '@types/unist': 2.0.11
-      unist-util-is: 5.2.1
-      unist-util-visit-parents: 5.1.3
-
   unist-util-stringify-position@4.0.0:
     dependencies:
       '@types/unist': 3.0.3
-
-  unist-util-visit-parents@5.1.3:
-    dependencies:
-      '@types/unist': 2.0.11
-      unist-util-is: 5.2.1
 
   unist-util-visit-parents@6.0.1:
     dependencies:
@@ -7095,11 +7035,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile: 6.0.3
-
-  vfile-matter@5.0.1:
-    dependencies:
-      vfile: 6.0.3
-      yaml: 2.8.0
 
   vfile-message@4.0.2:
     dependencies:

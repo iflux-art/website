@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useFilterState } from "@/components/common/filter/use-filter-state";
+import { useFilterState } from "@/hooks/state/use-filter-state";
 import type {
   LinksItem as Item,
   LinksCategory as Category,

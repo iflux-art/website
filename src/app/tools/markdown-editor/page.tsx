@@ -13,8 +13,7 @@ import {
   Columns,
   ArrowLeft,
 } from "lucide-react"; // Added Columns as a placeholder for split view
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -240,6 +239,7 @@ function greet(name) {
 
   const htmlContent = markdownToHtml(markdown);
 
+  // 1. 在 actions 定义时为所有 action 显式加 disabled: false，保证类型安全
   const actions = [
     {
       label: "编辑模式",
@@ -247,6 +247,7 @@ function greet(name) {
       icon: Edit,
       variant:
         viewMode === "edit" ? ("default" as const) : ("outline" as const),
+      disabled: false,
     },
     {
       label: "预览模式",
@@ -254,25 +255,29 @@ function greet(name) {
       icon: Eye,
       variant:
         viewMode === "preview" ? ("default" as const) : ("outline" as const),
+      disabled: false,
     },
     {
       label: "分屏模式",
       onClick: () => setViewMode("split"),
-      icon: Columns, // Added icon
+      icon: Columns,
       variant:
         viewMode === "split" ? ("default" as const) : ("outline" as const),
+      disabled: false,
     },
     {
       label: "加载示例",
       onClick: loadExample,
       icon: FileDown,
       variant: "outline" as const,
+      disabled: false,
     },
     {
       label: "清空",
       onClick: clearContent,
       icon: RotateCcw,
       variant: "outline" as const,
+      disabled: false,
     },
   ];
 
@@ -351,9 +356,26 @@ function greet(name) {
       </div>
       <ToolLayout
         title="Markdown 编辑器"
-        description="在线 Markdown 编辑器，支持实时预览和语法高亮"
+        description="支持实时预览、语法高亮、导出、复制等功能"
         icon={FileText}
-        actions={<ToolActions actions={actions} />}
+        actions={
+          <div className="flex gap-2">
+            {actions.map((action) => (
+              <Button
+                key={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+                {...(typeof action.disabled !== "undefined"
+                  ? { disabled: action.disabled }
+                  : {})}
+                className="flex items-center gap-1"
+              >
+                {action.icon && <action.icon className="h-4 w-4" />}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        }
         helpContent={helpContent}
       >
         {/* 工具栏 */}

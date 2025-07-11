@@ -86,7 +86,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     const cardContent = (
       <Card
         className={cn(
-          "group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30",
+          "group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50",
           className,
         )}
         style={{

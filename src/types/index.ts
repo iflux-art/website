@@ -27,6 +27,26 @@ export * from "@/types/content";
 // Web Vitals 相关类型
 export * from "@/types/web-vitals-types";
 
+// 通用组件类型
+export type {
+  LogoProps,
+  ContentType,
+  ContentDisplayProps,
+  ContentRendererProps,
+  RelatedPostsProps,
+  BreadcrumbItem,
+  BreadcrumbProps,
+  RelatedPost,
+} from "@/types/common-component-types";
+// 博客相关类型
+export type {
+  BlogPost,
+  BlogCategory,
+  BlogFrontmatter,
+  TagCount,
+} from "@/types/blog-types";
+export type { RelatedPost as BlogRelatedPost } from "@/types/blog-types";
+
 // API响应类型
 export interface ApiResponse<T = unknown> {
   data?: T;

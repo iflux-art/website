@@ -1,15 +1,15 @@
 // 页面重构：类型、配置、工具函数全部归档，页面只负责参数解析和渲染
 import React from "react";
-import { DocsContent } from "@/components/layout/docs/DocsContent";
-import { Breadcrumb } from "@/components/common/breadcrumb/breadcrumb";
-import { createDocBreadcrumbs } from "@/components/common/breadcrumb/breadcrumb-utils";
+import { Breadcrumb } from "@/components/common/breadcrumb";
+import { createDocBreadcrumbsServer } from "@/lib/utils/breadcrumb";
 import { ContentDisplay } from "@/components/common/content-display";
-import { DocPagination } from "@/components/layout/docs/pagination";
-import { Sidebar } from "@/components/layout/docs/sidebar";
-import { TableOfContents } from "@/components/layout/toc/table-of-contents";
+import { DocPagination } from "@/components/common/pagination";
+import { Sidebar } from "@/components/common/sidebar";
+import { TableOfContents } from "@/components/common/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import { getDocContent } from "@/lib/content/get-doc-content";
 import type { DocPageParams, DocContentResult } from "@/types/docs-types";
+import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 
 export default async function DocPage({
   params,
@@ -22,14 +22,8 @@ export default async function DocPage({
     : [resolvedParams.slug];
   const doc: DocContentResult = getDocContent(slug);
 
-  // 生成面包屑
-  const breadcrumbs = createDocBreadcrumbs({
-    slug: doc.isIndexPage
-      ? doc.topLevelCategorySlug.split("/")
-      : doc.relativePathFromTopCategory.split("/"),
-    title: doc.frontmatter.title,
-    meta: undefined, // 如需 meta 可在 getDocContent 返回
-  });
+  // 生成面包屑（服务端）
+  const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,7 +57,7 @@ export default async function DocPage({
                 tags={doc.frontmatter.tags || []}
                 wordCount={doc.wordCount}
               >
-                <DocsContent content={doc.content} />
+                <ClientMDXRenderer content={doc.content} />
               </ContentDisplay>
               <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
             </div>

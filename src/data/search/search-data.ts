@@ -1,5 +1,6 @@
-// 工具数据 - 实际项目中应该从API获取
-export const TOOLS = [
+import type { Tool, NavigationSite } from "@/types/search";
+
+export const TOOLS: Tool[] = [
   {
     id: "json-formatter",
     name: "JSON 格式化",
@@ -72,8 +73,7 @@ export const TOOLS = [
   },
 ];
 
-// 网址导航数据 - 实际项目中应该从API获取
-export const NAVIGATION_SITES = [
+export const NAVIGATION_SITES: NavigationSite[] = [
   {
     name: "GitHub",
     description: "全球最大的代码托管平台",
@@ -123,19 +123,3 @@ export const NAVIGATION_SITES = [
     category: "设计工具",
   },
 ];
-
-// 数据类型定义
-export interface Tool {
-  id: string;
-  name: string;
-  description: string;
-  path: string;
-  tags: string[];
-}
-
-export interface NavigationSite {
-  name: string;
-  description: string;
-  url: string;
-  category: string;
-}

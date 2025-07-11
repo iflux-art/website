@@ -24,7 +24,7 @@ export const ToolCard = forwardRef<HTMLAnchorElement, ToolCardProps>(
     ref,
   ) => {
     const cardContent = (
-      <Card className="group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50 hover:bg-accent/30">
+      <Card className="group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50">
         <CardContent className="flex h-full flex-col p-4">
           <div className="mb-2 flex items-start justify-between">
             <h3 className="mb-1 text-xl font-semibold">{title}</h3>

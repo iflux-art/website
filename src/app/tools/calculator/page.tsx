@@ -2,11 +2,10 @@
 
 import React, { useState } from "react";
 import { Calculator, Delete, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "@/components/layout/tools/tool-layout";
-import { ToolActions } from "@/components/layout/tools/tool-actions";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { calculatorUtils } from "@/components/layout/tools/tool-utils";
+import { evaluateExpression } from "@/lib/tools/tool-utils";
 import { useSafeTool } from "@/hooks/state";
 import Link from "next/link";
 
@@ -39,7 +38,7 @@ export default function CalculatorPage() {
 
   const performEquals = () => {
     const fullExpression = expression + display;
-    const result = calculatorUtils.evaluate(fullExpression);
+    const result = evaluateExpression(fullExpression);
 
     if (result.success) {
       addToHistory({
@@ -143,7 +142,7 @@ export default function CalculatorPage() {
 
   const calculate = () => {
     const fullExpression = expression + display;
-    const result = calculatorUtils.evaluate(fullExpression);
+    const result = evaluateExpression(fullExpression);
 
     if (result.success) {
       addToHistory({
@@ -266,7 +265,22 @@ export default function CalculatorPage() {
         title="计算器"
         description="多功能计算器，支持基本运算和科学计算"
         icon={Calculator}
-        actions={<ToolActions actions={actions} />}
+        actions={
+          <div className="flex gap-2">
+            {actions.map((action) => (
+              <Button
+                key={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+                disabled={action.disabled}
+                className="flex items-center gap-1"
+              >
+                {action.icon && <action.icon className="h-4 w-4" />}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        }
         helpContent={helpContent}
       >
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
-import { TOOLS } from "@/components/layout/tools/tools-data";
+import { TOOLS } from "@/data/tools-data";
 import items from "@/data/links/items.json";
 import type { LinksItem as Item } from "@/types/links-types";
 import type {
