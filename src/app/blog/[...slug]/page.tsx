@@ -32,11 +32,12 @@ export default async function BlogPostPage({
     return (
       <div className="min-h-screen bg-background">
         <MDXCodeEnhance />
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex justify-center gap-12">
-            <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 lg:block">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex justify-center gap-10">
+            <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto lg:block">
               <RelatedPosts posts={relatedPosts} currentSlug={slug.slice(1)} />
             </aside>
+
             <main className="max-w-4xl min-w-0 flex-1">
               <div>
                 <div className="mb-6">
@@ -59,6 +60,7 @@ export default async function BlogPostPage({
                 </ContentDisplay>
               </div>
             </main>
+            
             <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
               <TableOfContents
                 headings={headings}

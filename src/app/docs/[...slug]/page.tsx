@@ -34,9 +34,9 @@ export default async function DocPage({
   return (
     <div className="min-h-screen bg-background">
       <MDXCodeEnhance />
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-4 py-8">
         <div className="flex justify-center gap-10">
-          <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 lg:block">
+          <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto lg:block">
             <Sidebar
               category={doc.topLevelCategorySlug}
               currentDoc={
