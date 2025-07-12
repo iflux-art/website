@@ -108,3 +108,54 @@ export async function getBlogContent(slug: string[]): Promise<{
     relatedPosts,
   };
 }
+
+/**
+ * 生成所有博客文章的静态路径
+ * @returns 所有博客文章路径数组
+ */
+export function generateBlogPaths(): { slug: string[] }[] {
+  const blogContentDir = path.join(process.cwd(), "src", "content", "blog");
+  const paths: { slug: string[] }[] = [];
+
+  function scanDirectory(dir: string, currentSlug: string[] = []) {
+    if (!fs.existsSync(dir)) return;
+
+    const items = fs.readdirSync(dir, { withFileTypes: true });
+
+    for (const item of items) {
+      const itemPath = path.join(dir, item.name);
+
+      if (item.isDirectory()) {
+        // 跳过以 _ 开头的目录
+        if (item.name.startsWith("_")) continue;
+
+        const newSlug = [...currentSlug, item.name];
+        scanDirectory(itemPath, newSlug);
+      } else if (
+        item.isFile() &&
+        (item.name.endsWith(".mdx") || item.name.endsWith(".md")) &&
+        !item.name.startsWith("_")
+      ) {
+        // 添加文件路径（去掉扩展名）
+        const fileName = item.name.replace(/\.(mdx|md)$/, "");
+        const fullSlug = [...currentSlug, fileName];
+
+        // 检查文章是否已发布
+        try {
+          const fileContent = fs.readFileSync(itemPath, "utf8");
+          const { data } = matter(fileContent);
+
+          // 只包含已发布的文章
+          if (data.published !== false) {
+            paths.push({ slug: fullSlug });
+          }
+        } catch (error) {
+          console.error(`Error reading blog file ${itemPath}:`, error);
+        }
+      }
+    }
+  }
+
+  scanDirectory(blogContentDir);
+  return paths;
+}

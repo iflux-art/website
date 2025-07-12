@@ -24,8 +24,8 @@ npx next dev --turbo
 ---
 
 1. 梳理并重构，让 @/types、@/lib/utils、@/lib、@/data、@/config、@/hooks 文件各归其位
-2. 全局修正 index.ts 统一导出文件、引用路径、import/export，保证引用唯一、无冗余
-3. 构建 100% 通过，无 warning、无 error
+2. 重构后保证引用唯一、无冗余，全局修正 index.ts 统一导出文件、import/export
+3. pnpm build 构建 100% 通过，无 warning、无 error
 
 config：只放静态配置对象和常量，不放类型和工具函数。
 types：只放类型定义，所有 interface/type 归一。类型全部通过 @/types 引用，lib/、hooks/ 只 import 不定义。

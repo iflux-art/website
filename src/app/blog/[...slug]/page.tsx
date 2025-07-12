@@ -6,9 +6,17 @@ import { RelatedPosts } from "@/components/common/related-posts";
 import { TableOfContents } from "@/components/common/table-of-contents";
 import { NAVBAR_HEIGHT } from "@/config/layout";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
-import { getBlogContent } from "@/lib/content/get-blog-content";
+import {
+  getBlogContent,
+  generateBlogPaths,
+} from "@/lib/content/get-blog-content";
 import React from "react";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
+
+// 生成静态路径
+export async function generateStaticParams() {
+  return generateBlogPaths();
+}
 
 // 如需 generateMetadata，可用 getBlogContent 获取 frontmatter
 

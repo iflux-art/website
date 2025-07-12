@@ -7,9 +7,14 @@ import { DocPagination } from "@/components/common/pagination";
 import { Sidebar } from "@/components/common/sidebar";
 import { TableOfContents } from "@/components/common/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
-import { getDocContent } from "@/lib/content/get-doc-content";
+import { getDocContent, generateDocPaths } from "@/lib/content/get-doc-content";
 import type { DocPageParams, DocContentResult } from "@/types/docs-types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
+
+// 生成静态路径
+export async function generateStaticParams() {
+  return generateDocPaths();
+}
 
 export default async function DocPage({
   params,
