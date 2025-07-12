@@ -6,6 +6,7 @@ import { Logo } from "@/components/common/logo";
 import { MobileMenu } from "@/components/layout/navbar/mobile-menu";
 import { NavMenu } from "@/components/layout/navbar/nav-menu";
 import { useNavbarScroll } from "@/hooks";
+import { ThemeToggle } from "@/components/common/button/theme-toggle";
 
 /**
  * 主站点导航栏组件
@@ -47,8 +48,9 @@ export function MainNavbar({ className = "" }: { className?: string }) {
           )}
         </div>
 
-        {/* 右侧部分 - 搜索图标和移动菜单 */}
+        {/* 右侧部分 - 搜索图标、主题切换和移动菜单 */}
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <MobileMenu isOpen={isOpen} setIsOpenAction={setIsOpen} />
         </div>
       </div>

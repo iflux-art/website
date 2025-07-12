@@ -44,6 +44,9 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
               className="lg:hidden"
               aria-label={isOpen ? "关闭菜单" : "打开菜单"}
               title={isOpen ? "关闭菜单" : "打开菜单"}
+              onClick={() => {
+                console.log("汉堡按钮被点击");
+              }}
             >
               <Menu className="h-5 w-5" />
             </Button>
