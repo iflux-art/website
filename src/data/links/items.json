@@ -19192,5 +19192,18 @@
     "id": "dUtcuJBu47x4U52ij-tTb",
     "createdAt": "2025-07-11T09:06:30.801Z",
     "updatedAt": "2025-07-11T09:12:54.370Z"
+  },
+  {
+    "title": "绘想",
+    "url": "https://huixiang.baidu.com/",
+    "description": "AI视频创作平台",
+    "category": "ai",
+    "tags": ["视频生成", "数字人"],
+    "featured": false,
+    "icon": "https://huixiang.baidu.com/favicon.ico",
+    "iconType": "image",
+    "id": "Eb4_4mCaDNK3CH4Ezin5M",
+    "createdAt": "2025-07-12T08:28:14.420Z",
+    "updatedAt": "2025-07-12T08:28:14.420Z"
   }
 ]

@@ -243,7 +243,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
   }
 
   return (
-    <div ref={sidebarRef} className="scrollbar-hide">
+    <div ref={sidebarRef} className="hide-scrollbar">
       <div>
         <ul className="space-y-1">{MemoizedSidebarItems}</ul>
       </div>

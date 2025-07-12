@@ -152,6 +152,7 @@ export function TableOfContents({
           "pr-2 pb-4",
           adaptive && "transition-all duration-200",
           adaptive && "fixed overflow-y-auto",
+          "hide-scrollbar", // 新增隐藏滚动条 class
         )}
         style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >

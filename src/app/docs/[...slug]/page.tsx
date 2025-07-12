@@ -16,6 +16,7 @@ import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { TwikooComment } from "@/components/common/twikoo-comment";
 
 // 内联的路径生成函数
 function generateDocPaths(): { slug: string[] }[] {
@@ -168,7 +169,7 @@ export default async function DocPage({
         <MDXCodeEnhance />
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center gap-10">
-            <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto lg:block">
+            <aside className="hide-scrollbar sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto lg:block">
               <Sidebar
                 category={doc.topLevelCategorySlug}
                 currentDoc={
@@ -198,10 +199,11 @@ export default async function DocPage({
                   <ClientMDXRenderer content={doc.content} />
                 </ContentDisplay>
                 <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
+                <TwikooComment />
               </div>
             </main>
 
-            <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
+            <aside className="sticky top-[80px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
               <TableOfContents
                 headings={doc.headings}
                 adaptive={true}

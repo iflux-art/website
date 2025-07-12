@@ -4,7 +4,6 @@ import { createBlogBreadcrumbs } from "@/lib/utils/breadcrumb";
 import { ContentDisplay } from "@/components/common/content-display";
 import { RelatedPosts } from "@/components/common/related-posts";
 import { TableOfContents } from "@/components/common/table-of-contents";
-import { NAVBAR_HEIGHT } from "@/config/layout";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import {
   getBlogContent,
@@ -12,6 +11,7 @@ import {
 } from "@/lib/content/get-blog-content";
 import React from "react";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
+import { TwikooComment } from "@/components/common/twikoo-comment";
 
 // 生成静态路径
 export async function generateStaticParams() {
@@ -66,14 +66,15 @@ export default async function BlogPostPage({
                 >
                   <ClientMDXRenderer content={content} />
                 </ContentDisplay>
+                <TwikooComment />
               </div>
             </main>
 
-            <aside className="sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
+            <aside className="sticky top-[80px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
               <TableOfContents
                 headings={headings}
                 adaptive={true}
-                adaptiveOffset={NAVBAR_HEIGHT}
+                adaptiveOffset={80}
               />
             </aside>
           </div>
