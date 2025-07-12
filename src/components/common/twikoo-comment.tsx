@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 /**
  * Twikoo 评论组件（适用于 Next.js）
  * 自动使用全局 envId 和当前页面 path
+ * 内部包含分割线、卡片、引导文案和评论区
  */
 export const TwikooComment: React.FC = () => {
   useEffect(() => {
@@ -48,5 +49,14 @@ export const TwikooComment: React.FC = () => {
     };
   }, []);
 
-  return <div id="twikoo-comment" className="relative"></div>;
+  return (
+    <>
+      <div className="rounded-xl border bg-card p-6 mt-10">
+        <p className="mb-4 text-center text-base text-muted-foreground">
+          你的每一条评论都是宝贵的交流
+        </p>
+        <div id="twikoo-comment" className="relative"></div>
+      </div>
+    </>
+  );
 };

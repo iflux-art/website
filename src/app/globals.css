@@ -271,14 +271,8 @@
     "Courier New", monospace;
 }
 
-/* Twikoo 评论区 loading 居中样式 */
-#twikoo .el-loading-mask {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-}
+/* 隐藏 Twikoo 评论区的 loading 动画 */
+#twikoo .el-loading-mask,
 #twikoo .el-loading-spinner {
-  left: 0 !important;
-  right: 0 !important;
-  margin: 0 auto !important;
+  display: none !important;
 }

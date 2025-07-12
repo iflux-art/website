@@ -17,6 +17,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { TwikooComment } from "@/components/common/twikoo-comment";
+import { getFlattenedDocsOrder } from "@/lib/content";
 
 // 内联的路径生成函数
 function generateDocPaths(): { slug: string[] }[] {
@@ -134,12 +135,22 @@ function getDocContentSimple(slug: string[]): DocContentResult {
     .replace(/\\/g, "/")
     .replace(/\.(mdx|md)$/, "");
 
+  // === 新增分页逻辑 ===
+  const flatDocs = getFlattenedDocsOrder(topLevelCategorySlug);
+  const currentDocPath = `/docs/${topLevelCategorySlug}/${relativePathFromTopCategory}`;
+  const currentIndex = flatDocs.findIndex(
+    (item) => item.path === currentDocPath,
+  );
+  const prevDoc = currentIndex > 0 ? flatDocs[currentIndex - 1] : null;
+  const nextDoc =
+    currentIndex < flatDocs.length - 1 ? flatDocs[currentIndex + 1] : null;
+
   return {
     content: originalContent,
     frontmatter,
     headings,
-    prevDoc: null,
-    nextDoc: null,
+    prevDoc,
+    nextDoc,
     breadcrumbs: [],
     mdxContent: originalContent,
     wordCount,

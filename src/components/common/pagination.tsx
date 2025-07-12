@@ -9,7 +9,7 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
   return (
     <div className="mt-12 flex justify-between gap-4">
       {prevDoc ? (
-        <Card className="max-w-[48%] flex-1 rounded-xl shadow-sm transition-all hover:shadow-md">
+        <Card className="max-w-[48%] flex-1 rounded-xl transition-all hover:shadow-md">
           <CardContent className="p-5">
             <Link href={prevDoc.path} className="flex flex-col">
               <span className="flex items-center text-sm text-muted-foreground">
@@ -26,7 +26,7 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
         <div className="max-w-[48%] flex-1"></div>
       )}
       {nextDoc ? (
-        <Card className="max-w-[48%] flex-1 rounded-xl shadow-sm transition-all hover:shadow-md">
+        <Card className="max-w-[48%] flex-1 rounded-xl transition-all hover:shadow-md">
           <CardContent className="p-5">
             <Link
               href={nextDoc.path}
