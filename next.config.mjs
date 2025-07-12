@@ -81,6 +81,22 @@ const nextConfig = {
       ],
     },
   ],
+
+  // 强制静态生成配置
+  trailingSlash: true,
+  
+  // 优化函数大小
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // 排除大文件从服务端包中
+      config.externals = config.externals || [];
+      config.externals.push({
+        'src/data/links/items.json': 'commonjs src/data/links/items.json',
+        'src/data/links/categories.json': 'commonjs src/data/links/categories.json',
+      });
+    }
+    return config;
+  },
 };
 
 // 导出配置
