@@ -1,26 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
 import { nanoid } from "nanoid";
 import type { LinksItem, LinksFormData, CategoryId } from "@/types";
-
-const filePath = path.join(process.cwd(), "src/data/links/items.json");
-
-// 读取全部 items
-async function readItems(): Promise<LinksItem[]> {
-  const data = await fs.readFile(filePath, "utf-8");
-  const items = JSON.parse(data);
-  return items as LinksItem[];
-}
-
-// 写入全部 items
-async function writeItems(items: LinksItem[]) {
-  await fs.writeFile(filePath, JSON.stringify(items, null, 2), "utf-8");
-}
+import {
+  getLinksData,
+  writeLinksData,
+} from "@/lib/admin/get-links-data-server";
 
 export async function GET() {
   try {
-    const items = await readItems();
+    const items = await getLinksData();
     return NextResponse.json(items);
   } catch (error) {
     console.error("Error reading links:", error);
@@ -74,7 +62,7 @@ export async function POST(request: NextRequest) {
       iconType: formData.iconType || "text",
     };
 
-    const items = await readItems();
+    const items = await getLinksData();
 
     if (items.some((item) => item.url === validatedFormData.url)) {
       return NextResponse.json(
@@ -92,7 +80,7 @@ export async function POST(request: NextRequest) {
     } as LinksItem;
 
     items.push(newItem);
-    await writeItems(items);
+    await writeLinksData(items);
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
     console.error("Error adding link:", error);
@@ -116,7 +104,7 @@ export async function PUT(request: NextRequest) {
 
     const updates = await request.json();
     const validatedUpdates = updates as Partial<LinksFormData>;
-    const items = await readItems();
+    const items = await getLinksData();
     const idx = items.findIndex((item) => item.id === id);
 
     if (idx === -1) {
@@ -144,7 +132,7 @@ export async function PUT(request: NextRequest) {
     };
 
     items[idx] = updatedItem;
-    await writeItems(items);
+    await writeLinksData(items);
     return NextResponse.json(updatedItem);
   } catch (error) {
     console.error("Error updating link:", error);
@@ -166,7 +154,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const items = await readItems();
+    const items = await getLinksData();
     const idx = items.findIndex((item) => item.id === id);
 
     if (idx === -1) {
@@ -174,7 +162,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     items.splice(idx, 1);
-    await writeItems(items);
+    await writeLinksData(items);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting link:", error);

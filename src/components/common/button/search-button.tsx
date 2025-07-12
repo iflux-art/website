@@ -37,7 +37,7 @@ export function SearchIcon() {
       >
         <Search className="h-5 w-5" />
       </Button>
-      <SearchDialog open={open} onOpenChangeAction={setOpen} />
+      <SearchDialog open={open} onOpenChange={setOpen} />
     </>
   );
 }

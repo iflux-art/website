@@ -1,284 +1,157 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-// Icons are now handled in SearchResults component
-import { SearchDialogProps, APISearchResult } from "@/types";
-import type { SearchResult } from "@/types/search-types";
-import { COMMANDS } from "@/data/search/commands";
-import { TOOLS } from "@/data/search/search-data";
-import items from "@/data/links/items.json";
-import type { LinksItem as Item } from "@/types/links-types";
-import { SearchBar } from "@/components/features/search/search-bar";
-import { SearchResults } from "@/components/features/search/search-results";
-import { KeyboardHints } from "@/components/features/search/keyboard-hints";
-import { useSafeSearch } from "@/hooks/state";
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
 
-/**
- * 搜索对话框组件
- * 提供全站内容搜索、命令执行和历史记录功能
- */
-export function SearchDialog({ open, onOpenChangeAction }: SearchDialogProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
+interface SearchResult {
+  type: "link" | "blog" | "doc" | "tool";
+  title: string;
+  description?: string;
+  url?: string;
+  path?: string;
+  category?: string;
+  tags?: string[];
+  icon?: string;
+}
 
-  // 使用安全状态管理
-  const {
-    query: searchQuery,
-    results,
-    isLoading,
-    selectedIndex,
-    history: searchHistory,
-    setQuery: setSearchQuery,
-    setResults,
-    setLoading: setIsLoading,
-    setSelectedIndex,
-    addToHistory: saveToHistory,
-    clearHistory,
-    // resetSearch 功能暂时不需要
-  } = useSafeSearch();
+interface SearchDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-  // 处理结果选择
-  const handleSelect = (result: SearchResult) => {
-    if (result.type === "link") {
-      window.open(result.url, "_blank");
-    } else if (result.url && result.url !== "#") {
-      router.push(result.url);
-      if (result.type !== "command") {
-        saveToHistory(searchQuery);
-      }
-    } else if (result.type === "command") {
-      // 处理命令类型的结果
-      if (result.title.includes("切换主题")) {
-        document.documentElement.classList.toggle("dark");
-      } else if (result.title.includes("查看文档")) {
-        router.push("/docs");
-      }
-    }
-    onOpenChangeAction(false);
-  };
+export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // 键盘导航
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelectedIndex(
-        selectedIndex > 0 ? selectedIndex - 1 : results.length - 1,
-      );
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelectedIndex(
-        selectedIndex < results.length - 1 ? selectedIndex + 1 : 0,
-      );
-    } else if (e.key === "Enter" && results[selectedIndex]) {
-      handleSelect(results[selectedIndex]);
-    }
-  };
-
-  // 搜索逻辑
   useEffect(() => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) {
-      // 显示搜索历史和快捷命令
-      const historyResults: SearchResult[] = searchHistory
-        .filter((item: string) => item.toLowerCase().includes(query))
-        .map((item: string, index: number) => ({
-          id: `history-${index}`,
-          title: item,
-          url: "#",
-          path: "#",
-          description: "最近搜索",
-          excerpt: "最近搜索",
-          type: "command" as const,
-          icon: null,
-        }));
-
-      const commandResults: SearchResult[] = COMMANDS.map((cmd, index) => ({
-        id: `command-${index}`,
-        title: cmd.title,
-        url: "",
-        path: "",
-        description: cmd.description,
-        excerpt: cmd.description,
-        type: "command" as const,
-        icon: null,
-      }));
-
-      setResults([...commandResults, ...historyResults]);
-      setIsLoading(false);
+    if (!query.trim()) {
+      setResults([]);
       return;
     }
 
-    setIsLoading(true);
-    const timer = setTimeout(async () => {
-      // 处理文档搜索结果
-      const docResults: SearchResult[] = [];
-      const blogResults: SearchResult[] = [];
+    const searchTimeout = setTimeout(async () => {
+      setLoading(true);
       try {
         const response = await fetch(
-          `/api/search?q=${encodeURIComponent(query)}`,
+          `/api/search?q=${encodeURIComponent(query)}&type=all`,
         );
         const data = await response.json();
-
-        // 处理文档搜索结果
-        docResults.push(
-          ...data.results
-            .filter((result: APISearchResult) => result.type === "doc")
-            .map((doc: APISearchResult, index: number) => ({
-              id: `doc-${index}`,
-              title: doc.title,
-              url: doc.path,
-              path: doc.path,
-              description: doc.excerpt,
-              excerpt: doc.excerpt,
-              type: "docs" as const,
-              icon: null,
-            })),
-        );
-
-        // 处理博客搜索结果
-        blogResults.push(
-          ...data.results
-            .filter((result: APISearchResult) => result.type === "blog")
-            .map((blog: APISearchResult, index: number) => ({
-              id: `blog-${index}`,
-              title: blog.title,
-              url: blog.path,
-              path: blog.path,
-              description: blog.excerpt,
-              excerpt: blog.excerpt,
-              type: "blog" as const,
-              icon: null,
-            })),
-        );
+        setResults(data.results || []);
       } catch (error) {
-        console.error("Error fetching search results:", error);
+        console.error("Search error:", error);
+        setResults([]);
+      } finally {
+        setLoading(false);
       }
-
-      // 处理历史记录
-      const historyResults: SearchResult[] = searchHistory
-        .filter((item: string) => item.toLowerCase().includes(query))
-        .map((item: string, index: number) => ({
-          id: `history-search-${index}`,
-          title: item,
-          url: "#",
-          path: "#",
-          description: "最近搜索",
-          excerpt: "最近搜索",
-          type: "command" as const,
-          icon: null,
-        }));
-
-      // 处理工具结果
-      const toolResults: SearchResult[] = TOOLS.filter(
-        (tool) =>
-          tool.name.toLowerCase().includes(query) ||
-          tool.description.toLowerCase().includes(query) ||
-          tool.tags.some((tag) => tag.toLowerCase().includes(query)),
-      ).map((tool, index) => ({
-        id: `tool-${index}`,
-        title: tool.name,
-        url: tool.path,
-        path: tool.path,
-        description: tool.description,
-        excerpt: tool.description,
-        type: "tool" as const,
-        icon: null,
-      }));
-
-      // 处理命令结果
-      const commandResults: SearchResult[] = COMMANDS.filter(
-        (command) =>
-          command.title.toLowerCase().includes(query) ||
-          command.description.toLowerCase().includes(query),
-      ).map((command, index) => ({
-        id: `command-search-${index}`,
-        title: command.title,
-        url: "#",
-        path: "#",
-        description: command.description,
-        excerpt: command.description,
-        type: "command" as const,
-        icon: null,
-      }));
-
-      // 处理链接导航搜索结果
-      const linkResults: SearchResult[] = (items as Item[])
-        .filter(
-          (item: Item) =>
-            item.title.toLowerCase().includes(query) ||
-            item.description.toLowerCase().includes(query) ||
-            item.tags.some((tag: string) => tag.toLowerCase().includes(query)),
-        )
-        .map((item: Item, index: number) => ({
-          id: `link-${index}`,
-          title: item.title,
-          url: item.url,
-          path: item.url,
-          description: item.description,
-          excerpt: item.description,
-          type: "link" as const,
-          icon: null,
-        }));
-
-      const allResults: SearchResult[] = [
-        ...historyResults,
-        ...docResults,
-        ...blogResults,
-        ...toolResults,
-        ...linkResults,
-        ...commandResults,
-      ];
-      setResults(allResults);
-      setIsLoading(false);
-      setSelectedIndex(0);
     }, 300);
 
-    return () => clearTimeout(timer);
-  }, [searchQuery, searchHistory]);
+    return () => clearTimeout(searchTimeout);
+  }, [query]);
+
+  const handleResultClick = (result: SearchResult) => {
+    if (result.url) {
+      window.open(result.url, "_blank");
+    } else if (result.path) {
+      window.location.href = result.path;
+    }
+    onOpenChange(false);
+  };
+
+  const getIcon = (type: string) => {
+    switch (type) {
+      case "link":
+        return <Link className="h-4 w-4" />;
+      case "blog":
+        return <FileText className="h-4 w-4" />;
+      case "doc":
+        return <BookOpen className="h-4 w-4" />;
+      default:
+        return <ExternalLink className="h-4 w-4" />;
+    }
+  };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChangeAction}>
-      <DialogContent className="gap-0 overflow-hidden border p-0 shadow-lg sm:max-h-[85vh] sm:max-w-[550px] dark:border-gray-700 [&>button]:hidden">
-        <DialogTitle className="sr-only">站内搜索</DialogTitle>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="flex max-h-[80vh] flex-col overflow-hidden sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>搜索</DialogTitle>
+        </DialogHeader>
 
-        <SearchBar
-          ref={inputRef}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          isLoading={isLoading}
-          onClear={() => setSearchQuery("")}
-          placeholder="搜索文档、工具、导航..."
-        />
-
-        <div className="flex-1 overflow-hidden">
-          <div className="h-[50vh] overflow-y-auto">
-            <SearchResults
-              results={results}
-              searchQuery={searchQuery}
-              isLoading={isLoading}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              onSelect={handleSelect}
-              onClearHistory={clearHistory}
-              searchHistory={searchHistory}
-              onHistoryClick={(query) => setSearchQuery(query)}
-            />
-          </div>
+        <div className="relative mb-4">
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+          <Input
+            placeholder="搜索链接、博客、文档..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pl-10"
+          />
         </div>
 
-        <KeyboardHints />
+        <div className="flex-1 overflow-y-auto">
+          {loading ? (
+            <div className="py-8 text-center text-muted-foreground">
+              搜索中...
+            </div>
+          ) : results.length > 0 ? (
+            <div className="space-y-2">
+              {results.map((result, index) => (
+                <div
+                  key={index}
+                  className="cursor-pointer rounded-lg border p-3 transition-colors hover:bg-accent"
+                  onClick={() => handleResultClick(result)}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 text-muted-foreground">
+                      {getIcon(result.type)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <h4 className="truncate text-sm font-medium">
+                          {result.title}
+                        </h4>
+                        <Badge variant="secondary" className="text-xs">
+                          {result.type}
+                        </Badge>
+                      </div>
+                      {result.description && (
+                        <p className="line-clamp-2 text-sm text-muted-foreground">
+                          {result.description}
+                        </p>
+                      )}
+                      {result.tags && result.tags.length > 0 && (
+                        <div className="mt-2 flex gap-1">
+                          {result.tags.slice(0, 3).map((tag, tagIndex) => (
+                            <Badge
+                              key={tagIndex}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : query.trim() ? (
+            <div className="py-8 text-center text-muted-foreground">
+              未找到相关结果
+            </div>
+          ) : null}
+        </div>
       </DialogContent>
     </Dialog>
   );
 }
-
-// 导出所有子组件
-export * from "../../../types/search-types";
-export * from "@/data/search/commands";
-export * from "@/components/features/search/search-bar";
-export * from "@/components/features/search/search-results";
-export * from "@/components/features/search/keyboard-hints";
-export * from "@/data/search/search-data";

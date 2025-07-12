@@ -1,23 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFilterState } from "@/hooks/state/use-filter-state";
-import type {
-  LinksItem as Item,
-  LinksCategory as Category,
-} from "@/types/links-types";
-import itemsData from "@/data/links/items.json";
-import categoriesData from "@/data/links/categories.json";
+import type { LinksItem, LinksCategory } from "@/types";
 
-export const useLinksData = () => {
-  const [items] = useState<Item[]>(
-    (itemsData as Item[]).map((item) => ({
-      ...item,
-      // Ensure no emoji types remain
-      iconType: item.icon ? "image" : ("text" as const),
-    })),
-  );
-  const [categories] = useState<Category[]>(
-    (categoriesData as Category[]).sort((a, b) => a.order - b.order),
-  );
+export function useLinksData() {
+  const [items, setItems] = useState<LinksItem[]>([]);
+  const [categories, setCategories] = useState<LinksCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+
+        // 并行获取数据
+        const [itemsResponse, categoriesResponse] = await Promise.all([
+          fetch("/api/links"),
+          fetch("/api/links/categories"),
+        ]);
+
+        if (!itemsResponse.ok) {
+          throw new Error("Failed to fetch links");
+        }
+        if (!categoriesResponse.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+
+        const itemsData = await itemsResponse.json();
+        const categoriesData = await categoriesResponse.json();
+
+        setItems(Array.isArray(itemsData) ? itemsData : []);
+        setCategories(
+          Array.isArray(categoriesData)
+            ? categoriesData.sort(
+                (a: LinksCategory, b: LinksCategory) => a.order - b.order,
+              )
+            : [],
+        );
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const {
     filteredItems,
@@ -44,8 +72,10 @@ export const useLinksData = () => {
     selectedTag,
     filteredItems,
     sortedTags,
+    loading,
+    error,
     handleCategoryClick,
     handleTagClick,
     getCategoryName,
   };
-};
+}

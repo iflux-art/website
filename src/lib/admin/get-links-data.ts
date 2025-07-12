@@ -1,5 +1,6 @@
-import type { LinksItem, LinksCategory } from "@/types/links-types";
+import type { LinksItem, LinksCategory } from "@/types";
 
+// 客户端使用的函数
 export async function fetchLinksData(): Promise<LinksItem[]> {
   const res = await fetch("/api/links", { cache: "no-store" });
   const data = await res.json();
