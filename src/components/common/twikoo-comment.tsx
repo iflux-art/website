@@ -51,7 +51,7 @@ export const TwikooComment: React.FC = () => {
 
   return (
     <>
-      <div className="rounded-xl border bg-card p-6 mt-10">
+      <div className="mt-10 rounded-xl border bg-card p-6">
         <p className="mb-4 text-center text-base text-muted-foreground">
           你的每一条评论都是宝贵的交流
         </p>
