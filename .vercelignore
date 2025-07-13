@@ -1,0 +1,6 @@
+  .git
+  .pnpm-store
+  node_modules
+  *.log
+  *.tmp
+  .DS_Store
