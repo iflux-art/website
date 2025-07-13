@@ -39,6 +39,39 @@ const config = {
                 color: 'oklch(var(--primary))',
               },
             },
+            // 表格样式
+            table: {
+              borderCollapse: 'collapse',
+              width: '100%',
+              marginTop: '1.5em',
+              marginBottom: '1.5em',
+            },
+            'thead th': {
+              borderBottom: '1px solid oklch(var(--border))',
+              paddingTop: '0.75em',
+              paddingBottom: '0.75em',
+              paddingLeft: '0.75em',
+              paddingRight: '0.75em',
+              textAlign: 'left',
+              fontWeight: '600',
+              color: 'oklch(var(--foreground))',
+            },
+            'tbody tr': {
+              borderBottom: '1px solid oklch(var(--border))',
+            },
+            'tbody tr:last-child': {
+              borderBottom: 'none',
+            },
+            'tbody td': {
+              paddingTop: '0.75em',
+              paddingBottom: '0.75em',
+              paddingLeft: '0.75em',
+              paddingRight: '0.75em',
+              verticalAlign: 'top',
+            },
+            'tbody tr:nth-child(odd)': {
+              backgroundColor: 'oklch(var(--muted) / 0.3)',
+            },
           },
         },
       },

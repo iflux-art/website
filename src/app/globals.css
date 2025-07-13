@@ -271,8 +271,8 @@
     "Courier New", monospace;
 }
 
-/* 隐藏 Twikoo 评论区的 loading 动画 */
-#twikoo .el-loading-mask,
-#twikoo .el-loading-spinner {
-  display: none !important;
+/* 自定义 Twikoo 评论区样式 */
+#twikoo .tk-comments-container:not(:has(.tk-comment)),
+#twikoo .tk-footer {
+  @apply hidden;
 }

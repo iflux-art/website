@@ -4,6 +4,7 @@
  */
 
 import type { BaseComponentProps } from "@/types/base-types";
+import type React from "react";
 
 // MDXImgProps
 export interface MDXImgProps extends React.ComponentPropsWithoutRef<"img"> {
@@ -25,62 +26,11 @@ export interface MDXLinkProps
 }
 
 // Blockquote
-export type BlockquoteVariant = "default" | "info" | "elegant";
 export interface MDXBlockquoteProps
   extends React.BlockquoteHTMLAttributes<HTMLQuoteElement> {
   children: React.ReactNode;
   citation?: string;
   author?: string;
-  variant?: BlockquoteVariant;
-}
-
-// Callout
-export type CalloutType = "info" | "success" | "warning" | "error";
-export interface MDXCalloutProps {
-  type?: CalloutType;
-  title?: string;
-  children: React.ReactNode;
-  className?: string;
-}
-
-// Card
-export interface MDXCardProps {
-  children: React.ReactNode;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  icon?: React.ReactNode;
-  className?: string;
-  variant?: "default" | "outline" | "ghost";
-  size?: "sm" | "md" | "lg";
-  hoverable?: boolean;
-}
-
-// Video
-export interface MDXVideoProps {
-  src: string;
-  title?: string;
-  poster?: string;
-  autoPlay?: boolean;
-  controls?: boolean;
-  loop?: boolean;
-  muted?: boolean;
-  className?: string;
-  width?: number | string;
-  height?: number | string;
-  onPlay?: () => void;
-  onPause?: () => void;
-  onEnded?: () => void;
-  onError?: (event: React.SyntheticEvent<HTMLVideoElement, Event>) => void;
-}
-
-/** 代码块组件属性 */
-export interface CodeBlockProps extends BaseComponentProps {
-  /** 文件名 */
-  filename?: string;
-  /** 代码语言 */
-  language?: string;
-  /** 是否显示行号 */
-  showLineNumbers?: boolean;
 }
 
 /** 列表类型 */
@@ -127,18 +77,6 @@ export interface MDXListItemProps
   nested?: boolean;
 }
 
-/** 引用块组件属性 */
-export interface MDXBlockquoteProps extends BaseComponentProps {
-  /** 引用来源 */
-  cite?: string;
-  /** 引用类型 */
-  type?: "default" | "warning" | "error" | "info" | "success";
-  /** 是否可折叠 */
-  collapsible?: boolean;
-  /** 默认展开状态 */
-  defaultOpen?: boolean;
-}
-
 /** 表格组件属性 */
 export interface MDXTableProps extends BaseComponentProps {
   /** 表格标题 */
@@ -169,22 +107,6 @@ export interface MDXTableCellProps
   align?: "left" | "center" | "right";
   /** 单元格宽度 */
   width?: string | number;
-}
-
-/** 代码高亮组件属性 */
-export interface MDXCodeHighlightProps extends BaseComponentProps {
-  /** 代码语言 */
-  language?: string;
-  /** 代码主题 */
-  theme?: string;
-  /** 是否显示行号 */
-  showLineNumbers?: boolean;
-  /** 高亮行号 */
-  highlightLines?: number[];
-  /** 是否可复制 */
-  copyable?: boolean;
-  /** 文件名 */
-  filename?: string;
 }
 
 /** 数学公式组件属性 */

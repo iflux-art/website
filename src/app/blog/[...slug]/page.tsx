@@ -5,10 +5,8 @@ import { ContentDisplay } from "@/components/common/content-display";
 import { RelatedPosts } from "@/components/common/related-posts";
 import { TableOfContents } from "@/components/common/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
-import {
-  getBlogContent,
-  generateBlogPaths,
-} from "@/lib/content/get-blog-content";
+import { getBlogContent } from "@/lib/content/get-blog-content";
+import { generateBlogPaths } from "@/lib/content/utils";
 import React from "react";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 import { TwikooComment } from "@/components/common/twikoo-comment";

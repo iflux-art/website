@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { getRandomGreeting } from "@/data/home/greetings";
 
 /**
  * Twikoo 评论组件（适用于 Next.js）
@@ -8,6 +9,12 @@ import React, { useEffect } from "react";
  * 内部包含分割线、卡片、引导文案和评论区
  */
 export const TwikooComment: React.FC = () => {
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    setGreeting(getRandomGreeting());
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const envId = "https://twikoo.iflux.art/";
@@ -52,8 +59,12 @@ export const TwikooComment: React.FC = () => {
   return (
     <>
       <div className="mt-10 rounded-xl border bg-card p-6">
-        <p className="mb-4 text-center text-base text-muted-foreground">
-          你的每一条评论都是宝贵的交流
+        <p
+          className="mb-2 cursor-pointer text-center text-base text-muted-foreground transition-colors hover:text-muted-foreground/70"
+          title="点击刷新问候语"
+          onClick={() => setGreeting(getRandomGreeting())}
+        >
+          {greeting}
         </p>
         <div id="twikoo-comment" className="relative"></div>
       </div>

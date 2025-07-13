@@ -38,14 +38,6 @@ export interface MDXContent {
   frontmatter?: MDXFrontmatter;
 }
 
-/** MDX渲染器属性 */
-export interface MDXRendererProps {
-  /** MDX内容 */
-  content: string;
-  /** MDX配置选项 */
-  options?: MDXOptions;
-}
-
 /** MDX 组件映射类型 */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type MDXComponents = Record<string, ComponentType<any>>;

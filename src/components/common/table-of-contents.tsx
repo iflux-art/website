@@ -180,11 +180,12 @@ export function TableOfContents({
                 className={cn(
                   "group flex min-w-0 items-start py-1.5 text-sm transition-colors",
                   headingSize,
-                  {
-                    "font-medium text-primary": activeId === heading.id,
-                    "text-muted-foreground hover:text-primary/80":
-                      activeId !== heading.id,
-                  },
+                  // 普通文本最暗
+                  "text-zinc-500 dark:text-zinc-400",
+                  // hover 稍亮
+                  "hover:text-zinc-800 dark:hover:text-zinc-100",
+                  // active 最亮且加粗
+                  activeId === heading.id && "text-black dark:text-white",
                 )}
                 style={{
                   paddingLeft:

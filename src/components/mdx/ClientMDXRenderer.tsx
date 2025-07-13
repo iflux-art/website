@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { MDXComponents } from "@/components/mdx/mdx-components";
 import { evaluateSync } from "@mdx-js/mdx";
+import remarkGfm from "remark-gfm";
 import * as runtime from "react/jsx-runtime";
 import matter from "gray-matter";
 
@@ -20,7 +21,7 @@ export default function ClientMDXRenderer({ content }: Props) {
       const mdxModule = evaluateSync(pureContent, {
         ...runtime,
         useMDXComponents,
-        // 这里可加 remark/rehype 插件
+        remarkPlugins: [remarkGfm], // 支持 GFM 表格等扩展
       });
       return mdxModule.default;
     } catch (e) {
