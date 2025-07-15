@@ -3,8 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
-import { RECOMMENDATION_TAGS } from "@/data/home/recommendation-tags";
-import type { RecommendationTagsProps } from "@/types/home-types";
+import { RECOMMENDATION_TAGS } from "@/config/home/recommendation-tags";
+
+// 内联 RecommendationTagsProps 类型定义
+export interface RecommendationTagsProps {
+  className?: string;
+}
 
 /**
  * 推荐标签组件

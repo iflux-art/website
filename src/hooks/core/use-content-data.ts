@@ -1,13 +1,27 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ContentLoadOptions } from "@/types/content";
 import { BaseContent, BaseCategory } from "@/types";
 import { useCache } from "@/hooks/cache";
-import { CACHE_CONFIG } from "@/config/site";
-import { HookResult } from "@/types";
+const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
 export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
+
+// 内联 HookResult 类型定义
+export type HookResult<T> = {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refresh: () => Promise<void>;
+};
+
+// 内联 ContentLoadOptions 类型定义
+export interface ContentLoadOptions {
+  /** 是否强制刷新缓存 */
+  forceRefresh?: boolean;
+  /** 其他可扩展选项 */
+  [key: string]: any;
+}
 
 // 请求去重Map
 const pendingRequests = new Map<string, Promise<unknown>>();
@@ -23,7 +37,7 @@ export function useContentData<T>({
   path,
   url,
   category,
-  cacheTime = CACHE_CONFIG.DEFAULT_CACHE_TIME,
+  cacheTime = DEFAULT_CACHE_TIME,
   disableCache = false,
   params,
   headers,

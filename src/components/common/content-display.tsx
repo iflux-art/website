@@ -7,9 +7,19 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { ContentDisplayProps } from "@/types";
-
-export type { ContentType } from "@/types";
+// 内联 ContentType 类型定义
+export type ContentType = "blog" | "docs";
+// 内联 ContentType 和 ContentDisplayProps 类型定义
+export interface ContentDisplayProps {
+  contentType: ContentType;
+  title: string;
+  date?: string | null;
+  category?: string;
+  tags?: string[];
+  wordCount?: number;
+  children?: React.ReactNode;
+  className?: string;
+}
 
 /**
  * 内容显示组件

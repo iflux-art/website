@@ -1,7 +1,38 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { DataTableProps } from "@/types/layout-links-types";
+
+// 内联 DataTableProps 类型定义
+export interface DataTableColumn<T> {
+  key: keyof T;
+  title: string;
+  width?: string | number;
+  align?: "left" | "center" | "right";
+  render?: (value: any, record: T, index: number) => React.ReactNode;
+}
+
+export interface DataTableAction<T> {
+  label: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  onClick: (record: T, index: number) => void;
+  disabled?: (record: T) => boolean;
+  variant?: "default" | "outline" | "ghost" | "destructive";
+}
+
+export interface DataTablePagination {
+  current: number;
+  pageSize: number;
+  total: number;
+  onChange: (page: number) => void;
+}
+
+export interface DataTableProps<T> {
+  title?: string;
+  data: T[];
+  columns: DataTableColumn<T>[];
+  actions?: DataTableAction<T>[];
+  pagination?: DataTablePagination;
+}
 
 export function DataTable<T extends object>({
   title,

@@ -1,7 +1,15 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
-import type { MDXOptions } from "@/types";
+// 内联 MDXOptions 类型定义
+export interface MDXOptions {
+  components?: Record<string, React.ComponentType<any>>;
+}
 import { debounce } from "@/lib/utils/helpers";
-import { MDX_CONFIG } from "@/config/mdx-config";
+// ====== 迁移自 src/config/mdx-config.ts ======
+/** 防抖延迟时间（毫秒） */
+const DEFAULT_DEBOUNCE_DELAY = 300;
+// ====== END ======
+
+// 内联 MDXComponentsType 和 PrettyCodeOptions 类型定义
 
 type MDXComponents = NonNullable<MDXOptions["components"]>;
 type DebouncedFunction<T> = T & { cancel: () => void };
@@ -18,7 +26,7 @@ interface UseMDXOptions {
  */
 export function useMDX({
   initialContent = "",
-  debounceDelay = MDX_CONFIG.DEBOUNCE_DELAY,
+  debounceDelay = DEFAULT_DEBOUNCE_DELAY,
   components = {},
 }: UseMDXOptions = {}) {
   // 内容状态管理

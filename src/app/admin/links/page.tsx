@@ -16,7 +16,6 @@ import {
   getTableActions,
   getPageActions,
 } from "@/components/layout/admin/links/table-config";
-import type { LinksItem, LinksCategory } from "@/types/links-types";
 import {
   Select,
   SelectContent,
@@ -24,20 +23,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  fetchLinksData,
-  fetchLinksCategories,
-} from "@/lib/admin/get-links-data";
+
+// 客户端使用的函数
+const fetchLinksData = async (): Promise<any[]> => {
+  const res = await fetch("/api/links", { cache: "no-store" });
+  const config = await res.json();
+  return Array.isArray(config) ? config : config.items || [];
+};
+
+const fetchLinksCategories = async (): Promise<any[]> => {
+  const res = await fetch("/api/links/categories", { cache: "no-store" });
+  return await res.json();
+};
+
 export default function LinksAdminPage() {
-  const [items, setItems] = useState<LinksItem[]>([]);
-  const [categories, setCategories] = useState<LinksCategory[]>([]);
-  const [filteredItems, setFilteredItems] = useState<LinksItem[]>([]);
+  const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
-  const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
+  const [editingItem, setEditingItem] = useState<any | null>(null);
+  const [deletingItem, setDeletingItem] = useState<any | null>(null);
 
   // 加载数据
   useEffect(() => {
@@ -61,7 +69,9 @@ export default function LinksAdminPage() {
             item.title.toLowerCase().includes(searchLower) ||
             item.description.toLowerCase().includes(searchLower) ||
             item.url.toLowerCase().includes(searchLower) ||
-            item.tags.some((tag) => tag.toLowerCase().includes(searchLower));
+            item.tags.some((tag: string) =>
+              tag.toLowerCase().includes(searchLower),
+            );
 
           const matchesCategory =
             !selectedCategory || item.category === selectedCategory;
@@ -92,7 +102,7 @@ export default function LinksAdminPage() {
 
   // 配置已移至 table-config.ts
 
-  const handleAddSuccess = () => {
+  const handleAddSuccess = (_item: any) => {
     loadData();
     setShowAddDialog(false);
   };
@@ -172,7 +182,7 @@ export default function LinksAdminPage() {
       </Card>
 
       {/* 网址表格 */}
-      <DataTable<LinksItem>
+      <DataTable<any>
         data={filteredItems}
         columns={getTableColumns(getCategoryName)}
         actions={getTableActions(
@@ -190,6 +200,7 @@ export default function LinksAdminPage() {
       />
 
       <EditDialog
+        open={!!editingItem}
         item={editingItem}
         onOpenChange={(open: boolean) => !open && setEditingItem(null)}
         onSuccess={handleEditSuccess}

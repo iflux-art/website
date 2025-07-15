@@ -1,7 +1,17 @@
 import React from "react";
 import { NavLink } from "@/components/ui/nav-link";
 import { ArrowRightLeft } from "lucide-react";
-import type { RelatedPostsProps } from "@/types";
+
+// 内联 RelatedPost 和 RelatedPostsProps 类型定义
+export interface RelatedPost {
+  title: string;
+  href: string;
+  category?: string;
+}
+export interface RelatedPostsProps {
+  posts: RelatedPost[];
+  currentSlug: string[];
+}
 
 export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
   if (!posts?.length) return null;

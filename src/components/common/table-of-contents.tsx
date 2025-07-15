@@ -4,9 +4,32 @@ import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Text } from "lucide-react";
 import { useHeadingObserver } from "@/hooks";
-import { NAVBAR_HEIGHT, SCROLL_OFFSET } from "@/config/layout";
+// ====== 迁移自 src/config/layout.ts ======
+/**
+ * 页面顶部固定导航栏的高度
+ */
+const NAVBAR_HEIGHT = 80;
+/**
+ * 滚动偏移量，用于锚点定位时避免被导航栏遮挡
+ */
+const SCROLL_OFFSET = NAVBAR_HEIGHT;
+// ====== END ======
 import { scrollToElement } from "@/lib/utils/route";
-import type { TocHeading, TocProps } from "@/types/layout-toc-types";
+
+// 内联 TocHeading、TocProps 类型定义
+export interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export interface TocProps {
+  headings: TocHeading[];
+  className?: string;
+  title?: string;
+  adaptive?: boolean;
+  adaptiveOffset?: number;
+}
 
 /**
  * 目录组件

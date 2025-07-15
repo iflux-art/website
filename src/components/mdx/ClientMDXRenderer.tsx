@@ -7,6 +7,14 @@ import { evaluateSync } from "@mdx-js/mdx";
 import remarkGfm from "remark-gfm";
 import * as runtime from "react/jsx-runtime";
 import matter from "gray-matter";
+import rehypePrettyCode from "rehype-pretty-code";
+import type { Options as PrettyCodeOptions } from "rehype-pretty-code";
+
+export const prettyCodeOptions: PrettyCodeOptions = {
+  theme: "github-dark",
+};
+
+export const mdxRehypePlugins = [[rehypePrettyCode, prettyCodeOptions]];
 
 interface Props {
   content: string;

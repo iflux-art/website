@@ -7,8 +7,8 @@
 
 import { useMemo } from "react";
 import { useContentData } from "@/hooks/core";
-import { API_PATHS } from "@/config/site";
-import { HookResult } from "@/types";
+import { API_PATHS } from "@/config/metadata";
+import type { HookResult } from "@/hooks/core/use-content-data";
 import { BlogPost } from "@/types";
 
 export interface TagCount {
@@ -16,6 +16,7 @@ export interface TagCount {
   count: number;
 }
 
+// 内联 BlogResult、UseBlogPostsResult、UseTimelinePostsResult 类型定义
 export interface BlogResult<T> extends HookResult<T> {
   loading: boolean;
   error: Error | null;

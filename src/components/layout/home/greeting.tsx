@@ -1,8 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getRandomGreeting } from "@/data/home/greetings";
-import type { GreetingProps } from "@/types/home-types";
+import { getRandomGreeting } from "@/config/greetings";
+
+/**
+ * Greeting 组件 props
+ */
+interface GreetingProps {
+  className?: string;
+}
 
 /**
  * 问候语组件

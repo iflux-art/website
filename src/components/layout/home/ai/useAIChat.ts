@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { AI_MODELS, getModelById } from "@/data/home/ai-models";
+import { AI_MODELS, getModelById } from "@/config/home/ai-models";
 import { performAIChat } from "@/components/layout/home/ai/ai-service";
-import type { Message } from "@/types/home-types";
+// 内联 Message 类型定义
+export interface Message {
+  id: string;
+  type: "user" | "ai";
+  content: string;
+  timestamp: Date;
+}
 
 export function useAIChat() {
   const [selectedModelId, setSelectedModelId] = useState(AI_MODELS[0].id);

@@ -1,11 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
-import type {
-  LinksCategory as Category,
-  LinksItem as Item,
-  CategoryId,
-} from "@/types/links-types";
+// 内联 LinksCategory 类型定义
+interface LinksCategory {
+  id: string;
+  name: string;
+  description: string;
+  order: number;
+  icon?: string;
+  color?: string;
+}
+// 内联 LinksItem 类型定义
+interface LinksItem {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  icon?: string;
+  iconType?: "image" | "text";
+  tags: string[];
+  featured?: boolean;
+  category: CategoryId;
+  createdAt: string;
+  updatedAt: string;
+  visits?: number;
+  isActive?: boolean;
+}
+// 内联 CategoryId 类型定义
+type CategoryId =
+  | "ai"
+  | "development"
+  | "design"
+  | "audio"
+  | "video"
+  | "office"
+  | "productivity"
+  | "operation"
+  | "profile"
+  | "friends";
+
+type Category = LinksCategory;
+type Item = LinksItem;
 
 const CATEGORIES_FILE_PATH = path.join(
   process.cwd(),

@@ -11,15 +11,16 @@ interface CacheItem {
   timestamp: number;
 }
 
+// 内联 WebsiteMetadata 类型定义
 interface WebsiteMetadata {
-  title: string;
-  description: string;
-  icon: string;
-  image: string;
+  title?: string;
+  description?: string;
+  icon?: string;
+  image?: string;
   author?: string;
   siteName?: string;
   type?: string;
-  url: string;
+  url?: string;
   language?: string;
 }
 

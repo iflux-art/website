@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { TYPE_LABELS } from "@/data/search/commands";
+import { TYPE_LABELS } from "@/config/commands";
 import type { SearchResultsProps } from "@/types/search-types";
 
 export function SearchResults({

@@ -1,5 +1,12 @@
 import type { AIModel } from "@/components/layout/home/ai/ai-config";
-import type { Message } from "@/types/home-types";
+
+// 内联 Message 类型定义
+export interface Message {
+  id: string;
+  type: "user" | "ai";
+  content: string;
+  timestamp: Date;
+}
 
 /**
  * AI对话功能

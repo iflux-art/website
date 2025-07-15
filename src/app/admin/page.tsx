@@ -5,8 +5,20 @@ import AdminPageContentLayout from "@/components/layout/admin/admin-page-content
 import { LinkCard } from "@/components/common/card/link-card";
 import { BarChart3 } from "lucide-react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { ADMIN_STATS } from "@/config/admin";
+// 内联 ADMIN_STATS 配置
+import { Globe } from "lucide-react";
 import type { AdminStatItem } from "@/types/admin-types";
+
+const ADMIN_STATS: AdminStatItem[] = [
+  {
+    title: "网址管理",
+    description: "添加、编辑、删除网址信息。",
+    icon: Globe,
+    color: "text-blue-600",
+    href: "/admin/links",
+  },
+  // 可扩展更多卡片
+];
 
 export default function AdminDashboard() {
   return (

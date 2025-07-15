@@ -2,7 +2,18 @@ import { Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import type { Category, TagType } from "@/types/filter-types";
+// 内联 Category 类型定义
+export interface Category {
+  id: string;
+  name: string;
+  icon?: any;
+}
+
+// 内联 TagType 类型定义
+export interface TagType {
+  name: string;
+  count: number;
+}
 
 interface UnifiedFilterProps {
   categories: Category[];

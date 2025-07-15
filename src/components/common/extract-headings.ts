@@ -3,7 +3,12 @@
  * @param content Markdown/MDX 内容
  * @returns 标题列表和处理后的内容
  */
-import type { TocHeading } from "@/types/layout-toc-types";
+// 内联 TocHeading 类型定义
+export interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+}
 export function extractHeadings(content: string): {
   headings: TocHeading[];
   processedContent: string;

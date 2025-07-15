@@ -1,8 +1,17 @@
 "use client";
 
 import React from "react";
-import type { LinksHeaderProps } from "@/types/links-types";
-import { FRIEND_LINK_FORM_URL } from "@/config/links";
+// 内联 LinksHeaderProps 类型定义
+interface LinksHeaderProps {
+  totalItems: number;
+  filteredCount: number;
+  selectedCategory?: string;
+  selectedTag?: string | null;
+  getCategoryName: (categoryId: string) => string;
+}
+// 内联 FRIEND_LINK_FORM_URL 配置
+const FRIEND_LINK_FORM_URL =
+  "https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb";
 
 function LinksHeader({
   totalItems,

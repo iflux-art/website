@@ -16,7 +16,26 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
-import { LinksFormData, LinksCategory } from "@/types";
+// 内联 LinksFormData 类型定义
+interface LinksFormData {
+  title: string;
+  description: string;
+  url: string;
+  icon: string;
+  iconType: "image" | "text";
+  tags: string[];
+  featured: boolean;
+  category: string;
+}
+// 内联 LinksCategory 类型定义
+interface LinksCategory {
+  id: string;
+  name: string;
+  description: string;
+  order: number;
+  icon?: string;
+  color?: string;
+}
 import {
   parseWebsiteMetadata,
   isValidUrl,

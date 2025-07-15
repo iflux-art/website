@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getLinksData } from "@/lib/admin/get-links-data-server";
-import type { LinksItem } from "@/types";
+import fs from "fs/promises";
+import path from "path";
+
+const filePath = path.join(process.cwd(), "src/data/links/items.json");
+
+// 工具函数仅文件内部使用
+const getLinksData = async (): Promise<any[]> => {
+  try {
+    const data = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(data) as any[];
+  } catch (error) {
+    console.error("Error reading links data:", error);
+    return [];
+  }
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,12 +31,12 @@ export async function GET(request: NextRequest) {
     if (type === "all" || type === "links") {
       const items = await getLinksData();
       const linkResults = items
-        .filter((item: LinksItem) => {
+        .filter((item: any) => {
           const searchText =
             `${item.title} ${item.description} ${item.tags?.join(" ")}`.toLowerCase();
           return searchText.includes(query.toLowerCase());
         })
-        .map((item: LinksItem) => ({
+        .map((item: any) => ({
           type: "link",
           title: item.title,
           description: item.description,

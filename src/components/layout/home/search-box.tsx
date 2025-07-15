@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import type { SearchBoxProps } from "@/types/home-types";
+// 内联 SearchBoxProps 类型定义
+export interface SearchBoxProps {
+  className?: string;
+  onSearchModeChange?: (isAI: boolean) => void;
+}
 import {
   PlusCircle,
   SendHorizontal,
@@ -10,7 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AI_MODELS } from "@/data/home/ai-models";
+import { AI_MODELS } from "@/config/home/ai-models";
 import { useAIChat } from "@/components/layout/home/ai/useAIChat";
 import { ModelSelector } from "@/components/layout/home/ai/ModelSelector";
 

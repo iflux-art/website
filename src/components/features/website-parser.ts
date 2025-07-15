@@ -1,4 +1,10 @@
-import { WebsiteMetadata } from "@/types";
+// 内联 WebsiteMetadata 类型定义
+export interface WebsiteMetadata {
+  title?: string;
+  description?: string;
+  icon?: string;
+  image?: string;
+}
 
 /**
  * 解析网站元数据

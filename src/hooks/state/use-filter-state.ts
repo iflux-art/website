@@ -1,6 +1,11 @@
 import { useMemo } from "react";
 import { useSafeFilter } from "@/hooks/state";
-import type { FilterableItem } from "@/types/filter-types";
+
+// 内联 FilterableItem 类型定义
+export interface FilterableItem {
+  tags?: string[];
+  category?: string;
+}
 
 export function useFilterState<T extends FilterableItem>(items: T[]) {
   const {

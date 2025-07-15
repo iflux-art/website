@@ -131,14 +131,6 @@ export interface UseDocSidebarResult {
   refetch: () => Promise<void>;
 }
 
-// 侧边栏组件 props
-export interface SidebarProps {
-  /** 文档分类名称 */
-  category: string;
-  /** 当前打开的文档路径 */
-  currentDoc?: string;
-}
-
 // DocsContent 组件 props
 export interface DocsContentProps {
   content: string;

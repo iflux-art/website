@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getRandomGreeting } from "@/data/home/greetings";
+import { getRandomGreeting } from "@/config/greetings";
 
 /**
  * Twikoo 评论组件（适用于 Next.js）

@@ -23,6 +23,8 @@ npx next dev --turbo
 
 ---
 
+目录下只被单一文件引用、且只服务于该文件的代码，全部迁移到对应实现文件顶部（即“内联”），以提升文件归属清晰度和可维护性
+
 1. 梳理并重构，让 @/types、@/lib/utils、@/lib、@/data、@/config、@/hooks 文件各归其位
 2. 重构后保证引用唯一、无冗余，全局修正 index.ts 统一导出文件、import/export
 3. pnpm build 构建 100% 通过，无 warning、无 error

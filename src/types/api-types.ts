@@ -101,3 +101,19 @@ export interface ApiRequestBody {
   stream?: boolean;
   model?: string;
 }
+
+// Web Vitals API 类型定义
+export interface WebVitalsMetric {
+  id: string;
+  name: string;
+  value: number;
+  label?: string;
+  delta?: number;
+  entries?: unknown[];
+  [key: string]: unknown;
+}
+
+export interface WebVitalsResponse {
+  success: boolean;
+  error?: string;
+}

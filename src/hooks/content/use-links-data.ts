@@ -1,6 +1,30 @@
 import { useState, useEffect } from "react";
 import { useFilterState } from "@/hooks/state/use-filter-state";
-import type { LinksItem, LinksCategory } from "@/types";
+// 内联 LinksItem 类型定义
+export interface LinksItem {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  icon?: string;
+  iconType?: "image" | "text";
+  tags: string[];
+  featured?: boolean;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+  visits?: number;
+  isActive?: boolean;
+}
+// 内联 LinksCategory 类型定义
+export interface LinksCategory {
+  id: string;
+  name: string;
+  description: string;
+  order: number;
+  icon?: string;
+  color?: string;
+}
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);
@@ -30,13 +54,7 @@ export function useLinksData() {
         const categoriesData = await categoriesResponse.json();
 
         setItems(Array.isArray(itemsData) ? itemsData : []);
-        setCategories(
-          Array.isArray(categoriesData)
-            ? categoriesData.sort(
-                (a: LinksCategory, b: LinksCategory) => a.order - b.order,
-              )
-            : [],
-        );
+        setCategories(Array.isArray(categoriesData) ? categoriesData : []);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {

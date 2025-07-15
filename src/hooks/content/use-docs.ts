@@ -5,9 +5,8 @@
 
 "use client";
 
-import { useContentData } from "@/hooks/core";
-import { API_PATHS } from "@/config/site";
-import { HookResult } from "@/types";
+import { useContentData } from "@/hooks/core/use-content-data";
+import { API_PATHS } from "@/config/metadata";
 import {
   DocItem,
   DocCategory,
@@ -15,6 +14,7 @@ import {
   UseDocSidebarResult,
   SidebarItem,
 } from "@/types";
+import type { HookResult } from "@/hooks/core/use-content-data";
 
 /**
  * 使用文档分类

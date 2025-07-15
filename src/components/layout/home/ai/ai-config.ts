@@ -5,10 +5,10 @@ export const AI_STYLES = {
   card: "bg-white rounded-xl shadow-md p-4",
 };
 
-import type { AIModel } from "@/data/home/ai-models";
+import type { AIModel } from "@/config/home/ai-models";
 export {
   AI_MODELS,
   getDefaultModel,
   getModelById,
-} from "@/data/home/ai-models";
+} from "@/config/home/ai-models";
 export type { AIModel };

@@ -3,8 +3,17 @@
  * 合并了原route.ts和route-utils.ts的功能
  */
 
-import { ContentType } from "@/components/common/content-display";
-import { CONTENT_BASE_ROUTES } from "@/config/layout";
+import type { ContentType } from "@/types/common-component-types";
+
+// ====== 迁移自 src/config/layout.ts ======
+/**
+ * 内容类型及其对应的基础路由
+ */
+const CONTENT_BASE_ROUTES = {
+  blog: "/blog",
+  docs: "/docs",
+} as const;
+// ====== END ======
 
 /**
  * 构建标签链接

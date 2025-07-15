@@ -8,7 +8,8 @@ import { useBlogPosts } from "@/hooks";
 import { useMemo } from "react";
 import type { BlogPost } from "@/types/blog-types";
 import { formatDate } from "@/lib/utils/date";
-import type { Category } from "@/types/filter-types";
+// 内联 Category 类型定义
+type Category = { id: string; name: string };
 
 function BlogContent() {
   const { posts, categories: rawCategories } = useBlogPosts();

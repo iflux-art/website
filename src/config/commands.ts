@@ -1,4 +1,4 @@
-import type { Command } from "@/types/search";
+import type { Command } from "@/types/search-types";
 
 export const COMMANDS: Command[] = [
   {

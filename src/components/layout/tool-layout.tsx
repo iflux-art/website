@@ -6,7 +6,62 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { ToolLayoutProps } from "@/types/layout-tools-types";
+
+// layout-tools-types.ts 类型定义迁移自 src/types/layout-tools-types.ts
+import type { LucideIcon } from "lucide-react";
+
+export interface ActionButton {
+  label: string;
+  onClick: () => void;
+  icon?: LucideIcon;
+  variant?:
+    | "default"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "destructive";
+  disabled?: boolean;
+}
+
+export interface ToolActionsProps {
+  actions: ActionButton[];
+  className?: string;
+}
+
+export interface ToolLayoutProps {
+  children: React.ReactNode;
+  className?: string;
+  containerClassName?: string;
+  title?: string;
+  description?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  actions?: React.ReactNode;
+  helpContent?: React.ReactNode;
+  showBackButton?: boolean;
+}
+
+export interface ProcessResult {
+  success: boolean;
+  data?: string;
+  error?: string;
+}
+
+export interface ToolCategory {
+  id: string;
+  name: string;
+  icon: LucideIcon;
+}
+
+export interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+  tags: string[];
+  isInternal: boolean;
+}
 
 export const ToolLayout: React.FC<ToolLayoutProps> = ({
   children,

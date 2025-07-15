@@ -8,7 +8,13 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import { useDocSidebar } from "@/hooks";
 import { NavLink } from "@/components/ui/nav-link";
 import { SidebarItem } from "@/types";
-import type { SidebarProps } from "@/types/docs-types";
+// 内联 SidebarProps 类型定义
+export interface SidebarProps {
+  /** 文档分类名称 */
+  category: string;
+  /** 当前打开的文档路径 */
+  currentDoc?: string;
+}
 // 检查是否在客户端环境
 const isBrowser = typeof window !== "undefined";
 

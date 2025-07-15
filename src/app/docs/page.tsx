@@ -3,6 +3,7 @@
 import { useDocCategories } from "@/hooks";
 import { AppGrid } from "@/components/layout/app-grid";
 import { DocCard } from "@/components/common/card/doc-card";
+import type { DocCategory } from "@/types/docs-types";
 
 export default function DocsPage() {
   const { data: categories = [] } = useDocCategories();
@@ -17,7 +18,7 @@ export default function DocsPage() {
           </div>
 
           <AppGrid columns={4}>
-            {categories?.map((category) => (
+            {categories?.map((category: DocCategory) => (
               <DocCard
                 key={category.id}
                 title={category.title}

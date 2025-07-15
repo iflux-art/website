@@ -38,6 +38,9 @@ function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
 }
 import { useSafeNavbar } from "@/hooks/state";
 
+/**
+ * 导航栏滚动配置项
+ */
 const THROTTLE_DELAY = 50; // 更快的节流响应
 
 /**

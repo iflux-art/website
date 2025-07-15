@@ -1,7 +1,7 @@
-import type { Tool } from "@/types/tools-types";
 import { Wrench, PenTool, Code, Palette, FileText, Smile } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+// 内联 ToolCategory 类型定义
 export interface ToolCategory {
   id: string;
   name: string;
@@ -16,6 +16,17 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   { id: "utility", name: "实用工具", icon: Wrench },
   { id: "entertainment", name: "娱乐工具", icon: Smile },
 ];
+
+// 内联 Tool 类型定义
+export interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+  tags: string[];
+  isInternal?: boolean;
+}
 
 export const TOOLS: Tool[] = [
   {
