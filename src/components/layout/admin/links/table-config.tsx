@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from "lucide-react";
+import { LinksItem } from "@/types/links-types";
 // 内联 TableColumn 类型定义
 export interface TableColumn<T> {
   key: keyof T;
@@ -7,22 +8,6 @@ export interface TableColumn<T> {
   width?: string | number;
   align?: "left" | "center" | "right";
   render?: (value: any, record: T, index: number) => React.ReactNode;
-}
-// 内联 LinksItem 类型定义
-export interface LinksItem {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
 }
 
 export const getTableColumns = (

@@ -27,15 +27,7 @@ interface LinksFormData {
   featured: boolean;
   category: string;
 }
-// 内联 LinksCategory 类型定义
-interface LinksCategory {
-  id: string;
-  name: string;
-  description: string;
-  order: number;
-  icon?: string;
-  color?: string;
-}
+import { LinksCategory } from "@/types/links-types";
 import {
   parseWebsiteMetadata,
   isValidUrl,

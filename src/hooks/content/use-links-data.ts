@@ -1,30 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFilterState } from "@/hooks/state/use-filter-state";
-// 内联 LinksItem 类型定义
-export interface LinksItem {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
-}
-// 内联 LinksCategory 类型定义
-export interface LinksCategory {
-  id: string;
-  name: string;
-  description: string;
-  order: number;
-  icon?: string;
-  color?: string;
-}
+import { LinksItem, LinksCategory } from "@/types/links-types";
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);

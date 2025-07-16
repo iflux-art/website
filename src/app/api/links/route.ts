@@ -2,49 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import fs from "fs/promises";
 import path from "path";
+import { CategoryId, LinksItem, LinksFormData } from "@/types/links-types";
 
 const filePath = path.join(process.cwd(), "src/config/links/items.json");
-
-// 内联 LinksItem、LinksFormData、LinksCategory、CategoryId 类型定义
-
-type CategoryId =
-  | "ai"
-  | "development"
-  | "design"
-  | "audio"
-  | "video"
-  | "office"
-  | "productivity"
-  | "operation"
-  | "profile"
-  | "friends";
-
-interface LinksItem {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: CategoryId;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
-}
-
-interface LinksFormData {
-  title: string;
-  description: string;
-  url: string;
-  icon: string;
-  iconType: "image" | "text";
-  tags: string[];
-  featured: boolean;
-  category: string;
-}
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {

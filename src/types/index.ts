@@ -9,6 +9,7 @@ export * from "@/types/docs-types";
 export * from "@/types/journal-types";
 export * from "@/types/search-types";
 export * from "@/types/nav-types";
+export * from "./links-types";
 
 // MDX 相关类型
 export * from "@/types/mdx-component-types";
