@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import { JournalEntry } from "@/types/journal-types";
+import { JournalEntry } from "@/app/blog/src/types/journal-types";
 
 function getMdxFiles(): JournalEntry[] {
   console.log("Starting to fetch MDX files...");

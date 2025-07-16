@@ -2,9 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import fs from "fs/promises";
 import path from "path";
-import { CategoryId, LinksItem, LinksFormData } from "@/types/links-types";
+import {
+  CategoryId,
+  LinksItem,
+  LinksFormData,
+} from "@/app/links/src/types/links-types";
 
-const filePath = path.join(process.cwd(), "src/config/links/items.json");
+const filePath = path.join(
+  process.cwd(),
+  "src/app/links/src/config/items.json",
+);
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {

@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Greeting } from "@/components/layout/home/greeting";
-import { SearchBox } from "@/components/layout/home/search-box";
-import { RecommendationTags } from "@/components/layout/home/recommendation-tags";
-import { cn } from "@/lib/utils";
+import { Greeting } from "packages/src/ui/components/greeting";
+import { SearchBox } from "@/app/chat/src/components/search-box";
+import { RecommendationTags } from "@/app/chat/src/components/recommendation-tags";
+import { cn } from "packages/src/lib/utils";
 
 // 直接内联 Background 组件
 function Background({ className }: { className?: string }) {

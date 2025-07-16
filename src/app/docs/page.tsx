@@ -1,9 +1,9 @@
 "use client";
 
-import { useDocCategories } from "@/hooks";
-import { AppGrid } from "@/components/layout/app-grid";
-import { DocCard } from "@/components/common/card/doc-card";
-import type { DocCategory } from "@/types/docs-types";
+import { useDocCategories } from "./src/hooks/use-docs";
+import { AppGrid } from "packages/src/ui/components/app-grid";
+import { DocCard } from "@/app/docs/src/components/doc-card";
+import type { DocCategory } from "@/app/docs/src/types/docs-types";
 
 export default function DocsPage() {
   const { data: categories = [] } = useDocCategories();

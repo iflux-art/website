@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import AdminPageContentLayout from "@/components/layout/admin/admin-page-content-layout";
-import { LinkCard } from "@/components/common/card/link-card";
+import AdminPageContentLayout from "@/app/admin/src/components/admin-page-content-layout";
+import { LinkCard } from "@/app/links/src/components/link-card";
 import { BarChart3 } from "lucide-react";
-import { AppGrid } from "@/components/layout/app-grid";
+import { AppGrid } from "packages/src/ui/components/app-grid";
 // 内联 ADMIN_STATS 配置
 import { Globe } from "lucide-react";
-import type { AdminStatItem } from "@/types/admin-types";
+import type { AdminStatItem } from "@/app/admin/src/types/admin-types";
 
 const ADMIN_STATS: AdminStatItem[] = [
   {

@@ -1,8 +1,23 @@
 # Next.js 技术栈推荐清单与最佳实践
 
+五、迁移顺序建议
+先抽离 UI 组件、hooks、utils、types 到 packages。
+再迁移 blog、docs、links 等业务模块到 apps。
+配置好 workspace、tsconfig、样式、主题等基础设施。
+逐步适配和测试每个模块，确保功能和样式一致。
+六、后续可扩展方向
+支持微前端（如 Module Federation）
+独立部署各 app
+统一 CI/CD、测试、发布流程
+
 ## pnpm 命令
 
 pnpm add -g pnpm@latest
+pnpm install：自动安装依赖。
+pnpm lint --fix：自动修复大部分代码风格和语法问题。
+pnpm format：自动格式化代码（如配置了 prettier）。
+pnpm tsc --noEmit：类型检查，发现类型和路径错误。
+pnpm build：正式构建，发现运行时和打包错误。
 
 ## node 命令
 
@@ -12,6 +27,8 @@ pnpm update @types/node --latest 升级最新版
 ## 格式修复
 
 本地运行 pnpm format 或 pnpm lint --fix，以自动修复所有格式问题
+
+用 pnpm lint、pnpm tsc --noEmit 检查所有未修复的引用错误
 
 npx prettier --write
 

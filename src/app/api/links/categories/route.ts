@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-const filePath = path.join(process.cwd(), "src/config/links/categories.json");
+const filePath = path.join(
+  process.cwd(),
+  "src/app/links/src/config/categories.json",
+);
 
 export async function GET() {
   try {

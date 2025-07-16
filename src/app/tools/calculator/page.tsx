@@ -2,10 +2,15 @@
 
 import React, { useState } from "react";
 import { Calculator, Delete, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useSafeTool } from "@/hooks/state";
+import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "packages/src/ui/components/shared-ui/card";
+import { Button } from "packages/src/ui/components/shared-ui/button";
+import { useSafeTool } from "../src/hooks/tool-state";
 import Link from "next/link";
 
 // ===== 迁移自 src/lib/tools/tool-utils.ts =====
@@ -749,15 +754,20 @@ export default function CalculatorPage() {
                       暂无计算记录
                     </p>
                   ) : (
-                    history.map((entry, index) => (
-                      <div
-                        key={index}
-                        className="cursor-pointer text-sm text-muted-foreground hover:text-foreground dark:text-slate-400"
-                        onClick={() => setDisplay(entry.output)}
-                      >
-                        {entry.input} = {entry.output}
-                      </div>
-                    ))
+                    history.map(
+                      (
+                        entry: { input: string; output: string },
+                        index: number,
+                      ) => (
+                        <div
+                          key={index}
+                          className="cursor-pointer text-sm text-muted-foreground hover:text-foreground dark:text-slate-400"
+                          onClick={() => setDisplay(entry.output)}
+                        >
+                          {entry.input} = {entry.output}
+                        </div>
+                      ),
+                    )
                   )}
                 </div>
               </CardContent>

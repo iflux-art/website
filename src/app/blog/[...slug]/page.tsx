@@ -1,20 +1,20 @@
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/common/breadcrumb";
-import { createBlogBreadcrumbs } from "@/lib/utils/breadcrumb";
-import { ContentDisplay } from "@/components/common/content-display";
-import { RelatedPosts } from "@/components/common/related-posts";
-import { TableOfContents } from "@/components/common/table-of-contents";
-import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
+import { Breadcrumb } from "packages/src/ui/components/content/breadcrumb";
+import { createBlogBreadcrumbs } from "packages/src/lib/utils/breadcrumb";
+import { ContentDisplay } from "packages/src/ui/components/content/content-display";
+import { RelatedPosts } from "packages/src/ui/components/content/related-posts";
+import { TableOfContents } from "packages/src/ui/components/content/table-of-contents";
+import { MDXCodeEnhance } from "packages/src/ui/components/mdx/mdx-code-enhance";
 import React from "react";
-import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/common/twikoo-comment";
+import ClientMDXRenderer from "packages/src/ui/components/mdx/ClientMDXRenderer";
+import { TwikooComment } from "packages/src/ui/components/twikoo-comment";
 
 // 内联 getBlogContent 及其依赖
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { extractHeadings } from "@/components/common/extract-headings";
-import type { BlogFrontmatter } from "@/types/blog-types";
+import { extractHeadings } from "packages/src/ui/components/content/extract-headings";
+import type { BlogFrontmatter } from "@/app/blog/src/types/blog-types";
 import { sync as globSync } from "glob";
 
 function scanContentDirectory(options: {

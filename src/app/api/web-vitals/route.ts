@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import type { WebVitalsResponse, WebVitalsMetric } from "@/types";
+import type {
+  WebVitalsResponse,
+  WebVitalsMetric,
+} from "packages/src/types/api-types";
 
 /**
  * Web Vitals API 路由

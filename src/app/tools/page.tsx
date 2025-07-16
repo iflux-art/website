@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { AppGrid } from "@/components/layout/app-grid";
-import { UnifiedFilter } from "@/components/common/unified-filter";
-import { TOOLS, TOOL_CATEGORIES } from "@/config/tools";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { useFilterState } from "@/hooks/state/use-filter-state";
-import { ToolCard } from "@/components/common/card/tool-card";
+import { AppGrid } from "packages/src/ui/components/app-grid";
+import { UnifiedFilter } from "packages/src/ui/components/unified-filter";
+import { TOOLS, TOOL_CATEGORIES } from "@/app/tools/src/config/tools";
+import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import { useFilterState } from "packages/src/hooks/state/use-filter-state";
+import { ToolCard } from "@/app/tools/src/components/tool-card";
 
 /**
  * 工具页面组件

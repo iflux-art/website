@@ -98,7 +98,7 @@ const getCacheControl = (pathname: string): string => {
     pathname.startsWith("/admin") ||
     pathname.startsWith("/blog") ||
     pathname.startsWith("/docs") ||
-    pathname.startsWith("/journal") ||
+    pathname.startsWith("/blog/journal") ||
     pathname.startsWith("/links") ||
     pathname.startsWith("/tools")
   ) {
