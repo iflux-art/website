@@ -7,9 +7,9 @@ import {
   NAV_DESCRIPTIONS,
   NAV_PATHS,
 } from "packages/src/config/nav-config";
-import { useAuthState } from "@/app/admin/src/hooks/use-auth-state";
+import { useAuthState } from "packages/src/hooks/admin/use-auth-state";
 import { useActiveSection } from "packages/src/hooks/ui/use-active-section";
-import { AdminMenu as AdminMenuComponent } from "src/app/admin/src/components/admin-menu";
+import { AdminMenu as AdminMenuComponent } from "packages/src/ui/components/admin/admin-menu";
 import type { NavProps, NavMenuProps } from "packages/src/types/nav-types";
 
 function NavLinks({ onClose, className }: NavProps) {

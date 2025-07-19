@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
 import {
   Card,
   CardContent,

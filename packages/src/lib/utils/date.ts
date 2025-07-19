@@ -1,4 +1,4 @@
-import type { JournalEntry } from "@/app/blog/src/types/journal-types";
+import type { JournalEntry } from "packages/src/types/journal-types";
 
 export function formatDate(dateStr: string | undefined) {
   if (!dateStr) return "";

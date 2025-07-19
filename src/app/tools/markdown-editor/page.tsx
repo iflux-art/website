@@ -13,7 +13,7 @@ import {
   Columns,
   ArrowLeft,
 } from "lucide-react"; // Added Columns as a placeholder for split view
-import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
 import {
   Card,
   CardContent,

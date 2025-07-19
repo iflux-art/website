@@ -3,10 +3,10 @@
 import React from "react";
 import { AppGrid } from "packages/src/ui/components/app-grid";
 import { UnifiedFilter } from "packages/src/ui/components/unified-filter";
-import { TOOLS, TOOL_CATEGORIES } from "@/app/tools/src/config/tools";
-import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import { TOOLS, TOOL_CATEGORIES } from "packages/src/config/tools/tools";
+import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
 import { useFilterState } from "packages/src/hooks/state/use-filter-state";
-import { ToolCard } from "@/app/tools/src/components/tool-card";
+import { ToolCard } from "packages/src/ui/components/tools/tool-card";
 
 /**
  * 工具页面组件

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { useJournalEntries } from "../src/hooks/use-journal";
+import { useJournalEntries } from "packages/src/hooks/blog/use-journal";
 import { cn, formatDate } from "../../../../packages/src/lib/utils";
 import {
   groupEntriesByYear,
@@ -9,7 +9,7 @@ import {
 } from "../../../../packages/src/lib/utils/date";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "../../../../packages/src/ui/components/shared-ui/badge";
-import { JournalEntry } from "../src/types/journal-types";
+import { JournalEntry } from "packages/src/types/journal-types";
 import { useState, useEffect, useMemo } from "react";
 // 内联 typeColors 和 typeLabels 配置
 const typeColors: Record<JournalEntry["type"], string> = {

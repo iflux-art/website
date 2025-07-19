@@ -41,9 +41,9 @@ function LinksHeader({
   );
 }
 import { AppGrid } from "packages/src/ui/components/app-grid";
-import { LinkCard } from "@/app/links/src/components/link-card";
+import { LinkCard } from "packages/src/ui/components/links/link-card";
 import { UnifiedFilter } from "packages/src/ui/components/unified-filter";
-import { useLinksData } from "./src/hooks/use-links-data";
+import { useLinksData } from "packages/src/hooks/links/use-links-data";
 export default function LinksPage() {
   const {
     items,

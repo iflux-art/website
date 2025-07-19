@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Calculator, Delete, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "@/app/tools/src/components/tool-layout";
+import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "packages/src/ui/components/shared-ui/card";
 import { Button } from "packages/src/ui/components/shared-ui/button";
-import { useSafeTool } from "../src/hooks/tool-state";
+import { useSafeTool } from "packages/src/hooks/tools/tool-state";
 import Link from "next/link";
 
 // ===== 迁移自 src/lib/tools/tool-utils.ts =====

@@ -4,7 +4,7 @@ import path from "path";
 
 const filePath = path.join(
   process.cwd(),
-  "src/app/links/src/config/categories.json",
+  "packages/src/config/links/categories.json",
 );
 
 export async function GET() {

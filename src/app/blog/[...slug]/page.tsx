@@ -14,7 +14,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { extractHeadings } from "packages/src/ui/components/content/extract-headings";
-import type { BlogFrontmatter } from "@/app/blog/src/types/blog-types";
+import type { BlogFrontmatter } from "packages/src/types/blog-types";
 import { sync as globSync } from "glob";
 
 function scanContentDirectory(options: {

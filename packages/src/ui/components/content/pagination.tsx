@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "packages/src/ui/components/shared-ui/card";
-import type { DocPaginationProps } from "@/app/docs/src/types/docs-types";
+import type { DocPaginationProps } from "packages/src/types/docs/docs-types";
 
 export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
   if (!prevDoc && !nextDoc) return null;

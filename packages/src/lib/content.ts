@@ -12,8 +12,8 @@ import {
   DocCategory,
   DocItem,
   NavDocItem,
-} from "@/app/docs/src/types/docs-types";
-import { BlogPost } from "@/app/blog/src/types/blog-types";
+} from "packages/src/types/docs/docs-types";
+import { BlogPost } from "packages/src/types/blog-types";
 
 // ==================== 博客相关函数 ====================
 

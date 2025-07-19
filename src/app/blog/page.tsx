@@ -1,12 +1,12 @@
 "use client";
 
 import { UnifiedFilter } from "packages/src/ui/components/unified-filter";
-import { BlogCard } from "@/app/blog/src/components/blog-card";
+import { BlogCard } from "packages/src/ui/components/blog/blog-card";
 import { AppGrid } from "packages/src/ui/components/app-grid";
 import { useFilterState } from "packages/src/hooks/state/use-filter-state";
-import { useBlogPosts } from "./src/hooks/use-blog";
+import { useBlogPosts } from "packages/src/hooks/blog/use-blog";
 import { useMemo } from "react";
-import type { BlogPost } from "@/app/blog/src/types/blog-types";
+import type { BlogPost } from "packages/src/types/blog-types";
 import { formatDate } from "packages/src/lib/utils/date";
 // 内联 Category 类型定义
 type Category = { id: string; name: string };

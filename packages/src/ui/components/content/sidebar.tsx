@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 
 import { cn } from "packages/src/lib/utils";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { useDocSidebar, SidebarItem } from "@/app/docs/src/hooks/use-docs";
+import { useDocSidebar, SidebarItem } from "packages/src/hooks/docs/use-docs";
 import { NavLink } from "packages/src/ui/components/shared-ui/nav-link";
 // 内联 SidebarProps 类型定义
 export interface SidebarProps {

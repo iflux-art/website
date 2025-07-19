@@ -6,11 +6,11 @@ import {
   CategoryId,
   LinksItem,
   LinksFormData,
-} from "@/app/links/src/types/links-types";
+} from "packages/src/types/links/links-types";
 
 const filePath = path.join(
   process.cwd(),
-  "src/app/links/src/config/items.json",
+  "packages/src/config/links/items.json",
 );
 
 // 工具函数仅文件内部使用

@@ -10,7 +10,7 @@ import { MDXCodeEnhance } from "packages/src/ui/components/mdx/mdx-code-enhance"
 import type {
   DocPageParams,
   DocContentResult,
-} from "@/app/docs/src/types/docs-types";
+} from "packages/src/types/docs/docs-types";
 import ClientMDXRenderer from "packages/src/ui/components/mdx/ClientMDXRenderer";
 import { TwikooComment } from "packages/src/ui/components/twikoo-comment";
 
@@ -25,7 +25,7 @@ import { countWords } from "packages/src/lib/utils";
 import type {
   DocFrontmatter,
   NavDocItem,
-} from "@/app/docs/src/types/docs-types";
+} from "packages/src/types/docs/docs-types";
 const DOCS_CONTENT_DIR = "src/content/docs";
 const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 
