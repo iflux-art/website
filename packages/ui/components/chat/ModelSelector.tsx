@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { cn } from "packages/utils";
 import type { AIModel } from "packages/config/chat/ai-models";
@@ -14,7 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "packages/ui/components/shared-ui/dropdown-menu";
+} from "packages/ui/components/ui/dropdown-menu";
 
 export function ModelSelector({
   selectedModelId,

@@ -2,7 +2,7 @@
 
 import React, { forwardRef } from "react";
 import Link from "next/link";
-import { Card, CardContent } from "packages/ui/components/shared-ui/card";
+import { Card, CardContent } from "packages/ui/components/ui/card";
 import { cn } from "packages/utils";
 
 export interface DocCardProps {

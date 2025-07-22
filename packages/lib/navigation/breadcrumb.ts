@@ -1,6 +1,5 @@
 /**
- * 面包屑导航项生成与处理工具函数
- * 原内容迁移自 components/common/breadcrumb/breadcrumb-utils.ts
+ * 面包屑导航工具函数 (业务相关)
  */
 import type { BreadcrumbItem } from "packages/types/common-component-types";
 import fs from "fs";

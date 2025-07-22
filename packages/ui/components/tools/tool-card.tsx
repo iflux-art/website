@@ -3,8 +3,8 @@
 import React, { forwardRef } from "react";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { Card, CardContent } from "packages/ui/components/shared-ui/card";
-import { Badge } from "packages/ui/components/shared-ui/badge";
+import { Card, CardContent } from "packages/ui/components/ui/card";
+import { Badge } from "packages/ui/components/ui/badge";
 
 export interface ToolCardProps {
   title: string;

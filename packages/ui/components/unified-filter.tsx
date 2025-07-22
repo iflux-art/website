@@ -1,6 +1,6 @@
 import { Tag, X } from "lucide-react";
-import { Button } from "packages/ui/components/shared-ui/button";
-import { Badge } from "packages/ui/components/shared-ui/badge";
+import { Button } from "packages/ui/components/ui/button";
+import { Badge } from "packages/ui/components/ui/badge";
 import { useState } from "react";
 // 内联 Category 类型定义
 export interface Category {

@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "packages/ui/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "packages/utils/breadcrumb";
+import { createDocBreadcrumbsServer } from "packages/lib/navigation/breadcrumb";
 import { ContentDisplay } from "packages/ui/components/content/content-display";
 import { DocPagination } from "packages/ui/components/content/pagination";
 import { Sidebar } from "packages/ui/components/content/sidebar";

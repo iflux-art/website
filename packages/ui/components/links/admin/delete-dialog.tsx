@@ -8,7 +8,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "packages/ui/components/shared-ui/alert-dialog";
+} from "packages/ui/components/ui/alert-dialog";
 
 // 内联 DeleteDialogProps 类型定义
 interface DeleteDialogProps {

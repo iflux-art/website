@@ -2,13 +2,13 @@
 
 import React from "react";
 import { Menu, X } from "lucide-react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
-} from "packages/ui/components/shared-ui/sheet";
+} from "packages/ui/components/ui/sheet";
 import { ThemeToggle } from "packages/ui/components/theme/theme-toggle";
 import { TravelButton } from "packages/ui/components/button/travel-button";
 import { Logo } from "packages/ui/components/logo";

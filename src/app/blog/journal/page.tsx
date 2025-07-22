@@ -8,7 +8,7 @@ import {
   type GroupedEntries,
 } from "../../../../packages/utils/date";
 import { ChevronDown } from "lucide-react";
-import { Badge } from "../../../../packages/ui/components/shared-ui/badge";
+import { Badge } from "../../../../packages/ui/components/ui/badge";
 import { JournalEntry } from "packages/types/journal-types";
 import { useState, useEffect, useMemo } from "react";
 // 内联 typeColors 和 typeLabels 配置

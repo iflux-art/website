@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import { SearchDialog } from "packages/ui/components/search/search-dialog";
 
 /**

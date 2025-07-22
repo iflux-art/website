@@ -6,9 +6,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "packages/ui/components/shared-ui/dialog";
-import { Input } from "packages/ui/components/shared-ui/input";
-import { Badge } from "packages/ui/components/shared-ui/badge";
+} from "packages/ui/components/ui/dialog";
+import { Input } from "packages/ui/components/ui/input";
+import { Badge } from "packages/ui/components/ui/badge";
 import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
 
 interface SearchResult {

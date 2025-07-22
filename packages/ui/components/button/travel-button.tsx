@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { TramFront } from "lucide-react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 
 const ICON_SIZE = {
   height: "1rem",

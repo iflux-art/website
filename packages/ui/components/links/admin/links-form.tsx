@@ -1,23 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "packages/ui/components/shared-ui/button";
-import { Input } from "packages/ui/components/shared-ui/input";
-import { Textarea } from "packages/ui/components/shared-ui/textarea";
-import { Label } from "packages/ui/components/shared-ui/label";
+import { Button } from "packages/ui/components/ui/button";
+import { Input } from "packages/ui/components/ui/input";
+import { Textarea } from "packages/ui/components/ui/textarea";
+import { Label } from "packages/ui/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "packages/ui/components/shared-ui/select";
-import { Switch } from "packages/ui/components/shared-ui/switch";
-import { Badge } from "packages/ui/components/shared-ui/badge";
-import {
-  Alert,
-  AlertDescription,
-} from "packages/ui/components/shared-ui/alert";
+} from "packages/ui/components/ui/select";
+import { Switch } from "packages/ui/components/ui/switch";
+import { Badge } from "packages/ui/components/ui/badge";
+import { Alert, AlertDescription } from "packages/ui/components/ui/alert";
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
 // 内联 LinksFormData 类型定义
 interface LinksFormData {

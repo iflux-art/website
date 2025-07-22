@@ -3,8 +3,8 @@
 import React, { forwardRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Card } from "packages/ui/components/shared-ui/card";
-import { Badge } from "packages/ui/components/shared-ui/badge";
+import { Card } from "packages/ui/components/ui/card";
+import { Badge } from "packages/ui/components/ui/badge";
 import { cn } from "packages/utils";
 
 export interface BlogCardProps {

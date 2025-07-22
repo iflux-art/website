@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/ui/components/shared-ui/card";
+} from "packages/ui/components/ui/card";
 import { ArrowLeft, BookOpen, Shuffle, Copy, Download } from "lucide-react";
 import Link from "next/link";
 

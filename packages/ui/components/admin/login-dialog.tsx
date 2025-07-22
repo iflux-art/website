@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "packages/ui/components/shared-ui/button";
-import { Input } from "packages/ui/components/shared-ui/input";
-import { Label } from "packages/ui/components/shared-ui/label";
+import { Button } from "packages/ui/components/ui/button";
+import { Input } from "packages/ui/components/ui/input";
+import { Label } from "packages/ui/components/ui/label";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "packages/ui/components/shared-ui/dialog";
+} from "packages/ui/components/ui/dialog";
 import { User, Lock } from "lucide-react";
 import type { LoginDialogProps } from "packages/types/admin-types";
 

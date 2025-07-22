@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "packages/utils";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import { Globe, LogOut, Home } from "lucide-react";
 import type { AdminLayoutProps } from "packages/types/admin-types";
 

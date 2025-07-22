@@ -12,7 +12,7 @@ import {
   BotMessageSquare,
   User,
 } from "lucide-react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import { cn } from "packages/utils";
 import { AI_MODELS } from "packages/config/chat/ai-models";
 import { useAIChat } from "./useAIChat";

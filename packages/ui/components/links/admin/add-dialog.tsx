@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "packages/ui/components/shared-ui/dialog";
+} from "packages/ui/components/ui/dialog";
 import { LinksForm } from "./links-form";
 // 内联 LinksFormData 类型定义
 interface LinksFormData {

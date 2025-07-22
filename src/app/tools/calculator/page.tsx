@@ -8,8 +8,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/ui/components/shared-ui/card";
-import { Button } from "packages/ui/components/shared-ui/button";
+} from "packages/ui/components/ui/card";
+import { Button } from "packages/ui/components/ui/button";
 import { useSafeTool } from "packages/hooks/tools/tool-state";
 import Link from "next/link";
 

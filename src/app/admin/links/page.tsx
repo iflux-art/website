@@ -5,8 +5,8 @@ import { useDebouncedValue } from "packages/hooks/ui/use-debounced-value";
 import { AdminLayout } from "packages/ui/components/links/admin/admin-layout";
 import { AdminActions } from "packages/ui/components/links/admin/admin-actions";
 import { DataTable } from "packages/ui/components/links/data-table";
-import { Input } from "packages/ui/components/shared-ui/input";
-import { Card, CardContent } from "packages/ui/components/shared-ui/card";
+import { Input } from "packages/ui/components/ui/input";
+import { Card, CardContent } from "packages/ui/components/ui/card";
 import { Search, Globe } from "lucide-react";
 import { AddDialog } from "packages/ui/components/links/admin/add-dialog";
 import { EditDialog } from "packages/ui/components/links/admin/edit-dialog";
@@ -22,7 +22,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "packages/ui/components/shared-ui/select";
+} from "packages/ui/components/ui/select";
 
 // 客户端使用的函数
 const fetchLinksData = async (): Promise<any[]> => {

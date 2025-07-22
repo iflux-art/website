@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { Search, Loader2, X } from "lucide-react";
-import { Input } from "packages/ui/components/shared-ui/input";
+import { Input } from "packages/ui/components/ui/input";
 import type { SearchBarProps } from "packages/types/search-types";
 
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(

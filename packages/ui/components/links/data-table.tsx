@@ -4,8 +4,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/ui/components/shared-ui/card";
-import { Button } from "packages/ui/components/shared-ui/button";
+} from "packages/ui/components/ui/card";
+import { Button } from "packages/ui/components/ui/button";
 
 // 内联 DataTableProps 类型定义
 export interface DataTableColumn<T> {

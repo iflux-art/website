@@ -1,4 +1,4 @@
-import { Badge } from "packages/ui/components/shared-ui/badge";
+import { Badge } from "packages/ui/components/ui/badge";
 import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from "lucide-react";
 import { LinksItem } from "packages/types/links/links-types";
 // 内联 TableColumn 类型定义

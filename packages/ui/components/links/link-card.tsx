@@ -4,7 +4,7 @@ import React, { forwardRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { Card, CardContent } from "packages/ui/components/shared-ui/card";
+import { Card, CardContent } from "packages/ui/components/ui/card";
 import { cn } from "packages/utils";
 
 export interface LinkCardProps {

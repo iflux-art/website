@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "packages/ui/components/shared-ui/nav-link";
+import { NavLink } from "packages/ui/components/ui/nav-link";
 import { ArrowRightLeft } from "lucide-react";
 
 // 内联 RelatedPost 和 RelatedPostsProps 类型定义

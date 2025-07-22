@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import { cn } from "packages/utils";
-import { buttonVariants } from "packages/ui/components/shared-ui/button";
+import { buttonVariants } from "packages/ui/components/ui/button";
 
 interface NavButtonProps {
   href: string;

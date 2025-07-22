@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "packages/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/ui/button";
 import type { AdminActionsProps } from "packages/types/admin-types";
 
 export function AdminActions({ actions, className = "" }: AdminActionsProps) {
