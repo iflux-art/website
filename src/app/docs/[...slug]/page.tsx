@@ -1,31 +1,31 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "packages/src/ui/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "packages/src/lib/utils/breadcrumb";
-import { ContentDisplay } from "packages/src/ui/components/content/content-display";
-import { DocPagination } from "packages/src/ui/components/content/pagination";
-import { Sidebar } from "packages/src/ui/components/content/sidebar";
-import { TableOfContents } from "packages/src/ui/components/content/table-of-contents";
-import { MDXCodeEnhance } from "packages/src/ui/components/mdx/mdx-code-enhance";
+import { Breadcrumb } from "packages/ui/components/content/breadcrumb";
+import { createDocBreadcrumbsServer } from "packages/utils/breadcrumb";
+import { ContentDisplay } from "packages/ui/components/content/content-display";
+import { DocPagination } from "packages/ui/components/content/pagination";
+import { Sidebar } from "packages/ui/components/content/sidebar";
+import { TableOfContents } from "packages/ui/components/content/table-of-contents";
+import { MDXCodeEnhance } from "packages/ui/components/mdx/mdx-code-enhance";
 import type {
   DocPageParams,
   DocContentResult,
-} from "packages/src/types/docs/docs-types";
-import ClientMDXRenderer from "packages/src/ui/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "packages/src/ui/components/twikoo-comment";
+} from "packages/types/docs/docs-types";
+import ClientMDXRenderer from "packages/ui/components/mdx/ClientMDXRenderer";
+import { TwikooComment } from "packages/ui/components/twikoo-comment";
 
 // 文件顶部只保留一处 import fs 和 import path
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "packages/src/lib/content";
-import { extractHeadings } from "packages/src/ui/components/content/extract-headings";
-import { countWords } from "packages/src/lib/utils";
+import { getFlattenedDocsOrder } from "packages/lib/content";
+import { extractHeadings } from "packages/ui/components/content/extract-headings";
+import { countWords } from "packages/utils";
 // 修复 Prettier 格式错误，将多行类型 import 改为单行
 import type {
   DocFrontmatter,
   NavDocItem,
-} from "packages/src/types/docs/docs-types";
+} from "packages/types/docs/docs-types";
 const DOCS_CONTENT_DIR = "src/content/docs";
 const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 

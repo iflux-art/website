@@ -1,4 +1,4 @@
-import { getDocSidebar } from "packages/src/lib/content";
+import { getDocSidebar } from "packages/lib/content";
 
 export const dynamic = "force-dynamic";
 

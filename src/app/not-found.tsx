@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Home } from "lucide-react";
-import { Button } from "packages/src/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/shared-ui/button";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -2,15 +2,15 @@
 
 import React, { useState } from "react";
 import { Calculator, Delete, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
+import { ToolLayout } from "packages/ui/components/tools/tool-layout";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/src/ui/components/shared-ui/card";
-import { Button } from "packages/src/ui/components/shared-ui/button";
-import { useSafeTool } from "packages/src/hooks/tools/tool-state";
+} from "packages/ui/components/shared-ui/card";
+import { Button } from "packages/ui/components/shared-ui/button";
+import { useSafeTool } from "packages/hooks/tools/tool-state";
 import Link from "next/link";
 
 // ===== 迁移自 src/lib/tools/tool-utils.ts =====

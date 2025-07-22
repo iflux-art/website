@@ -1,28 +1,28 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDebouncedValue } from "packages/src/hooks/ui/use-debounced-value";
-import { AdminLayout } from "packages/src/ui/components/links/admin/admin-layout";
-import { AdminActions } from "packages/src/ui/components/links/admin/admin-actions";
-import { DataTable } from "packages/src/ui/components/links/data-table";
-import { Input } from "packages/src/ui/components/shared-ui/input";
-import { Card, CardContent } from "packages/src/ui/components/shared-ui/card";
+import { useDebouncedValue } from "packages/hooks/ui/use-debounced-value";
+import { AdminLayout } from "packages/ui/components/links/admin/admin-layout";
+import { AdminActions } from "packages/ui/components/links/admin/admin-actions";
+import { DataTable } from "packages/ui/components/links/data-table";
+import { Input } from "packages/ui/components/shared-ui/input";
+import { Card, CardContent } from "packages/ui/components/shared-ui/card";
 import { Search, Globe } from "lucide-react";
-import { AddDialog } from "packages/src/ui/components/links/admin/add-dialog";
-import { EditDialog } from "packages/src/ui/components/links/admin/edit-dialog";
-import { DeleteDialog } from "packages/src/ui/components/links/admin/delete-dialog";
+import { AddDialog } from "packages/ui/components/links/admin/add-dialog";
+import { EditDialog } from "packages/ui/components/links/admin/edit-dialog";
+import { DeleteDialog } from "packages/ui/components/links/admin/delete-dialog";
 import {
   getTableColumns,
   getTableActions,
   getPageActions,
-} from "packages/src/ui/components/links/admin/table-config";
+} from "packages/ui/components/links/admin/table-config";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "packages/src/ui/components/shared-ui/select";
+} from "packages/ui/components/shared-ui/select";
 
 // 客户端使用的函数
 const fetchLinksData = async (): Promise<any[]> => {

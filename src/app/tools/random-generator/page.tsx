@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "packages/src/ui/components/shared-ui/button";
+import { Button } from "packages/ui/components/shared-ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/src/ui/components/shared-ui/card";
+} from "packages/ui/components/shared-ui/card";
 import {
   ArrowLeft,
   Copy,

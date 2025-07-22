@@ -6,12 +6,9 @@ import {
   CategoryId,
   LinksItem,
   LinksFormData,
-} from "packages/src/types/links/links-types";
+} from "packages/types/links/links-types";
 
-const filePath = path.join(
-  process.cwd(),
-  "packages/src/config/links/items.json",
-);
+const filePath = path.join(process.cwd(), "packages/config/links/items.json");
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {

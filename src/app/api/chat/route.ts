@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getModelById,
-  getApiModelName,
-} from "packages/src/config/chat/ai-models";
-import { ModelNotFoundError } from "packages/src/lib/errors";
-import type { ChatMessage, ApiRequestBody } from "packages/src/types/api-types";
+import { getModelById, getApiModelName } from "packages/config/chat/ai-models";
+import { ModelNotFoundError } from "packages/lib/errors";
+import type { ChatMessage, ApiRequestBody } from "packages/types/api-types";
 
 export async function POST(request: NextRequest) {
   try {

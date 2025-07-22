@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { ArrowUpDown, Ruler, RotateCcw, ArrowLeft } from "lucide-react";
-import { ToolLayout } from "packages/src/ui/components/tools/tool-layout";
+import { ToolLayout } from "packages/ui/components/tools/tool-layout";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "packages/src/ui/components/shared-ui/card";
-import { Button } from "packages/src/ui/components/shared-ui/button";
+} from "packages/ui/components/shared-ui/card";
+import { Button } from "packages/ui/components/shared-ui/button";
 import Link from "next/link";
 
 export default function UnitConverterPage() {
