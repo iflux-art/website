@@ -38,6 +38,6 @@ export function buildTagLink(tag: string): string {
  * @returns 完整的分类页URL
  */
 export function buildCategoryLink(category: string | { id: string }): string {
-  const categoryId = typeof category === 'string' ? category : category.id;
+  const categoryId = typeof category === "string" ? category : category.id;
   return `/docs/${encodeURIComponent(categoryId)}`;
 }

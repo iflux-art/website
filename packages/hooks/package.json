@@ -1,0 +1,27 @@
+{
+  "name": "@ifa/hooks",
+  "version": "1.0.0",
+  "description": "React hooks for IFA project",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "pnpm run tsc",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@ifa/lib": "workspace:*",
+    "@ifa/types": "workspace:*",
+    "@ifa/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "pnpm": ">=9.11.0"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@ifa/lib",
+  "version": "1.0.0",
+  "description": "Core libraries for IFA project",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "pnpm run tsc",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@ifa/config": "workspace:*",
+    "@ifa/types": "workspace:*"
+  },
+  "peerDependencies": {
+    "typescript": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "pnpm": ">=9.11.0"
+  }
+}

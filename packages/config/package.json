@@ -1,0 +1,16 @@
+{
+  "name": "@ifa/config",
+  "version": "1.0.0",
+  "description": "Configuration utilities for IFA project",
+  "main": "index.ts",
+  "types": "index.ts",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "pnpm": ">=9.11.0"
+  }
+}

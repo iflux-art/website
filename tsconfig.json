@@ -21,7 +21,8 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ifa/*": ["./packages/*/src"]
     }
   },
   "include": [
@@ -31,5 +32,13 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "references": [
+    { "path": "./packages/config" },
+    { "path": "./packages/hooks" },
+    { "path": "./packages/lib" },
+    { "path": "./packages/types" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/utils" }
+  ]
 }
