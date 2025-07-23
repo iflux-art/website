@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  logging: {
+    level: 'verbose'
+  },
   // 基本配置
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 
@@ -11,7 +14,10 @@ const nextConfig = {
     ignoreDuringBuilds: process.env.NODE_ENV === 'development',
   },
   typescript: {
-    ignoreBuildErrors: process.env.NODE_ENV === 'development',
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
   },
 
   // 实验性功能

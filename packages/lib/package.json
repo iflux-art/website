@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@ifa/config": "workspace:*",
-    "@ifa/types": "workspace:*"
+    "@ifa/types": "workspace:*",
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "typescript": "workspace:*"
+    "typescript": "^5.8.3"
   },
   "publishConfig": {
     "access": "public"
