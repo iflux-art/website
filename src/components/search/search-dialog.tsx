@@ -1,0 +1,157 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
+
+interface SearchResult {
+  type: "link" | "blog" | "doc" | "tool";
+  title: string;
+  description?: string;
+  url?: string;
+  path?: string;
+  category?: string;
+  tags?: string[];
+  icon?: string;
+}
+
+interface SearchDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
+
+    const searchTimeout = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/search?q=${encodeURIComponent(query)}&type=all`,
+        );
+        const data = await response.json();
+        setResults(data.results || []);
+      } catch (error) {
+        console.error("Search error:", error);
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(searchTimeout);
+  }, [query]);
+
+  const handleResultClick = (result: SearchResult) => {
+    if (result.url) {
+      window.open(result.url, "_blank");
+    } else if (result.path) {
+      window.location.href = result.path;
+    }
+    onOpenChange(false);
+  };
+
+  const getIcon = (type: string) => {
+    switch (type) {
+      case "link":
+        return <Link className="h-4 w-4" />;
+      case "blog":
+        return <FileText className="h-4 w-4" />;
+      case "doc":
+        return <BookOpen className="h-4 w-4" />;
+      default:
+        return <ExternalLink className="h-4 w-4" />;
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="flex max-h-[80vh] flex-col overflow-hidden sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>搜索</DialogTitle>
+        </DialogHeader>
+
+        <div className="relative mb-4">
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+          <Input
+            placeholder="搜索链接、博客、文档..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        <div className="flex-1 overflow-y-auto">
+          {loading ? (
+            <div className="py-8 text-center text-muted-foreground">
+              搜索中...
+            </div>
+          ) : results.length > 0 ? (
+            <div className="space-y-2">
+              {results.map((result, index) => (
+                <div
+                  key={index}
+                  className="cursor-pointer rounded-lg border p-3 transition-colors hover:bg-accent"
+                  onClick={() => handleResultClick(result)}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 text-muted-foreground">
+                      {getIcon(result.type)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <h4 className="truncate text-sm font-medium">
+                          {result.title}
+                        </h4>
+                        <Badge variant="secondary" className="text-xs">
+                          {result.type}
+                        </Badge>
+                      </div>
+                      {result.description && (
+                        <p className="line-clamp-2 text-sm text-muted-foreground">
+                          {result.description}
+                        </p>
+                      )}
+                      {result.tags && result.tags.length > 0 && (
+                        <div className="mt-2 flex gap-1">
+                          {result.tags.slice(0, 3).map((tag, tagIndex) => (
+                            <Badge
+                              key={tagIndex}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : query.trim() ? (
+            <div className="py-8 text-center text-muted-foreground">
+              未找到相关结果
+            </div>
+          ) : null}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

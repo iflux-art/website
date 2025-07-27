@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPostsByTag } from "packages/lib/content";
+import { getPostsByTag } from "@/lib/content";
 
 /**
  * 获取指定标签的文章列表的 API 路由

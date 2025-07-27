@@ -1,8 +1,32 @@
 import { NextResponse } from "next/server";
-import type {
-  WebVitalsResponse,
-  WebVitalsMetric,
-} from "packages/types/api-types";
+
+type WebVitalsMetric = {
+  /** 指标名称 */
+  name: "CLS" | "FCP" | "FID" | "INP" | "LCP" | "TTFB";
+  /** 指标值 */
+  value: number;
+  /** 指标ID */
+  id: string;
+  /** 导航类型 */
+  navigationType?:
+    | "navigate"
+    | "reload"
+    | "back-forward"
+    | "back-forward-cache";
+  /** 指标评级 */
+  rating?: "good" | "needs-improvement" | "poor";
+  /** 指标时间戳 */
+  delta?: number;
+  /** 指标条目 */
+  entries?: PerformanceEntry[];
+};
+
+type WebVitalsResponse = {
+  /** 是否成功 */
+  success: boolean;
+  /** 错误信息 */
+  error?: string;
+};
 
 /**
  * Web Vitals API 路由

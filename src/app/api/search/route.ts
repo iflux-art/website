@@ -1,56 +1,153 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
+import links from "@/config/links/items.json";
+import { promises as fs } from "fs";
 import path from "path";
+import { glob } from "fast-glob";
+import matter from "gray-matter";
 
-const filePath = path.join(process.cwd(), "src/data/links/items.json");
+interface SearchResult {
+  type: "link" | "blog" | "doc";
+  title: string;
+  description?: string;
+  url?: string;
+  path?: string;
+  tags?: string[];
+}
 
-// 工具函数仅文件内部使用
-const getLinksData = async (): Promise<any[]> => {
-  try {
-    const data = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(data) as any[];
-  } catch (error) {
-    console.error("Error reading links data:", error);
-    return [];
+// 内存缓存
+let cache: {
+  blogs: SearchResult[];
+  docs: SearchResult[];
+  timestamp: number;
+} | null = null;
+
+const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
+
+async function scanContentFiles(contentType: "blog" | "docs") {
+  const basePath = path.join(process.cwd(), `src/content/${contentType}`);
+  const files = await glob("**/*.mdx", { cwd: basePath });
+
+  const results: SearchResult[] = [];
+
+  for (const file of files) {
+    try {
+      const filePath = path.join(basePath, file);
+      const content = await fs.readFile(filePath, "utf-8");
+
+      try {
+        const { data: frontmatter } = matter(content);
+        if (frontmatter?.title && typeof frontmatter.title === "string") {
+          results.push({
+            type: contentType === "blog" ? "blog" : "doc",
+            title: frontmatter.title,
+            description:
+              typeof frontmatter.description === "string"
+                ? frontmatter.description
+                : undefined,
+            path: `/${contentType}/${file.replace(/\.mdx$/, "")}`,
+            tags: Array.isArray(frontmatter.tags)
+              ? frontmatter.tags
+              : undefined,
+          });
+        }
+      } catch (parseError) {
+        console.warn(
+          `Skipping ${file}: Invalid frontmatter format`,
+          parseError,
+        );
+        continue;
+      }
+    } catch (readError) {
+      console.warn(`Skipping ${file}: Failed to read file`, readError);
+      continue;
+    }
   }
-};
+
+  return results;
+}
+
+async function getCachedContent() {
+  const now = Date.now();
+  if (cache && now - cache.timestamp < CACHE_TTL) {
+    return cache;
+  }
+
+  const [blogs, docs] = await Promise.all([
+    scanContentFiles("blog"),
+    scanContentFiles("docs"),
+  ]);
+
+  cache = { blogs, docs, timestamp: now };
+  return cache;
+}
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get("q") || "";
+    const query = searchParams.get("q")?.trim() || "";
     const type = searchParams.get("type") || "all";
 
-    if (!query.trim()) {
+    if (!query) {
       return NextResponse.json({ results: [] });
     }
 
-    const results: any[] = [];
+    const { blogs, docs } = await getCachedContent();
+    const results: SearchResult[] = [];
+    const queryLower = query.toLowerCase();
 
     // 搜索链接
     if (type === "all" || type === "links") {
-      const items = await getLinksData();
-      const linkResults = items
+      const linkResults = links
         .filter((item: any) => {
           const searchText =
             `${item.title} ${item.description} ${item.tags?.join(" ")}`.toLowerCase();
-          return searchText.includes(query.toLowerCase());
+          return searchText.includes(queryLower);
         })
         .map((item: any) => ({
-          type: "link",
+          type: "link" as const,
           title: item.title,
           description: item.description,
           url: item.url,
-          category: item.category,
           tags: item.tags,
-          icon: item.icon,
         }))
-        .slice(0, 10);
+        .slice(0, 5);
 
       results.push(...linkResults);
     }
 
-    return NextResponse.json({ results });
+    // 搜索博客
+    if (type === "all" || type === "blog") {
+      const blogResults = blogs
+        .filter((post) => {
+          const searchText =
+            `${post.title} ${post.description} ${post.tags?.join(" ")}`.toLowerCase();
+          return searchText.includes(queryLower);
+        })
+        .slice(0, 5);
+
+      results.push(...blogResults);
+    }
+
+    // 搜索文档
+    if (type === "all" || type === "doc") {
+      const docResults = docs
+        .filter((doc) => {
+          const searchText = `${doc.title} ${doc.description}`.toLowerCase();
+          return searchText.includes(queryLower);
+        })
+        .slice(0, 5);
+
+      results.push(...docResults);
+    }
+
+    // 按匹配度排序
+    results.sort((a, b) => {
+      const aScore = a.title.toLowerCase().includes(queryLower) ? 1 : 0;
+      const bScore = b.title.toLowerCase().includes(queryLower) ? 1 : 0;
+      return bScore - aScore;
+    });
+
+    return NextResponse.json({ results: results.slice(0, 10) });
   } catch (error) {
     console.error("Search error:", error);
     return NextResponse.json({ error: "Search failed" }, { status: 500 });

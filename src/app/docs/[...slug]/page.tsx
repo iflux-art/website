@@ -1,31 +1,29 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "packages/ui/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "packages/lib/navigation/breadcrumb";
-import { ContentDisplay } from "packages/ui/components/content/content-display";
-import { DocPagination } from "packages/ui/components/content/pagination";
-import { Sidebar } from "packages/ui/components/content/sidebar";
-import { TableOfContents } from "packages/ui/components/content/table-of-contents";
-import { MDXCodeEnhance } from "packages/ui/components/mdx/mdx-code-enhance";
-import type {
-  DocPageParams,
-  DocContentResult,
-} from "packages/types/docs/docs-types";
-import ClientMDXRenderer from "packages/ui/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "packages/ui/components/twikoo-comment";
+import { Breadcrumb } from "@/components/content/breadcrumb";
+import { createDocBreadcrumbsServer } from "@/lib/navigation/breadcrumb";
+import { ContentDisplay } from "@/components/content/content-display";
+import { DocPagination } from "@/components/content/pagination";
+import { Sidebar } from "@/components/content/sidebar";
+import { TableOfContents } from "@/components/content/table-of-contents";
+import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
+import type { DocContentResult } from "@/types/docs/docs-types";
+import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
+import { TwikooComment } from "@/components/twikoo-comment";
+
+type DocPageParams = {
+  slug: string[];
+};
 
 // 文件顶部只保留一处 import fs 和 import path
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "packages/lib/content";
-import { extractHeadings } from "packages/ui/components/content/extract-headings";
-import { countWords } from "packages/utils";
+import { getFlattenedDocsOrder } from "@/lib/content";
+import { extractHeadings } from "@/components/content/extract-headings";
+import { countWords } from "@/utils";
 // 修复 Prettier 格式错误，将多行类型 import 改为单行
-import type {
-  DocFrontmatter,
-  NavDocItem,
-} from "packages/types/docs/docs-types";
+import type { DocFrontmatter, NavDocItem } from "@/types/docs/docs-types";
 const DOCS_CONTENT_DIR = "src/content/docs";
 const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 
@@ -213,6 +211,7 @@ function getDocContent(slug: string[]): DocContentResult {
   // breadcrumbs 由页面层负责生成
 
   return {
+    title: frontmatter.title || path.basename(filePath, path.extname(filePath)),
     content: originalContent,
     frontmatter: frontmatter as DocFrontmatter,
     headings,

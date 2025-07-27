@@ -1,39 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
-import fs from "fs/promises";
-import path from "path";
+import _items from "@/config/links/items.json";
 import {
   CategoryId,
   LinksItem,
   LinksFormData,
-} from "packages/types/links/links-types";
-
-const filePath = path.join(process.cwd(), "packages/config/links/items.json");
+} from "@/types/links/links-types";
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {
-  try {
-    const config = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(config) as LinksItem[];
-  } catch (error) {
-    console.error("Error reading links config:", error);
-    return [];
-  }
+  return _items as LinksItem[];
 };
 
-const writeLinksData = async (items: LinksItem[]): Promise<void> => {
-  try {
-    await fs.writeFile(filePath, JSON.stringify(items, null, 2), "utf-8");
-  } catch (error) {
-    console.error("Error writing links config:", error);
-    throw error;
+const writeLinksData = async (_items: LinksItem[]): Promise<void> => {
+  // 在开发环境中禁用写入操作
+  if (process.env.NODE_ENV === "development") {
+    console.warn("Write operation disabled in development mode");
+    return;
   }
+  throw new Error("Write operations are not implemented in this version");
 };
 
 export async function GET() {
   try {
-    const items = await getLinksData();
-    return NextResponse.json(items);
+    return NextResponse.json(await getLinksData());
   } catch (error) {
     console.error("Error reading links:", error);
     return NextResponse.json(
@@ -128,8 +118,8 @@ export async function PUT(request: NextRequest) {
 
     const updates = await request.json();
     const validatedUpdates = updates as Partial<LinksFormData>;
-    const items = await getLinksData();
-    const idx = items.findIndex((item) => item.id === id);
+    const linksData = await getLinksData();
+    const idx = linksData.findIndex((item) => item.id === id);
 
     if (idx === -1) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
@@ -138,7 +128,9 @@ export async function PUT(request: NextRequest) {
     // 检查 url 是否重复
     if (
       validatedUpdates.url &&
-      items.some((item) => item.url === validatedUpdates.url && item.id !== id)
+      linksData.some(
+        (item) => item.url === validatedUpdates.url && item.id !== id,
+      )
     ) {
       return NextResponse.json(
         { error: "URL already exists" },
@@ -148,15 +140,15 @@ export async function PUT(request: NextRequest) {
 
     const now = new Date().toISOString();
     const updatedItem: LinksItem = {
-      ...items[idx],
+      ...linksData[idx],
       ...validatedUpdates,
       updatedAt: now,
       category: (validatedUpdates.category ??
-        items[idx].category) as CategoryId,
+        linksData[idx].category) as CategoryId,
     };
 
-    items[idx] = updatedItem;
-    await writeLinksData(items);
+    linksData[idx] = updatedItem;
+    await writeLinksData(linksData);
     return NextResponse.json(updatedItem);
   } catch (error) {
     console.error("Error updating link:", error);
@@ -178,15 +170,15 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const items = await getLinksData();
-    const idx = items.findIndex((item) => item.id === id);
+    const linksData = await getLinksData();
+    const idx = linksData.findIndex((item) => item.id === id);
 
     if (idx === -1) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    items.splice(idx, 1);
-    await writeLinksData(items);
+    linksData.splice(idx, 1);
+    await writeLinksData(linksData);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting link:", error);

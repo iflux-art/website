@@ -1,20 +1,27 @@
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "packages/ui/components/content/breadcrumb";
-import { createBlogBreadcrumbs } from "packages/lib/navigation/breadcrumb";
-import { ContentDisplay } from "packages/ui/components/content/content-display";
-import { RelatedPosts } from "packages/ui/components/content/related-posts";
-import { TableOfContents } from "packages/ui/components/content/table-of-contents";
-import { MDXCodeEnhance } from "packages/ui/components/mdx/mdx-code-enhance";
+import { Breadcrumb } from "@/components/content/breadcrumb";
+import { createBlogBreadcrumbs } from "@/lib/navigation/breadcrumb";
+import { ContentDisplay } from "@/components/content/content-display";
+import { RelatedPosts } from "@/components/content/related-posts";
+import { TableOfContents } from "@/components/content/table-of-contents";
+import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import React from "react";
-import ClientMDXRenderer from "packages/ui/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "packages/ui/components/twikoo-comment";
+import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
+import { TwikooComment } from "@/components/twikoo-comment";
+
+type BlogFrontmatter = {
+  title?: string;
+  description?: string;
+  date?: string | Date;
+  category?: string;
+  tags?: string[];
+};
 
 // 内联 getBlogContent 及其依赖
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { extractHeadings } from "packages/ui/components/content/extract-headings";
-import type { BlogFrontmatter } from "packages/types/blog-types";
+import { extractHeadings } from "@/components/content/extract-headings";
 import { sync as globSync } from "glob";
 
 function scanContentDirectory(options: {

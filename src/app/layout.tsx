@@ -1,7 +1,7 @@
 import "./globals.css";
-import { MainNavbar } from "packages/ui/components/navbar/main-navbar";
-import { Footer } from "packages/ui/components/footer";
-import { ThemeProvider } from "packages/ui/components/theme/theme-provider";
+import { MainNavbar } from "@/components/navbar/main-navbar";
+import { Footer } from "@/components/footer";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import React from "react";
 
 /**
@@ -10,7 +10,7 @@ import React from "react";
  * 1. 先从配置文件导入 - 便于集中管理和复用
  * 2. 然后再导出 - 满足Next.js的约定要求
  */
-import { generateMetadata, generateViewport } from "packages/config/metadata";
+import { generateMetadata, generateViewport } from "@/config/metadata";
 
 // 导出元数据配置 - Next.js会在构建时处理这些导出
 export const metadata = generateMetadata();

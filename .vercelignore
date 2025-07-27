@@ -1,7 +1,0 @@
-  .git
-  .pnpm-store
-  .vercel/.pnpm-store
-  node_modules
-  *.log
-  *.tmp
-  .DS_Store

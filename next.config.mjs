@@ -11,13 +11,10 @@ const nextConfig = {
 
   // ESLint 和 TypeScript 错误检查配置
   eslint: {
-    ignoreDuringBuilds: process.env.NODE_ENV === 'development',
+    ignoreDuringBuilds: false,
   },
   typescript: {
     ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
   },
 
   // 实验性功能
@@ -97,8 +94,8 @@ const nextConfig = {
       // 排除大文件从服务端包中
       config.externals = config.externals || [];
       config.externals.push({
-        'src/data/links/items.json': 'commonjs src/data/links/items.json',
-        'src/data/links/categories.json': 'commonjs src/data/links/categories.json',
+        'src/config/links/items.json': 'commonjs src/config/links/items.json',
+        'src/config/links/categories.json': 'commonjs src/config/links/categories.json',
       });
     }
     return config;

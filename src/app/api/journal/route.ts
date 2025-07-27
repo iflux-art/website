@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import { JournalEntry } from "packages/types/journal-types";
+import { JournalEntry } from "@/types/journal-types";
 
 function getMdxFiles(): JournalEntry[] {
   console.log("Starting to fetch MDX files...");
@@ -57,14 +57,24 @@ function getMdxFiles(): JournalEntry[] {
                   urlPath,
                 });
 
-                const entry: JournalEntry = {
-                  id: `${type}:${fileName}`,
-                  slug: fileName,
+                // 确保 frontmatter 包含所有必需属性
+                const frontmatter = {
                   title: data.title || fileName,
                   description: data.description || data.excerpt || "",
                   date: data.date,
+                  ...data,
+                };
+
+                const entry: JournalEntry = {
+                  id: `${type}:${fileName}`,
+                  slug: fileName,
+                  title: frontmatter.title,
+                  description: frontmatter.description,
+                  date: frontmatter.date,
                   url: `/${urlPath}`,
                   type: type === "docs" ? "doc" : "blog",
+                  frontmatter,
+                  content: fileContent,
                 };
 
                 console.log(`Found entry: ${entry.id}`);

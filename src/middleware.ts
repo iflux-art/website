@@ -99,8 +99,7 @@ const getCacheControl = (pathname: string): string => {
     pathname.startsWith("/blog") ||
     pathname.startsWith("/docs") ||
     pathname.startsWith("/blog/journal") ||
-    pathname.startsWith("/links") ||
-    pathname.startsWith("/tools")
+    pathname.startsWith("/links")
   ) {
     return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.pages}, s-maxage=${
       MIDDLEWARE_CACHE_CONFIG.pages * 2

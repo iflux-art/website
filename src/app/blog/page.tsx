@@ -1,13 +1,13 @@
 "use client";
 
-import { UnifiedFilter } from "packages/ui/components/unified-filter";
-import { BlogCard } from "packages/ui/components/blog/blog-card";
-import { AppGrid } from "packages/ui/components/app-grid";
-import { useFilterState } from "packages/hooks/state/use-filter-state";
-import { useBlogPosts } from "packages/hooks/blog/use-blog";
+import { UnifiedFilter } from "@/components/unified-filter";
+import { BlogCard } from "@/components/card/blog-card";
+import { AppGrid } from "@/components/app-grid";
+import { useFilterState } from "@/hooks/filter/use-filter-state";
+import { useBlogPosts } from "@/hooks/use-blog";
 import { useMemo } from "react";
-import type { BlogPost } from "packages/types/blog-types";
-import { formatDate } from "packages/utils/date";
+import type { BlogPost } from "@/types/blog-types";
+import { formatDate } from "@/utils/date";
 // 内联 Category 类型定义
 type Category = { id: string; name: string };
 
