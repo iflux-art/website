@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-
-
 // 验证函数
 function validateLoginRequest(data: any): {
   username: string;
