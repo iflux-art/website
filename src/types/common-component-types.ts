@@ -1,9 +1,3 @@
-// ContentRenderer 组件 props
-export interface ContentRendererProps {
-  content: string;
-  frontmatter?: Record<string, unknown>;
-}
-
 /**
  * 面包屑导航项接口
  */

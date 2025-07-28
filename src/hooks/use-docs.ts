@@ -13,7 +13,7 @@ import {
   DocListItem,
   UseDocSidebarResult,
   SidebarItem,
-} from "@/types/docs/docs-types";
+} from "@/types/docs-types";
 import type { HookResult } from "@/hooks/use-content-data";
 
 /**

@@ -1,22 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// 定义请求体类型
-interface LoginRequest {
+
+
+// 验证函数
+function validateLoginRequest(data: any): {
   username: string;
   password: string;
   rememberMe?: boolean;
-}
-
-// 定义响应体类型
-interface LoginResponse {
-  success: boolean;
-  token?: string;
-  expiresIn?: number;
-  error?: string;
-}
-
-// 验证函数
-function validateLoginRequest(data: any): LoginRequest {
+} {
   if (typeof data !== "object" || data === null) {
     throw new Error("请求数据格式错误");
   }
@@ -48,26 +39,26 @@ export async function POST(request: NextRequest) {
       const expiresIn = rememberMe ? 30 * 24 * 60 * 60 : 2 * 60 * 60; // 30天或2小时
       const token = "demo-token-" + Math.random().toString(36).substring(2);
 
-      const response: LoginResponse = {
+      const response = {
         success: true,
         token,
         expiresIn,
-      };
+      } as const;
 
       return NextResponse.json(response);
     }
 
-    const response: LoginResponse = {
+    const response = {
       success: false,
       error: "用户名或密码错误",
-    };
+    } as const;
 
     return NextResponse.json(response, { status: 401 });
   } catch (error) {
-    const response: LoginResponse = {
+    const response = {
       success: false,
       error: error instanceof Error ? error.message : "服务器内部错误",
-    };
+    } as const;
 
     return NextResponse.json(response, { status: 500 });
   }

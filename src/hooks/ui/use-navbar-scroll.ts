@@ -4,38 +4,6 @@ import { useEffect, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { ThrottledScrollHandler } from "@/types/base-types";
 
-function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
-  fn: T,
-  delay: number,
-): T & { cancel: () => void } {
-  let lastCall = 0;
-  let timeoutId: NodeJS.Timeout | null = null;
-
-  const throttled = ((...args: Parameters<T>) => {
-    const now = Date.now();
-    const timeSinceLastCall = now - lastCall;
-
-    if (timeSinceLastCall >= delay) {
-      lastCall = now;
-      fn(...args);
-    } else {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        lastCall = Date.now();
-        fn(...args);
-      }, delay - timeSinceLastCall);
-    }
-  }) as T;
-
-  (throttled as T & { cancel: () => void }).cancel = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-  };
-
-  return throttled as T & { cancel: () => void };
-}
 import { useSafeNavbar } from "@/hooks/navbar-state";
 
 /**
@@ -67,16 +35,41 @@ export function useNavbarScroll() {
   } = useSafeNavbar();
 
   const handleScroll = useCallback(
-    function (this: Window, _: Event) {
+    (_: Event) => {
       setScrollPosition(window.scrollY);
     },
     [setScrollPosition],
   );
 
-  const throttledHandleScroll = useMemo(
-    () => throttle(handleScroll, THROTTLE_DELAY) as ThrottledScrollHandler,
-    [handleScroll],
-  );
+  const throttledHandleScroll = useMemo(() => {
+    let lastCall = 0;
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    const throttled = function (this: Window, _: Event) {
+      const now = Date.now();
+      const timeSinceLastCall = now - lastCall;
+
+      if (timeSinceLastCall >= THROTTLE_DELAY) {
+        lastCall = now;
+        handleScroll.call(this, _);
+      } else {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          lastCall = Date.now();
+          handleScroll.call(this, _);
+        }, THROTTLE_DELAY - timeSinceLastCall);
+      }
+    } as ThrottledScrollHandler;
+
+    throttled.cancel = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
+
+    return throttled;
+  }, [handleScroll]);
 
   // 设置页面标题
   const updatePageTitle = useCallback(() => {

@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import _items from "@/config/links/items.json";
-import {
-  CategoryId,
-  LinksItem,
-  LinksFormData,
-} from "@/types/links/links-types";
+import { CategoryId, LinksItem, LinksFormData } from "@/types/links-types";
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {

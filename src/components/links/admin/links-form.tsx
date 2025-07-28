@@ -16,7 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
-import { LinksCategory } from "@/types/links/links-types";
+import { LinksCategory } from "@/types/links-types";
 import { parseWebsiteMetadata, isValidUrl } from "@/components/website-parser";
 
 interface LinksFormData {

@@ -8,11 +8,25 @@ import path from "path";
 import matter from "gray-matter";
 import {
   SidebarItem,
-  DocMetaItem,
   DocCategory,
   DocListItem,
   NavDocItem,
-} from "@/types/docs/docs-types";
+} from "@/types/docs-types";
+
+type DocMetaItem = {
+  title: string;
+  path?: string;
+  description?: string;
+  category?: string;
+  href?: URL;
+  collapsed?: boolean;
+  items?: string[] | Record<string, DocMetaItem | string>;
+  type?: "separator" | "page" | "menu";
+  display?: "hidden" | "normal";
+  order?: number;
+  index?: boolean;
+  hidden?: boolean;
+};
 import { BlogPost } from "@/types/blog-types";
 
 // ==================== 博客相关函数 ====================

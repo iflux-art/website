@@ -58,26 +58,6 @@ export function generateViewport() {
   };
 }
 
-function generateJsonLd(config: any): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": config.type,
-    name: config.name,
-    description: config.description,
-    url: config.url,
-    image: config.image,
-    author: config.author
-      ? {
-          "@type": "Person",
-          name: config.author,
-        }
-      : undefined,
-    datePublished: config.datePublished,
-    dateModified: config.dateModified,
-    ...config,
-  });
-}
-
 const metadataCache = new Map<string, Metadata>();
 
 export function generateMetadata(
@@ -161,7 +141,23 @@ export function generateMetadata(
     icons: icons,
     other: {
       ...(jsonLd && {
-        "application/ld+json": generateJsonLd(jsonLd),
+        "application/ld+json": JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": jsonLd.type,
+          name: jsonLd.name,
+          description: jsonLd.description,
+          url: jsonLd.url,
+          image: jsonLd.image,
+          author: jsonLd.author
+            ? {
+                "@type": "Person",
+                name: jsonLd.author,
+              }
+            : undefined,
+          datePublished: jsonLd.datePublished,
+          dateModified: jsonLd.dateModified,
+          ...jsonLd,
+        }),
       }),
     },
   };

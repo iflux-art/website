@@ -87,22 +87,7 @@ export interface NavDocItem extends DocNavBase {
   [key: string]: any;
 }
 
-// ================= 文档组件属性类型 =================
-export interface DocsContentProps {
-  doc: DocItem;
-}
-
 // ================= 保留原有类型别名以保持兼容 =================
-export type DocMetaItem = DocContentBase & {
-  href?: URL;
-  collapsed?: boolean;
-  items?: string[] | Record<string, DocMetaItem | string>;
-  type?: "separator" | "page" | "menu";
-  display?: "hidden" | "normal";
-  order?: number;
-  index?: boolean;
-  hidden?: boolean;
-};
 
 export type DocListItem = Pick<
   DocItem,

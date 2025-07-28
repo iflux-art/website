@@ -14,20 +14,6 @@ interface BaseNavItem {
   hidden?: boolean;
 }
 
-/**
- * 管理菜单项接口
- */
-interface AdminNavItem extends BaseNavItem {
-  /** 菜单图标 */
-  icon: LucideIcon;
-  /** 权限标识 */
-  permission?: string;
-}
-
-/**
- * 主导航项配置
- * @description 定义网站主要导航结构
- */
 export const NAV_ITEMS = [
   {
     key: "blog",
@@ -46,10 +32,6 @@ export const NAV_ITEMS = [
   },
 ] as const satisfies readonly BaseNavItem[];
 
-/**
- * 管理菜单配置
- * @description 定义后台管理界面的菜单结构
- */
 export const ADMIN_MENU_ITEMS = [
   {
     key: "admin",
@@ -65,18 +47,14 @@ export const ADMIN_MENU_ITEMS = [
     icon: Globe,
     permission: "admin.links.manage",
   },
-] as const satisfies readonly AdminNavItem[];
+] as const satisfies Array<
+  BaseNavItem & {
+    icon: LucideIcon;
+    permission?: string;
+  }
+>;
 
-/**
- * 导航项键名类型
- */
-export type NavKey = (typeof NAV_ITEMS)[number]["key"];
-
-/**
- * 导航路径映射
- * @description 用于生成导航URL
- */
-export const NAV_PATHS: Record<NavKey, string> = {
+export const NAV_PATHS: Record<(typeof NAV_ITEMS)[number]["key"], string> = {
   blog: "/blog",
   docs: "/docs",
   links: "/links",

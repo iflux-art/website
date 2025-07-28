@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/utils";
 import { TYPE_LABELS } from "@/config/commands";
-import type { SearchResult } from "@/types/search-types";
+import type { SearchResult } from "@/types/data-types";
 
 type SearchResultsProps = {
   results: SearchResult[];

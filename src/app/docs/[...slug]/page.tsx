@@ -1,13 +1,13 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "@/lib/navigation/breadcrumb";
+import { createDocBreadcrumbsServer } from "@/lib/breadcrumb";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
 import { Sidebar } from "@/components/content/sidebar";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
-import type { DocContentResult } from "@/types/docs/docs-types";
+import type { DocContentResult } from "@/types/docs-types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 import { TwikooComment } from "@/components/twikoo-comment";
 
@@ -23,7 +23,7 @@ import { getFlattenedDocsOrder } from "@/lib/content";
 import { extractHeadings } from "@/components/content/extract-headings";
 import { countWords } from "@/utils";
 // 修复 Prettier 格式错误，将多行类型 import 改为单行
-import type { DocFrontmatter, NavDocItem } from "@/types/docs/docs-types";
+import type { DocFrontmatter, NavDocItem } from "@/types/docs-types";
 const DOCS_CONTENT_DIR = "src/content/docs";
 const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 

@@ -14,7 +14,7 @@ const NAVBAR_HEIGHT = 80;
  */
 const SCROLL_OFFSET = NAVBAR_HEIGHT;
 // ====== END ======
-import { scrollToElement } from "@/utils/route";
+import { scrollToElement } from "@/utils/dom";
 
 // 内联 TocHeading、TocProps 类型定义
 export interface TocHeading {

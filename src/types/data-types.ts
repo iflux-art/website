@@ -3,7 +3,15 @@
  * 包含加载状态、分页、内容基础类型等
  */
 
-import type { ID, Timestamp, URL } from "@/types/base-types";
+import type { ReactNode } from "react";
+
+/** 基础标识符类型 */
+type ID = string;
+
+/** 时间戳类型 */
+type Timestamp = string | Date;
+
+import type { URL } from "@/types/base-types";
 
 // ==================== 数据状态类型 ====================
 
@@ -152,4 +160,18 @@ export interface BaseSearchResult {
     title?: string;
     content?: string[];
   };
+}
+
+/** 搜索结果 */
+export interface SearchResult extends BaseSearchResult {
+  /** 结果类型 */
+  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history" | "link";
+  /** 图标 */
+  icon: ReactNode;
+  /** 是否为外部链接 */
+  isExternal?: boolean;
+  /** 点击动作 */
+  action?: () => void;
+  /** 兼容旧用法：url 字段，等价于 path */
+  url?: string;
 }

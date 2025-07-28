@@ -183,5 +183,3 @@ export function useCache<T>(
     clearCache,
   };
 }
-
-export type CacheHookResult<T> = ReturnType<typeof useCache<T>>;

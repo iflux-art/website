@@ -1,53 +1,4 @@
 /**
- * 文本处理工具函数
- */
-
-/**
- * 复制文本到剪贴板
- * @param text 要复制的文本
- * @returns Promise<boolean> 是否复制成功
- */
-export const copyToClipboard = async (text: string): Promise<boolean> => {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } else {
-      // 降级方案
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      const result = document.execCommand("copy");
-      textArea.remove();
-      return result;
-    }
-  } catch (error) {
-    console.error("复制失败:", error);
-    return false;
-  }
-};
-
-/**
- * 格式化文件大小
- * @param bytes 字节数
- * @returns 格式化后的文件大小字符串
- */
-export const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return "0 Bytes";
-
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-};
-
-/**
  * 计算文本中的字数
  *
  * @param text 要计算字数的文本
@@ -76,35 +27,4 @@ export function countWords(text: string): number {
 
   // 返回中文字符数和英文单词数之和
   return chineseChars.length + englishWords.length;
-}
-
-/**
- * 将文本转换为 URL 友好的格式
- * @param text 要转换的文本
- * @returns URL 友好的字符串
- */
-export const slugify = (text: string): string => {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "") // 移除特殊字符
-    .replace(/[\s_-]+/g, "-") // 替换空格和下划线为连字符
-    .replace(/^-+|-+$/g, ""); // 移除开头和结尾的连字符
-};
-
-/**
- * 格式化阅读时间
- * @param minutes 阅读时间（分钟）
- * @returns 格式化后的阅读时间
- */
-export function formatReadingTime(minutes: number): string {
-  if (minutes < 1) {
-    return "少于 1 分钟";
-  } else if (minutes < 60) {
-    return `${Math.ceil(minutes)} 分钟`;
-  } else {
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = Math.ceil(minutes % 60);
-    return `${hours} 小时 ${remainingMinutes} 分钟`;
-  }
 }

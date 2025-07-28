@@ -1,13 +1,11 @@
-type Command = {
+export const COMMANDS: Array<{
   id: string;
   title: string;
   description: string;
   action: () => void;
   shortcut?: string;
   group?: string;
-};
-
-export const COMMANDS: Command[] = [
+}> = [
   {
     id: "theme",
     title: "切换主题",

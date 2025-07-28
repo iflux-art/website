@@ -7,12 +7,6 @@ import type { ReactNode, CSSProperties } from "react";
 
 // ==================== 基础值类型 ====================
 
-/** 基础标识符类型 */
-export type ID = string;
-
-/** 时间戳类型 */
-export type Timestamp = string | Date;
-
 /** URL 类型 */
 export type URL = string;
 

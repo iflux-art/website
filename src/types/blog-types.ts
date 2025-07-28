@@ -2,7 +2,7 @@
  * 博客相关类型定义
  */
 
-import { BaseContent, BaseCategory } from "@/types/data-types";
+import { BaseContent } from "@/types/data-types";
 import { URL } from "@/types/base-types";
 
 /**
@@ -29,16 +29,6 @@ export interface BlogPost extends BaseContent {
   views?: number;
   /** 点赞数 */
   likes?: number;
-}
-
-/**
- * 博客分类
- */
-export interface BlogCategory extends BaseCategory {
-  /** 分类颜色 */
-  color?: string;
-  /** 分类图标 */
-  icon?: string;
 }
 
 export interface RelatedPost {

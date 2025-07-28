@@ -67,32 +67,6 @@ export function createBlogBreadcrumbs({
   });
 }
 
-interface DocBreadcrumbProps {
-  slug: string[];
-  title?: string;
-  meta?: Record<string, { title?: string }>;
-}
-
-export function createDocBreadcrumbs({
-  slug,
-  title,
-  meta,
-}: DocBreadcrumbProps): BreadcrumbItem[] {
-  return generateBreadcrumbs({
-    basePath: "docs",
-    slug,
-    currentTitle: title,
-    meta,
-    startLabel: "文档",
-    segmentProcessor: (segment, index, meta) => {
-      if (meta?.[segment]?.title) {
-        return meta[segment].title;
-      }
-      return title && index === slug.length - 1 ? title : segment;
-    },
-  });
-}
-
 /**
  * 服务端专用：生成 docs 面包屑，label 优先 _meta.json title，href 跳转目录下第一文档
  */

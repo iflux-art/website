@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFilterState } from "@/hooks/filter/use-filter-state";
-import { LinksItem, LinksCategory } from "@/types/links/links-types";
+import { LinksItem, LinksCategory } from "@/types/links-types";
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);
