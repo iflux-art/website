@@ -2,20 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 import { useDebouncedValue } from "@/hooks/ui/use-debounced-value";
-import { AdminLayout } from "@/components/links/admin/admin-layout";
-import { AdminActions } from "@/components/links/admin/admin-actions";
+import { AdminLayout } from "@/components/admin/admin-layout";
+import { AdminActions } from "@/components/admin/admin-actions";
 import { DataTable } from "@/components/links/data-table";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Globe } from "lucide-react";
-import { AddDialog } from "@/components/links/admin/add-dialog";
-import { EditDialog } from "@/components/links/admin/edit-dialog";
-import { DeleteDialog } from "@/components/links/admin/delete-dialog";
+import { Search } from "lucide-react";
+import { AddDialog } from "@/components/admin/add-dialog";
+import { EditDialog } from "@/components/admin/edit-dialog";
+import { DeleteDialog } from "@/components/admin/delete-dialog";
 import {
   getTableColumns,
   getTableActions,
   getPageActions,
-} from "@/components/links/admin/table-config";
+} from "@/components/links/table-config";
 import {
   Select,
   SelectContent,
@@ -98,10 +98,6 @@ export default function LinksAdminPage() {
     return category?.name || categoryId;
   };
 
-  // Delete this block
-
-  // 配置已移至 table-config.ts
-
   const handleAddSuccess = (_item: any) => {
     loadData();
     setShowAddDialog(false);
@@ -126,10 +122,7 @@ export default function LinksAdminPage() {
     <AdminLayout>
       {/* 页面标题 */}
       <div className="mb-8">
-        <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
-          <Globe className="h-8 w-8" />
-          网址管理
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight"></h1>
         <p className="mt-2 text-muted-foreground">
           管理网站导航中的所有网址，当前共有 {items.length} 个网址
         </p>

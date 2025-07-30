@@ -1,6 +1,6 @@
 /**
  * 基础类型定义
- * 包含基础值类型和组件类型
+ * 包含基础值类型、组件类型和工具类型
  */
 
 import type { ReactNode, CSSProperties } from "react";
@@ -46,6 +46,17 @@ export interface FormComponentProps extends BaseComponentProps {
   /** 占位符文本 */
   placeholder?: string;
 }
+
+/** 面包屑导航项接口 */
+export interface BreadcrumbItem {
+  /** 显示的标签文本 */
+  label: string;
+  /** 链接地址，如果不提供则显示为纯文本 */
+  href?: string;
+}
+
+/** 内容显示类型 */
+export type ContentType = "blog" | "docs";
 
 /**
  * 节流滚动事件处理函数类型（带 cancel 方法）

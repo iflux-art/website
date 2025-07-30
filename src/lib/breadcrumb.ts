@@ -1,7 +1,7 @@
 /**
  * 面包屑导航工具函数 (业务相关)
  */
-import type { BreadcrumbItem } from "@/types/common-component-types";
+import type { BreadcrumbItem } from "@/types/base-types";
 import fs from "fs";
 import path from "path";
 import { sync as globSync } from "glob";

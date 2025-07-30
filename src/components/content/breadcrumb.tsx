@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/utils";
-import type { BreadcrumbItem } from "@/types/common-component-types";
+import type { BreadcrumbItem } from "@/types/base-types";
 
 type BreadcrumbProps = {
   items: BreadcrumbItem[];

@@ -7,7 +7,7 @@ import { TableOfContents } from "@/components/content/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import React from "react";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/twikoo-comment";
+import { TwikooComment } from "@/components/layout/twikoo-comment";
 
 type BlogFrontmatter = {
   title?: string;

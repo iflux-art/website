@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/utils";
-import type { ContentType } from "@/types/common-component-types";
+import type { ContentType } from "@/types/base-types";
 
 export interface ContentDisplayProps {
   contentType: ContentType;

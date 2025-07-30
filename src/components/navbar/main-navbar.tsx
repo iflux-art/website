@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/layout/logo";
 import { MobileMenu } from "@/components/navbar/mobile-menu";
 import { NavMenu } from "@/components/navbar/nav-menu";
 import { useNavbarScroll } from "@/hooks/ui/use-navbar-scroll";

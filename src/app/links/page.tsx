@@ -40,9 +40,9 @@ function LinksHeader({
     </div>
   );
 }
-import { AppGrid } from "@/components/app-grid";
+import { AppGrid } from "@/components/layout/app-grid";
 import { LinkCard } from "@/components/card/link-card";
-import { UnifiedFilter } from "@/components/unified-filter";
+import { UnifiedFilter } from "@/components/layout/unified-filter";
 import { useLinksData } from "@/hooks/use-links-data";
 export default function LinksPage() {
   const {

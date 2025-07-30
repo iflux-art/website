@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { TravelButton } from "@/components/button/travel-button";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/layout/logo";
 import { NavMenu } from "@/components/navbar/nav-menu";
 import { SearchIcon } from "@/components/button/search-button";
 

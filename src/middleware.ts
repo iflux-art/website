@@ -9,12 +9,12 @@ export const MIDDLEWARE_CACHE_CONFIG = {
   staticAssets: 60 * 60 * 24 * 365,
   // 字体缓存时间（1年）
   fonts: 60 * 60 * 24 * 365,
-  // 图片缓存时间（1周）
-  images: 60 * 60 * 24 * 7,
-  // API 缓存时间（1小时）
-  api: 60 * 60,
-  // 页面缓存时间（1天）
-  pages: 60 * 60 * 24,
+  // 图片缓存时间（1天）
+  images: 60 * 60 * 24,
+  // API 缓存时间（30秒）
+  api: 30,
+  // 页面缓存时间（1小时）
+  pages: 60 * 60,
 } as const;
 
 /**
@@ -98,8 +98,8 @@ const getCacheControl = (pathname: string): string => {
     pathname.startsWith("/admin") ||
     pathname.startsWith("/blog") ||
     pathname.startsWith("/docs") ||
-    pathname.startsWith("/blog/journal") ||
-    pathname.startsWith("/links")
+    pathname.startsWith("/links") ||
+    pathname.startsWith("/journal")
   ) {
     return `public, max-age=${MIDDLEWARE_CACHE_CONFIG.pages}, s-maxage=${
       MIDDLEWARE_CACHE_CONFIG.pages * 2
@@ -132,6 +132,7 @@ export const config = {
     "/((?!_next/static|_next/image|favicon.ico).*)",
     "/images/:path*",
     "/fonts/:path*",
-    "/(api|app/api)/:path*",
+    "/api/:path*",
+    "/app/api/:path*",
   ],
 };

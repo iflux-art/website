@@ -1,8 +1,8 @@
 "use client";
 
-import { UnifiedFilter } from "@/components/unified-filter";
+import { UnifiedFilter } from "@/components/layout/unified-filter";
 import { BlogCard } from "@/components/card/blog-card";
-import { AppGrid } from "@/components/app-grid";
+import { AppGrid } from "@/components/layout/app-grid";
 import { useFilterState } from "@/hooks/filter/use-filter-state";
 import { useBlogPosts } from "@/hooks/use-blog";
 import { useMemo } from "react";

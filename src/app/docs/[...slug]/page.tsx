@@ -9,7 +9,7 @@ import { TableOfContents } from "@/components/content/table-of-contents";
 import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
 import type { DocContentResult } from "@/types/docs-types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/twikoo-comment";
+import { TwikooComment } from "@/components/layout/twikoo-comment";
 
 type DocPageParams = {
   slug: string[];

@@ -2,7 +2,8 @@
  * 日志相关类型定义
  */
 
-import { BaseFrontmatter, LoadingState } from "@/types/data-types";
+import { BaseFrontmatter } from "@/types/data-types";
+import { LoadingState } from "@/types/api-types";
 
 /** 日志 Frontmatter */
 export interface JournalFrontmatter extends BaseFrontmatter {
@@ -50,4 +51,8 @@ export interface JournalEntry extends MDXEntry {
 export interface JournalState extends LoadingState {
   /** 日志条目列表 */
   entries: JournalEntry[];
+  /** 是否正在加载 */
+  loading: boolean;
+  /** 错误信息 */
+  error?: Error | string | null;
 }

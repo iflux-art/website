@@ -27,6 +27,6 @@ export function useJournalEntries(): JournalState {
   return {
     entries: sortedEntries,
     loading,
-    error,
+    error: error || null,
   };
 }

@@ -2,8 +2,12 @@
 import Link from "next/link";
 
 import { useJournalEntries } from "@/hooks/use-journal";
-import { cn, formatDate } from "@/utils";
-import { groupEntriesByYear, type GroupedEntries } from "@/utils/date";
+import { cn } from "@/utils";
+import { formatDate } from "@/utils/date";
+import {
+  useGroupEntries,
+  type GroupedEntries,
+} from "@/hooks/use-group-entries";
 import type { JournalEntry } from "@/types/journal-types";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +29,7 @@ const typeLabels: Record<JournalEntry["type"], string> = {
 
 export default function Home() {
   const { entries } = useJournalEntries();
-  const groupedEntries: GroupedEntries = groupEntriesByYear(entries);
+  const groupedEntries: GroupedEntries = useGroupEntries(entries);
 
   const allYears = useMemo(() => {
     return entries
