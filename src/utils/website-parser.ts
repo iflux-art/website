@@ -27,10 +27,8 @@ export async function parseWebsiteMetadata(
 
     const metadata = await response.json();
     return metadata;
-  } catch (error) {
-    console.error("Error parsing website:", error);
-
-    // 返回基础信息
+  } catch {
+    // Return basic information on error
     return {
       title: extractDomainName(url),
       description: "",

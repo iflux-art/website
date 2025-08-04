@@ -5,15 +5,12 @@ import matter from "gray-matter";
 import { JournalEntry } from "@/types/journal-types";
 
 function getMdxFiles(): JournalEntry[] {
-  console.log("Starting to fetch MDX files...");
   const entries: JournalEntry[] = [];
   const contentTypes = ["blog", "docs"] as const;
 
   for (const type of contentTypes) {
     const dir = path.join(process.cwd(), "src", "content", type);
-    console.log(`Checking ${type} directory: ${dir}`);
     if (!fs.existsSync(dir)) {
-      console.warn(`Directory not found: ${dir}`);
       continue;
     }
 
@@ -32,7 +29,6 @@ function getMdxFiles(): JournalEntry[] {
             (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
           ) {
             try {
-              console.log(`Processing file: ${itemPath}`);
               const fileContent = fs.readFileSync(itemPath, "utf8");
               const { data } = matter(fileContent);
 
@@ -50,12 +46,6 @@ function getMdxFiles(): JournalEntry[] {
                 const urlPath = relativeDir
                   .replace(/\.(mdx|md)$/, "")
                   .replace(/\\/g, "/");
-                console.log("Building URL:", {
-                  type,
-                  relativeDir,
-                  fileName,
-                  urlPath,
-                });
 
                 // 确保 frontmatter 包含所有必需属性
                 const frontmatter = {
@@ -77,7 +67,6 @@ function getMdxFiles(): JournalEntry[] {
                   content: fileContent,
                 };
 
-                console.log(`Found entry: ${entry.id}`);
                 entries.push(entry);
               }
             } catch (error) {
@@ -102,11 +91,8 @@ function getMdxFiles(): JournalEntry[] {
 }
 
 export async function GET() {
-  console.log("Received GET request to /api/journal");
-
   try {
     const entries = getMdxFiles();
-    console.log(`Successfully retrieved ${entries.length} entries`);
 
     return new NextResponse(JSON.stringify(entries), {
       status: 200,

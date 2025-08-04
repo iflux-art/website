@@ -168,65 +168,77 @@ export function TableOfContents({
   }, [adaptive, adaptiveOffset]);
 
   return (
-    <div className={cn("overflow-hidden pl-0", className)}>
+    <div className={cn("table-of-contents w-full min-w-0 pl-0", className)}>
       <div
         ref={tocRef}
         className={cn(
-          "pr-2 pb-4",
           adaptive && "transition-all duration-200",
           adaptive && "fixed overflow-y-auto",
-          "hide-scrollbar", // 新增隐藏滚动条 class
+          "hide-scrollbar w-full",
         )}
         style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >
-        <h3 className="mb-2 flex items-center px-2 text-sm font-medium text-foreground">
+        <h3 className="mb-4 flex items-center px-1 text-sm font-medium text-foreground">
           <Text className="mr-1.5 h-4 w-4 text-primary/80" />
           <span>{title}</span>
         </h3>
-        <div className="space-y-1">
-          {organizedHeadings.map((heading, index) => {
-            // 计算缩进，根据标题级别
-            const indent = (heading.level - 2) * 0.75;
+        <div className="relative">
+          {/* 左侧细线 */}
+          <div className="absolute top-0 bottom-0 left-2 w-px bg-border" />
 
-            // 根据标题级别设置不同的样式
-            const headingSize =
-              {
-                2: "font-medium",
-                3: "font-normal",
-                4: "text-xs",
-              }[heading.level] || "";
+          <div className="space-y-1">
+            {organizedHeadings.map((heading, index) => {
+              // 计算缩进，根据标题级别
+              const indent = (heading.level - 2) * 0.75;
+              const isActive = activeId === heading.id;
 
-            return (
-              <a
-                key={index}
-                href={`#${heading.id}`}
-                className={cn(
-                  "group flex min-w-0 items-start py-1.5 text-sm transition-colors",
-                  headingSize,
-                  // 普通文本最暗
-                  "text-zinc-500 dark:text-zinc-400",
-                  // hover 稍亮
-                  "hover:text-zinc-800 dark:hover:text-zinc-100",
-                  // active 最亮且加粗
-                  activeId === heading.id && "text-black dark:text-white",
-                )}
-                style={{
-                  paddingLeft:
-                    heading.level > 2
-                      ? `calc(${indent}rem + 0.5rem)`
-                      : "0.5rem",
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToElement(heading.id, SCROLL_OFFSET);
-                }}
-              >
-                <span className="block w-full min-w-0 break-words whitespace-normal">
-                  {heading.text}
-                </span>
-              </a>
-            );
-          })}
+              // 根据标题级别设置不同的样式
+              const headingSize =
+                {
+                  2: "font-medium",
+                  3: "font-normal",
+                  4: "text-xs",
+                }[heading.level] || "";
+
+              return (
+                <div key={index} className="relative">
+                  {/* 选中状态的粗线 */}
+                  {isActive && (
+                    <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary" />
+                  )}
+
+                  <a
+                    href={`#${heading.id}`}
+                    className={cn(
+                      "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
+                      headingSize,
+                      // 普通文本
+                      "text-muted-foreground",
+                      // hover 状态
+                      "hover:text-foreground",
+                      // active 状态
+                      isActive && "font-medium text-foreground",
+                      "w-full",
+                    )}
+                    style={{
+                      paddingLeft:
+                        heading.level > 2
+                          ? `calc(${indent}rem + 1rem)`
+                          : "1rem",
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToElement(heading.id, SCROLL_OFFSET);
+                    }}
+                  >
+                    <span className="overflow-wrap-anywhere block w-full text-left leading-relaxed break-words hyphens-auto whitespace-normal">
+                      {heading.text}
+                    </span>
+                  </a>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

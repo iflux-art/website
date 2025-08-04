@@ -178,10 +178,8 @@ export async function getWebsiteMetadata(
     });
 
     return metadata;
-  } catch (error) {
-    console.error("Error parsing website:", error);
-
-    // 返回基本数据
+  } catch {
+    // Return basic data on error
     const urlObj = new URL(url);
     return {
       title: urlObj.hostname.replace("www.", ""),

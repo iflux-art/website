@@ -6,7 +6,8 @@ import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
 import { Sidebar } from "@/components/content/sidebar";
 import { TableOfContents } from "@/components/content/table-of-contents";
-import { MDXCodeEnhance } from "@/components/mdx/mdx-code-enhance";
+
+import { AppGrid } from "@/components/layout/app-grid";
 import type { DocContentResult } from "@/types/docs-types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 import { TwikooComment } from "@/components/layout/twikoo-comment";
@@ -157,10 +158,6 @@ function getDocContent(slug: string[]): DocContentResult {
     throw new Error(`Document not found at path: ${requestedPath}`);
   }
   const fileContent = fs.readFileSync(filePath, "utf8");
-  // 调试：打印读取到的内容片段和 slug
-  console.log("[getDocContent] slug:", slug);
-  console.log("[getDocContent] filePath:", filePath);
-  console.log("[getDocContent] content preview:", fileContent.slice(0, 300));
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
   const date = frontmatter.date
@@ -248,10 +245,10 @@ export default async function DocPage({
 
     return (
       <div className="min-h-screen bg-background">
-        <MDXCodeEnhance />
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center gap-10">
-            <aside className="hide-scrollbar sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto lg:block">
+        <div className="container mx-auto">
+          <AppGrid columns={5} gap="large">
+            {/* 左侧边栏 - 文档导航 */}
+            <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
               <Sidebar
                 category={doc.topLevelCategorySlug}
                 currentDoc={
@@ -265,34 +262,33 @@ export default async function DocPage({
               />
             </aside>
 
-            <main className="max-w-4xl min-w-0 flex-1">
-              <div className="mx-auto">
-                <div className="mb-6">
-                  <Breadcrumb items={breadcrumbs} />
-                </div>
-                <ContentDisplay
-                  contentType="docs"
-                  title={doc.frontmatter.title}
-                  date={doc.date}
-                  category={doc.frontmatter.category}
-                  tags={doc.frontmatter.tags || []}
-                  wordCount={doc.wordCount}
-                >
-                  <ClientMDXRenderer content={doc.content} />
-                </ContentDisplay>
-                <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
-                <TwikooComment />
+            {/* 主内容区 - 占3列 */}
+            <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
+              <div className="mb-6">
+                <Breadcrumb items={breadcrumbs} />
               </div>
+              <ContentDisplay
+                contentType="docs"
+                title={doc.frontmatter.title}
+                date={doc.date}
+                wordCount={doc.wordCount}
+              >
+                <ClientMDXRenderer content={doc.content} />
+              </ContentDisplay>
+              <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
+              <TwikooComment />
             </main>
 
-            <aside className="sticky top-[80px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] w-72 max-w-72 shrink-0 self-start overflow-y-auto px-4 [overflow-wrap:break-word] [word-break:break-all] [white-space:normal] xl:block">
+            {/* 右侧边栏 - TOC */}
+            <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-hidden xl:block">
               <TableOfContents
                 headings={doc.headings}
                 adaptive={true}
                 adaptiveOffset={80}
+                className="prose-sm"
               />
             </aside>
-          </div>
+          </AppGrid>
         </div>
       </div>
     );

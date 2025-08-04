@@ -79,9 +79,8 @@ export function useContentData<T>({
 
         const result = await response.json();
         return result as T;
-      } catch (error) {
-        console.error("Error fetching content:", error);
-        throw error;
+      } catch {
+        throw new Error("Failed to fetch content");
       } finally {
         // 请求完成后移除
         pendingRequests.delete(requestKey);

@@ -42,40 +42,38 @@ function BlogContent() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mx-auto">
-          <div className="mb-8">
-            <h1 className="mb-2 text-3xl font-bold">博客文章</h1>
-            <p className="text-muted-foreground">分享技术见解和经验</p>
-          </div>
-
-          <UnifiedFilter
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryChange={handleCategoryChange}
-            tags={tags}
-            selectedTag={selectedTag}
-            onTagChange={handleTagChange}
-            onCardTagClick={handleTagChange}
-            categoryButtonClassName="rounded-full"
-            className="mb-6"
-          />
-
-          <AppGrid columns={4} className="mt-8 gap-6">
-            {filteredPosts.map((post: BlogPost) => (
-              <BlogCard
-                key={post.slug}
-                title={post.title}
-                description={post.description}
-                href={`/blog/${post.slug}`}
-                image={post.image}
-                tags={post.tags}
-                date={formatDate(post.date?.toString())}
-                onTagClick={handleTagChange}
-              />
-            ))}
-          </AppGrid>
+      <div className="container mx-auto py-8">
+        <div className="mb-8">
+          <h1 className="mb-2 text-3xl font-bold">博客文章</h1>
+          <p className="text-muted-foreground">分享技术见解和经验</p>
         </div>
+
+        <UnifiedFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+          tags={tags}
+          selectedTag={selectedTag}
+          onTagChange={handleTagChange}
+          onCardTagClick={handleTagChange}
+          categoryButtonClassName="rounded-full"
+          className="mb-6"
+        />
+
+        <AppGrid columns={4} className="mt-8 gap-6">
+          {filteredPosts.map((post: BlogPost) => (
+            <BlogCard
+              key={post.slug}
+              title={post.title}
+              description={post.description}
+              href={`/blog/${post.slug}`}
+              image={post.image}
+              tags={post.tags}
+              date={formatDate(post.date?.toString())}
+              onTagClick={handleTagChange}
+            />
+          ))}
+        </AppGrid>
       </div>
     </div>
   );

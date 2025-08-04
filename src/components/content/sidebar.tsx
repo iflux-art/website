@@ -220,7 +220,7 @@ export function Sidebar({ category, currentDoc }: SidebarProps) {
             isInitialized.current = true;
             return;
           } catch {
-            console.warn("Failed to parse saved sidebar state");
+            // Failed to parse saved sidebar state
           }
         }
       }

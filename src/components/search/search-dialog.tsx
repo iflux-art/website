@@ -46,8 +46,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         );
         const data = await response.json();
         setResults(data.results || []);
-      } catch (error) {
-        console.error("Search error:", error);
+      } catch {
         setResults([]);
       } finally {
         setLoading(false);

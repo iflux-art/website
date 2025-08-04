@@ -26,7 +26,7 @@ export function MainNavbar({ className = "" }: { className?: string }) {
       onDoubleClick={scrollToTop}
       title={showTitle ? "双击返回顶部" : ""}
     >
-      <div className="container mx-auto flex h-full items-center justify-between px-4">
+      <div className="container mx-auto flex h-full items-center justify-between">
         {/* 左侧部分 - Logo */}
         <div className="flex items-center opacity-100">
           <Logo />

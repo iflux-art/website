@@ -45,8 +45,8 @@ interface CacheOptions {
 export const debouncedUpdateStorage = debounce((key: string, value: string) => {
   try {
     localStorage.setItem(key, value);
-  } catch (err) {
-    console.error(`Failed to save cache for key ${key}:`, err);
+  } catch {
+    // Failed to save cache
   }
 }, 1000);
 

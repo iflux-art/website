@@ -273,9 +273,7 @@ export function LinksForm({
           disabled={categoriesLoading}
         >
           <SelectTrigger>
-            <SelectValue
-              placeholder={categoriesLoading ? "加载中..." : "选择分类"}
-            />
+            <SelectValue placeholder="选择分类" />
           </SelectTrigger>
           <SelectContent>
             {categories.map((category) => (

@@ -32,8 +32,8 @@ export default function ClientMDXRenderer({ content }: Props) {
         remarkPlugins: [remarkGfm], // 支持 GFM 表格等扩展
       });
       return mdxModule.default;
-    } catch (e) {
-      console.error("[MDX 编译失败]", e, content.slice(0, 200));
+    } catch {
+      // MDX compilation failed
       return null;
     }
   }, [content]);

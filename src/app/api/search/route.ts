@@ -50,15 +50,12 @@ async function scanContentFiles(contentType: "blog" | "docs") {
               : undefined,
           });
         }
-      } catch (parseError) {
-        console.warn(
-          `Skipping ${file}: Invalid frontmatter format`,
-          parseError,
-        );
+      } catch {
+        // Skip files with invalid frontmatter format
         continue;
       }
-    } catch (readError) {
-      console.warn(`Skipping ${file}: Failed to read file`, readError);
+    } catch {
+      // Skip files that cannot be read
       continue;
     }
   }

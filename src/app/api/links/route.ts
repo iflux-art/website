@@ -9,9 +9,8 @@ const getLinksData = async (): Promise<LinksItem[]> => {
 };
 
 const writeLinksData = async (_items: LinksItem[]): Promise<void> => {
-  // 在开发环境中禁用写入操作
+  // Disable write operations in development mode
   if (process.env.NODE_ENV === "development") {
-    console.warn("Write operation disabled in development mode");
     return;
   }
   throw new Error("Write operations are not implemented in this version");

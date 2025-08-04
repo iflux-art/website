@@ -11,7 +11,6 @@ export async function GET(
     const items = getDocSidebar(resolvedParams.category);
     return Response.json(items);
   } catch (err) {
-    console.error("Error fetching sidebar structure:", err);
     return Response.json(
       {
         error: "Failed to fetch sidebar structure",

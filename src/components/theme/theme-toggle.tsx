@@ -38,12 +38,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return (
-      <Button variant="ghost" size="icon" disabled>
-        <span className="sr-only">加载中...</span>
-        <div className="h-[1.2rem] w-[1.2rem] rounded-full bg-muted" />
-      </Button>
-    );
+    return null; // Let Next.js loading.tsx handle loading states
   }
 
   const handleToggle = () => {

@@ -31,7 +31,7 @@ export function Footer() {
         "bg-transparent",
       )}
     >
-      <div className="container mx-auto flex items-center justify-center px-4 md:px-6">
+      <div className="container mx-auto flex items-center justify-center">
         <div className="text-center text-sm text-muted-foreground">
           © 2025{" "}
           <button

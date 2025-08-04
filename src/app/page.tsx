@@ -1,136 +1,185 @@
 "use client";
+
 import Link from "next/link";
-
-import { useJournalEntries } from "@/hooks/use-journal";
-import { cn } from "@/utils";
-import { formatDate } from "@/utils/date";
+import { Button } from "@/components/ui/button";
 import {
-  useGroupEntries,
-  type GroupedEntries,
-} from "@/hooks/use-group-entries";
-import type { JournalEntry } from "@/types/journal-types";
-import { ChevronDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { useState, useEffect, useMemo } from "react";
+  BookOpen,
+  FileText,
+  Globe,
+  Heart,
+  ArrowRight,
+  Sparkles,
+  Zap,
+  Target,
+} from "lucide-react";
+// cn utility removed as it's not currently used
+import { SITE_METADATA } from "@/config/metadata";
+import { useSiteStats } from "@/hooks/use-stats";
+import { useEffect, useState } from "react";
 
-const typeColors: Record<JournalEntry["type"], string> = {
-  blog: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
-  doc: "bg-purple-500/10 text-purple-700 dark:text-purple-300",
-  note: "bg-green-500/10 text-green-700 dark:text-green-300",
-  idea: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
-} as const;
-
-const typeLabels: Record<JournalEntry["type"], string> = {
-  blog: "博客",
-  doc: "文档",
-  note: "笔记",
-  idea: "想法",
-} as const;
-
-export default function Home() {
-  const { entries } = useJournalEntries();
-  const groupedEntries: GroupedEntries = useGroupEntries(entries);
-
-  const allYears = useMemo(() => {
-    return entries
-      .map((entry) =>
-        entry.date ? new Date(entry.date).getFullYear().toString() : "未知",
-      )
-      .filter((year, index, array) => array.indexOf(year) === index);
-  }, [entries]);
-
-  const [expandedYears, setExpandedYears] = useState<string[]>([]);
+// 数字动画组件
+function AnimatedNumber({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) {
+  const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (entries.length > 0) {
-      setExpandedYears(allYears);
-    }
-  }, [entries.length, allYears]);
+    if (value === 0) return;
 
-  const toggleYear = (year: string) => {
-    setExpandedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year],
-    );
-  };
+    const duration = 2000; // 2秒动画
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
 
-  if (entries.length === 0) {
-    return null;
-  }
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) {
+        setDisplayValue(value);
+        clearInterval(timer);
+      } else {
+        setDisplayValue(Math.floor(current));
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [value]);
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-8">
-      <div>
-        {groupedEntries.map(([year, yearEntries]) => (
-          <div key={year} className="mb-12">
-            <div
-              className="sticky top-4 z-20 mb-8 backdrop-blur-sm"
-              onClick={() => toggleYear(year)}
-            >
-              <div className="group flex cursor-pointer items-center gap-4 bg-background/95">
-                <h2 className="text-2xl font-bold">{year}</h2>
-                <div className="h-px flex-1 bg-border transition-colors group-hover:bg-primary/50" />
-                <ChevronDown
-                  className={cn(
-                    "h-5 w-5 text-muted-foreground transition-all duration-200 group-hover:text-primary",
-                    expandedYears.includes(year)
-                      ? "rotate-0 transform"
-                      : "-rotate-90 transform",
-                  )}
-                />
-              </div>
+    <span className="tabular-nums">
+      {displayValue}
+      {suffix}
+    </span>
+  );
+}
+
+// Hero区域组件
+function HeroSection() {
+  const { blogCount, docCount, linkCount, friendCount, loading } =
+    useSiteStats();
+
+  return (
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
+      {/* 背景装饰 */}
+      <div className="bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
+      <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-20 blur-3xl" />
+
+      {/* 浮动装饰元素 */}
+      <div
+        className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
+        style={{ animationDelay: "0s", animationDuration: "3s" }}
+      />
+      <div
+        className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
+        style={{ animationDelay: "1s", animationDuration: "4s" }}
+      />
+      <div
+        className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
+        style={{ animationDelay: "2s", animationDuration: "5s" }}
+      />
+
+      <div className="relative container mx-auto px-4 py-24">
+        <div className="mx-auto max-w-5xl text-center">
+          {/* 标题区域 */}
+          <div className="mb-12">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-6 py-3 text-sm font-medium text-primary backdrop-blur-sm">
+              <Sparkles className="h-4 w-4 animate-spin" />
+              {SITE_METADATA.title}
             </div>
+            <h1 className="mb-8 text-5xl leading-tight font-bold tracking-tight lg:text-7xl">
+              <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+                斐启智境，流韵新生
+              </span>
+            </h1>
+            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground lg:text-2xl">
+              探索AI与艺术的无限可能，分享技术与创意的完美结合
+            </p>
+          </div>
 
-            <div
-              className={cn(
-                "relative",
-                "transition-all duration-200",
-                expandedYears.includes(year) ? "block" : "hidden",
-              )}
+          {/* CTA按钮 */}
+          <div className="mb-20 flex flex-col items-center justify-center gap-6 sm:flex-row">
+            <Button size="lg" className="group px-4 py-4 text-lg" asChild>
+              <Link href="/blog">
+                <Zap className="h-5 w-5" />
+                开始探索
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="px-4 py-4 text-lg backdrop-blur-sm"
+              asChild
             >
-              <div className="absolute left-[12rem] h-full w-px bg-border"></div>
+              <Link href="/docs">
+                <Target className="h-5 w-5" />
+                查看文档
+              </Link>
+            </Button>
+          </div>
 
-              {yearEntries.map((entry: JournalEntry, idx) => (
-                <div
-                  key={`${entry.id}-${entry.date || ""}-${idx}`}
-                  className="group relative mb-8 flex items-start"
-                >
-                  <time className="w-48 pt-0.5 pr-8 text-right text-sm text-muted-foreground">
-                    {entry.date
-                      ? formatDate(entry.date.toString(), "MM月dd日")
-                      : "未知日期"}
-                  </time>
-
-                  <div className="absolute top-[7px] left-[12rem] -translate-x-[3px]">
-                    <div className="h-[6px] w-[6px] rounded-full bg-primary ring-[3px] ring-background transition-all group-hover:ring-4 group-hover:ring-primary/20"></div>
+          {/* 实时统计数据 */}
+          <div className="grid grid-cols-4">
+            {[
+              {
+                label: "博客文章",
+                value: blogCount,
+                icon: FileText,
+                color: "text-blue-600 dark:text-blue-400",
+                bgColor: "bg-blue-500/10",
+              },
+              {
+                label: "技术文档",
+                value: docCount,
+                icon: BookOpen,
+                color: "text-purple-600 dark:text-purple-400",
+                bgColor: "bg-purple-500/10",
+              },
+              {
+                label: "实用导航",
+                value: linkCount,
+                icon: Globe,
+                color: "text-green-600 dark:text-green-400",
+                bgColor: "bg-green-500/10",
+              },
+              {
+                label: "友情链接",
+                value: friendCount,
+                icon: Heart,
+                color: "text-rose-600 dark:text-rose-400",
+                bgColor: "bg-rose-500/10",
+              },
+            ].map((stat, index) => {
+              return (
+                <div key={index} className="group text-center">
+                  <div className="mb-2 text-3xl font-bold text-primary lg:text-4xl">
+                    {loading ? (
+                      <div className="mx-auto h-8 w-12 animate-pulse rounded bg-muted" />
+                    ) : (
+                      <AnimatedNumber value={stat.value} suffix="+" />
+                    )}
                   </div>
-
-                  <div className="flex-1 pl-8">
-                    <Link
-                      href={entry.url}
-                      className="-m-3 block rounded-lg p-3 transition-colors hover:bg-accent/50"
-                    >
-                      <h3 className="text-lg leading-snug font-semibold transition-colors group-hover:text-primary">
-                        {entry.title}
-                      </h3>
-                      {entry.description && (
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {entry.description}
-                        </p>
-                      )}
-                      <Badge
-                        variant="secondary"
-                        className={`mt-2 ${typeColors[entry.type]}`}
-                      >
-                        {typeLabels[entry.type]}
-                      </Badge>
-                    </Link>
+                  <div className="text-sm font-medium text-muted-foreground lg:text-base">
+                    {stat.label}
                   </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        ))}
+        </div>
       </div>
+    </section>
+  );
+}
+
+export default function Home() {
+  return (
+    <div className="min-h-screen">
+      {/* 全屏Hero区域 */}
+      <HeroSection />
     </div>
   );
 }

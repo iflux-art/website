@@ -77,7 +77,7 @@ export async function GET(
     flattenSidebarItems(sidebarItems);
 
     if (docs.length === 0) {
-      console.log(`使用旧方法获取分类 ${decodedCategory} 的文档列表`);
+      // Fallback to old method for category documents
 
       const fallbackDocs = fs
         .readdirSync(categoryDir)
@@ -100,12 +100,8 @@ export async function GET(
     }
 
     return NextResponse.json(docs);
-  } catch (error) {
-    const categoryName =
-      typeof params === "object" && params !== null && "category" in params
-        ? decodeURIComponent((await params).category)
-        : "未知分类";
-    console.error(`获取分类 ${categoryName} 的文档列表时出错:`, error);
+  } catch {
+    // Error getting document list for category
     return NextResponse.json({ error: "获取文档列表失败" }, { status: 500 });
   }
 }

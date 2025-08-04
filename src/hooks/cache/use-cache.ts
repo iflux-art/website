@@ -145,8 +145,8 @@ export function useCache<T>(
   const refetch = useCallback(async () => {
     try {
       await fetchData();
-    } catch (err) {
-      console.error("Failed to refetch data:", err);
+    } catch {
+      // Failed to refetch data
     }
   }, [fetchData]);
 

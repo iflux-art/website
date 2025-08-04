@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Calendar,
-  Calculator,
-  FolderKanban,
-  Tag as TagIcon,
-} from "lucide-react";
-import Link from "next/link";
+import { Calendar, Calculator, Clock } from "lucide-react";
 import { cn } from "@/utils";
 import type { ContentType } from "@/types/base-types";
 
@@ -13,11 +7,30 @@ export interface ContentDisplayProps {
   contentType: ContentType;
   title: string;
   date?: string | null;
-  category?: string;
-  tags?: string[];
   wordCount?: number;
   children?: React.ReactNode;
   className?: string;
+}
+
+/**
+ * 计算预计阅读时间
+ * 基于中文阅读速度约 300-400 字/分钟，英文约 200-250 词/分钟
+ * 这里采用保守估计 250 字/分钟
+ */
+function calculateReadingTime(wordCount: number): string {
+  if (wordCount === 0) return "0 分钟";
+
+  const wordsPerMinute = 250;
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+
+  if (minutes < 1) return "1 分钟";
+  if (minutes < 60) return `${minutes} 分钟`;
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (remainingMinutes === 0) return `${hours} 小时`;
+  return `${hours} 小时 ${remainingMinutes} 分钟`;
 }
 
 /**
@@ -31,8 +44,6 @@ export interface ContentDisplayProps {
  *   contentType="blog"
  *   title="Hello World"
  *   date="2023-01-01"
- *   category="技术"
- *   tags={["JavaScript", "React"]}
  *   wordCount={1000}
  * >
  *   <MDXContent />
@@ -40,26 +51,13 @@ export interface ContentDisplayProps {
  * ```
  */
 export function ContentDisplay({
-  contentType,
   title,
   date,
-  category,
-  tags = [],
   wordCount = 0,
   children,
   className,
 }: ContentDisplayProps) {
-  // 获取标签链接基础路径
-  const getTagLink = (tag: string) => {
-    const base = contentType === "blog" ? "/blog" : "/docs";
-    return `${base}?tag=${encodeURIComponent(tag)}`;
-  };
-
-  // 获取分类链接
-  const getCategoryLink = () => {
-    const base = contentType === "blog" ? "/blog" : "/docs";
-    return `${base}?category=${encodeURIComponent(category || "")}`;
-  };
+  const readingTime = calculateReadingTime(wordCount);
 
   return (
     <article className={cn("prose-container", className)}>
@@ -76,46 +74,24 @@ export function ContentDisplay({
             </div>
           )}
 
-          {/* 分类 */}
-          {category && (
-            <>
-              <div className="mx-2 text-muted-foreground/50">|</div>
-              <Link
-                href={getCategoryLink()}
-                className="flex items-center transition-colors hover:text-primary"
-              >
-                <FolderKanban className="mr-1 h-4 w-4" />
-                <span>{category}</span>
-              </Link>
-            </>
-          )}
-
-          {/* 标签 */}
-          {tags.length > 0 && (
-            <>
-              <div className="mx-2 text-muted-foreground/50">|</div>
-              <div className="flex flex-wrap items-center gap-2">
-                <TagIcon className="h-4 w-4" />
-                {tags.map((tag, index) => (
-                  <Link
-                    key={index}
-                    href={getTagLink(tag)}
-                    className="rounded-xl bg-muted px-3 py-1.5 text-xs font-medium transition-all hover:bg-primary/10 hover:text-primary hover:shadow-md"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
-            </>
-          )}
-
           {/* 字数统计 */}
           {wordCount > 0 && (
             <>
               <div className="mx-2 text-muted-foreground/50">|</div>
               <div className="flex items-center">
                 <Calculator className="mr-1 h-4 w-4" />
-                <span>{wordCount} 字</span>
+                <span>全文共计 {wordCount} 字</span>
+              </div>
+            </>
+          )}
+
+          {/* 预计阅读时间 */}
+          {wordCount > 0 && (
+            <>
+              <div className="mx-2 text-muted-foreground/50">|</div>
+              <div className="flex items-center">
+                <Clock className="mr-1 h-4 w-4" />
+                <span>预计阅读 {readingTime}</span>
               </div>
             </>
           )}

@@ -156,7 +156,7 @@ export function LoginDialog({
         </div>
 
         {/* 底部信息 */}
-        <div className="px-6 pb-6">
+        <div className="pb-6">
           <div className="text-center">
             <Button
               variant="ghost"

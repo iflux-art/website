@@ -9,9 +9,7 @@ interface LinksHeaderProps {
   selectedTag?: string | null;
   getCategoryName: (categoryId: string) => string;
 }
-// 内联 FRIEND_LINK_FORM_URL 配置
-const FRIEND_LINK_FORM_URL =
-  "https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb";
+// Friend link form URL removed as it's not currently used
 
 function LinksHeader({
   totalItems,
@@ -30,12 +28,7 @@ function LinksHeader({
           {selectedTag && ` · ${selectedTag}`}
         </p>
       ) : (
-        <p className="text-muted-foreground">
-          共收录 {totalItems} 个优质网站，欢迎
-          <a href={FRIEND_LINK_FORM_URL} target="_blank" rel="noreferrer">
-            互换友链
-          </a>
-        </p>
+        <p className="text-muted-foreground">共收录 {totalItems} 个优质网站</p>
       )}
     </div>
   );
@@ -57,19 +50,33 @@ export default function LinksPage() {
     getCategoryName,
   } = useLinksData();
 
+  // 过滤掉友链和个人主页分类的项目
+  const filteredNavItems = filteredItems.filter(
+    (item) => item.category !== "friends" && item.category !== "profile",
+  );
+  // 过滤掉友链和个人主页分类
+  const filteredNavCategories = categories.filter(
+    (cat) => cat.id !== "friends" && cat.id !== "profile",
+  );
+
   if (!items.length) return null;
   return (
     <div className="container mx-auto px-4 py-8">
       <LinksHeader
-        filteredCount={filteredItems.length}
+        filteredCount={filteredNavItems.length}
         selectedCategory={selectedCategory}
         selectedTag={selectedTag}
-        totalItems={items.length}
+        totalItems={
+          items.filter(
+            (item) =>
+              item.category !== "friends" && item.category !== "profile",
+          ).length
+        }
         getCategoryName={getCategoryName}
       />
 
       <UnifiedFilter
-        categories={categories.map((cat) => ({
+        categories={filteredNavCategories.map((cat) => ({
           id: cat.id,
           name: cat.name,
           icon: undefined, // LinksCategory 的 icon 是 string，不是 LucideIcon
@@ -85,7 +92,7 @@ export default function LinksPage() {
       />
 
       <AppGrid columns={5} className="items-stretch">
-        {filteredItems.map((item) => (
+        {filteredNavItems.map((item) => (
           <LinkCard
             key={item.id}
             title={item.title}

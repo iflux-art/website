@@ -55,6 +55,24 @@ interface BlogBreadcrumbProps {
   title: string;
 }
 
+/**
+ * 获取博客目录的显示名称
+ * 根据实际的文件夹结构返回友好的显示名称
+ */
+function getBlogDirectoryTitle(segment: string): string {
+  const directoryTitleMap: Record<string, string> = {
+    ai: "人工智能",
+    dev: "开发技术",
+    essays: "随笔感悟",
+    music: "音乐制作",
+    ops: "运维部署",
+    project: "项目经验",
+    software: "软件工具",
+  };
+
+  return directoryTitleMap[segment] || segment;
+}
+
 export function createBlogBreadcrumbs({
   slug,
   title,
@@ -64,6 +82,15 @@ export function createBlogBreadcrumbs({
     slug,
     currentTitle: title,
     startLabel: "博客",
+    segmentProcessor: (segment, index) => {
+      // 如果是最后一个段落且有标题，使用标题
+      const isLastSegment = index === slug.length - 1;
+      if (isLastSegment && title) {
+        return title;
+      }
+      // 否则使用目录映射名称
+      return getBlogDirectoryTitle(segment);
+    },
   });
 }
 

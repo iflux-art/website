@@ -16,16 +16,25 @@
   --radius: 0.75rem;
 
   /* 基础亮度 - neutral 基础色 */
-  --light-bg: 1; /* 浅色背景亮度 */
-  --light-fg: 0.145; /* 浅色前景亮度 */
-  --light-surface: 0.97; /* 浅色表面亮度 */
-  --light-border: 0.922; /* 浅色边框亮度 */
-  --light-ring: 0.708; /* 浅色环亮度 */
+  --light-bg: 1;
+  /* 浅色背景亮度 */
+  --light-fg: 0.145;
+  /* 浅色前景亮度 */
+  --light-surface: 0.97;
+  /* 浅色表面亮度 */
+  --light-border: 0.922;
+  /* 浅色边框亮度 */
+  --light-ring: 0.708;
+  /* 浅色环亮度 */
 
-  --dark-bg: 0.145; /* 深色背景亮度 */
-  --dark-fg: 0.985; /* 深色前景亮度 */
-  --dark-surface: 0.269; /* 深色表面亮度 */
-  --dark-card: 0.205; /* 深色卡片亮度 */
+  --dark-bg: 0.145;
+  /* 深色背景亮度 */
+  --dark-fg: 0.985;
+  /* 深色前景亮度 */
+  --dark-surface: 0.269;
+  /* 深色表面亮度 */
+  --dark-card: 0.205;
+  /* 深色卡片亮度 */
 
   /* ===== 主题变量 - 浅色模式 ===== */
   /* 主要界面颜色 - neutral 基础色 */
@@ -216,6 +225,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     /* 系统字体回退方案 */
@@ -229,6 +239,7 @@
       Arial,
       sans-serif;
   }
+
   kbd,
   samp {
     /* 系统等宽字体回退方案 */
@@ -239,20 +250,28 @@
 }
 
 .scrollbar-hide {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
+
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 /* 隐藏滚动条但内容可滚动 */
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
+
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Webkit */
+  display: none;
+  /* Chrome/Safari/Webkit */
 }
 
 .prose code::before,

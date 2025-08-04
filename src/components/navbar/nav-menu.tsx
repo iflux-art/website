@@ -39,7 +39,7 @@ function NavLinks({ onClose, className }: NavProps) {
       {NAV_ITEMS.map((item) => (
         <li
           key={item.key}
-          className="w-full transition-all duration-300 hover:scale-105 active:scale-95 lg:w-auto"
+          className="w-full transition-all duration-300 lg:w-auto"
         >
           <Link
             href={NAV_PATHS[item.key as keyof typeof NAV_PATHS]}

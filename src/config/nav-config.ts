@@ -30,6 +30,16 @@ export const NAV_ITEMS = [
     label: "导航",
     description: "发现精选的网站和工具，提高您的工作效率",
   },
+  {
+    key: "friends",
+    label: "友链",
+    description: "探索我们的合作伙伴和友情链接，发现更多优质资源",
+  },
+  {
+    key: "about",
+    label: "关于",
+    description: "了解我们的项目理念和个人主页，探索更多信息",
+  },
 ] as const satisfies readonly BaseNavItem[];
 
 export const ADMIN_MENU_ITEMS = [
@@ -58,24 +68,14 @@ export const NAV_PATHS: Record<(typeof NAV_ITEMS)[number]["key"], string> = {
   blog: "/blog",
   docs: "/docs",
   links: "/links",
+  friends: "/friends",
+  about: "/about",
 } as const;
 
 /**
  * 检查导航配置完整性
  */
-if (process.env.NODE_ENV === "development") {
-  const navKeys = NAV_ITEMS.map((item) => item.key);
-  const pathKeys = Object.keys(NAV_PATHS);
-
-  // 确保所有配置项的key一致
-  const allKeysMatch = navKeys.every((key) => pathKeys.includes(key));
-
-  if (!allKeysMatch) {
-    console.warn("Navigation configuration mismatch detected!");
-    console.warn("NAV_ITEMS keys:", navKeys);
-    console.warn("NAV_PATHS keys:", pathKeys);
-  }
-}
+// Navigation configuration validation removed for production
 
 export const NAV_DESCRIPTIONS = Object.fromEntries(
   NAV_ITEMS.map((item) => [item.key, item.description]),

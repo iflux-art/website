@@ -17,7 +17,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("获取文档分类列表失败:", error);
+    // Failed to get document categories
     return NextResponse.json(
       {
         error: "获取文档分类列表失败",

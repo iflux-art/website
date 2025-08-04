@@ -232,8 +232,8 @@ export function getDocCategories(): DocCategory[] {
   if (fs.existsSync(rootMetaPath)) {
     try {
       rootMeta = JSON.parse(fs.readFileSync(rootMetaPath, "utf8"));
-    } catch (error) {
-      console.error("解析根目录 _meta.json 文件失败:", error);
+    } catch {
+      // Failed to parse root _meta.json file
     }
   }
 
@@ -293,8 +293,8 @@ export function getDocCategories(): DocCategory[] {
         const catMeta = JSON.parse(catMetaContent) as DocMetaItem;
         if (catMeta.title) title = catMeta.title;
         if (catMeta.description) description = catMeta.description;
-      } catch (e) {
-        console.error(`Error parsing _meta.json for ${categoryId}`, e);
+      } catch {
+        // Error parsing _meta.json for category
       }
     }
 
@@ -398,11 +398,8 @@ export function getDocDirectoryStructure(
   if (metaExists) {
     try {
       metaConfig = JSON.parse(fs.readFileSync(metaFilePath, "utf8"));
-    } catch (error) {
-      console.error(
-        `Error parsing _meta.json in ${currentAbsolutePath}:`,
-        error,
-      );
+    } catch {
+      // Error parsing _meta.json in directory
     }
   }
 
@@ -514,8 +511,8 @@ export function getDocDirectoryStructure(
               if (frontmatter.title) {
                 title = frontmatter.title;
               }
-            } catch (e) {
-              console.error(`Error reading frontmatter for ${mdFilePath}:`, e);
+            } catch {
+              // Error reading frontmatter for file
             }
           }
         }
@@ -547,8 +544,8 @@ export function getDocSidebar(category: string): SidebarItem[] {
   try {
     const result = getDocDirectoryStructure(docsContentDir, category);
     return Array.isArray(result) ? result : [];
-  } catch (error) {
-    console.error(`Error getting doc sidebar for category ${category}:`, error);
+  } catch {
+    // Error getting doc sidebar for category
     return [];
   }
 }

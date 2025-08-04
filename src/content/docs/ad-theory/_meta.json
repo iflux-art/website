@@ -19,20 +19,16 @@
     "title": "从一张白纸开始你的创意",
     "description": "介绍如何从零开始激发创意，提供了一系列实用的思考方法和创意生成技巧"
   },
-  "theory": {
-    "title": "文案写作指南",
-    "description": "专业的文案创作指南集"
+  "copywriting-axioms": {
+    "title": "文案写作公理",
+    "description": "基于《文案训练手册》整理的14条核心写作公理，包含文案结构、写作技巧、创意思维等方面的系统指导"
   },
-  "brand-campaigns": {
-    "title": "品牌广告文案",
-    "description": "各个品牌的创意广告文案"
+  "headline-writing-guide": {
+    "title": "标题文案编写指南",
+    "description": "这是一篇关于如何写好标题文案的详细指南，涵盖了标题特点、写法技巧、常见类型和句式模板"
   },
-  "examples": {
-    "title": "行业广告文案",
-    "description": "各个垂直行业的创意广告文案"
-  },
-  "pun-based-usernames": {
-    "title": "谐音梗网名",
-    "description": "基于谐音梗的创意用户名集合，包含姓氏谐音、成语改编、流行语改编等多种玩法，为社交媒体用户名提供灵感"
+  "tencent-news-factual-journalism-birth": {
+    "title": "腾讯新闻'事实派'的诞生历程",
+    "description": "以品牌拟人化的创意对话形式，展现腾讯新闻探索'多维'、'客观'、'深入'的新闻报道理念的过程。"
   }
 }

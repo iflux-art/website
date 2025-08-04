@@ -1,25 +1,6 @@
 import { NextResponse } from "next/server";
 
-type WebVitalsMetric = {
-  /** 指标名称 */
-  name: "CLS" | "FCP" | "FID" | "INP" | "LCP" | "TTFB";
-  /** 指标值 */
-  value: number;
-  /** 指标ID */
-  id: string;
-  /** 导航类型 */
-  navigationType?:
-    | "navigate"
-    | "reload"
-    | "back-forward"
-    | "back-forward-cache";
-  /** 指标评级 */
-  rating?: "good" | "needs-improvement" | "poor";
-  /** 指标时间戳 */
-  delta?: number;
-  /** 指标条目 */
-  entries?: PerformanceEntry[];
-};
+// WebVitalsMetric type removed as it's not currently used
 
 type WebVitalsResponse = {
   /** 是否成功 */
@@ -49,10 +30,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const metric = requestBody.metric as WebVitalsMetric;
-
-    // 记录指标
-    console.log("[Web Vitals]", metric);
+    // Record metrics (removed console.log for production)
 
     // 在实际项目中，可以将指标存储到数据库或发送到分析服务
     // 例如：
@@ -64,9 +42,8 @@ export async function POST(request: Request) {
       success: true,
     };
     return NextResponse.json(response);
-  } catch (error) {
-    // 记录错误
-    console.error("[Web Vitals] 处理指标失败:", error);
+  } catch {
+    // Error processing metrics
 
     // 返回错误响应
     const response: WebVitalsResponse = {

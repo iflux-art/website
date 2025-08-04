@@ -83,8 +83,8 @@ export function getAllContentFiles(): ContentItem[] {
             slug: path.basename(file, ".mdx"),
             filePath: relativePath,
           });
-        } catch (error) {
-          console.error(`Error reading file ${filePath}:`, error);
+        } catch {
+          // Error reading file
         }
       }
     }
