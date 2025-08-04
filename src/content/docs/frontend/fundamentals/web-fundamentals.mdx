@@ -1,0 +1,265 @@
+---
+title: "Web 开发基础知识"
+description: "全面的 Web 开发基础指南，涵盖 HTML、CSS、JavaScript 核心概念，文件路径规则，字符编码，以及现代 Web 开发最佳实践"
+date: "2024-12-04"
+category: "基础知识"
+tags:
+  - HTML
+  - CSS
+  - JavaScript
+  - Web基础
+  - 前端开发
+---
+
+# Web 开发基础知识
+
+Web 开发的三大支柱是 HTML、CSS 和 JavaScript。理解这些基础技术是成为优秀 Web 开发者的第一步。
+
+## 第一部分：HTML 基础
+
+### 1.1 HTML 概述
+
+HTML（HyperText Markup Language，超文本标记语言）是构建网页结构的标准标记语言。它使用标签来定义内容的结构和语义。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面标题</title>
+</head>
+<body>
+    <header>
+        <h1>网站标题</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            <h2>文章标题</h2>
+            <p>文章内容...</p>
+        </article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 版权信息</p>
+    </footer>
+</body>
+</html>
+```
+
+### 1.2 语义化 HTML
+
+使用语义化标签提高可访问性和 SEO：
+
+```html
+<article>
+    <header>
+        <h1>文章标题</h1>
+        <time datetime="2024-12-04">2024年12月4日</time>
+    </header>
+    
+    <section>
+        <h2>章节标题</h2>
+        <p>章节内容...</p>
+    </section>
+    
+    <footer>
+        <p>文章标签：<span class="tag">HTML</span></p>
+    </footer>
+</article>
+```
+
+## 第二部分：CSS 基础
+
+### 2.1 CSS 选择器
+
+```css
+/* 基础选择器 */
+h1 {
+    color: #333;
+    font-size: 2rem;
+}
+
+/* 类选择器 */
+.highlight {
+    background-color: yellow;
+}
+
+/* ID 选择器 */
+#header {
+    background-color: #f8f9fa;
+}
+
+/* 伪类选择器 */
+a:hover {
+    color: #007bff;
+}
+```
+
+### 2.2 CSS 盒模型
+
+```css
+.box {
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    border: 2px solid #333;
+    margin: 10px;
+    box-sizing: border-box;
+}
+```
+
+### 2.3 现代 CSS 布局
+
+**Flexbox 布局**：
+```css
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+```
+
+**Grid 布局**：
+```css
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+```
+
+## 第三部分：JavaScript 基础
+
+### 3.1 变量和数据类型
+
+```javascript
+// 变量声明
+const name = "张三";
+let age = 25;
+
+// 数据类型
+const number = 42;
+const string = "Hello World";
+const boolean = true;
+const array = [1, 2, 3];
+const object = { key: "value" };
+```
+
+### 3.2 函数
+
+```javascript
+// 函数声明
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// 箭头函数
+const greetArrow = (name) => `Hello, ${name}!`;
+
+// 异步函数
+async function fetchData() {
+    try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+```
+
+### 3.3 DOM 操作
+
+```javascript
+// 选择元素
+const element = document.getElementById('myId');
+const elements = document.querySelectorAll('.myClass');
+
+// 修改内容
+element.textContent = '新文本';
+element.innerHTML = '<strong>HTML 内容</strong>';
+
+// 事件监听
+element.addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log('元素被点击了');
+});
+```
+
+## 第四部分：最佳实践
+
+### 4.1 性能优化
+
+```html
+<!-- 图片优化 -->
+<img src="image.webp" 
+     alt="描述文字" 
+     loading="lazy"
+     width="300" 
+     height="200">
+
+<!-- 资源预加载 -->
+<link rel="preload" href="font.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+### 4.2 可访问性
+
+```html
+<!-- 语义化标签 -->
+<button type="button" aria-label="关闭对话框">×</button>
+<input type="email" id="email" aria-describedby="email-help" required>
+<div id="email-help">请输入有效的邮箱地址</div>
+```
+
+### 4.3 响应式设计
+
+```css
+/* 移动优先 */
+.container {
+    padding: 1rem;
+}
+
+/* 平板 */
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+/* 桌面 */
+@media (min-width: 1024px) {
+    .container {
+        padding: 3rem;
+    }
+}
+```
+
+## 总结
+
+掌握 HTML、CSS 和 JavaScript 的基础知识是 Web 开发的起点。通过理解这些核心概念，你可以构建结构良好、样式美观、交互丰富的网页应用。
+
+记住关键要点：
+- HTML 负责结构和语义
+- CSS 负责样式和布局
+- JavaScript 负责交互和动态行为
+- 始终考虑可访问性和性能
+- 保持代码的可维护性和可读性
+
+## 相关资源
+
+- [MDN Web Docs](https://developer.mozilla.org/)
+- [W3C 标准](https://www.w3.org/)
+- [Can I Use](https://caniuse.com/)
+- [Web.dev](https://web.dev/)

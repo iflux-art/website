@@ -1,0 +1,473 @@
+---
+title: "Vercel 部署优化完全指南"
+description: "深入解析 Vercel 平台的部署配置和性能优化，重点介绍国内访问加速方案、DNS 解析优化、自定义域名配置等实用部署技巧"
+date: "2024-12-04"
+category: "部署运维"
+tags:
+  - Vercel部署
+  - 性能优化
+  - DNS配置
+  - 网站加速
+  - 前端部署
+---
+
+# Vercel 部署优化完全指南
+
+Vercel 是一个优秀的前端部署平台，特别适合 React、Next.js、Vue 等现代前端应用。本指南将详细介绍如何优化 Vercel 部署。
+
+## 第一部分：Vercel 基础部署
+
+### 1.1 Vercel 简介
+
+Vercel 是一个专注于前端的云平台，提供：
+- **零配置部署**：自动检测框架并配置
+- **全球 CDN**：边缘网络加速
+- **无服务器函数**：API 路由支持
+- **预览部署**：每个 PR 自动部署预览
+- **自动 HTTPS**：免费 SSL 证书
+
+### 1.2 快速开始
+
+**通过 Git 部署**：
+1. 连接 GitHub/GitLab/Bitbucket 仓库
+2. 选择项目和分支
+3. 配置构建设置
+4. 点击部署
+
+**通过 CLI 部署**：
+```bash
+# 安装 Vercel CLI
+npm install -g vercel
+
+# 登录
+vercel login
+
+# 部署项目
+vercel
+
+# 部署到生产环境
+vercel --prod
+```
+
+### 1.3 项目配置
+
+**vercel.json 配置文件**：
+```json
+{
+  "version": 2,
+  "name": "my-project",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_API_URL": "https://api.example.com"
+    }
+  }
+}
+```
+
+## 第二部分：框架特定配置
+
+### 2.1 Next.js 项目
+
+**next.config.js 优化**：
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // 输出配置
+  output: 'export', // 静态导出
+  trailingSlash: true,
+  
+  // 图片优化
+  images: {
+    unoptimized: true, // 静态导出时需要
+    domains: ['example.com'],
+    formats: ['image/webp', 'image/avif'],
+  },
+  
+  // 压缩配置
+  compress: true,
+  
+  // 实验性功能
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lodash', 'date-fns'],
+  },
+  
+  // 环境变量
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY,
+  },
+}
+
+module.exports = nextConfig
+```
+
+### 2.2 React 项目
+
+**Vite 配置优化**：
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+        },
+      },
+    },
+  },
+  server: {
+    port: 3000,
+  },
+})
+```
+
+### 2.3 Vue 项目
+
+**Vue CLI 配置**：
+```javascript
+// vue.config.js
+module.exports = {
+  publicPath: '/',
+  outputDir: 'dist',
+  assetsDir: 'static',
+  
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+  },
+  
+  chainWebpack: config => {
+    config.optimization.minimizer('terser').tap(args => {
+      args[0].terserOptions.compress.drop_console = true
+      return args
+    })
+  },
+}
+```
+
+## 第三部分：性能优化
+
+### 3.1 构建优化
+
+**环境变量配置**：
+```bash
+# Vercel 环境变量
+NEXT_PUBLIC_API_URL=https://api.example.com
+DATABASE_URL=postgresql://...
+VERCEL_URL=auto-generated-url.vercel.app
+```
+
+**构建命令优化**：
+```json
+{
+  "scripts": {
+    "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
+    "build:prod": "NODE_ENV=production next build"
+  }
+}
+```
+
+### 3.2 缓存策略
+
+**静态资源缓存**：
+```json
+{
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 3.3 图片优化
+
+**Next.js Image 组件**：
+```jsx
+import Image from 'next/image'
+
+function OptimizedImage() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={800}
+      height={600}
+      priority // 首屏图片
+      placeholder="blur"
+      blurDataURL="data:image/jpeg;base64,..."
+    />
+  )
+}
+```
+
+**响应式图片**：
+```jsx
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  fill
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  style={{ objectFit: 'cover' }}
+/>
+```
+
+## 第四部分：自定义域名配置
+
+### 4.1 域名添加
+
+**在 Vercel 控制台**：
+1. 进入项目设置
+2. 点击 "Domains"
+3. 添加自定义域名
+4. 配置 DNS 记录
+
+### 4.2 DNS 配置
+
+**A 记录配置**：
+```
+Type: A
+Name: @
+Value: 76.76.19.61
+TTL: 3600
+```
+
+**CNAME 配置**：
+```
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com
+TTL: 3600
+```
+
+### 4.3 国内访问优化
+
+**使用 CDN 加速**：
+```javascript
+// next.config.js
+module.exports = {
+  assetPrefix: process.env.NODE_ENV === 'production' 
+    ? 'https://cdn.example.com' 
+    : '',
+  
+  images: {
+    loader: 'custom',
+    loaderFile: './image-loader.js',
+  },
+}
+```
+
+**自定义图片加载器**：
+```javascript
+// image-loader.js
+export default function cloudflareLoader({ src, width, quality }) {
+  const params = [`w=${width}`, `q=${quality || 75}`]
+  return `https://cdn.example.com/cdn-cgi/image/${params.join(',')}${src}`
+}
+```
+
+## 第五部分：无服务器函数
+
+### 5.1 API 路由
+
+**Next.js API 路由**：
+```javascript
+// pages/api/hello.js
+export default function handler(req, res) {
+  res.status(200).json({ 
+    message: 'Hello from Vercel!',
+    timestamp: new Date().toISOString()
+  })
+}
+```
+
+**边缘函数**：
+```javascript
+// pages/api/edge.js
+export const config = {
+  runtime: 'edge',
+}
+
+export default function handler(req) {
+  return new Response(
+    JSON.stringify({ message: 'Hello from Edge!' }),
+    {
+      status: 200,
+      headers: {
+        'content-type': 'application/json',
+      },
+    }
+  )
+}
+```
+
+### 5.2 中间件
+
+**Next.js 中间件**：
+```javascript
+// middleware.js
+import { NextResponse } from 'next/server'
+
+export function middleware(request) {
+  // 地理位置重定向
+  const country = request.geo?.country || 'US'
+  
+  if (country === 'CN') {
+    return NextResponse.redirect(new URL('/cn', request.url))
+  }
+  
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+}
+```
+
+## 第六部分：监控和分析
+
+### 6.1 性能监控
+
+**Web Vitals 集成**：
+```javascript
+// pages/_app.js
+import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals'
+
+function sendToAnalytics(metric) {
+  // 发送到分析服务
+  console.log(metric)
+}
+
+export function reportWebVitals(metric) {
+  sendToAnalytics(metric)
+}
+
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+```
+
+### 6.2 错误监控
+
+**Sentry 集成**：
+```javascript
+// next.config.js
+const { withSentryConfig } = require('@sentry/nextjs')
+
+const nextConfig = {
+  // 其他配置
+}
+
+module.exports = withSentryConfig(nextConfig, {
+  silent: true,
+  org: 'your-org',
+  project: 'your-project',
+})
+```
+
+## 第七部分：故障排除
+
+### 7.1 常见问题
+
+**构建失败**：
+```bash
+# 检查构建日志
+vercel logs
+
+# 本地测试构建
+npm run build
+
+# 清除缓存
+vercel --force
+```
+
+**环境变量问题**：
+```bash
+# 检查环境变量
+vercel env ls
+
+# 添加环境变量
+vercel env add VARIABLE_NAME
+```
+
+### 7.2 调试技巧
+
+**本地开发**：
+```bash
+# 使用 Vercel 开发服务器
+vercel dev
+
+# 模拟生产环境
+vercel build && vercel start
+```
+
+**日志查看**：
+```bash
+# 实时日志
+vercel logs --follow
+
+# 函数日志
+vercel logs --function=api/hello
+```
+
+## 总结
+
+Vercel 部署优化的关键点：
+
+1. **合理配置**：根据框架选择合适的配置
+2. **性能优化**：图片、缓存、代码分割
+3. **域名配置**：正确设置 DNS 记录
+4. **监控分析**：及时发现和解决问题
+5. **持续优化**：根据数据不断改进
+
+## 相关资源
+
+- [Vercel 官方文档](https://vercel.com/docs)
+- [Next.js 部署指南](https://nextjs.org/docs/deployment)
+- [Web Vitals 指南](https://web.dev/vitals/)
+- [容器化部署指南](../containerization/containerization.mdx)

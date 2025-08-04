@@ -1,0 +1,190 @@
+---
+title: 现代前端颜色系统设计指南
+description: 深入解析基于 CSS 变量和 OKLCH 的前端颜色系统，包括暗色模式适配、主题定制、色彩无障碍性以及与 Tailwind CSS 的集成最佳实践
+date: "2025-04-12"
+category: "样式设计"
+tags:
+  - CSS变量
+  - OKLCH颜色空间
+  - 主题切换
+  - 色彩系统
+  - 暗色模式
+  - 无障碍设计
+---
+
+## 颜色系统概述
+
+我们的项目使用了基于 CSS 变量和 OKLCH 颜色格式的颜色系统，这与 Tailwind CSS v4 的设计理念一致。这种方式有以下优势：
+
+1. **主题切换**：通过 CSS 变量可以轻松实现浅色/深色主题切换
+2. **一致性**：使用统一的颜色变量确保整个应用的视觉一致性
+3. **可维护性**：集中管理颜色，便于后期调整和维护
+4. **性能**：OKLCH 颜色格式提供了更好的色彩表现和感知一致性
+
+## CSS 变量
+
+### 基础变量
+
+以下是项目中定义的基础 CSS 变量：
+
+```css
+/* 主要界面颜色 */
+--background: oklch(var(--light-bg) 0 0);
+--foreground: oklch(var(--light-fg) 0 0);
+--card: oklch(0.98 0 0);
+--card-foreground: var(--foreground);
+--popover: var(--background);
+--popover-foreground: var(--foreground);
+
+/* 主题颜色 */
+--primary: oklch(0.25 0 0);
+--primary-foreground: oklch(0.98 0 0);
+--secondary: oklch(0.94 0 0);
+--secondary-foreground: oklch(0.35 0 0);
+--muted: oklch(0.96 0 0);
+--muted-foreground: oklch(0.64 0 0);
+--accent: oklch(0.94 0 0);
+--accent-foreground: oklch(0.35 0 0);
+--destructive: oklch(0.65 0.18 25);
+--destructive-foreground: oklch(0.98 0 0);
+--success: oklch(0.65 0.15 140);
+--success-foreground: oklch(0.98 0 0);
+
+/* 边框和输入框 */
+--border: oklch(0.85 0 0);
+--input: oklch(0.85 0 0);
+--ring: oklch(0.7 0 0);
+```
+
+### 在 Tailwind 中使用 CSS 变量
+
+在 Tailwind 类名中使用 CSS 变量：
+
+```jsx
+<div className="bg-background text-foreground">
+  <h1 className="text-primary">标题</h1>
+  <p className="text-muted-foreground">段落文本</p>
+  <button className="bg-primary text-primary-foreground">按钮</button>
+</div>
+```
+
+## OKLCH 颜色格式
+
+OKLCH 是一种现代颜色格式，它比传统的 RGB 或 HSL 格式更接近人类感知。OKLCH 代表：
+
+- **O**：亮度（Lightness）
+- **C**：色度（Chroma）
+- **H**：色相（Hue）
+
+### OKLCH 语法
+
+```
+oklch(亮度 色度 色相 / 透明度)
+```
+
+- **亮度**：0 到 1 之间的值，0 表示黑色，1 表示白色
+- **色度**：颜色的饱和度，通常在 0 到 0.3 之间
+- **色相**：0 到 360 之间的角度值，表示颜色的色相
+- **透明度**：可选，0 到 1 之间的值
+
+### 在 Tailwind 中使用 OKLCH
+
+```jsx
+<div className="bg-[oklch(0.98_0_0)] text-[oklch(0.2_0_0)]">
+  <h1 className="text-[oklch(0.5_0.15_240)]">蓝色标题</h1>
+  <p className="text-[oklch(0.3_0_0)]">深灰色文本</p>
+  <button className="bg-[oklch(0.5_0.15_140)] text-[oklch(0.98_0_0)]">
+    绿色按钮
+  </button>
+</div>
+```
+
+## 常用颜色对照表
+
+以下是传统颜色名称与 OKLCH 颜色格式的对照表：
+
+| 传统颜色   | CSS 变量              | OKLCH 等效值        |
+| ---------- | --------------------- | ------------------- |
+| gray-900   | text-foreground       | oklch(0.2 0 0)      |
+| gray-700   | text-muted-foreground | oklch(0.4 0 0)      |
+| gray-200   | bg-muted              | oklch(0.9 0 0)      |
+| gray-100   | bg-background         | oklch(0.95 0 0)     |
+| blue-600   | text-primary          | oklch(0.5 0.15 240) |
+| green-500  | text-success          | oklch(0.5 0.15 140) |
+| red-500    | text-destructive      | oklch(0.5 0.15 20)  |
+| yellow-500 | -                     | oklch(0.7 0.15 80)  |
+
+## 颜色工具函数
+
+我们提供了一些工具函数，用于在代码中使用颜色：
+
+### 分类颜色
+
+```jsx
+import { getCategoryColorClasses } from "@/lib/color-utils";
+
+<div className={getCategoryColorClasses("blue")}>蓝色分类</div>;
+```
+
+### 标签颜色
+
+```jsx
+import { getTagColorClasses } from "@/lib/color-utils";
+
+<span className={getTagColorClasses("green")}>绿色标签</span>;
+```
+
+## 最佳实践
+
+1. **优先使用 CSS 变量**：尽可能使用 CSS 变量而不是硬编码颜色值
+2. **避免使用传统颜色名称**：不要使用 `text-blue-500` 这样的传统 Tailwind 颜色名称
+3. **保持一致性**：为相似的元素使用相同的颜色变量
+4. **考虑深色模式**：确保颜色在深色模式下也有良好的对比度
+5. **使用颜色工具函数**：对于需要多种颜色的组件，使用颜色工具函数
+
+## 示例
+
+### 使用 CSS 变量的组件
+
+```jsx
+export function PrimaryCard({ title, description }) {
+  return (
+    <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+      <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+      <p className="mt-2 text-muted-foreground">{description}</p>
+      <button className="mt-4 rounded-lg bg-primary px-4 py-2 text-primary-foreground">
+        了解更多
+      </button>
+    </div>
+  );
+}
+```
+
+### 使用 OKLCH 颜色的组件
+
+```jsx
+export function CustomColorCard({ title, description, hue = 240 }) {
+  return (
+    <div
+      className={`rounded-xl border p-6 shadow-sm bg-[oklch(0.98_0.02_${hue}/0.2)] border-[oklch(0.85_0.05_${hue}/0.3)]`}
+    >
+      <h3 className={`text-xl font-semibold text-[oklch(0.5_0.15_${hue})]`}>
+        {title}
+      </h3>
+      <p className="mt-2 text-[oklch(0.4_0_0)]">{description}</p>
+      <button
+        className={`mt-4 rounded-lg px-4 py-2 bg-[oklch(0.5_0.15_${hue})] text-[oklch(0.98_0_0)] hover:bg-[oklch(0.45_0.15_${hue})] transition-colors`}
+      >
+        了解更多
+      </button>
+    </div>
+  );
+}
+```
+
+## 相关资源
+
+- [Tailwind CSS v4 文档](https://tailwindcss.com/docs)
+- [OKLCH 颜色格式介绍](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
+- [Tailwind CSS 完整指南](./tailwind-guide.mdx)
+- [CSS 动画完全指南](./css-animations.mdx)

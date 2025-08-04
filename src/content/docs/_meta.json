@@ -1,26 +1,38 @@
 {
-  "playwriting": {
-    "title": "编剧指南",
-    "description": "系统性的剧本创作指南，涵盖三幕剧结构、角色塑造、戏剧冲突、对白技巧等核心要素，包含经典剧本分析和实用写作模板"
+  "frontend": {
+    "title": "前端开发",
+    "description": "现代前端开发技术栈，包括基础知识、框架技术、样式设计和静态站点生成"
   },
-  "film-theory": {
-    "title": "电影理论与评论",
-    "description": "深入电影创作的方方面面，从理论到实践，涵盖剧本写作、结构分析、对白技巧、影评研究等核心内容，助你系统掌握电影创作的艺术"
+  "development": {
+    "title": "开发工具",
+    "description": "软件开发工具链，涵盖版本控制、包管理、部署运维和容器化技术"
   },
-  "post-production": {
-    "title": "影视后期制作",
-    "description": "专业影视后期全流程指南，包含Premiere、Final Cut Pro、DaVinci Resolve等主流软件的剪辑技巧、特效制作、调色方法及快捷键大全"
+  "content-management": {
+    "title": "内容管理",
+    "description": "内容创作与管理系统，包括Markdown、MDX和各种CMS解决方案"
   },
-  "tv-research": {
-    "title": "综艺节目研究",
-    "description": "国内外综艺节目形态深度研究，包含真人秀、竞技类、访谈类等节目类型的制作模式、叙事结构和市场分析报告"
+  "ecommerce": {
+    "title": "电商运营",
+    "description": "电商平台运营策略，涵盖直播电商、平台运营、商业策略和视频号运营"
   },
-  "ad-theory": {
-    "title": "广告创意与理论",
-    "description": "汇集广告界传奇人物的经典著作与洞见，以及实用的创意方法论，涵盖品牌策略、视觉传达、消费者心理学等广告创意全流程理论"
+  "guides": {
+    "title": "实用指南",
+    "description": "开发实践指南，包括命名规范、最佳实践和常见问题解答"
   },
-  "ad-copy": {
-    "title": "创意文案库",
-    "description": "精选各行业优秀广告文案实例，包含品牌slogan、产品描述、社交媒体文案等，按行业分类的实战案例参考库"
+  "ai": {
+    "title": "人工智能",
+    "description": "AI技术应用指南，包括大语言模型部署、AI工具使用和机器学习实践"
+  },
+  "creative": {
+    "title": "创意内容",
+    "description": "创意产业技术指南，涵盖广告创意、影视制作、音乐制作和内容创作"
+  },
+  "software": {
+    "title": "软件使用",
+    "description": "常用软件工具指南，包括办公软件、设计工具和开发环境配置"
+  },
+  "reference": {
+    "title": "参考资料",
+    "description": "技术参考文档，包括编程语言、API文档和技术规范"
   }
 }

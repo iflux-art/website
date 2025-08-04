@@ -1,0 +1,449 @@
+---
+title: VS Code 开发环境配置
+description: 完整的 Visual Studio Code 开发环境配置指南，包括必备插件、主题配置、快捷键设置和工作区优化
+date: "2025-04-16"
+category: "开发工具"
+tags:
+  - VS Code
+  - 开发环境
+  - 插件配置
+  - 工作效率
+  - 代码编辑器
+---
+
+# VS Code 开发环境配置
+
+Visual Studio Code 是目前最受欢迎的代码编辑器之一。本指南将帮助您配置一个高效的开发环境。
+
+## 基础配置
+
+### 用户设置 (settings.json)
+
+```json
+{
+  // 编辑器基础设置
+  "editor.fontSize": 14,
+  "editor.fontFamily": "'Fira Code', 'Cascadia Code', Consolas, monospace",
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 1.5,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  
+  // 代码格式化
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
+  },
+  
+  // 文件和工作区
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  
+  // 终端设置
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontFamily": "'Fira Code', monospace",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  
+  // 工作台外观
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.enablePreview": false,
+  
+  // Git 设置
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  
+  // 语言特定设置
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  }
+}
+```
+
+## 必备插件
+
+### 代码质量和格式化
+
+**Prettier - Code formatter**
+```json
+// .prettierrc
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false
+}
+```
+
+**ESLint**
+```json
+// .eslintrc.js
+module.exports = {
+  extends: [
+    'eslint:recommended',
+    '@typescript-eslint/recommended',
+    'prettier'
+  ],
+  plugins: ['@typescript-eslint'],
+  rules: {
+    'no-console': 'warn',
+    'no-unused-vars': 'error',
+    '@typescript-eslint/no-explicit-any': 'warn'
+  }
+};
+```
+
+### 开发效率插件
+
+1. **Auto Rename Tag** - 自动重命名配对标签
+2. **Bracket Pair Colorizer 2** - 括号配对着色
+3. **Path Intellisense** - 路径自动补全
+4. **GitLens** - Git 增强功能
+5. **Thunder Client** - API 测试工具
+6. **Live Server** - 本地服务器
+7. **Code Spell Checker** - 拼写检查
+
+### 前端开发插件
+
+1. **ES7+ React/Redux/React-Native snippets** - React 代码片段
+2. **Auto Import - ES6, TS, JSX, TSX** - 自动导入
+3. **Tailwind CSS IntelliSense** - Tailwind 智能提示
+4. **CSS Peek** - CSS 类定义跳转
+5. **HTML CSS Support** - HTML 中的 CSS 支持
+
+### 主题和图标
+
+1. **One Dark Pro** - 流行的暗色主题
+2. **Material Icon Theme** - 文件图标主题
+3. **Dracula Official** - 另一个优秀的暗色主题
+
+## 快捷键配置
+
+### 自定义快捷键 (keybindings.json)
+
+```json
+[
+  // 快速打开终端
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  
+  // 快速切换侧边栏
+  {
+    "key": "ctrl+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  
+  // 快速打开命令面板
+  {
+    "key": "ctrl+shift+p",
+    "command": "workbench.action.showCommands"
+  },
+  
+  // 快速文件搜索
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen"
+  },
+  
+  // 多光标选择
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.addSelectionToNextFindMatch"
+  },
+  
+  // 代码格式化
+  {
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument"
+  },
+  
+  // 快速注释
+  {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine"
+  }
+]
+```
+
+## 代码片段配置
+
+### JavaScript/TypeScript 片段
+
+```json
+// javascript.json
+{
+  "Console Log": {
+    "prefix": "clg",
+    "body": [
+      "console.log('$1:', $1);"
+    ],
+    "description": "Console log with label"
+  },
+  
+  "Arrow Function": {
+    "prefix": "af",
+    "body": [
+      "const $1 = ($2) => {",
+      "  $3",
+      "};"
+    ],
+    "description": "Arrow function"
+  },
+  
+  "React Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface ${1:Component}Props {",
+      "  $2",
+      "}",
+      "",
+      "export function $1({ $3 }: ${1:Component}Props) {",
+      "  return (",
+      "    <div>",
+      "      $4",
+      "    </div>",
+      "  );",
+      "}"
+    ],
+    "description": "React functional component with TypeScript"
+  },
+  
+  "useState Hook": {
+    "prefix": "us",
+    "body": [
+      "const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2);"
+    ],
+    "description": "useState hook"
+  },
+  
+  "useEffect Hook": {
+    "prefix": "ue",
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "}, [$2]);"
+    ],
+    "description": "useEffect hook"
+  }
+}
+```
+
+## 工作区配置
+
+### 项目级配置 (.vscode/settings.json)
+
+```json
+{
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/coverage": true
+  },
+  
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true
+  }
+}
+```
+
+### 推荐插件配置 (.vscode/extensions.json)
+
+```json
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode.vscode-json",
+    "eamodio.gitlens",
+    "rangav.vscode-thunder-client",
+    "ritwickdey.liveserver",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
+```
+
+## 调试配置
+
+### launch.json 配置
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": ["--runInBand"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
+```
+
+## 性能优化
+
+### 提升 VS Code 性能
+
+```json
+{
+  // 禁用不必要的功能
+  "editor.minimap.enabled": false,
+  "editor.hover.enabled": false,
+  "editor.lightbulb.enabled": false,
+  "editor.parameterHints.enabled": false,
+  
+  // 限制文件监控
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
+  },
+  
+  // 搜索优化
+  "search.followSymlinks": false,
+  "search.useIgnoreFiles": true,
+  
+  // TypeScript 优化
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.suggest.enabled": false
+}
+```
+
+## 团队协作
+
+### 共享配置
+
+创建团队共享的配置文件：
+
+```bash
+# 项目结构
+.vscode/
+├── settings.json      # 项目设置
+├── extensions.json    # 推荐插件
+├── launch.json       # 调试配置
+└── tasks.json        # 任务配置
+```
+
+### Git 集成
+
+```json
+// .vscode/settings.json
+{
+  "git.decorations.enabled": true,
+  "git.enableStatusBarSync": true,
+  "git.showPushSuccessNotification": true,
+  "gitlens.codeLens.enabled": true,
+  "gitlens.currentLine.enabled": true,
+  "gitlens.hovers.enabled": true
+}
+```
+
+## 常用命令
+
+### 命令面板常用命令
+
+- `Ctrl+Shift+P` - 打开命令面板
+- `Developer: Reload Window` - 重新加载窗口
+- `Preferences: Open Settings (JSON)` - 打开设置文件
+- `Extensions: Show Recommended Extensions` - 显示推荐插件
+- `Git: Clone` - 克隆仓库
+- `Terminal: Create New Integrated Terminal` - 创建新终端
+
+### 快捷操作
+
+- `Ctrl+Shift+E` - 文件资源管理器
+- `Ctrl+Shift+F` - 全局搜索
+- `Ctrl+Shift+G` - Git 面板
+- `Ctrl+Shift+D` - 调试面板
+- `Ctrl+Shift+X` - 插件面板
+
+## 故障排除
+
+### 常见问题解决
+
+1. **插件冲突**：禁用可疑插件，逐个启用测试
+2. **性能问题**：检查文件监控设置，排除大型目录
+3. **格式化问题**：检查 Prettier 和 ESLint 配置
+4. **TypeScript 错误**：重启 TypeScript 服务器
+5. **Git 问题**：检查 Git 路径配置
+
+### 重置配置
+
+```bash
+# 重置用户设置
+rm -rf ~/.vscode/User/settings.json
+
+# 重置插件
+code --list-extensions | xargs -L 1 echo code --uninstall-extension
+```
+
+## 相关资源
+
+- [终端工具和命令行优化](./terminal-tools.mdx)
+- [调试工具和技巧](./debugging-tools.mdx)
+- [开发效率工具集](./productivity-tools.mdx)
+- [Git 工作流程指南](../version-control/git-workflow.mdx)

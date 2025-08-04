@@ -1,0 +1,435 @@
+---
+title: "编程命名规范指南"
+description: "全面的编程命名规范指南，涵盖变量、函数、类、文件等各种命名场景的最佳实践，帮助开发者写出更可读、可维护的代码"
+date: "2024-12-04"
+category: "实用指南"
+tags:
+  - 命名规范
+  - 代码规范
+  - 最佳实践
+  - 可读性
+  - 团队协作
+---
+
+# 编程命名规范指南
+
+良好的命名是编写可读、可维护代码的基础。本指南将全面介绍各种编程场景下的命名最佳实践。
+
+## 第一部分：命名基本原则
+
+### 1.1 核心原则
+
+**清晰性 (Clarity)**：
+- 名称应该清楚地表达意图
+- 避免使用缩写和简写
+- 选择描述性的词汇
+
+**一致性 (Consistency)**：
+- 在整个项目中保持一致的命名风格
+- 遵循团队或社区的约定
+- 使用统一的词汇表
+
+**简洁性 (Conciseness)**：
+- 在保持清晰的前提下尽量简洁
+- 避免冗余的词汇
+- 平衡描述性和长度
+
+### 1.2 通用规则
+
+```javascript
+// ✅ 好的命名
+const userAge = 25
+const calculateTotalPrice = (items) => { /* ... */ }
+const isUserLoggedIn = true
+
+// ❌ 避免的命名
+const a = 25              // 不清楚含义
+const calc = () => {}     // 过于简写
+const flag = true         // 不具体
+```
+
+## 第二部分：变量命名
+
+### 2.1 基本变量
+
+**使用名词或名词短语**：
+```javascript
+// ✅ 推荐
+const userName = 'john_doe'
+const userEmail = 'john@example.com'
+const totalAmount = 1500
+const itemCount = 10
+
+// ❌ 避免
+const user = 'john_doe'     // 不够具体
+const total = 1500          // 缺少上下文
+const count = 10            // 计数什么？
+```
+
+**布尔变量使用 is/has/can/should 前缀**：
+```javascript
+// ✅ 推荐
+const isLoading = false
+const hasPermission = true
+const canEdit = false
+const shouldUpdate = true
+const isVisible = true
+
+// ❌ 避免
+const loading = false       // 不明确类型
+const permission = true     // 不是布尔语义
+const edit = false          // 动词不适合布尔值
+```
+
+### 2.2 集合和数组
+
+**使用复数形式**：
+```javascript
+// ✅ 推荐
+const users = ['john', 'jane', 'bob']
+const products = [product1, product2]
+const errorMessages = ['Error 1', 'Error 2']
+
+// 特殊情况
+const userData = { name: 'john', age: 25 }  // 单个对象的数据
+const userList = [user1, user2]            // 明确是列表
+```
+
+### 2.3 常量
+
+**使用 SCREAMING_SNAKE_CASE**：
+```javascript
+// ✅ 推荐
+const MAX_RETRY_COUNT = 3
+const API_BASE_URL = 'https://api.example.com'
+const DEFAULT_TIMEOUT = 5000
+
+// 配置对象
+const CONFIG = {
+  MAX_FILE_SIZE: 10 * 1024 * 1024,  // 10MB
+  SUPPORTED_FORMATS: ['jpg', 'png', 'gif'],
+  DEFAULT_LANGUAGE: 'en'
+}
+```
+
+## 第三部分：函数命名
+
+### 3.1 函数命名原则
+
+**使用动词开头**：
+```javascript
+// ✅ 推荐
+function calculateTotal(items) { /* ... */ }
+function validateEmail(email) { /* ... */ }
+function formatDate(date) { /* ... */ }
+function fetchUserData(userId) { /* ... */ }
+
+// 特殊前缀
+function getUserById(id) { /* ... */ }      // get - 获取
+function setUserName(name) { /* ... */ }    // set - 设置
+function isValidEmail(email) { /* ... */ }  // is - 判断
+function hasPermission(user) { /* ... */ }  // has - 检查拥有
+function canAccess(resource) { /* ... */ }  // can - 检查能力
+```
+
+### 3.2 事件处理函数
+
+**使用 handle/on 前缀**：
+```javascript
+// ✅ 推荐
+function handleClick() { /* ... */ }
+function handleSubmit() { /* ... */ }
+function onUserLogin() { /* ... */ }
+function onDataLoad() { /* ... */ }
+
+// React 组件中
+const handleInputChange = (event) => { /* ... */ }
+const onButtonClick = () => { /* ... */ }
+```
+
+### 3.3 异步函数
+
+**明确异步性质**：
+```javascript
+// ✅ 推荐
+async function fetchUserData(userId) { /* ... */ }
+async function loadConfiguration() { /* ... */ }
+async function saveToDatabase(data) { /* ... */ }
+
+// 或者使用后缀
+function getUserDataAsync(userId) { /* ... */ }
+function loadConfigurationAsync() { /* ... */ }
+```
+
+## 第四部分：类和对象命名
+
+### 4.1 类命名
+
+**使用 PascalCase 和名词**：
+```javascript
+// ✅ 推荐
+class User {
+  constructor(name, email) {
+    this.name = name
+    this.email = email
+  }
+}
+
+class EmailValidator {
+  static validate(email) { /* ... */ }
+}
+
+class DatabaseConnection {
+  connect() { /* ... */ }
+  disconnect() { /* ... */ }
+}
+```
+
+### 4.2 接口命名
+
+**TypeScript 接口**：
+```typescript
+// ✅ 推荐
+interface User {
+  id: number
+  name: string
+  email: string
+}
+
+interface ApiResponse<T> {
+  data: T
+  status: number
+  message: string
+}
+
+// 可选：使用 I 前缀（根据团队约定）
+interface IUserService {
+  getUser(id: number): Promise<User>
+  createUser(userData: Partial<User>): Promise<User>
+}
+```
+
+## 第五部分：文件和目录命名
+
+### 5.1 文件命名
+
+**根据项目类型选择合适的命名风格**：
+
+**kebab-case（推荐用于 Web 项目）**：
+```
+user-profile.js
+email-validator.js
+api-client.js
+user-dashboard.component.js
+```
+
+**camelCase（JavaScript 模块）**：
+```
+userProfile.js
+emailValidator.js
+apiClient.js
+```
+
+**PascalCase（组件文件）**：
+```
+UserProfile.jsx
+EmailValidator.js
+ApiClient.ts
+```
+
+### 5.2 目录结构
+
+**按功能组织**：
+```
+src/
+├── components/
+│   ├── common/
+│   ├── user/
+│   └── dashboard/
+├── services/
+│   ├── api/
+│   ├── auth/
+│   └── validation/
+├── utils/
+├── hooks/
+└── types/
+```
+
+**按页面组织**：
+```
+src/
+├── pages/
+│   ├── home/
+│   ├── user-profile/
+│   └── dashboard/
+├── shared/
+│   ├── components/
+│   ├── services/
+│   └── utils/
+```
+
+## 第六部分：特定场景命名
+
+### 6.1 API 相关
+
+**RESTful API**：
+```javascript
+// ✅ 推荐
+const API_ENDPOINTS = {
+  USERS: '/api/users',
+  USER_BY_ID: '/api/users/:id',
+  USER_POSTS: '/api/users/:id/posts'
+}
+
+// 服务函数
+async function getUsers() { /* ... */ }
+async function getUserById(id) { /* ... */ }
+async function createUser(userData) { /* ... */ }
+async function updateUser(id, userData) { /* ... */ }
+async function deleteUser(id) { /* ... */ }
+```
+
+### 6.2 状态管理
+
+**Redux/Zustand**：
+```javascript
+// Action Types
+const USER_ACTIONS = {
+  FETCH_USERS_REQUEST: 'FETCH_USERS_REQUEST',
+  FETCH_USERS_SUCCESS: 'FETCH_USERS_SUCCESS',
+  FETCH_USERS_FAILURE: 'FETCH_USERS_FAILURE'
+}
+
+// State
+const initialState = {
+  users: [],
+  isLoading: false,
+  error: null
+}
+
+// Selectors
+const selectUsers = (state) => state.users
+const selectIsLoading = (state) => state.isLoading
+const selectError = (state) => state.error
+```
+
+### 6.3 测试文件
+
+**测试命名约定**：
+```javascript
+// 文件命名
+user.test.js
+user.spec.js
+userService.test.ts
+
+// 测试描述
+describe('UserService', () => {
+  describe('getUserById', () => {
+    it('should return user when valid id is provided', () => {
+      // 测试实现
+    })
+    
+    it('should throw error when invalid id is provided', () => {
+      // 测试实现
+    })
+  })
+})
+```
+
+## 第七部分：语言特定规范
+
+### 7.1 JavaScript/TypeScript
+
+```javascript
+// 变量和函数：camelCase
+const userName = 'john'
+function calculateTotal() {}
+
+// 类：PascalCase
+class UserManager {}
+
+// 常量：SCREAMING_SNAKE_CASE
+const MAX_RETRY_COUNT = 3
+
+// 私有成员：下划线前缀
+class User {
+  constructor(name) {
+    this.name = name
+    this._id = Math.random()  // 私有属性
+  }
+  
+  _validateName(name) {       // 私有方法
+    return name.length > 0
+  }
+}
+```
+
+### 7.2 CSS/SCSS
+
+```css
+/* BEM 命名法 */
+.user-card {}                    /* Block */
+.user-card__avatar {}            /* Element */
+.user-card--featured {}          /* Modifier */
+
+/* 实用类 */
+.text-center {}
+.margin-bottom-large {}
+.color-primary {}
+
+/* 状态类 */
+.is-active {}
+.is-loading {}
+.is-disabled {}
+```
+
+## 第八部分：团队协作
+
+### 8.1 建立团队规范
+
+**创建命名指南文档**：
+```markdown
+# 团队命名规范
+
+## 变量命名
+- 使用 camelCase
+- 布尔值使用 is/has/can 前缀
+- 常量使用 SCREAMING_SNAKE_CASE
+
+## 函数命名
+- 使用动词开头
+- 事件处理使用 handle/on 前缀
+- 异步函数明确标识
+
+## 文件命名
+- 组件使用 PascalCase
+- 工具函数使用 camelCase
+- 配置文件使用 kebab-case
+```
+
+### 8.2 代码审查检查点
+
+**命名审查清单**：
+- [ ] 名称是否清楚表达意图？
+- [ ] 是否遵循项目命名约定？
+- [ ] 是否避免了缩写和简写？
+- [ ] 布尔变量是否使用了合适的前缀？
+- [ ] 函数名是否以动词开头？
+- [ ] 类名是否使用了名词？
+
+## 总结
+
+良好命名的关键要点：
+
+1. **清晰表达意图**：让代码自文档化
+2. **保持一致性**：遵循团队和项目约定
+3. **选择合适长度**：平衡描述性和简洁性
+4. **使用标准约定**：遵循语言和框架规范
+5. **持续改进**：在代码审查中不断优化
+
+## 相关资源
+
+- [Clean Code 命名原则](https://clean-code-developer.com/)
+- [Google 编程风格指南](https://google.github.io/styleguide/)
+- [Airbnb JavaScript 风格指南](https://github.com/airbnb/javascript)
+- [网页导航命名规范](../frontend/styling/navigation-naming.mdx)

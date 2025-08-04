@@ -1,0 +1,18 @@
+{
+  "astro": {
+    "title": "Astro",
+    "description": "Astro静态网站生成器的使用指南和最佳实践"
+  },
+  "hexo": {
+    "title": "Hexo",
+    "description": "Hexo博客框架的配置和使用教程"
+  },
+  "hugo": {
+    "title": "Hugo",
+    "description": "Hugo静态网站生成器的详细指南"
+  },
+  "vitepress": {
+    "title": "VitePress",
+    "description": "VitePress文档工具的使用方法和技巧"
+  }
+}

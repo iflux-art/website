@@ -1,0 +1,30 @@
+{
+  "windows-dpi-scaling": {
+    "title": "Windows DPI缩放",
+    "description": "Windows系统DPI缩放设置的优化指南"
+  },
+  "geforce-mode-switch": {
+    "title": "GeForce模式切换",
+    "description": "NVIDIA GeForce显卡模式切换的详细教程"
+  },
+  "windows-scroll-reverse": {
+    "title": "Windows滚动方向",
+    "description": "Windows系统鼠标滚动方向设置的调整方法"
+  },
+  "cloudflare-zero-trust": {
+    "title": "Cloudflare Zero Trust",
+    "description": "Cloudflare Zero Trust安全架构的配置和使用指南"
+  },
+  "v2rayn": {
+    "title": "V2RayN",
+    "description": "V2RayN客户端的安装和使用教程"
+  },
+  "obsidian-plugins": {
+    "title": "Obsidian插件",
+    "description": "Obsidian笔记软件的插件推荐和配置指南"
+  },
+  "invite": {
+    "title": "邀请系统",
+    "description": "软件邀请系统的设置和使用方法"
+  }
+}
