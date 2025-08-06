@@ -4,35 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { cn } from "@/utils";
 
+import type { BaseNavItemProps } from "@/components/types";
+
 /**
  * 导航项组件属性
  */
-export interface NavItemProps {
-  /**
-   * 导航项链接
-   */
-  href: string;
-
-  /**
-   * 导航项标签
-   */
-  label: string;
-
-  /**
-   * 是否激活
-   */
-  isActive?: boolean;
-
-  /**
-   * 额外的类名
-   */
-  className?: string;
-
-  /**
-   * 点击处理函数
-   */
-  onClick?: () => void;
-
+export interface NavItemProps extends BaseNavItemProps {
   /**
    * 是否使用动画
    * @default true
@@ -40,7 +17,7 @@ export interface NavItemProps {
   animated?: boolean;
 
   /**
-   * 动画延迟
+   * 动画延迟（单位：秒）
    * @default 0
    */
   animationDelay?: number;

@@ -2,9 +2,15 @@
 
 import { useEffect, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { ThrottledScrollHandler } from "@/types/base-types";
 
 import { useSafeNavbar } from "@/hooks/navbar-state";
+
+/**
+ * 节流滚动事件处理函数类型（带 cancel 方法）
+ */
+type ThrottledScrollHandler = ((event: Event) => void) & {
+  cancel: () => void;
+};
 
 /**
  * 导航栏滚动配置项

@@ -55,7 +55,7 @@ export default function FriendsPage() {
 
   if (friendsItems.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto py-8">
         <FriendsHeader totalItems={0} />
         <div className="flex min-h-[400px] items-center justify-center">
           <div className="text-center">
@@ -75,7 +75,7 @@ export default function FriendsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <FriendsHeader totalItems={friendsItems.length} />
 
       <AppGrid columns={5} className="items-stretch">

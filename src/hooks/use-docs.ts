@@ -7,13 +7,7 @@
 
 import { useContentData } from "@/hooks/use-content-data";
 import { API_PATHS } from "@/config/metadata";
-import {
-  DocItem,
-  DocCategory,
-  DocListItem,
-  UseDocSidebarResult,
-  SidebarItem,
-} from "@/types/docs-types";
+import { DocItem, DocCategory, DocListItem } from "@/types/docs-types";
 import type { HookResult } from "@/hooks/use-content-data";
 
 /**
@@ -25,19 +19,6 @@ export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
     type: "docs",
     path: API_PATHS.DOCS.CATEGORIES,
-  });
-}
-
-/**
- * 使用分类文档
- *
- * @param category 分类名称
- * @returns 分类下的文档列表
- */
-export function useCategoryDocs(category: string): HookResult<DocListItem[]> {
-  return useContentData<DocListItem[]>({
-    type: "docs",
-    path: API_PATHS.DOCS.CATEGORY(category),
   });
 }
 
@@ -54,36 +35,8 @@ export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
   });
 }
 
-/**
- * 使用文档侧边栏结构
- * @param category 分类名称
- * @returns 侧边栏结构和加载状态
- */
-export function useDocSidebar(category: string): UseDocSidebarResult {
-  const { data, loading, refresh, error } = useContentData<SidebarItem[]>({
-    type: "docs",
-    path: API_PATHS.DOCS.SIDEBAR(category),
-    disableCache: true,
-  });
-
-  return {
-    items: data || [],
-    loading,
-    error: error?.message || null,
-    refetch: async () => {
-      await refresh();
-    },
-  };
-}
-
 // 导出类型
-export type {
-  DocItem,
-  DocCategory,
-  DocListItem,
-  UseDocSidebarResult,
-  SidebarItem,
-};
+export type { DocItem, DocCategory, DocListItem };
 
 /**
  * 获取所有文档

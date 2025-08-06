@@ -1,51 +1,15 @@
+/**
+ * 元数据生成工具函数
+ * 整合了网站元数据生成的所有逻辑
+ */
+
 import { SITE_METADATA } from "@/config/metadata";
 import type { Metadata } from "next";
+import type { GenerateMetadataOptions } from "@/types/metadata-types";
 
-type GenerateMetadataOptions = {
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  image?: string;
-  type?: "website" | "article" | "profile";
-  author?: string;
-  date?: string;
-  modified?: string;
-  locale?: string;
-  url?: string;
-  noindex?: boolean;
-  nofollow?: boolean;
-  icons?: {
-    icon?: string;
-    shortcut?: string;
-    apple?: string;
-    mask?: string;
-    manifest?: string;
-  };
-  verification?: {
-    google?: string;
-    yandex?: string;
-    yahoo?: string;
-    other?: Record<string, string[]>;
-  };
-  jsonLd?: {
-    type: string;
-    name?: string;
-    description?: string;
-    url?: string;
-    image?: string;
-    author?: string;
-    datePublished?: string;
-    dateModified?: string;
-    [key: string]: string | undefined;
-  };
-  social?: {
-    twitter?: string;
-    facebook?: string;
-    linkedin?: string;
-    instagram?: string;
-  };
-};
-
+/**
+ * 生成视口配置
+ */
 export function generateViewport() {
   return {
     width: "device-width",
@@ -58,8 +22,13 @@ export function generateViewport() {
   };
 }
 
+// 元数据缓存，提高性能
 const metadataCache = new Map<string, Metadata>();
 
+/**
+ * 生成网站元数据的主函数
+ * 支持缓存以提高性能
+ */
 export function generateMetadata(
   options: GenerateMetadataOptions = {},
 ): Metadata {
@@ -162,6 +131,7 @@ export function generateMetadata(
     },
   };
 
+  // 处理社交媒体配置
   if (social) {
     if (social.twitter) {
       metadata.twitter = {
@@ -177,6 +147,7 @@ export function generateMetadata(
     }
   }
 
+  // 处理日期相关的 OpenGraph 数据
   if (date || modified) {
     const openGraphUpdate: any = {};
     if (date) openGraphUpdate.publishedTime = date;
@@ -192,12 +163,18 @@ export function generateMetadata(
   return metadata;
 }
 
+/**
+ * 生成文章类型的元数据
+ */
 export function generateArticleMetadata(
   options: Omit<GenerateMetadataOptions, "type">,
 ): Metadata {
   return generateMetadata({ ...options, type: "article" });
 }
 
+/**
+ * 生成个人资料类型的元数据
+ */
 export function generateProfileMetadata(
   options: Omit<GenerateMetadataOptions, "type">,
 ): Metadata {

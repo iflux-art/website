@@ -14,7 +14,35 @@ const NAVBAR_HEIGHT = 80;
  */
 const SCROLL_OFFSET = NAVBAR_HEIGHT;
 // ====== END ======
-import { scrollToElement } from "@/utils/dom";
+// ====== 迁移自 src/utils/dom.ts ======
+/**
+ * 平滑滚动到指定元素
+ * @param elementId 目标元素ID
+ * @param offset 偏移量（默认为0）
+ * @param updateHash 是否更新URL hash（默认为false）
+ */
+function scrollToElement(
+  elementId: string,
+  offset: number = 0,
+  updateHash: boolean = false,
+): void {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth",
+  });
+
+  // 仅在需要时更新 URL hash
+  if (updateHash) {
+    history.pushState(null, "", `#${elementId}`);
+  }
+}
+// ====== END ======
 
 // 内联 TocHeading、TocProps 类型定义
 export interface TocHeading {

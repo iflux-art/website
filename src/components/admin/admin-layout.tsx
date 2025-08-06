@@ -5,9 +5,60 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
-type AdminLayoutProps = {
+// 内联管理员布局相关类型定义
+interface AdminLayoutProps {
   children: ReactNode;
-};
+}
+
+// 内联认证相关工具函数
+const AUTH_STORAGE_KEYS = {
+  IS_LOGGED_IN: "isLoggedIn",
+  LOGIN_TIME: "loginTime",
+} as const;
+
+const AUTH_CONFIG = {
+  SESSION_DURATION: 24 * 60 * 60 * 1000, // 24小时
+} as const;
+
+/**
+ * 检查认证状态
+ */
+function checkAuthStatus(): { isValid: boolean; shouldRedirect: boolean } {
+  if (typeof window === "undefined") {
+    return { isValid: false, shouldRedirect: false };
+  }
+
+  const loggedIn = localStorage.getItem(AUTH_STORAGE_KEYS.IS_LOGGED_IN);
+  const loginTime = localStorage.getItem(AUTH_STORAGE_KEYS.LOGIN_TIME);
+
+  if (loggedIn !== "true" || !loginTime) {
+    return { isValid: false, shouldRedirect: true };
+  }
+
+  // 检查登录是否过期
+  const now = Date.now();
+  const loginTimestamp = parseInt(loginTime);
+  const isExpired = now - loginTimestamp > AUTH_CONFIG.SESSION_DURATION;
+
+  if (isExpired) {
+    // 清除过期的认证信息
+    localStorage.removeItem(AUTH_STORAGE_KEYS.IS_LOGGED_IN);
+    localStorage.removeItem(AUTH_STORAGE_KEYS.LOGIN_TIME);
+    return { isValid: false, shouldRedirect: true };
+  }
+
+  return { isValid: true, shouldRedirect: false };
+}
+
+/**
+ * 执行登出操作
+ */
+function performLogout(): void {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(AUTH_STORAGE_KEYS.IS_LOGGED_IN);
+    localStorage.removeItem(AUTH_STORAGE_KEYS.LOGIN_TIME);
+  }
+}
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,32 +66,17 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   // 检查登录状态
   useEffect(() => {
-    const checkAuth = () => {
-      const loggedIn = localStorage.getItem("isLoggedIn");
-      const loginTime = localStorage.getItem("loginTime");
+    const { isValid, shouldRedirect } = checkAuthStatus();
 
-      if (loggedIn === "true" && loginTime) {
-        // 检查登录是否过期（24小时）
-        const now = Date.now();
-        const loginTimestamp = parseInt(loginTime);
-        const isExpired = now - loginTimestamp > 24 * 60 * 60 * 1000;
-
-        if (isExpired) {
-          handleLogout();
-        } else {
-          setIsLoggedIn(true);
-        }
-      } else {
-        router.push("/");
-      }
-    };
-
-    checkAuth();
+    if (shouldRedirect) {
+      router.push("/");
+    } else if (isValid) {
+      setIsLoggedIn(true);
+    }
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("loginTime");
+    performLogout();
     setIsLoggedIn(false);
     router.push("/");
   };

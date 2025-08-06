@@ -16,8 +16,14 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
-import { LinksCategory } from "@/types/links-types";
-import { parseWebsiteMetadata, isValidUrl } from "@/utils/website-parser";
+// 内联链接相关类型定义
+interface LinksCategory {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+  order?: number;
+}
 
 interface LinksFormData {
   title: string;
@@ -28,6 +34,56 @@ interface LinksFormData {
   tags: string[];
   featured: boolean;
   category: string;
+}
+
+// 内联网站解析相关工具函数
+interface WebsiteMetadata {
+  title?: string;
+  description?: string;
+  icon?: string;
+  image?: string;
+}
+
+/**
+ * 验证 URL 格式
+ */
+function isValidUrl(url: string): boolean {
+  try {
+    new URL(url.startsWith("http") ? url : `https://${url}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * 解析网站元数据
+ */
+async function parseWebsiteMetadata(url: string): Promise<WebsiteMetadata> {
+  try {
+    // 确保 URL 格式正确
+    const normalizedUrl = url.startsWith("http") ? url : `https://${url}`;
+
+    // 使用代理服务解析网站信息
+    const response = await fetch(
+      `/api/parse-website?url=${encodeURIComponent(normalizedUrl)}`,
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to parse website");
+    }
+
+    const metadata = await response.json();
+    return metadata;
+  } catch {
+    // Return basic information on error
+    const urlObj = new URL(url.startsWith("http") ? url : `https://${url}`);
+    return {
+      title: urlObj.hostname.replace("www.", ""),
+      description: "",
+      icon: "",
+    };
+  }
 }
 
 interface LinksFormProps {

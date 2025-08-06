@@ -6,18 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
 /**
- * 主题切换组件属性
- */
-export interface ThemeToggleProps {
-  /**
-   * 是否显示文本标签
-   * 在移动设备上标签会被隐藏
-   * @default false
-   */
-  showLabel?: boolean;
-}
-
-/**
  * 主题切换组件
  * 用于切换明暗主题模式
  *

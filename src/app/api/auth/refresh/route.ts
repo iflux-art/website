@@ -1,59 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
+import { validateRefreshRequest } from "@/utils";
 
-// 定义请求体类型
-interface RefreshRequest {
+// 验证refresh token - 简化版，实际项目应使用JWT等
+function validateRefreshToken(token: string | null): boolean {
+  if (!token) return false;
+  return token.startsWith("demo-refresh-token-");
+}
+
+// 刷新token业务逻辑
+async function refreshToken(refreshToken: string): Promise<{
+  success: boolean;
+  token?: string;
+  expiresIn?: number;
+  error?: string;
+}> {
+  try {
+    if (!validateRefreshToken(refreshToken)) {
+      return { success: false, error: "无效的refresh token" };
+    }
+
+    const token = `demo-token-${Math.random().toString(36).substring(2)}`;
+    const expiresIn = 2 * 60 * 60; // 2小时
+
+    return { success: true, token, expiresIn };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "刷新token失败",
+    };
+  }
+}
+
+export interface RefreshRequest {
   refreshToken: string;
 }
 
-// 定义响应体类型
-interface RefreshResponse {
+export interface RefreshResponse {
   success: boolean;
   token?: string;
   expiresIn?: number;
   error?: string;
 }
 
-// 验证函数
-function validateRefreshRequest(data: any): RefreshRequest {
-  if (typeof data !== "object" || data === null) {
-    throw new Error("请求数据格式错误");
-  }
-
-  if (typeof data.refreshToken !== "string" || data.refreshToken.length < 10) {
-    throw new Error("refresh token 至少需要10个字符");
-  }
-
-  return {
-    refreshToken: data.refreshToken,
-  };
-}
-
 export async function POST(request: NextRequest) {
   try {
-    // 验证请求体
     const requestBody = await request.json();
-    const { refreshToken } = validateRefreshRequest(requestBody);
+    const { refreshToken: refreshTokenValue } =
+      validateRefreshRequest(requestBody);
 
-    // 模拟刷新逻辑 - 实际项目中验证refreshToken并生成新token
-    if (refreshToken.startsWith("demo-refresh-token-")) {
-      const expiresIn = 2 * 60 * 60; // 2小时
-      const token = "demo-token-" + Math.random().toString(36).substring(2);
+    // 执行刷新token
+    const result = await refreshToken(refreshTokenValue);
 
-      const response: RefreshResponse = {
-        success: true,
-        token,
-        expiresIn,
-      };
-
-      return NextResponse.json(response);
+    if (result.success) {
+      return NextResponse.json(result);
     }
 
-    const response: RefreshResponse = {
-      success: false,
-      error: "无效的refresh token",
-    };
-
-    return NextResponse.json(response, { status: 401 });
+    return NextResponse.json(result, { status: 401 });
   } catch (error) {
     const response: RefreshResponse = {
       success: false,

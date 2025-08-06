@@ -17,11 +17,11 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       {/* 个人主页版块 */}
       {profileItems.length > 0 && (
         <div>
-          <div className="mb-8 text-center">
+          <div className="mb-8">
             <h2 className="mb-2 text-2xl font-bold">关注我们</h2>
             <p className="text-muted-foreground">
               欢迎在各大平台关注我的最新动态

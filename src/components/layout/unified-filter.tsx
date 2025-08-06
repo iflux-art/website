@@ -1,16 +1,22 @@
+/**
+ * 统一过滤器组件
+ * 提供分类和标签的统一过滤功能
+ * 内联所有相关类型和逻辑，避免过度抽象
+ */
+
 import { Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-// 内联 Category 类型定义
-export interface Category {
+
+// 内联过滤器相关类型定义
+interface Category {
   id: string;
   name: string;
   icon?: any;
 }
 
-// 内联 TagType 类型定义
-export interface TagType {
+interface TagType {
   name: string;
   count: number;
 }

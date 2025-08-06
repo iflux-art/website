@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import _items from "@/config/links/items.json";
 import { CategoryId, LinksItem, LinksFormData } from "@/types/links-types";
+import { validateLinksFormData, validateLinksUpdate } from "@/utils";
 
 // 工具函数仅文件内部使用
 const getLinksData = async (): Promise<LinksItem[]> => {
@@ -35,42 +36,13 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.json();
 
-    // 手动验证表单数据
-    if (!formData.title || !formData.url || !formData.category) {
-      return NextResponse.json(
-        { error: "标题、URL和分类为必填项" },
-        { status: 400 },
-      );
+    // 使用统一的验证函数
+    const validation = validateLinksFormData(formData);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
-    // 验证category是否为有效的CategoryId
-    const validCategories = [
-      "ai",
-      "development",
-      "design",
-      "audio",
-      "video",
-      "office",
-      "productivity",
-      "operation",
-      "profile",
-      "friends",
-    ];
-    if (!validCategories.includes(formData.category)) {
-      return NextResponse.json({ error: "无效的分类ID" }, { status: 400 });
-    }
-
-    const validatedFormData = {
-      title: formData.title,
-      url: formData.url,
-      description: formData.description,
-      category: formData.category as CategoryId,
-      tags: formData.tags,
-      featured: formData.featured,
-      icon: formData.icon,
-      iconType: formData.iconType || "text",
-    };
-
+    const validatedFormData = validation.data!;
     const items = await getLinksData();
 
     if (items.some((item) => item.url === validatedFormData.url)) {
@@ -81,12 +53,12 @@ export async function POST(request: NextRequest) {
     }
 
     const now = new Date().toISOString();
-    const newItem = {
+    const newItem: LinksItem = {
       ...validatedFormData,
       id: nanoid(),
       createdAt: now,
       updatedAt: now,
-    } as LinksItem;
+    };
 
     items.push(newItem);
     await writeLinksData(items);
@@ -120,17 +92,10 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    // 检查 url 是否重复
-    if (
-      validatedUpdates.url &&
-      linksData.some(
-        (item) => item.url === validatedUpdates.url && item.id !== id,
-      )
-    ) {
-      return NextResponse.json(
-        { error: "URL already exists" },
-        { status: 409 },
-      );
+    // 使用统一的验证函数
+    const validation = validateLinksUpdate(linksData, id, validatedUpdates);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 409 });
     }
 
     const now = new Date().toISOString();

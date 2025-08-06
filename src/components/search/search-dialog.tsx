@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
 
+// 内联搜索相关类型定义
 interface SearchResult {
   type: "link" | "blog" | "doc" | "tool";
   title: string;

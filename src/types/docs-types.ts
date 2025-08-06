@@ -99,13 +99,6 @@ export type DocListItem = Pick<
   isParent?: boolean;
 };
 
-export type UseDocSidebarResult = {
-  items: SidebarItem[];
-  loading: boolean;
-  error: string | null;
-  refetch: () => Promise<void>;
-};
-
 export type DocContentResult = DocItem & {
   prevDoc: NavDocItem | null;
   nextDoc: NavDocItem | null;

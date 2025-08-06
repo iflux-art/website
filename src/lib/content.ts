@@ -1,17 +1,20 @@
 /**
  * 内容处理工具函数
- * 提供博客和文档相关的辅助功能
+ * 提供博客和文档相关的辅助功能，包括面包屑导航
  */
 
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { sync as globSync } from "glob";
 import {
   SidebarItem,
   DocCategory,
   DocListItem,
   NavDocItem,
 } from "@/types/docs-types";
+import { BlogPost } from "@/types/blog-types";
+import type { BreadcrumbItem } from "@/types/base-types";
 
 type DocMetaItem = {
   title: string;
@@ -27,7 +30,185 @@ type DocMetaItem = {
   index?: boolean;
   hidden?: boolean;
 };
-import { BlogPost } from "@/types/blog-types";
+
+// ==================== 面包屑导航相关类型和函数 ====================
+
+interface GenerateBreadcrumbsOptions {
+  basePath: string;
+  slug: string[];
+  meta?: Record<string, { title?: string }>;
+  currentTitle?: string;
+  startLabel: string;
+  segmentProcessor?: (
+    segment: string,
+    index: number,
+    meta?: Record<string, { title?: string }>,
+  ) => string;
+}
+
+interface BlogBreadcrumbProps {
+  slug: string[];
+  title: string;
+}
+
+/**
+ * 生成面包屑导航的通用函数
+ */
+export function generateBreadcrumbs({
+  basePath,
+  slug,
+  meta,
+  currentTitle,
+  startLabel,
+  segmentProcessor,
+}: GenerateBreadcrumbsOptions): BreadcrumbItem[] {
+  const items: BreadcrumbItem[] = [{ label: startLabel, href: `/${basePath}` }];
+  let currentPath = "";
+
+  slug.forEach((segment, index) => {
+    const isLastSegment = index === slug.length - 1;
+    currentPath += `/${segment}`;
+
+    const label = segmentProcessor
+      ? segmentProcessor(segment, index, meta)
+      : isLastSegment && currentTitle
+        ? currentTitle
+        : segment;
+
+    if (isLastSegment) {
+      items.push({ label });
+    } else {
+      items.push({ label, href: `/${basePath}${currentPath}` });
+    }
+  });
+
+  return items;
+}
+
+/**
+ * 获取博客目录的显示名称
+ * 根据实际的文件夹结构返回友好的显示名称
+ */
+function getBlogDirectoryTitle(segment: string): string {
+  const directoryTitleMap: Record<string, string> = {
+    ai: "人工智能",
+    dev: "开发技术",
+    essays: "随笔感悟",
+    music: "音乐制作",
+    ops: "运维部署",
+    project: "项目经验",
+    software: "软件工具",
+  };
+
+  return directoryTitleMap[segment] || segment;
+}
+
+/**
+ * 创建博客面包屑导航
+ */
+export function createBlogBreadcrumbs({
+  slug,
+  title,
+}: BlogBreadcrumbProps): BreadcrumbItem[] {
+  return generateBreadcrumbs({
+    basePath: "blog",
+    slug,
+    currentTitle: title,
+    startLabel: "博客",
+    segmentProcessor: (segment, index) => {
+      // 如果是最后一个段落且有标题，使用标题
+      const isLastSegment = index === slug.length - 1;
+      if (isLastSegment && title) {
+        return title;
+      }
+      // 否则使用目录映射名称
+      return getBlogDirectoryTitle(segment);
+    },
+  });
+}
+
+/**
+ * 获取目录 title（优先 _meta.json 的 title 字段，没有则 fallback slug）
+ */
+export function getDirectoryTitle(dirSlug: string[]): string {
+  const docsDir = path.join(process.cwd(), "src", "content", "docs");
+  if (dirSlug.length === 0) return "文档";
+  // 上级目录 _meta.json
+  const parent = dirSlug.slice(0, -1);
+  const metaPath = path.join(docsDir, ...parent, "_meta.json");
+  if (fs.existsSync(metaPath)) {
+    const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+    const key = dirSlug[dirSlug.length - 1];
+    if (meta[key] && meta[key].title) return meta[key].title;
+  }
+  return dirSlug[dirSlug.length - 1];
+}
+
+/**
+ * 获取目录下的第一篇文档 slug（不含扩展名）
+ * 优先 _meta.json 顺序，否则按文件名排序
+ */
+export function getFirstDocInDirectory(dirSlug: string[]): string[] | null {
+  const docsDir = path.join(
+    process.cwd(),
+    "src",
+    "content",
+    "docs",
+    ...dirSlug,
+  );
+  // 1. 优先 _meta.json 顺序
+  const metaPath = path.join(docsDir, "_meta.json");
+  if (fs.existsSync(metaPath)) {
+    const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+    const keys = Object.keys(meta);
+    for (const key of keys) {
+      // 检查是否有对应的 md/mdx 文件
+      const mdx = path.join(docsDir, `${key}.mdx`);
+      const md = path.join(docsDir, `${key}.md`);
+      if (fs.existsSync(mdx) || fs.existsSync(md)) {
+        return [...dirSlug, key];
+      }
+    }
+  }
+  // 2. 没有 _meta.json 或未命中，按文件名排序
+  const files = globSync("*.{md,mdx}", { cwd: docsDir });
+  if (files.length > 0) {
+    const first = files.sort()[0].replace(/\.(md|mdx)$/, "");
+    return [...dirSlug, first];
+  }
+  return null;
+}
+
+/**
+ * 服务端专用：生成 docs 面包屑，label 优先 _meta.json title，href 跳转目录下第一文档
+ */
+export function createDocBreadcrumbsServer(
+  slug: string[],
+  currentTitle?: string,
+): BreadcrumbItem[] {
+  const items: BreadcrumbItem[] = [];
+  // 根目录
+  items.push({ label: getDirectoryTitle([]), href: "/docs" });
+  for (let i = 0; i < slug.length; i++) {
+    const dir = slug.slice(0, i + 1);
+    const isLast = i === slug.length - 1;
+    // 只在最后一级用 currentTitle，否则用目录 title
+    const label =
+      isLast && currentTitle ? currentTitle : getDirectoryTitle(dir);
+    if (!isLast) {
+      const firstDoc = getFirstDocInDirectory(dir);
+      if (firstDoc) {
+        items.push({ label, href: "/docs/" + firstDoc.join("/") });
+      } else {
+        items.push({ label });
+      }
+    } else {
+      // 最后一级只加一次 label，无 href
+      items.push({ label });
+    }
+  }
+  return items;
+}
 
 // ==================== 博客相关函数 ====================
 
@@ -466,8 +647,10 @@ export function getDocDirectoryStructure(
       const isDirectory = actualItem.isDir;
 
       let title = itemSpecificConfig.title || itemName;
+      // Fix path separator issue: ensure URLs use forward slashes
+      const normalizedRelativePath = currentRelativePath.replace(/\\/g, "/");
       const defaultHref = `/docs/${
-        currentRelativePath ? currentRelativePath + "/" : ""
+        normalizedRelativePath ? normalizedRelativePath + "/" : ""
       }${itemName}`;
 
       if (isDirectory) {
@@ -486,7 +669,7 @@ export function getDocDirectoryStructure(
             !!itemSpecificConfig.href &&
             (itemSpecificConfig.href.toString().startsWith("http://") ||
               itemSpecificConfig.href.toString().startsWith("https://")),
-          filePath: itemFsRelativePath,
+          filePath: itemFsRelativePath.replace(/\\/g, "/"),
         };
       } else {
         // It's a file
@@ -525,7 +708,7 @@ export function getDocDirectoryStructure(
             !!itemSpecificConfig.href &&
             (itemSpecificConfig.href.toString().startsWith("http://") ||
               itemSpecificConfig.href.toString().startsWith("https://")),
-          filePath: itemFsRelativePath,
+          filePath: itemFsRelativePath.replace(/\\/g, "/"),
         };
       }
     })

@@ -183,8 +183,6 @@ export const API_PATHS = {
     CATEGORY: (category: string) =>
       `/api/docs/categories/${encodeURIComponent(category)}`,
     META: (path: string) => `/api/docs/${encodeURIComponent(path)}/meta`,
-    SIDEBAR: (category: string) =>
-      `/api/docs/sidebar/${encodeURIComponent(category)}`,
     CONTENT: (path: string) => `/api/docs/${encodeURIComponent(path)}`,
   },
 } as const;

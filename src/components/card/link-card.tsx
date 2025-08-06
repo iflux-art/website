@@ -1,3 +1,9 @@
+/**
+ * 链接卡片组件
+ * 用于显示外部或内部链接，如资源、导航、友链等
+ * 内联所有相关类型和逻辑，避免过度抽象
+ */
+
 "use client";
 
 import React, { forwardRef } from "react";
@@ -7,7 +13,8 @@ import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/utils";
 
-export interface LinkCardProps {
+// 内联链接卡片相关类型定义
+interface LinkCardProps {
   title: string;
   description?: string;
   href: string;
@@ -21,7 +28,7 @@ export interface LinkCardProps {
 
 /**
  * 链接卡片组件
- * 用于显示外部或内部链接，如资源、导航、友链等。
+ * 完整的独立实现，包含所有必要的样式和交互逻辑
  * 图标显示规则：
  * 1. 优先显示icon图片
  * 2. 图片无效时显示标题首个汉字或字母
@@ -40,6 +47,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     },
     ref,
   ) => {
+    // 内联图标渲染逻辑
     const renderIcon = () => {
       // 获取标题首个字符
       const firstChar = title.charAt(0);
@@ -83,19 +91,21 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       );
     };
 
+    // 内联样式处理逻辑
+    const cardStyle =
+      color && color.startsWith("#")
+        ? {
+            background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
+          }
+        : {};
+
     const cardContent = (
       <Card
         className={cn(
           "group h-full transition-all duration-300 hover:scale-[1.01] hover:border-primary/50",
           className,
         )}
-        style={{
-          ...(color && color.startsWith("#")
-            ? {
-                background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
-              }
-            : {}),
-        }}
+        style={cardStyle}
       >
         <CardContent className="flex h-full items-center p-4">
           <div className="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted">

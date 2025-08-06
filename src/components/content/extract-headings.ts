@@ -1,15 +1,26 @@
 /**
+ * 内容提取工具函数
  * 从 Markdown/MDX 内容中提取标题并更新内容
- * @param content Markdown/MDX 内容
- * @returns 标题列表和处理后的内容
+ * 内联所有相关类型和逻辑，避免外部依赖
  */
-// 内联 TocHeading 类型定义
+
+// 内联标题相关类型定义
 export interface TocHeading {
   id: string;
   text: string;
   level: number;
 }
 
+/**
+ * 转义正则表达式特殊字符
+ */
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * 从 Markdown/MDX 内容中提取标题并更新内容
+ */
 export function extractHeadings(content: string): {
   headings: TocHeading[];
   processedContent: string;
@@ -41,7 +52,7 @@ export function extractHeadings(content: string): {
 
   // 确保所有标题都有唯一ID
   headings.forEach((heading) => {
-    const escapedText = heading.text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escapedText = escapeRegExp(heading.text);
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,
       "gm",

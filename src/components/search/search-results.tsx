@@ -1,8 +1,18 @@
 import React from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/utils";
-import { TYPE_LABELS } from "@/config/commands";
 import type { SearchResult } from "@/types/navigation-types";
+
+const TYPE_LABELS = {
+  tool: "工具",
+  link: "网址导航",
+  docs: "文档",
+  blog: "博客",
+  command: "命令",
+  navigation: "网址导航",
+  doc: "文档",
+  history: "历史记录",
+} as const;
 
 type SearchResultsProps = {
   results: SearchResult[];

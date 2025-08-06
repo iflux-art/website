@@ -47,24 +47,6 @@ export interface FormComponentProps extends BaseComponentProps {
   placeholder?: string;
 }
 
-/** 面包屑导航项接口 */
-export interface BreadcrumbItem {
-  /** 显示的标签文本 */
-  label: string;
-  /** 链接地址，如果不提供则显示为纯文本 */
-  href?: string;
-}
-
-/** 内容显示类型 */
-export type ContentType = "blog" | "docs";
-
-/**
- * 节流滚动事件处理函数类型（带 cancel 方法）
- */
-export type ThrottledScrollHandler = ((event: Event) => void) & {
-  cancel: () => void;
-};
-
 // ==================== 工具类型 ====================
 
 /** 深度只读类型 */
@@ -80,3 +62,13 @@ export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 /** 非空类型 */
 export type NonNullable<T> = T extends null | undefined ? never : T;
+
+// ==================== 导航相关类型 ====================
+
+/** 面包屑导航项 */
+export interface BreadcrumbItem {
+  /** 显示的标签文本 */
+  label: string;
+  /** 链接地址，如果不提供则显示为纯文本 */
+  href?: string;
+}

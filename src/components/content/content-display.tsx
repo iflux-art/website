@@ -1,7 +1,9 @@
 import React from "react";
 import { Calendar, Calculator, Clock } from "lucide-react";
 import { cn } from "@/utils";
-import type { ContentType } from "@/types/base-types";
+
+/** 内容显示类型 */
+export type ContentType = "blog" | "docs";
 
 export interface ContentDisplayProps {
   contentType: ContentType;

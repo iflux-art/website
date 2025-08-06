@@ -18,7 +18,7 @@ const TEXTS = {
 
 export default function NotFound() {
   return (
-    <main className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-20 text-center">
+    <main className="container mx-auto flex min-h-[70vh] items-center justify-center py-20 text-center">
       <section aria-labelledby="error-title">
         <h1 id="error-title" className="text-9xl font-bold text-primary">
           {TEXTS.title}
