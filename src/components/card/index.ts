@@ -4,5 +4,4 @@
  */
 
 export { BlogCard } from "./blog-card";
-export { DocCard } from "./doc-card";
 export { LinkCard } from "./link-card";

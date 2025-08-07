@@ -7,10 +7,10 @@ import { useLinksData } from "@/hooks/use-links-data";
 // Icons removed as they are not currently used
 
 export default function AboutPage() {
-  const { items, loading, error } = useLinksData();
+  const { allItems, loading, error } = useLinksData();
 
   // 筛选出个人主页分类的项目
-  const profileItems = items.filter((item) => item.category === "profile");
+  const profileItems = allItems.filter((item) => item.category === "profile");
 
   if (loading || error) {
     return null; // Let Next.js loading.tsx handle loading states

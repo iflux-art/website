@@ -5,7 +5,7 @@ import { AppGrid } from "@/components/layout/app-grid";
 import { LinkCard } from "@/components/card/link-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TwikooComment } from "@/components/layout/twikoo-comment";
+import { TwikooComment } from "@/components/comment/twikoo-comment";
 import { useLinksData } from "@/hooks/use-links-data";
 import {
   ExternalLink,
@@ -44,10 +44,10 @@ function FriendsHeader({ totalItems }: FriendsHeaderProps) {
 }
 
 export default function FriendsPage() {
-  const { items, loading, error } = useLinksData();
+  const { allItems, loading, error } = useLinksData();
 
   // 筛选出友链分类的项目
-  const friendsItems = items.filter((item) => item.category === "friends");
+  const friendsItems = allItems.filter((item) => item.category === "friends");
 
   if (loading || error) {
     return null; // Let Next.js loading.tsx handle loading states

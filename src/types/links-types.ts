@@ -3,15 +3,53 @@
 
 export type CategoryId =
   | "ai"
+  | "ai-chat"
+  | "ai-image"
+  | "ai-code"
+  | "ai-writing"
   | "development"
+  | "dev-editor"
+  | "dev-framework"
+  | "dev-api"
+  | "dev-deploy"
   | "design"
+  | "design-tool"
+  | "design-icon"
+  | "design-color"
+  | "design-font"
   | "audio"
   | "video"
   | "office"
+  | "office-doc"
+  | "office-meeting"
+  | "office-project"
   | "productivity"
+  | "productivity-note"
+  | "productivity-time"
+  | "productivity-automation"
   | "operation"
   | "profile"
   | "friends";
+
+/** 链接子分类 */
+export interface LinksSubCategory {
+  id: CategoryId;
+  name: string;
+  description?: string;
+  icon?: string;
+  order?: number;
+}
+
+/** 链接分类 */
+export interface LinksCategory {
+  id: CategoryId;
+  name: string;
+  description?: string;
+  icon?: string;
+  order?: number;
+  collapsible?: boolean; // 是否支持折叠
+  children?: LinksSubCategory[]; // 子分类
+}
 
 /** 链接条目 */
 export interface LinksItem {
@@ -26,15 +64,6 @@ export interface LinksItem {
   category: CategoryId;
   createdAt?: string;
   updatedAt?: string;
-}
-
-/** 链接分类 */
-export interface LinksCategory {
-  id: CategoryId;
-  name: string;
-  description?: string;
-  icon?: string;
-  order?: number;
 }
 
 // 表单数据类型（如有需要）

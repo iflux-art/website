@@ -9,12 +9,18 @@ const getLinksData = async (): Promise<LinksItem[]> => {
   return _items as LinksItem[];
 };
 
-const writeLinksData = async (_items: LinksItem[]): Promise<void> => {
-  // Disable write operations in development mode
-  if (process.env.NODE_ENV === "development") {
-    return;
+const writeLinksData = async (items: LinksItem[]): Promise<void> => {
+  const fs = await import("fs/promises");
+  const path = await import("path");
+
+  try {
+    const filePath = path.join(process.cwd(), "src/config/links/items.json");
+    const jsonData = JSON.stringify(items, null, 2);
+    await fs.writeFile(filePath, jsonData, "utf8");
+  } catch (error) {
+    console.error("Error writing links data:", error);
+    throw new Error("Failed to write links data to file");
   }
-  throw new Error("Write operations are not implemented in this version");
 };
 
 export async function GET() {

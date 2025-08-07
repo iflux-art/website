@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SearchDialog } from "@/components/search/search-dialog";
@@ -11,19 +11,6 @@ import { SearchDialog } from "@/components/search/search-dialog";
  */
 export function SearchIcon() {
   const [open, setOpen] = useState(false);
-
-  // 监听键盘快捷键 (Ctrl+K 或 Command+K)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        setOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   return (
     <>

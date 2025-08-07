@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useCategories } from "@/hooks/use-categories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,14 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Plus, X, AlertCircle, CheckCircle } from "lucide-react";
-// 内联链接相关类型定义
-interface LinksCategory {
-  id: string;
-  name: string;
-  description?: string;
-  icon?: string;
-  order?: number;
-}
+// LinksCategory 类型已在 @/types/links-types 中定义
 
 interface LinksFormData {
   title: string;
@@ -111,8 +105,7 @@ export function LinksForm({
     ...initialData,
   });
 
-  const [categories, setCategories] = useState<LinksCategory[]>([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const { categories, loading: categoriesLoading } = useCategories();
   // TODO: availableTags 将用于实现标签建议和自动完成功能
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [availableTags, setAvailableTags] = useState<string[]>([]);
@@ -123,16 +116,7 @@ export function LinksForm({
   const [parseSuccess, setParseSuccess] = useState(false);
   const [urlError, setUrlError] = useState("");
 
-  // 加载分类
-  useEffect(() => {
-    fetch("/api/links/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-        setCategoriesLoading(false);
-      })
-      .catch(() => setCategoriesLoading(false));
-  }, []);
+  // 分类数据通过 useCategories hook 获取
 
   // URL 变化时验证格式
   useEffect(() => {
@@ -331,11 +315,25 @@ export function LinksForm({
           <SelectTrigger>
             <SelectValue placeholder="选择分类" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="max-h-[300px]">
             {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
+              <div key={category.id}>
+                {/* 主分类 */}
+                <SelectItem value={category.id} className="font-medium">
+                  {category.name}
+                </SelectItem>
+                {/* 子分类 */}
+                {category.children &&
+                  category.children.map((subCategory) => (
+                    <SelectItem
+                      key={subCategory.id}
+                      value={subCategory.id}
+                      className="pl-6 text-sm text-muted-foreground"
+                    >
+                      └ {subCategory.name}
+                    </SelectItem>
+                  ))}
+              </div>
             ))}
           </SelectContent>
         </Select>

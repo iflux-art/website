@@ -9,9 +9,9 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ThemeToggle } from "@/components/button/theme-toggle";
 import { TravelButton } from "@/components/button/travel-button";
-import { Logo } from "@/components/layout/logo";
+import { Logo } from "@/components/navbar/logo";
 import { NavMenu } from "@/components/navbar/nav-menu";
 import { SearchIcon } from "@/components/button/search-button";
 
@@ -53,7 +53,10 @@ export function MobileMenu({ isOpen, setIsOpenAction }: MobileMenuProps) {
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="fullscreen" className="border-none p-0 lg:hidden">
+          <SheetContent
+            side="right"
+            className="w-full border-none p-0 lg:hidden"
+          >
             {/* 添加 SheetTitle 以满足无障碍性要求，但使用 sr-only 类隐藏它 */}
             <SheetTitle className="sr-only">导航菜单</SheetTitle>
 

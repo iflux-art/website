@@ -1,16 +1,16 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllDocsStructure } from "@/lib/global-docs";
+import { getAllDocsStructure } from "@/components/sidebar/global-docs";
 import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createDocBreadcrumbsServer } from "@/lib/content";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { GlobalDocsSidebarWrapper } from "@/components/content/global-docs-sidebar-wrapper";
+import { GlobalDocsSidebarWrapper } from "@/components/sidebar/global-docs-sidebar-wrapper";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { AppGrid } from "@/components/layout/app-grid";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/layout/twikoo-comment";
+import { TwikooComment } from "@/components/comment/twikoo-comment";
 
 // 导入文档处理函数
 import fs from "fs";

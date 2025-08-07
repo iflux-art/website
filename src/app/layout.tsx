@@ -1,7 +1,7 @@
 import "./globals.css";
 import { MainNavbar } from "@/components/navbar/main-navbar";
 import { Footer } from "@/components/layout/footer";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
 
 /**

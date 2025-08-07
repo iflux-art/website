@@ -3,60 +3,188 @@
     "id": "ai",
     "name": "人工智能",
     "description": "分享AIGC与实用技巧",
-    "order": 1
+    "order": 1,
+    "collapsible": true,
+    "children": [
+      {
+        "id": "ai-chat",
+        "name": "AI对话",
+        "description": "ChatGPT、Claude等对话AI工具",
+        "order": 1
+      },
+      {
+        "id": "ai-image",
+        "name": "AI绘画",
+        "description": "Midjourney、DALL-E等AI绘画工具",
+        "order": 2
+      },
+      {
+        "id": "ai-code",
+        "name": "AI编程",
+        "description": "GitHub Copilot、Cursor等AI编程助手",
+        "order": 3
+      },
+      {
+        "id": "ai-writing",
+        "name": "AI写作",
+        "description": "AI文案生成、内容创作工具",
+        "order": 4
+      }
+    ]
   },
   {
     "id": "development",
     "name": "开发工具",
     "description": "编程开发相关工具和资源",
-    "order": 2
+    "order": 2,
+    "collapsible": true,
+    "children": [
+      {
+        "id": "dev-editor",
+        "name": "代码编辑器",
+        "description": "VS Code、WebStorm等开发环境",
+        "order": 1
+      },
+      {
+        "id": "dev-framework",
+        "name": "开发框架",
+        "description": "React、Vue、Angular等前端框架",
+        "order": 2
+      },
+      {
+        "id": "dev-api",
+        "name": "API工具",
+        "description": "Postman、Insomnia等API测试工具",
+        "order": 3
+      },
+      {
+        "id": "dev-deploy",
+        "name": "部署工具",
+        "description": "Vercel、Netlify等部署平台",
+        "order": 4
+      }
+    ]
   },
   {
     "id": "design",
     "name": "设计资源",
     "description": "设计工具和素材资源",
-    "order": 3
+    "order": 3,
+    "collapsible": true,
+    "children": [
+      {
+        "id": "design-tool",
+        "name": "设计工具",
+        "description": "Figma、Sketch、Adobe系列等设计软件",
+        "order": 1
+      },
+      {
+        "id": "design-icon",
+        "name": "图标素材",
+        "description": "免费图标库和图标设计工具",
+        "order": 2
+      },
+      {
+        "id": "design-color",
+        "name": "配色工具",
+        "description": "调色板、配色方案生成工具",
+        "order": 3
+      },
+      {
+        "id": "design-font",
+        "name": "字体资源",
+        "description": "免费字体下载和字体设计工具",
+        "order": 4
+      }
+    ]
   },
   {
     "id": "audio",
     "name": "音频处理",
     "description": "音频处理相关的工具",
-    "order": 4
+    "order": 4,
+    "collapsible": false
   },
   {
     "id": "video",
     "name": "视频处理",
     "description": "视频处理相关的工具",
-    "order": 5
+    "order": 5,
+    "collapsible": false
   },
   {
     "id": "office",
     "name": "协作办公",
     "description": "在线协作和办公相关的工具",
-    "order": 6
+    "order": 6,
+    "collapsible": true,
+    "children": [
+      {
+        "id": "office-doc",
+        "name": "文档协作",
+        "description": "在线文档编辑和协作工具",
+        "order": 1
+      },
+      {
+        "id": "office-meeting",
+        "name": "视频会议",
+        "description": "在线会议和远程协作工具",
+        "order": 2
+      },
+      {
+        "id": "office-project",
+        "name": "项目管理",
+        "description": "任务管理和项目协作工具",
+        "order": 3
+      }
+    ]
   },
   {
     "id": "productivity",
     "name": "效率工具",
     "description": "提升工作效率的工具",
-    "order": 7
+    "order": 7,
+    "collapsible": true,
+    "children": [
+      {
+        "id": "productivity-note",
+        "name": "笔记工具",
+        "description": "Notion、Obsidian等笔记和知识管理工具",
+        "order": 1
+      },
+      {
+        "id": "productivity-time",
+        "name": "时间管理",
+        "description": "番茄钟、时间追踪等时间管理工具",
+        "order": 2
+      },
+      {
+        "id": "productivity-automation",
+        "name": "自动化工具",
+        "description": "Zapier、IFTTT等工作流自动化工具",
+        "order": 3
+      }
+    ]
   },
   {
     "id": "operation",
     "name": "全域运营",
     "description": "公域 + 私域 + 商域运营相关工具和资源",
-    "order": 8
+    "order": 8,
+    "collapsible": false
   },
   {
     "id": "profile",
     "name": "个人主页",
     "description": "入驻的平台和个人主页链接",
-    "order": 9
+    "order": 9,
+    "collapsible": false
   },
   {
     "id": "friends",
     "name": "友情链接",
     "description": "合作伙伴和友情链接",
-    "order": 10
+    "order": 10,
+    "collapsible": false
   }
 ]

@@ -2,15 +2,65 @@
 
 import React, { useState, useEffect } from "react";
 import { useDebouncedValue } from "@/hooks/ui/use-debounced-value";
+import { useCategories } from "@/hooks/use-categories";
 import { AdminLayout } from "@/components/admin/admin-layout";
-import { AdminActions } from "@/components/admin/admin-actions";
+import { Button } from "@/components/ui/button";
+import { LucideIcon } from "lucide-react";
+
+type AdminAction = {
+  label: string;
+  onClick: () => void;
+  icon?: LucideIcon;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+  disabled?: boolean;
+  loading?: boolean;
+};
+
+function AdminActions({
+  actions,
+  className = "",
+}: {
+  actions: AdminAction[];
+  className?: string;
+}) {
+  return (
+    <div className={`flex flex-wrap gap-2 ${className}`}>
+      {actions.map((action, index) => {
+        const IconComponent = action.icon;
+        return (
+          <Button
+            key={index}
+            variant={action.variant || "default"}
+            onClick={action.onClick}
+            disabled={action.disabled || action.loading}
+            className="flex items-center gap-2"
+            type="button"
+          >
+            {action.loading ? (
+              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            ) : (
+              IconComponent && <IconComponent className="h-4 w-4" />
+            )}
+            {action.label}
+          </Button>
+        );
+      })}
+    </div>
+  );
+}
 import { DataTable } from "@/components/links/data-table";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
-import { AddDialog } from "@/components/admin/add-dialog";
-import { EditDialog } from "@/components/admin/edit-dialog";
-import { DeleteDialog } from "@/components/admin/delete-dialog";
+import { AddDialog } from "@/components/admin/dialog/add-dialog";
+import { EditDialog } from "@/components/admin/dialog/edit-dialog";
+import { DeleteDialog } from "@/components/admin/dialog/delete-dialog";
 import {
   getTableColumns,
   getTableActions,
@@ -31,14 +81,8 @@ const fetchLinksData = async (): Promise<any[]> => {
   return Array.isArray(config) ? config : config.items || [];
 };
 
-const fetchLinksCategories = async (): Promise<any[]> => {
-  const res = await fetch("/api/links/categories", { cache: "no-store" });
-  return await res.json();
-};
-
 export default function LinksAdminPage() {
   const [items, setItems] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
   const [filteredItems, setFilteredItems] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
@@ -46,6 +90,9 @@ export default function LinksAdminPage() {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [editingItem, setEditingItem] = useState<any | null>(null);
   const [deletingItem, setDeletingItem] = useState<any | null>(null);
+
+  // 使用共享的分类数据 hook
+  const { categories, getCategoryName } = useCategories();
 
   // 加载数据
   useEffect(() => {
@@ -85,17 +132,8 @@ export default function LinksAdminPage() {
   }, [items, debouncedSearchTerm, selectedCategory]);
 
   const loadData = async () => {
-    const [linksData, categoriesData] = await Promise.all([
-      fetchLinksData(),
-      fetchLinksCategories(),
-    ]);
+    const linksData = await fetchLinksData();
     setItems(linksData);
-    setCategories(categoriesData);
-  };
-
-  const getCategoryName = (categoryId: string) => {
-    const category = categories.find((cat) => cat.id === categoryId);
-    return category?.name || categoryId;
   };
 
   const handleAddSuccess = (_item: any) => {
@@ -137,7 +175,7 @@ export default function LinksAdminPage() {
 
       {/* 搜索和过滤 */}
       <Card className="mb-6">
-        <CardContent className="pt-6">
+        <CardContent className="py-6">
           <div className="flex gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -160,12 +198,26 @@ export default function LinksAdminPage() {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="所有分类" />
                 </SelectTrigger>
-                <SelectContent className="z-50">
+                <SelectContent className="z-50 max-h-[300px]">
                   <SelectItem value="all">所有分类</SelectItem>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
+                    <div key={category.id}>
+                      {/* 主分类 */}
+                      <SelectItem value={category.id} className="font-medium">
+                        {category.name}
+                      </SelectItem>
+                      {/* 子分类 */}
+                      {category.children &&
+                        category.children.map((subCategory) => (
+                          <SelectItem
+                            key={subCategory.id}
+                            value={subCategory.id}
+                            className="pl-6 text-sm text-muted-foreground"
+                          >
+                            └ {subCategory.name}
+                          </SelectItem>
+                        ))}
+                    </div>
                   ))}
                 </SelectContent>
               </Select>

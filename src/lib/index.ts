@@ -7,7 +7,7 @@
 export * from "@/lib/content";
 
 // ==================== 全局文档结构 ====================
-export * from "@/lib/global-docs";
+export * from "@/components/sidebar/global-docs";
 
 // ==================== 元数据生成 ====================
 export * from "@/lib/metadata";

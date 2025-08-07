@@ -4,13 +4,13 @@ import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createDocBreadcrumbsServer } from "@/lib/content";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { GlobalDocsSidebarWrapper } from "@/components/content/global-docs-sidebar-wrapper";
+import { GlobalDocsSidebarWrapper } from "@/components/sidebar/global-docs-sidebar-wrapper";
 import { TableOfContents } from "@/components/content/table-of-contents";
 
 import { AppGrid } from "@/components/layout/app-grid";
 import type { DocContentResult } from "@/types/docs-types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/layout/twikoo-comment";
+import { TwikooComment } from "@/components/comment/twikoo-comment";
 
 type DocPageParams = {
   slug: string[];
@@ -22,7 +22,10 @@ import path from "path";
 import matter from "gray-matter";
 import { getFlattenedDocsOrder } from "@/lib/content";
 import { extractHeadings } from "@/components/content/extract-headings";
-import { resolveDocumentPath, getAllDocsStructure } from "@/lib/global-docs";
+import {
+  resolveDocumentPath,
+  getAllDocsStructure,
+} from "@/components/sidebar/global-docs";
 // ====== 迁移自 src/utils/text.ts ======
 /**
  * 计算文本中的字数
