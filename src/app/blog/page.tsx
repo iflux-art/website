@@ -4,9 +4,9 @@ import { UnifiedFilter } from "@/components/layout/unified-filter";
 import { BlogCard } from "@/components/card/blog-card";
 import { AppGrid } from "@/components/layout/app-grid";
 import { useFilterState } from "@/hooks/filter/use-filter-state";
-import { useBlogPosts } from "@/hooks/use-blog";
+import { useBlogPosts } from "@/features/blog/hooks";
 import { useMemo } from "react";
-import type { BlogPost } from "@/types/blog-types";
+import type { BlogPost } from "@/features/blog/types";
 // ====== 迁移自 src/utils/date.ts ======
 /**
  * 格式化日期
@@ -66,11 +66,6 @@ function BlogContent() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
-        <div className="mb-8">
-          <h1 className="mb-2 text-3xl font-bold">博客文章</h1>
-          <p className="text-muted-foreground">分享技术见解和经验</p>
-        </div>
-
         <UnifiedFilter
           categories={categories}
           selectedCategory={selectedCategory}

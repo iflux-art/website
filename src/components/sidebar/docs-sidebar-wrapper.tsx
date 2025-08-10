@@ -1,16 +1,16 @@
 /**
- * 全局文档侧边栏包装组件
+ * 文档侧边栏包装组件
  *
- * 处理数据获取和加载状态，为 GlobalDocsSidebar 提供数据
+ * 处理数据获取和加载状态，为 DocsSidebar 提供数据
  */
 
 "use client";
 
-import { GlobalDocsSidebar } from "./global-docs-sidebar";
+import { DocsSidebar } from "./docs-sidebar";
 import { useGlobalDocs } from "@/components/sidebar/use-global-docs";
 import { cn } from "@/utils";
 
-export interface GlobalDocsSidebarWrapperProps {
+export interface DocsSidebarWrapperProps {
   /** 当前打开的文档路径 */
   currentDoc?: string;
   /** 自定义类名 */
@@ -18,14 +18,14 @@ export interface GlobalDocsSidebarWrapperProps {
 }
 
 /**
- * 全局文档侧边栏包装组件
+ * 文档侧边栏包装组件
  *
  * 负责获取全局文档结构数据并渲染侧边栏
  */
-export function GlobalDocsSidebarWrapper({
+export function DocsSidebarWrapper({
   currentDoc,
   className,
-}: GlobalDocsSidebarWrapperProps) {
+}: DocsSidebarWrapperProps) {
   const { structure, loading, error } = useGlobalDocs();
 
   // 加载状态
@@ -74,7 +74,7 @@ export function GlobalDocsSidebarWrapper({
 
   // 正常渲染
   return (
-    <GlobalDocsSidebar
+    <DocsSidebar
       structure={structure}
       currentDoc={currentDoc}
       className={className}

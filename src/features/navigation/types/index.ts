@@ -3,7 +3,7 @@
  */
 
 import type { ReactNode, ComponentType } from "react";
-import type { URL } from "./base-types";
+import type { URL } from "@/types/base-types";
 
 /** 基础导航项 */
 export interface BaseNavItem {

@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllDocsStructure } from "@/components/sidebar/global-docs";
 import { Breadcrumb } from "@/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "@/lib/content";
+import { createDocBreadcrumbsServer } from "@/features/docs/lib";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { GlobalDocsSidebarWrapper } from "@/components/sidebar/global-docs-sidebar-wrapper";
+import { DocsSidebarWrapper } from "@/components/sidebar/docs-sidebar-wrapper";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { AppGrid } from "@/components/layout/app-grid";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
@@ -16,9 +16,9 @@ import { TwikooComment } from "@/components/comment/twikoo-comment";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "@/lib/content";
+import { getFlattenedDocsOrder } from "@/features/docs/lib";
 import { extractHeadings } from "@/components/content/extract-headings";
-import type { DocContentResult } from "@/types/docs-types";
+import type { DocContentResult } from "@/features/docs/types";
 
 // 文档内容处理函数
 function countWords(text: string): number {
@@ -209,7 +209,7 @@ export default async function DocsPage() {
           <AppGrid columns={5} gap="large">
             {/* 左侧边栏 - 全局文档导航 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
-              <GlobalDocsSidebarWrapper currentDoc={structure.firstDocPath} />
+              <DocsSidebarWrapper currentDoc={structure.firstDocPath} />
             </aside>
 
             {/* 主内容区 - 占3列 */}

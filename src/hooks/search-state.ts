@@ -5,7 +5,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import type { SearchResult } from "@/types/navigation-types";
+import type { SearchResult } from "@/features/navigation/types";
 
 interface SearchState {
   isOpen: boolean;

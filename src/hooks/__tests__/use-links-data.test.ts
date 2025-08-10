@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 import { useLinksData } from "@/hooks/use-links-data";
-import { LinksItem, LinksCategory } from "@/types/links-types";
+import { LinksItem, LinksCategory } from "@/features/links/types";
 
 // Mock the filter hook
 vi.mock("@/hooks/filter/use-filter-state", () => ({

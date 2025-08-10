@@ -1,14 +1,14 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 import { Breadcrumb } from "@/components/content/breadcrumb";
-import { createDocBreadcrumbsServer } from "@/lib/content";
+import { createDocBreadcrumbsServer } from "@/features/docs/lib";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { GlobalDocsSidebarWrapper } from "@/components/sidebar/global-docs-sidebar-wrapper";
+import { DocsSidebarWrapper } from "@/components/sidebar/docs-sidebar-wrapper";
 import { TableOfContents } from "@/components/content/table-of-contents";
 
 import { AppGrid } from "@/components/layout/app-grid";
-import type { DocContentResult } from "@/types/docs-types";
+import type { DocContentResult } from "@/features/docs/types";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
 import { TwikooComment } from "@/components/comment/twikoo-comment";
 
@@ -20,7 +20,7 @@ type DocPageParams = {
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "@/lib/content";
+import { getFlattenedDocsOrder } from "@/features/docs/lib";
 import { extractHeadings } from "@/components/content/extract-headings";
 import {
   resolveDocumentPath,
@@ -59,7 +59,7 @@ function countWords(text: string): number {
 }
 // ====== END ======
 // 修复 Prettier 格式错误，将多行类型 import 改为单行
-import type { DocFrontmatter, NavDocItem } from "@/types/docs-types";
+import type { DocFrontmatter, NavDocItem } from "@/features/docs/types";
 const DOCS_CONTENT_DIR = "src/content/docs";
 const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 
@@ -557,9 +557,7 @@ export default async function DocPage({
           <AppGrid columns={5} gap="large">
             {/* 左侧边栏 - 全局文档导航 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
-              <GlobalDocsSidebarWrapper
-                currentDoc={`/docs/${slug.join("/")}`}
-              />
+              <DocsSidebarWrapper currentDoc={`/docs/${slug.join("/")}`} />
             </aside>
 
             {/* 主内容区 - 占3列 */}

@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 import { LinksSidebar } from "../links-sidebar";
-import { LinksCategory } from "@/types/links-types";
+import { LinksCategory } from "@/features/links/types";
 
 const mockCategories: LinksCategory[] = [
   {

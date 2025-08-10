@@ -44,22 +44,21 @@ type Item = LinksItem;
 const CATEGORIES_FILE_PATH = path.join(
   process.cwd(),
   "src",
-  "data",
+  "config",
   "links",
   "categories.json",
 );
-const ITEMS_FILE_PATH = path.join(
+const CATEGORIES_DIR = path.join(
   process.cwd(),
   "src",
-  "data",
+  "config",
   "links",
-  "items.json",
+  "categories",
 );
 
 function ensureDataDirectory() {
-  const dataDir = path.dirname(CATEGORIES_FILE_PATH);
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
+  if (!fs.existsSync(CATEGORIES_DIR)) {
+    fs.mkdirSync(CATEGORIES_DIR, { recursive: true });
   }
 }
 
@@ -82,28 +81,76 @@ function readCategories(): Category[] {
   }
 }
 
-function readItems(): Item[] {
-  if (!fs.existsSync(ITEMS_FILE_PATH)) {
-    fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify([], null, 2), "utf-8");
+const availableCategories = [
+  "friends",
+  "ai",
+  "ai-chat",
+  "development",
+  "design",
+  "productivity",
+  "profile",
+  "operation",
+  "office",
+  "audio",
+  "video",
+];
+
+function readCategoryItems(category: string): Item[] {
+  const categoryFile = path.join(CATEGORIES_DIR, `${category}.json`);
+  if (!fs.existsSync(categoryFile)) {
     return [];
   }
 
   try {
-    const content = fs.readFileSync(ITEMS_FILE_PATH, "utf-8");
+    const content = fs.readFileSync(categoryFile, "utf-8");
     return JSON.parse(content);
   } catch (error) {
-    console.error("Error reading items data:", error);
-    throw new Error("Failed to read items data");
+    console.error(`Error reading category ${category}:`, error);
+    return [];
   }
 }
 
-function writeItems(items: Item[]): void {
+function writeCategoryItems(category: string, items: Item[]): void {
   try {
-    fs.writeFileSync(ITEMS_FILE_PATH, JSON.stringify(items, null, 2), "utf-8");
+    const categoryFile = path.join(CATEGORIES_DIR, `${category}.json`);
+    fs.writeFileSync(categoryFile, JSON.stringify(items, null, 2), "utf-8");
   } catch (error) {
-    console.error("Error writing items data:", error);
-    throw new Error("Failed to write items data");
+    console.error(`Error writing category ${category}:`, error);
+    throw new Error(`Failed to write category ${category} data`);
   }
+}
+
+function readItems(): Item[] {
+  const allItems: Item[] = [];
+
+  for (const category of availableCategories) {
+    const categoryItems = readCategoryItems(category);
+    allItems.push(...categoryItems);
+  }
+
+  return allItems;
+}
+
+function writeItems(items: Item[]): void {
+  // 按分类分组
+  const categorizedItems: { [key: string]: Item[] } = {};
+
+  // 初始化所有分类
+  availableCategories.forEach((category) => {
+    categorizedItems[category] = [];
+  });
+
+  // 分组项目
+  items.forEach((item) => {
+    if (categorizedItems[item.category]) {
+      categorizedItems[item.category].push(item);
+    }
+  });
+
+  // 写入各分类文件
+  Object.entries(categorizedItems).forEach(([category, categoryItems]) => {
+    writeCategoryItems(category, categoryItems);
+  });
 }
 
 export function readLinksData(): { categories: Category[]; items: Item[] } {
@@ -129,11 +176,7 @@ export function writeLinksData(data: {
       JSON.stringify(data.categories, null, 2),
       "utf-8",
     );
-    fs.writeFileSync(
-      ITEMS_FILE_PATH,
-      JSON.stringify(data.items, null, 2),
-      "utf-8",
-    );
+    writeItems(data.items);
   } catch (error) {
     console.error("Error writing links data:", error);
     throw new Error("Failed to write links data");

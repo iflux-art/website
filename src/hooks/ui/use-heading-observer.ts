@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Heading } from "@/types/docs-types";
+import type { Heading } from "@/features/docs/types";
 
 export function useHeadingObserver(
   headings: Heading[],

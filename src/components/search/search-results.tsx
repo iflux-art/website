@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { cn } from "@/utils";
-import type { SearchResult } from "@/types/navigation-types";
+import type { SearchResult } from "@/features/navigation/types";
 
 const TYPE_LABELS = {
   tool: "工具",

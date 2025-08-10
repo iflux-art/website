@@ -1,36 +1,97 @@
 import { NextRequest, NextResponse } from "next/server";
-import { nanoid } from "nanoid";
-import _items from "@/config/links/items.json";
-import { CategoryId, LinksItem, LinksFormData } from "@/types/links-types";
-import { validateLinksFormData, validateLinksUpdate } from "@/utils";
+import { promises as fs } from "fs";
+import path from "path";
+import { LinksItem } from "@/features/links/types";
+import {
+  addItemToCategory,
+  updateItem,
+  deleteItem,
+  checkUrlExists,
+} from "@/features/links/lib/categories";
 
-// 工具函数仅文件内部使用
-const getLinksData = async (): Promise<LinksItem[]> => {
-  return _items as LinksItem[];
-};
-
-const writeLinksData = async (items: LinksItem[]): Promise<void> => {
-  const fs = await import("fs/promises");
-  const path = await import("path");
+// 获取所有分类文件夹和文件
+async function getAllLinksData(): Promise<LinksItem[]> {
+  const linksDir = path.join(process.cwd(), "src/content/links");
+  const allItems: LinksItem[] = [];
 
   try {
-    const filePath = path.join(process.cwd(), "src/config/links/items.json");
-    const jsonData = JSON.stringify(items, null, 2);
-    await fs.writeFile(filePath, jsonData, "utf8");
+    console.log("Reading from directory:", linksDir);
+
+    // 读取根目录下的 JSON 文件
+    const rootFiles = await fs.readdir(linksDir);
+    console.log("Root files:", rootFiles);
+
+    for (const file of rootFiles) {
+      if (file.endsWith(".json")) {
+        console.log("Processing root file:", file);
+        const filePath = path.join(linksDir, file);
+        const data = await fs.readFile(filePath, "utf8");
+        const items = JSON.parse(data);
+        console.log(`Found ${items.length} items in ${file}`);
+        allItems.push(...items);
+      }
+    }
+
+    // 读取子文件夹中的 JSON 文件
+    const entries = await fs.readdir(linksDir, { withFileTypes: true });
+    const directories = entries.filter((entry) => entry.isDirectory());
+    console.log(
+      "Directories:",
+      directories.map((d) => d.name),
+    );
+
+    for (const dir of directories) {
+      const dirPath = path.join(linksDir, dir.name);
+      const files = await fs.readdir(dirPath);
+      console.log(`Files in ${dir.name}:`, files);
+
+      for (const file of files) {
+        if (file.endsWith(".json")) {
+          console.log(`Processing ${dir.name}/${file}`);
+          const filePath = path.join(dirPath, file);
+          const data = await fs.readFile(filePath, "utf8");
+          const items = JSON.parse(data);
+
+          // 为每个项目设置正确的分类
+          const categoryName =
+            `${dir.name}/${file.replace(".json", "")}` as any;
+          items.forEach((item: LinksItem) => {
+            item.category = categoryName;
+          });
+
+          console.log(`Found ${items.length} items in ${categoryName}`);
+          allItems.push(...items);
+        }
+      }
+    }
+
+    console.log("Total items found:", allItems.length);
+    return allItems;
   } catch (error) {
-    console.error("Error writing links data:", error);
-    throw new Error("Failed to write links data to file");
+    console.error("Error reading links data:", error);
+    return [];
   }
-};
+}
+
+// 生成唯一ID
+function generateId(): string {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
+}
 
 export async function GET() {
   try {
-    return NextResponse.json(await getLinksData());
+    console.log("Starting to get all links data...");
+    const items = await getAllLinksData();
+    console.log("Found", items.length, "items");
+    return NextResponse.json(items);
   } catch (error) {
-    console.error("Error reading links:", error);
+    console.error("Error in links API:", error);
     return NextResponse.json(
       {
-        error: "Failed to read items",
+        error: "Failed to read links data",
         details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 },
@@ -40,40 +101,59 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.json();
+    const body = await request.json();
+    const {
+      title,
+      description,
+      url,
+      icon,
+      iconType,
+      tags,
+      featured,
+      category,
+    } = body;
 
-    // 使用统一的验证函数
-    const validation = validateLinksFormData(formData);
-    if (!validation.success) {
-      return NextResponse.json({ error: validation.error }, { status: 400 });
-    }
-
-    const validatedFormData = validation.data!;
-    const items = await getLinksData();
-
-    if (items.some((item) => item.url === validatedFormData.url)) {
+    // 验证必填字段
+    if (!title || !url || !category) {
       return NextResponse.json(
-        { error: "URL already exists" },
-        { status: 409 },
+        { error: "Missing required fields" },
+        { status: 400 },
       );
     }
 
-    const now = new Date().toISOString();
+    // 检查URL是否已存在
+    const urlExists = await checkUrlExists(url);
+    if (urlExists) {
+      return NextResponse.json(
+        { error: "URL already exists" },
+        { status: 400 },
+      );
+    }
+
+    // 创建新项目
     const newItem: LinksItem = {
-      ...validatedFormData,
-      id: nanoid(),
-      createdAt: now,
-      updatedAt: now,
+      id: generateId(),
+      title,
+      description: description || "",
+      url,
+      icon: icon || "",
+      iconType: iconType || "image",
+      tags: tags || [],
+      featured: featured || false,
+      category,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
-    items.push(newItem);
-    await writeLinksData(items);
+    // 添加到指定分类
+    await addItemToCategory(category, newItem);
+
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
-    console.error("Error adding link:", error);
+    console.error("Error creating item:", error);
     return NextResponse.json(
       {
-        error: "Failed to add item",
+        error: "Failed to create item",
         details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 },
@@ -85,39 +165,59 @@ export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
+
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return NextResponse.json({ error: "Missing item ID" }, { status: 400 });
     }
 
-    const updates = await request.json();
-    const validatedUpdates = updates as Partial<LinksFormData>;
-    const linksData = await getLinksData();
-    const idx = linksData.findIndex((item) => item.id === id);
+    const body = await request.json();
+    const {
+      title,
+      description,
+      url,
+      icon,
+      iconType,
+      tags,
+      featured,
+      category,
+    } = body;
 
-    if (idx === -1) {
+    // 验证必填字段
+    if (!title || !url || !category) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
+    }
+
+    // 检查URL是否已存在（排除当前项目）
+    const urlExists = await checkUrlExists(url, id);
+    if (urlExists) {
+      return NextResponse.json(
+        { error: "URL already exists" },
+        { status: 400 },
+      );
+    }
+
+    // 更新项目
+    const updatedItem = await updateItem(id, {
+      title,
+      description: description || "",
+      url,
+      icon: icon || "",
+      iconType: iconType || "image",
+      tags: tags || [],
+      featured: featured || false,
+      category,
+    });
+
+    if (!updatedItem) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    // 使用统一的验证函数
-    const validation = validateLinksUpdate(linksData, id, validatedUpdates);
-    if (!validation.success) {
-      return NextResponse.json({ error: validation.error }, { status: 409 });
-    }
-
-    const now = new Date().toISOString();
-    const updatedItem: LinksItem = {
-      ...linksData[idx],
-      ...validatedUpdates,
-      updatedAt: now,
-      category: (validatedUpdates.category ??
-        linksData[idx].category) as CategoryId,
-    };
-
-    linksData[idx] = updatedItem;
-    await writeLinksData(linksData);
     return NextResponse.json(updatedItem);
   } catch (error) {
-    console.error("Error updating link:", error);
+    console.error("Error updating item:", error);
     return NextResponse.json(
       {
         error: "Failed to update item",
@@ -132,22 +232,21 @@ export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
+
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return NextResponse.json({ error: "Missing item ID" }, { status: 400 });
     }
 
-    const linksData = await getLinksData();
-    const idx = linksData.findIndex((item) => item.id === id);
+    // 删除项目
+    const success = await deleteItem(id);
 
-    if (idx === -1) {
+    if (!success) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    linksData.splice(idx, 1);
-    await writeLinksData(linksData);
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error deleting link:", error);
+    console.error("Error deleting item:", error);
     return NextResponse.json(
       {
         error: "Failed to delete item",

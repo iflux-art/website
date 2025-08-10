@@ -72,7 +72,7 @@ export function ContentDisplay({
           {date && (
             <div className="flex items-center">
               <Calendar className="mr-1 h-4 w-4" />
-              <time>{date}</time>
+              <time>发布于 {date}</time>
             </div>
           )}
 

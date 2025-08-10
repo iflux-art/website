@@ -9,12 +9,12 @@ import {
   GlobalDocsStructure,
   DocCategoryWithDocs,
 } from "@/components/sidebar/global-docs";
-import { SidebarItem } from "@/types/docs-types";
+import { SidebarItem } from "@/features/docs/types";
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== "undefined";
 
-export interface GlobalDocsSidebarProps {
+export interface DocsSidebarProps {
   /** 全局文档结构数据 */
   structure: GlobalDocsStructure;
   /** 当前打开的文档路径 */
@@ -24,15 +24,15 @@ export interface GlobalDocsSidebarProps {
 }
 
 /**
- * 全局文档侧边栏组件
+ * 文档侧边栏组件
  *
  * 显示所有文档的完整导航结构，支持跨分类的文档导航
  */
-export function GlobalDocsSidebar({
+export function DocsSidebar({
   structure,
   currentDoc,
   className,
-}: GlobalDocsSidebarProps) {
+}: DocsSidebarProps) {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     {},
   );
@@ -41,7 +41,7 @@ export function GlobalDocsSidebar({
   const isInitialized = useRef(false);
 
   // 用于存储折叠状态的本地存储键
-  const localStorageKey = "global-docs-sidebar-open-categories";
+  const localStorageKey = "docs-sidebar-open-categories";
 
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback(

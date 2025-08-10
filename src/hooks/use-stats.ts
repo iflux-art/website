@@ -6,9 +6,9 @@
 "use client";
 
 import { useMemo } from "react";
-import { useBlogPosts } from "@/hooks/use-blog";
-import { useDocCategories } from "@/hooks/use-docs";
-import { useLinksData } from "@/hooks/use-links-data";
+import { useBlogPosts } from "@/features/blog/hooks";
+import { useDocCategories } from "@/features/docs/hooks";
+import { useLinksData } from "@/features/links/hooks";
 
 export interface SiteStats {
   blogCount: number;

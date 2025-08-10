@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { useTagAnchors } from "../use-tag-anchors";
-import { LinksItem } from "@/types/links-types";
+import { LinksItem } from "@/features/links/types";
 
 describe("useTagAnchors", () => {
   it("should return empty array when no items provided", () => {

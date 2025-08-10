@@ -37,7 +37,7 @@ export const MDXLink = ({
     "relative after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0",
     "after:bg-current after:transition-all after:duration-300 after:ease-out",
     "hover:after:left-0 hover:after:w-full",
-    isExternal && "text-primary-dark dark:text-primary-light",
+    isExternal && "text-primary",
     className,
   );
 

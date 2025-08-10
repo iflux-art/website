@@ -73,12 +73,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { loadAllLinksData } from "@/features/links/lib";
 
 // 客户端使用的函数
 const fetchLinksData = async (): Promise<any[]> => {
-  const res = await fetch("/api/links", { cache: "no-store" });
-  const config = await res.json();
-  return Array.isArray(config) ? config : config.items || [];
+  return await loadAllLinksData();
 };
 
 export default function LinksAdminPage() {

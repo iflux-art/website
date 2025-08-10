@@ -1,12 +1,11 @@
-"use client";
-
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
 import { LinkCard } from "@/components/card/link-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TwikooComment } from "@/components/comment/twikoo-comment";
-import { useLinksData } from "@/hooks/use-links-data";
+import { LinksItem } from "@/features/links/types";
+import friendsData from "@/content/links/friends.json";
 import {
   ExternalLink,
   Heart,
@@ -20,43 +19,16 @@ import {
 const FRIEND_LINK_FORM_URL =
   "https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb";
 
-interface FriendsHeaderProps {
-  totalItems: number;
-}
-
-function FriendsHeader({ totalItems }: FriendsHeaderProps) {
-  return (
-    <div className="mb-8">
-      <h1 className="mb-2 text-3xl font-bold tracking-tight">友情链接</h1>
-      <p className="text-muted-foreground">
-        共收录 {totalItems} 个友情链接，欢迎
-        <a
-          href={FRIEND_LINK_FORM_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mx-1 text-primary hover:underline"
-        >
-          互换友链
-        </a>
-      </p>
-    </div>
-  );
-}
-
 export default function FriendsPage() {
-  const { allItems, loading, error } = useLinksData();
-
-  // 筛选出友链分类的项目
-  const friendsItems = allItems.filter((item) => item.category === "friends");
-
-  if (loading || error) {
-    return null; // Let Next.js loading.tsx handle loading states
-  }
+  const friendsItems: LinksItem[] = friendsData.map((item) => ({
+    ...item,
+    category: item.category as any,
+    iconType: ((item as any).iconType || "image") as "image" | "text",
+  }));
 
   if (friendsItems.length === 0) {
     return (
       <div className="container mx-auto py-8">
-        <FriendsHeader totalItems={0} />
         <div className="flex min-h-[400px] items-center justify-center">
           <div className="text-center">
             <p className="mb-4 text-muted-foreground">暂无友情链接</p>
@@ -76,8 +48,6 @@ export default function FriendsPage() {
 
   return (
     <div className="container mx-auto py-8">
-      <FriendsHeader totalItems={friendsItems.length} />
-
       <AppGrid columns={5} className="items-stretch">
         {friendsItems.map((item) => (
           <LinkCard

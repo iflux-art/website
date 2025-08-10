@@ -29,7 +29,7 @@ export const MDXImg = ({
       alt={alt}
       width={width}
       height={height}
-      className={`my-6 w-full max-w-full rounded-lg border border-zinc-200 bg-zinc-100 object-cover shadow-md ${className}`}
+      className={`my-6 w-full max-w-full rounded-lg border border-border bg-muted object-cover shadow-md ${className}`}
       style={
         isRemote ? undefined : { position: "relative", aspectRatio: "16/9" }
       }

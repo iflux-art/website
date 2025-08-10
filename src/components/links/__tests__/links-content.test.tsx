@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { LinksContent } from "../links-content";
-import { LinksItem } from "@/types/links-types";
+import { LinksItem } from "@/features/links/types";
 
 const mockItems: LinksItem[] = [
   {

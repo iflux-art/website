@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/content/breadcrumb";
-import { createBlogBreadcrumbs } from "@/lib/content";
+import { createBlogBreadcrumbs } from "@/features/blog/lib";
 import { ContentDisplay } from "@/components/content/content-display";
 import { RelatedPostsCard } from "@/components/content/related-posts-card";
 import { TagCloudCard } from "@/components/content/tag-cloud-card";

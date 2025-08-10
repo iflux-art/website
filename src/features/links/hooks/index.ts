@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useFilterState } from "@/hooks/filter/use-filter-state";
 import { useCategories } from "@/hooks/use-categories";
-import { LinksItem } from "@/types/links-types";
+import { LinksItem } from "../types";
+import { loadAllLinksData } from "../lib";
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);
@@ -16,15 +17,8 @@ export function useLinksData() {
     async function fetchData() {
       try {
         setLoading(true);
-
-        const itemsResponse = await fetch("/api/links");
-
-        if (!itemsResponse.ok) {
-          throw new Error("Failed to fetch links");
-        }
-
-        const itemsData = await itemsResponse.json();
-        setItems(Array.isArray(itemsData) ? itemsData : []);
+        const itemsData = await loadAllLinksData();
+        setItems(itemsData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {

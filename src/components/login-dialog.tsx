@@ -142,7 +142,7 @@ export function LoginDialog({
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
-                  <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-primary"></div>
+                  <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-primary-foreground"></div>
                   登录中...
                 </div>
               ) : (

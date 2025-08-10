@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { LinksCategory, CategoryId } from "@/types/links-types";
+import { LinksCategory, CategoryId } from "@/features/links/types";
+import { generateCategoriesData } from "@/features/links/lib";
 
 /**
  * 获取链接分类数据的 Hook
@@ -16,16 +17,9 @@ export function useCategories() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch("/api/links/categories", {
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-
-        const data = await response.json();
-        setCategories(Array.isArray(data) ? data : []);
+        // 直接使用生成的分类数据
+        const data = generateCategoriesData();
+        setCategories(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
         setCategories([]);

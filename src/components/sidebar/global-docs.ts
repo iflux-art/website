@@ -5,8 +5,11 @@
 
 import fs from "fs";
 import path from "path";
-import { DocCategory, SidebarItem } from "@/types/docs-types";
-import { getDocCategories, getDocDirectoryStructure } from "@/lib/content";
+import { DocCategory, SidebarItem } from "@/features/docs/types";
+import {
+  getDocCategories,
+  getDocDirectoryStructure,
+} from "@/features/docs/lib";
 
 // 常量定义
 const DOCS_CONTENT_DIR = path.join(process.cwd(), "src", "content", "docs");

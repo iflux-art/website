@@ -23,8 +23,8 @@ export const MDXBlockquote = ({
         "not-prose my-6 rounded-r-lg px-6 py-4",
         "border-l-4 text-muted-foreground italic",
         "flex items-start gap-4",
-        "bg-gray-50 dark:bg-gray-800",
-        "border-gray-300 dark:border-gray-600",
+        "bg-muted/50",
+        "border-border",
         className,
       )}
       {...props}

@@ -2,6 +2,6 @@
  * 内容组件导出
  */
 
-export { GlobalDocsSidebarWrapper } from "../sidebar/global-docs-sidebar-wrapper";
+export { DocsSidebarWrapper as GlobalDocsSidebarWrapper } from "../sidebar/docs-sidebar-wrapper";
 
-export type { GlobalDocsSidebarWrapperProps } from "../sidebar/global-docs-sidebar-wrapper";
+export type { DocsSidebarWrapperProps as GlobalDocsSidebarWrapperProps } from "../sidebar/docs-sidebar-wrapper";

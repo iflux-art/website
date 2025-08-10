@@ -1,5 +1,7 @@
-// links-types.ts
-// 统一管理 links 相关类型定义，供前后端、hooks、组件复用
+/**
+ * Links 功能相关类型定义
+ * 统一管理 links 相关类型定义，供前后端、hooks、组件复用
+ */
 
 export type CategoryId =
   | "ai"
@@ -58,7 +60,7 @@ export interface LinksItem {
   description: string;
   url: string;
   icon: string;
-  iconType: "image" | "text";
+  iconType?: "image" | "text";
   tags: string[];
   featured: boolean;
   category: CategoryId;

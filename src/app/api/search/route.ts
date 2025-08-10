@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import links from "@/config/links/items.json";
+import { loadAllCategoriesData } from "@/features/links/lib/categories";
 import { promises as fs } from "fs";
 import path from "path";
 import { glob } from "fast-glob";
@@ -94,6 +94,7 @@ export async function GET(request: NextRequest) {
 
     // 搜索链接
     if (type === "all" || type === "links") {
+      const links = await loadAllCategoriesData();
       const linkResults = links
         .filter((item: any) => {
           const searchText =

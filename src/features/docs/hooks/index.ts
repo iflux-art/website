@@ -7,7 +7,7 @@
 
 import { useContentData } from "@/hooks/use-content-data";
 import { API_PATHS } from "@/config/metadata";
-import { DocItem, DocCategory, DocListItem } from "@/types/docs-types";
+import { DocItem, DocCategory, DocListItem } from "../types";
 import type { HookResult } from "@/hooks/use-content-data";
 
 /**

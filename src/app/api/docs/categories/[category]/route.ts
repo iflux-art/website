@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { getDocSidebar } from "@/lib/content";
-import { DocListItem } from "@/types/docs-types";
+import { getDocSidebar } from "@/features/docs/lib";
+import { DocListItem } from "@/features/docs/types";
 
 interface SidebarNavItem {
   type?: "menu" | "separator" | "page" | "item" | "category";

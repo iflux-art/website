@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import { useContentData } from "@/hooks/use-content-data";
 import { API_PATHS } from "@/config/metadata";
 import type { HookResult } from "@/hooks/use-content-data";
-import { BlogPost } from "@/types/blog-types";
+import { BlogPost } from "../types";
 
 export interface TagCount {
   tag: string;

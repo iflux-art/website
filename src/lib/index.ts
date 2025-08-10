@@ -1,45 +1,54 @@
 /**
- * 业务逻辑库统一导出
- * 整合所有业务相关的工具函数和类型
+ * 通用工具函数和类型导出
+ * 保留通用的工具函数，业务相关的已移动到对应的features目录
  */
 
-// ==================== 内容处理 ====================
-export * from "@/lib/content";
-
-// ==================== 全局文档结构 ====================
-export * from "@/components/sidebar/global-docs";
-
-// ==================== 元数据生成 ====================
-export * from "@/lib/metadata";
-
-// ==================== 重新导出常用类型 ====================
+// 通用类型导出
 export type {
+  BaseContent,
+  BaseFrontmatter,
+  BaseCategory,
+} from "@/types/data-types";
+
+export type {
+  URL,
   BreadcrumbItem,
   BaseComponentProps,
   ClickableProps,
   FormComponentProps,
 } from "@/types/base-types";
 
-export type { BlogPost, TagCount, RelatedPost } from "@/types/blog-types";
+// 业务类型重新导出（保持向后兼容）
+export type { BlogPost, TagCount, RelatedPost } from "@/features/blog/types";
 
 export type {
-  DocCategory,
   DocItem,
+  DocCategory,
+  DocListItem,
   SidebarItem,
   NavDocItem,
   Heading,
-} from "@/types/docs-types";
+} from "@/features/docs/types";
 
 export type {
   LinksItem,
   LinksCategory,
+  LinksSubCategory,
   LinksFormData,
   CategoryId,
-} from "@/types/links-types";
+} from "@/features/links/types";
 
 export type {
-  LoadingState,
-  AsyncResult,
-  PaginationInfo,
-  PaginatedData,
-} from "@/types/api-types";
+  BaseNavItem,
+  NestedNavItem,
+  BaseSearchResult,
+  SearchResult,
+} from "@/features/navigation/types";
+
+// 通用工具函数导出
+export {
+  generateMetadata,
+  generateArticleMetadata,
+  generateProfileMetadata,
+  generateViewport,
+} from "@/lib/metadata";

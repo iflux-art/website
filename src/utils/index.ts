@@ -89,7 +89,11 @@ export function validateRefreshRequest(data: unknown): {
 }
 
 // ==================== 链接数据验证 ====================
-import type { LinksFormData, LinksItem, CategoryId } from "@/types/links-types";
+import type {
+  LinksFormData,
+  LinksItem,
+  CategoryId,
+} from "@/features/links/types";
 
 const validCategories = [
   "ai",
