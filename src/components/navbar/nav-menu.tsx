@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 import { NAV_ITEMS, NAV_DESCRIPTIONS, NAV_PATHS } from "@/config/nav-config";
 import { useAuthState } from "@/hooks/auth-state";
 import { useActiveSection } from "@/hooks/ui/use-active-section";
-import { AdminMenu as AdminMenuComponent } from "@/components/admin/admin-menu";
+import { AdminMenu as AdminMenuComponent } from "@/features/admin/components";
 
 type NavProps = {
   /**

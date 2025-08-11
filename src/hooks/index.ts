@@ -17,8 +17,7 @@ export { useSafeTheme } from "./theme-state";
 
 // Content hooks
 export { useContentData } from "./use-content-data";
-export { useGlobalDocs } from "../components/sidebar/use-global-docs";
-export { useGroupEntries } from "./use-group-entries";
+export { useGlobalDocs } from "@/features/docs/components";
 export { useMDX } from "./use-mdx";
 
 // Cache hooks

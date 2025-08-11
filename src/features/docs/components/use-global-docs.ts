@@ -6,7 +6,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { GlobalDocsStructure } from "@/components/sidebar/global-docs";
+import { GlobalDocsStructure } from "./global-docs";
 
 export interface UseGlobalDocsResult {
   /** 全局文档结构数据 */

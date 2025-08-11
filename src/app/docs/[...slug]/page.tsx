@@ -4,7 +4,7 @@ import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createDocBreadcrumbsServer } from "@/features/docs/lib";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { DocsSidebarWrapper } from "@/components/sidebar/docs-sidebar-wrapper";
+import { DocsSidebarWrapper } from "@/features/docs/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 
 import { AppGrid } from "@/components/layout/app-grid";
@@ -25,7 +25,7 @@ import { extractHeadings } from "@/components/content/extract-headings";
 import {
   resolveDocumentPath,
   getAllDocsStructure,
-} from "@/components/sidebar/global-docs";
+} from "@/features/docs/components";
 // ====== 迁移自 src/utils/text.ts ======
 /**
  * 计算文本中的字数

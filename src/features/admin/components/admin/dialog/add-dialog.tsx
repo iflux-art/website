@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LinksForm } from "@/components/links/links-form";
+import { LinksForm } from "@/features/links/components";
 // 内联 LinksFormData 类型定义
 interface LinksFormData {
   title: string;

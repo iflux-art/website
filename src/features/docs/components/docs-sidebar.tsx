@@ -5,10 +5,7 @@ import { ChevronRight, FileText, Folder } from "lucide-react";
 import { cn } from "@/utils";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { NavLink } from "@/components/navbar/nav-link";
-import {
-  GlobalDocsStructure,
-  DocCategoryWithDocs,
-} from "@/components/sidebar/global-docs";
+import { GlobalDocsStructure, DocCategoryWithDocs } from "./global-docs";
 import { SidebarItem } from "@/features/docs/types";
 
 // 检查是否在客户端环境

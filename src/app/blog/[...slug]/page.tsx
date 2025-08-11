@@ -2,8 +2,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createBlogBreadcrumbs } from "@/features/blog/lib";
 import { ContentDisplay } from "@/components/content/content-display";
-import { RelatedPostsCard } from "@/components/content/related-posts-card";
-import { TagCloudCard } from "@/components/content/tag-cloud-card";
+import { RelatedPostsCard, TagCloudCard } from "@/features/blog/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 
 import { AppGrid } from "@/components/layout/app-grid";

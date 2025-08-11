@@ -2,8 +2,7 @@
 
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { LinksSidebar } from "@/components/links/links-sidebar";
-import { LinksContent } from "@/components/links/links-content";
+import { LinksSidebar, LinksContent } from "@/features/links/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { useLinksData } from "@/features/links/hooks";
 import { useTagAnchors } from "@/hooks/use-tag-anchors";

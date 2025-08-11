@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllDocsStructure } from "@/components/sidebar/global-docs";
+import { getAllDocsStructure } from "@/features/docs/components";
 
 /**
  * 获取全局文档结构的 API 路由

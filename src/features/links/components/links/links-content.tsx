@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import { cn } from "@/utils";
-import { LinkCard } from "@/components/card/link-card";
+import { LinkCard } from "../link-card";
 import { LinksItem } from "@/features/links/types";
 
 export interface LinksContentProps {

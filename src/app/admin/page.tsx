@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useDebouncedValue } from "@/hooks/ui/use-debounced-value";
 import { useCategories } from "@/hooks/use-categories";
-import { AdminLayout } from "@/components/admin/admin-layout";
+import { AdminLayout } from "@/features/admin/components";
 import { Button } from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";
 
@@ -54,18 +54,20 @@ function AdminActions({
     </div>
   );
 }
-import { DataTable } from "@/components/links/data-table";
+import { DataTable } from "@/features/links/components";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
-import { AddDialog } from "@/components/admin/dialog/add-dialog";
-import { EditDialog } from "@/components/admin/dialog/edit-dialog";
-import { DeleteDialog } from "@/components/admin/dialog/delete-dialog";
+import {
+  AddDialog,
+  EditDialog,
+  DeleteDialog,
+} from "@/features/admin/components";
 import {
   getTableColumns,
   getTableActions,
   getPageActions,
-} from "@/components/links/table-config";
+} from "@/features/links/components";
 import {
   Select,
   SelectContent,

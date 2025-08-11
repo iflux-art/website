@@ -1,12 +1,12 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllDocsStructure } from "@/components/sidebar/global-docs";
+import { getAllDocsStructure } from "@/features/docs/components";
 import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createDocBreadcrumbsServer } from "@/features/docs/lib";
 import { ContentDisplay } from "@/components/content/content-display";
 import { DocPagination } from "@/components/content/pagination";
-import { DocsSidebarWrapper } from "@/components/sidebar/docs-sidebar-wrapper";
+import { DocsSidebarWrapper } from "@/features/docs/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { AppGrid } from "@/components/layout/app-grid";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";

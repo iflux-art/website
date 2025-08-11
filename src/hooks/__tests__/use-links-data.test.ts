@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import { useLinksData } from "@/hooks/use-links-data";
+import { useLinksData } from "@/features/links/hooks";
 import { LinksItem, LinksCategory } from "@/features/links/types";
 
 // Mock the filter hook
@@ -122,15 +122,15 @@ describe("useLinksData", () => {
 
     // Should only include development and design items, excluding friends and profile
     expect(result.current.items).toHaveLength(2);
-    expect(result.current.items.map((item) => item.category)).toEqual(
-      expect.arrayContaining(["development", "design"]),
-    );
-    expect(result.current.items.map((item) => item.category)).not.toContain(
-      "friends",
-    );
-    expect(result.current.items.map((item) => item.category)).not.toContain(
-      "profile",
-    );
+    expect(
+      result.current.items.map((item: LinksItem) => item.category),
+    ).toEqual(expect.arrayContaining(["development", "design"]));
+    expect(
+      result.current.items.map((item: LinksItem) => item.category),
+    ).not.toContain("friends");
+    expect(
+      result.current.items.map((item: LinksItem) => item.category),
+    ).not.toContain("profile");
   });
 
   it("should filter out friends and profile categories from categories", async () => {
@@ -142,15 +142,15 @@ describe("useLinksData", () => {
 
     // Should only include development and design categories, excluding friends and profile
     expect(result.current.categories).toHaveLength(2);
-    expect(result.current.categories.map((cat) => cat.id)).toEqual(
-      expect.arrayContaining(["development", "design"]),
-    );
-    expect(result.current.categories.map((cat) => cat.id)).not.toContain(
-      "friends",
-    );
-    expect(result.current.categories.map((cat) => cat.id)).not.toContain(
-      "profile",
-    );
+    expect(
+      result.current.categories.map((cat: LinksCategory) => cat.id),
+    ).toEqual(expect.arrayContaining(["development", "design"]));
+    expect(
+      result.current.categories.map((cat: LinksCategory) => cat.id),
+    ).not.toContain("friends");
+    expect(
+      result.current.categories.map((cat: LinksCategory) => cat.id),
+    ).not.toContain("profile");
   });
 
   it("should calculate correct total filtered count", async () => {

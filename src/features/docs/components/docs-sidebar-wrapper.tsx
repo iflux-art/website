@@ -7,7 +7,7 @@
 "use client";
 
 import { DocsSidebar } from "./docs-sidebar";
-import { useGlobalDocs } from "@/components/sidebar/use-global-docs";
+import { useGlobalDocs } from "./use-global-docs";
 import { cn } from "@/utils";
 
 export interface DocsSidebarWrapperProps {

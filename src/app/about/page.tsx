@@ -1,6 +1,6 @@
 import React from "react";
 import { AppGrid } from "@/components/layout/app-grid";
-import { LinkCard } from "@/components/card/link-card";
+import { LinkCard } from "@/features/links/components";
 import { LinksItem } from "@/features/links/types";
 import profileData from "@/content/links/profile.json";
 

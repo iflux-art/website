@@ -1,7 +1,14 @@
 /**
- * 内容组件导出
+ * 通用内容组件导出
+ * 业务相关的内容组件已移动到对应的 features 目录
  */
 
-export { DocsSidebarWrapper as GlobalDocsSidebarWrapper } from "../sidebar/docs-sidebar-wrapper";
+// 通用内容组件
+export { Breadcrumb } from "./breadcrumb";
+export { ContentDisplay } from "./content-display";
+export { DocPagination } from "./pagination";
+export { TableOfContents } from "./table-of-contents";
 
-export type { DocsSidebarWrapperProps as GlobalDocsSidebarWrapperProps } from "../sidebar/docs-sidebar-wrapper";
+// 业务相关组件已移动：
+// - RelatedPostsCard -> @/features/blog/components
+// - TagCloudCard -> @/features/blog/components
