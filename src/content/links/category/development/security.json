@@ -3,8 +3,13 @@
     "title": "微信官方文档 | 微信开放文档",
     "url": "https://developers.weixin.qq.com/doc/",
     "description": "微信开发者平台文档",
-    "category": "development-security",
-    "tags": ["支付服务", "公众平台", "小程序", "视频号"],
+    "category": "development/security",
+    "tags": [
+      "支付服务",
+      "公众平台",
+      "小程序",
+      "视频号"
+    ],
     "featured": true,
     "icon": "https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico",
     "id": "mbdlqoshgfe7i6hdt05",
@@ -15,8 +20,10 @@
     "title": "npm",
     "url": "https://www.npmjs.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["包管理器"],
+    "category": "development/security",
+    "tags": [
+      "包管理器"
+    ],
     "featured": false,
     "icon": "https://static-production.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png",
     "id": "mbgcympvzf9hweil4q",
@@ -27,8 +34,10 @@
     "title": "Yarn",
     "url": "https://yarnpkg.com/",
     "description": "Yarn, the modern JavaScript package manager",
-    "category": "development-security",
-    "tags": ["包管理器"],
+    "category": "development/security",
+    "tags": [
+      "包管理器"
+    ],
     "featured": false,
     "icon": "https://yarnpkg.com/img/yarn-favicon.svg",
     "id": "mbgcz06g016c9hxd8gxof",
@@ -39,8 +48,10 @@
     "title": "pnpm",
     "url": "https://pnpm.io/",
     "description": "Fast, disk space efficient package manager",
-    "category": "development-security",
-    "tags": ["包管理器"],
+    "category": "development/security",
+    "tags": [
+      "包管理器"
+    ],
     "featured": false,
     "icon": "https://pnpm.io/img/favicon.png",
     "id": "mbgczeblrpfxu81e0t",
@@ -51,8 +62,10 @@
     "title": "Turborepo",
     "url": "https://turbo.build/",
     "description": "Turborepo is a build system optimized for JavaScript and TypeScript, written in Rust.",
-    "category": "development-security",
-    "tags": ["Monorepo"],
+    "category": "development/security",
+    "tags": [
+      "Monorepo"
+    ],
     "featured": false,
     "icon": "https://turbo.build/images/product-icons/repo-light-32x32.png",
     "id": "mbgd29fv4txvmvguhia",
@@ -63,8 +76,10 @@
     "title": "Workspace | pnpm",
     "url": "https://pnpm.io/workspaces",
     "description": "pnpm has built-in support for monorepositories (AKA multi-package repositories,",
-    "category": "development-security",
-    "tags": ["Monorepo"],
+    "category": "development/security",
+    "tags": [
+      "Monorepo"
+    ],
     "featured": false,
     "icon": "https://pnpm.io/img/favicon.png",
     "id": "mbgd2ufsc0wzy2cyx66",
@@ -75,8 +90,10 @@
     "title": "Lerna",
     "url": "https://lerna.js.org/",
     "description": "Lerna is a fast, modern build system for managing and publishing multiple JavaScript/TypeScript packages from the same repository.",
-    "category": "development-security",
-    "tags": ["Monorepo"],
+    "category": "development/security",
+    "tags": [
+      "Monorepo"
+    ],
     "featured": false,
     "icon": "https://lerna.js.org/images/favicon.ico",
     "id": "mbgd3exvvq7wqd5scz",
@@ -87,8 +104,10 @@
     "title": "Nx",
     "url": "https://nx.dev/",
     "description": "Build system, optimized for monorepos, with AI-powered architectural awareness and advanced CI capabilities.",
-    "category": "development-security",
-    "tags": ["Monorepo"],
+    "category": "development/security",
+    "tags": [
+      "Monorepo"
+    ],
     "featured": false,
     "icon": "https://nx.dev/favicon/favicon.svg",
     "id": "mbgd41ccki9crjb95f",
@@ -99,8 +118,10 @@
     "title": "Emmet",
     "url": "https://emmet.io/",
     "description": "the essential toolkit for web-developers",
-    "category": "development-security",
-    "tags": ["命令行"],
+    "category": "development/security",
+    "tags": [
+      "命令行"
+    ],
     "featured": false,
     "icon": "https://emmet.io/-/3755353140/favicon.ico",
     "id": "mbgd7xe1722u1nofia",
@@ -111,8 +132,10 @@
     "title": "Warp",
     "url": "https://www.warp.dev/",
     "description": "Warp is the intelligent terminal with AI and your dev team's knowledge built-in. Available on MacOS, Windows and Linux.",
-    "category": "development-security",
-    "tags": ["命令行"],
+    "category": "development/security",
+    "tags": [
+      "命令行"
+    ],
     "featured": false,
     "icon": "https://www.warp.dev/favicon.png",
     "id": "mbgd8e9ba3mqpiyyjln",
@@ -123,8 +146,10 @@
     "title": "Tabby",
     "url": "https://tabby.sh/",
     "description": "Tabby is a free and open source SSH, local and Telnet terminal with everything you'll ever need.",
-    "category": "development-security",
-    "tags": ["命令行"],
+    "category": "development/security",
+    "tags": [
+      "命令行"
+    ],
     "featured": false,
     "icon": "https://tabby.sh/41c0b2191a91f83bee77.png",
     "id": "mbgd8sc8qq4oqd3l47m",
@@ -135,8 +160,10 @@
     "title": "Hyper™",
     "url": "https://hyper.is/",
     "description": "A terminal built on web technologies",
-    "category": "development-security",
-    "tags": ["命令行"],
+    "category": "development/security",
+    "tags": [
+      "命令行"
+    ],
     "featured": false,
     "icon": "https://hyper.is/favicon-32x32.png",
     "id": "mbgd93jv4kvkkpdaghm",
@@ -147,8 +174,10 @@
     "title": "1.1.1.1",
     "url": "https://one.one.one.one/zh-Hans/",
     "description": "",
-    "category": "development-security",
-    "tags": ["网络加速"],
+    "category": "development/security",
+    "tags": [
+      "网络加速"
+    ],
     "featured": false,
     "icon": "https://one.one.one.one/favicon.ico",
     "id": "mbghocg1t9l3r3zgny",
@@ -159,8 +188,10 @@
     "title": "Watt Toolkit",
     "url": "https://steampp.net/",
     "description": "一个包含多种Steam工具功能的工具箱。",
-    "category": "development-security",
-    "tags": ["网络加速"],
+    "category": "development/security",
+    "tags": [
+      "网络加速"
+    ],
     "featured": false,
     "icon": "https://steampp.net/favicon.ico",
     "id": "mbghpj930sm7d7rawjza",
@@ -171,8 +202,10 @@
     "title": "DNSPod",
     "url": "https://www.dnspod.cn/",
     "description": "DNSPod是国内提供智能DNS产品的网站，致力于为各类网站提供高质量的电信、网通、教育网双线或者三线智能DNS免费解析。目前DNSPod已经是国内最大的免费DNS解析产品提供商",
-    "category": "development-security",
-    "tags": ["DNS解析"],
+    "category": "development/security",
+    "tags": [
+      "DNS解析"
+    ],
     "featured": false,
     "icon": "https://cloudcache.tencent-cloud.cn/open_proj/proj_qcloud_v2/tc-console/dnspod/gateway/css/img/dnspod.ico",
     "id": "mbghqnd2gmak87cb1je",
@@ -183,8 +216,10 @@
     "title": "FileZilla",
     "url": "https://filezilla-project.org/",
     "description": "FileZilla - The free FTP solution for both client and server. Filezilla is open source software distributed free of charge.",
-    "category": "development-security",
-    "tags": ["FTP"],
+    "category": "development/security",
+    "tags": [
+      "FTP"
+    ],
     "featured": false,
     "icon": "https://filezilla-project.org/favicon.ico",
     "id": "mbghw9eafqscaa7sp1",
@@ -195,8 +230,10 @@
     "title": "ShiftEdit",
     "url": "https://shiftedit.net/",
     "description": "The Online IDE",
-    "category": "development-security",
-    "tags": ["FTP"],
+    "category": "development/security",
+    "tags": [
+      "FTP"
+    ],
     "featured": false,
     "icon": "https://shiftedit.net/img/icons/favicon-32x32.png",
     "id": "mbghwzyee81c0gwx0qv",
@@ -207,8 +244,10 @@
     "title": "WinSCP",
     "url": "https://winscp.net/eng/docs/lang:chs",
     "description": "WinSCP is a free file manager for Windows supporting FTP, SFTP, S3 and WebDAV.",
-    "category": "development-security",
-    "tags": ["FTP"],
+    "category": "development/security",
+    "tags": [
+      "FTP"
+    ],
     "featured": false,
     "icon": "https://winscp.net/favicon.ico",
     "id": "mbghxfzl0rpcwphcn0yg",
@@ -219,8 +258,10 @@
     "title": "MobaXterm",
     "url": "https://mobaxterm.mobatek.net/",
     "description": "The ultimate toolbox for remote computing - includes X server, enhanced SSH client and much more!",
-    "category": "development-security",
-    "tags": ["FTP"],
+    "category": "development/security",
+    "tags": [
+      "FTP"
+    ],
     "featured": false,
     "icon": "https://mobaxterm.mobatek.net/favicon.ico",
     "id": "mbghxz28x2putcy7gz",
@@ -231,8 +272,10 @@
     "title": "Cyberduck",
     "url": "https://cyberduck.de/",
     "description": "",
-    "category": "development-security",
-    "tags": ["FTP"],
+    "category": "development/security",
+    "tags": [
+      "FTP"
+    ],
     "featured": false,
     "icon": "https://cyberduck.de/favicon.ico",
     "id": "mbghycahlggb74t5i9h",
@@ -243,8 +286,10 @@
     "title": "GoDaddy",
     "url": "https://www.godaddy.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["域名"],
+    "category": "development/security",
+    "tags": [
+      "域名"
+    ],
     "featured": false,
     "icon": "https://www.godaddy.com/favicon.ico",
     "id": "mbghzsemoabitc7riu",
@@ -255,8 +300,10 @@
     "title": "JS.ORG",
     "url": "https://js.org/",
     "description": "Dedicated to JavaScript and its awesome community since 2015",
-    "category": "development-security",
-    "tags": ["域名"],
+    "category": "development/security",
+    "tags": [
+      "域名"
+    ],
     "featured": false,
     "icon": "https://js.org/favicon.png",
     "id": "mbgi0xzd0ys32xw1pjs",
@@ -267,8 +314,10 @@
     "title": "EU.org",
     "url": "https://nic.eu.org/",
     "description": "Free domain names",
-    "category": "development-security",
-    "tags": ["域名"],
+    "category": "development/security",
+    "tags": [
+      "域名"
+    ],
     "featured": false,
     "icon": "https://nic.eu.org/favicon.ico",
     "id": "mbgi1dca1udjks8mo0p",
@@ -279,8 +328,10 @@
     "title": "SM.MS",
     "url": "https://smms.app/",
     "description": "",
-    "category": "development-security",
-    "tags": ["免费图床"],
+    "category": "development/security",
+    "tags": [
+      "免费图床"
+    ],
     "featured": false,
     "icon": "https://smms.app/favicon.ico",
     "id": "mbgsnw3ejuijthum2hl",
@@ -291,8 +342,10 @@
     "title": "ImgURL免费图床",
     "url": "https://www.imgurl.org/",
     "description": "ImgURL免费图床上线于2017年12月，累积托管图片超过100万。ImgURL可以快速将图片转换为URL链接，为您提供简单、稳定、可信赖的图片上传于外链分享服务。",
-    "category": "development-security",
-    "tags": ["免费图床"],
+    "category": "development/security",
+    "tags": [
+      "免费图床"
+    ],
     "featured": false,
     "icon": "https://www.imgurl.org/favicon.ico",
     "id": "mbgso943ixs7msv38u",
@@ -303,8 +356,10 @@
     "title": "Z4A图床",
     "url": "https://www.z4a.net/",
     "description": "",
-    "category": "development-security",
-    "tags": ["免费图床"],
+    "category": "development/security",
+    "tags": [
+      "免费图床"
+    ],
     "featured": false,
     "icon": "https://www.z4a.net/favicon.ico",
     "id": "mbgsp6v8hgco1k1b7yv",
@@ -315,8 +370,10 @@
     "title": "Node.js",
     "url": "https://nodejs.org/zh-cn/",
     "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "category": "development-security",
-    "tags": ["JavaScript运行时"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript运行时"
+    ],
     "featured": false,
     "icon": "https://nodejs.org/static/images/favicons/favicon.png",
     "id": "mbhu0iuiw9dh03hlg1f",
@@ -327,8 +384,10 @@
     "title": "NestJS",
     "url": "https://nestjs.com/",
     "description": "NestJS is a framework for building efficient, scalable Node.js web applications. It uses modern JavaScript, is built with TypeScript and combines elements of OOP (Object Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).",
-    "category": "development-security",
-    "tags": ["Node.js框架"],
+    "category": "development/security",
+    "tags": [
+      "Node.js框架"
+    ],
     "featured": false,
     "icon": "https://nestjs.com/favicon-32x32.42b683bd.png",
     "id": "mbhu1fabpg38ip3pn0p",
@@ -339,8 +398,10 @@
     "title": "Express",
     "url": "https://expressjs.com/",
     "description": "Express is a fast, unopinionated, minimalist web framework for Node.js, providing a robust set of features for web and mobile applications.",
-    "category": "development-security",
-    "tags": ["Node.js框架"],
+    "category": "development/security",
+    "tags": [
+      "Node.js框架"
+    ],
     "featured": false,
     "icon": "https://expressjs.com/images/favicon.png",
     "id": "mbhu1yhsgm2186h9rxn",
@@ -351,8 +412,10 @@
     "title": "十年之约",
     "url": "https://www.foreverblog.cn/",
     "description": "十年之约是一个记录、展示独立博客的平台，即从加入这个活动起，我们的博客10年不关闭或者更久，保持更新和活力。把博客从爱好变成一种习惯，坚持10年，是一项很有意义的活动，我们希望更多的博主加入！",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://www.foreverblog.cn/favicon.ico",
     "id": "mbhu8hw2po5yeq9pmp",
@@ -363,8 +426,10 @@
     "title": "BlogFinder",
     "url": "https://bf.zzxworld.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://bf.zzxworld.com/favicon.ico",
     "id": "mbhu8vwof3mrc21o9av",
@@ -375,8 +440,10 @@
     "title": "BlogsClub - 博客俱乐部",
     "url": "https://www.blogsclub.org/",
     "description": "BlogsClub是一个互联网独立博客俱乐部",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://www.blogsclub.org/usr/themes/default/favicon.png",
     "id": "mbhu98vpoqzthcd27ui",
@@ -387,8 +454,10 @@
     "title": "集博栈",
     "url": "https://zhblogs.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://zhblogs.cn/favicon.ico",
     "id": "mbhu9m276gzjk9xjknq",
@@ -399,8 +468,10 @@
     "title": "博客驿站",
     "url": "https://www.bloginn.vip/",
     "description": "",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://www.bloginn.vip/favicon.ico",
     "id": "mbhu9z3tj7j0e2lbkpb",
@@ -411,8 +482,10 @@
     "title": "博客星球",
     "url": "https://www.blogplanet.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://www.blogplanet.cn/favicon.ico",
     "id": "mbhuab3nds9ljuz9lmo",
@@ -423,8 +496,10 @@
     "title": "Blogwe",
     "url": "https://blogwe.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://blogwe.com/favicon.ico",
     "id": "mbhuap1wvswtkmxaxl",
@@ -435,8 +510,10 @@
     "title": "笔墨迹",
     "url": "https://blogscn.fun/",
     "description": "Your description here.",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://photo.xiangming.site/img/blogscn_icon.png",
     "id": "mbhub1a9ucuarerirzm",
@@ -447,8 +524,10 @@
     "title": "博友圈",
     "url": "https://www.boyouquan.com/",
     "description": "博客人的朋友圈！",
-    "category": "development-security",
-    "tags": ["博客联盟"],
+    "category": "development/security",
+    "tags": [
+      "博客联盟"
+    ],
     "featured": false,
     "icon": "https://www.boyouquan.com/assets/favicon.ico",
     "id": "mbhubfatl9pgds9e5s9",
@@ -459,8 +538,10 @@
     "title": "萌国ICP备案",
     "url": "https://icp.gov.moe/",
     "description": "萌友网站联萌，快来申请萌萌的ICP备案号吧!",
-    "category": "development-security",
-    "tags": ["友链接力"],
+    "category": "development/security",
+    "tags": [
+      "友链接力"
+    ],
     "featured": false,
     "icon": "https://icp.gov.moe/favicon.ico",
     "id": "mbhubz19tffvbu089y",
@@ -471,8 +552,10 @@
     "title": "开往 | 友链接力",
     "url": "https://www.travellings.cn/",
     "description": "友链接力",
-    "category": "development-security",
-    "tags": ["友链接力"],
+    "category": "development/security",
+    "tags": [
+      "友链接力"
+    ],
     "featured": false,
     "icon": "https://www.travellings.cn/assets/favicon.png",
     "id": "mbhucd751c0vuzu6zlw",
@@ -483,8 +566,10 @@
     "title": "个站商店",
     "url": "https://storeweb.cn/",
     "description": "一个精致的，带社交元素的个人网站发布平台，博客收录网站",
-    "category": "development-security",
-    "tags": ["友链接力"],
+    "category": "development/security",
+    "tags": [
+      "友链接力"
+    ],
     "featured": false,
     "icon": "https://storeweb.cn/static/favicon.ico",
     "id": "mbhucpld1c69s4siymk",
@@ -495,8 +580,11 @@
     "title": "Sublime Text",
     "url": "https://www.sublimetext.com/",
     "description": "Available on Mac, Windows and Linux",
-    "category": "development-security",
-    "tags": ["代码编辑器", "轻量编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "轻量编辑器"
+    ],
     "featured": false,
     "icon": "https://www.sublimetext.com/favicon.ico",
     "id": "mbhv8tww5mqulad2eu5",
@@ -507,8 +595,11 @@
     "title": "Notepad++",
     "url": "https://notepad-plus-plus.org/",
     "description": "",
-    "category": "development-security",
-    "tags": ["代码编辑器", "轻量编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "轻量编辑器"
+    ],
     "featured": false,
     "icon": "https://notepad-plus-plus.org/favicon.ico",
     "id": "mbhv9hk48c1glwkit96",
@@ -519,8 +610,11 @@
     "title": "Vim",
     "url": "https://www.vim.org/",
     "description": "",
-    "category": "development-security",
-    "tags": ["代码编辑器", "轻量编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "轻量编辑器"
+    ],
     "featured": false,
     "icon": "https://www.vim.org/images/vim_shortcut.ico",
     "id": "mbhv9xdaacuv1yoszqn",
@@ -531,8 +625,11 @@
     "title": "GNU Emacs",
     "url": "https://www.gnu.org/software/emacs/",
     "description": "",
-    "category": "development-security",
-    "tags": ["代码编辑器", "轻量编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "轻量编辑器"
+    ],
     "featured": false,
     "icon": "https://www.gnu.org/favicon.ico",
     "id": "mbhvacp2hnwkjbd0v7",
@@ -543,8 +640,11 @@
     "title": "Visual Studio",
     "url": "https://visualstudio.microsoft.com/zh-hans/",
     "description": "Visual Studio 开发工具和服务让任何开发人员在任何平台和语言的应用开发都更加轻松。 随时随地免费使用代码编辑器或 IDE 进行开发。",
-    "category": "development-security",
-    "tags": ["代码编辑器", "IDE"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "IDE"
+    ],
     "featured": false,
     "icon": "https://visualstudio.microsoft.com/wp-content/uploads/2017/02/Microsoft-favicon.png",
     "id": "mbhvc66rjasniuy647",
@@ -555,8 +655,11 @@
     "title": "Visual Studio 2022 社区版",
     "url": "https://visualstudio.microsoft.com/zh-hans/vs/community/",
     "description": "试用我们免费、功能齐全且可扩展的 IDE，以创建适用于 Windows、Android 和 iOS 的新式开发人员应用。 立即免费下载社区!",
-    "category": "development-security",
-    "tags": ["代码编辑器", "IDE"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "IDE"
+    ],
     "featured": false,
     "icon": "https://visualstudio.microsoft.com/wp-content/uploads/2017/02/Microsoft-favicon.png",
     "id": "mbhvcnv68qy0xmmowoi",
@@ -567,8 +670,11 @@
     "title": "WebStorm",
     "url": "https://www.jetbrains.com/webstorm/",
     "description": "Make development more productive and enjoyable with WebStorm, the IDE for JavaScript and related technologies.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "IDE"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "IDE"
+    ],
     "featured": false,
     "icon": "https://www.jetbrains.com/favicon.ico?r=1234",
     "id": "mbhvd5iyj8tgrfysdu",
@@ -579,8 +685,11 @@
     "title": "NetBeans",
     "url": "https://netbeans.apache.org/front/main/index.html",
     "description": "Apache NetBeans",
-    "category": "development-security",
-    "tags": ["代码编辑器", "IDE"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "IDE"
+    ],
     "featured": false,
     "icon": "https://netbeans.apache.org/_/images/fav/favicon-32x32.png",
     "id": "mbhvdjqtk2t9ee963ed",
@@ -591,8 +700,12 @@
     "title": "Cursor",
     "url": "https://www.cursor.com/cn",
     "description": "Built to make you extraordinarily productive, Cursor is the best way to code with AI.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器", "Cursor"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器",
+      "Cursor"
+    ],
     "featured": true,
     "icon": "https://www.cursor.com/favicon-48x48.png",
     "id": "mbhvee15059rplaclcgu",
@@ -603,8 +716,10 @@
     "title": "Cursor 目录",
     "url": "https://cursor.directory/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Cursor"],
+    "category": "development/security",
+    "tags": [
+      "Cursor"
+    ],
     "featured": false,
     "icon": "https://cursor.directory/favicon.ico",
     "id": "mbhvg18jq4br57960tl",
@@ -615,8 +730,10 @@
     "title": "CursorList",
     "url": "https://cursorlist.com/",
     "description": "Manage and view .cursorrule files and SOPs",
-    "category": "development-security",
-    "tags": ["Cursor"],
+    "category": "development/security",
+    "tags": [
+      "Cursor"
+    ],
     "featured": false,
     "icon": "https://cursorlist.com/favicon.svg",
     "id": "mbi77cste3bdj3hfuv",
@@ -627,8 +744,11 @@
     "title": "Trae - AI 原生 IDE",
     "url": "https://www.trae.com.cn/",
     "description": "Trae AI IDE | 国内首款AI原生集成开发环境，深度集成Doubao-1.5-pro与DeepSeek模型，支持中文自然语言一键生成完整代码框架，实时预览前端效果并智能修复BUG。首创Builder模式实现需求到代码的自动化开发，兼容Windows/macOS系统，官网下载即用。",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器"
+    ],
     "featured": false,
     "icon": "https://lf-cdn.trae.com.cn/obj/trae-com-cn/trae_website_prod_cn/favicon.ico",
     "id": "mbi796rronrxkirb6x",
@@ -639,8 +759,11 @@
     "title": "Trae - Collaborate with Intelligence",
     "url": "https://www.trae.ai/",
     "description": "Trae IDE integrates seamlessly into your workflow, collaborating with you to maximize performance and efficiency.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器"
+    ],
     "featured": false,
     "icon": "https://lf-cdn.trae.ai/obj/trae-ai-sg/trae_website_prod/favicon.png",
     "id": "mbi79mltsoronugujpa",
@@ -651,8 +774,11 @@
     "title": "Windsurf",
     "url": "https://windsurf.com/",
     "description": "Windsurf (formerly Codeium) is the world's most advanced AI coding assistant for developers and enterprises. Windsurf Editor — the first AI-native IDE that keeps developers in flow.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器"
+    ],
     "featured": false,
     "icon": "https://windsurf.com/favicon.png",
     "id": "mbi7a4o0hmli8dbgb",
@@ -663,8 +789,11 @@
     "title": "Visual Studio Code for the Web",
     "url": "https://vscode.dev/?vscode-lang=zh-cn",
     "description": "Build with Visual Studio Code, anywhere, anytime, entirely in your browser.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://vscode.dev/favicon.ico",
     "id": "mbi7ax7n23zi7x4w6d",
@@ -675,8 +804,11 @@
     "title": "JSFiddle - Code Playground",
     "url": "https://jsfiddle.net/",
     "description": "JSFiddle - Test your JavaScript, CSS, HTML or CoffeeScript online with JSFiddle.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://jsfiddle.net/img/favicon.png",
     "id": "mbi7ba1km53sjdqrll9",
@@ -687,8 +819,11 @@
     "title": "StackBlitz",
     "url": "https://stackblitz.com/",
     "description": "StackBlitz is the collaborative browser-based IDE for web developers. StackBlitz eliminates time-consuming local configuration and lets developers spend more time building.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://stackblitz.com/_astro/favicon.svg",
     "id": "mbi7bqxhyr073xvyawi",
@@ -699,8 +834,11 @@
     "title": "CodePen",
     "url": "https://codepen.io/",
     "description": "",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://codepen.io/favicon.ico",
     "id": "mbi7cl75123alvzciva",
@@ -711,8 +849,11 @@
     "title": "Glitch",
     "url": "https://glitch.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://glitch.com/favicon.ico",
     "id": "mbi7cyy5me0c7fqre1e",
@@ -723,8 +864,11 @@
     "title": "JS Bin",
     "url": "https://jsbin.com/",
     "description": "Sample of the bin:",
-    "category": "development-security",
-    "tags": ["代码编辑器", "在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://static.jsbin.com/images/favicon.png",
     "id": "mbi7dgsoc344lawz05",
@@ -735,8 +879,11 @@
     "title": "Augment Code",
     "url": "https://www.augmentcode.com/",
     "description": "Experience the AI platform that truly understands your codebase. Our developer AI helps teams code faster, make smarter decisions, and unlock collective knowledge. Try free today.",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": true,
     "icon": "https://cdn.prod.website-files.com/66d76c2202b335e39ad2b5e8/66f302d663108ca67c19ddbc_Favicon.png",
     "id": "mbi7m41dj7pt3voemm",
@@ -747,8 +894,11 @@
     "title": "Kilo Code",
     "url": "https://kilocode.ai/",
     "description": "Write code more efficiently by generating code, automating tasks, and providing suggestions",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": true,
     "icon": "https://kilocode.ai/favicon.ico",
     "id": "mbi7oe81quov820ke2h",
@@ -759,8 +909,11 @@
     "title": "Trae - 插件",
     "url": "https://www.trae.com.cn/plugin",
     "description": "Plugin",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://lf-cdn.trae.com.cn/obj/trae-com-cn/trae_website_prod_cn/favicon.ico",
     "id": "mbi7qia5ac1z54rjyb",
@@ -771,8 +924,11 @@
     "title": "文心快码",
     "url": "https://comate.baidu.com/zh",
     "description": "文心快码（Baidu Comate）是由百度基于文心大模型研发的编程辅助工具，可提供自动代码生成、单元测试生成、注释生成以及智能问答等功能。支持上百种编程语言，旨在帮助开发者大幅提升编码效率。使用Comate，让编程更加高效和便捷。",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://comate.baidu.com/favicon.ico",
     "id": "mbi7sdt17p9jq3svsiy",
@@ -783,8 +939,10 @@
     "title": "Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code",
     "url": "https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans",
     "description": "Extension for Visual Studio Code - Language pack extension for Chinese (Simplified)",
-    "category": "development-security",
-    "tags": ["IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://marketplace.visualstudio.com/favicon.ico",
     "id": "mbi7v2zdwq1yln9fwgd",
@@ -795,8 +953,10 @@
     "title": "Live Preview",
     "url": "https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server",
     "description": "Extension for Visual Studio Code - Hosts a local server in your workspace for you to preview your webpages on.",
-    "category": "development-security",
-    "tags": ["IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://marketplace.visualstudio.com/favicon.ico",
     "id": "mbi7vkzh57djwr6a89n",
@@ -807,8 +967,10 @@
     "title": "DNS Lookup",
     "url": "https://www.nslookup.io/",
     "description": "Find all DNS records for a domain name with this online tool. Nslookup shows A, AAAA, CNAME, TXT, MX, SPF, NS, SOA and more.",
-    "category": "development-security",
-    "tags": ["DNS查询"],
+    "category": "development/security",
+    "tags": [
+      "DNS查询"
+    ],
     "featured": true,
     "icon": "https://www.nslookup.io/img/favicon.png",
     "id": "mbi9qeqpb81bi2ntb48",
@@ -819,8 +981,10 @@
     "title": "稀土掘金",
     "url": "https://juejin.cn/",
     "description": "掘金是面向全球中文开发者的技术内容分享与交流平台。我们通过技术文章、沸点、课程、直播等产品和服务，打造一个激发开发者创作灵感，激励开发者沉淀分享，陪伴开发者成长的综合类技术社区。",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/static/favicons/favicon-32x32.png",
     "id": "mbi9rxbloftdrrl84no",
@@ -831,8 +995,10 @@
     "title": "博客园",
     "url": "https://www.cnblogs.com/",
     "description": "专注于为开发者服务，帮助开发者用代码改变世界",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://assets.cnblogs.com/favicon_v3_2.ico",
     "id": "mbi9s9l9ztxcce4haw",
@@ -843,8 +1009,10 @@
     "title": "OSCHINA",
     "url": "https://www.oschina.net/",
     "description": "OSCHINA.NET 是目前领先的中文开源技术社区。我们传播开源的理念，推广开源项目，为 IT 开发者提供了一个发现、使用、并交流开源技术的平台",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://static.oschina.net/new-osc/img/favicon.ico",
     "id": "mbi9slcoevbdqdl0kkn",
@@ -855,8 +1023,10 @@
     "title": "CSDN",
     "url": "https://www.csdn.net/",
     "description": "CSDN是全球知名中文IT技术交流平台,创建于1999年,包含原创博客、精品问答、职业培训、技术论坛、资源下载等产品服务,提供原创、优质、完整内容的专业IT技术开发社区.",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://g.csdnimg.cn/static/logo/favicon32.ico",
     "id": "mbi9t21oddruktyh38j",
@@ -867,8 +1037,10 @@
     "title": "Medium",
     "url": "https://medium.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://medium.com/favicon.ico",
     "id": "mbi9tks8drrr3s758nw",
@@ -879,8 +1051,10 @@
     "title": "Stack Overflow",
     "url": "https://stackoverflow.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://stackoverflow.com/favicon.ico",
     "id": "mbi9u1qjc9usxel2ds5",
@@ -891,8 +1065,10 @@
     "title": "DEV Community",
     "url": "https://dev.to/",
     "description": "A space to discuss and keep up software development and manage your software career",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://media2.dev.to/dynamic/image/width=32,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png",
     "id": "mbi9udr2p7iqzcbsou8",
@@ -903,8 +1079,10 @@
     "title": "v2ex",
     "url": "https://www.v2ex.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": false,
     "icon": "https://www.v2ex.com/favicon.ico",
     "id": "mbi9urwfqybdiujmvnn",
@@ -915,8 +1093,10 @@
     "title": "Microsoft 开发人员博客",
     "url": "https://devblogs.microsoft.com/",
     "description": "Get the latest information, insights, and news from Microsoft.",
-    "category": "development-security",
-    "tags": ["技术博客"],
+    "category": "development/security",
+    "tags": [
+      "技术博客"
+    ],
     "featured": false,
     "icon": "https://devblogs.microsoft.com/wp-content/uploads/2024/10/Microsoft-favicon-48x48.jpg",
     "id": "mbi9vnu12shhwrlznn",
@@ -927,8 +1107,10 @@
     "title": "廖雪峰的官方网站",
     "url": "https://liaoxuefeng.com/",
     "description": "研究互联网产品和技术，提供原创中文精品教程",
-    "category": "development-security",
-    "tags": ["技术博客"],
+    "category": "development/security",
+    "tags": [
+      "技术博客"
+    ],
     "featured": false,
     "icon": "https://liaoxuefeng.com/favicon.ico",
     "id": "mbi9w7c1ad30bqz0rd",
@@ -939,8 +1121,10 @@
     "title": "Firefox Source Tree Documentation",
     "url": "https://firefox-source-docs.mozilla.org/index.html",
     "description": "Firefox Source Docs  documentation",
-    "category": "development-security",
-    "tags": ["浏览器文档"],
+    "category": "development/security",
+    "tags": [
+      "浏览器文档"
+    ],
     "featured": false,
     "icon": "https://firefox-source-docs.mozilla.org/_static/favicon.ico",
     "id": "mbi9xf89ygza421jmjg",
@@ -951,8 +1135,10 @@
     "title": "Chrome for Developers",
     "url": "https://developer.chrome.com/docs?hl=zh-cn",
     "description": "",
-    "category": "development-security",
-    "tags": ["浏览器文档"],
+    "category": "development/security",
+    "tags": [
+      "浏览器文档"
+    ],
     "featured": false,
     "icon": "https://developer.chrome.com/favicon.ico",
     "id": "mbi9xwdu2jn8hq386ri",
@@ -963,8 +1149,10 @@
     "title": "Microsoft Edge 文档",
     "url": "https://learn.microsoft.com/zh-cn/microsoft-edge/",
     "description": "为开发人员、IT 管理员和浏览器用户Microsoft Edge信息;包括 DevTools、扩展、PWA、WebDriver 等。",
-    "category": "development-security",
-    "tags": ["浏览器文档"],
+    "category": "development/security",
+    "tags": [
+      "浏览器文档"
+    ],
     "featured": false,
     "icon": "https://learn.microsoft.com/favicon.ico",
     "id": "mbi9yf8vjpqih8sclz",
@@ -975,8 +1163,10 @@
     "title": "Bootswatch",
     "url": "https://bootswatch.com/",
     "description": "Free themes for Bootstrap",
-    "category": "development-security",
-    "tags": ["Bootstrap"],
+    "category": "development/security",
+    "tags": [
+      "Bootstrap"
+    ],
     "featured": false,
     "icon": "https://bootswatch.com/favicon.ico",
     "id": "mbi9zymfsup3cvqa538",
@@ -987,8 +1177,11 @@
     "title": "WordPress",
     "url": "https://wordpress.com/zh-cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["CMS", "WordPress"],
+    "category": "development/security",
+    "tags": [
+      "CMS",
+      "WordPress"
+    ],
     "featured": false,
     "icon": "https://wordpress.com/favicon.ico",
     "id": "mbia640u3kt2klb3jno",
@@ -999,8 +1192,10 @@
     "title": "THYUU/星度主题品牌站",
     "url": "https://theme.thyuu.com/",
     "description": "THYUU/星度主题,感受它与文字的温度,一款用心制作的多平台综合博客主题框架",
-    "category": "development-security",
-    "tags": ["WordPress"],
+    "category": "development/security",
+    "tags": [
+      "WordPress"
+    ],
     "featured": false,
     "icon": "https://theme.thyuu.com/media/image/logo-theme.svg",
     "id": "mbia7ihoeqe8kj2jood",
@@ -1011,8 +1206,10 @@
     "title": "PIX",
     "url": "https://pixit.cn/",
     "description": "wordpress类朋友圈/轻社区主题",
-    "category": "development-security",
-    "tags": ["WordPress"],
+    "category": "development/security",
+    "tags": [
+      "WordPress"
+    ],
     "featured": false,
     "icon": "https://pixit.cn/wp-content/uploads/2022/06/logo.png",
     "id": "mbia8a7u3ed67aoldqr",
@@ -1023,8 +1220,10 @@
     "title": "知更鸟",
     "url": "https://zmingcx.com/",
     "description": "分享交流WordPress经验与技巧，关注前端设计与网站制作，打造自己专属的WordPress主题，让你的博客与众不同！",
-    "category": "development-security",
-    "tags": ["WordPress"],
+    "category": "development/security",
+    "tags": [
+      "WordPress"
+    ],
     "featured": false,
     "icon": "https://zmingcx.com/wp-content/uploads/work/2022012104263758.png",
     "id": "mbia8ubpox2v8ksger9",
@@ -1035,8 +1234,10 @@
     "title": "Publii",
     "url": "https://getpublii.com/",
     "description": "Build blazing-fast, secure websites with Publii.  Easy for bloggers, developers & businesses. GDPR-compliant & packed with features. Try Publii, the user-friendly static CMS!",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://getpublii.com/favicon-96x96.png",
     "id": "mbia9j8wxcwk0rr2h6j",
@@ -1047,8 +1248,10 @@
     "title": "Joomla.org",
     "url": "https://www.joomla.org/",
     "description": "The Flexible Platform Empowering Website Creators",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://www.joomla.org/favicon.ico",
     "id": "mbia9w7fek4n0ert6bn",
@@ -1059,8 +1262,10 @@
     "title": "Drupal",
     "url": "https://new.drupal.org/home",
     "description": "",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://new.drupal.org/favicon.ico",
     "id": "mbiaa9woksnzykocgp",
@@ -1071,8 +1276,10 @@
     "title": "xLog",
     "url": "https://xlog.app/",
     "description": "",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://xlog.app/favicon.ico",
     "id": "mbiaalpzx7s2v0w77w",
@@ -1083,8 +1290,10 @@
     "title": "Halo",
     "url": "https://www.halo.run/",
     "description": "Halo 是一款强大易用的开源建站工具，配合上不同的模板与插件，可以很好地帮助你构建你心中的理想站点。",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://www.halo.run/upload/2021/03/Adaptive256-463ca9b92e2d40268431018c07735842.png",
     "id": "mbiaaxtaj5jiazt8o7",
@@ -1095,8 +1304,10 @@
     "title": "Gridea",
     "url": "https://open.gridea.dev/",
     "description": "一个静态博客写作客户端 | 记录生活、心情、知识、笔记、创意...",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://open.gridea.dev/favicon.ico",
     "id": "mbiabcxo0vqsvmow5li",
@@ -1107,8 +1318,10 @@
     "title": "Typecho Official Site",
     "url": "https://typecho.org/",
     "description": "",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://typecho.org/favicon.ico",
     "id": "mbiabmtsmhxuiy4j9dk",
@@ -1119,8 +1332,10 @@
     "title": "ZBlog",
     "url": "https://www.zblogcn.com/",
     "description": "开源免费、小巧强大的博客程序与CMS建站系统",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://www.zblogcn.com/favicon.ico",
     "id": "mbiac17qzioid2m9vl",
@@ -1131,8 +1346,12 @@
     "title": "Hexo",
     "url": "https://hexo.io/zh-cn/",
     "description": "Hexo 是一个由Node.js驱动的快速、简单的 & 强大的博客框架。",
-    "category": "development-security",
-    "tags": ["SSG", "Hexo", "博客框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "Hexo",
+      "博客框架"
+    ],
     "featured": false,
     "icon": "https://hexo.io/icon/favicon-196x196.png",
     "id": "mbiaeeceos7kc0uscis",
@@ -1143,8 +1362,10 @@
     "title": "Butterfly主题美化教程",
     "url": "https://butterfly.zhheo.com/",
     "description": "让每个人轻松的自定义自己的博客",
-    "category": "development-security",
-    "tags": ["Hexo"],
+    "category": "development/security",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://butterfly.zhheo.com/favicon.png",
     "id": "mbiagjfc1u650xthglc",
@@ -1155,8 +1376,12 @@
     "title": "Hugo",
     "url": "https://gohugo.io/",
     "description": "Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.",
-    "category": "development-security",
-    "tags": ["SSG", "博客框架", "Hugo"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "博客框架",
+      "Hugo"
+    ],
     "featured": false,
     "icon": "https://gohugo.io/favicon-32x32.png",
     "id": "mbiajjp5dk1hbefnu5",
@@ -1167,8 +1392,12 @@
     "title": "Jekyll",
     "url": "https://jekyllcn.com/",
     "description": "将纯文本转换为静态博客网站",
-    "category": "development-security",
-    "tags": ["SSG", "Jekyll", "博客框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "Jekyll",
+      "博客框架"
+    ],
     "featured": false,
     "icon": "https://jekyllcn.com/favicon.ico",
     "id": "mbialx9wrsb38632bii",
@@ -1179,8 +1408,10 @@
     "title": "Blogger",
     "url": "https://www.blogger.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["CMS"],
+    "category": "development/security",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://www.blogger.com/favicon.ico",
     "id": "mbian6luw76likmauwh",
@@ -1191,8 +1422,11 @@
     "title": "BootstrapCDN",
     "url": "https://www.bootstrapcdn.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["CDN", "Bootstrap"],
+    "category": "development/security",
+    "tags": [
+      "CDN",
+      "Bootstrap"
+    ],
     "featured": false,
     "icon": "https://www.bootstrapcdn.com/favicon.ico",
     "id": "mbj77bktpj9znfr6ncn",
@@ -1203,8 +1437,10 @@
     "title": "Gravatar",
     "url": "https://gravatar.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Gravatar"],
+    "category": "development/security",
+    "tags": [
+      "Gravatar"
+    ],
     "featured": false,
     "icon": "https://gravatar.com/favicon.ico",
     "id": "mbj78ay2fnhz9wqbcdl",
@@ -1215,8 +1451,10 @@
     "title": "Gravatar 中文站",
     "url": "https://cn.gravatar.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Gravatar"],
+    "category": "development/security",
+    "tags": [
+      "Gravatar"
+    ],
     "featured": false,
     "icon": "https://cn.gravatar.com/favicon.ico",
     "id": "mbj78st0dy445o0hxs",
@@ -1227,8 +1465,10 @@
     "title": "WeAvatar",
     "url": "https://weavatar.com/",
     "description": "WeAvatar 是超越 Gravatar 的新一代头像服务，支持多级头像匹配，WEBP 及 AVIF、HEIF 格式返回，引入 AI 自动审核头像。",
-    "category": "development-security",
-    "tags": ["Gravatar"],
+    "category": "development/security",
+    "tags": [
+      "Gravatar"
+    ],
     "featured": false,
     "icon": "https://weavatar.com/favicon.ico",
     "id": "mbj7970jd1mm5phaebf",
@@ -1239,8 +1479,10 @@
     "title": "Cravatar 初认头像",
     "url": "https://cravatar.com/",
     "description": "Cravatar（初认头像）是开放、免费的中国互联网公共头像服务，为您的网站公开个人资料提供助力，无论您在互联网上的何处发帖、评论或在线互动均可获取。China Recognized Avatar 真人、真实、真像好用方便。Cravatar 对任何人永久免费。",
-    "category": "development-security",
-    "tags": ["Gravatar"],
+    "category": "development/security",
+    "tags": [
+      "Gravatar"
+    ],
     "featured": false,
     "icon": "https://cravatar.com/wp-content/uploads/2023/08/cravatar-icon-150x150.png",
     "id": "mbj79lh6vfekdqp3r7r",
@@ -1251,8 +1493,10 @@
     "title": "Multiavatar",
     "url": "https://multiavatar.com/",
     "description": "12 billion unique multicultural avatars. Generate your own free avatar, get your Multiavatar merch.",
-    "category": "development-security",
-    "tags": ["Gravatar"],
+    "category": "development/security",
+    "tags": [
+      "Gravatar"
+    ],
     "featured": false,
     "icon": "https://multiavatar.com/favicon.ico?v=001",
     "id": "mbj7a0jyubi257ire3f",
@@ -1263,8 +1507,11 @@
     "title": "Jest",
     "url": "https://jestjs.io/",
     "description": "",
-    "category": "development-security",
-    "tags": ["前端测试", "单元测试"],
+    "category": "development/security",
+    "tags": [
+      "前端测试",
+      "单元测试"
+    ],
     "featured": false,
     "icon": "https://jestjs.io/img/favicon/favicon.ico",
     "id": "mbj7k2592wsu0gdq6j6",
@@ -1275,8 +1522,11 @@
     "title": "Vitest",
     "url": "https://vitest.dev/",
     "description": "Next generation testing framework powered by Vite",
-    "category": "development-security",
-    "tags": ["前端测试", "单元测试"],
+    "category": "development/security",
+    "tags": [
+      "前端测试",
+      "单元测试"
+    ],
     "featured": false,
     "icon": "https://vitest.dev/favicon.ico",
     "id": "mbj7kiw2tbg975d7qr",
@@ -1287,8 +1537,11 @@
     "title": "Playwright",
     "url": "https://playwright.dev/",
     "description": "Cross-browser end-to-end testing for modern web apps",
-    "category": "development-security",
-    "tags": ["前端测试", "端到端测试"],
+    "category": "development/security",
+    "tags": [
+      "前端测试",
+      "端到端测试"
+    ],
     "featured": false,
     "icon": "https://playwright.dev/img/playwright-logo.ico",
     "id": "mbj7lat5qcqyb95kbqf",
@@ -1299,8 +1552,10 @@
     "title": "utterances",
     "url": "https://utteranc.es/",
     "description": "",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://utteranc.es/favicon.ico",
     "id": "mbj7nzjfnx2n83rfdrq",
@@ -1311,8 +1566,10 @@
     "title": "Staticman",
     "url": "https://staticman.net/",
     "description": "I bring user-generated content to static sites",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://staticman.net/assets/images/icons/favicon-32x32.png",
     "id": "mbj7oabo1qf02c9cm6",
@@ -1323,8 +1580,10 @@
     "title": "Artalk",
     "url": "https://artalk.js.org/",
     "description": "A self-hosted comment system built in Golang, providing a lightweight and highly customizable solution for adding comments to your website.",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://artalk.js.org/favicon.png",
     "id": "mbj7onppc5q5mi099a",
@@ -1335,8 +1594,10 @@
     "title": "Cusdis",
     "url": "https://cusdis.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://cusdis.com/favicon.ico",
     "id": "mbj7p0j0z7dnokbcwv",
@@ -1347,8 +1608,10 @@
     "title": "Hyvor Talk",
     "url": "https://talk.hyvor.com/",
     "description": "Hyvor Talk is a privacy-first, all-in-one platform for comments, newsletters, memberships and more engaging features for your website.",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://talk.hyvor.com/favicon.ico",
     "id": "mbj7pcuihuy6gfxsh8n",
@@ -1359,8 +1622,10 @@
     "title": "Commento",
     "url": "https://commento.io/",
     "description": "Add comments to your website with Commento. It's fast, modern, and privacy-focused.",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://cdn.commento.io/images/logo.svg",
     "id": "mbj7pnp0jqato97328a",
@@ -1371,8 +1636,10 @@
     "title": "Twikoo",
     "url": "https://twikoo.js.org/",
     "description": "一个简洁、安全、免费的静态网站评论系统",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": true,
     "icon": "https://twikoo.js.org/twikoo-logo-mini.png",
     "id": "mbj7qsqpo67c8x5cp4l",
@@ -1383,8 +1650,10 @@
     "title": "Waline",
     "url": "https://waline.js.org/",
     "description": "一款简洁、安全的评论系统。",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://waline.js.org/favicon.ico",
     "id": "mbj7r3z2fg71js8wn75",
@@ -1395,8 +1664,10 @@
     "title": "Valine",
     "url": "https://valine.js.org/",
     "description": "一款快速、简洁且高效的无后端评论系统。",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://valine.js.org/images/favicon.ico",
     "id": "mbj7rhs3746kgkjb5n4",
@@ -1407,8 +1678,10 @@
     "title": "Vssue",
     "url": "https://vssue.js.org/zh/",
     "description": "Vue 驱动的、基于 Issue 的评论插件",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://vssue.js.org/favicon.ico",
     "id": "mbj7rsuprxtik07abvs",
@@ -1419,8 +1692,10 @@
     "title": "Disqus",
     "url": "https://disqus.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://disqus.com/favicon.ico",
     "id": "mbj7s7ebke8u1o5zg5l",
@@ -1431,8 +1706,10 @@
     "title": "睿言云评",
     "url": "https://www.ruispeak.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["评论系统"],
+    "category": "development/security",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://www.ruispeak.cn/favicon.ico",
     "id": "mbj7sj2p952xhr7zoq7",
@@ -1443,8 +1720,10 @@
     "title": "Resend",
     "url": "https://resend.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["邮件服务"],
+    "category": "development/security",
+    "tags": [
+      "邮件服务"
+    ],
     "featured": false,
     "icon": "https://resend.com/favicon.ico",
     "id": "mbj7td1j7q3sjlwihk7",
@@ -1455,8 +1734,10 @@
     "title": "MarkEditor",
     "url": "https://www.markeditor.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://www.markeditor.com/favicon.ico",
     "id": "mbj9aecvgyvv1y23rvh",
@@ -1467,8 +1748,10 @@
     "title": "MWeb",
     "url": "https://zh.mweb.im/",
     "description": "专业的Markdown写作、记笔记、静态博客生成软件",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://zh.mweb.im/asset/icon_192.png",
     "id": "mbj9b12w0bcmi3rjk90r",
@@ -1479,8 +1762,10 @@
     "title": "Typora",
     "url": "https://typora.io/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://typora.io/favicon.ico",
     "id": "mbj9bghtgv6w0zqkg0u",
@@ -1491,8 +1776,10 @@
     "title": "Markdown Nice",
     "url": "https://editor.mdnice.com/",
     "description": "mdnice 是一款 Markdown 微信编辑器，拥有良好的兼容性、海量主题样式、免费的图床、强大的技术团队，提供文章一键排版，同时支持知乎、掘金、微信订阅号等多个平台。",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://editor.mdnice.com/favicon.svg",
     "id": "mbj9c1l83gqqbt6rxjk",
@@ -1503,8 +1790,10 @@
     "title": "markdown转微信公众号",
     "url": "https://wechat.bmpi.dev/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://wechat.bmpi.dev/favicon.svg",
     "id": "mbj9dlg7vvzcre4py9f",
@@ -1515,8 +1804,10 @@
     "title": "OpenWrite",
     "url": "https://openwrite.cn/",
     "description": "做最懂自媒体的工具平台",
-    "category": "development-security",
-    "tags": ["Markdown编辑器"],
+    "category": "development/security",
+    "tags": [
+      "Markdown编辑器"
+    ],
     "featured": false,
     "icon": "https://openwrite.cn/favicon.ico",
     "id": "mbj9efgxsnw9l9utmoq",
@@ -1527,8 +1818,10 @@
     "title": "Featurebase",
     "url": "https://www.featurebase.app/",
     "description": "",
-    "category": "development-security",
-    "tags": ["反馈平台"],
+    "category": "development/security",
+    "tags": [
+      "反馈平台"
+    ],
     "featured": true,
     "icon": "https://www.featurebase.app/favicon.ico",
     "id": "mbjmua4f83xl8j6pxha",
@@ -1539,8 +1832,10 @@
     "title": "八爪鱼采集器",
     "url": "https://www.bazhuayu.com/",
     "description": "八爪鱼网页数据采集器，是一款使用简单、功能强大的网络爬虫工具，完全可视化操作，无需编写代码，内置海量模板，支持任意网络数据抓取，连续五年大数据行业数据采集领域排名领先。",
-    "category": "development-security",
-    "tags": ["网页采集"],
+    "category": "development/security",
+    "tags": [
+      "网页采集"
+    ],
     "featured": false,
     "icon": "https://www.bazhuayu.com/favicon.ico?v1",
     "id": "mbkjvln4tlev4wq3dbr",
@@ -1551,8 +1846,10 @@
     "title": "webpack",
     "url": "https://webpack.docschina.org/",
     "description": "webpack 是一个模块打包器。它的主要目标是将 JavaScript 文件打包在一起，打包后的文件用于在浏览器中使用，但它也能够胜任转换、打包或包裹任何资源。",
-    "category": "development-security",
-    "tags": ["模块打包"],
+    "category": "development/security",
+    "tags": [
+      "模块打包"
+    ],
     "featured": false,
     "icon": "https://webpack.docschina.org/favicon.f326220248556af65f41.ico",
     "id": "mbkn4tlfabciuntpnro",
@@ -1563,8 +1860,10 @@
     "title": "Rollup",
     "url": "https://cn.rollupjs.org/",
     "description": "The JavaScript module bundler",
-    "category": "development-security",
-    "tags": ["模块打包"],
+    "category": "development/security",
+    "tags": [
+      "模块打包"
+    ],
     "featured": false,
     "icon": "https://cn.rollupjs.org/favicon.png",
     "id": "mbkn54jwlaa8p4u2xln",
@@ -1575,8 +1874,10 @@
     "title": "Parcel",
     "url": "https://parceljs.org/",
     "description": "Parcel combines a great out-of-the-box development experience with a scalable architecture that can take your project from just getting started to massive production application.",
-    "category": "development-security",
-    "tags": ["模块打包"],
+    "category": "development/security",
+    "tags": [
+      "模块打包"
+    ],
     "featured": false,
     "icon": "https://parceljs.org/favicon.ico",
     "id": "mbkn5jakmui86et1yhh",
@@ -1587,8 +1888,10 @@
     "title": "Babel",
     "url": "https://babeljs.io/",
     "description": "The compiler for next generation JavaScript",
-    "category": "development-security",
-    "tags": ["编译器"],
+    "category": "development/security",
+    "tags": [
+      "编译器"
+    ],
     "featured": false,
     "icon": "https://babeljs.io/img/favicon.png",
     "id": "mbkn7047r26qdzgtkp9",
@@ -1599,8 +1902,10 @@
     "title": "Babel 中文文档",
     "url": "https://www.babeljs.cn/",
     "description": "Babel - 下一代 JavaScript 语法的编译器",
-    "category": "development-security",
-    "tags": ["编译器"],
+    "category": "development/security",
+    "tags": [
+      "编译器"
+    ],
     "featured": false,
     "icon": "https://www.babeljs.cn/img/favicon.png",
     "id": "mbkn7f5554bkhdrcu1l",
@@ -1611,8 +1916,10 @@
     "title": "SWC",
     "url": "https://swc.rs/",
     "description": "Rust-based platform for the Web",
-    "category": "development-security",
-    "tags": ["编译器"],
+    "category": "development/security",
+    "tags": [
+      "编译器"
+    ],
     "featured": false,
     "icon": "https://swc.rs/favicon/favicon-32x32.png",
     "id": "mbkn7ws0ag6ht5fhace",
@@ -1623,8 +1930,10 @@
     "title": "Vite",
     "url": "https://cn.vitejs.dev/",
     "description": "Next Generation Frontend Tooling",
-    "category": "development-security",
-    "tags": ["构建工具"],
+    "category": "development/security",
+    "tags": [
+      "构建工具"
+    ],
     "featured": false,
     "icon": "https://cn.vitejs.dev/logo.svg",
     "id": "mbkn8xhe0ns2ucovptin",
@@ -1635,8 +1944,10 @@
     "title": "Replit",
     "url": "https://replit.com/",
     "description": "Replit is an AI-powered platform for building professional web apps and websites.",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://cdn.replit.com/dotcom/favicon-196.png",
     "id": "mbknsdl8x64n1wazh2",
@@ -1647,8 +1958,10 @@
     "title": "Lovable",
     "url": "https://lovable.dev/",
     "description": "Build software products, using only a chat interface",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://lovable.dev/favicon.ico",
     "id": "mbknt6lrbn2womu3zxb",
@@ -1659,8 +1972,10 @@
     "title": "Same",
     "url": "https://same.new/",
     "description": "",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://same.new/favicon-32x32.png",
     "id": "mbknu8r3urcbcx0596",
@@ -1671,8 +1986,10 @@
     "title": "Gamma",
     "url": "https://gamma.app/",
     "description": "",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://gamma.app/favicon.ico",
     "id": "mbknv92p0joupz9d3msv",
@@ -1683,8 +2000,10 @@
     "title": "DeepSite",
     "url": "https://deepsite.site/zh",
     "description": "DeepSite Huggingface开发， Deepseek V3最新模型驱动是一款 AI 编码工具，让您无需编程即可创建网站和 Web 应用程序。获得实时预览、优化的 SEO 和快速部署——所有这些都在一个强大的平台中。",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://deepsite.site/favicon.ico",
     "id": "mbknx5y93joyazu91tf",
@@ -1695,8 +2014,10 @@
     "title": "Popsy",
     "url": "https://popsy.co/",
     "description": "Create a beautiful no-code website in minutes. Popsy works just like Notion but is built from the ground up for building websites. Choose a free template. Edit content just like in Notion. Customize styles without code. Free Notion icons and illustrations.",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://popsy.co/favicon.svg",
     "id": "mbknxlaojl4arbra2tm",
@@ -1707,8 +2028,10 @@
     "title": "AI Website Builder",
     "url": "https://wordpress.com/ai-website-builder/",
     "description": "",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://wordpress.com/favicon.ico",
     "id": "mbkny23lndok3krjjb",
@@ -1719,8 +2042,10 @@
     "title": "Readdy",
     "url": "https://readdy.ai/",
     "description": "Build your dream websites by talking with AI - no drag-and-drop needed. When you're happy, publish instantly, or export as clean code or Figma files. Perfect for small teams with limited design resources, or agencies looking to deliver 10x faster.",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://framerusercontent.com/images/kCeKN2l2KX0tIQDaoTZ2CX8w5Ns.png",
     "id": "mbknymsqiutcsrsrlfc",
@@ -1731,8 +2056,10 @@
     "title": "Logical",
     "url": "https://logical.so/",
     "description": "The first AI driven visual development platform.",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://logical.so/images/favicon.png",
     "id": "mbko6o23qrd96wglrhi",
@@ -1743,8 +2070,10 @@
     "title": "Lightning AI",
     "url": "https://lightning.ai/",
     "description": "The all-in-one platform for AI development. Code together. Prototype. Train. Scale. Serve. From your browser - with zero setup. From the creators of PyTorch Lightning.",
-    "category": "development-security",
-    "tags": ["在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://lightning.ai/favicon/favicon.ico",
     "id": "mbko8mmv9mk90r2am7",
@@ -1755,8 +2084,10 @@
     "title": "Discover Frontend AI",
     "url": "https://www.webcrumbs.ai/",
     "description": "Take your frontend game to the next level. Use AI-powered tools and a visual editor to create, refine, and perfect components in seconds while keeping your designs clean and consistent.",
-    "category": "development-security",
-    "tags": ["在线编辑器"],
+    "category": "development/security",
+    "tags": [
+      "在线编辑器"
+    ],
     "featured": false,
     "icon": "https://webcrumbs.cloud/logo/favicon.ico",
     "id": "mbkocbue4l751nhf8qd",
@@ -1767,8 +2098,10 @@
     "title": "Websparks AI Software Engineer Agent",
     "url": "https://websparks.ai/",
     "description": "Talk with Websparks AI Agent, an AI assistant from Websparks Corporation",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://websparks.ai/icons/logo.svg",
     "id": "mbkoerkodidxrphk4ce",
@@ -1779,8 +2112,11 @@
     "title": "Jolt AI",
     "url": "https://www.usejolt.ai/",
     "description": "Finally, AI that understands large codebases. Jolt AI is purpose-built for 100K to multi-million line codebases.",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://www.usejolt.ai/favicon.png",
     "id": "mbkohwihy06rd9qomo",
@@ -1791,8 +2127,10 @@
     "title": "vly.ai",
     "url": "https://vly.ai/",
     "description": "English is the new programming language",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://vly.ai/favicon_new.png",
     "id": "mbkou9cyxyfg08lgau",
@@ -1803,8 +2141,10 @@
     "title": "Sparkable",
     "url": "https://www.sparkableai.com/",
     "description": "The AI assistant built for Developers",
-    "category": "development-security",
-    "tags": ["AI应用生成"],
+    "category": "development/security",
+    "tags": [
+      "AI应用生成"
+    ],
     "featured": false,
     "icon": "https://www.sparkableai.com/favicon-32x32.png",
     "id": "mbkpdibz1k8ov4o9lki",
@@ -1815,8 +2155,10 @@
     "title": "co.dev",
     "url": "https://www.co.dev/",
     "description": "Transform your ideas into production-ready web applications with Codev. Our AI-powered platform converts text descriptions into full-stack Next.js apps instantly.",
-    "category": "development-security",
-    "tags": ["AI应用生成"],
+    "category": "development/security",
+    "tags": [
+      "AI应用生成"
+    ],
     "featured": false,
     "icon": "https://www.co.dev/favicon.ico",
     "id": "mbkpeu3w71f66u2xfo",
@@ -1827,8 +2169,10 @@
     "title": "Builder.io",
     "url": "https://www.builder.io/",
     "description": "Builder is the only Visual Development Platform that offers an AI-powered design-to-code tool, a visual editor, and an enterprise CMS.",
-    "category": "development-security",
-    "tags": ["AI应用生成"],
+    "category": "development/security",
+    "tags": [
+      "AI应用生成"
+    ],
     "featured": true,
     "icon": "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F470aa2bd45fb4ff5b77c91a394a957e6?width=240",
     "id": "mbkpflla6bkc96wvlq3",
@@ -1839,8 +2183,10 @@
     "title": "BuilderKit",
     "url": "https://apps.builderkit.ai/",
     "description": "Highly modular end to end NextJs AI Boilerplate that allows you to build any AI Apps within days",
-    "category": "development-security",
-    "tags": ["AI应用生成"],
+    "category": "development/security",
+    "tags": [
+      "AI应用生成"
+    ],
     "featured": false,
     "icon": "https://apps.builderkit.ai/favicon.ico",
     "id": "mbkph0tu302crrpbpfw",
@@ -1851,8 +2197,10 @@
     "title": "CodeAI ",
     "url": "https://www.codeai.studio/",
     "description": "",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://www.codeai.studio/assets/logo.png",
     "id": "mbkpvdb8hvku3g0jili",
@@ -1863,8 +2211,11 @@
     "title": "Continue",
     "url": "https://www.continue.dev/",
     "description": "Amplified developers, AI-enhanced development · The leading open-source AI code assistant. You can connect any models and any context to build custom autocomplete and chat experiences inside the IDE",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://cdn.prod.website-files.com/663e06c56841363663ffbbcf/665253511c9fe499ba28f6c5_Logo_32x32%20(1).png",
     "id": "mbkpyemzvbq0gf04knf",
@@ -1875,8 +2226,11 @@
     "title": "CodeMate",
     "url": "https://codemate.ai/",
     "description": "Code 10x faster as CodeMate search, navigate and understand complex codebases for you.",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://codemate.ai/favicon.ico",
     "id": "mbkq72ulp3p9s5h3yvl",
@@ -1887,8 +2241,10 @@
     "title": "Codegen",
     "url": "https://codegen.com/",
     "description": "Ship with AI using Codegen, your AI developer teammate that helps you build incredible software faster. Get code reviews, bug fixes, and feature implementations through natural language.",
-    "category": "development-security",
-    "tags": ["AI应用生成"],
+    "category": "development/security",
+    "tags": [
+      "AI应用生成"
+    ],
     "featured": true,
     "icon": "https://codegen.com/icons/favicon-96x96.png",
     "id": "mbkqgz9mhw4x61wfk2n",
@@ -1899,8 +2255,11 @@
     "title": "Code Snippets AI",
     "url": "https://codesnippets.ai/",
     "description": "Contextually-rich AI chats, integrated with your secure code snippets library.\nBuild new features, fix bugs, //add comments and understand your codebase.",
-    "category": "development-security",
-    "tags": ["AI编辑器", "代码编辑器"],
+    "category": "development/security",
+    "tags": [
+      "AI编辑器",
+      "代码编辑器"
+    ],
     "featured": false,
     "icon": "https://framerusercontent.com/images/vVC7s85O5plh6ODSQsbxkhh2Ksc.png",
     "id": "mbkqncim9nn5v82zzd8",
@@ -1911,8 +2270,10 @@
     "title": "CodeGeeX",
     "url": "https://codegeex.cn/",
     "description": "CodeGeeX is an AI-based coding assistant, which can suggest code in the current or following lines. It is powered by a large-scale multilingual code generation model with 13 billion parameters, pretrained on a large code corpus of more than 20 programming languages. CodeGeeX是一个基于AI大模型的编程辅助工具，可以实现自动代码生成、代码翻译、自动编写注释等功能，支持20多种编程语言。",
-    "category": "development-security",
-    "tags": ["AI编程助手"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手"
+    ],
     "featured": false,
     "icon": "https://codegeex.cn/assets/images/only_logo_dark.png",
     "id": "mbkqshmeuah7rnfjze",
@@ -1923,8 +2284,10 @@
     "title": "Dora",
     "url": "https://www.dora.run/",
     "description": "Publish stunning 3D animated websites without writing a line of code. Generate landing pages and design inspiration with Dora AI. Enjoy the convenience of our no-code platform, allowing you to create professional and custom websites in a completely visual canvas. Benefit from our fully responsive designs and flexible domain setups. With Dora, designers can seamlessly import from Figma to Dora and enjoy a free plan. Use our newest text-to-website feature to generate websites from natural language prompts. Start exploring the endless possibilities today and bring your creative vision to life with Dora!",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://www.dora.run/favicon.ico",
     "id": "mbkqy6xn7gpissm6q0f",
@@ -1935,7 +2298,7 @@
     "title": "码上飞（CodeFlying）",
     "url": "https://www.codeflying.net/#/index",
     "description": "说中文，做应用。一句话自动生成小程序、APP、网页应用！",
-    "category": "development-security",
+    "category": "development/security",
     "tags": [],
     "featured": false,
     "icon": "https://www.codeflying.net/fe-views/logo.ico",
@@ -1947,8 +2310,11 @@
     "title": "Visual Studio Marketplace",
     "url": "https://marketplace.visualstudio.com/",
     "description": "Extensions for Visual Studio family of products on Visual Studio Marketplace",
-    "category": "development-security",
-    "tags": ["IDE插件", "VSCode市场"],
+    "category": "development/security",
+    "tags": [
+      "IDE插件",
+      "VSCode市场"
+    ],
     "featured": false,
     "icon": "https://marketplace.visualstudio.com/favicon.ico",
     "id": "mbkra8rz8pntr2kdwl6",
@@ -1959,8 +2325,11 @@
     "title": "Open VSX Registry",
     "url": "https://open-vsx.org/",
     "description": "Extensions for VS Code Compatible Editors",
-    "category": "development-security",
-    "tags": ["IDE插件", "VSCode市场"],
+    "category": "development/security",
+    "tags": [
+      "IDE插件",
+      "VSCode市场"
+    ],
     "featured": false,
     "icon": "https://open-vsx.org/favicon.ico",
     "id": "mbkrayxyknjgdy8vc8l",
@@ -1971,8 +2340,10 @@
     "title": "Plasmo",
     "url": "https://www.plasmo.com/",
     "description": "Plasmo is a browser extension development platform that helps you build, publish, and manage your browser extensions.",
-    "category": "development-security",
-    "tags": ["浏览器扩展开发"],
+    "category": "development/security",
+    "tags": [
+      "浏览器扩展开发"
+    ],
     "featured": true,
     "icon": "https://www.plasmo.com/favicon-light.svg",
     "id": "mbkreqfybnsz8lvojjj",
@@ -1983,8 +2354,10 @@
     "title": "React 官方中文文档",
     "url": "https://zh-hans.react.dev/",
     "description": "React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript. React is designed to let you seamlessly combine components written by independent people, teams, and organizations.",
-    "category": "development-security",
-    "tags": ["JavaScript框架"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript框架"
+    ],
     "featured": false,
     "icon": "https://zh-hans.react.dev/favicon-32x32.png",
     "id": "mbnexuzcvdb5fsgwb8h",
@@ -1995,8 +2368,10 @@
     "title": "React",
     "url": "https://react.dev/",
     "description": "React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript. React is designed to let you seamlessly combine components written by independent people, teams, and organizations.",
-    "category": "development-security",
-    "tags": ["JavaScript框架"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript框架"
+    ],
     "featured": false,
     "icon": "https://react.dev/favicon-32x32.png",
     "id": "mbney65hdr8ns6zyn1p",
@@ -2007,8 +2382,10 @@
     "title": "Vue.js",
     "url": "https://cn.vuejs.org/",
     "description": "Vue.js - 渐进式的 JavaScript 框架",
-    "category": "development-security",
-    "tags": ["JavaScript框架"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript框架"
+    ],
     "featured": false,
     "icon": "https://cn.vuejs.org/logo.svg",
     "id": "mbneysgxo5193y0i4yp",
@@ -2019,7 +2396,7 @@
     "title": "Vue.js",
     "url": "https://vuejs.org/",
     "description": "Vue.js - The Progressive JavaScript Framework",
-    "category": "development-security",
+    "category": "development/security",
     "tags": [],
     "featured": false,
     "icon": "https://vuejs.org/logo.svg",
@@ -2031,8 +2408,10 @@
     "title": "Angular",
     "url": "https://angular.cn/",
     "description": "The web development framework for building modern apps.",
-    "category": "development-security",
-    "tags": ["JavaScript框架"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript框架"
+    ],
     "featured": false,
     "icon": "https://angular.cn/assets/icons/favicon-48x48.png",
     "id": "mbneztulnofker878lj",
@@ -2043,8 +2422,11 @@
     "title": "Next.js 中文文档",
     "url": "https://nextjscn.org/",
     "description": "Next.js 最新中文文档，是官方英文文档最新、最全面的中文翻译，已更新至 Next.js 15，欢迎中文开发者使用 Next.js 中文文档学习 Next.js，本文档包括 Next.js app router 和 Next.js pages router 知识",
-    "category": "development-security",
-    "tags": ["React框架", "Next.js"],
+    "category": "development/security",
+    "tags": [
+      "React框架",
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://nextjscn.org/favicon.ico",
     "id": "mbngc6shh1wnvims7pt",
@@ -2055,8 +2437,11 @@
     "title": "Next.js - React 应用开发框架",
     "url": "https://www.nextjs.cn/",
     "description": "Next.js 支持规模化的生产级 React 应用程序。大量世界领先的公司都在使用 Next.js 来构建静态和动态网站及 web 应用。",
-    "category": "development-security",
-    "tags": ["React框架", "Next.js"],
+    "category": "development/security",
+    "tags": [
+      "React框架",
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://www.nextjs.cn/static/favicon/favicon-32x32.png",
     "id": "mbngd23wesnc5qc50xf",
@@ -2067,8 +2452,10 @@
     "title": "Create T3 App",
     "url": "https://create.t3.gg/",
     "description": "The best way to start a full-stack, typesafe Next.js app.",
-    "category": "development-security",
-    "tags": ["Next.js"],
+    "category": "development/security",
+    "tags": [
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://create.t3.gg/images/t3-dark.svg",
     "id": "mbngezgd618i3tpgojy",
@@ -2079,8 +2466,10 @@
     "title": "Next.js templates",
     "url": "https://nextjstemplates.com/",
     "description": "Launch your Next.js project faster with our handcrafted boilerplates, templates, starter kits, and landing pages. Explore our expertly crafted free and premium templates, boilerplates, and starter kits. Build high-performance, feature-rich, and SEO-friendly websites, SaaS, landing pages and more with Next.js",
-    "category": "development-security",
-    "tags": ["Next.js"],
+    "category": "development/security",
+    "tags": [
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://nextjstemplates.com/assets/images/favicon.png",
     "id": "mbngfn7pg4f4740p09e",
@@ -2091,8 +2480,10 @@
     "title": "Next.js Starter Kit",
     "url": "https://www.nextstarter.xyz/",
     "description": "A modern, full-stack Next.js starter kit with authentication, payments, and dashboard. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-    "category": "development-security",
-    "tags": ["Next.js"],
+    "category": "development/security",
+    "tags": [
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://www.nextstarter.xyz/favicon.ico",
     "id": "mbngg5fgyqjkai5zvcj",
@@ -2103,8 +2494,10 @@
     "title": "NextMerce",
     "url": "https://nextmerce.com/",
     "description": "NextMerce - a free Next.js eCommerce boilerplate template designed to help you launch and manage your online store effortlessly. With advanced features, smooth integration, and customizable options, NextMerce offers everything you need to build and scale your business. Enjoy top-tier performance and flexibility powered by Next.js",
-    "category": "development-security",
-    "tags": ["Next.js"],
+    "category": "development/security",
+    "tags": [
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://nextmerce.com/favicon.ico",
     "id": "mbnghb1c05a84016t20g",
@@ -2115,8 +2508,10 @@
     "title": "Remix",
     "url": "https://remix.run/",
     "description": "Remix is a full stack web framework that lets you focus on the user interface and work back through web standards to deliver a fast, slick, and resilient user experience. People are gonna love using your stuff.",
-    "category": "development-security",
-    "tags": ["React框架"],
+    "category": "development/security",
+    "tags": [
+      "React框架"
+    ],
     "featured": false,
     "icon": "https://remix.run/favicon-32.png",
     "id": "mbngi6mjklnio029nfa",
@@ -2127,8 +2522,10 @@
     "title": "GatsbyJS 中文网",
     "url": "https://www.gatsbyjs.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["React框架"],
+    "category": "development/security",
+    "tags": [
+      "React框架"
+    ],
     "featured": false,
     "icon": "https://www.gatsbyjs.cn/icons/icon-48x48.png?v=edf3d310d67f8284a562bc3a58c3e761",
     "id": "mbngiypfsqdrbx4fz6",
@@ -2139,8 +2536,10 @@
     "title": "Nuxt.js - Vue.js 通用应用框架",
     "url": "https://www.nuxtjs.cn/",
     "description": "Nuxt.js 是一个基于 Vue.js 的轻量级应用框架，可用来创建服务端渲染 (SSR) 应用，也可充当静态站点引擎生成静态站点应用，具有优雅的代码结构分层和热加载等特性。",
-    "category": "development-security",
-    "tags": ["Vue框架"],
+    "category": "development/security",
+    "tags": [
+      "Vue框架"
+    ],
     "featured": false,
     "icon": "https://www.nuxtjs.cn/favicon.ico",
     "id": "mbngko2jyeqfgtlrokk",
@@ -2151,8 +2550,10 @@
     "title": "Ember FastBoot",
     "url": "https://ember-fastboot.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Python框架"],
+    "category": "development/security",
+    "tags": [
+      "Python框架"
+    ],
     "featured": false,
     "icon": "https://ember-fastboot.com/images/favicon-0cb6ade5490dc1eae8ed49c88997cb9a.png",
     "id": "mbnglngj7kijr4ng7d",
@@ -2163,8 +2564,11 @@
     "title": "TanStack",
     "url": "https://tanstack.com/",
     "description": "Headless, type-safe, powerful utilities for complex workflows like Data Management, Data Visualization, Charts, Tables, and UI Components.",
-    "category": "development-security",
-    "tags": ["数据获取", "状态管理"],
+    "category": "development/security",
+    "tags": [
+      "数据获取",
+      "状态管理"
+    ],
     "featured": false,
     "icon": "https://tanstack.com/favicon-32x32.png",
     "id": "mbngm2frwqx0w0vzbj",
@@ -2175,8 +2579,10 @@
     "title": "Django",
     "url": "https://www.djangoproject.com/",
     "description": "The web framework for perfectionists with deadlines.",
-    "category": "development-security",
-    "tags": ["Python框架"],
+    "category": "development/security",
+    "tags": [
+      "Python框架"
+    ],
     "featured": false,
     "icon": "https://static.djangoproject.com/img/icon-touch.e4872c4da341.png",
     "id": "mbngmk8ce6y2t4i3amd",
@@ -2187,8 +2593,13 @@
     "title": "Nextra – Next.js Static Site Generator",
     "url": "https://nextra.site/",
     "description": "Build fast, customizable, and content-rich websites with Nextra. Powered by Next.js, it offers seamless Markdown support, customizable themes, file conventions, and easy integration with MDX, making it perfect for documentation, blogs, and static websites.",
-    "category": "development-security",
-    "tags": ["Next.js", "Nextra", "SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "Next.js",
+      "Nextra",
+      "SSG",
+      "文档框架"
+    ],
     "featured": true,
     "icon": "https://nextra.site/icon.svg?cac6a12bdc398585",
     "id": "mbngtm2bjh1ctujcg6",
@@ -2199,8 +2610,12 @@
     "title": "Mintlify — The documentation you want, effortlessly",
     "url": "https://mintlify.com/",
     "description": "Meet the modern standard for public facing documentation. Beautiful out of the box, easy to maintain, and optimized for user engagement.",
-    "category": "development-security",
-    "tags": ["Next.js", "SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "Next.js",
+      "SSG",
+      "文档框架"
+    ],
     "featured": true,
     "icon": "https://cdn.prod.website-files.com/66cc2bd703ccf308a49a6188/66cc3e0d67f2324645580a18_favicon.png",
     "id": "mbnh1620w1eghb7o2lg",
@@ -2211,8 +2626,12 @@
     "title": "Taxonomy",
     "url": "https://tx.shadcn.com/",
     "description": "An open source application built using the new router, server components and everything new in Next.js 13.",
-    "category": "development-security",
-    "tags": ["Next.js", "SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "Next.js",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://tx.shadcn.com/favicon.ico",
     "id": "mbnh2g1qr7fm67dz4p",
@@ -2223,8 +2642,12 @@
     "title": "VitePress | 由 Vite 和 Vue 驱动的静态站点生成器",
     "url": "https://vitepress.dev/zh/",
     "description": "由 Vite 和 Vue 驱动的静态站点生成器",
-    "category": "development-security",
-    "tags": ["SSG", "Vue", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "Vue",
+      "文档框架"
+    ],
     "featured": true,
     "icon": "https://vitepress.dev/vitepress-logo-mini.svg",
     "id": "mbnh3jzd9x596fmxqvf",
@@ -2235,8 +2658,12 @@
     "title": "VitePress | 快速上手中文教程",
     "url": "https://vitepress.yiov.top/",
     "description": "我的vitpress文档教程",
-    "category": "development-security",
-    "tags": ["Vue", "SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "Vue",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://vitepress.yiov.top/logo.png",
     "id": "mbnh3vkpd2o3yn9y8on",
@@ -2247,8 +2674,12 @@
     "title": "VuePress",
     "url": "https://vuepress.vuejs.org/zh/",
     "description": "Vue 驱动的静态网站生成器",
-    "category": "development-security",
-    "tags": ["Vue", "SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "Vue",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://vuepress.vuejs.org/images/icons/favicon-16x16.png",
     "id": "mbnh4fhwkng8fhgsrl",
@@ -2259,8 +2690,10 @@
     "title": "VuePress 生态系统",
     "url": "https://ecosystem.vuejs.press/zh/",
     "description": "VuePress 官方主题和插件",
-    "category": "development-security",
-    "tags": ["Vue"],
+    "category": "development/security",
+    "tags": [
+      "Vue"
+    ],
     "featured": false,
     "icon": "https://ecosystem.vuejs.press/images/icons/favicon-16x16.png",
     "id": "mbnh5huj4s8rcv9ukov",
@@ -2271,8 +2704,11 @@
     "title": "Outline – Team knowledge base & wiki",
     "url": "https://www.getoutline.com/",
     "description": "A modern team knowledge base for your internal documentation, product specs, support answers, meeting notes, onboarding, &amp; more…",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://www.getoutline.com/favicon.png",
     "id": "mbnhbr2ulyrq1h52wms",
@@ -2283,8 +2719,11 @@
     "title": "Rspress",
     "url": "https://rspress.dev/zh/",
     "description": "Rspack based static site generator",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://assets.rspack.dev/rspress/rspress-logo-480x480.png",
     "id": "mbnhc7ub4fckf5kv9ux",
@@ -2295,8 +2734,11 @@
     "title": "NotionNext中文 | Notion笔记，轻松建站，NotionNext官网",
     "url": "https://www.tangly1024.com/",
     "description": "Notion笔记，轻松建站，NotionNext官网",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://www.tangly1024.com/favicon.ico",
     "id": "mbnhctq86qle53q5a2c",
@@ -2307,8 +2749,11 @@
     "title": "Docz",
     "url": "https://www.docz.site/",
     "description": "",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "",
     "id": "mbnhe3a4el6kgs8thyp",
@@ -2320,8 +2765,11 @@
     "title": "dumi",
     "url": "https://d.umijs.org/",
     "description": "为组件研发而生的静态站点框架",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://gw.alipayobjects.com/zos/bmw-prod/d3e3eb39-1cd7-4aa5-827c-877deced6b7e/lalxt4g3_w256_h256.png",
     "id": "mbnhelintfd8n8eyds8",
@@ -2332,8 +2780,11 @@
     "title": "Docus",
     "url": "https://docus.dev/",
     "description": "The best place to start your documentation.",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://docus.dev/favicon.ico",
     "id": "mbnhfbi45kpiay10aio",
@@ -2344,8 +2795,11 @@
     "title": "Valaxy",
     "url": "https://valaxy.site/",
     "description": "Valaxy Site Docs",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://valaxy.site/favicon.svg",
     "id": "mbnhfpv9v7jrk22owui",
@@ -2356,8 +2810,12 @@
     "title": "Docusaurus",
     "url": "https://docusaurus.io/",
     "description": "An optimized site generator in React. Docusaurus helps you to move fast and write content. Build documentation websites, blogs, marketing pages, and more.",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架", "React框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架",
+      "React框架"
+    ],
     "featured": false,
     "icon": "https://docusaurus.io/img/docusaurus.ico",
     "id": "mbnhgiwofsr1v8xd127",
@@ -2368,8 +2826,11 @@
     "title": "docsify",
     "url": "https://docsify.js.org/",
     "description": "A magical documentation generator.",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://docsify.js.org/_media/favicon.ico",
     "id": "mbnhh0euvggxnilg44m",
@@ -2380,8 +2841,11 @@
     "title": "Wiki.js",
     "url": "https://js.wiki/",
     "description": "",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://js.wiki/favicons/favicon-32x32.png",
     "id": "mbnhhebwicywzs5cll",
@@ -2392,8 +2856,11 @@
     "title": "TypeDoc",
     "url": "https://typedoc.org/",
     "description": "Documentation for TypeDoc",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://typedoc.org/assets/favicon.ico",
     "id": "mbnhhq4i0pf50ysx0eho",
@@ -2404,8 +2871,11 @@
     "title": "MkDocs",
     "url": "https://www.mkdocs.org/",
     "description": "Project documentation with Markdown.",
-    "category": "development-security",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/security",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://www.mkdocs.org/img/favicon.ico",
     "id": "mbnhi48hrw1vwiqx16s",
@@ -2416,8 +2886,10 @@
     "title": "cubic-bezier",
     "url": "https://cubic-bezier.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["贝塞尔曲线"],
+    "category": "development/security",
+    "tags": [
+      "贝塞尔曲线"
+    ],
     "featured": false,
     "icon": "",
     "id": "mbplwqck99idkg2bf6s",
@@ -2429,8 +2901,10 @@
     "title": "CSS Arrow Please",
     "url": "https://cssarrowplease.com/",
     "description": "CSSArrowPlease allows you to create and export CSS code for a custom box with an arrow extending out from the side.",
-    "category": "development-security",
-    "tags": ["CSS箭头"],
+    "category": "development/security",
+    "tags": [
+      "CSS箭头"
+    ],
     "featured": false,
     "icon": "https://cssarrowplease.com/favicon.ico",
     "id": "mbpmbe8zhx557lxwak",
@@ -2441,8 +2915,10 @@
     "title": "Blobmaker",
     "url": "https://www.blobmaker.app/",
     "description": "Make organic SVG shapes for your next design. Modify the complexity, contrast, and color, to generate unique SVG blobs every time.",
-    "category": "development-security",
-    "tags": ["图形生成"],
+    "category": "development/security",
+    "tags": [
+      "图形生成"
+    ],
     "featured": true,
     "icon": "https://www.blobmaker.app/icons/icon-48x48.png?v=d2064a4d23cc375c9a373bc2d9f2aa35",
     "id": "mbpmdcgkt2bx8arguim",
@@ -2453,8 +2929,10 @@
     "title": "Shape Divider App",
     "url": "https://www.shapedivider.app/",
     "description": "Create fully responsive shape dividers for your next web project",
-    "category": "development-security",
-    "tags": ["图形生成"],
+    "category": "development/security",
+    "tags": [
+      "图形生成"
+    ],
     "featured": false,
     "icon": "https://shapedivider.app/favicon.ico",
     "id": "mbpme1w3e0vzdgwkkm8",
@@ -2465,8 +2943,10 @@
     "title": "NoCode",
     "url": "https://nocode.cn/",
     "description": "零代码应用生成平台",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": false,
     "icon": "https://s3plus.meituan.net/nocode-external/assets/nocode-logo.png",
     "id": "mbpw8rkwqw2kve5mnp",
@@ -2477,8 +2957,10 @@
     "title": "LottieFiles",
     "url": "https://lottiefiles.com/",
     "description": "Effortlessly bring the smallest, free, ready-to-use motion graphics for the web, app, social, and designs. Create, edit, test, collaborate, and ship Lottie animations in no time!",
-    "category": "development-security",
-    "tags": ["动效制作"],
+    "category": "development/security",
+    "tags": [
+      "动效制作"
+    ],
     "featured": false,
     "icon": "https://static.lottiefiles.com/favicons-new/android-icon-192x192.png",
     "id": "mbq6z6dsh3sfvgc41n",
@@ -2489,8 +2971,10 @@
     "title": "犸犸良",
     "url": "https://design.alipay.com/emotion",
     "description": "蚂蚁设计服务平台",
-    "category": "development-security",
-    "tags": ["动效制作"],
+    "category": "development/security",
+    "tags": [
+      "动效制作"
+    ],
     "featured": false,
     "icon": "https://gw.alipayobjects.com/mdn/rms_966c97/afts/img/A*5N6wSI7g83IAAAAAAAAAAAAAARQnAQ",
     "id": "mbq702mqqgkquea6egr",
@@ -2501,8 +2985,10 @@
     "title": "loading.io",
     "url": "https://loading.io/",
     "description": "",
-    "category": "development-security",
-    "tags": ["动效制作"],
+    "category": "development/security",
+    "tags": [
+      "动效制作"
+    ],
     "featured": false,
     "icon": "https://loading.io/favicon.ico",
     "id": "mbq70itrykqtrfcliy",
@@ -2513,8 +2999,11 @@
     "title": "Free Gradients Collection by itmeo.com",
     "url": "https://webgradients.com/",
     "description": "Free collection of 180 background gradients that you can use as content backdrops in any part of your website.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://webgradients.com/favicons/favicon-196x196.png",
     "id": "mbq75svz3km03iz1dej",
@@ -2525,8 +3014,11 @@
     "title": "uiGradients - Beautiful colored gradients",
     "url": "https://uigradients.com/#MoonlitAsteroid/",
     "description": "uiGradients is a handpicked collection of beautiful color gradients for designers and developers.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://uigradients.com/static/images/favicon-32x32.png",
     "id": "mbq76dlq7boce4bqd2m",
@@ -2537,8 +3029,11 @@
     "title": "CSS Gradient – Generator, Maker, and Background",
     "url": "https://cssgradient.io/",
     "description": "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://cssgradient.io/favicon.ico",
     "id": "mbq76tulz2xsu7s1bta",
@@ -2549,8 +3044,11 @@
     "title": "Trianglify.io · Low Poly Pattern Generator",
     "url": "https://trianglify.io/",
     "description": "Create colorful low poly triangle patterns that can be used as wallpapers and website assets.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://trianglify.io/favicon.png",
     "id": "mbq777lrsmwnb7a2dh",
@@ -2561,8 +3059,11 @@
     "title": "Flat Surface Shader",
     "url": "https://matthew.wagerfield.com/flat-surface-shader/",
     "description": "Simple, lightweight Flat Surface Shader for rendering lit triangles.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://matthew.wagerfield.com/favicon.ico",
     "id": "mbq77m6sbb1bgcj7kfp",
@@ -2573,8 +3074,11 @@
     "title": "Free patterns from Pattern8",
     "url": "https://pattern8.com/",
     "description": "Download Free Repeat Patterns",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://pattern8.com/favicon.ico",
     "id": "mbq780ns978u5tnwgro",
@@ -2585,8 +3089,11 @@
     "title": "Gridzzly.com - Make your own grid paper",
     "url": "https://gridzzly.com/",
     "description": "The easiest way to create custom grid paper printable. Available options are: dot grid, isometric dot grid, lines, graph, isometric grid, hexagons, and music staff. Supported paper formats are A2, A3, A4, A5, Legal, Letter, Tabloid and many others.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://gridzzly.com/favicon.png",
     "id": "mbq78dnd0styren0l3tr",
@@ -2597,8 +3104,11 @@
     "title": "Seamless Pattern Maker - Create Unique Backgrounds For Free",
     "url": "https://patternico.com/",
     "description": "create your own free seamless patterns and backgrounds online fast and easy. Try our pattern generator - it is totally free!",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://patternico.com/android-icon-192x192.png",
     "id": "mbq78rxtokq6ew6zxyl",
@@ -2609,8 +3119,11 @@
     "title": "Silk – Interactive Generative Art",
     "url": "https://weavesilk.com/",
     "description": "Create beautiful flowing art with Silk.",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://weavesilk.com/favicon.ico",
     "id": "mbq7e14nnw1wf2k97an",
@@ -2621,8 +3134,11 @@
     "title": "Vector Halftone Maker",
     "url": "https://halftone.xoihazard.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/security",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://halftone.xoihazard.com/favicon.ico",
     "id": "mbq7fm4f7mai9j7e8u",
@@ -2633,8 +3149,11 @@
     "title": "shadcn/ui",
     "url": "https://ui.shadcn.com/",
     "description": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": true,
     "icon": "https://ui.shadcn.com/favicon.ico",
     "id": "mbq7i59ru5n8egu65lj",
@@ -2645,8 +3164,11 @@
     "title": "Sailboat UI - Modern UI component library for Tailwind CSS",
     "url": "https://sailboatui.com/",
     "description": "Get started with 150+ Tailwind CSS components, built your website quickly with Sailboat UI.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://sailboatui.com/favicon-32x32.png",
     "id": "mbq7ikty2bbez33jo4",
@@ -2657,8 +3179,11 @@
     "title": "Reka",
     "url": "https://reka-ui.com/",
     "description": "An open-source library with unstyled, primitive components, accompanied by a variety of examples & use cases ready to be integrated into your projects.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://reka-ui.com/logo.png",
     "id": "mbq7j21bzypwkn7nad",
@@ -2669,8 +3194,11 @@
     "title": "Headless UI",
     "url": "https://headlessui.com/",
     "description": "Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://headlessui.com/favicon.ico",
     "id": "mbq7jh03v1hubclm5n",
@@ -2681,8 +3209,11 @@
     "title": "daisyUI — Tailwind CSS Components",
     "url": "https://daisyui.com/",
     "description": "Best Tailwind Components Library - Free UI components for Tailwind CSS",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://img.daisyui.com/images/logo/horizontal-dark.svg",
     "id": "mbq7jzqi7mvtmek7s0j",
@@ -2693,8 +3224,11 @@
     "title": "HyperUI",
     "url": "https://www.hyperui.dev/",
     "description": "Discover free Tailwind CSS v4 components for your next project, designed to enhance your web development with the latest features and styles.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://www.hyperui.dev/favicon.ico",
     "id": "mbq7kk7ffldch38t9o9",
@@ -2705,8 +3239,11 @@
     "title": "Tailblocks",
     "url": "https://tailblocks.cc/",
     "description": "Ready-to-use Tailwind CSS blocks",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://tailblocks.cc/favicon.png",
     "id": "mbq7l518k9m1ngwmzoj",
@@ -2717,8 +3254,11 @@
     "title": "Meraki UI Tailwind CSS Components",
     "url": "https://merakiui.com/",
     "description": "Free Tailwind CSS Components That Support RTL Languages & Fully Responsive Based On Flexbox & CSS Grid with elegant Dark Mode.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://merakiui.com/images/logo.svg",
     "id": "mbq7lq5sge1cs6oh7t",
@@ -2729,8 +3269,11 @@
     "title": "TailwindTemplates",
     "url": "https://tailwindtemplates.io/",
     "description": "A repository of free components built with TailwindCss. Every component is responsive, customizable and carefully crafted for your use.",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://tailwindtemplates.io/images/favicon-32.png",
     "id": "mbq7m3yruot6dqtgitr",
@@ -2741,8 +3284,11 @@
     "title": "Windy Toolbox",
     "url": "https://windytoolbox.com/",
     "description": "Discover a curated collection of Tailwind CSS starter templates, UI components, generators, and tools (Formerly Tailwind Toolbox)",
-    "category": "development-security",
-    "tags": ["组件库", "Tailwind"],
+    "category": "development/security",
+    "tags": [
+      "组件库",
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://windytoolbox.com/favicon-32x32.png",
     "id": "mbq7mmxj53hbwp1utn9",
@@ -2753,8 +3299,10 @@
     "title": "Gradio",
     "url": "https://www.gradio.app/",
     "description": "Build & Share Delightful Machine Learning Apps",
-    "category": "development-security",
-    "tags": ["Python"],
+    "category": "development/security",
+    "tags": [
+      "Python"
+    ],
     "featured": true,
     "icon": "https://www.gradio.app/favicon.png",
     "id": "mbq7ujwjohes50st8ed",
@@ -2765,8 +3313,11 @@
     "title": "Zed — The editor for what's next",
     "url": "https://zed.dev/",
     "description": "Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器"
+    ],
     "featured": true,
     "icon": "https://zed.dev/favicon_black_16.png",
     "id": "mbq8chu7jyr6crn0lwk",
@@ -2777,8 +3328,11 @@
     "title": "LibreChat",
     "url": "https://www.librechat.ai/",
     "description": "Free, open source AI chat platform - Every AI for Everyone",
-    "category": "development-security",
-    "tags": ["代码编辑器", "AI编辑器"],
+    "category": "development/security",
+    "tags": [
+      "代码编辑器",
+      "AI编辑器"
+    ],
     "featured": false,
     "icon": "https://www.librechat.ai/favicon-32x32.png",
     "id": "mbq8gugbrn5f3l1f4kq",
@@ -2789,8 +3343,10 @@
     "title": "npx",
     "url": "https://dev.nodejs.cn/learn/the-npx-nodejs-package-runner/",
     "description": "node.js 适用",
-    "category": "development-security",
-    "tags": ["包管理器"],
+    "category": "development/security",
+    "tags": [
+      "包管理器"
+    ],
     "featured": true,
     "icon": "https://dev.nodejs.cn/favicon.ico",
     "id": "mbq8hz0i2w23bq0qh57",
@@ -2801,8 +3357,10 @@
     "title": "uvx",
     "url": "https://pypi.org/project/uvx/",
     "description": "适用 Python",
-    "category": "development-security",
-    "tags": ["包管理器"],
+    "category": "development/security",
+    "tags": [
+      "包管理器"
+    ],
     "featured": true,
     "icon": "https://pypi.org/favicon.ico",
     "id": "mbq8ij123v9hxa1xjwt",
@@ -2813,8 +3371,10 @@
     "title": "犀牛书 - 中文技术文档大全",
     "url": "https://xiniushu.com/",
     "description": "中文技术文档大全",
-    "category": "development-security",
-    "tags": ["在线教程"],
+    "category": "development/security",
+    "tags": [
+      "在线教程"
+    ],
     "featured": true,
     "icon": "https://xiniushu.com/favicon.ico",
     "id": "mbq8zn0dzv3dcvjhfsf",
@@ -2825,8 +3385,11 @@
     "title": "W3Schools 在线教程",
     "url": "https://www.w3ccoo.com/",
     "description": "免费学技术",
-    "category": "development-security",
-    "tags": ["在线教程", "W3Schools"],
+    "category": "development/security",
+    "tags": [
+      "在线教程",
+      "W3Schools"
+    ],
     "featured": false,
     "icon": "https://www.w3ccoo.com/favicon.ico",
     "id": "mbq915x6r61f5t63lrs",
@@ -2837,8 +3400,11 @@
     "title": "W3Schools 中文教程",
     "url": "https://w3s.com.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["在线教程", "W3Schools"],
+    "category": "development/security",
+    "tags": [
+      "在线教程",
+      "W3Schools"
+    ],
     "featured": false,
     "icon": "https://www.w3s.com.cn/favicon.ico",
     "id": "mbq91szk4kk7mvsomye",
@@ -2849,8 +3415,10 @@
     "title": "Sass",
     "url": "https://sass-lang.com/",
     "description": "Syntactically Awesome Style Sheets",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://sass-lang.com/icon.png",
     "id": "mbq9428is4w30buazv",
@@ -2861,8 +3429,10 @@
     "title": "Less.js",
     "url": "https://lesscss.org/",
     "description": "Less extends CSS with dynamic behavior such as variables, mixins, operations and functions. Less runs on both the server-side (with Node.js and Rhino) or client-side (modern browsers only).",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://lesscss.org/public/ico/favicon.ico",
     "id": "mbq94kqrzpqe3rg4ks",
@@ -2873,8 +3443,10 @@
     "title": "Stylus",
     "url": "https://stylus-lang.com/",
     "description": "Expressive, robust, feature-rich CSS language built for nodejs",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://stylus-lang.com/logo.svg",
     "id": "mbq94w72bmi3m91b818",
@@ -2885,8 +3457,10 @@
     "title": "PostCSS - a tool for transforming CSS with JavaScript",
     "url": "https://postcss.org/",
     "description": "Transform CSS with the power of JavaScript. Auto-prefixing, future CSS syntaxes, modules, linting and more are possible with hundreds of PostCSS plugins.",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://postcss.org/assets/favicon-DbGqNhKa.ico",
     "id": "mbq95bzkdyd32tye2ta",
@@ -2897,8 +3471,10 @@
     "title": "Lit",
     "url": "https://lit.dev/",
     "description": "Simple. Fast. Web Components.",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://lit.dev/images/flame-favicon.svg",
     "id": "mbq95ldn3qzfcdkf274",
@@ -2909,8 +3485,10 @@
     "title": "Splendid Labz",
     "url": "https://splendidlabz.com/",
     "description": "Splendid Labz is a software development company that builds for Astro users",
-    "category": "development-security",
-    "tags": ["CSS框架"],
+    "category": "development/security",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://splendidlabz.com/favicon.ico",
     "id": "mbq95w680x3c2l0dli1",
@@ -2921,8 +3499,10 @@
     "title": "JavaScript Standard Style",
     "url": "https://standardjs.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["JavaScript风格指南"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript风格指南"
+    ],
     "featured": false,
     "icon": "https://standardjs.com/favicon-32x32.png",
     "id": "mbq98n5pyi5pu3q0zsc",
@@ -2933,8 +3513,10 @@
     "title": "Alexa排名",
     "url": "https://www.alexa.cn/",
     "description": "Alexa网站流量全球综合排名查询。免费提供Alexa网站流量排名官方数据查询，中文网站排行榜，官方网站ICP备案信息查询，域名注册信息查询，网站访问量查询，网站浏览量查询，网站排名变化趋势数据每日更新。",
-    "category": "development-security",
-    "tags": ["网站排名"],
+    "category": "development/security",
+    "tags": [
+      "网站排名"
+    ],
     "featured": true,
     "icon": "https://www.alexa.cn/favicon.ico",
     "id": "mbq9bvzxpcw8qgpus0o",
@@ -2945,8 +3527,10 @@
     "title": "Axios",
     "url": "https://axios-http.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["数据请求库"],
+    "category": "development/security",
+    "tags": [
+      "数据请求库"
+    ],
     "featured": false,
     "icon": "https://axios-http.com/assets/favicon.ico",
     "id": "mbqkyuy5h0gd07trbbj",
@@ -2957,8 +3541,10 @@
     "title": "Three.js",
     "url": "https://threejs.org/",
     "description": "JavaScript 3D library",
-    "category": "development-security",
-    "tags": ["Web3D可视化"],
+    "category": "development/security",
+    "tags": [
+      "Web3D可视化"
+    ],
     "featured": true,
     "icon": "https://threejs.org/files/favicon_white.ico",
     "id": "mbqlij3vpkfsz7qc748",
@@ -2969,8 +3555,10 @@
     "title": "Three.js中文网",
     "url": "https://www.webgl3d.cn/",
     "description": "提供Three.js、WebGL视频课程",
-    "category": "development-security",
-    "tags": ["Web3D可视化"],
+    "category": "development/security",
+    "tags": [
+      "Web3D可视化"
+    ],
     "featured": false,
     "icon": "https://www.webgl3d.cn/img/favicon.ico",
     "id": "mbqliw0zxymutzhe4rj",
@@ -2981,8 +3569,10 @@
     "title": "支付宝开放平台",
     "url": "https://open.alipay.com/",
     "description": "支付宝开放平台基于支付宝的海量用户，将强大的支付、营销、数据能力，通过接口等形式开放给第三方合作伙伴，帮助第三方合作伙伴创建更具竞争力的应用",
-    "category": "development-security",
-    "tags": ["支付服务"],
+    "category": "development/security",
+    "tags": [
+      "支付服务"
+    ],
     "featured": true,
     "icon": "https://mdn.alipayobjects.com/huamei_llciku/afts/img/A*ofPZSqIRTxYAAAAAAAAAAAAADsTiAQ/original",
     "id": "mbqlnlbtsy7x5me34kd",
@@ -2993,8 +3583,10 @@
     "title": "Google Maps Platform",
     "url": "https://developers.google.com/maps",
     "description": "运用 Google 对现实世界的认识和了解，构建优质应用",
-    "category": "development-security",
-    "tags": ["地图服务"],
+    "category": "development/security",
+    "tags": [
+      "地图服务"
+    ],
     "featured": false,
     "icon": "https://developers.google.com/favicon.ico",
     "id": "mbqlr4o5oagah207e68",
@@ -3005,8 +3597,10 @@
     "title": "Auth.js",
     "url": "https://authjs.dev/",
     "description": "Authentication for the Web",
-    "category": "development-security",
-    "tags": ["身份验证"],
+    "category": "development/security",
+    "tags": [
+      "身份验证"
+    ],
     "featured": true,
     "icon": "https://authjs.dev/favicon-32x32.png",
     "id": "mbr0867dgsv537kwnfv",
@@ -3017,8 +3611,10 @@
     "title": "Clerk | Authentication and User Management",
     "url": "https://clerk.com/",
     "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and \"The Modern Web\".",
-    "category": "development-security",
-    "tags": ["身份验证"],
+    "category": "development/security",
+    "tags": [
+      "身份验证"
+    ],
     "featured": true,
     "icon": "https://clerk.com/v2/favicon.ico",
     "id": "mbr0avb4n7u2wd1kemc",
@@ -3029,8 +3625,10 @@
     "title": "Markdown 教程",
     "url": "https://markdown.com.cn/",
     "description": "",
-    "category": "development-security",
-    "tags": ["Markdown"],
+    "category": "development/security",
+    "tags": [
+      "Markdown"
+    ],
     "featured": true,
     "icon": "https://markdown.com.cn/favicon.ico",
     "id": "mbr0sow1comv7wj7vnf",
@@ -3041,8 +3639,10 @@
     "title": "Table Convert Online",
     "url": "https://tableconvert.com/",
     "description": "Effortlessly convert Excel (or other spreadsheets) to Markdown Table. Utilize the Table Editor to create and modify Markdown Table online.",
-    "category": "development-security",
-    "tags": ["Markdown表格"],
+    "category": "development/security",
+    "tags": [
+      "Markdown表格"
+    ],
     "featured": true,
     "icon": "https://tableconvert.com/images/favicon.png",
     "id": "mbr0wer21mhbmzp2p5z",
@@ -3053,8 +3653,10 @@
     "title": "Chart.js",
     "url": "https://www.chartjs.org/",
     "description": "Simple yet flexible JavaScript charting library for the modern web",
-    "category": "development-security",
-    "tags": ["图表库"],
+    "category": "development/security",
+    "tags": [
+      "图表库"
+    ],
     "featured": true,
     "icon": "https://www.chartjs.org/favicon.ico",
     "id": "mbr12vqemgulocqeop8",
@@ -3065,8 +3667,10 @@
     "title": "D3 by Observable",
     "url": "https://d3js.org/",
     "description": "The JavaScript library for bespoke data visualization",
-    "category": "development-security",
-    "tags": ["图表库"],
+    "category": "development/security",
+    "tags": [
+      "图表库"
+    ],
     "featured": false,
     "icon": "https://d3js.org/logo.png",
     "id": "mbr13jirwlv2cxdent",
@@ -3077,8 +3681,10 @@
     "title": "Apache ECharts",
     "url": "https://echarts.apache.org/zh/index.html",
     "description": "一款基于JavaScript的数据可视化图表库，提供直观，生动，可交互，可个性化定制的数据可视化图表。",
-    "category": "development-security",
-    "tags": ["图表库"],
+    "category": "development/security",
+    "tags": [
+      "图表库"
+    ],
     "featured": false,
     "icon": "https://echarts.apache.org/zh/images/favicon.png?_v_=20240226",
     "id": "mbr14015ccae2efenc4",
@@ -3089,8 +3695,10 @@
     "title": "HTML5 UP",
     "url": "https://html5up.net/",
     "description": "Responsive HTML5 and CSS3 site templates designed by @ajlkn and released under the Creative Commons license.",
-    "category": "development-security",
-    "tags": ["网站模板"],
+    "category": "development/security",
+    "tags": [
+      "网站模板"
+    ],
     "featured": false,
     "icon": "https://html5up.net/assets/icons/favicon.ico",
     "id": "mbr17obpj9utvgxc2xo",
@@ -3101,8 +3709,10 @@
     "title": "TEMPLATED",
     "url": "https://templated.co/",
     "description": "Free HTML5 and CSS3 website templates. Our beautiful site templates are fully responsive and can be used for commercial purposes. Download now!",
-    "category": "development-security",
-    "tags": ["网站模板"],
+    "category": "development/security",
+    "tags": [
+      "网站模板"
+    ],
     "featured": false,
     "icon": "https://templated.co/assets/icons/templated-favicon.ico",
     "id": "mbr181cefvaytte498k",
@@ -3113,8 +3723,11 @@
     "title": "WrapPixel",
     "url": "https://www.wrappixel.com/",
     "description": "",
-    "category": "development-security",
-    "tags": ["网站模板", "管理后台"],
+    "category": "development/security",
+    "tags": [
+      "网站模板",
+      "管理后台"
+    ],
     "featured": true,
     "icon": "https://www.wrappixel.com/favicon.ico",
     "id": "mbr19tl06chq5inuemy",
@@ -3125,8 +3738,10 @@
     "title": "Graphy - Make Beautiful Graphs Online For Free",
     "url": "https://graphy.app/",
     "description": "Graphy enables anyone to become a skilled data storyteller, by radically simplifying the way data is presented and communicated.",
-    "category": "development-security",
-    "tags": ["图表库"],
+    "category": "development/security",
+    "tags": [
+      "图表库"
+    ],
     "featured": false,
     "icon": "https://framerusercontent.com/images/C9074C960Flfv5AEOmPk3CGIHg.png",
     "id": "mbr1dix49orepuobd8",
@@ -3137,8 +3752,10 @@
     "title": "Transform",
     "url": "https://transform.tools/",
     "description": "A polyglot web converter that's going to save you a lot of time.",
-    "category": "development-security",
-    "tags": ["代码格式转换"],
+    "category": "development/security",
+    "tags": [
+      "代码格式转换"
+    ],
     "featured": true,
     "icon": "https://transform.tools/static/favicon.png",
     "id": "mbrlamq3msngo5j5vjr",
@@ -3149,8 +3766,10 @@
     "title": "代码小抄",
     "url": "https://www.codecopy.cn/",
     "description": "简单易用的代码分享工具",
-    "category": "development-security",
-    "tags": ["代码分享"],
+    "category": "development/security",
+    "tags": [
+      "代码分享"
+    ],
     "featured": true,
     "icon": "https://www.codecopy.cn/favicon.ico",
     "id": "mbrlfyohuvhek3yz8fh",
@@ -3161,8 +3780,10 @@
     "title": "Carbon",
     "url": "https://carbon.now.sh/",
     "description": "Carbon is the easiest way to create and share beautiful images of your source code.",
-    "category": "development-security",
-    "tags": ["代码分享"],
+    "category": "development/security",
+    "tags": [
+      "代码分享"
+    ],
     "featured": true,
     "icon": "https://carbon.now.sh/favicon.ico",
     "id": "mbrlh5na24jps8q9lvz",
@@ -3173,8 +3794,10 @@
     "title": "Live DOM Viewer",
     "url": "https://software.hixie.ch/utilities/js/live-dom-viewer/",
     "description": "实时 DOM 查看器",
-    "category": "development-security",
-    "tags": ["DOM查看器"],
+    "category": "development/security",
+    "tags": [
+      "DOM查看器"
+    ],
     "featured": true,
     "icon": "https://software.hixie.ch/favicon.ico",
     "id": "mbrlk0o5yb3smat9bl",
@@ -3185,8 +3808,10 @@
     "title": "SourceForge",
     "url": "https://sourceforge.net/",
     "description": "完整的商业软件和服务比较平台，买家可以在其中找到、比较和评论商业软件和IT服务",
-    "category": "development-security",
-    "tags": ["软件下载"],
+    "category": "development/security",
+    "tags": [
+      "软件下载"
+    ],
     "featured": true,
     "icon": "https://sourceforge.net/favicon.ico",
     "id": "mbrlorupyoqosfvv7nh",
@@ -3197,8 +3822,10 @@
     "title": "KDE 应用程序",
     "url": "https://apps.kde.org/zh-cn/",
     "description": "KDE是一个气氛友善的自由软件社区。社区成员编写了 200 多款应用程序，它们可以运行在任意 Linux 桌面环境，也通常支持其他操作系统平台。完整列表如下。",
-    "category": "development-security",
-    "tags": ["软件下载"],
+    "category": "development/security",
+    "tags": [
+      "软件下载"
+    ],
     "featured": true,
     "icon": "https://apps.kde.org/favicon-32x32.png",
     "id": "mbrlpguwdwmr6a5ghn6",
@@ -3209,8 +3836,10 @@
     "title": "Microsoft 开发人员",
     "url": "https://developer.microsoft.com/zh-cn/",
     "description": "任何平台。任何语言。我们的工具。根据你的条件使用 Microsoft 产品和服务开发解决方案。",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": true,
     "icon": "https://developer.microsoft.com/favicon.ico",
     "id": "mbrlrimld1vw7iousmf",
@@ -3221,8 +3850,10 @@
     "title": "web.dev for China",
     "url": "https://web.developers.google.cn/?hl=zh-cn",
     "description": "构建可在任何浏览器上运行的现代 Web 体验的指南。",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": true,
     "icon": "https://www.gstatic.cn/devrel-devsite/prod/vd980a342b8e3e77c07209be506f8385246f583d6eec83ceb07569bbf26f054dc/web/images/favicon.png",
     "id": "mbrlrvszikwilhxq4rb",
@@ -3233,8 +3864,10 @@
     "title": "freeCodeCamp.org",
     "url": "https://www.freecodecamp.org/learn/",
     "description": "Learn to Code — For Free",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://www.freecodecamp.org/favicon-32x32.png?v=6cba562cbd10e31af925a976f3db73f7",
     "id": "mbrltl839ib1hb6j90l",
@@ -3245,8 +3878,10 @@
     "title": "egghead.io",
     "url": "https://egghead.io/",
     "description": "expert led courses for front-end web developers and teams that want to level up through straightforward and concise lessons on the most useful tools available.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://egghead.io/favicon.ico",
     "id": "mbrlvhguzak120tqe4a",
@@ -3257,8 +3892,10 @@
     "title": "Learn to code with Scrimba",
     "url": "https://scrimba.com/home",
     "description": "Scrimba is the fast way of learning to code! Our interactive courses and tutorials will teach you React, Vue, Angular, Web Development, Node.JS, JavaScript, HTML, CSS, and more.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://scrimba.com/static/brand/favicon-16x16.png",
     "id": "mbrlw21lk21na0pqx3d",
@@ -3269,8 +3906,10 @@
     "title": "Codecademy",
     "url": "https://www.codecademy.com/",
     "description": "通过学习 AI、数据、编码、网络安全等方面的热门技能，在你的职业生涯中成长并解锁新的机会",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://www.codecademy.com/favicon.ico",
     "id": "mbrlxgpsnmdgl6javeq",
@@ -3281,8 +3920,10 @@
     "title": "SitePoint – Learn HTML, CSS, JavaScript, PHP, Ruby & Responsive Design",
     "url": "https://www.sitepoint.com/",
     "description": "Learn Web Design & Development with SitePoint tutorials, courses and books - HTML5, CSS3, JavaScript, PHP, mobile app development, Responsive Web Design",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://www.sitepoint.com/favicons/32x32.png",
     "id": "mbrlyh9ryw8oblvhsi",
@@ -3293,8 +3934,10 @@
     "title": "Smashing Magazine — For Web Designers And Developers",
     "url": "https://www.smashingmagazine.com/",
     "description": "Magazine on CSS, JavaScript, front-end, accessibility, UX and design. For developers, designers and front-end engineers.",
-    "category": "development-security",
-    "tags": ["技术博客"],
+    "category": "development/security",
+    "tags": [
+      "技术博客"
+    ],
     "featured": false,
     "icon": "https://www.smashingmagazine.com/images/favicon/favicon.ico",
     "id": "mbrlzimdbryqbwzlrhm",
@@ -3305,8 +3948,10 @@
     "title": "CSS-Tricks",
     "url": "https://css-tricks.com/",
     "description": "A Website About Making Websites",
-    "category": "development-security",
-    "tags": ["技术博客"],
+    "category": "development/security",
+    "tags": [
+      "技术博客"
+    ],
     "featured": false,
     "icon": "https://css-tricks.com/favicon.ico",
     "id": "mbrm0anp9o6jxn86vf",
@@ -3317,8 +3962,10 @@
     "title": "CSS Tricks",
     "url": "https://lhammer.cn/You-need-to-know-css/",
     "description": "You-need-to-know-css,CSS tricks web developers need to know",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": false,
     "icon": "https://lhammer.cn/You-need-to-know-css/static/favicon.ico",
     "id": "mbrm1fug8p9wr8lxjsw",
@@ -3329,8 +3976,10 @@
     "title": "缓动函数速查表",
     "url": "https://easings.net/zh-cn#",
     "description": "缓动函数可以自定义动画在执行中的速度 使得物体的移动更加自然。现实生活中， 物体当然不是匀速移动，同样也不会立刻启动或结束。 这个页面将帮助你选择正确的缓动函数。",
-    "category": "development-security",
-    "tags": ["速查表"],
+    "category": "development/security",
+    "tags": [
+      "速查表"
+    ],
     "featured": false,
     "icon": "https://easings.net/96.8aa68ac4.png",
     "id": "mbrm26g4zxbcs3z916",
@@ -3341,8 +3990,10 @@
     "title": "A handbook for aspiring web designers",
     "url": "https://designforweb.org/index.html",
     "description": "This site is for anyone wishing to get into webdesign. It has been written and designed for my web design students and anyone looking to learn ツ",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://designforweb.org/favicon-32x32.png",
     "id": "mbrm30tldl18yncllj",
@@ -3353,8 +4004,10 @@
     "title": "现代 JavaScript 教程",
     "url": "https://zh.javascript.info/",
     "description": "现代 JavaScript 教程：有关示例和任务的简单但详细的解释包括：闭包、文档和事件，以及面向对象编程等。",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": true,
     "icon": "https://zh.javascript.info/img/favicon/favicon.png",
     "id": "mbrm3mswmu1junx03f",
@@ -3365,8 +4018,10 @@
     "title": "Learn HTML CSS",
     "url": "https://learnhtmlcss.online/",
     "description": "Learn HTML CSS is the easiest, most interactive way to learn & practice modern HTML and CSS online. Learn in an interactive environment.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://learnhtmlcss.online/assets/fav2/favicon-96x96.png",
     "id": "mbrmcfc5hocjqamdbpd",
@@ -3377,8 +4032,10 @@
     "title": "Learn JavaScript",
     "url": "https://learnjavascript.online/",
     "description": "Learn JavaScript is the easiest, most interactive way to learn & practice modern JavaScript online. Read short lessons, solve challenges & answer flashcards.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://learnjavascript.online/assets/fav2/favicon-96x96.png",
     "id": "mbrmct75qcz9wthvaw",
@@ -3389,8 +4046,10 @@
     "title": "Learn TypeScript",
     "url": "https://learntypescript.online/",
     "description": "Learn TypeScript is the easiest, most interactive way to learn & practice typescript online. Learn in an interactive environment. Understand how TypeScript works.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://learntypescript.online/assets/fav2/favicon-96x96.png",
     "id": "mbrmd4jit6gspczaaqc",
@@ -3401,8 +4060,10 @@
     "title": "React Tutorial",
     "url": "https://react-tutorial.app/",
     "description": "React Tutorial is the easiest, most interactive way to learn & practice modern React online. Learn in an interactive environment. Understand how React works not just how to build with React.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://react-tutorial.app/assets/fav2/favicon-96x96.png",
     "id": "mbrmdh7ws7pn8qywv2",
@@ -3413,8 +4074,10 @@
     "title": "Learn Programming",
     "url": "https://learnprogramming.online/",
     "description": "Learn Programming is the easiest, most interactive way to learn & practice programming online. Learn in an interactive environment. Understand how programming works.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://learnprogramming.online/assets/fav2/favicon-96x96.png",
     "id": "mbrmdtpsd2mczozmfsl",
@@ -3425,8 +4088,10 @@
     "title": "TypeScript",
     "url": "https://www.typescriptlang.org/",
     "description": "TypeScript extends JavaScript by adding types to the language. TypeScript speeds up your development experience by catching errors and providing fixes before you even run your code.",
-    "category": "development-security",
-    "tags": ["TypeScript"],
+    "category": "development/security",
+    "tags": [
+      "TypeScript"
+    ],
     "featured": true,
     "icon": "https://www.typescriptlang.org/favicon-32x32.png?v=8944a05a8b601855de116c8a56d3b3ae",
     "id": "mbrrmxn6e2umgrlkadc",
@@ -3437,8 +4102,10 @@
     "title": "TypeScript 官方博客",
     "url": "https://devblogs.microsoft.com/typescript/",
     "description": "The official blog of the TypeScript team.",
-    "category": "development-security",
-    "tags": ["TypeScript"],
+    "category": "development/security",
+    "tags": [
+      "TypeScript"
+    ],
     "featured": false,
     "icon": "https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/10/Microsoft-Favicon.png",
     "id": "mbrrnaax64r7asrhu25",
@@ -3449,8 +4116,10 @@
     "title": "Google Fonts",
     "url": "https://developers.google.com/fonts?hl=zh-cn",
     "description": "",
-    "category": "development-security",
-    "tags": ["CDN"],
+    "category": "development/security",
+    "tags": [
+      "CDN"
+    ],
     "featured": true,
     "icon": "https://developers.google.com/favicon.ico",
     "id": "mbrrqubluolyjyuaeps",
@@ -3461,8 +4130,10 @@
     "title": "Adobe Fonts",
     "url": "https://fonts.adobe.com/",
     "description": "Adobe Fonts partners with the world's leading type foundries to bring thousands of beautiful fonts to designers every day. No need to worry about licensing, and you can use fonts from Adobe Fonts on the web or in desktop applications.",
-    "category": "development-security",
-    "tags": ["CDN"],
+    "category": "development/security",
+    "tags": [
+      "CDN"
+    ],
     "featured": false,
     "icon": "https://fonts.adobe.com/favicon.ico",
     "id": "mbrrrd8sn6seg5p0dyf",
@@ -3473,8 +4144,10 @@
     "title": "Fonts by Hoefler&Co.",
     "url": "https://www.typography.com/webfonts",
     "description": "H&Co designs fonts for print, web, and mobile environments.",
-    "category": "development-security",
-    "tags": ["CDN"],
+    "category": "development/security",
+    "tags": [
+      "CDN"
+    ],
     "featured": false,
     "icon": "https://www.typography.com/favicon.ico",
     "id": "mbrrrp8of2tp2vb2vdl",
@@ -3485,8 +4158,10 @@
     "title": "Bunny Fonts | Explore Faster & GDPR friendly Fonts",
     "url": "https://fonts.bunny.net/",
     "description": "Bunny Fonts help make the internet faster, safer and GDPR compliant!",
-    "category": "development-security",
-    "tags": ["CDN"],
+    "category": "development/security",
+    "tags": [
+      "CDN"
+    ],
     "featured": false,
     "icon": "https://fonts.bunny.net/assets/favicon.webp",
     "id": "mbrrs3uy5479u5fe2e6",
@@ -3497,8 +4172,10 @@
     "title": "CSS Font Stack",
     "url": "https://www.cssfontstack.com/",
     "description": "Web safe CSS font stacks and web fonts.  Select, preview, and generate CSS and HTML for your font family.",
-    "category": "development-security",
-    "tags": ["CDN"],
+    "category": "development/security",
+    "tags": [
+      "CDN"
+    ],
     "featured": false,
     "icon": "https://dpidudyah7i0b.cloudfront.net/favicon.ico",
     "id": "mbrrskgd3woiwje9yz6",
@@ -3509,8 +4186,11 @@
     "title": "React Native · Learn once, write anywhere",
     "url": "https://reactnative.dev/",
     "description": "A framework for building native apps using React",
-    "category": "development-security",
-    "tags": ["React框架", "跨平台开发"],
+    "category": "development/security",
+    "tags": [
+      "React框架",
+      "跨平台开发"
+    ],
     "featured": true,
     "icon": "https://reactnative.dev/img/favicon.ico",
     "id": "mbrrx8yrxeswqhc4bug",
@@ -3521,8 +4201,10 @@
     "title": "Mantine",
     "url": "https://mantine.dev/",
     "description": "",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": true,
     "icon": "https://mantine.dev/favicon.svg",
     "id": "mbrrz1b1ovki4uk7xc9",
@@ -3533,8 +4215,10 @@
     "title": "Arco Design",
     "url": "https://arco.design/",
     "description": "企业级产品的完整设计和开发解决方案",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://unpkg.byted-static.com/latest/byted/arco-config/assets/favicon.ico",
     "id": "mbrs1xjnri8ldtxquqj",
@@ -3545,8 +4229,10 @@
     "title": "Egg",
     "url": "https://eggjs.org/",
     "description": "egg - Born to build better enterprise frameworks and apps",
-    "category": "development-security",
-    "tags": ["Node.js框架"],
+    "category": "development/security",
+    "tags": [
+      "Node.js框架"
+    ],
     "featured": false,
     "icon": "https://eggjs.org/favicon.png",
     "id": "mbrs3re61meuoef65w5",
@@ -3557,8 +4243,10 @@
     "title": "AntV | 蚂蚁数据可视化",
     "url": "https://antv.antgroup.com/",
     "description": "蚂蚁企业级数据可视化解决方案，让人们在数据世界里获得视觉化思考能力",
-    "category": "development-security",
-    "tags": ["图表库"],
+    "category": "development/security",
+    "tags": [
+      "图表库"
+    ],
     "featured": false,
     "icon": "https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*7svFR6wkPMoAAAAAAAAAAAAADmJ7AQ/original",
     "id": "mbrs66ie5ftxn04zq96",
@@ -3569,8 +4257,10 @@
     "title": "Galacean Effects 动效制作",
     "url": "https://galacean.antgroup.com/effects",
     "description": "免费使用 Galacean Effects 动效制作工具，视觉高表现，运行高性能。下载您的动效，分享至各个渠道。",
-    "category": "development-security",
-    "tags": ["动效制作"],
+    "category": "development/security",
+    "tags": [
+      "动效制作"
+    ],
     "featured": false,
     "icon": "https://mdn.alipayobjects.com/huamei_tnzzhx/afts/img/A*RBuwQKUEuRgAAAAAAAAAAAAADk3OAQ/original",
     "id": "mbrs8kqku94elgz09up",
@@ -3581,8 +4271,10 @@
     "title": "Ant Design - 一套企业级 UI 设计语言和 React 组件库",
     "url": "https://ant.design/index-cn",
     "description": "基于 Ant Design 设计体系的 React UI 组件库，用于研发企业级中后台产品。",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://gw.alipayobjects.com/zos/rmsportal/rlpTLlbMzTNYuZGGCVYM.png",
     "id": "mbrsbbv7z4y8f5w0jun",
@@ -3593,8 +4285,10 @@
     "title": "Radix UI",
     "url": "https://www.radix-ui.com/",
     "description": "Components, icons, and colors for building high‑quality, accessible UI. Free and open-source.",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://www.radix-ui.com/favicon.png",
     "id": "mbrsdojd7rcuriktgld",
@@ -3605,8 +4299,10 @@
     "title": "Material UI",
     "url": "https://mui.com/material-ui/",
     "description": "Material UI is an open-source React component library that implements Google's Material Design. It's comprehensive and can be used in production out of the box.",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://mui.com/static/favicon.ico",
     "id": "mbrsf7vwmqdg4kdsn4",
@@ -3617,8 +4313,10 @@
     "title": "Chakra UI",
     "url": "https://chakra-ui.com/",
     "description": "Simple, Modular & Accessible UI Components for your React Applications",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://chakra-ui.com/favicon.ico",
     "id": "mbrsh75o0b02ebm0anxq",
@@ -3629,8 +4327,10 @@
     "title": "Preline UI - Tailwind CSS components library",
     "url": "https://preline.co/index.html",
     "description": "Preline UI is an open-source Tailwind CSS components library for any needs. Comes with UI examples & blocks, templates, plugins, Figma design system and more.",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://preline.co/favicon.ico",
     "id": "mbrsi8nj0hmhos3f4zxn",
@@ -3641,8 +4341,10 @@
     "title": "Flowbite",
     "url": "https://flowbite.com/",
     "description": "Build websites even faster with components on top of Tailwind CSS",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://flowbite.com/favicon.ico",
     "id": "mbrsjapa07eommg1b4v7",
@@ -3653,8 +4355,10 @@
     "title": "KokonutUI",
     "url": "https://kokonutui.com/",
     "description": "Copy, Paste, Customize. A collection of modern, interactive, customizable UI components. Quick and easy to use.",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://kokonutui.com/icon.png?38c1cd3992d62c7f",
     "id": "mbrsk4slqhijq8qyyms",
@@ -3665,8 +4369,10 @@
     "title": "NextUI",
     "url": "https://nextui.org.cn/",
     "description": "美观、快速、现代的 React UI 库",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://nextui.org.cn/favicon.ico",
     "id": "mbrsktfh2oe2u0dlda9",
@@ -3677,8 +4383,10 @@
     "title": "Semi Design",
     "url": "https://semi.design/zh-CN/",
     "description": "Create a consistent, good-looking, easy-to-use, and efficient user experience with a user-centric, content-first, and human-friendly design system",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://lf9-static.semi.design/obj/semi-tos/images/favicon.ico",
     "id": "mbrslyobqh6p43sgi4",
@@ -3689,8 +4397,10 @@
     "title": "21st.dev - Discover, share, and craft UI components",
     "url": "https://21st.dev/home",
     "description": "Ship polished UIs faster with ready-to-use React Tailwind components inspired by shadcn/ui.",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://21st.dev/favicon.ico",
     "id": "mbrsqdrx62t8qwyqwsj",
@@ -3701,8 +4411,10 @@
     "title": "Uiverse",
     "url": "https://uiverse.io/",
     "description": "",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://uiverse.io/favicon.ico",
     "id": "mbrsr7u9wy5du9lh4oq",
@@ -3713,8 +4425,10 @@
     "title": "Premium Bootstrap Themes and Templates",
     "url": "https://www.creative-tim.com/",
     "description": "UI Kits, Templates and Dashboards built on top of Bootstrap, Vue.js, React, Angular, Node.js and Laravel. Join 2,725,661+ users and to access all our free items!",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://www.creative-tim.com/assets/favicon-9d06eb31fc41af6ef76f2954364a3a0b75637640a367d1816b9bf8b9ce392cb6.ico",
     "id": "mbrss5xbnkphj87oqh",
@@ -3725,8 +4439,10 @@
     "title": "Magic UI",
     "url": "https://magicui.design/",
     "description": "Beautiful UI components and templates to make your landing page look stunning.",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://magicui.design/favicon.ico",
     "id": "mbrssrvilqifl6jyq8",
@@ -3737,8 +4453,10 @@
     "title": "TW Elements - 500+ free Tailwind CSS components",
     "url": "https://tw-elements.com/",
     "description": "A free collection of open source UI components, templates, sections & plugins for Tailwind CSS. Features dark mode and theming customization options.",
-    "category": "development-security",
-    "tags": ["组件库"],
+    "category": "development/security",
+    "tags": [
+      "组件库"
+    ],
     "featured": false,
     "icon": "https://tecdn.b-cdn.net/img/Marketing/general/logo/small/te.ico",
     "id": "mbrsu8zn6nb57x5eiw",
@@ -3749,8 +4467,10 @@
     "title": "Nuxt UI",
     "url": "https://ui.nuxt.com/",
     "description": "Create beautiful, responsive & accessible web apps quickly with Vue or Nuxt. Nuxt UI is an open-source UI library of 50+ customizable components built with Tailwind CSS and Reka UI.",
-    "category": "development-security",
-    "tags": ["Vue组件库"],
+    "category": "development/security",
+    "tags": [
+      "Vue组件库"
+    ],
     "featured": true,
     "icon": "https://ui.nuxt.com/favicon.ico",
     "id": "mbrsv4aqhcvqd9jkw7r",
@@ -3761,8 +4481,10 @@
     "title": "Nuxt：Nuxt中文站 - Nuxt中文文档 - Nuxt3",
     "url": "https://nuxt.com.cn/",
     "description": "使用 Nuxt 创建高质量的 Web 应用，这是一个开源框架，让基于 Vue.js 的全栈开发变得直观。",
-    "category": "development-security",
-    "tags": ["Vue框架"],
+    "category": "development/security",
+    "tags": [
+      "Vue框架"
+    ],
     "featured": false,
     "icon": "https://nuxt.com.cn/icon.png",
     "id": "mbrsvv54vt1ihdjc7so",
@@ -3773,8 +4495,10 @@
     "title": "一个 Vue 3 UI 框架 | Element Plus",
     "url": "https://cn.element-plus.org/zh-CN/",
     "description": "A Vue 3 based component library for designers and developers",
-    "category": "development-security",
-    "tags": ["Vue组件库"],
+    "category": "development/security",
+    "tags": [
+      "Vue组件库"
+    ],
     "featured": false,
     "icon": "https://cn.element-plus.org/images/element-plus-logo-small.svg",
     "id": "mbrswbsthytdndso74d",
@@ -3785,8 +4509,10 @@
     "title": "PrimeVue | Vue UI Component Library",
     "url": "https://primevue.org/",
     "description": "The ultimate collection of design-agnostic, flexible and accessible Vue UI Components.",
-    "category": "development-security",
-    "tags": ["Vue组件库"],
+    "category": "development/security",
+    "tags": [
+      "Vue组件库"
+    ],
     "featured": false,
     "icon": "https://primevue.org/favicon.ico",
     "id": "mbrsx0q8e5km1ungypp",
@@ -3797,8 +4523,10 @@
     "title": "Vuetify —— 一个 Vue 的组件框架 — Vuetify",
     "url": "https://vuetifyjs.com/zh-Hans/",
     "description": "Vuetify 是一个无需设计技能的 Vue 开源 UI 组件框架。它为您提供了创建精美、内容丰富的网络应用所需的所有工具。",
-    "category": "development-security",
-    "tags": ["Vue组件库"],
+    "category": "development/security",
+    "tags": [
+      "Vue组件库"
+    ],
     "featured": false,
     "icon": "https://vuetifyjs.com/favicon.ico",
     "id": "mbrsxlw5yfuopq3rhh",
@@ -3809,8 +4537,10 @@
     "title": "VueUse",
     "url": "https://vueuse.org/",
     "description": "Collection of essential Vue Composition Utilities",
-    "category": "development-security",
-    "tags": ["Vue组件库"],
+    "category": "development/security",
+    "tags": [
+      "Vue组件库"
+    ],
     "featured": false,
     "icon": "https://vueuse.org/favicon.ico",
     "id": "mbrszmz2ua3eoehgwun",
@@ -3821,8 +4551,10 @@
     "title": "ChatUI",
     "url": "https://chatui.io/",
     "description": "服务于智能对话领域的设计和开发体系，助力智能对话机器人的构建",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": false,
     "icon": "https://gw.alicdn.com/tfs/TB17TaySSzqK1RjSZFHXXb3CpXa-80-80.svg",
     "id": "mbrt177cwdulwspppfo",
@@ -3833,8 +4565,10 @@
     "title": "Refactoring UI",
     "url": "https://www.refactoringui.com/",
     "description": "Learn how to design awesome UIs by yourself using specific tactics explained from a developer's point-of-view.",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": false,
     "icon": "https://www.refactoringui.com/favicon-32x32.png",
     "id": "mbrt24bgnve549cms59",
@@ -3845,8 +4579,10 @@
     "title": "JS Mastery Pro",
     "url": "https://jsmastery.com/",
     "description": "Learn full stack web development by building real-world projects. Get hired by top tech companies or start your own business.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://jsmastery.com/favicon.ico",
     "id": "mbrt33cwlszqm1g8r6d",
@@ -3857,8 +4593,10 @@
     "title": "ui.dev | JavaScript, but fun.",
     "url": "https://ui.dev/",
     "description": "We help JavaScript developers make more money - and enjoy themselves in the process.",
-    "category": "development-security",
-    "tags": ["编程教程"],
+    "category": "development/security",
+    "tags": [
+      "编程教程"
+    ],
     "featured": false,
     "icon": "https://ui.dev/favicon.ico",
     "id": "mbrt5iaf80o5yusr58u",
@@ -3869,8 +4607,10 @@
     "title": "SonarQube",
     "url": "https://www.sonarsource.com/products/sonarqube/",
     "description": "企业级代码质量管理平台",
-    "category": "development-security",
-    "tags": ["代码分析"],
+    "category": "development/security",
+    "tags": [
+      "代码分析"
+    ],
     "featured": false,
     "icon": "https://www.sonarsource.com/app-icon.png",
     "id": "mbrti1ova9eps3v8tua",
@@ -3881,8 +4621,10 @@
     "title": " ESLint",
     "url": "https://eslint.org/",
     "description": "JavaScript/TypeScript 静态代码分析工具",
-    "category": "development-security",
-    "tags": ["代码分析"],
+    "category": "development/security",
+    "tags": [
+      "代码分析"
+    ],
     "featured": true,
     "icon": "https://eslint.org/favicon.ico",
     "id": "mbrtizip7xexvf8fvzm",
@@ -3893,8 +4635,10 @@
     "title": "Flake8",
     "url": "https://flake8.pycqa.org/",
     "description": "Python 代码规范检查工具",
-    "category": "development-security",
-    "tags": ["代码分析"],
+    "category": "development/security",
+    "tags": [
+      "代码分析"
+    ],
     "featured": false,
     "icon": "https://flake8.pycqa.org/favicon.ico",
     "id": "mbrtjjj3tli0lkznlp",
@@ -3905,8 +4649,10 @@
     "title": "Stylelint",
     "url": "https://stylelint.io/",
     "description": "现代 CSS/SCSS 样式表校验工具",
-    "category": "development-security",
-    "tags": ["代码分析"],
+    "category": "development/security",
+    "tags": [
+      "代码分析"
+    ],
     "featured": false,
     "icon": "https://stylelint.io/img/favicon.svg",
     "id": "mbrtkebk6tqnekij803",
@@ -3917,8 +4663,10 @@
     "title": "Prettier · Opinionated Code Formatter",
     "url": "https://prettier.io/",
     "description": "多语言代码格式化工具",
-    "category": "development-security",
-    "tags": ["代码格式化"],
+    "category": "development/security",
+    "tags": [
+      "代码格式化"
+    ],
     "featured": true,
     "icon": "https://prettier.io/icon.png",
     "id": "mbrtmrtn04cyuxjo0um3",
@@ -3929,8 +4677,10 @@
     "title": "JSCompress - The JavaScript Compression Tool",
     "url": "https://jscompress.com/",
     "description": "JSCompress is an online JavaScript compressor that allows you to compress and minify all of your JS files by up to 80% of their original size.",
-    "category": "development-security",
-    "tags": ["代码压缩"],
+    "category": "development/security",
+    "tags": [
+      "代码压缩"
+    ],
     "featured": false,
     "icon": "https://jscompress.com/icons/icon-hires.png",
     "id": "mbrtndowoflhnl5ryg",
@@ -3941,8 +4691,10 @@
     "title": "Nu Html Checker",
     "url": "https://validator.w3.org/nu/",
     "description": "HTML 语法校验工具",
-    "category": "development-security",
-    "tags": ["语法校验"],
+    "category": "development/security",
+    "tags": [
+      "语法校验"
+    ],
     "featured": false,
     "icon": "https://validator.w3.org/nu/icon.png",
     "id": "mbrtolziiv6zmq1oz2d",
@@ -3953,8 +4705,10 @@
     "title": "W3C CSS 验证服务",
     "url": "https://jigsaw.w3.org/css-validator/",
     "description": "CSS 语法校验工具",
-    "category": "development-security",
-    "tags": ["语法校验"],
+    "category": "development/security",
+    "tags": [
+      "语法校验"
+    ],
     "featured": false,
     "icon": "https://jigsaw.w3.org/favicon.ico",
     "id": "mbrtp8y1uw1houj6bii",
@@ -3965,7 +4719,7 @@
     "title": "JSON Online Validator and Formatter - JSON Lint",
     "url": "https://jsonlint.com/",
     "description": "JSONLint is the free online validator, json formatter, and json beautifier tool for JSON, a lightweight data-interchange format. You can format json, validate json, with a quick and easy copy+paste.",
-    "category": "development-security",
+    "category": "development/security",
     "tags": [],
     "featured": false,
     "icon": "https://jsonlint.com/images/favicon-32x32.png",
@@ -3977,8 +4731,10 @@
     "title": "Can I use... Support tables for HTML5, CSS3, etc",
     "url": "https://caniuse.com/",
     "description": "Web 特性兼容性查询",
-    "category": "development-security",
-    "tags": ["代码兼容性"],
+    "category": "development/security",
+    "tags": [
+      "代码兼容性"
+    ],
     "featured": false,
     "icon": "https://caniuse.com/img/favicon-128.png",
     "id": "mbrtr8aiaht7tudaebv",
@@ -3989,8 +4745,10 @@
     "title": "Electron",
     "url": "https://www.electronjs.org/zh/",
     "description": "基于 Web 技术的桌面应用开发框架",
-    "category": "development-security",
-    "tags": ["跨平台开发"],
+    "category": "development/security",
+    "tags": [
+      "跨平台开发"
+    ],
     "featured": false,
     "icon": "https://www.electronjs.org/zh/assets/img/favicon.ico",
     "id": "mbrtv4ehwbmhsvdpdj",
@@ -4001,8 +4759,10 @@
     "title": "Qt | 软件开发全周期的各阶段工具",
     "url": "https://www.qt.io/zh-cn/",
     "description": "软件开发生命周期各阶段的所有基本工具：规划、设计、开发、测试和部署",
-    "category": "development-security",
-    "tags": ["跨平台开发"],
+    "category": "development/security",
+    "tags": [
+      "跨平台开发"
+    ],
     "featured": false,
     "icon": "https://www.qt.io/hubfs/QtGroup_Favicon_32.ico",
     "id": "mbrtxybna2y77ftxd6",
@@ -4013,8 +4773,10 @@
     "title": "Umami",
     "url": "https://umami.is/",
     "description": "简单、快速、隐私友好的分析",
-    "category": "development-security",
-    "tags": ["网站分析"],
+    "category": "development/security",
+    "tags": [
+      "网站分析"
+    ],
     "featured": false,
     "icon": "https://umami.is/favicon.ico",
     "id": "mbrudi6idrfu1nak0dk",
@@ -4025,8 +4787,10 @@
     "title": "Semrush: Data-Driven Marketing Tools to Grow Your Business",
     "url": "https://www.semrush.com/",
     "description": "Drive growth in SEO, PPC, content, social media, and traffic with AI-powered marketing tools for every task.",
-    "category": "development-security",
-    "tags": ["SEO"],
+    "category": "development/security",
+    "tags": [
+      "SEO"
+    ],
     "featured": false,
     "icon": "https://www.semrush.com/__static__/favicon.f8cd638f087a.ico",
     "id": "mbrugw4up19qnbkegsp",
@@ -4037,8 +4801,10 @@
     "title": "Website Carbon Calculator v3",
     "url": "https://www.websitecarbon.com/",
     "description": "网站碳排放计算器",
-    "category": "development-security",
-    "tags": ["网站分析"],
+    "category": "development/security",
+    "tags": [
+      "网站分析"
+    ],
     "featured": false,
     "icon": "https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_auto/www.websitecarbon.com/wp-content/uploads/2019/08/cropped-carbon-fav-512-32x32.png",
     "id": "mbruj883n4x6ou63mva",
@@ -4049,8 +4815,10 @@
     "title": "Neumorphism/Soft UI CSS shadow generator",
     "url": "https://neumorphism.io/#e0e0e0",
     "description": "CSS code generator that will help with colors, gradients and shadows to adapt this new design trend or discover its posibilities.",
-    "category": "development-security",
-    "tags": ["图形生成"],
+    "category": "development/security",
+    "tags": [
+      "图形生成"
+    ],
     "featured": false,
     "icon": "https://neumorphism.io/favicon.ico",
     "id": "mbrun1ufpocnsyaml2r",
@@ -4061,8 +4829,10 @@
     "title": "互站网",
     "url": "https://web.huzhan.com/",
     "description": "互站网网站交易专区，致力于为个人站长和企业提供网站交易、网站买卖、网站求购、网站出售、网站中介等综合性网站服务!",
-    "category": "development-security",
-    "tags": ["网站交易"],
+    "category": "development/security",
+    "tags": [
+      "网站交易"
+    ],
     "featured": false,
     "icon": "https://statics.huzhan.com/favicon.ico",
     "id": "mbrunzsr9q7tzoiql28",
@@ -4073,8 +4843,10 @@
     "title": "AI SDK",
     "url": "https://ai-sdk.dev/",
     "description": "The AI Toolkit for TypeScript, from the creators of Next.js.",
-    "category": "development-security",
-    "tags": ["AI工具包"],
+    "category": "development/security",
+    "tags": [
+      "AI工具包"
+    ],
     "featured": true,
     "icon": "https://ai-sdk.dev/favicon.ico",
     "id": "mbruslziln3xajvrl2l",
@@ -4085,8 +4857,10 @@
     "title": "阮一峰的网络日志",
     "url": "https://www.ruanyifeng.com/blog/",
     "description": "",
-    "category": "development-security",
-    "tags": ["技术博客"],
+    "category": "development/security",
+    "tags": [
+      "技术博客"
+    ],
     "featured": false,
     "icon": "https://www.ruanyifeng.com/favicon.ico",
     "id": "mbrv04xrontxxa22h8",
@@ -4097,8 +4871,10 @@
     "title": "少数派 - 高效工作，品质生活",
     "url": "https://sspai.com/",
     "description": "少数派致力于更好地运用数字产品或科学方法，帮助用户提升工作效率和生活品质",
-    "category": "development-security",
-    "tags": ["技术社区"],
+    "category": "development/security",
+    "tags": [
+      "技术社区"
+    ],
     "featured": true,
     "icon": "https://cdn-static.sspai.com/favicon/sspai.ico",
     "id": "mbrv1a6av2jy7unz3bo",
@@ -4109,8 +4885,10 @@
     "title": "Microsoft Learn：培养开拓职业生涯新机遇的技能",
     "url": "https://learn.microsoft.com/zh-cn/",
     "description": "通过交互式课程和技术文档学习，获得专业发展学时和认证，并与社区建立联系。",
-    "category": "development-security",
-    "tags": ["技术文档"],
+    "category": "development/security",
+    "tags": [
+      "技术文档"
+    ],
     "featured": true,
     "icon": "https://learn.microsoft.com/favicon.ico",
     "id": "mbrv2lu3ay0368prufm",
@@ -4121,8 +4899,10 @@
     "title": "Qwik Documentation",
     "url": "https://qwik.dev/",
     "description": "No hydration, auto lazy-loading, edge-optimized, and fun 🎉🎉🎉!",
-    "category": "development-security",
-    "tags": ["JavaScript框架"],
+    "category": "development/security",
+    "tags": [
+      "JavaScript框架"
+    ],
     "featured": false,
     "icon": "https://qwik.dev/favicons/favicon.svg",
     "id": "mbrvcsy7xisrafru88",
@@ -4133,8 +4913,10 @@
     "title": "Node-Based UIs in React - React Flow",
     "url": "https://reactflow.dev/",
     "description": "一个可定制的 React 组件，用于构建基于节点的编辑器和交互式图表",
-    "category": "development-security",
-    "tags": ["React组件库"],
+    "category": "development/security",
+    "tags": [
+      "React组件库"
+    ],
     "featured": true,
     "icon": "https://reactflow.dev/favicon.ico",
     "id": "mbs3umeenli3z66edel",
@@ -4145,8 +4927,10 @@
     "title": "PageSpeed Insights",
     "url": "https://pagespeed.web.dev/",
     "description": "PageSpeed Insights (PSI) 可提供有关网页在移动设备和桌面设备上的用户体验的报告 并提供有关如何改进该页面的建议",
-    "category": "development-security",
-    "tags": ["网站分析"],
+    "category": "development/security",
+    "tags": [
+      "网站分析"
+    ],
     "featured": true,
     "icon": "https://pagespeed.web.dev/favicon.ico",
     "id": "mbs4dfaolygfa5i2dg",
@@ -4157,8 +4941,10 @@
     "title": "The JavaScript Oxidation Compiler",
     "url": "https://oxc.rs/",
     "description": "A collection of high-performance JavaScript tools written in Rust",
-    "category": "development-security",
-    "tags": ["编译器"],
+    "category": "development/security",
+    "tags": [
+      "编译器"
+    ],
     "featured": true,
     "icon": "https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/square.ico",
     "id": "mbtpi6bywooq1ikra3g",
@@ -4169,8 +4955,10 @@
     "title": "Firebase Studio",
     "url": "https://studio.firebase.google.com/",
     "description": "Prototype an app with AI",
-    "category": "development-security",
-    "tags": ["AI应用开发"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://studio.firebase.google.com/favicon.ico",
     "id": "mbtq7uqnuqyj07qofsl",
@@ -4181,8 +4969,11 @@
     "title": "Pagtive",
     "url": "https://pagtive.frago.ai/",
     "description": "通过 AI 构建Active Pages，将概念、故事和场景以更佳的视觉与交互可视化方式呈现。",
-    "category": "development-security",
-    "tags": ["AI应用开发", "智能体"],
+    "category": "development/security",
+    "tags": [
+      "AI应用开发",
+      "智能体"
+    ],
     "featured": true,
     "icon": "https://pagtive.frago.ai/favicon.ico",
     "id": "mbtrcmgplrn0m5wfv1l",
@@ -4193,8 +4984,10 @@
     "title": "Claudia - The Elegant Desktop Companion for Claude Code",
     "url": "https://claudia.asterisk.so/",
     "description": "Transform your AI coding workflow with a beautiful GUI that makes managing Claude sessions, creating custom agents, and tracking usage effortless.",
-    "category": "development-security",
-    "tags": ["AI编程助手"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手"
+    ],
     "featured": true,
     "icon": "https://claudia.asterisk.so/claudia-icon.svg",
     "id": "mchzvxqy83pxobismai",
@@ -4205,8 +4998,11 @@
     "title": "Fitten Code",
     "url": "https://code.fittentech.com/",
     "description": "AI编程加速器",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://code.fittentech.com/favicon.ico",
     "id": "1x1HqW8MkuHbNWzuUFFMw",
@@ -4217,8 +5013,11 @@
     "title": "stagewise | Visually prompt your dev agent - right on localhost.",
     "url": "https://stagewise.io/",
     "description": "Our toolbar connects your app frontend to your favorite code agent and lets you edit your web app UI with prompts.",
-    "category": "development-security",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/security",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": true,
     "icon": "https://stagewise.io/icon.png?e58f759334fae5f7",
     "id": "xzaCAPLrFhT7n-P1psp3R",
@@ -4229,8 +5028,10 @@
     "title": "React Hook Form - performant, flexible and extensible form library",
     "url": "https://react-hook-form.com/",
     "description": "Performant, flexible and extensible forms with easy-to-use validation.",
-    "category": "development-security",
-    "tags": ["表单管理"],
+    "category": "development/security",
+    "tags": [
+      "表单管理"
+    ],
     "featured": false,
     "icon": "https://react-hook-form.com/images/logo/react-hook-form-logo-only.png",
     "id": "kx9KGLBMY_u7Y-7VXO-a2",
@@ -4241,8 +5042,10 @@
     "title": "Zod",
     "url": "https://zod.dev/",
     "description": "",
-    "category": "development-security",
-    "tags": ["数据校验"],
+    "category": "development/security",
+    "tags": [
+      "数据校验"
+    ],
     "featured": false,
     "icon": "https://zod.dev/icon.png?39fe259ddd7f4224",
     "iconType": "image",
@@ -4254,8 +5057,10 @@
     "title": "Zustand",
     "url": "https://zustand-demo.pmnd.rs/",
     "description": "Bear necessities for state management in React ",
-    "category": "development-security",
-    "tags": ["状态管理"],
+    "category": "development/security",
+    "tags": [
+      "状态管理"
+    ],
     "featured": true,
     "icon": "https://github.com/pmndrs/zustand/raw/main/docs/favicon.ico",
     "iconType": "image",

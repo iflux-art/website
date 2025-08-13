@@ -7,7 +7,7 @@ const TYPE_LABELS = {
   tool: "工具",
   link: "网址导航",
   docs: "文档",
-  blog: "博客",
+  blog: "文章",
   command: "命令",
   navigation: "网址导航",
   doc: "文档",

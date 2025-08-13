@@ -3,8 +3,12 @@
     "title": "美图设计室",
     "url": "https://www.designkit.com/",
     "description": "美图设计室是美图秀秀旗下的智能设计在线协作平台",
-    "category": "design-tools",
-    "tags": ["在线设计", "智能设计", "协作平台"],
+    "category": "design/tools",
+    "tags": [
+      "在线设计",
+      "智能设计",
+      "协作平台"
+    ],
     "featured": false,
     "icon": "https://www.designkit.com/favicon.ico",
     "id": "mbg9s1zc6oc44s3gq5f",
@@ -15,8 +19,12 @@
     "title": "Canva",
     "url": "https://www.canva.cn/",
     "description": "",
-    "category": "design-tools",
-    "tags": ["在线设计", "模板设计", "易用工具"],
+    "category": "design/tools",
+    "tags": [
+      "在线设计",
+      "模板设计",
+      "易用工具"
+    ],
     "featured": false,
     "icon": "https://www.canva.cn/favicon.ico",
     "id": "mbg9shupjadeyvtehqs",
@@ -27,8 +35,12 @@
     "title": "稿定设计",
     "url": "https://www.gaoding.com/",
     "description": "海量设计模板加持不会PS也能轻松搞定设计，在线设计海报、简历、PPT、名片、宣传单、邀请函、Logo等多种设计需求场景，3秒抠图、批量套版、AI辅助设计实用便捷。海量正版授权资源，商用无忧。",
-    "category": "design-tools",
-    "tags": ["在线设计", "模板设计", "商用授权"],
+    "category": "design/tools",
+    "tags": [
+      "在线设计",
+      "模板设计",
+      "商用授权"
+    ],
     "featured": false,
     "icon": "https://cdn.dancf.com/fe-assets/20230811/logo/favicon@w64.ico",
     "id": "mbg9tcb6ba0nawdh4te",
@@ -39,8 +51,12 @@
     "title": "创客贴",
     "url": "https://www.chuangkit.com/",
     "description": "无需PS，会打字就能用的图片、视频编辑器。8000万图片素材在线编辑，换图改字生成精美设计。自动抠图，高清背景，设计不求人，商用有版权",
-    "category": "design-tools",
-    "tags": ["在线设计", "零基础设计", "素材丰富"],
+    "category": "design/tools",
+    "tags": [
+      "在线设计",
+      "零基础设计",
+      "素材丰富"
+    ],
     "featured": false,
     "icon": "https://www.chuangkit.com/favicon.ico",
     "id": "mbg9trda8e8fn93q9ip",
@@ -51,8 +67,12 @@
     "title": "Photopea",
     "url": "https://www.photopea.com/",
     "description": "Photopea Online Photo Editor lets you edit photos, apply effects, filters, add text, crop or resize pictures. Do Online Photo Editing in your browser for free!",
-    "category": "design-tools",
-    "tags": ["在线设计", "图片编辑", "免费工具"],
+    "category": "design/tools",
+    "tags": [
+      "在线设计",
+      "图片编辑",
+      "免费工具"
+    ],
     "featured": false,
     "icon": "https://www.photopea.com/promo/icon512.png",
     "id": "mbg9w22pdnb6hj9qvg7",
@@ -64,7 +84,9 @@
     "url": "https://www.pixiv.net/",
     "description": "插畫藝術社交網站",
     "category": "design",
-    "tags": ["社区"],
+    "tags": [
+      "社区"
+    ],
     "featured": false,
     "icon": "https://www.pixiv.net/favicon.ico",
     "id": "mb8ta5fxo8yaacdo6c",
@@ -76,7 +98,9 @@
     "url": "https://www.jpeg.io/",
     "description": "Convert any major image format into a highly optimized JPEG",
     "category": "design",
-    "tags": ["图像压缩"],
+    "tags": [
+      "图像压缩"
+    ],
     "featured": false,
     "icon": "https://www.jpeg.io/favicon.ico",
     "id": "mbesgd6owau1gnfg8w",
@@ -88,7 +112,9 @@
     "url": "https://zh.pixfix.com/",
     "description": "在删除图像噪声的同时保留细节 — 100% 免费 —  全部在浏览器中完成 — 支持照片和徽标。",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://d1r4k4kkp2obq0.cloudfront.net/p/assets/m/favicons/pixfix/favicon-32_247c47e3919a4433dc2f08e53532c052.png",
     "id": "mbeshn2x7gjs3xg5jkv",
@@ -100,7 +126,9 @@
     "url": "https://bigjpg.com/",
     "description": "使用人工智能深度卷积神经网络（CNN）智能无损免费放大图片，可放大4K级超高清分辨率（4000x4000）图片，最大32倍放大,效果秒杀PhotoZoom放大。",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://bigjpg.com/htdocs/favicon.ico",
     "id": "mbesivciktmb2enchb",
@@ -112,7 +140,9 @@
     "url": "https://igoutu.cn/upscaler",
     "description": "免费的在线智能升级软件，能够升级图像和照片品质（JPG、PNG），无损画质。利用人工智能自动放大图像、提升图像质量。",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://maxst.icons8.com/vue-static/upscaler/favicon.png",
     "id": "mbesjimctjdhgdbpxj",
@@ -124,7 +154,9 @@
     "url": "https://www.birme.net/",
     "description": "BIRME is a flexible and easy to use bulk image resizer. It can resize multiple images to any specific dimension and crop images if necessary.",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://www.birme.net/static/images/favicon.png",
     "id": "mbesk0tzd2bk3p50zjw",
@@ -136,7 +168,9 @@
     "url": "https://batchresizer.com/zh",
     "description": "调整图像批次的大小。",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://batchresizer.com/favicon-64.png",
     "id": "mbeskm9030oqzr41pp5",
@@ -148,7 +182,9 @@
     "url": "https://www.designkit.com/quality/",
     "description": "图片高清修复，免费修复模糊照片，增强画质清晰度，让您轻松拥有高清图片！无论是拍摄不当，还是老照片退色模糊，都能轻松修复，快来体验吧",
     "category": "design",
-    "tags": ["图像修复"],
+    "tags": [
+      "图像修复"
+    ],
     "featured": false,
     "icon": "https://pc.meitudata.com/ai-quality/favicon-32x32.png",
     "id": "mbesllhq5r1uj1jeww9",
@@ -160,7 +196,9 @@
     "url": "https://picular.co/",
     "description": "Picular is a rocket fast primary color generator using Google’s image search. If you ever needed the perfect yellow hex code from a banana, this is the tool for you.",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://picular.co/apple-touch-icon.png",
     "id": "mbg9dddoo3uv5ies22g",
@@ -172,7 +210,9 @@
     "url": "https://colors.dopely.top/",
     "description": "",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://colors.dopely.top/favicon.ico",
     "id": "mbg9dtsjppl2ucaljg8",
@@ -184,7 +224,9 @@
     "url": "https://colors.eva.design/",
     "description": "",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://colors.eva.design/favicon.ico",
     "id": "mbg9e902gikhxa3n2zh",
@@ -196,7 +238,9 @@
     "url": "https://www.webdesignrankings.com/resources/lolcolors/",
     "description": "",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://www.webdesignrankings.com/resources/lolcolors/assets/favicon-028961ddf3326f09d20986f6e6c28df70350a32f4938d04d7ca3ed9538515ff7.png",
     "id": "mbg9f32jopye3lbheo",
@@ -208,7 +252,9 @@
     "url": "https://www.materialpalette.com/",
     "description": "Choose your favorite colors and get your Material Design palette generated and downloadable.",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://www.materialpalette.com/assets/favicon-0f3eb1b9f6d525e848b1dca6db1cabd2a3e9e843749cb9ad72222b80ab9fdf19.ico",
     "id": "mbg9fwoyvlm6nmwd4ho",
@@ -220,7 +266,9 @@
     "url": "https://colorsafe.co/",
     "description": "Color Safe is a tool to explore beautiful, accessible color palettes for your website based on Web Content Accessibility Guidelines (WCAG).",
     "category": "design",
-    "tags": ["配色工具"],
+    "tags": [
+      "配色工具"
+    ],
     "featured": false,
     "icon": "https://colorsafe.co/favicon.ico",
     "id": "mbg9gx0hvh4yfb7wteo",
@@ -232,7 +280,9 @@
     "url": "https://www.jetbrains.com/lp/mono/",
     "description": "Try JetBrains Mono in your IDE. Its simple forms and attention to every detail make coding a nice experience for developers' eyes, no matter which IDE you choose.",
     "category": "design",
-    "tags": ["免费字体"],
+    "tags": [
+      "免费字体"
+    ],
     "featured": false,
     "icon": "",
     "id": "mbg9jg70fyt7o9hkrh",
@@ -245,7 +295,9 @@
     "url": "https://www.dafont.com/",
     "description": "Archive of freely downloadable fonts. Browse by alphabetical listing, by style, by author or by popularity.",
     "category": "design",
-    "tags": ["免费字体"],
+    "tags": [
+      "免费字体"
+    ],
     "featured": false,
     "icon": "https://www.dafont.com/img/favicon.ico",
     "id": "mbg9keviov5o65n0aka",
@@ -257,7 +309,9 @@
     "url": "https://everythingfonts.com/",
     "description": "Everything Fonts is a place for font tools/font information/font download/font-face hosting  and one of a kind font market place.",
     "category": "design",
-    "tags": ["免费字体"],
+    "tags": [
+      "免费字体"
+    ],
     "featured": false,
     "icon": "https://everythingfonts.com/favicon.ico",
     "id": "mbg9ksyo85pzs5p42vj",
@@ -269,7 +323,9 @@
     "url": "https://www.myfonts.com/",
     "description": "Welcome to MyFonts, the #1 place to download great @font-face webfonts and desktop fonts: classics (Baskerville, Futura, Garamond) alongside hot new fonts (TT Fellows, Hernandez Bros,Phonk Sans).",
     "category": "design",
-    "tags": ["付费字体"],
+    "tags": [
+      "付费字体"
+    ],
     "featured": false,
     "icon": "https://cdn.shopify.com/s/files/1/0568/7164/9450/files/MyFonts_Favicon_small.png?v=1717748062",
     "id": "mbg9lirojsa25wnqyc",
@@ -281,7 +337,9 @@
     "url": "https://www.monotype.com/",
     "description": "",
     "category": "design",
-    "tags": ["付费字体"],
+    "tags": [
+      "付费字体"
+    ],
     "featured": false,
     "icon": "https://www.monotype.com/sites/default/files/favicon.png",
     "id": "mbg9lwmsde8y3ki1cbh",
@@ -293,7 +351,9 @@
     "url": "https://www.fonts.com/",
     "description": "Browse and find the best selection of high-quality desktop and web fonts. Try, buy and download classics, new releases, and best selling fonts.",
     "category": "design",
-    "tags": ["付费字体"],
+    "tags": [
+      "付费字体"
+    ],
     "featured": false,
     "icon": "https://fast.fonts.net/FontsCom/Live/static/2.15.1011.0/img/favicon-192x192.png",
     "id": "mbg9mbjny1a5utz3ehn",
@@ -305,7 +365,9 @@
     "url": "https://www.linotype.com/",
     "description": "",
     "category": "design",
-    "tags": ["付费字体"],
+    "tags": [
+      "付费字体"
+    ],
     "featured": false,
     "icon": "https://www.linotype.com/images/favicon.ico",
     "id": "mbg9mta2z3nne0t6qv8",
@@ -317,7 +379,9 @@
     "url": "https://izihun.com/",
     "description": "提供商用字体下载授权,字体定制,免费字体下载,字体授权,中文字体设计,字体大全以及在线字体转换器的字体网站,致力于让所有人用得起正版字体.",
     "category": "design",
-    "tags": ["字体管理"],
+    "tags": [
+      "字体管理"
+    ],
     "featured": false,
     "icon": "https://izihun.com/favicon.ico",
     "id": "mbg9nsmcrvvxyskvi3o",
@@ -329,7 +393,9 @@
     "url": "https://www.myfonts.com/pages/whatthefont",
     "description": "Identify fonts with our font finder tool using an image or photo. Upload an image, and we'll search our collection of over 133,000 fonts for the best match.",
     "category": "design",
-    "tags": ["字体查询"],
+    "tags": [
+      "字体查询"
+    ],
     "featured": false,
     "icon": "https://cdn.shopify.com/s/files/1/0568/7164/9450/files/MyFonts_Favicon_small.png?v=1717748062",
     "id": "mbg9ozxr3krw87ub8ab",
@@ -341,7 +407,9 @@
     "url": "https://fonts.safe.360.cn/",
     "description": "查版权，免纠纷",
     "category": "design",
-    "tags": ["字体查询"],
+    "tags": [
+      "字体查询"
+    ],
     "featured": false,
     "icon": "https://p2.ssl.qhimg.com/t014de4ba13ada26743.png",
     "id": "mbg9pif239w5k6eh9gx",
@@ -353,7 +421,9 @@
     "url": "https://playground.com/",
     "description": "",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://playground.com/favicon.ico",
     "id": "mbg9sz0p586l56l980w",
@@ -365,7 +435,9 @@
     "url": "https://www.fotor.com.cn/",
     "description": "Fotor懒设计是全球最受欢迎的在线图片制作神器、平面设计工具和在线平面设计软件之一,提供海量海报,PPT,邀请函,banner,名片,logo等免费设计素材和模板,可在线一键稿定设计印刷,并能在线图片编辑、照片编辑。",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "",
     "id": "mbg9u4hzolcwwp0sx0b",
@@ -378,7 +450,9 @@
     "url": "https://www.nolibox.com/",
     "description": "Nolibox 计算美学致力于用人工智能赋能设计创意，旗下「画宇宙」和「图宇宙」两款产品，为个人用户和企业用户提供全链路 AIGC 和人工智能设计服务。",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://www.nolibox.com/favicon.ico?v=1",
     "id": "mbg9uiezay411xo4fjq",
@@ -390,7 +464,9 @@
     "url": "https://pc.meitu.com/",
     "description": "美图秀秀网页版在线图片照片编辑制作美化修改处理工具",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://pc.meitudata.com/web-xiuxiu-offical/_next/static/media/favicon.87479806.ico",
     "id": "mbg9v7whdjojylzisd",
@@ -402,7 +478,9 @@
     "url": "https://photokit.com/?lang=zh",
     "description": "PhotoKit是一款免费的在线图片编辑器，方便易用。一键轻松抠图、改图、修图和美图应用。包含图片裁剪、调整大小、旋转等基本编辑。开始免费编辑您的图片。",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://photokit.com/images/icon256.png",
     "id": "mbg9vpa9m7y9upd2pm",
@@ -414,7 +492,9 @@
     "url": "https://www.pixilart.com/draw",
     "description": "Pixilart, free online pixel drawing tool - This drawing tool allows you to make pixel art, game sprites and animated GIFs online for free.",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://www.pixilart.com/images/favicon/favicon-32x32.png?v=jw6qNMPWz42",
     "id": "mbg9wgyfsw0sgvtkdps",
@@ -426,7 +506,9 @@
     "url": "https://www.fffuel.co/",
     "description": "",
     "category": "design",
-    "tags": ["在线设计"],
+    "tags": [
+      "在线设计"
+    ],
     "featured": false,
     "icon": "https://www.fffuel.co/favicon.ico",
     "id": "mbg9wvnmp6eo4s4ttf",
@@ -438,7 +520,9 @@
     "url": "https://www.stickermule.com/trace",
     "description": "The internet's best free background remover tool. Erase the background of any photo with AI online for free! No hidden charges - it's 100% free.",
     "category": "design",
-    "tags": ["抠图工具"],
+    "tags": [
+      "抠图工具"
+    ],
     "featured": false,
     "icon": "https://www.stickermule.com/tools/_next/static/shared/static/favicon-production-32.82a661325b4162573480a4ca1498b3aa.ico",
     "id": "mbg9xvxdk1wy8p42nlf",
@@ -450,7 +534,9 @@
     "url": "https://clippingmagic.com/",
     "description": "Remove background from image 100% automatically — Smart Clip Editor — Crop, rotate, fix colors, add shadows & reflections — for Free",
     "category": "design",
-    "tags": ["抠图工具"],
+    "tags": [
+      "抠图工具"
+    ],
     "featured": false,
     "icon": "https://d5nunyagcicgy.cloudfront.net/p/assets/m/favicons/cm/favicon-32_58e41bb4014f688dd792a26cae7b8afc.png",
     "id": "mbg9ya9g2k04yhjp323",
@@ -462,7 +548,9 @@
     "url": "https://www.gaoding.com/koutu",
     "description": "使用稿定在线智能抠图工具，无需PS基础即可一键抠图去除图片背景。",
     "category": "design",
-    "tags": ["抠图工具"],
+    "tags": [
+      "抠图工具"
+    ],
     "featured": false,
     "icon": "https://cdn.dancf.com/fe-assets/20230811/logo/favicon@w64.ico",
     "id": "mbg9ziwethnmj5hf4ql",
@@ -474,7 +562,9 @@
     "url": "https://www.bgeraser.com/",
     "description": "100% free online services to remove background from images in batch, replace background color in one single click, and download images in zip file.",
     "category": "design",
-    "tags": ["抠图工具"],
+    "tags": [
+      "抠图工具"
+    ],
     "featured": false,
     "icon": "https://www.bgeraser.com/favicon.ico",
     "id": "mbg9zvhbrlcejffwu3",
@@ -486,7 +576,9 @@
     "url": "https://www.screentogif.com/",
     "description": "Free screen recorder tool. Record, edit and save as a gif or video.",
     "category": "design",
-    "tags": ["GIF动图"],
+    "tags": [
+      "GIF动图"
+    ],
     "featured": false,
     "icon": "https://www.screentogif.com/logos/favicon.ico",
     "id": "mbga0uown0whrtlagw",
@@ -498,7 +590,9 @@
     "url": "https://ezgif.com/",
     "description": "Easy to use online animated GIF maker and image editor. Create, convert, crop, resize, reverse, optimize animated GIF, WebP, APNG files, images and videos.",
     "category": "design",
-    "tags": ["GIF动图"],
+    "tags": [
+      "GIF动图"
+    ],
     "featured": false,
     "icon": "https://ezgif.com/favicon.ico",
     "id": "mbga1cjwyvyt7gne8w",
@@ -510,7 +604,9 @@
     "url": "https://gifcap.dev/",
     "description": "",
     "category": "design",
-    "tags": ["GIF动图"],
+    "tags": [
+      "GIF动图"
+    ],
     "featured": false,
     "icon": "https://gifcap.dev/media/android-icon-192x192.png",
     "id": "mbga1q7hb3yeucl1bw",
@@ -522,7 +618,9 @@
     "url": "https://www.soogif.com/",
     "description": "SOOGIF提供搞笑、表情、美女、明星、热门事件GIF动图全搜索，GIF工具支持视频转GIF、图片合成GIF、GIF压缩、GIF编辑、GIF裁剪、在线录屏等功能。",
     "category": "design",
-    "tags": ["GIF动图"],
+    "tags": [
+      "GIF动图"
+    ],
     "featured": false,
     "icon": "https://www.soogif.com/favicon.ico",
     "id": "mbga2a06fvwdimuge5d",
@@ -534,7 +632,9 @@
     "url": "https://giphy.com/",
     "description": "GIPHY is the platform that animates your world. Find the GIFs, Clips, and Stickers that make your conversations more positive, more expressive, and more you.",
     "category": "design",
-    "tags": ["GIF动图"],
+    "tags": [
+      "GIF动图"
+    ],
     "featured": false,
     "icon": "https://giphy.com/static/img/favicon.png",
     "id": "mbga2n8zk02x3o1qxtb",
@@ -546,7 +646,9 @@
     "url": "https://www.moage.cn/",
     "description": "在线生成，免费制作",
     "category": "design",
-    "tags": ["文字云"],
+    "tags": [
+      "文字云"
+    ],
     "featured": false,
     "icon": "https://www.moage.cn/favicon.ico",
     "id": "mbga3706n552anjlkoq",
@@ -558,7 +660,9 @@
     "url": "https://www.weiciyun.com/",
     "description": "微词云是一款实用性强、简单的在线文字云、在线词云图生成器",
     "category": "design",
-    "tags": ["文字云"],
+    "tags": [
+      "文字云"
+    ],
     "featured": false,
     "icon": "https://www.weiciyun.com/img/weiciyun.ico",
     "id": "mbga3mavizwbt49oe9",
@@ -570,7 +674,9 @@
     "url": "https://cli.im/",
     "description": "一站式二维码生成工具，免费可用。提供编码解码、数据统计、富文本和多媒体展示、表单制作、美化标签、批量管理等功能，并可作为无代码平台，搭建二维码信息系统。",
     "category": "design",
-    "tags": ["二维码"],
+    "tags": [
+      "二维码"
+    ],
     "featured": false,
     "icon": "https://static.clewm.net/static/images/favicon.ico",
     "id": "mbga46qsbhwdapgexyc",
@@ -582,7 +688,9 @@
     "url": "https://www.2weima.com/",
     "description": "二维工坊在线二维码生成器，提供一物一码、设备维保、防伪溯源等行业解决方案，可制作名片、地图导航、wifi、PDF文件、相册、音视频等二维码和小程序，低代码页面设计可自己DIY小程序和定制二维码营销解决方案。",
     "category": "design",
-    "tags": ["二维码"],
+    "tags": [
+      "二维码"
+    ],
     "featured": false,
     "icon": "https://www.2weima.com/favicon.ico",
     "id": "mbga4ikj7okrut82ftp",
@@ -594,7 +702,9 @@
     "url": "https://ar-code.com/",
     "description": "Create immersive AR QR Code experiences with ease using AR Code's powerful creator interface. Engage your audience on iOS & Android. Elevate your brand. Try it for free now.",
     "category": "design",
-    "tags": ["二维码"],
+    "tags": [
+      "二维码"
+    ],
     "featured": false,
     "icon": "https://ar-code.com/favicon.ico",
     "id": "mbga52vzelpc1bgoh1i",
@@ -606,7 +716,9 @@
     "url": "https://www.ih5.cn/",
     "description": "10万+设计师为企业提供H5设计和制作服务",
     "category": "design",
-    "tags": ["H5"],
+    "tags": [
+      "H5"
+    ],
     "featured": false,
     "icon": "https://www.ih5.cn/favicon.ico",
     "id": "mbga5n5siu9xmd5fjfk",
@@ -618,7 +730,9 @@
     "url": "https://www.epub360.com/",
     "description": "意派Epub360H5页面制作工具零代码在线制作专业测试答题,视频H5,微信邀请函,H5小游戏,合成微信头像海报,表单收集,抽奖H5,招聘,节日祝福贺卡,微杂志等创意营销互动网页,并可直接微信发布",
     "category": "design",
-    "tags": ["H5"],
+    "tags": [
+      "H5"
+    ],
     "featured": false,
     "icon": "https://v2static.epub360.com/epub360.ico",
     "id": "mbga6oe9o7b8hdm3vsq",
@@ -630,7 +744,9 @@
     "url": "https://www.maka.im/",
     "description": "全球3000万中小企业用户使用的在线平面设计工具，MAKA免费提供海量精美平面设计素材，快速在线PS，随时随地编辑设计模板，一键搞定设计，支持下载高清素材图片。",
     "category": "design",
-    "tags": ["H5"],
+    "tags": [
+      "H5"
+    ],
     "featured": false,
     "icon": "https://img2.maka.im/favicon.ico",
     "id": "mbga71eyu1lqeooa9wf",
@@ -642,7 +758,9 @@
     "url": "https://store.eqxiu.com/",
     "description": "易企秀提供免费H5微场景、海报、长图、表单、视频、互动游戏、画册、数字人、建站、小程序等制作工具及企业微信私域数字智能营销平台",
     "category": "design",
-    "tags": ["H5"],
+    "tags": [
+      "H5"
+    ],
     "featured": false,
     "icon": "https://lib.eqh5.com/images/favicon.ico",
     "id": "mbga7hrzz4wmg6pn9fo",
@@ -654,7 +772,9 @@
     "url": "https://v3.polarr.co/",
     "description": "Polarr makes advanced free online photo editor, also available for iOS, Android, Mac and Windows with professional photo editing tools.",
     "category": "design",
-    "tags": ["修图工具"],
+    "tags": [
+      "修图工具"
+    ],
     "featured": false,
     "icon": "https://v3.polarr.co/favicon-16x16.png",
     "id": "mbga89e4gtqdvzvuwb",
@@ -666,7 +786,9 @@
     "url": "https://duotone.shapefactory.co/",
     "description": "Find beautiful free duotone images to use in any project, or make custom duotone images by uploading your own image and applying a duotone effect in seconds.",
     "category": "design",
-    "tags": ["修图工具"],
+    "tags": [
+      "修图工具"
+    ],
     "featured": false,
     "icon": "https://duotone.shapefactory.co/favicon.ico",
     "id": "mbga8yg2estvmstaqy",
@@ -678,7 +800,9 @@
     "url": "https://halftonepro.com/",
     "description": "Vector Halftone Image Generator",
     "category": "design",
-    "tags": ["修图工具"],
+    "tags": [
+      "修图工具"
+    ],
     "featured": false,
     "icon": "https://halftonepro.com/images/favicon.ico",
     "id": "mbga9bo5yza7b64zko",
@@ -690,7 +814,9 @@
     "url": "https://slea.ai/zh-CN/",
     "description": "使用Slea.ai的免费AI Logo生成器，轻松设计高质量定制Logo。通过先进的编辑工具，比如文字生成Logo和反向提示功能，几分钟内即可创建专业Logo。",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://slea.ai/favicon.ico",
     "id": "mbgaa72brihxpc0neg",
@@ -702,7 +828,9 @@
     "url": "https://www.namecheap.com/logo-maker/",
     "description": "",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://www.namecheap.com/favicon.ico",
     "id": "mbgaanepj2calq6jgw8",
@@ -714,7 +842,9 @@
     "url": "https://www.logosc.cn/",
     "description": "标小智是一款智能LOGO在线设计生成器。只需输入品牌名称就能免费在线生成公司logo设计，商标设计，以及配套企业VI助您打造个性品牌。",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://www.logosc.cn/img/logo-icons/logosc-new.svg",
     "id": "mbgab17zowh47ie1f0b",
@@ -726,7 +856,9 @@
     "url": "https://www.logonews.cn/",
     "description": "标志情报局24小时提供全球最新最全的新标志、新LOGO、标志新闻、标志资讯、LOGO新闻、LOGO设计欣赏、标志揭晓、国外LOGO设计欣赏等情报资讯。",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://www.logonews.cn/favicon-64x64.png",
     "id": "mbgabikwr9e84jugarl",
@@ -738,7 +870,9 @@
     "url": "https://logomoose.com/",
     "description": "Logo inspiration - Logo design inspiration from professional logo designers.",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://www.logomoose.com/favicon.ico",
     "id": "mbgabzupjlxsvyg5ci",
@@ -750,7 +884,9 @@
     "url": "https://www.logoed.co.uk/",
     "description": "Brand Identity Inspiration for Graphic Designers",
     "category": "design",
-    "tags": ["LOGO设计"],
+    "tags": [
+      "LOGO设计"
+    ],
     "featured": false,
     "icon": "https://www.logoed.co.uk/favicon.ico",
     "id": "mbgacdsc0jei0oo1k08o",
@@ -762,7 +898,9 @@
     "url": "https://unsplash.com/",
     "description": "Beautiful, free images and photos that you can download and use for any project. Better than any royalty free or stock photos.",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://unsplash.com/favicon-32x32.png",
     "id": "mbgadr2hmkv2teihy8",
@@ -774,7 +912,9 @@
     "url": "https://pixabay.com/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://pixabay.com/favicon.ico",
     "id": "mbgae5fmrs72n7d64l7",
@@ -786,7 +926,9 @@
     "url": "https://www.pexels.com/zh-cn/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://www.pexels.com/favicon.ico",
     "id": "mbgaekgbvzfldmz3mq",
@@ -798,7 +940,9 @@
     "url": "https://thenounproject.com/",
     "description": "Free Icons & Stock Photos for Everything",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://thenounproject.com/favicon-32x32.png",
     "id": "mbgaffmrjjlfhyxxsf",
@@ -810,7 +954,9 @@
     "url": "https://magdeleine.co/",
     "description": "Magdeleine is a curated collection of the best free stock images in high resolution (CC0, Public Domain and Creative Commons) that you can use for inspiration.",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://magdeleine.co/wp-content/themes/magdeleine/images/favicon.ico",
     "id": "mbgafsi2ti236mut0rm",
@@ -822,7 +968,9 @@
     "url": "https://stocksnap.io/",
     "description": "The best source for free, CC0, do-what-you-want-with stock photos. Browse and download thousands of copyright-free stock images. No attribution required.",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://stocksnap.io/img/favicon.png",
     "id": "mbgag73vv5avy03ebr",
@@ -834,7 +982,9 @@
     "url": "https://picography.co/",
     "description": "Picography offers gorgeous high-resolution free photos. Our free stock photos can be used for any project. No attribution needed. Download your favorites.",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://picography.co/wp-content/themes/picography-v3.0/images/android-icon-192x192.png",
     "id": "mbgagj4kuo41ha0qh0m",
@@ -846,7 +996,9 @@
     "url": "https://gratisography.com/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://gratisography.com/favicon.ico",
     "id": "mbgagxgsgvoqwlmvo",
@@ -858,7 +1010,9 @@
     "url": "https://www.pakutaso.com/",
     "description": "一部を有料販売したり、枚数制限による課金など一切ありません。美しい日本の風景を中心に人物やテクスチャーなどの写真とAIで生成した背景画像の素材を配布しています。2025年6月 2日現在、56,895枚の写真を掲載中。",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://www.pakutaso.com/favicon.ico",
     "id": "mbgahjg2g8cgai33fc5",
@@ -870,7 +1024,9 @@
     "url": "https://photock.jp/",
     "description": "商用利用可、クレジット表記不要、加工自由な高解像度フリー素材を今すぐ無料ダウンロード！",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://photock.jp/favicon.ico",
     "id": "mbgai0ikfylfsqzk9zc",
@@ -882,7 +1038,9 @@
     "url": "https://www.foodiesfeed.com/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://www.foodiesfeed.com/favicon.ico",
     "id": "mbgaif5cqbo8pihjwpo",
@@ -894,7 +1052,9 @@
     "url": "https://publicdomainarchive.com/",
     "description": "100% free Public Domain Images New free stock photos added weekly No attribution required. Images released under CC0 1.0 Universal Public Domain Dedication.",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://publicdomainarchive.com/wp-content/uploads/2014/02/favicon.jpg",
     "id": "mbgaizr45iuunbjy1v",
@@ -906,7 +1066,9 @@
     "url": "https://picryl.com/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://picryl.com/favicon.ico",
     "id": "mbgajdo01knk2te0qsv",
@@ -918,7 +1080,9 @@
     "url": "https://flickr.com/",
     "description": "",
     "category": "design",
-    "tags": ["版权图片"],
+    "tags": [
+      "版权图片"
+    ],
     "featured": false,
     "icon": "https://flickr.com/favicon.ico",
     "id": "mbgajxkmlv61ryp3dcp",
@@ -930,7 +1094,9 @@
     "url": "https://www.shutterstock.com/zh/",
     "description": "",
     "category": "design",
-    "tags": ["版权图片"],
+    "tags": [
+      "版权图片"
+    ],
     "featured": false,
     "icon": "https://www.shutterstock.com/favicon.ico",
     "id": "mbgakcr40ymtelkk8m0j",
@@ -942,7 +1108,9 @@
     "url": "https://miankoutupian.com/",
     "description": "免费的免抠图片素材网站,png透明背景图片素材库，支持以图搜图功能，提供了海量的高质量免抠图片素材免费下载，专门为设计师搜索和分享优质的无背景图和剪贴画，用户无需注册即可免费下载使用。",
     "category": "design",
-    "tags": ["免抠图片"],
+    "tags": [
+      "免抠图片"
+    ],
     "featured": false,
     "icon": "https://web-assets.soutushenqi.com/logo/mktp_logo.ico",
     "id": "mbgakx5bzuhi8bi5hq8",
@@ -954,7 +1122,9 @@
     "url": "https://www.51yuansu.com/",
     "description": "觅元素专注于提供高质量版权素材图片免费下载的网站，提供优质png素材、高清背景素材、图片素材、设计素材，找高质量版权素材就来觅元素.",
     "category": "design",
-    "tags": ["免抠图片"],
+    "tags": [
+      "免抠图片"
+    ],
     "featured": false,
     "icon": "https://www.51yuansu.com/favicon.ico",
     "id": "mbgalalbjrv3fxm8hvg",
@@ -966,7 +1136,9 @@
     "url": "https://igoutu.cn/photos",
     "description": "",
     "category": "design",
-    "tags": ["免抠图片"],
+    "tags": [
+      "免抠图片"
+    ],
     "featured": false,
     "icon": "https://igoutu.cn/favicon.ico",
     "id": "mbgalpvjjbriq2sayy",
@@ -978,7 +1150,9 @@
     "url": "https://pngimg.com/",
     "description": "The largest FREE transparent PNG images clipart catalog for design and web design in best resolution and quality",
     "category": "design",
-    "tags": ["免抠图片"],
+    "tags": [
+      "免抠图片"
+    ],
     "featured": false,
     "icon": "https://pngimg.com/favicon.ico",
     "id": "mbgam4vgpgfpwzo87t",
@@ -990,7 +1164,9 @@
     "url": "https://pixcall.com/",
     "description": "Pixcall 是为设计师打造的本地文件管理客户端，方便地管理图片、视频等设计素材，支持多种同步方案。",
     "category": "design",
-    "tags": ["素材管理"],
+    "tags": [
+      "素材管理"
+    ],
     "featured": false,
     "icon": "https://pixcall.com/favicon.svg",
     "id": "mbgaoee8egrdvqj4am",
@@ -1002,7 +1178,9 @@
     "url": "https://cn.eagle.cool/",
     "description": "Eagle 可以轻松管理大量图片、视频、音频素材，满足素材「收藏、整理、查找」的各种场景，支持 Mac 与 Windows 系统。",
     "category": "design",
-    "tags": ["素材管理"],
+    "tags": [
+      "素材管理"
+    ],
     "featured": false,
     "icon": "https://cn.eagle.cool/images/favicon.png",
     "id": "mbgaori9yduk89oa8jf",
@@ -1014,7 +1192,9 @@
     "url": "https://www.billfish.cn/",
     "description": "Billfish是专为设计师打造的图片素材管理工具，素材管家可以高效的整理电脑的各类素材",
     "category": "design",
-    "tags": ["素材管理"],
+    "tags": [
+      "素材管理"
+    ],
     "featured": false,
     "icon": "https://www.billfish.cn/favicon.ico",
     "id": "mbgap6akrs4uldpxlan",
@@ -1026,7 +1206,9 @@
     "url": "https://lingquan.cool/",
     "description": "零泉可以轻松和整理图片、视频等素材，保持创意灵感源源不断，让工作更高效",
     "category": "design",
-    "tags": ["素材管理"],
+    "tags": [
+      "素材管理"
+    ],
     "featured": false,
     "icon": "https://lingquan.cool/favicon.ico",
     "id": "mbgapj25604jxu4bf3t",
@@ -1038,7 +1220,9 @@
     "url": "https://zoommyapp.com/",
     "description": "Zoommy helps you find awesome free stock photos for your creative product or inspiration",
     "category": "design",
-    "tags": ["素材管理"],
+    "tags": [
+      "素材管理"
+    ],
     "featured": false,
     "icon": "https://zoommyapp.com/favicon.ico",
     "id": "mbgapyhoaj18dhm7b15",
@@ -1050,7 +1234,9 @@
     "url": "https://www.pacdora.cn/",
     "description": "Pacdora是一家专业的在线3D包装设计资源的平台。提供刀版自定义尺寸和样机在线编辑功能，所见即所得，可实现3D云渲染效果实时预览。",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://www.pacdora.cn/_pacui/pacdora-icon.png",
     "id": "mbgaqmd5l8jscuzbzdk",
@@ -1062,7 +1248,9 @@
     "url": "https://www.ls.graphics/",
     "description": "Discover a vast collection of free and premium mockups for Photoshop and Figmaю Enhance your design projects with high-quality device and packaging mockups",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://cdn.prod.website-files.com/6251e30396c5bc84d2f37d19/627d323c97670d8332c54915_32.png",
     "id": "mbgar2kyip76ay7r4jj",
@@ -1074,7 +1262,9 @@
     "url": "https://mockups-design.com/",
     "description": "Download free mockups! Mockups Design is a site where you can find free premium mockups that can be used in your private and commercial work.",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://mockups-design-com.b-cdn.net/wp-content/uploads/2017/08/cropped-favicon-32x32.png",
     "id": "mbgarhp19xvis7ippod",
@@ -1086,7 +1276,9 @@
     "url": "https://mockups.pixeltrue.com/",
     "description": "Create beautiful product mockups in just a few clicks! Completely free",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://mockups.pixeltrue.com/favicon.ico",
     "id": "mbgas1dpq6thrg2n4l",
@@ -1098,7 +1290,9 @@
     "url": "https://deviceshots.com/",
     "description": "",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://deviceshots.com/favicon.ico",
     "id": "mbgasg7rqzrforje6ao",
@@ -1110,7 +1304,9 @@
     "url": "https://mockuphone.com/",
     "description": "MockUPhone is a free tool that helps you wrap app screenshots in different mobile devices. Support iPhone mockup, iPad mockup, Android mockup and TV mockup.",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://mockuphone.com/images/favicon.png",
     "id": "mbgasrm2yaejbpkuqh",
@@ -1122,7 +1318,9 @@
     "url": "https://themockup.club/",
     "description": "Best Free Mockups",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://i0.wp.com/themockup.club/wp-content/uploads/2018/01/cropped-fav-3.png?fit=32%2C32&quality=95&ssl=1",
     "id": "mbgat250tt6dtgzglc",
@@ -1134,7 +1332,9 @@
     "url": "https://mockerie.io/",
     "description": "",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://mockerie.io/favicon.ico",
     "id": "mbgatglyl9ww2xisj4",
@@ -1146,7 +1346,9 @@
     "url": "https://screely.com/",
     "description": "Instantly turn your screenshot into a beautiful website mockup. Customize the browser mockup window, background and much more.",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://screely.com/favicons/favicon-32x32.png?v=m2LPa2XMm8",
     "id": "mbgatulq3nl5f4ixfmb",
@@ -1158,7 +1360,9 @@
     "url": "https://mockupplanet.com/",
     "description": "Great Collection of Best Free Mockups From The Web",
     "category": "design",
-    "tags": ["样机"],
+    "tags": [
+      "样机"
+    ],
     "featured": false,
     "icon": "https://mockupplanet.com/wp-content/uploads/2017/05/Mockup-Planet-Favicon-2.png",
     "id": "mbgau549hxepsufgd2",
@@ -1170,7 +1374,9 @@
     "url": "https://lucide.dev/",
     "description": "Beautiful & consistent icon toolkit made by the community.",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://lucide.dev/favicon.ico",
     "id": "mbgaxeuno6s6ltq1zhp",
@@ -1182,7 +1388,9 @@
     "url": "https://geticonjar.com/",
     "description": "Say goodbye to scattered icons and hello to simple organization one click away!.",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://geticonjar.com/favicon16.png",
     "id": "mbgaxtu1k6o6gw49bkh",
@@ -1194,7 +1402,9 @@
     "url": "https://www.streamlinehq.com/",
     "description": "",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://www.streamlinehq.com/favicon.ico",
     "id": "mbgay7kvrftajm9ym6",
@@ -1206,7 +1416,9 @@
     "url": "https://yesicon.app/",
     "description": "194 个图标库，25 万个精品矢量图标，多种语言跨图标库搜索，丰富的类型及风格筛选，快速自定义图标颜色、尺寸及代码风格，专供开发者和设计师一键复制、下载",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://yesicon.app/favicon-16x16.png",
     "id": "mbgaylsej46pq5va54j",
@@ -1218,7 +1430,9 @@
     "url": "https://www.iconfont.cn/",
     "description": "iconfont-国内功能很强大且图标内容很丰富的矢量图标库，提供矢量图标下载、在线存储、格式转换等功能。阿里巴巴体验团队倾力打造，设计和前端开发的便捷工具",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://img.alicdn.com/imgextra/i4/O1CN01Z5paLz1O0zuCC7osS_!!6000000001644-55-tps-83-82.svg",
     "id": "mbgaz6fzjr6rx58g7ms",
@@ -1230,7 +1444,9 @@
     "url": "https://iconmonstr.com/",
     "description": "Free simple icons for your next project",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://iconmonstr.com/wp-content/themes/iconmonstr/assets/ico/2.0.0/favicon.ico",
     "id": "mbgazt1dnxp9i0ei26",
@@ -1242,7 +1458,9 @@
     "url": "https://fontawesome.com/",
     "description": "The internet's icon library + toolkit. Used by millions of designers, devs, & content creators. Open-source. Always free. Always awesome.",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://fontawesome.com/favicon.ico",
     "id": "mbgb03tcen6v2jrmour",
@@ -1254,7 +1472,9 @@
     "url": "https://icones.js.org/",
     "description": "",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://icones.js.org/favicon.svg",
     "id": "mbgb0j6n97w3frsh3d",
@@ -1266,7 +1486,10 @@
     "url": "https://icons.getbootstrap.com/",
     "description": "Official open source SVG icon library for Bootstrap",
     "category": "design",
-    "tags": ["图标", "Bootstrap"],
+    "tags": [
+      "图标",
+      "Bootstrap"
+    ],
     "featured": false,
     "icon": "https://icons.getbootstrap.com/assets/img/favicons/favicon-32x32.png",
     "id": "mbgb0ulmlzm92mdjvu",
@@ -1278,7 +1501,9 @@
     "url": "https://lineicons.com/",
     "description": "Get 15739+ free line icons in SVG, PNG, React, Figma, and more. Available in multiple variations, with free CDN & icon editor for seamless customization!",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://lineicons.com/favicon.ico",
     "id": "mbgb191zf92txxodb3",
@@ -1290,7 +1515,9 @@
     "url": "https://fontello.com/",
     "description": "Tool to build custom fonts with icons.",
     "category": "design",
-    "tags": ["图标"],
+    "tags": [
+      "图标"
+    ],
     "featured": false,
     "icon": "https://fontello.com/favicon.ico",
     "id": "mbgb1l0qtxu2qbx06l",
@@ -1302,7 +1529,9 @@
     "url": "https://openmoji.org/",
     "description": "Open source emojis for designers, developers and everyone else!",
     "category": "design",
-    "tags": ["Emoji"],
+    "tags": [
+      "Emoji"
+    ],
     "featured": false,
     "icon": "https://openmoji.org/favicons/favicon.svg",
     "id": "mbgb36lr1g7kuv1bn2v",
@@ -1314,7 +1543,9 @@
     "url": "https://www.emojiall.com/zh-hans",
     "description": "该网站提供了最新、完整的Emoji搜索和相关信息，包括表情符号含义、使用示例、Unicode代码点、高分辨率图片、复制和粘贴，以及Emoji大数据排名、矢量图形和动态图表、智能算法情感分析和表情符号语言学研究。",
     "category": "design",
-    "tags": ["Emoji"],
+    "tags": [
+      "Emoji"
+    ],
     "featured": false,
     "icon": "https://www.emojiall.com/favicon.ico",
     "id": "mbgb3uq5nii11rrfemr",
@@ -1326,7 +1557,9 @@
     "url": "https://tw.piliapp.com/emoji/list/",
     "description": "在iOS和Android原生繪文字符號",
     "category": "design",
-    "tags": ["Emoji"],
+    "tags": [
+      "Emoji"
+    ],
     "featured": false,
     "icon": "https://assets.piliapp.com/s3pxy/favicon.ico",
     "id": "mbgb4escjq6kpx7ph4s",
@@ -1338,7 +1571,9 @@
     "url": "https://searchemoji.app/zh-hans",
     "description": "SearchEmoji 收录最全的 Emoji 表情库，并提供强大的搜索功能，你可以通过关键词精确查找，或者通过分类筛选、预览，并一键复制到你的文章、聊天及社交媒体中。",
     "category": "design",
-    "tags": ["Emoji"],
+    "tags": [
+      "Emoji"
+    ],
     "featured": false,
     "icon": "https://searchemoji.app/favicon.ico",
     "id": "mbgb53r1xiam89lxxn",
@@ -1350,7 +1585,9 @@
     "url": "https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.mjs",
     "description": "",
     "category": "design",
-    "tags": ["Emoji"],
+    "tags": [
+      "Emoji"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbgb5ycbd49sr9elln9",
@@ -1362,7 +1599,9 @@
     "url": "https://pixelmap.amcharts.com/",
     "description": "",
     "category": "design",
-    "tags": ["地图"],
+    "tags": [
+      "地图"
+    ],
     "featured": false,
     "icon": "https://pixelmap.amcharts.com/favicon.ico",
     "id": "mbgb6ha4bvsmcv57p",
@@ -1374,7 +1613,9 @@
     "url": "https://www.mapchart.net/",
     "description": "",
     "category": "design",
-    "tags": ["地图"],
+    "tags": [
+      "地图"
+    ],
     "featured": false,
     "icon": "https://www.mapchart.net/favicon.ico",
     "id": "mbgb7091d38lnpoxqsm",
@@ -1386,7 +1627,9 @@
     "url": "https://www.tianditu.gov.cn/",
     "description": "国家地理信息公共服务平台",
     "category": "design",
-    "tags": ["地图"],
+    "tags": [
+      "地图"
+    ],
     "featured": false,
     "icon": "https://www.tianditu.gov.cn/favicon.ico",
     "id": "mbgc3q0kzndrzihngo9",
@@ -1398,7 +1641,9 @@
     "url": "https://ngac.org.cn/Map/List",
     "description": "",
     "category": "design",
-    "tags": ["地图"],
+    "tags": [
+      "地图"
+    ],
     "featured": false,
     "icon": "https://ngac.org.cn/favicon.ico",
     "id": "mbgc49cnaptuv67eshc",
@@ -1410,7 +1655,9 @@
     "url": "https://undraw.co/",
     "description": "",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://undraw.co/favicon.ico",
     "id": "mbgc5ej6gqbyt8sbqwd",
@@ -1422,7 +1669,9 @@
     "url": "https://www.manypixels.co/gallery",
     "description": "Discover a diverse range of stunning illustrations at ManyPixels Design Gallery. Power up your designs with visual brilliance!",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://cdn.prod.website-files.com/63a9cb71c629474d4ae334b9/63ac68e5916d9b5c5a24a999_Favicon%201.png",
     "id": "mbgc5s6mmgnha5q1gha",
@@ -1434,7 +1683,9 @@
     "url": "https://www.openpeeps.com/",
     "description": "Open Peeps is a hand-drawn illustration library to create scenes of people. You can use them in product illustration, marketing, comics, product states, user flows, personas, storyboarding, quinceañera invitations, or whatever you want! ⠀",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://cdn.prod.website-files.com/5e51b3b0337309d672efd94c/5e51ce488c34f8b713499e29_icon32w.png",
     "id": "mbgc64mt9n0820rg8vp",
@@ -1446,7 +1697,9 @@
     "url": "https://stubborn.fun/",
     "description": "Free illustrations generator for Figma and Sketch. Get the opportunity to design your characters using symbols and styles.",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://stubborn.fun/icon/favicon-32x32.png",
     "id": "mbgc6i8yps4ydba0sh",
@@ -1458,7 +1711,9 @@
     "url": "https://www.humaaans.com/",
     "description": "Mix-&-match illustrations of people with a design library for InVIsion Studio and Sketch.",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://cdn.prod.website-files.com/5bff8886c3964a992e90d465/5c00a0ccd86e9656ff7c748a_favicon-32.png",
     "id": "mbgc71n9wdroursnrm",
@@ -1470,7 +1725,9 @@
     "url": "https://blush.design/zh-CN",
     "description": "Blush使您可以轻松地在设计中添加免费插图。尽情使用由全球艺术家创作的可自定义的图形。",
     "category": "design",
-    "tags": ["免费插画"],
+    "tags": [
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://blush.design/favicon-32x32.png",
     "id": "mbgc7ekfgyrwf40vldk",
@@ -1482,7 +1739,9 @@
     "url": "https://zh.snipaste.com/index.html",
     "description": "截图 + 贴图，提高您的工作效率",
     "category": "design",
-    "tags": ["截图工具"],
+    "tags": [
+      "截图工具"
+    ],
     "featured": false,
     "icon": "https://zh.snipaste.com/favicon.ico",
     "id": "mbgca0eill7uhjluvuf",
@@ -1494,7 +1753,9 @@
     "url": "https://getsharex.com/",
     "description": "ShareX is a free and open source program that lets you capture or record any area of your screen and share it with a single press of a key.",
     "category": "design",
-    "tags": ["截图工具"],
+    "tags": [
+      "截图工具"
+    ],
     "featured": false,
     "icon": "https://getsharex.com/favicon.ico",
     "id": "mbgcao88tlzdf0xpjql",
@@ -1506,7 +1767,9 @@
     "url": "https://jietu.qq.com/",
     "description": "截图（Jietu）轻松便捷的截图软件,截图（Jietu）是一款免费应用,精美界面设计,操作简单,功能强大",
     "category": "design",
-    "tags": ["截图工具"],
+    "tags": [
+      "截图工具"
+    ],
     "featured": false,
     "icon": "https://jietu.qq.com/favicon.ico",
     "id": "mbgcayw4n0we0adex9p",
@@ -1518,7 +1781,9 @@
     "url": "https://screenzy.io/",
     "description": "Screenzy is a free tool to instantly transform you pictures and screenshots into beautiful mockups ready to be shared on social media.",
     "category": "design",
-    "tags": ["截图工具"],
+    "tags": [
+      "截图工具"
+    ],
     "featured": false,
     "icon": "https://screenzy.io/favicon-32x32.png",
     "id": "mbgcbd21ncnays6jdwj",
@@ -1530,7 +1795,9 @@
     "url": "https://pixpin.cn/",
     "description": "PixPin是一款功能强大的免费截图工具，支持截图、录屏、长截图、OCR文字识别、屏幕贴图等功能。为设计师、开发者、办公人员提供高效的屏幕操作体验。",
     "category": "design",
-    "tags": ["截图工具"],
+    "tags": [
+      "截图工具"
+    ],
     "featured": false,
     "icon": "https://pixpin.cn/favicon.ico",
     "id": "mbgcbpuczlaoi2mj5jk",
@@ -1542,7 +1809,9 @@
     "url": "https://www.vectorizer.io/",
     "description": "Online raster to vector converter. Convert your images (jpeg, jpg or png) into scalable and clear vector art (svg)",
     "category": "design",
-    "tags": ["图像矢量化"],
+    "tags": [
+      "图像矢量化"
+    ],
     "featured": false,
     "icon": "https://www.vectorizer.io/favicon.ico",
     "id": "mbhu7hnlo6g4ctkp7dg",
@@ -1554,7 +1823,9 @@
     "url": "https://www.91sotu.com/",
     "description": "搜图导航精选及整理国内外优秀的设计行业网站,并且提供一站式快速搜索图像服务支持全网正版图片搜索。拥有以图搜图、智能配色、字体生成、个性定制等功能。给你带来更好的搜图体验,并且收录了十几类设计相关网站包括高清图库、灵感创意、素材资源、教程文章、设计工具、绘画涂鸦、建模贴图、设计社区、字体下载、图标下载等网站。",
     "category": "design",
-    "tags": ["搜图工具"],
+    "tags": [
+      "搜图工具"
+    ],
     "featured": false,
     "icon": "https://www.91sotu.com/favicon.ico",
     "id": "mbi961t0vjvjsbvps2d",
@@ -1566,7 +1837,9 @@
     "url": "https://cn.bing.com/visualsearch",
     "description": "按图像或反向图像进行免费搜索。拍摄或上传照片以查找相似的图像和产品。从图像中查找和识别陆标、动物、食物、地点、产品和名人。",
     "category": "design",
-    "tags": ["搜图工具"],
+    "tags": [
+      "搜图工具"
+    ],
     "featured": false,
     "icon": "https://cn.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico",
     "id": "mbi96fqu5u6f8ek5dxl",
@@ -1578,7 +1851,9 @@
     "url": "https://graph.baidu.com/pcpage/index",
     "description": "百度图像搜索-领先的图像识别技术连接人与信息-为你搜寻所见",
     "category": "design",
-    "tags": ["搜图工具"],
+    "tags": [
+      "搜图工具"
+    ],
     "featured": false,
     "icon": "https://www.baidu.com/favicon.ico",
     "id": "mbi96t4i3533vjh3e25",
@@ -1590,7 +1865,9 @@
     "url": "https://folioart.co.uk/",
     "description": "Illustration and animation agency representing top illustrators and animators. Find an illustrator and browse animation services.",
     "category": "design",
-    "tags": ["插画灵感"],
+    "tags": [
+      "插画灵感"
+    ],
     "featured": false,
     "icon": "https://folioart.co.uk/content/themes/folio/assets/img/favicons/favicon-32x32.png",
     "id": "mbi98a3y9pv4pba8jq",
@@ -1602,7 +1879,9 @@
     "url": "https://exoplanets.nasa.gov/alien-worlds/exoplanet-travel-bureau/?intent=021",
     "description": "Book your trip to the imagined surfaces of planets outside our solar system, with NASA's interactive Exoplanet Travel Bureau",
     "category": "design",
-    "tags": ["插画灵感"],
+    "tags": [
+      "插画灵感"
+    ],
     "featured": false,
     "icon": "https://exoplanets.nasa.gov/favicon.ico",
     "id": "mbi98mivj65yt0mjoxr",
@@ -1614,7 +1893,9 @@
     "url": "https://www.agent002.com/",
     "description": "",
     "category": "design",
-    "tags": ["插画灵感"],
+    "tags": [
+      "插画灵感"
+    ],
     "featured": false,
     "icon": "https://www.agent002.com/favicon.ico",
     "id": "mbi990vkmti5winojo",
@@ -1626,7 +1907,9 @@
     "url": "https://justfont.com/",
     "description": "致力培育台灣下一代的設計力量。邀您一起創造更好的文字風景。",
     "category": "design",
-    "tags": ["字体设计"],
+    "tags": [
+      "字体设计"
+    ],
     "featured": false,
     "icon": "https://justfont.com/favicon.ico",
     "id": "mbi9bt590c8oiw7nljxm",
@@ -1638,7 +1921,9 @@
     "url": "https://favicon.yandex.net/favicon/vinci.pszhuli.com",
     "description": "",
     "category": "design",
-    "tags": ["PS插件"],
+    "tags": [
+      "PS插件"
+    ],
     "featured": false,
     "icon": "https://favicon.yandex.net/favicon.ico",
     "id": "mbi9e48wctn0rlzr32",
@@ -1650,7 +1935,9 @@
     "url": "https://vinci.pszhuli.com/",
     "description": "设计助理，一款基于PS开发的设计插件，可以轻松解决繁琐臃臃肿的工作量，开启高效设计",
     "category": "design",
-    "tags": ["PS插件"],
+    "tags": [
+      "PS插件"
+    ],
     "featured": false,
     "icon": "https://cdn.dancf.com/pszhuli/vinci.ico",
     "id": "mbi9eta1ax46f81hnxo",
@@ -1662,7 +1949,9 @@
     "url": "https://ck.pszhuli.com/",
     "description": "设计助理智能参考，一款基于PS开发的设计插件，可以快速生成参考线，构图，版式，开启高效设计，我们提供了一系列高效设计工具",
     "category": "design",
-    "tags": ["PS插件"],
+    "tags": [
+      "PS插件"
+    ],
     "featured": false,
     "icon": "https://cdn.dancf.com/pszhuli/ck.ico",
     "id": "mbi9f7frgkyl9sz889q",
@@ -1674,7 +1963,9 @@
     "url": "https://www.pslkzs.com/ps/index.php",
     "description": "Figma拉框助手能够快速的生成折线图、柱状图、饼图、雷达图、全国各省市的地图",
     "category": "design",
-    "tags": ["PS插件"],
+    "tags": [
+      "PS插件"
+    ],
     "featured": false,
     "icon": "https://www.pslkzs.com/ps/images/favicon.ico",
     "id": "mbi9fnczxh2v2e0adn",
@@ -1686,7 +1977,9 @@
     "url": "https://guideguide.me/",
     "description": "GuideGuide is a plugin that lets you quickly and easily create grids and manipulate guides, wherever you like to work.",
     "category": "design",
-    "tags": ["PS插件"],
+    "tags": [
+      "PS插件"
+    ],
     "featured": false,
     "icon": "https://guideguide.me/favicon.ico",
     "id": "mbi9g1kt3j3j32dlmbs",
@@ -1698,7 +1991,9 @@
     "url": "https://www.gimp.org/",
     "description": "The GNU Image Manipulation Program: The Free and Open Source Image Editor",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://www.gimp.org/images/wilber32.png",
     "id": "mbi9gy7t9bf7frsc9g5",
@@ -1710,7 +2005,9 @@
     "url": "https://yunxiu.meitu.com/home",
     "description": "美图云修是美图公司推出的专业级AI人像精修软件，应用全球领先的AI影像技术，为商业摄影后期提供全方位智能修图服务，打造真实、自然、干净、通透的人像精修效果，又好又快地完成照片批量处理工作，助力企业降本、提效、增收。",
     "category": "design",
-    "tags": ["人像精修"],
+    "tags": [
+      "人像精修"
+    ],
     "featured": false,
     "icon": "https://yunxiu.meitu.com/favicon.ico",
     "id": "mbi9hks9mwo9fzzwa8n",
@@ -1722,7 +2019,9 @@
     "url": "https://www.gymss.cn/",
     "description": "光影魔术手是迅雷公司旗下的图像处理软件。AI 智能抠图、人像美容、智能调色、批处理、证件照排版冲印等功能强大、简便易用。轻松实现大师级调色，一键秒改千图。备受用户好评，是摄影爱好者的装机必备。",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://www.gymss.cn/favicon/favicon.ico",
     "id": "mbi9hyytjg9n321d0xa",
@@ -1734,7 +2033,9 @@
     "url": "https://x.photoscape.org/",
     "description": "Free Download PhotoScape X - Fun and Easy Photo Editor. PhotoScape X is an all-in-one photo editing software which provides photo-related features such as Photo Viewer, Editor, Cut Out, Batch, Collage, Combine, Create GIF, Color Picker, Screen Capture, RAW images and More. Best Photoshop Alternative.",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://x.photoscape.org/favicon.ico",
     "id": "mbi9iblbfyih93cl0do",
@@ -1746,7 +2047,9 @@
     "url": "https://www.xnview.com/en/",
     "description": "XnView, one of the best and popular image viewer",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://www.xnview.com/ico/favicon.ico",
     "id": "mbi9irf0s126tiujkq",
@@ -1758,7 +2061,9 @@
     "url": "https://picpick.app/zh/",
     "description": "一款全功能的设计工具，包含屏幕截图、图片编辑器、颜色选择器、像素标尺和其它更多的功能",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://picpick.app/favicon-32x32.png?v=32ef3f284ce5058bd11263e9796a5606",
     "id": "mbi9j9m5u7vdncfvrsh",
@@ -1770,7 +2075,9 @@
     "url": "https://www.sketch.com/",
     "description": "Sketch puts the focus back on you and your work. Made by designers, for designers.",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://www.sketch.com/images/metadata/icon-16.svg",
     "id": "mbi9jp6os3xl4zmrg5",
@@ -1782,7 +2089,9 @@
     "url": "https://www.coreldraw.com/en/",
     "description": "Creativity meets productivity in CorelDRAW Graphics Suite, your fully-loaded professional design toolkit for vector illustration, page layout, photo editing, typography, and more.",
     "category": "design",
-    "tags": ["图像处理"],
+    "tags": [
+      "图像处理"
+    ],
     "featured": false,
     "icon": "https://www.coreldraw.com/static/cdgs/images/favicon.ico",
     "id": "mbi9k23i7dt1keb4asi",
@@ -1794,7 +2103,9 @@
     "url": "https://help.procreate.com/cn/procreate/handbook/introduction",
     "description": "在官方使用指南中了解 Procreate® 中你所需要知道的一切。让自己熟悉简约大气的多点触控界面、发掘高级自定义笔刷系统，以及更多信息和内容。",
     "category": "design",
-    "tags": ["绘图应用"],
+    "tags": [
+      "绘图应用"
+    ],
     "featured": false,
     "icon": "https://d1tq2834awssza.cloudfront.net/9017a82b-9592-4c7e-8ecc-2adcacffed78/favicon/apple-icon-152x152.png",
     "id": "mbi9m82f8chpzswfb4",
@@ -1806,7 +2117,9 @@
     "url": "https://www.behance.net/",
     "description": "",
     "category": "design",
-    "tags": ["设计平台"],
+    "tags": [
+      "设计平台"
+    ],
     "featured": false,
     "icon": "https://www.behance.net/favicon.ico",
     "id": "mbi9nql4feyv2buli4d",
@@ -1818,7 +2131,9 @@
     "url": "https://www.zcool.com.cn/",
     "description": "",
     "category": "design",
-    "tags": ["设计平台"],
+    "tags": [
+      "设计平台"
+    ],
     "featured": false,
     "icon": "https://www.zcool.com.cn/favicon.ico",
     "id": "mbi9o8068rdxyrj5h1w",
@@ -1830,7 +2145,9 @@
     "url": "https://www.ui.cn/",
     "description": "",
     "category": "design",
-    "tags": ["设计平台"],
+    "tags": [
+      "设计平台"
+    ],
     "featured": false,
     "icon": "https://www.ui.cn/Public/img/favicon.ico",
     "id": "mbi9oimvpyghb29ppom",
@@ -1842,7 +2159,9 @@
     "url": "https://www.figma.com/",
     "description": "Figma is the leading collaborative design tool for building meaningful products. Seamlessly design, prototype, develop, and collect feedback in a single platform.",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": true,
     "icon": "https://static.figma.com/app/icon/1/icon-192.png",
     "id": "mbj7zhc79egll12cwdl",
@@ -1854,7 +2173,9 @@
     "url": "https://modao.cc/",
     "description": "墨刀原型设计工具，支持APP、网站页面、管理后台、可视化大屏、工业HMI、小程序、H5多场景领域原型设计，AI智能生成组件、页面，智能填充，支持执行AI语义化指令，支持团队项目实时协作和管理，金融级数据安全保障，还支持私有化部署，是产品经理、设计师和技术开发团队必备工具。",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://images.modao.cc/images/favicon.ico",
     "id": "mbj7zxmlrg0t43kg6b",
@@ -1866,7 +2187,9 @@
     "url": "https://www.mockplus.cn/",
     "description": "摹客集设计协作平台、原型设计和设计规范为一体，数百万设计师、产品经理和开发工程师必备设计神器、交互原型、标注切图、文档管理。设计+协作，摹客就够了！",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://www.mockplus.cn/favicon.ico",
     "id": "mbj80xtn7k007nmvahw",
@@ -1878,7 +2201,9 @@
     "url": "https://js.design/",
     "description": "即时设计是一款在线可协作的UI设计工具，是可协作的在线sketch、国内版figma，拥有海量的设计资源与素材，支持导入sketch格式的源文件。支持创建交互原型、获取设计标注、快速切图、团队协作等工作。",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://img.js.design/assets/webImg/favicon.ico",
     "id": "mbj81w56vtbfrceup0r",
@@ -1890,7 +2215,9 @@
     "url": "https://wegic.ai/zh-cn/",
     "description": "您好，我们是Wegic——您的AI网站团队：设计师、开发者和管理者。只需与我们聊天，我们将为您构建、管理并轻松更新您的网站！",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://cdn.wegic.ai/assets/email/logo.ico",
     "id": "mbj839k66skih4j7xhr",
@@ -1902,7 +2229,9 @@
     "url": "https://www.axure.com/",
     "description": "The most powerful way to plan, prototype and handoff to developers, all without code. Download a free trial and see why UX professionals choose Axure RP.",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://www.axure.com/wp-content/uploads/2019/04/favicon.ico",
     "id": "mbj83njf0xzt222sys3l",
@@ -1914,7 +2243,9 @@
     "url": "https://www.uxpin.com/",
     "description": "Design tool like no other. Prototypes that feel real, with powers of code components, logic, states, and design systems. Join for free!",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://www.uxpin.com/images/favicon.ico",
     "id": "mbj84oo5zvvhq75y58i",
@@ -1926,7 +2257,9 @@
     "url": "https://mastergo.com/",
     "description": "MasterGo/莫高设计是AI时代企业级产品设计平台，贯穿产品设计研发的全链条在线协作工具,是可协作的在线sketch、国内版figma，提供在线产品设计、原型图制作设计、网页开发设计、产品交互设计、UI和UX设计工具等功能,支持多人实时协作,可快速搭建设计系统,为产品设计师、交互设计师、工程师以及产品经理提供更简单灵活的工作模式。",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://mastergo.com/favicon.ico",
     "id": "mbj855yd082ueidynngn",
@@ -1938,7 +2271,9 @@
     "url": "https://onlook.com/",
     "description": "The power of Cursor for your own website. Onlook lets you edit your React website and write your changes back to code in real-time. Iterate and experiement with AI. Download the open-source, local-first desktop app today.",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": true,
     "icon": "https://framerusercontent.com/images/lpmCNiuYoiviK2nVja6Wt64Q.png",
     "id": "mbkqzqv8stwdv09335c",
@@ -1950,7 +2285,9 @@
     "url": "https://www.framer.com/",
     "description": "Build a free website with Framer—enjoy full design freedom, powerful CMS, built-in SEO, and real-time collaboration. Create professional, fully custom sites with the no-code builder loved by designers and high-performing teams.",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://framerusercontent.com/images/Io89FonxEaWg4nxvQQllVLwPUUI.png",
     "id": "mbkr0rx00kq5ajw9ypw",
@@ -1962,7 +2299,9 @@
     "url": "https://www.wix.com/",
     "description": "Create a website without limits",
     "category": "design",
-    "tags": ["UI设计"],
+    "tags": [
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://www.wix.com/favicon.ico",
     "id": "mbkr3znkespsoj59gw",
@@ -1974,7 +2313,9 @@
     "url": "https://creativemarket.com/",
     "description": "",
     "category": "design",
-    "tags": ["素材售卖"],
+    "tags": [
+      "素材售卖"
+    ],
     "featured": false,
     "icon": "https://creativemarket.com/favicon.ico",
     "id": "mbmvco678uazhy55ems",
@@ -1986,7 +2327,9 @@
     "url": "https://ibaotu.com/",
     "description": "包图网拥有亿级正版商用素材模板，为企业 、政府机关、个人用户提供原创可商用的精品版权，涵盖4K/8K高清视频、AE模板、MG动画、配乐音效、AI素材、AI视频、AI音乐、PPT模板、海报模板、UI设计素材、PNG元素、电商淘宝、摄影图、插画动图、装饰装修、3D素材等，满足企业宣传、政府党建宣传及个人用户的创意剪辑、智能抠图、在线设计、AI绘画等各种使用场景，会员可享免费下载，立即访问包图网，获取高质素材！",
     "category": "design",
-    "tags": ["素材售卖"],
+    "tags": [
+      "素材售卖"
+    ],
     "featured": false,
     "icon": "https://ibaotu.com/favicon.ico",
     "id": "mbmvd9zockg5hls7laa",
@@ -1998,7 +2341,9 @@
     "url": "https://www.58pic.com/",
     "description": "",
     "category": "design",
-    "tags": ["素材售卖"],
+    "tags": [
+      "素材售卖"
+    ],
     "featured": false,
     "icon": "https://www.58pic.com/favicon.ico",
     "id": "mbmvdx98gvz6blgvkdl",
@@ -2010,7 +2355,9 @@
     "url": "https://www.ooopic.com/",
     "description": "",
     "category": "design",
-    "tags": ["素材售卖"],
+    "tags": [
+      "素材售卖"
+    ],
     "featured": false,
     "icon": "https://www.ooopic.com/favicon.ico",
     "id": "mbmvei7vvhxa36soepb",
@@ -2022,7 +2369,9 @@
     "url": "https://www.awwwards.com/",
     "description": "Awwwards are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": false,
     "icon": "https://assets.awwwards.com/assets/images/favicon.svg",
     "id": "mbnhl2z8wk4vdeggx1p",
@@ -2034,7 +2383,9 @@
     "url": "https://www.uisdc.com/",
     "description": "优设网 (uisdc.com) 是国内设计师入门到进阶的专业设计网站。AIGC及设计内容全面及时，全网粉丝过千万。专注前沿设计趋势和设计方法论，拥有原创独家设计内容和设计师网站导航。提供AIGC教程、灵感素材、UI设计、平面设计、网页设计、电商设计、SDC网站推荐。",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": true,
     "icon": "https://www.uisdc.com/favicon-32x32.ico",
     "id": "mbnhlnpiheino48lvcu",
@@ -2046,7 +2397,9 @@
     "url": "https://uiiiuiii.com/inspiration",
     "description": "优优教程网灵感频道,设计师没灵感?在这里你可以找到Banner设计,海报设计,logo设计,UI设计,网页设计,App设计等灵感,来优优,找设计灵感.",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": false,
     "icon": "https://uiiiuiii.com/favicon.ico",
     "id": "mbnhmac0s4e03xpxem",
@@ -2058,7 +2411,9 @@
     "url": "https://huaban.com/",
     "description": "花瓣网, 设计师寻找灵感的天堂！图片素材领导者，帮你采集、发现网络上你喜欢的事物。你可以用它收集灵感,保存有用的素材,计划旅行,晒晒自己想要的东西",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": true,
     "icon": "https://huaban.com/img/touch-icon-iphone.png",
     "id": "mbnhmq8i035451rmcuiw",
@@ -2070,7 +2425,9 @@
     "url": "https://www.pinterest.com/",
     "description": "",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": false,
     "icon": "https://www.pinterest.com/favicon.ico",
     "id": "mbnhnfkfqm47zx7lpgk",
@@ -2082,7 +2439,9 @@
     "url": "https://www.typographicposters.com/",
     "description": "since 2008, a reference platform for typographic and graphic posters.",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": false,
     "icon": "https://www.typographicposters.com/favicon.ico",
     "id": "mbnhnqr3d9014gnelet",
@@ -2094,7 +2453,9 @@
     "url": "https://glander.co/",
     "description": "GLANDERCO: The grafix practice of 3D artist Julian Glander",
     "category": "design",
-    "tags": ["设计灵感"],
+    "tags": [
+      "设计灵感"
+    ],
     "featured": false,
     "icon": "https://favicon.cargocollective.com/35962-1561097461.ico",
     "id": "mbnho3bifqznhuelp",
@@ -2106,7 +2467,11 @@
     "url": "https://www.weshop.com/",
     "description": "WeShop唯象是专注电商需求的AI商拍工具，专注电商产品图片的智能生成。品牌方无需再受到模特、经纪、摄影、后期、场租、机酒的限制，在高效产出优质商品图的同时，还能大幅节约拍摄成本。用WeShop唯象妙境，鼠标就是快门，点击即看成片。",
     "category": "design",
-    "tags": ["图像生成", "AI商拍", "AI抠图"],
+    "tags": [
+      "图像生成",
+      "AI商拍",
+      "AI抠图"
+    ],
     "featured": true,
     "icon": "https://www.weshop.com/small_logo.svg",
     "id": "mbplkk033btuq7od5yq",
@@ -2118,7 +2483,9 @@
     "url": "https://bezier.method.ac/",
     "description": "A game to help you master the pen tool",
     "category": "design",
-    "tags": ["钢笔工具"],
+    "tags": [
+      "钢笔工具"
+    ],
     "featured": false,
     "icon": "https://bezier.method.ac/favicon.ico",
     "id": "mbplsoi7646bfecfuaj",
@@ -2130,7 +2497,12 @@
     "url": "https://igoutu.cn/",
     "description": "免费下载设计素材：图标、照片、矢量插图和视频音乐。所有素材均由设计师制作 → 质量始终如一⚡⚡️",
     "category": "design",
-    "tags": ["免费图标", "免费插画", "3D模型", "免费音乐"],
+    "tags": [
+      "免费图标",
+      "免费插画",
+      "3D模型",
+      "免费音乐"
+    ],
     "featured": true,
     "icon": "https://maxst.icons8.com/vue-static/landings/primary-landings/favs/icons8_fav_32%C3%9732.png",
     "id": "mbplz5sc7lwgn4bo88u",
@@ -2142,7 +2514,12 @@
     "url": "https://freebiesbug.com/",
     "description": "Get free high quality design resources. Choose from an extensive selection of fonts, graphic and HTML templates, icons, mockups, and more!",
     "category": "design",
-    "tags": ["设计资源", "样机", "网站模板", "UI设计"],
+    "tags": [
+      "设计资源",
+      "样机",
+      "网站模板",
+      "UI设计"
+    ],
     "featured": false,
     "icon": "https://freebiesbug.com/wp-content/themes/freebiesbug-5/dist/images/favicon.ico",
     "id": "mbpm4m31ajap3efx2dr",
@@ -2154,7 +2531,12 @@
     "url": "https://www.vecteezy.com/",
     "description": "Download Free Vectors, Stock Photos, Stock Videos, and More",
     "category": "design",
-    "tags": ["免费图片", "免费插画", "免费视频", "免抠图片"],
+    "tags": [
+      "免费图片",
+      "免费插画",
+      "免费视频",
+      "免抠图片"
+    ],
     "featured": false,
     "icon": "https://www.vecteezy.com/favicon.ico",
     "id": "mbpm66mvzhrit3npz8",
@@ -2166,7 +2548,10 @@
     "url": "https://www.iconfinder.com/",
     "description": "Iconfinder is the world's largest marketplace for icons, illustrations and 3D illustrations in SVG, AI, and PNG format.",
     "category": "design",
-    "tags": ["免费图标", "免费插画"],
+    "tags": [
+      "免费图标",
+      "免费插画"
+    ],
     "featured": false,
     "icon": "https://www.iconfinder.com/static/img/favicons/favicon-32x32.png?87b2a5c3aa",
     "id": "mbpm86ahyejabsf56z8",
@@ -2178,7 +2563,9 @@
     "url": "https://picjumbo.com/",
     "description": "",
     "category": "design",
-    "tags": ["免费图片"],
+    "tags": [
+      "免费图片"
+    ],
     "featured": false,
     "icon": "https://picjumbo.com/favicon.ico",
     "id": "mbpm98idbn2491hv3dk",
@@ -2190,7 +2577,10 @@
     "url": "https://unblast.com/",
     "description": "",
     "category": "design",
-    "tags": ["样机", "设计资源"],
+    "tags": [
+      "样机",
+      "设计资源"
+    ],
     "featured": false,
     "icon": "https://unblast.com/favicon.ico",
     "id": "mbpma7w8c21cu052yo9",
@@ -2202,7 +2592,9 @@
     "url": "https://icraft.gantcloud.com/zh-CN",
     "description": "iCraft Editor是一款免费的3D架构图设计工具，是一款免费的 3D 架构图设计工具，可以帮助您绘制系统架构图、软件架构图、云架构图、网络拓扑图、AWS|GCP|Azure|AliCloud架构图以及其他3D架构图，采用真实3D场景，可视化为等距架构图, 可旋转视角、嵌套子场景，帮助您轻松绘制出色的3D架构图。",
     "category": "design",
-    "tags": ["2D转3D"],
+    "tags": [
+      "2D转3D"
+    ],
     "featured": true,
     "icon": "https://icraft.gantcloud.com/favicon.ico",
     "id": "mbtr45o3tfzguas4qg",
@@ -2214,7 +2606,10 @@
     "url": "https://developer.apple.com/cn/design/resources/",
     "description": "使用 Apple 官方设计模板、图标制作模板、色彩指南以及其他资源，快速精准地设计 App。",
     "category": "design",
-    "tags": ["样机", "图标"],
+    "tags": [
+      "样机",
+      "图标"
+    ],
     "featured": true,
     "icon": "https://developer.apple.com/favicon.ico",
     "id": "mbukz2oul2jqvm7wf1",

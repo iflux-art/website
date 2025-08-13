@@ -3,7 +3,9 @@
 import { usePathname } from "next/navigation";
 import { BaseContent, BaseCategory } from "@/types/data-types";
 import { useCache } from "@/hooks/cache";
+
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
+
 export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
 
@@ -17,6 +19,14 @@ export type HookResult<T> = {
 
 // 内联 ContentLoadOptions 类型定义
 export interface ContentLoadOptions {
+  type?: string;
+  path?: string;
+  url?: string;
+  category?: string;
+  cacheTime?: number;
+  disableCache?: boolean;
+  params?: any;
+  headers?: Record<string, string>;
   /** 是否强制刷新缓存 */
   forceRefresh?: boolean;
   /** 其他可扩展选项 */
@@ -109,25 +119,4 @@ export function useContentData<T>({
       await refetch();
     },
   };
-}
-
-// 分类数据获取hook
-export function useCategories(
-  type: "blog" | "docs",
-): HookResult<ContentCategory[]> {
-  return useContentData<ContentCategory[]>({
-    type,
-    path: `/api/${type}/categories`,
-  });
-}
-
-// 分类内容获取hook
-export function useCategoryItems(
-  type: "blog" | "docs",
-  category: string,
-): HookResult<ContentItem[]> {
-  return useContentData<ContentItem[]>({
-    type,
-    path: `/api/${type}/categories/${encodeURIComponent(category)}`,
-  });
 }

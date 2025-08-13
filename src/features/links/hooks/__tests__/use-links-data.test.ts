@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import { useLinksData } from "@/features/links/hooks";
-import { LinksItem, LinksCategory } from "@/features/links/types";
+import { useLinksData } from "../index";
+import { LinksItem, LinksCategory } from "../../types";
 
 // Mock the filter hook
 vi.mock("@/hooks/filter/use-filter-state", () => ({
@@ -16,7 +16,7 @@ vi.mock("@/hooks/filter/use-filter-state", () => ({
 }));
 
 // Mock the categories hook
-vi.mock("@/hooks/use-categories", () => ({
+vi.mock("../use-categories", () => ({
   useCategories: vi.fn(() => ({
     categories: mockCategories,
     loading: false,

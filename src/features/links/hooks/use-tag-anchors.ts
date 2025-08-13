@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { LinksItem } from "@/features/links/types";
+import { LinksItem } from "../types";
 
 export interface TagAnchor {
   id: string;

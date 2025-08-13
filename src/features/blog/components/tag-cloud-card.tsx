@@ -19,6 +19,23 @@ export function TagCloudCard({
 }: TagCloudCardProps) {
   if (!allTags?.length) return null;
 
+  // 确保当前文章的所有标签都包含在显示的标签中
+  // 优先显示当前标签，然后显示其他标签
+  const displayTags = React.useMemo(() => {
+    const currentTagsSet = new Set(currentTags);
+    const otherTags = allTags.filter((tag) => !currentTagsSet.has(tag));
+
+    // 当前标签放在前面，其他标签按原顺序排列
+    const prioritizedTags = [...currentTags, ...otherTags];
+
+    // 限制总数为24个，但确保所有当前标签都包含
+    if (currentTags.length >= 24) {
+      return currentTags.slice(0, 24);
+    }
+
+    return prioritizedTags.slice(0, 24);
+  }, [allTags, currentTags]);
+
   return (
     <Card className="w-full">
       <CardHeader className="pt-4">
@@ -28,7 +45,7 @@ export function TagCloudCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="mb-4 flex flex-wrap gap-1.5">
-        {allTags.slice(0, 24).map((tag) => {
+        {displayTags.map((tag) => {
           const isActive = currentTags.includes(tag);
           return (
             <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>

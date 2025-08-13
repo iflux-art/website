@@ -102,7 +102,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         <div className="relative mb-4">
           <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
           <Input
-            placeholder="搜索链接、博客、文档..."
+            placeholder="搜索链接、文章、文档..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="pl-10"

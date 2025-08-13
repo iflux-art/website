@@ -3,8 +3,10 @@
     "title": "PostHog - How developers build successful products",
     "url": "https://posthog.com/",
     "description": "PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers.",
-    "category": "development-monitoring",
-    "tags": ["网站分析"],
+    "category": "development/monitoring",
+    "tags": [
+      "网站分析"
+    ],
     "featured": false,
     "icon": "https://posthog.com/favicon-32x32.png?v=6e5ac8d4a5b381b5caa29396fbf7c955",
     "id": "mbrucd69td2afqw7kpp",
@@ -15,8 +17,10 @@
     "title": "Plausible Analytics",
     "url": "https://plausible.io/",
     "description": "Plausible is a lightweight and open-source Google Analytics alternative. Your website data is 100% yours and the privacy of your visitors is respected.",
-    "category": "development-monitoring",
-    "tags": ["网站分析"],
+    "category": "development/monitoring",
+    "tags": [
+      "网站分析"
+    ],
     "featured": false,
     "icon": "https://plausible.io/assets/images/icon/favicon-16x16.png",
     "id": "mbructcijvy8v9mml5l",
@@ -27,8 +31,10 @@
     "title": "Google Analytics",
     "url": "https://analytics.google.com/",
     "description": "Google 网站流量分析工具",
-    "category": "development-monitoring",
-    "tags": ["网站分析"],
+    "category": "development/monitoring",
+    "tags": [
+      "网站分析"
+    ],
     "featured": true,
     "icon": "https://analytics.google.com/favicon.ico",
     "id": "mbrueadi174c9ur1srw",

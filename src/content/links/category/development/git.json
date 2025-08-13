@@ -3,8 +3,10 @@
     "title": "GitCode",
     "url": "https://gitcode.com/",
     "description": "面向全球开发者的开源社区,包括原创博客,开源代码托管,代码协作,项目管理等。与开发者社区互动,提升您的研发效率和质量。",
-    "category": "development-git",
-    "tags": ["开发平台"],
+    "category": "development/git",
+    "tags": [
+      "开发平台"
+    ],
     "featured": false,
     "icon": "https://cdn-static.gitcode.com/static/images/logo-favicon.png",
     "id": "mbb3cw5udi85aroetsm",
@@ -15,8 +17,11 @@
     "title": "Git",
     "url": "https://git-scm.com/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Git", "版本控制"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "版本控制"
+    ],
     "featured": false,
     "icon": "https://git-scm.com/favicon.ico",
     "id": "mbgdkyuxxaykg2peya",
@@ -27,8 +32,12 @@
     "title": "极狐GitLab",
     "url": "https://gitlab.cn/",
     "description": "提供企业级源代码管理，GitLab CI/CD，CodeReview，研发效能管理，GitLab DevSecOps等产品及服务。GitLab一站式DevOps平台，加速和优化软件开发全生命周期。现在下载安装GitLab，成为精英效能组织。",
-    "category": "development-git",
-    "tags": ["Git", "版本控制", "代码托管"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "版本控制",
+      "代码托管"
+    ],
     "featured": false,
     "icon": "https://gitlab.cn/ico/favicon-192x192.png",
     "id": "mbgdqyil8ypcgsdh9tt",
@@ -39,8 +48,11 @@
     "title": "Atlassian Bitbucket",
     "url": "https://www.atlassian.com/software/bitbucket",
     "description": "Collaborate on code, and elevate your software delivery with built-in AI, CI/CD, and best-in-class Jira integration.",
-    "category": "development-git",
-    "tags": ["Git", "版本控制"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "版本控制"
+    ],
     "featured": false,
     "icon": "https://www.atlassian.com/favicon-32x32.png",
     "id": "mbgdryudpczjtja1th8",
@@ -51,8 +63,12 @@
     "title": "Gitee",
     "url": "https://gitee.com/",
     "description": "基于 Git 的代码托管和研发协作平台",
-    "category": "development-git",
-    "tags": ["Git", "代码托管", "版本控制"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "代码托管",
+      "版本控制"
+    ],
     "featured": false,
     "icon": "https://gitee.com/favicon.ico",
     "id": "mbgdt8jfgu5tzog51oi",
@@ -63,8 +79,11 @@
     "title": "Gitpod",
     "url": "https://www.gitpod.io/",
     "description": "Gitpod is a platform for automated and standardized development environments. Available self-hosted in 3 minutes, or run locally on your laptop.",
-    "category": "development-git",
-    "tags": ["Git", "版本控制"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "版本控制"
+    ],
     "featured": false,
     "icon": "https://www.gitpod.io/favicon192.png",
     "id": "mbgdvdayud0kbu144q",
@@ -75,8 +94,12 @@
     "title": "GitLink",
     "url": "https://www.gitlink.org.cn/",
     "description": "GitLink 是一个新一代的开源创新服务平台，提供分布式协作开发、流水线运维、代码分析等功能，基于 Git 打造分布式代码托管环境。",
-    "category": "development-git",
-    "tags": ["Git", "版本控制", "代码托管"],
+    "category": "development/git",
+    "tags": [
+      "Git",
+      "版本控制",
+      "代码托管"
+    ],
     "featured": false,
     "icon": "https://www.gitlink.org.cn/favicon.ico",
     "id": "mbgdvyottuj1bjyl56",
@@ -87,8 +110,10 @@
     "title": "Learn Git Branching",
     "url": "https://learngitbranching.js.org/?locale=zh_CN",
     "description": "An interactive Git visualization tool to educate and challenge!",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://learngitbranching.js.org/assets/favicon.ico",
     "id": "mbgdwtlgx1kn0jytmfl",
@@ -99,8 +124,10 @@
     "title": "GitHub Git 备忘单",
     "url": "https://training.github.com/downloads/zh_CN/github-git-cheat-sheet/",
     "description": "Github Git Cheat Sheets Training Kit",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://training.github.com/favicon.ico",
     "id": "mbgdx4qojuwx5frjcvi",
@@ -111,8 +138,10 @@
     "title": "Git Cheatsheet",
     "url": "https://ndpsoftware.com/git-cheatsheet.html#loc=index;",
     "description": "",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://ndpsoftware.com/favicon.ico",
     "id": "mbgdxmb5618bx0n2p9",
@@ -123,8 +152,10 @@
     "title": "Git飞行规则",
     "url": "https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md",
     "description": "",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbgdy41o3h4fx44ppkn",
@@ -135,8 +166,10 @@
     "title": "git - 简明指南",
     "url": "https://rogerdudler.github.io/git-guide/index.zh.html",
     "description": "",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://rogerdudler.github.io/favicon.ico",
     "id": "mbgdyjv77i5b7x5ye7d",
@@ -147,8 +180,10 @@
     "title": "GitHub.com 帮助文档",
     "url": "https://docs.github.com/zh",
     "description": "开始使用、排除故障和充分利用 GitHub。 新用户、开发人员、管理员和所有 GitHub 产品的文档。",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://docs.github.com/assets/cb-345/images/site/favicon.png",
     "id": "mbgdz4qkxp62ayk5zh",
@@ -159,8 +194,10 @@
     "title": "Git 的奇技淫巧",
     "url": "https://github.com/521xueweihan/git-tips",
     "description": "",
-    "category": "development-git",
-    "tags": ["Git教程"],
+    "category": "development/git",
+    "tags": [
+      "Git教程"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbgdzivndkz6aaqs6fk",
@@ -171,8 +208,10 @@
     "title": "GitHub 文件加速",
     "url": "https://github.moeyy.xyz/",
     "description": "",
-    "category": "development-git",
-    "tags": ["网络加速"],
+    "category": "development/git",
+    "tags": [
+      "网络加速"
+    ],
     "featured": false,
     "icon": "https://github.moeyy.xyz/favicon.ico",
     "id": "mbghopgpd5tss1rhnc",
@@ -183,8 +222,10 @@
     "title": "ProxyTool",
     "url": "https://github.com/githubvpn007/ProxyTool",
     "description": "",
-    "category": "development-git",
-    "tags": ["网络加速"],
+    "category": "development/git",
+    "tags": [
+      "网络加速"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbghp3l74ciulp3w8at",
@@ -195,8 +236,10 @@
     "title": "PicGo",
     "url": "https://picgo.github.io/PicGo-Doc/",
     "description": "",
-    "category": "development-git",
-    "tags": ["自建图床"],
+    "category": "development/git",
+    "tags": [
+      "自建图床"
+    ],
     "featured": false,
     "icon": "https://picgo.github.io/favicon.ico",
     "id": "mbgsrlkbl9xzzelqoqb",
@@ -207,8 +250,10 @@
     "title": "Cursor Reset",
     "url": "https://github.com/hamflx/cursor-reset",
     "description": "",
-    "category": "development-git",
-    "tags": ["Cursor"],
+    "category": "development/git",
+    "tags": [
+      "Cursor"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbi780zgk7fagnayi8j",
@@ -219,8 +264,10 @@
     "title": "Cursor 免费试用重置",
     "url": "https://github.com/yuaotian/go-cursor-help",
     "description": "",
-    "category": "development-git",
-    "tags": ["Cursor"],
+    "category": "development/git",
+    "tags": [
+      "Cursor"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbi78p4kb4ka3urjwbe",
@@ -231,8 +278,11 @@
     "title": "GitHub Copilot",
     "url": "https://github.com/features/copilot",
     "description": "",
-    "category": "development-git",
-    "tags": ["AI编程助手", "IDE插件"],
+    "category": "development/git",
+    "tags": [
+      "AI编程助手",
+      "IDE插件"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbi7r686b7hcwlwh16q",
@@ -243,8 +293,10 @@
     "title": "Butterfly 主题",
     "url": "https://github.com/jerryc127/hexo-theme-butterfly/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiaf1j666ibysa14kf",
@@ -255,8 +307,10 @@
     "title": "安知鱼主题",
     "url": "https://github.com/anzhiyu-c/hexo-theme-anzhiyu/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiah1m8f4rpnq50gg",
@@ -267,8 +321,10 @@
     "title": "NexT 主题",
     "url": "https://github.com/next-theme/hexo-theme-next/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiahhs94dl80zcsw77",
@@ -279,8 +335,10 @@
     "title": "Stellar 主题",
     "url": "https://github.com/xaoxuu/hexo-theme-stellar/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiahx50obu1a6fvza8",
@@ -291,8 +349,10 @@
     "title": "Icarus 主题",
     "url": "https://github.com/ppoffice/hexo-theme-icarus",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiaiaqjs7evw2oloog",
@@ -303,8 +363,10 @@
     "title": "Acorn 主题",
     "url": "https://github.com/zhwangart/hexo-theme-acorn/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hexo"],
+    "category": "development/git",
+    "tags": [
+      "Hexo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiaipd32kb55n593qo",
@@ -315,8 +377,10 @@
     "title": "Stack 主题",
     "url": "https://github.com/CaiJimmy/hugo-theme-stack-starter/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hugo"],
+    "category": "development/git",
+    "tags": [
+      "Hugo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiak0ibjfoonnvw18m",
@@ -327,8 +391,10 @@
     "title": "Hugo NexT 主题",
     "url": "https://github.com/hugo-next/hugo-theme-next/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hugo"],
+    "category": "development/git",
+    "tags": [
+      "Hugo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiakf456m22in8pc83",
@@ -339,8 +405,10 @@
     "title": "Hugo PaperMod",
     "url": "https://github.com/adityatelange/hugo-PaperMod/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hugo"],
+    "category": "development/git",
+    "tags": [
+      "Hugo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiakti5bzfap1e82ul",
@@ -351,8 +419,10 @@
     "title": "Paper 主题",
     "url": "https://github.com/nanxiaobei/hugo-paper/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Hugo"],
+    "category": "development/git",
+    "tags": [
+      "Hugo"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbial7kmqj6t76bk8b",
@@ -363,8 +433,10 @@
     "title": "Chirpy 主题",
     "url": "https://github.com/cotes2020/chirpy-starter/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Jekyll"],
+    "category": "development/git",
+    "tags": [
+      "Jekyll"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbiamcsveqjutjvzgo",
@@ -375,8 +447,10 @@
     "title": "jsDelivr",
     "url": "https://www.jsdelivr.com/",
     "description": "Optimized for JS and ESM delivery from npm and GitHub. Works with all web formats. Serving more than 150 billion requests per month.",
-    "category": "development-git",
-    "tags": ["CDN"],
+    "category": "development/git",
+    "tags": [
+      "CDN"
+    ],
     "featured": false,
     "icon": "https://www.jsdelivr.com/favicon.ico",
     "id": "mbj7559hsj058te4gl",
@@ -387,8 +461,10 @@
     "title": "giscus",
     "url": "https://giscus.app/zh-CN",
     "description": "A comments widget built on GitHub Discussions.",
-    "category": "development-git",
-    "tags": ["评论系统"],
+    "category": "development/git",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://giscus.app/favicon.ico",
     "id": "mbj7n924eo8qy7pjaiu",
@@ -399,8 +475,10 @@
     "title": "Gitalk",
     "url": "https://github.com/gitalk/gitalk",
     "description": "",
-    "category": "development-git",
-    "tags": ["评论系统"],
+    "category": "development/git",
+    "tags": [
+      "评论系统"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbj7nmkwsqg5b9getc",
@@ -411,8 +489,10 @@
     "title": "Awesome Vite.js",
     "url": "https://github.com/vitejs/awesome-vite",
     "description": "",
-    "category": "development-git",
-    "tags": ["构建工具"],
+    "category": "development/git",
+    "tags": [
+      "构建工具"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbkn9cni4dg67xw1oh5",
@@ -423,8 +503,10 @@
     "title": "bolt.diy",
     "url": "https://github.com/stackblitz-labs/bolt.diy",
     "description": "",
-    "category": "development-git",
-    "tags": ["AI应用开发"],
+    "category": "development/git",
+    "tags": [
+      "AI应用开发"
+    ],
     "featured": true,
     "icon": "https://github.com/favicon.ico",
     "id": "mbknwn2grumxw15v4f",
@@ -435,8 +517,10 @@
     "title": "Awesome Nextjs",
     "url": "https://officialrajdeepsingh.github.io/awesome-nextjs/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Next.js"],
+    "category": "development/git",
+    "tags": [
+      "Next.js"
+    ],
     "featured": false,
     "icon": "https://officialrajdeepsingh.github.io/favicon.ico",
     "id": "mbngdtz4osbwjth25ml",
@@ -447,8 +531,13 @@
     "title": "Mantine Next.js + Nextra template",
     "url": "https://github.com/gfazioli/next-app-nextra-template/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Next.js", "Nextra", "SSG", "文档框架"],
+    "category": "development/git",
+    "tags": [
+      "Next.js",
+      "Nextra",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbngvqchsigyjz24k9",
@@ -459,8 +548,13 @@
     "title": "Nextjs Nextra Starter",
     "url": "https://github.com/pdsuwwz/nextjs-nextra-starter/",
     "description": "",
-    "category": "development-git",
-    "tags": ["Next.js", "Nextra", "SSG", "文档框架"],
+    "category": "development/git",
+    "tags": [
+      "Next.js",
+      "Nextra",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbngwolkzi1vna3ebv",
@@ -471,8 +565,12 @@
     "title": "Plume 主题",
     "url": "https://theme-plume.vuejs.press/",
     "description": "GitHub Repo stars npm version npm downloads npm downloads github license peer dependency codecov 使用 使用以下命令，快速创建一个新的使用本主题的 VuePress 项目。 启动项目 更新记录 贡献者 感谢所有的贡献者！",
-    "category": "development-git",
-    "tags": ["Vue", "SSG", "文档框架"],
+    "category": "development/git",
+    "tags": [
+      "Vue",
+      "SSG",
+      "文档框架"
+    ],
     "featured": false,
     "icon": "https://theme-plume.vuejs.press/favicon-32x32.png",
     "id": "mbnh61b2uoc3x8q4h7",
@@ -483,8 +581,11 @@
     "title": "GitBook – Build product documentation your users will love",
     "url": "https://www.gitbook.com/",
     "description": "Forget building and maintaining your own custom docs platform. With GitBook you get beautiful documentation for your users, and a branch-based Git workflow your team will love.",
-    "category": "development-git",
-    "tags": ["SSG", "文档框架"],
+    "category": "development/git",
+    "tags": [
+      "SSG",
+      "文档框架"
+    ],
     "featured": true,
     "icon": "https://framerusercontent.com/images/93a6peqhbHQaWP67zttmrKDazq4.png",
     "id": "mbnhbd3oz5bo5tmgrae",
@@ -495,8 +596,11 @@
     "title": "Stars-Emmision",
     "url": "https://wangyasai.github.io/Stars-Emmision/",
     "description": "",
-    "category": "development-git",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/git",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://wangyasai.github.io/favicon.ico",
     "id": "mbq79acetj72tenp328",
@@ -507,8 +611,11 @@
     "title": "Perlin-Noise",
     "url": "https://wangyasai.github.io/Perlin-Noise/",
     "description": "",
-    "category": "development-git",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/git",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://wangyasai.github.io/favicon.ico",
     "id": "mbq79uolz3giy6jb8a",
@@ -519,8 +626,11 @@
     "title": "TheMatrix",
     "url": "https://wangyasai.github.io/TheMatrix/",
     "description": "",
-    "category": "development-git",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/git",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://wangyasai.github.io/favicon.ico",
     "id": "mbq7a9fzc04s758m0ti",
@@ -531,8 +641,11 @@
     "title": "Speed-Line",
     "url": "https://wangyasai.github.io/Speed-Line/",
     "description": "",
-    "category": "development-git",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/git",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://wangyasai.github.io/favicon.ico",
     "id": "mbq7emzaobzvgkklwy",
@@ -543,8 +656,11 @@
     "title": "Particles-Emission",
     "url": "https://wangyasai.github.io/Particles-Emission/",
     "description": "",
-    "category": "development-git",
-    "tags": ["动效制作", "动态背景"],
+    "category": "development/git",
+    "tags": [
+      "动效制作",
+      "动态背景"
+    ],
     "featured": false,
     "icon": "https://wangyasai.github.io/favicon.ico",
     "id": "mbq7f3tm137yp49pptl",
@@ -555,8 +671,10 @@
     "title": "CSS Modules",
     "url": "https://github.com/css-modules/css-modules",
     "description": "",
-    "category": "development-git",
-    "tags": ["CSS框架"],
+    "category": "development/git",
+    "tags": [
+      "CSS框架"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq93pn4q8y5h100las",
@@ -567,8 +685,10 @@
     "title": "Google JavaScript Style Guide",
     "url": "https://google.github.io/styleguide/jsguide.html",
     "description": "",
-    "category": "development-git",
-    "tags": ["JavaScript风格指南"],
+    "category": "development/git",
+    "tags": [
+      "JavaScript风格指南"
+    ],
     "featured": false,
     "icon": "https://google.github.io/favicon.ico",
     "id": "mbq987o90sxgh4kkdt8",
@@ -579,8 +699,10 @@
     "title": "Airbnb JavaScript Style Guide",
     "url": "https://github.com/airbnb/javascript",
     "description": "",
-    "category": "development-git",
-    "tags": ["JavaScript风格指南"],
+    "category": "development/git",
+    "tags": [
+      "JavaScript风格指南"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq9964qdbli2zokvy",
@@ -591,8 +713,10 @@
     "title": "Principles of Writing Consistent, Idiomatic JavaScript",
     "url": "https://github.com/rwaldron/idiomatic.js",
     "description": "",
-    "category": "development-git",
-    "tags": ["JavaScript风格指南"],
+    "category": "development/git",
+    "tags": [
+      "JavaScript风格指南"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq99x859te594srqwe",
@@ -603,8 +727,11 @@
     "title": "BMM",
     "url": "https://github.com/Y80/bmm/",
     "description": "",
-    "category": "development-git",
-    "tags": ["网站模板", "网址导航"],
+    "category": "development/git",
+    "tags": [
+      "网站模板",
+      "网址导航"
+    ],
     "featured": true,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq9gmqtex8qe0nt4pe",
@@ -615,8 +742,11 @@
     "title": "Webstack网址导航",
     "url": "https://github.com/WebStackPage/WebStackPage.github.io",
     "description": "",
-    "category": "development-git",
-    "tags": ["网站模板", "网址导航"],
+    "category": "development/git",
+    "tags": [
+      "网站模板",
+      "网址导航"
+    ],
     "featured": true,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq9h9hfj4v2gvu032e",
@@ -627,8 +757,11 @@
     "title": "IT Tools",
     "url": "https://github.com/CorentinTh/it-tools/",
     "description": "",
-    "category": "development-git",
-    "tags": ["网站模板", "网址导航"],
+    "category": "development/git",
+    "tags": [
+      "网站模板",
+      "网址导航"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbq9hzgp6l0d3hb3hca",
@@ -639,8 +772,10 @@
     "title": "Editor.md",
     "url": "https://pandao.github.io/editor.md/index.html",
     "description": "开源在线 Markdown 编辑器",
-    "category": "development-git",
-    "tags": ["Markdown"],
+    "category": "development/git",
+    "tags": [
+      "Markdown"
+    ],
     "featured": true,
     "icon": "https://pandao.github.io/favicon.ico",
     "id": "mbr0uy2jd41fzn9rm2e",
@@ -651,8 +786,11 @@
     "title": "GitHub Pages",
     "url": "https://pages.github.com/",
     "description": "Websites for you and your projects, hosted directly from your GitHub repository. Just edit, push, and your changes are live.",
-    "category": "development-git",
-    "tags": ["SSG", "博客框架"],
+    "category": "development/git",
+    "tags": [
+      "SSG",
+      "博客框架"
+    ],
     "featured": false,
     "icon": "https://pages.github.com/favicon.ico",
     "id": "mbr1ao2hytr1m70jh28",
@@ -663,8 +801,10 @@
     "title": "Python-100-Days",
     "url": "https://github.com/jackfrued/Python-100-Days",
     "description": "",
-    "category": "development-git",
-    "tags": ["Python教程"],
+    "category": "development/git",
+    "tags": [
+      "Python教程"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbrlnhvxqyr7lrtp9wp",
@@ -675,8 +815,12 @@
     "title": "Generative AI For Beginners with JavaScript",
     "url": "https://microsoft.github.io/generative-ai-with-javascript/#/",
     "description": "",
-    "category": "development-git",
-    "tags": ["编程教程", "人工智能", "MCP"],
+    "category": "development/git",
+    "tags": [
+      "编程教程",
+      "人工智能",
+      "MCP"
+    ],
     "featured": true,
     "icon": "https://microsoft.github.io/favicon.ico",
     "id": "mbrm501s1k7k2khnnov",
@@ -687,8 +831,10 @@
     "title": "Awesome Markdown",
     "url": "https://github.com/mundimark/awesome-markdown",
     "description": "A collection of awesome markdown goodies (libraries, services, editors, tools, cheatsheets, etc.",
-    "category": "development-git",
-    "tags": ["Markdown"],
+    "category": "development/git",
+    "tags": [
+      "Markdown"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbrt7n5eor7uzj4ooe",
@@ -699,8 +845,10 @@
     "title": "ECMAScript",
     "url": "https://compat-table.github.io/compat-table/es6/",
     "description": "ECMAScript 特性兼容性表",
-    "category": "development-git",
-    "tags": ["代码兼容性"],
+    "category": "development/git",
+    "tags": [
+      "代码兼容性"
+    ],
     "featured": false,
     "icon": "https://compat-table.github.io/favicon.ico",
     "id": "mbrtruh4xs6ig1zkv",
@@ -711,8 +859,10 @@
     "title": "Ahrefs - 全能型 SEO 工具集",
     "url": "https://ahrefs.com/",
     "description": "Unlock data to make effective decisions across digital marketing. SEO, content marketing, PPC, digital PR, and more.",
-    "category": "development-git",
-    "tags": ["SEO"],
+    "category": "development/git",
+    "tags": [
+      "SEO"
+    ],
     "featured": false,
     "icon": "https://static.ahrefs.com/favicon.ico?v=2",
     "id": "mbrug0x6l5510cpkc0m",
@@ -723,8 +873,10 @@
     "title": "SEO Software for Smarter Marketing",
     "url": "https://moz.com/",
     "description": "Backed by the largest community of SEOs on the planet, Moz builds the tools that make SEO, content marketing, market research, digital PR, and local SEO easy. Start your free trial today!",
-    "category": "development-git",
-    "tags": ["SEO"],
+    "category": "development/git",
+    "tags": [
+      "SEO"
+    ],
     "featured": false,
     "icon": "https://moz.com/favicon.ico",
     "id": "mbruhdpye1nc6cr83mk",
@@ -735,8 +887,10 @@
     "title": "DeepWiki | AI documentation you can talk to, for every repo",
     "url": "https://deepwiki.com/",
     "description": "DeepWiki provides up-to-date documentation you can talk to, for every repo in the world. Think Deep Research for GitHub - powered by Devin.",
-    "category": "development-git",
-    "tags": ["技术文档"],
+    "category": "development/git",
+    "tags": [
+      "技术文档"
+    ],
     "featured": true,
     "icon": "https://deepwiki.com/favicon.ico",
     "id": "mbrv7geajf2f4g70xt",
@@ -747,8 +901,10 @@
     "title": "Strapi - Open source Node.js Headless CMS 🚀🚀🚀",
     "url": "https://strapi.io/",
     "description": "Strapi is the next-gen headless CMS, open-source, JavaScript/TypeScript, enabling content-rich experiences to be created, managed and exposed to any digital device.",
-    "category": "development-git",
-    "tags": ["CMS"],
+    "category": "development/git",
+    "tags": [
+      "CMS"
+    ],
     "featured": false,
     "icon": "https://strapi.io/assets/favicon-16x16.png",
     "id": "mbrvp0glsl226qcyg3",
@@ -759,8 +915,10 @@
     "title": "compose",
     "url": "https://github.com/FrozenGEE/compose",
     "description": "分享compose模板，方便新人，老手快速部署docker容器",
-    "category": "development-git",
-    "tags": ["容器化"],
+    "category": "development/git",
+    "tags": [
+      "容器化"
+    ],
     "featured": false,
     "icon": "https://github.com/favicon.ico",
     "id": "mbtqrssccemx5tks2yj",
@@ -771,8 +929,10 @@
     "title": "CS-Books-Store",
     "url": "https://github.com/Jackpopc/CS-Books-Store",
     "description": "CS-Books-Store是一个收集计算机领域经典书籍的开源项目",
-    "category": "development-git",
-    "tags": ["编程教程"],
+    "category": "development/git",
+    "tags": [
+      "编程教程"
+    ],
     "featured": true,
     "icon": "https://github.com/favicon.ico",
     "id": "mbtqxvpabcbv79pqpy",
@@ -783,8 +943,10 @@
     "title": "Awesome",
     "url": "https://github.com/sindresorhus/awesome",
     "description": "😎 Awesome lists about all kinds of interesting topics - sindresorhus/awesome",
-    "category": "development-git",
-    "tags": ["教程"],
+    "category": "development/git",
+    "tags": [
+      "教程"
+    ],
     "featured": true,
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "id": "Kze0-HRu5r2yLIQclVT2M",
@@ -795,7 +957,7 @@
     "title": "opencode-ai/opencode",
     "url": "https://github.com/opencode-ai/opencode",
     "description": "A powerful AI coding agent. Built for the terminal.",
-    "category": "development-git",
+    "category": "development/git",
     "tags": [],
     "featured": true,
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
@@ -808,8 +970,10 @@
     "title": "tailwindcss-typography",
     "url": "https://github.com/tailwindlabs/tailwindcss-typography",
     "description": "Beautiful typographic defaults for HTML you don't control.",
-    "category": "development-git",
-    "tags": ["Tailwind"],
+    "category": "development/git",
+    "tags": [
+      "Tailwind"
+    ],
     "featured": false,
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "iconType": "image",

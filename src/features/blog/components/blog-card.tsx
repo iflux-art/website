@@ -1,6 +1,6 @@
 /**
- * 博客卡片组件
- * 用于在列表页或首页展示博客文章摘要
+ * 文章卡片组件
+ * 用于在列表页或首页展示文章摘要
  * 内联所有相关类型和逻辑，避免过度抽象
  */
 
@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils";
 
-// 内联博客卡片相关类型定义
+// 内联文章卡片相关类型定义
 interface BlogCardProps {
   title: string;
   description?: string;
@@ -27,7 +27,7 @@ interface BlogCardProps {
 }
 
 /**
- * 博客卡片组件
+ * 文章卡片组件
  * 完整的独立实现，包含所有必要的样式和交互逻辑
  */
 export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(

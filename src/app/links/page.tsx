@@ -5,7 +5,7 @@ import { AppGrid } from "@/components/layout/app-grid";
 import { LinksSidebar, LinksContent } from "@/features/links/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { useLinksData } from "@/features/links/hooks";
-import { useTagAnchors } from "@/hooks/use-tag-anchors";
+import { useTagAnchors } from "@/features/links/hooks/use-tag-anchors";
 
 export default function LinksPage() {
   const {

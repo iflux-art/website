@@ -5,6 +5,7 @@
 // 博客相关组件
 export { BlogCard } from "./blog-card";
 export { RelatedPostsCard } from "./related-posts-card";
+export { LatestPostsCard } from "./latest-posts-card";
 export { TagCloudCard } from "./tag-cloud-card";
 
 // 导出类型

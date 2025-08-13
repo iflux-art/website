@@ -36,6 +36,10 @@ const categoryStructure = {
         name: "平台",
         file: () => import("@/content/links/category/ai/platforms.json"),
       },
+      resources: {
+        name: "资源",
+        file: () => import("@/content/links/category/ai/resources.json"),
+      },
       services: {
         name: "服务",
         file: () => import("@/content/links/category/ai/services.json"),
@@ -91,10 +95,46 @@ const categoryStructure = {
   development: {
     name: "开发",
     children: {
+      apis: {
+        name: "API",
+        file: () => import("@/content/links/category/development/apis.json"),
+      },
+      cloud: {
+        name: "云服务",
+        file: () => import("@/content/links/category/development/cloud.json"),
+      },
+      containers: {
+        name: "容器",
+        file: () =>
+          import("@/content/links/category/development/containers.json"),
+      },
+      databases: {
+        name: "数据库",
+        file: () =>
+          import("@/content/links/category/development/databases.json"),
+      },
       frameworks: {
         name: "框架",
         file: () =>
           import("@/content/links/category/development/frameworks.json"),
+      },
+      git: {
+        name: "Git",
+        file: () => import("@/content/links/category/development/git.json"),
+      },
+      hosting: {
+        name: "托管",
+        file: () => import("@/content/links/category/development/hosting.json"),
+      },
+      monitoring: {
+        name: "监控",
+        file: () =>
+          import("@/content/links/category/development/monitoring.json"),
+      },
+      security: {
+        name: "安全",
+        file: () =>
+          import("@/content/links/category/development/security.json"),
       },
       tools: {
         name: "工具",

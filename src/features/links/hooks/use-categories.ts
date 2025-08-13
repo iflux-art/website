@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { LinksCategory, CategoryId } from "@/features/links/types";
-import { generateCategoriesData } from "@/features/links/lib";
+import { LinksCategory, CategoryId } from "../types";
+import { generateCategoriesData } from "../lib";
 
 /**
  * 获取链接分类数据的 Hook

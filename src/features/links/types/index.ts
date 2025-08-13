@@ -4,34 +4,60 @@
  */
 
 export type CategoryId =
-  | "ai"
-  | "ai-chat"
-  | "ai-image"
-  | "ai-code"
-  | "ai-writing"
-  | "development"
-  | "dev-editor"
-  | "dev-framework"
-  | "dev-api"
-  | "dev-deploy"
-  | "design"
-  | "design-tool"
-  | "design-icon"
-  | "design-color"
-  | "design-font"
-  | "audio"
-  | "video"
-  | "office"
-  | "office-doc"
-  | "office-meeting"
-  | "office-project"
-  | "productivity"
-  | "productivity-note"
-  | "productivity-time"
-  | "productivity-automation"
-  | "operation"
+  // 根目录文件
   | "profile"
-  | "friends";
+  | "friends"
+  // AI 分类
+  | "ai"
+  | "ai/api"
+  | "ai/chat"
+  | "ai/creative"
+  | "ai/models"
+  | "ai/platforms"
+  | "ai/resources"
+  | "ai/services"
+  | "ai/tools"
+  // 音频分类
+  | "audio"
+  | "audio/daw"
+  | "audio/distribution"
+  | "audio/processing"
+  // 设计分类
+  | "design"
+  | "design/colors"
+  | "design/fonts"
+  | "design/image-processing"
+  | "design/tools"
+  // 开发分类
+  | "development"
+  | "development/apis"
+  | "development/cloud"
+  | "development/containers"
+  | "development/databases"
+  | "development/frameworks"
+  | "development/git"
+  | "development/hosting"
+  | "development/monitoring"
+  | "development/security"
+  | "development/tools"
+  // 办公分类
+  | "office"
+  | "office/documents"
+  | "office/pdf"
+  // 运营分类
+  | "operation"
+  | "operation/ecommerce"
+  | "operation/marketing"
+  // 效率分类
+  | "productivity"
+  | "productivity/browsers"
+  | "productivity/cloud-storage"
+  | "productivity/email"
+  | "productivity/search"
+  | "productivity/system-tools"
+  // 视频分类
+  | "video"
+  | "video/editing";
 
 /** 链接子分类 */
 export interface LinksSubCategory {

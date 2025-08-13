@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 // cn utility removed as it's not currently used
 import { SITE_METADATA } from "@/config/metadata";
-import { useSiteStats } from "@/hooks/use-stats";
+import { useSiteStats } from "@/hooks/use-site-stats";
 import { useEffect, useState } from "react";
 
 // 数字动画组件
@@ -125,7 +125,7 @@ function HeroSection() {
           <div className="grid grid-cols-4">
             {[
               {
-                label: "博客文章",
+                label: "文章",
                 value: blogCount,
                 icon: FileText,
                 color: "text-blue-600 dark:text-blue-400",

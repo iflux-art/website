@@ -3,8 +3,12 @@
     "title": "MiniMax - 你的AI智能助手",
     "url": "https://chat.minimaxi.com/",
     "description": "基于多模态大语言模型为用户打造的AI伙伴",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "AI对话"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "AI对话"
+    ],
     "featured": false,
     "icon": "https://chat.minimaxi.com/assets/logo/favicon.png?v=4",
     "id": "mb7v1c02edu541s6aaq",
@@ -16,8 +20,11 @@
     "title": "零一万物",
     "url": "https://platform.lingyiwanwu.com/",
     "description": "权威盲测国产最有，全系平替GPT系列。",
-    "category": "ai-chat",
-    "tags": ["大模型", "AI对话"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "AI对话"
+    ],
     "featured": false,
     "icon": "https://platform.lingyiwanwu.com/icon.png?f17992d0c17501d7",
     "id": "mb7v1xp5qml4lwxkdxo",
@@ -29,8 +36,12 @@
     "title": "盘古大模型",
     "url": "https://www.huaweicloud.com/product/pangu.html",
     "description": "以 AI for insdustries 为核心理念，包含NLP大模型、CV大模型、多模态大模型、预测大模型、科学计算大模型5类大模型",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "企业级"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "企业级"
+    ],
     "featured": false,
     "icon": "https://www.huaweicloud.com/favicon.ico",
     "id": "mb7v2ixe754su0apf7w",
@@ -42,8 +53,11 @@
     "title": "百小应",
     "url": "https://ying.baichuan-ai.com/",
     "description": "懂搜索的AI助手",
-    "category": "ai-chat",
-    "tags": ["大模型", "AI搜索"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "AI搜索"
+    ],
     "featured": false,
     "icon": "https://ying.baichuan-ai.com/favicon.ico",
     "id": "mb7v3kgr5oi4bg8tpx3",
@@ -55,8 +69,11 @@
     "title": "360智脑",
     "url": "https://ai.360.com/",
     "description": "千亿参数大模型，涵盖十大能力数百项细分功能",
-    "category": "ai-chat",
-    "tags": ["大模型", "多功能"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多功能"
+    ],
     "featured": false,
     "icon": "https://p1.ssl.qhimg.com/t0180f58567ac1a6ba5.png",
     "id": "mb7v4o70x36qpw9cpml",
@@ -68,8 +85,12 @@
     "title": "ChatGPT",
     "url": "https://chatgpt.com/",
     "description": "OpenAI 出品",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "AI对话"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "AI对话"
+    ],
     "featured": true,
     "icon": "https://chatgpt.com/favicon.ico",
     "id": "mb7v6fjkzmuzhksm8wa",
@@ -81,8 +102,12 @@
     "title": "Google Gemini",
     "url": "https://gemini.google.com/",
     "description": "谷歌出品",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "AI对话"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "AI对话"
+    ],
     "featured": true,
     "icon": "https://gemini.google.com/favicon.ico",
     "id": "mb7vc3xay9yvm6od67q",
@@ -94,8 +119,12 @@
     "title": "紫东太初",
     "url": "https://taichu-web.ia.ac.cn/",
     "description": "中国科学院自动化研究所和武汉人工智能研究院推出新一代多模态大模型",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "科研机构"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "科研机构"
+    ],
     "featured": false,
     "icon": "https://taichu-public.wair.ac.cn/chatweb/favicon.ico",
     "id": "mb7vdahcmjde0g84tfh",
@@ -107,8 +136,14 @@
     "title": "Qwen Chat",
     "url": "https://chat.qwen.ai/",
     "description": "涵盖聊天机器人、图像和视频理解、图像生成、文档处理、网络搜索集成等",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "图像生成", "视频生成", "文档处理"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "图像生成",
+      "视频生成",
+      "文档处理"
+    ],
     "featured": false,
     "icon": "https://assets.alicdn.com/g/qwenweb/qwen-webui-fe/0.0.104/favicon.png",
     "id": "mb7vfblbfpykq699f1f",
@@ -120,8 +155,14 @@
     "title": "通义",
     "url": "https://tongyi.aliyun.com/",
     "description": "一个通情、达义的国产AI模型，你的全能AI助手",
-    "category": "ai-chat",
-    "tags": ["大模型", "多模态", "AI阅读", "语音转文字", "AIPPT"],
+    "category": "ai/chat",
+    "tags": [
+      "大模型",
+      "多模态",
+      "AI阅读",
+      "语音转文字",
+      "AIPPT"
+    ],
     "featured": false,
     "icon": "https://img.alicdn.com/imgextra/i4/O1CN01EfJVFQ1uZPd7W4W6i_!!6000000006051-2-tps-112-112.png",
     "id": "mb7vg1ve39zzaswujqg",
@@ -133,7 +174,7 @@
     "title": "文心一言",
     "url": "https://yiyan.baidu.com/",
     "description": "你的智能伙伴，帮你高效完成工作和学习任务。",
-    "category": "ai-chat",
+    "category": "ai/chat",
     "tags": [
       "大模型",
       "多模态",
@@ -154,7 +195,7 @@
     "title": "豆包",
     "url": "https://www.doubao.com/",
     "description": "你的 AI 聊天智能对话问答助手，写作文案翻译编程全能工具。豆包为你答疑解惑，提供灵感，辅助创作，也可以和你畅聊任何你感兴趣的话题。",
-    "category": "ai-chat",
+    "category": "ai/chat",
     "tags": [
       "大模型",
       "AI搜索",
@@ -175,8 +216,11 @@
     "title": "知乎直答",
     "url": "https://zhida.zhihu.com/",
     "description": "知乎推出的一款使用 AI 大模型等先进技术的产品，以知乎社区的优质内容为核心，多种数据源为辅助，为人们提供一种全新的获取可靠信息的途径。知乎直答是多智能体系统，能够满足用户多维度的需求；同时对生成结果进行溯源，以确保内容的可信、可控以及对知识产权和版权的尊重。知乎直答致力于为用户提供卓越的使用体验，用技术拉近创作者和用户之间的距离。有问题，就会有答案。",
-    "category": "ai-chat",
-    "tags": ["AI搜索", "知识问答"],
+    "category": "ai/chat",
+    "tags": [
+      "AI搜索",
+      "知识问答"
+    ],
     "featured": false,
     "icon": "https://pic1.zhimg.com/v2-7e3856b1a6d415224ca95814132a3612.png",
     "id": "mbb3hrhcgkym877yh1s",
@@ -188,8 +232,13 @@
     "title": "Anthropic | Claude",
     "url": "https://claude.ai/",
     "description": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems.",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "智能助手", "AI安全"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "智能助手",
+      "AI安全"
+    ],
     "featured": true,
     "icon": "https://claude.ai/images/icons/favicon-32x32.png",
     "id": "mb7ms6mxlqnxpvw3ipb",
@@ -201,8 +250,12 @@
     "title": "Grok",
     "url": "https://x.ai/",
     "description": "AI for all humanity",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "智能助手"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "智能助手"
+    ],
     "featured": false,
     "icon": "https://x.ai/favicon.ico",
     "id": "mb7mxrlmvfynsfr99i",
@@ -214,8 +267,12 @@
     "title": "Grok / X",
     "url": "https://x.com/i/grok",
     "description": "在 X 中使用 Grok",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "社交媒体"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "社交媒体"
+    ],
     "featured": false,
     "icon": "https://x.com/favicon.ico",
     "id": "mb7mzp5tcjtwth8u1c6",
@@ -227,8 +284,13 @@
     "title": "DeepSeek",
     "url": "https://chat.deepseek.com/",
     "description": "Chat with DeepSeek AI.",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "智能助手", "开源模型"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "智能助手",
+      "开源模型"
+    ],
     "featured": true,
     "icon": "https://chat.deepseek.com/favicon.svg",
     "id": "mb7n4dlznm5ceb79da",
@@ -240,8 +302,12 @@
     "title": "腾讯混元",
     "url": "https://hunyuan.tencent.com/",
     "description": "腾讯研发的大语言模型",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "腾讯产品"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "腾讯产品"
+    ],
     "featured": false,
     "icon": "https://cdn-portal.hunyuan.tencent.com/public/static/logo/favicon.png",
     "id": "mb7uu72dwe23m9qq90h",
@@ -253,8 +319,13 @@
     "title": "Kimi",
     "url": "https://kimi.moonshot.cn/",
     "description": "Moonshot AI 出品的智能助手",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "智能助手", "长文本处理"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "智能助手",
+      "长文本处理"
+    ],
     "featured": false,
     "icon": "https://statics.moonshot.cn/kimi-web-seo/favicon.ico",
     "id": "mb7uw9e5ktcln08jmpo",
@@ -266,8 +337,13 @@
     "title": "讯飞星火",
     "url": "https://xinghuo.xfyun.cn/desk",
     "description": "科大讯飞推出的新一代认知智能大模型",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "认知智能", "科大讯飞"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "认知智能",
+      "科大讯飞"
+    ],
     "featured": false,
     "icon": "https://xinghuo.xfyun.cn/spark-icon.ico",
     "id": "mb7uxdh27gtux69e5w9",
@@ -279,8 +355,13 @@
     "title": "Z",
     "url": "https://chat.z.ai/",
     "description": "基于开源GLM模型，支持文本生成、推理和深入研究",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "开源模型", "文本生成", "AI推理"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "开源模型",
+      "文本生成",
+      "AI推理"
+    ],
     "featured": false,
     "icon": "https://z-cdn.chatglm.cn/z-ai/frontend/static/logo.png",
     "id": "mb7uymlhnczlrlu9ar",
@@ -292,8 +373,13 @@
     "title": "智谱清言",
     "url": "https://chatglm.cn/",
     "description": "中国版对话语言模型，与GLM大模型进行对话。",
-    "category": "ai-chat",
-    "tags": ["大语言模型", "AI对话", "智谱AI", "GLM模型"],
+    "category": "ai/chat",
+    "tags": [
+      "大语言模型",
+      "AI对话",
+      "智谱AI",
+      "GLM模型"
+    ],
     "featured": false,
     "icon": "https://chatglm.cn/img/icons/favicon.svg",
     "id": "mb7uyzv41hu97a0nc7s",
@@ -305,8 +391,11 @@
     "title": "天工（Skywork）超级智能体",
     "url": "https://www.tiangong.cn/",
     "description": "具备超强DeepResearch能力的全新AI Office智能体",
-    "category": "ai-chat",
-    "tags": ["AI办公", "智能体"],
+    "category": "ai/chat",
+    "tags": [
+      "AI办公",
+      "智能体"
+    ],
     "featured": false,
     "icon": "https://static.tiangong.cn/prod-skywork-web-bundle/favicon.ico",
     "id": "mb7v00kbjnhebw3j3xb",
@@ -317,8 +406,10 @@
     "title": "律己AI",
     "url": "https://www.tensorbounce.com/",
     "description": "TensorBounce旗下的通用大模型x领域法务模型",
-    "category": "ai-chat",
-    "tags": ["垂直模型"],
+    "category": "ai/chat",
+    "tags": [
+      "垂直模型"
+    ],
     "featured": false,
     "icon": "https://www.tensorbounce.com/favicon.ico",
     "id": "mb7x9lfv1lc3u3vao8",
@@ -330,8 +421,10 @@
     "title": "eechat",
     "url": "https://www.ee.chat",
     "description": "🚀 Powerful Local AI Chat Application - Secure, Efficient, Personalized 本地化部署的大模型客户端",
-    "category": "ai-chat",
-    "tags": ["部署工具"],
+    "category": "ai/chat",
+    "tags": [
+      "部署工具"
+    ],
     "featured": false,
     "icon": "https://www.ee.chat/icon.svg",
     "id": "mb8rnvzwq9cs98ei3s",

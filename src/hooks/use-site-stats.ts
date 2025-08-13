@@ -1,6 +1,6 @@
 /**
  * 统计数据相关钩子函数
- * @module hooks/use-stats
+ * @module hooks/use-site-stats
  */
 
 "use client";
@@ -35,7 +35,7 @@ export function useSiteStats(): SiteStats {
     error: docError,
   } = useDocCategories();
   const {
-    items: linkItems,
+    allItems: linkItems,
     loading: linkLoading,
     error: linkError,
   } = useLinksData();
@@ -50,9 +50,11 @@ export function useSiteStats(): SiteStats {
         return total + (category.count || 0);
       }, 0) || 0;
 
-    // 导航链接数量 - 排除友链分类
+    // 导航链接数量 - 排除友链和个人主页分类
     const linkCount =
-      linkItems?.filter((item) => item.category !== "friends").length || 0;
+      linkItems?.filter(
+        (item) => item.category !== "friends" && item.category !== "profile",
+      ).length || 0;
 
     // 友链数量
     const friendCount =

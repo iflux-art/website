@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDebouncedValue } from "@/hooks/ui/use-debounced-value";
-import { useCategories } from "@/hooks/use-categories";
+import { useCategories } from "@/features/links/hooks/use-categories";
 import { AdminLayout } from "@/features/admin/components";
 import { Button } from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";

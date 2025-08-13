@@ -1,8 +1,3 @@
-// Export all hooks
-export { useTagAnchors } from "./use-tag-anchors";
-export { useCategories } from "./use-categories";
-export { useFilterState } from "./filter/use-filter-state";
-
 // UI hooks
 export { useActiveSection } from "./ui/use-active-section";
 export { useDebouncedValue } from "./ui/use-debounced-value";
@@ -15,10 +10,12 @@ export { useSafeNavbar } from "./navbar-state";
 export { useSafeSearch } from "./search-state";
 export { useSafeTheme } from "./theme-state";
 
+// Filter hooks
+export { useFilterState } from "./filter/use-filter-state";
+
 // Content hooks
 export { useContentData } from "./use-content-data";
-export { useGlobalDocs } from "@/features/docs/components";
-export { useMDX } from "./use-mdx";
+export { useSiteStats } from "./use-site-stats";
 
 // Cache hooks
 export { useCache } from "./cache/use-cache";

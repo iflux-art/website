@@ -12,13 +12,32 @@ interface BaseNavItem {
   description: string;
   /** 是否在特定场景下隐藏 */
   hidden?: boolean;
+  /** 子菜单项 */
+  children?: readonly BaseNavItem[];
 }
 
 export const NAV_ITEMS = [
   {
     key: "blog",
     label: "博客",
-    description: "阅读最新的博客文章，了解行业动态和技术趋势",
+    description: "阅读最新的文章，了解行业动态和技术趋势",
+    children: [
+      {
+        key: "articles",
+        label: "文章",
+        description: "浏览所有文章",
+      },
+      {
+        key: "categories",
+        label: "分类",
+        description: "按分类浏览文章",
+      },
+      {
+        key: "tags",
+        label: "标签",
+        description: "通过标签发现相关文章",
+      },
+    ] as const,
   },
   {
     key: "docs",
@@ -40,7 +59,7 @@ export const NAV_ITEMS = [
     label: "关于",
     description: "了解我们的项目理念和个人主页，探索更多信息",
   },
-] as const satisfies readonly BaseNavItem[];
+] as const;
 
 export const ADMIN_MENU_ITEMS = [
   {
@@ -64,8 +83,25 @@ export const ADMIN_MENU_ITEMS = [
   }
 >;
 
-export const NAV_PATHS: Record<(typeof NAV_ITEMS)[number]["key"], string> = {
+// 扁平化所有导航项（包括子项）以便路径映射
+const flattenNavItems = (items: readonly BaseNavItem[]): BaseNavItem[] => {
+  const result: BaseNavItem[] = [];
+  items.forEach((item) => {
+    result.push(item);
+    if (item.children) {
+      result.push(...item.children);
+    }
+  });
+  return result;
+};
+
+const FLAT_NAV_ITEMS = flattenNavItems(NAV_ITEMS);
+
+export const NAV_PATHS: Record<string, string> = {
   blog: "/blog",
+  articles: "/blog",
+  categories: "/blog/categories",
+  tags: "/blog/tags",
   docs: "/docs",
   links: "/links",
   friends: "/friends",
@@ -78,5 +114,5 @@ export const NAV_PATHS: Record<(typeof NAV_ITEMS)[number]["key"], string> = {
 // Navigation configuration validation removed for production
 
 export const NAV_DESCRIPTIONS = Object.fromEntries(
-  NAV_ITEMS.map((item) => [item.key, item.description]),
+  FLAT_NAV_ITEMS.map((item) => [item.key, item.description]),
 ) as Record<string, string>;

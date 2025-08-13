@@ -2,7 +2,11 @@ import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/content/breadcrumb";
 import { createBlogBreadcrumbs } from "@/features/blog/lib";
 import { ContentDisplay } from "@/components/content/content-display";
-import { RelatedPostsCard, TagCloudCard } from "@/features/blog/components";
+import {
+  RelatedPostsCard,
+  LatestPostsCard,
+  TagCloudCard,
+} from "@/features/blog/components";
 import { TableOfContents } from "@/components/content/table-of-contents";
 
 import { AppGrid } from "@/components/layout/app-grid";
@@ -143,6 +147,12 @@ async function getBlogContent(slug: string[]): Promise<{
   headings: { level: number; text: string; id: string }[];
   type: string;
   relatedPosts: Array<{ title: string; href: string; category?: string }>;
+  latestPosts: Array<{
+    title: string;
+    href: string;
+    date?: string;
+    category?: string;
+  }>;
   allTags: string[];
 }> {
   const filePath = findBlogFile(slug);
@@ -192,6 +202,22 @@ async function getBlogContent(slug: string[]): Promise<{
     category: item.frontmatter.category,
   }));
 
+  // 获取最新发布的文章（按时间倒序）
+  const latestPosts = candidates
+    .filter((item) => item.frontmatter.date) // 只包含有日期的文章
+    .sort((a, b) => {
+      const dateA = new Date(a.frontmatter.date!).getTime();
+      const dateB = new Date(b.frontmatter.date!).getTime();
+      return dateB - dateA; // 时间倒序
+    })
+    .slice(0, 5) // 只取前5个
+    .map((item) => ({
+      title: item.frontmatter.title || item.slug.join("/"),
+      href: `/blog/${item.slug.join("/")}`,
+      date: item.frontmatter.date as string,
+      category: item.frontmatter.category,
+    }));
+
   // 获取所有标签
   const allTags = Array.from(
     new Set(
@@ -208,6 +234,7 @@ async function getBlogContent(slug: string[]): Promise<{
     headings,
     type: "blog",
     relatedPosts,
+    latestPosts,
     allTags,
   };
 }
@@ -226,8 +253,15 @@ export default async function BlogPostPage({
 }) {
   try {
     const resolvedParams = await params;
-    const { slug, content, frontmatter, headings, relatedPosts, allTags } =
-      await getBlogContent(resolvedParams.slug);
+    const {
+      slug,
+      content,
+      frontmatter,
+      headings,
+      relatedPosts,
+      latestPosts,
+      allTags,
+    } = await getBlogContent(resolvedParams.slug);
     const title = frontmatter.title || slug.join("/");
     const date = frontmatter.date
       ? new Date(frontmatter.date).toLocaleDateString("zh-CN", {
@@ -240,9 +274,13 @@ export default async function BlogPostPage({
       <div className="min-h-screen bg-background">
         <div className="container mx-auto">
           <AppGrid columns={5} gap="large">
-            {/* 左侧边栏 - 相关文章和标签云 */}
+            {/* 左侧边栏 - 最新发布、相关文章和标签云 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
               <div className="space-y-4">
+                <LatestPostsCard
+                  posts={latestPosts}
+                  currentSlug={slug.slice(1)}
+                />
                 <RelatedPostsCard
                   posts={relatedPosts}
                   currentSlug={slug.slice(1)}

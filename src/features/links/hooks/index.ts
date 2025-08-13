@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useFilterState } from "@/hooks/filter/use-filter-state";
-import { useCategories } from "@/hooks/use-categories";
+import { useCategories } from "./use-categories";
 import { LinksItem } from "../types";
 import { loadAllLinksData } from "../lib";
 
