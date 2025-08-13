@@ -33,7 +33,7 @@ export function MainNavbar({ className = "" }: { className?: string }) {
         </div>
 
         {/* 居中部分 - 桌面导航或页面标题 */}
-        <div className="hidden items-center justify-center overflow-hidden opacity-100 lg:flex">
+        <div className="hidden items-center justify-center opacity-100 lg:flex">
           {showTitle ? (
             <h2
               className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight transition-colors hover:text-primary"

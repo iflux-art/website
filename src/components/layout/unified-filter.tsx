@@ -25,9 +25,9 @@ interface UnifiedFilterProps {
   categories: Category[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  tags: TagType[];
-  selectedTag: string | null;
-  onTagChange: (tag: string | null) => void;
+  tags?: TagType[];
+  selectedTag?: string | null;
+  onTagChange?: (tag: string | null) => void;
   categoryButtonClassName?: string;
   className?: string;
   showAllCategoryButton?: boolean;
@@ -42,8 +42,8 @@ export function UnifiedFilter({
   categories,
   selectedCategory,
   onCategoryChange,
-  tags,
-  selectedTag,
+  tags = [],
+  selectedTag = null,
   onTagChange,
   categoryButtonClassName = "",
   className = "",
@@ -67,14 +67,14 @@ export function UnifiedFilter({
     } else {
       onCategoryChange(categoryId);
     }
-    onTagChange(null);
+    onTagChange?.(null);
   };
 
   const handleTagClick = (tagName: string) => {
     if (selectedTag === tagName) {
-      onTagChange(null);
+      onTagChange?.(null);
     } else {
-      onTagChange(tagName);
+      onTagChange?.(tagName);
     }
   };
 
@@ -122,7 +122,7 @@ export function UnifiedFilter({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onTagChange(null)}
+                onClick={() => onTagChange?.(null)}
                 className="rounded-xl text-muted-foreground shadow-sm transition-all hover:text-foreground hover:shadow-md"
               >
                 清除筛选 <X className="ml-1 h-3 w-3" />

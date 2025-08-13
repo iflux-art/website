@@ -6,12 +6,7 @@ import { NAV_ITEMS, NAV_DESCRIPTIONS, NAV_PATHS } from "@/config/nav-config";
 import { useAuthState } from "@/hooks/auth-state";
 import { useActiveSection } from "@/hooks/ui/use-active-section";
 import { AdminMenu as AdminMenuComponent } from "@/features/admin/components";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// import { HoverDropdown, HoverDropdownItem } from "@/components/ui/hover-dropdown";
 import { ChevronDown } from "lucide-react";
 
 type NavProps = {
@@ -48,34 +43,38 @@ function NavLinks({ onClose, className }: NavProps) {
           key={item.key}
           className="w-full transition-all duration-300 lg:w-auto"
         >
-          {"children" in item && item.children ? (
-            // 有子菜单的项目使用下拉菜单
-            <DropdownMenu>
-              <DropdownMenuTrigger
+          {"children" in item && item.children && item.children.length > 0 ? (
+            // 有子菜单的项目使用内联悬浮下拉菜单
+            <div className="group relative">
+              <div
                 className={cn(
-                  "flex items-center gap-1 rounded-md px-1 py-2 transition-colors duration-300 hover:bg-accent/20 lg:py-0",
+                  "flex cursor-pointer items-center gap-1 rounded-md px-1 py-2 transition-colors duration-300 hover:bg-accent/20 lg:py-0",
                   isActiveSection === item.key
                     ? "text-primary"
                     : "text-muted-foreground hover:text-primary",
                 )}
               >
                 {item.label}
-                <ChevronDown className="h-4 w-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+                <ChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
+              </div>
+
+              {/* 内联悬浮下拉菜单 */}
+              <div
+                className="invisible absolute top-full left-0 mt-2 min-w-[8rem] rounded-md border border-border bg-popover p-1 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100"
+                style={{ zIndex: 9999 }}
+              >
                 {item.children.map((child) => (
-                  <DropdownMenuItem key={child.key} asChild>
-                    <Link
-                      href={NAV_PATHS[child.key]}
-                      onClick={onClose}
-                      className="w-full cursor-pointer"
-                    >
-                      {child.label}
-                    </Link>
-                  </DropdownMenuItem>
+                  <Link
+                    key={child.key}
+                    href={NAV_PATHS[child.key]}
+                    onClick={onClose}
+                    className="block rounded-sm px-3 py-2 text-sm text-popover-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {child.label}
+                  </Link>
                 ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </div>
+            </div>
           ) : (
             // 没有子菜单的项目使用普通链接
             <Link
@@ -104,7 +103,7 @@ function NavCards({ onClose, className }: NavProps) {
     <div className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}>
       {NAV_ITEMS.map((item) => (
         <div key={item.key} className="space-y-2">
-          {"children" in item && item.children ? (
+          {"children" in item && item.children && item.children.length > 0 ? (
             // 有子菜单的项目显示为卡片组
             <>
               <div

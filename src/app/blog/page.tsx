@@ -47,21 +47,12 @@ function BlogContent() {
     [rawCategories],
   );
 
-  // 使用统一的过滤状态管理
+  // 使用统一的过滤状态管理 - 只保留分类筛选
   const {
     filteredItems: filteredPosts,
     selectedCategory,
-    selectedTag,
-    handleCategoryChange: baseHandleCategoryChange,
-    handleTagChange,
-    filteredTags: tags,
+    handleCategoryChange,
   } = useFilterState(posts);
-
-  // 处理分类切换，同时清空标签选择
-  const handleCategoryChange = (category: string) => {
-    baseHandleCategoryChange(category);
-    handleTagChange(null);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,10 +61,6 @@ function BlogContent() {
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryChange={handleCategoryChange}
-          tags={tags}
-          selectedTag={selectedTag}
-          onTagChange={handleTagChange}
-          onCardTagClick={handleTagChange}
           categoryButtonClassName="rounded-full"
           className="mb-6"
         />
@@ -88,7 +75,7 @@ function BlogContent() {
               image={post.image}
               tags={post.tags}
               date={formatDate(post.date?.toString())}
-              onTagClick={handleTagChange}
+              onTagClick={undefined}
             />
           ))}
         </AppGrid>

@@ -19,3 +19,9 @@ export { useSiteStats } from "./use-site-stats";
 
 // Cache hooks
 export { useCache } from "./cache/use-cache";
+
+// Modal hooks
+export { useModal } from "./use-modal";
+export { useModalWithFilter } from "./use-modal-with-filter";
+export { useModalErrorHandler } from "./use-modal-error-handler";
+export { useArticleFilter } from "./use-article-filter";

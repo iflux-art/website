@@ -4,9 +4,7 @@
     "url": "https://coolify.io/",
     "description": "An open-source & self-hostable Heroku / Netlify / Vercel alternative.",
     "category": "development/hosting",
-    "tags": [
-      "代码托管"
-    ],
+    "tags": ["代码托管"],
     "featured": false,
     "icon": "https://coolify.io/android-launchericon-48-48.png",
     "id": "mbgdsjjygvzvbdqs9x8",
@@ -18,9 +16,7 @@
     "url": "https://www.name.com/zh-cn/",
     "description": "Name.com is your complete source for domain names, hosting and other online presence solutions.",
     "category": "development/hosting",
-    "tags": [
-      "域名"
-    ],
+    "tags": ["域名"],
     "featured": false,
     "icon": "",
     "id": "mbghzbzn3kkxbjiutxo",
@@ -33,9 +29,7 @@
     "url": "https://bolt.new/",
     "description": "Prompt, run, edit & deploy apps",
     "category": "development/hosting",
-    "tags": [
-      "AI应用开发"
-    ],
+    "tags": ["AI应用开发"],
     "featured": true,
     "icon": "https://bolt.new/static/favicon.svg",
     "id": "mbknr5oy46y5g5ggkmm",
@@ -47,9 +41,7 @@
     "url": "https://v0.dev/",
     "description": "Generate UI, build full-stack apps, ask questions, and more.",
     "category": "development/hosting",
-    "tags": [
-      "AI应用开发"
-    ],
+    "tags": ["AI应用开发"],
     "featured": true,
     "icon": "https://v0.dev/assets/icon-light-32x32.png",
     "id": "mbknrr7n8efnit3ex7e",
@@ -61,9 +53,7 @@
     "url": "https://openbolt.dev/",
     "description": "Streamline web development with Openbolt.dev. Use AI, boltnew private deploy, and the bolt coding tool to build, deploy, and scale projects effortlessly.",
     "category": "development/hosting",
-    "tags": [
-      "AI应用开发"
-    ],
+    "tags": ["AI应用开发"],
     "featured": false,
     "icon": "https://openbolt.dev/favicon.ico",
     "id": "mbko4zojzdbx8hzsj3",
@@ -75,10 +65,7 @@
     "url": "https://nextjs.org/",
     "description": "Next.js by Vercel is the full-stack React framework for the web.",
     "category": "development/hosting",
-    "tags": [
-      "React框架",
-      "Next.js"
-    ],
+    "tags": ["React框架", "Next.js"],
     "featured": true,
     "icon": "https://nextjs.org/favicon.ico",
     "id": "mbngbn7espzao69m5m8",
@@ -90,9 +77,7 @@
     "url": "https://next-saas-stripe-starter.vercel.app/",
     "description": "",
     "category": "development/hosting",
-    "tags": [
-      "Next.js"
-    ],
+    "tags": ["Next.js"],
     "featured": false,
     "icon": "https://next-saas-stripe-starter.vercel.app/favicon.ico",
     "id": "mbnggogzaclbgowczww",
@@ -104,9 +89,7 @@
     "url": "https://www.gatsbyjs.com/",
     "description": "Gatsby is a React-based open source framework with performance, scalability and security built-in. Collaborate, build and deploy 1000x faster on Netlify.",
     "category": "development/hosting",
-    "tags": [
-      "React框架"
-    ],
+    "tags": ["React框架"],
     "featured": false,
     "icon": "https://www.gatsbyjs.com/favicon-32x32.png?v=3ad5294f3fa6c06e2d07ab07c76df2cf",
     "id": "mbngin96wlq6ymvwb1f",
@@ -118,11 +101,7 @@
     "url": "https://fumadocs.vercel.app/",
     "description": "",
     "category": "development/hosting",
-    "tags": [
-      "Next.js",
-      "SSG",
-      "文档框架"
-    ],
+    "tags": ["Next.js", "SSG", "文档框架"],
     "featured": false,
     "icon": "https://fumadocs.vercel.app/favicon.ico",
     "id": "mbnh1m5crmymb5f5mfd",
@@ -134,11 +113,7 @@
     "url": "https://ariadocs.vercel.app/",
     "description": "",
     "category": "development/hosting",
-    "tags": [
-      "Next.js",
-      "SSG",
-      "文档框架"
-    ],
+    "tags": ["Next.js", "SSG", "文档框架"],
     "featured": false,
     "icon": "https://ariadocs.vercel.app/favicon.ico",
     "id": "mbnh22w450v7cw6yell",
@@ -150,9 +125,7 @@
     "url": "https://swr.vercel.app/",
     "description": "用于数据请求的 React Hooks 库",
     "category": "development/hosting",
-    "tags": [
-      "数据请求库"
-    ],
+    "tags": ["数据请求库"],
     "featured": true,
     "icon": "https://swr.vercel.app/favicon.ico",
     "id": "mbqkzk1laso4gec29g",
@@ -164,9 +137,7 @@
     "url": "https://react-typescript-cheatsheet.netlify.app",
     "description": "",
     "category": "development/hosting",
-    "tags": [
-      "TypeScript"
-    ],
+    "tags": ["TypeScript"],
     "featured": false,
     "icon": "https://react-typescript-cheatsheet.netlify.app/img/icon.png",
     "id": "mbrroe9pey8bks7bds6",
@@ -178,9 +149,7 @@
     "url": "https://flutter.dev/",
     "description": "Flutter transforms the entire app development process. Build, test, and deploy beautiful mobile, web, desktop, and embedded apps from a single codebase.",
     "category": "development/hosting",
-    "tags": [
-      "跨平台开发"
-    ],
+    "tags": ["跨平台开发"],
     "featured": false,
     "icon": "https://storage.googleapis.com/cms-storage-bucket/4fd0db61df0567c0f352.png",
     "id": "mbrtwu8dzuwdj05c49l",

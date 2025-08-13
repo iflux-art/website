@@ -1,86 +1,65 @@
 "use client";
 
-import { UnifiedFilter } from "@/components/layout/unified-filter";
-import { BlogCard } from "@/features/blog/components";
-import { AppGrid } from "@/components/layout/app-grid";
-import { useFilterState } from "@/hooks/filter/use-filter-state";
+import { CategoryGrid } from "@/features/blog/components";
+import { ArticleModal } from "@/components/modals";
 import { useBlogPosts } from "@/features/blog/hooks";
+import { useModal } from "@/hooks/use-modal";
+import { useArticleFilter } from "@/hooks/use-article-filter";
 import { useMemo } from "react";
-import type { BlogPost } from "@/features/blog/types";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-
-// ====== 迁移自 src/utils/date.ts ======
-/**
- * 格式化日期
- * @param date 日期字符串或Date对象
- * @param format 可选格式 (支持 'MM月dd日')
- * @returns 格式化后的日期字符串
- */
-function formatDate(date: string | Date | undefined, format?: string): string {
-  if (!date) return "";
-
-  const d = new Date(date);
-  if (isNaN(d.getTime())) return "";
-
-  if (format === "MM月dd日") {
-    return `${d.getMonth() + 1}月${d.getDate()}日`;
-  }
-
-  return d.toLocaleDateString("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-// ====== END ======
 
 // 内联 Category 类型定义
-type Category = { id: string; name: string };
+interface Category {
+  id: string;
+  name: string;
+  count: number;
+}
 
 export default function CategoriesPage() {
   const { posts, categories: rawCategories } = useBlogPosts();
+  const { modalState, openModal, closeModal } = useModal();
+  const { filterByCategory } = useArticleFilter();
 
-  // 转换分类数据格式
-  const categories = useMemo<Category[]>(
-    () =>
-      rawCategories.map((cat) => ({
-        id: cat,
-        name: cat,
-      })),
-    [rawCategories],
-  );
+  // 转换分类数据格式并计算文章数量
+  const categories = useMemo<Category[]>(() => {
+    const categoryStats = new Map<string, number>();
 
-  // 计算每个分类的文章数量
-  const categoryStats = useMemo(() => {
-    const stats = new Map<string, number>();
+    // 计算每个分类的文章数量
     posts.forEach((post) => {
       if (post.category) {
-        stats.set(post.category, (stats.get(post.category) || 0) + 1);
+        categoryStats.set(
+          post.category,
+          (categoryStats.get(post.category) || 0) + 1,
+        );
       }
     });
-    return stats;
-  }, [posts]);
 
-  // 使用统一的过滤状态管理
-  const {
-    filteredItems: filteredPosts,
-    selectedCategory,
-    selectedTag,
-    handleCategoryChange: baseHandleCategoryChange,
-    handleTagChange,
-    filteredTags: tags,
-  } = useFilterState(posts);
+    // 转换为 Category 格式
+    return rawCategories.map((cat) => ({
+      id: cat,
+      name: cat,
+      count: categoryStats.get(cat) || 0,
+    }));
+  }, [posts, rawCategories]);
 
-  // 处理分类切换，同时清空标签选择
-  const handleCategoryChange = (category: string) => {
-    baseHandleCategoryChange(category);
-    handleTagChange(null);
+  // 处理分类点击事件
+  const handleCategoryClick = (categoryName: string) => {
+    const filterResult = filterByCategory(posts, categoryName);
+    const title = `${categoryName}分类文章 (${filterResult.posts.length}篇)`;
+    openModal(title, filterResult.posts);
+  };
+
+  // 处理标签点击事件（在模态对话框中）
+  const handleTagClick = (_tag: string) => {
+    // 关闭当前模态对话框，可以在这里添加标签页面导航逻辑
+    closeModal();
+    // 这里可以添加导航到标签页面的逻辑
+    // router.push(`/blog/tags?tag=${encodeURIComponent(tag)}`);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
+        {/* 页面标题 */}
         <div className="mb-8">
           <h1 className="mb-4 text-3xl font-bold tracking-tight">文章分类</h1>
           <p className="text-muted-foreground">
@@ -88,61 +67,23 @@ export default function CategoriesPage() {
           </p>
         </div>
 
-        {/* 分类概览 */}
-        <div className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold">所有分类</h2>
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/blog/categories?category=${encodeURIComponent(category.name)}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleCategoryChange(category.name);
-                }}
-              >
-                <Badge
-                  variant={
-                    selectedCategory === category.name ? "default" : "secondary"
-                  }
-                  className="cursor-pointer px-3 py-1 text-sm transition-colors hover:bg-primary/80"
-                >
-                  {category.name}
-                  <span className="ml-2 text-xs opacity-70">
-                    ({categoryStats.get(category.name) || 0})
-                  </span>
-                </Badge>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <UnifiedFilter
+        {/* 分类网格 */}
+        <CategoryGrid
           categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-          tags={tags}
-          selectedTag={selectedTag}
-          onTagChange={handleTagChange}
-          onCardTagClick={handleTagChange}
-          categoryButtonClassName="rounded-full"
-          className="mb-6"
+          onCategoryClick={handleCategoryClick}
+          className="mb-8"
         />
 
-        <AppGrid columns={4} className="mt-8 gap-6">
-          {filteredPosts.map((post: BlogPost) => (
-            <BlogCard
-              key={post.slug}
-              title={post.title}
-              description={post.description}
-              href={`/blog/${post.slug}`}
-              image={post.image}
-              tags={post.tags}
-              date={formatDate(post.date?.toString())}
-              onTagClick={handleTagChange}
-            />
-          ))}
-        </AppGrid>
+        {/* 文章模态对话框 */}
+        <ArticleModal
+          isOpen={modalState.isOpen}
+          onClose={closeModal}
+          title={modalState.title}
+          posts={modalState.posts}
+          isLoading={modalState.isLoading}
+          error={modalState.error}
+          onTagClick={handleTagClick}
+        />
       </div>
     </div>
   );
