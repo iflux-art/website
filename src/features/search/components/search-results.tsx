@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
-import { cn } from "@/utils";
-import type { SearchResult } from "@/features/navigation/types";
+import { cn } from "@/lib/utils";
+import type { SearchResult } from "../types";
 
 const TYPE_LABELS = {
   tool: "工具",
@@ -71,14 +71,14 @@ export function SearchResults({
                 {result.type === "link" && <ExternalLink className="h-3 w-3" />}
               </h4>
               <p className="line-clamp-2 text-xs text-muted-foreground">
-                {result.excerpt}
+                {result.description}
               </p>
               <div className="mt-1 text-xs text-muted-foreground capitalize">
                 {TYPE_LABELS[result.type as keyof typeof TYPE_LABELS] ||
                   result.type}
               </div>
             </div>
-            {result.type === "command" && result.excerpt === "最近搜索" ? (
+            {result.type === "command" && result.description === "最近搜索" ? (
               <button
                 onClick={(e) => {
                   e.stopPropagation();

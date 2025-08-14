@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 空状态组件属性

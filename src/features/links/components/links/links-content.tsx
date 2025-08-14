@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { LinkCard } from "../link-card";
 import { LinksItem } from "@/features/links/types";
 

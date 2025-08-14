@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { NAV_ITEMS, NAV_DESCRIPTIONS, NAV_PATHS } from "@/config/nav-config";
-import { useAuthState } from "@/hooks/auth-state";
+import { useUser } from "@clerk/nextjs";
 import { useActiveSection } from "@/hooks/ui/use-active-section";
 import { AdminMenu as AdminMenuComponent } from "@/features/admin/components";
 // import { HoverDropdown, HoverDropdownItem } from "@/components/ui/hover-dropdown";
@@ -200,7 +200,7 @@ function NavCards({ onClose, className }: NavProps) {
 }
 
 export function NavMenu({ mode, onClose, className }: NavMenuProps) {
-  const isLoggedIn = useAuthState();
+  const { isSignedIn } = useUser();
 
   if (mode === "links") {
     return <NavLinks onClose={onClose} className={className} />;
@@ -209,7 +209,7 @@ export function NavMenu({ mode, onClose, className }: NavMenuProps) {
   return (
     <div className={cn("space-y-6", className)}>
       <NavCards onClose={onClose} />
-      {isLoggedIn && <AdminMenuComponent onClose={onClose} />}
+      {isSignedIn && <AdminMenuComponent onClose={onClose} />}
     </div>
   );
 }

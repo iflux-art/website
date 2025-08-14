@@ -2,7 +2,7 @@
 
 import React from "react";
 import { BlogCard } from "@/features/blog/components";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import type { BlogPost } from "@/features/blog/types";
 
 /**
@@ -54,9 +54,9 @@ export function ArticleGrid({
       className={cn(
         // 基础网格样式
         "grid gap-4",
-        // 响应式列数：移动1列，小屏2列，中屏3列，大屏4列
-        // 在模态对话框中使用更保守的布局
-        "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+        // 响应式列数：移动1列，小屏2列，中屏3列，大屏4列，超大屏5列
+        // 优化大屏幕显示效果
+        "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
         // 自定义类名
         className,
       )}

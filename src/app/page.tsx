@@ -7,7 +7,6 @@ import {
   FileText,
   Globe,
   Heart,
-  ArrowRight,
   Sparkles,
   Zap,
   Target,
@@ -105,7 +104,6 @@ function HeroSection() {
               <Link href="/blog">
                 <Zap className="h-5 w-5" />
                 开始探索
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
             <Button

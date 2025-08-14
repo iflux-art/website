@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联链接卡片相关类型定义
 interface LinkCardProps {

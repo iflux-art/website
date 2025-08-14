@@ -30,55 +30,8 @@ interface LinksFormData {
   category: string;
 }
 
-// 内联网站解析相关工具函数
-interface WebsiteMetadata {
-  title?: string;
-  description?: string;
-  icon?: string;
-  image?: string;
-}
-
-/**
- * 验证 URL 格式
- */
-function isValidUrl(url: string): boolean {
-  try {
-    new URL(url.startsWith("http") ? url : `https://${url}`);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * 解析网站元数据
- */
-async function parseWebsiteMetadata(url: string): Promise<WebsiteMetadata> {
-  try {
-    // 确保 URL 格式正确
-    const normalizedUrl = url.startsWith("http") ? url : `https://${url}`;
-
-    // 使用代理服务解析网站信息
-    const response = await fetch(
-      `/api/parse-website?url=${encodeURIComponent(normalizedUrl)}`,
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to parse website");
-    }
-
-    const metadata = await response.json();
-    return metadata;
-  } catch {
-    // Return basic information on error
-    const urlObj = new URL(url.startsWith("http") ? url : `https://${url}`);
-    return {
-      title: urlObj.hostname.replace("www.", ""),
-      description: "",
-      icon: "",
-    };
-  }
-}
+// 使用统一的网站解析功能
+import { isValidUrl, useWebsiteParser } from "@/features/website-parser";
 
 interface LinksFormProps {
   submitAction: (data: LinksFormData) => Promise<void>;
@@ -107,12 +60,13 @@ export function LinksForm({
 
   const { categories, loading: categoriesLoading } = useCategories();
   // TODO: availableTags 将用于实现标签建议和自动完成功能
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [availableTags, setAvailableTags] = useState<string[]>([]);
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  // const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const [isParsing, setIsParsing] = useState(false);
-  const [parseError, setParseError] = useState("");
+  const {
+    parseWebsite,
+    isLoading: isParsing,
+    error: parseError,
+  } = useWebsiteParser();
   const [parseSuccess, setParseSuccess] = useState(false);
   const [urlError, setUrlError] = useState("");
 
@@ -139,24 +93,20 @@ export function LinksForm({
 
     // 清除解析状态
     if (field === "url") {
-      setParseError("");
       setParseSuccess(false);
     }
   };
 
   const handleParseWebsite = async () => {
     if (!formData.url || !isValidUrl(formData.url)) {
-      setParseError("请先输入有效的 URL");
       return;
     }
 
-    setIsParsing(true);
-    setParseError("");
     setParseSuccess(false);
 
-    try {
-      const metadata = await parseWebsiteMetadata(formData.url);
+    const metadata = await parseWebsite(formData.url);
 
+    if (metadata) {
       setFormData((prev) => ({
         ...prev,
         title: metadata.title || prev.title,
@@ -165,10 +115,6 @@ export function LinksForm({
       }));
 
       setParseSuccess(true);
-    } catch {
-      setParseError("解析网站信息失败，请手动填写");
-    } finally {
-      setIsParsing(false);
     }
   };
 
@@ -347,7 +293,7 @@ export function LinksForm({
             placeholder="添加标签"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            onKeyPress={(e) =>
+            onKeyDown={(e) =>
               e.key === "Enter" && (e.preventDefault(), handleAddTag())
             }
           />

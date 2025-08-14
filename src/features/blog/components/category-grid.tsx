@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联类型定义
 interface Category {

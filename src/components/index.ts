@@ -18,12 +18,8 @@ export * from "./button";
 // 通用MDX组件
 export * from "./mdx";
 
-// 通用搜索组件
-export * from "./search";
-
 // 其他通用组件
 export { ThemeProvider } from "./theme-provider";
-export { LoginDialog } from "./login-dialog";
 
 // 业务相关组件已移动到：
 // - Links 相关 -> @/features/links/components

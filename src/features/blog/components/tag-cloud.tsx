@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联类型定义
 interface TagWithCount {

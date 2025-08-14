@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ArticleGrid } from "./article-grid";
+import { SimpleArticleList } from "./simple-article-list";
 import { EmptyState } from "./empty-state";
 import { LoadingState } from "./loading-state";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import type { BlogPost } from "@/features/blog/types";
 
 // 内联相关类型定义
@@ -30,7 +30,7 @@ interface ArticleModalProps {
   error?: string;
   /** 自定义类名 */
   className?: string;
-  /** 标签点击回调 */
+  /** 标签点击回调 (已弃用，简化版本不显示标签) */
   onTagClick?: (tag: string) => void;
 }
 
@@ -80,7 +80,6 @@ export function ArticleModal({
   isLoading = false,
   error,
   className,
-  onTagClick,
 }: ArticleModalProps) {
   // 处理键盘事件
   useEffect(() => {
@@ -106,12 +105,16 @@ export function ArticleModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         className={cn(
-          // 基础样式 - 改进移动端体验
-          "flex max-h-[95vh] w-[98vw] max-w-[1200px] flex-col overflow-hidden p-0",
-          // 响应式宽度 - 更好的移动端适配
-          "sm:max-h-[90vh] sm:w-[90vw]",
-          "md:max-h-[85vh] md:w-[85vw]",
-          "lg:max-h-[80vh] lg:w-[80vw]",
+          // 覆盖默认的固定宽度，使用动态宽度
+          "w-auto max-w-[95vw] min-w-[320px]",
+          // 基础样式
+          "flex max-h-[95vh] flex-col overflow-hidden p-0",
+          // 响应式最小和最大宽度
+          "sm:max-h-[90vh] sm:max-w-[90vw] sm:min-w-[400px]",
+          "md:max-h-[85vh] md:max-w-[85vw] md:min-w-[500px]",
+          "lg:max-h-[80vh] lg:max-w-[80vw] lg:min-w-[600px]",
+          "xl:max-h-[80vh] xl:max-w-[85vw] xl:min-w-[700px]",
+          "2xl:max-h-[80vh] 2xl:max-w-[80vw] 2xl:min-w-[800px]",
           // 动画效果
           "data-[state=open]:animate-in data-[state=closed]:animate-out",
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -147,11 +150,7 @@ export function ArticleModal({
               description={`${title}暂时没有相关文章`}
             />
           ) : (
-            <ArticleGrid
-              posts={posts}
-              onTagClick={onTagClick}
-              className="gap-3 sm:gap-4"
-            />
+            <SimpleArticleList posts={posts} className="gap-4" />
           )}
         </div>
       </DialogContent>

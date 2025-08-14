@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联面包屑相关类型定义
 interface BreadcrumbItem {

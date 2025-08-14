@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 基础导航项属性

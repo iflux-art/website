@@ -1,10 +1,3 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 /**
  * 创建一个防抖函数
  * @param func 要防抖的函数

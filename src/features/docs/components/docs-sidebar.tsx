@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { ChevronRight, FileText, Folder } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { NavLink } from "@/components/navbar/nav-link";
 import { GlobalDocsStructure, DocCategoryWithDocs } from "./global-docs";

@@ -8,7 +8,7 @@
 
 import { DocsSidebar } from "./docs-sidebar";
 import { useGlobalDocs } from "./use-global-docs";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 export interface DocsSidebarWrapperProps {
   /** 当前打开的文档路径 */

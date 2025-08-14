@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联文章卡片相关类型定义
 interface BlogCardProps {

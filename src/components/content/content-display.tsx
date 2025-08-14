@@ -1,6 +1,6 @@
 import React from "react";
 import { Calendar, Calculator, Clock } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /** 内容显示类型 */
 export type ContentType = "blog" | "docs";

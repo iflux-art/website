@@ -1,27 +1,16 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/utils";
-import dynamic from "next/dynamic";
-
-const LoginDialog = dynamic(
-  () =>
-    import("@/components/login-dialog").then((mod) => ({
-      default: mod.LoginDialog,
-    })),
-  { ssr: false },
-);
+import { cn } from "@/lib/utils";
 
 const COPYRIGHT_TEXT = "保留所有权利。";
 const BRAND_NAME = "iFluxArt";
 
 /**
  * 底栏组件
- * 简洁样式，文字居中，点击iFluxArt弹出登录面板
+ * 简洁样式，文字居中，纯文本显示
  */
 export function Footer() {
-  const [isLoginOpen, setIsLoginOpen] = React.useState(false);
-
   return (
     <footer
       role="contentinfo"
@@ -33,24 +22,9 @@ export function Footer() {
     >
       <div className="container mx-auto flex items-center justify-center">
         <div className="text-center text-sm text-muted-foreground">
-          © 2025{" "}
-          <button
-            onClick={() => setIsLoginOpen(true)}
-            className={cn(
-              "link-hover hover:text-primary",
-              "cursor-pointer transition-colors",
-            )}
-            aria-label="打开登录面板"
-          >
-            {BRAND_NAME}
-          </button>{" "}
-          {COPYRIGHT_TEXT}
+          © 2025 {BRAND_NAME} {COPYRIGHT_TEXT}
         </div>
       </div>
-
-      <LoginDialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-        <span />
-      </LoginDialog>
     </footer>
   );
 }

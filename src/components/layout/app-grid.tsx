@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 通用网格布局组件属性

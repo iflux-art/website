@@ -3,11 +3,12 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SearchDialog } from "@/components/search/search-dialog";
+import { SearchDialog } from "@/features/search";
 
 /**
  * 搜索图标组件
  * 点击后打开搜索对话框
+ * @deprecated 请使用 @/features/search 中的 SearchButton
  */
 export function SearchIcon() {
   const [open, setOpen] = useState(false);

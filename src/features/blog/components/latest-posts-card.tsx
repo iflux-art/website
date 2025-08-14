@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, FileText } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 最新文章类型定义
 export interface LatestPost {

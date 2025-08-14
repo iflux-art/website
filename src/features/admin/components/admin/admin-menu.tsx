@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { ADMIN_MENU_ITEMS } from "@/config/nav-config";
 import { useActiveSection } from "@/hooks/ui/use-active-section";
 import type { LucideIcon } from "lucide-react";

@@ -9,6 +9,7 @@ export { LatestPostsCard } from "./latest-posts-card";
 export { TagCloudCard } from "./tag-cloud-card";
 export { CategoryGrid } from "./category-grid";
 export { TagCloud } from "./tag-cloud";
+export { ArticleModal } from "./article-modal";
 
 // 导出类型
 export type { RelatedPost } from "./related-posts-card";

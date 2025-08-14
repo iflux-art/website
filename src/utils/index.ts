@@ -7,7 +7,8 @@
 export * from "@/utils/helpers";
 
 // ==================== 网站解析工具 ====================
-export * from "@/utils/website-parser";
+// 已迁移到 @/features/website-parser，保持向后兼容
+export * from "@/features/website-parser";
 
 // ==================== 日期格式化工具 ====================
 /**
@@ -37,53 +38,4 @@ export function formatDate(
     .replace("HH", hours)
     .replace("mm", minutes)
     .replace("ss", seconds);
-}
-
-// ==================== 数据验证工具 ====================
-/**
- * 验证登录请求数据
- */
-export function validateLoginRequest(data: unknown): {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-} {
-  if (typeof data !== "object" || data === null) {
-    throw new Error("请求数据格式错误");
-  }
-
-  const { username, password, rememberMe } = data as Record<string, unknown>;
-
-  if (typeof username !== "string" || username.length < 3) {
-    throw new Error("用户名至少需要3个字符");
-  }
-
-  if (typeof password !== "string" || password.length < 6) {
-    throw new Error("密码至少需要6个字符");
-  }
-
-  return {
-    username,
-    password,
-    rememberMe: typeof rememberMe === "boolean" ? rememberMe : false,
-  };
-}
-
-/**
- * 验证刷新令牌请求数据
- */
-export function validateRefreshRequest(data: unknown): {
-  refreshToken: string;
-} {
-  if (typeof data !== "object" || data === null) {
-    throw new Error("请求数据格式错误");
-  }
-
-  const { refreshToken } = data as Record<string, unknown>;
-
-  if (typeof refreshToken !== "string" || refreshToken.length < 10) {
-    throw new Error("refresh token 至少需要10个字符");
-  }
-
-  return { refreshToken };
 }

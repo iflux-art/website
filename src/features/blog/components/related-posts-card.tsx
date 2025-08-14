@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRightLeft, FileText } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 相关文章类型定义
 export interface RelatedPost {

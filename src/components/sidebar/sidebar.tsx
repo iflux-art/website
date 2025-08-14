@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronRight, Folder } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import * as Collapsible from "@radix-ui/react-collapsible";
 
 // 检查是否在客户端环境

@@ -1,7 +1,7 @@
 "use client";
 
 import { Quote } from "lucide-react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 type MDXBlockquoteProps = {
   children: React.ReactNode;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { Text } from "lucide-react";
 import { useHeadingObserver } from "@/hooks/ui/use-heading-observer";
 // ====== 迁移自 src/config/layout.ts ======

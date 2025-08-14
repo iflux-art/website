@@ -2,6 +2,7 @@ import "./globals.css";
 import { MainNavbar } from "@/components/navbar/main-navbar";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";
 
 /**
@@ -22,28 +23,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="zh-CN"
-      // 禁用hydration warning提示 - next-themes要求
-      suppressHydrationWarning
-    >
-      <head></head>
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* 页面主体布局容器 */}
-          <div className="flex min-h-screen flex-col">
-            <MainNavbar className="flex-shrink-0" />
-            {/* 主内容区域 - 自动填充剩余空间 */}
-            <main className="flex-auto">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="zh-CN"
+        // 禁用hydration warning提示 - next-themes要求
+        suppressHydrationWarning
+      >
+        <head></head>
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* 页面主体布局容器 */}
+            <div className="flex min-h-screen flex-col">
+              <MainNavbar className="flex-shrink-0" />
+              {/* 主内容区域 - 自动填充剩余空间 */}
+              <main className="flex-auto">{children}</main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

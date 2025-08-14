@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 /**
  * 中间件缓存配置
@@ -18,7 +18,7 @@ export const MIDDLEWARE_CACHE_CONFIG = {
 } as const;
 
 /**
- * 内容安全策略配置
+ * 内容安全策略配置 - 为 Clerk 优化
  */
 export const CSP_CONFIG = {
   "default-src": ["'self'"],
@@ -27,13 +27,60 @@ export const CSP_CONFIG = {
     "'unsafe-inline'",
     "'unsafe-eval'",
     "https://cdn.jsdelivr.net",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
   ],
-  "style-src": ["'self'", "'unsafe-inline'"],
-  "img-src": ["'self'", "data:", "https:"],
-  "font-src": ["'self'", "data:"],
-  "connect-src": ["'self'", "https:"],
+  "script-src-elem": [
+    "'self'",
+    "'unsafe-inline'",
+    "https://cdn.jsdelivr.net",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
+  ],
+  "style-src": [
+    "'self'",
+    "'unsafe-inline'",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
+  ],
+  "img-src": [
+    "'self'",
+    "data:",
+    "https:",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
+  ],
+  "font-src": [
+    "'self'",
+    "data:",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
+  ],
+  "connect-src": [
+    "'self'",
+    "https:",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://api.clerk.com",
+    "https://js.clerk.com",
+  ],
+  "frame-src": [
+    "'self'",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+    "https://js.clerk.com",
+  ],
   "frame-ancestors": ["'none'"],
-  "form-action": ["'self'"],
+  "form-action": [
+    "'self'",
+    "https://*.clerk.accounts.dev",
+    "https://*.clerk.com",
+  ],
   "base-uri": ["'self'"],
   "upgrade-insecure-requests": [],
 } as const;
@@ -110,22 +157,51 @@ const getCacheControl = (pathname: string): string => {
   return "public, max-age=0, must-revalidate";
 };
 
+// 定义需要保护的路由
+const isProtectedRoute = createRouteMatcher(["/admin(.*)"]);
+
 /**
  * 中间件
  */
-export function middleware(request: NextRequest) {
+export default clerkMiddleware(async (auth, request) => {
   const { pathname } = request.nextUrl;
+
+  // 保护管理员路由
+  if (isProtectedRoute(request)) {
+    await auth.protect();
+  }
+
   const response = NextResponse.next();
 
-  // 设置安全头
-  response.headers.set("Content-Security-Policy", buildCSP(CSP_CONFIG));
+  // 在开发环境中使用更宽松的 CSP，生产环境中使用严格的 CSP
+  const isDevelopment = process.env.NODE_ENV === "development";
+
+  if (isDevelopment) {
+    // 开发环境：更宽松的 CSP 以支持 Clerk
+    response.headers.set(
+      "Content-Security-Policy",
+      "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; " +
+        "script-src-elem 'self' 'unsafe-inline' https: http:; " +
+        "style-src 'self' 'unsafe-inline' https: http:; " +
+        "img-src 'self' data: https: http:; " +
+        "font-src 'self' data: https: http:; " +
+        "connect-src 'self' https: http: ws: wss:; " +
+        "frame-src 'self' https: http:; " +
+        "form-action 'self' https: http:;",
+    );
+  } else {
+    // 生产环境：严格的 CSP
+    response.headers.set("Content-Security-Policy", buildCSP(CSP_CONFIG));
+  }
+
   response.headers.set("Cache-Control", getCacheControl(pathname));
   Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
 
   return response;
-}
+});
 
 export const config = {
   matcher: [

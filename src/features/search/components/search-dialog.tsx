@@ -10,18 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
-
-// 内联搜索相关类型定义
-interface SearchResult {
-  type: "link" | "blog" | "doc" | "tool";
-  title: string;
-  description?: string;
-  url?: string;
-  path?: string;
-  category?: string;
-  tags?: string[];
-  icon?: string;
-}
+import { useSearch } from "../hooks/use-search";
+import type { SearchResult } from "../types";
 
 interface SearchDialogProps {
   open: boolean;
@@ -30,8 +20,7 @@ interface SearchDialogProps {
 
 export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { search, results, isLoading } = useSearch();
 
   // 监听键盘快捷键 (Ctrl+K 或 Command+K)
   useEffect(() => {
@@ -48,27 +37,15 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   useEffect(() => {
     if (!query.trim()) {
-      setResults([]);
       return;
     }
 
     const searchTimeout = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `/api/search?q=${encodeURIComponent(query)}&type=all`,
-        );
-        const data = await response.json();
-        setResults(data.results || []);
-      } catch {
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
+      await search(query);
     }, 300);
 
     return () => clearTimeout(searchTimeout);
-  }, [query]);
+  }, [query, search]);
 
   const handleResultClick = (result: SearchResult) => {
     if (result.url) {
@@ -110,7 +87,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          {loading ? (
+          {isLoading ? (
             <div className="py-8 text-center text-muted-foreground">
               搜索中...
             </div>
