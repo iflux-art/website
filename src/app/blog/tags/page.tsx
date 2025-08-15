@@ -1,7 +1,7 @@
 "use client";
 
 import { TagCloud } from "@/features/blog/components";
-import { ArticleModal } from "@/components/modals/article-modal";
+import { ArticleModal } from "@/features/blog";
 import { useBlogPosts } from "@/features/blog/hooks";
 import { useModal } from "@/hooks/use-modal";
 import { useArticleFilter } from "@/hooks/use-article-filter";
@@ -78,7 +78,6 @@ export default function TagsPage() {
           posts={modalState.posts}
           isLoading={modalState.isLoading}
           error={modalState.error}
-          onTagClick={handleTagClick}
         />
       </div>
     </div>

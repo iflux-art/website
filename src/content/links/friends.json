@@ -211,10 +211,11 @@
     "category": "friends",
     "tags": ["全栈开发", "Next.js"],
     "featured": true,
-    "icon": "https://weijunext.com/favicon.ico",
+    "icon": "",
     "id": "mb6tg8qxbt7cwpfrm1",
     "createdAt": "2025-05-27T17:54:39.561Z",
-    "updatedAt": "2025-05-27T17:54:39.561Z"
+    "updatedAt": "2025-08-15T18:19:58.686Z",
+    "iconType": "text"
   },
   {
     "title": "韩小韩博客",

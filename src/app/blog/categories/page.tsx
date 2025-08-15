@@ -1,7 +1,7 @@
 "use client";
 
 import { CategoryGrid } from "@/features/blog/components";
-import { ArticleModal } from "@/components/modals";
+import { ArticleModal } from "@/features/blog";
 import { useBlogPosts } from "@/features/blog/hooks";
 import { useModal } from "@/hooks/use-modal";
 import { useArticleFilter } from "@/hooks/use-article-filter";
@@ -48,13 +48,7 @@ export default function CategoriesPage() {
     openModal(title, filterResult.posts);
   };
 
-  // 处理标签点击事件（在模态对话框中）
-  const handleTagClick = (_tag: string) => {
-    // 关闭当前模态对话框，可以在这里添加标签页面导航逻辑
-    closeModal();
-    // 这里可以添加导航到标签页面的逻辑
-    // router.push(`/blog/tags?tag=${encodeURIComponent(tag)}`);
-  };
+  // handleTagClick 函数已移除，因为新的 ArticleModal 不再支持标签点击
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,7 +76,6 @@ export default function CategoriesPage() {
           posts={modalState.posts}
           isLoading={modalState.isLoading}
           error={modalState.error}
-          onTagClick={handleTagClick}
         />
       </div>
     </div>

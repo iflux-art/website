@@ -6,10 +6,11 @@
     "category": "profile",
     "tags": ["开发平台", "代码托管"],
     "featured": true,
-    "icon": "https://github.com/favicon.ico",
+    "icon": "",
     "id": "mbdhdhcnmhcvaseymb",
     "createdAt": "2025-06-01T09:50:58.583Z",
-    "updatedAt": "2025-06-03T10:30:20.537Z"
+    "updatedAt": "2025-08-15T18:12:55.390Z",
+    "iconType": "text"
   },
   {
     "title": "CNC",
@@ -30,10 +31,11 @@
     "category": "profile",
     "tags": ["AI平台", "机器学习"],
     "featured": true,
-    "icon": "https://huggingface.co/favicon.ico",
+    "icon": "",
     "id": "mbdhejxr7p3rw93txeu",
     "createdAt": "2025-06-01T09:51:48.591Z",
-    "updatedAt": "2025-06-01T09:51:48.591Z"
+    "updatedAt": "2025-08-15T18:18:28.828Z",
+    "iconType": "text"
   },
   {
     "title": "扣子",
@@ -102,10 +104,11 @@
     "category": "profile",
     "tags": ["技术社区", "开源技术"],
     "featured": false,
-    "icon": "https://static.oschina.net/new-osc/img/favicon.ico",
+    "icon": "",
     "id": "mbdhgr5j82aiwi1pok3",
     "createdAt": "2025-06-01T09:53:31.255Z",
-    "updatedAt": "2025-06-01T09:53:31.255Z"
+    "updatedAt": "2025-08-15T18:13:57.977Z",
+    "iconType": "text"
   },
   {
     "title": "CSDN博客",
@@ -162,10 +165,11 @@
     "category": "profile",
     "tags": ["社交媒体", "兴趣社交"],
     "featured": false,
-    "icon": "https://okjk.co/favicon-32x32.png",
+    "icon": "",
     "id": "mbdhkfbpkkp9iyuxm89",
     "createdAt": "2025-06-01T09:56:22.549Z",
-    "updatedAt": "2025-06-01T09:56:22.549Z"
+    "updatedAt": "2025-08-15T18:15:52.456Z",
+    "iconType": "text"
   },
   {
     "title": "酷安",
@@ -186,10 +190,11 @@
     "category": "profile",
     "tags": ["社交媒体", "国际平台"],
     "featured": true,
-    "icon": "https://x.com/favicon.ico",
+    "icon": "",
     "id": "mbdhlb7xs85fp8qfjcj",
     "createdAt": "2025-06-01T09:57:03.885Z",
-    "updatedAt": "2025-06-01T09:57:03.885Z"
+    "updatedAt": "2025-08-15T18:16:09.368Z",
+    "iconType": "text"
   },
   {
     "title": "Facebook",
@@ -198,10 +203,11 @@
     "category": "profile",
     "tags": ["社交媒体", "国际平台"],
     "featured": false,
-    "icon": "https://www.facebook.com/favicon.ico",
+    "icon": "",
     "id": "mbdhlsqz4t7n9xe1pns",
     "createdAt": "2025-06-01T09:57:26.603Z",
-    "updatedAt": "2025-06-01T09:57:26.603Z"
+    "updatedAt": "2025-08-15T18:16:44.813Z",
+    "iconType": "text"
   },
   {
     "title": "Lofter",
@@ -246,10 +252,11 @@
     "category": "profile",
     "tags": ["内容平台", "自媒体"],
     "featured": false,
-    "icon": "https://www.baidu.com/favicon.ico",
+    "icon": "",
     "id": "mbdhoty2ckob20h5ge5",
     "createdAt": "2025-06-01T09:59:48.122Z",
-    "updatedAt": "2025-06-01T09:59:48.122Z"
+    "updatedAt": "2025-08-15T18:16:54.724Z",
+    "iconType": "text"
   },
   {
     "title": "哔哩哔哩",
@@ -258,10 +265,11 @@
     "category": "profile",
     "tags": ["视频平台", "弹幕视频"],
     "featured": true,
-    "icon": "https://i0.hdslb.com/bfs/static/jinkela/long/images/favicon.ico",
+    "icon": "",
     "id": "mbdhs7v2bmmf50yho2",
     "createdAt": "2025-06-01T10:02:26.126Z",
-    "updatedAt": "2025-06-01T10:02:26.126Z"
+    "updatedAt": "2025-08-15T18:17:03.662Z",
+    "iconType": "text"
   },
   {
     "title": "YouTube",
@@ -270,10 +278,11 @@
     "category": "profile",
     "tags": ["视频平台", "国际平台"],
     "featured": true,
-    "icon": "https://www.youtube.com/favicon.ico",
+    "icon": "",
     "id": "mbdhsznvduik5oawqu",
     "createdAt": "2025-06-01T10:03:02.155Z",
-    "updatedAt": "2025-06-01T10:03:02.155Z"
+    "updatedAt": "2025-08-15T18:18:46.723Z",
+    "iconType": "text"
   },
   {
     "title": "抖音",
@@ -282,10 +291,11 @@
     "category": "profile",
     "tags": ["视频平台", "短视频"],
     "featured": true,
-    "icon": "https://v.douyin.com/favicon.ico",
+    "icon": "",
     "id": "mbdhqqzmc3ozq974env",
     "createdAt": "2025-06-01T10:01:17.602Z",
-    "updatedAt": "2025-06-01T11:52:20.105Z"
+    "updatedAt": "2025-08-15T18:17:11.570Z",
+    "iconType": "text"
   },
   {
     "title": "快手",
@@ -342,10 +352,11 @@
     "category": "profile",
     "tags": ["音乐平台", "AI音乐"],
     "featured": false,
-    "icon": "https://suno.com/favicon.ico",
+    "icon": "",
     "id": "mbdhyghtze1xi9a1l8",
     "createdAt": "2025-06-01T10:07:17.249Z",
-    "updatedAt": "2025-06-01T10:07:17.249Z"
+    "updatedAt": "2025-08-15T18:17:26.537Z",
+    "iconType": "text"
   },
   {
     "title": "Udio",
@@ -366,10 +377,11 @@
     "category": "profile",
     "tags": ["设计平台", "作品展示"],
     "featured": true,
-    "icon": "https://dribbble.com/favicon.ico",
+    "icon": "",
     "id": "mbdhzjltst78p6mhyjk",
     "createdAt": "2025-06-01T10:08:07.937Z",
-    "updatedAt": "2025-06-01T10:08:07.937Z"
+    "updatedAt": "2025-08-15T18:17:34.002Z",
+    "iconType": "text"
   },
   {
     "title": "Figma",
