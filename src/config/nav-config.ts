@@ -21,23 +21,6 @@ export const NAV_ITEMS = [
     key: "blog",
     label: "博客",
     description: "阅读最新的文章，了解行业动态和技术趋势",
-    children: [
-      {
-        key: "articles",
-        label: "文章",
-        description: "浏览所有文章",
-      },
-      {
-        key: "categories",
-        label: "分类",
-        description: "按分类浏览文章",
-      },
-      {
-        key: "tags",
-        label: "标签",
-        description: "通过标签发现相关文章",
-      },
-    ] as const,
   },
   {
     key: "docs",
@@ -99,9 +82,6 @@ const FLAT_NAV_ITEMS = flattenNavItems(NAV_ITEMS);
 
 export const NAV_PATHS: Record<string, string> = {
   blog: "/blog",
-  articles: "/blog",
-  categories: "/blog/categories",
-  tags: "/blog/tags",
   docs: "/docs",
   links: "/links",
   friends: "/friends",

@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // 最新文章类型定义
 export interface LatestPost {
@@ -27,13 +27,13 @@ export function LatestPostsCard({ posts, currentSlug }: LatestPostsCardProps) {
 
   return (
     <Card className="w-full">
-      <CardHeader className="pt-4">
+      <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
           <Clock className="h-3.5 w-3.5 text-primary" />
           最新发布
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-1 pb-4">
+      <CardContent className="pt-0 pb-4">
         {posts.slice(0, 5).map((post) => {
           const isActive = currentPath === post.href;
           return (

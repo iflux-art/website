@@ -34,9 +34,9 @@ export const MDXLink = ({
   const isExternal = external ?? isExternalLink(href);
   const linkClasses = cn(
     "not-prose font-medium text-primary hover:text-primary/80",
-    "relative after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0",
+    "relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0",
     "after:bg-current after:transition-all after:duration-300 after:ease-out",
-    "hover:after:left-0 hover:after:w-full",
+    "hover:after:w-full",
     isExternal && "text-primary",
     className,
   );

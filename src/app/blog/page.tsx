@@ -1,87 +1,181 @@
 "use client";
 
-import { UnifiedFilter } from "@/components/layout/unified-filter";
-import { BlogCard } from "@/features/blog/components";
-import { AppGrid } from "@/components/layout/app-grid";
-import { useFilterState } from "@/hooks/filter/use-filter-state";
-import { useBlogPosts } from "@/features/blog/hooks";
-import { useMemo } from "react";
+import { AppGrid } from "@/features/layout";
+import {
+  BlogListContent,
+  TagCloudCard,
+  BlogCategoryCard,
+  RelatedPostsCard,
+  LatestPostsCard,
+} from "@/features/blog/components";
+import type { CategoryWithCount } from "@/features/blog/hooks";
 import type { BlogPost } from "@/features/blog/types";
-// ====== 迁移自 src/utils/date.ts ======
-/**
- * 格式化日期
- * @param date 日期字符串或Date对象
- * @param format 可选格式 (支持 'MM月dd日')
- * @returns 格式化后的日期字符串
- */
-function formatDate(date: string | Date | undefined, format?: string): string {
-  if (!date) return "";
+import { getAllPosts } from "@/features/blog/hooks";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-  const d = new Date(date);
-  if (isNaN(d.getTime())) return "";
+export default function BlogPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { category, tag } = Object.fromEntries(searchParams.entries());
 
-  if (format === "MM月dd日") {
-    return `${d.getMonth() + 1}月${d.getDate()}日`;
-  }
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        setLoading(true);
+        const data = await getAllPosts();
+        setPosts(data);
+      } catch (error) {
+        console.error("Failed to load posts", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadPosts();
+  }, []);
 
-  return d.toLocaleDateString("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  // 过滤文章
+  const filteredPosts = posts.filter((post) => {
+    if (category && post.category !== category) return false;
+    if (tag && !post.tags?.includes(tag)) return false;
+    return true;
   });
-}
-// ====== END ======
-// 内联 Category 类型定义
-type Category = { id: string; name: string };
 
-function BlogContent() {
-  const { posts, categories: rawCategories } = useBlogPosts();
+  // 分类统计
+  const categoriesCount: Record<string, number> = {};
+  posts.forEach((post) => {
+    if (post.category) {
+      categoriesCount[post.category] =
+        (categoriesCount[post.category] || 0) + 1;
+    }
+  });
+  const categories: CategoryWithCount[] = Object.entries(categoriesCount)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 
-  // 转换分类数据格式
-  const categories = useMemo<Category[]>(
-    () =>
-      rawCategories.map((cat) => ({
-        id: cat,
-        name: cat,
-      })),
-    [rawCategories],
-  );
+  // 标签统计
+  const postsCount: Record<string, number> = {};
+  posts.forEach((post) => {
+    post.tags?.forEach((tag) => {
+      postsCount[tag] = (postsCount[tag] || 0) + 1;
+    });
+  });
 
-  // 使用统一的过滤状态管理 - 只保留分类筛选
-  const {
-    filteredItems: filteredPosts,
-    selectedCategory,
-    handleCategoryChange,
-  } = useFilterState(posts);
+  // 相关文章（取最新的10篇）
+  const relatedPosts = posts.slice(0, 10).map((post) => ({
+    title: post.title,
+    href: `/blog/${post.slug}`,
+    category: post.category,
+  }));
+
+  // 最新发布的文章
+  const latestPosts = posts
+    .filter((post) => post.date)
+    .slice(0, 5)
+    .map((post) => ({
+      title: post.title,
+      href: `/blog/${post.slug}`,
+      date: post.date?.toString(),
+      category: post.category,
+    }));
+
+  // 处理分类/标签点击
+  const handleCategoryClick = (newCategory: string | null) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (newCategory) {
+      newParams.set("category", newCategory);
+    } else {
+      newParams.delete("category");
+    }
+    router.push(`/blog?${newParams.toString()}`, { scroll: false });
+  };
+
+  const handleTagClick = (newTag: string | null) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (newTag) {
+      newParams.set("tag", newTag);
+    } else {
+      newParams.delete("tag");
+    }
+    router.push(`/blog?${newParams.toString()}`, { scroll: false });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto">
+          <AppGrid columns={5} gap="large">
+            {/* 左侧边栏 - 加载状态 */}
+            <aside className="hide-scrollbar sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-1 lg:block">
+              <div className="space-y-4">
+                <div className="h-[200px] animate-pulse rounded-md bg-muted" />
+                <div className="h-[300px] animate-pulse rounded-md bg-muted" />
+              </div>
+            </aside>
+
+            {/* 主内容区 - 加载状态 */}
+            <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
+              <div className="h-[600px] animate-pulse rounded-md bg-muted" />
+            </main>
+
+            {/* 右侧边栏 - 加载状态 */}
+            <aside className="hide-scrollbar sticky top-[80px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-1 lg:block">
+              <div className="space-y-4">
+                <div className="h-[200px] animate-pulse rounded-md bg-muted" />
+                <div className="h-[300px] animate-pulse rounded-md bg-muted" />
+              </div>
+            </aside>
+          </AppGrid>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto py-8">
-        <UnifiedFilter
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-          categoryButtonClassName="rounded-full"
-          className="mb-6"
-        />
+      <div className="container mx-auto">
+        <AppGrid columns={5} gap="large">
+          {/* 左侧边栏 - 分类导航和标签云 (桌面端) */}
+          <aside className="hide-scrollbar sticky top-20 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-1 lg:block">
+            <div className="space-y-4">
+              <BlogCategoryCard
+                categories={categories}
+                selectedCategory={category ?? undefined}
+                onCategoryClick={handleCategoryClick}
+              />
+              <TagCloudCard
+                allTags={Object.entries(postsCount).map(([name, count]) => ({
+                  name,
+                  count,
+                }))}
+                selectedTag={tag ?? undefined}
+                onTagClick={handleTagClick}
+              />
+            </div>
+          </aside>
 
-        <AppGrid columns={4} className="mt-8 gap-6">
-          {filteredPosts.map((post: BlogPost) => (
-            <BlogCard
-              key={post.slug}
-              title={post.title}
-              description={post.description}
-              href={`/blog/${post.slug}`}
-              image={post.image}
-              tags={post.tags}
-              date={formatDate(post.date?.toString())}
-              onTagClick={undefined}
+          {/* 主内容区 - 文章列表 */}
+          <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
+            <BlogListContent
+              posts={filteredPosts}
+              selectedCategory={category}
+              selectedTag={tag}
+              onCategoryClick={handleCategoryClick}
+              onTagClick={handleTagClick}
             />
-          ))}
+          </main>
+
+          {/* 右侧边栏 - 相关文章和最新发布 (桌面端) */}
+          <aside className="hide-scrollbar sticky top-[80px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-1 lg:block">
+            <div className="space-y-4">
+              <RelatedPostsCard posts={relatedPosts} currentSlug={[]} />
+              <LatestPostsCard posts={latestPosts} currentSlug={[]} />
+            </div>
+          </aside>
         </AppGrid>
       </div>
     </div>
   );
 }
-
-export default BlogContent;

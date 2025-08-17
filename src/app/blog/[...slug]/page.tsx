@@ -1,18 +1,19 @@
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/content/breadcrumb";
+import { Breadcrumb } from "@/features/content";
 import { createBlogBreadcrumbs } from "@/features/blog/lib";
-import { ContentDisplay } from "@/components/content/content-display";
+import { ContentDisplay } from "@/features/content";
 import {
   RelatedPostsCard,
   LatestPostsCard,
   TagCloudCard,
+  BlogCategoryCard,
 } from "@/features/blog/components";
-import { TableOfContents } from "@/components/content/table-of-contents";
+import { TableOfContentsCard } from "@/features/content";
 
-import { AppGrid } from "@/components/layout/app-grid";
+import { AppGrid } from "@/features/layout";
 import React from "react";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/comment/twikoo-comment";
+import { TwikooComment } from "@/features/comment";
 
 type BlogFrontmatter = {
   title?: string;
@@ -26,7 +27,7 @@ type BlogFrontmatter = {
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { extractHeadings } from "@/components/content/extract-headings";
+import { extractHeadings } from "@/features/content";
 import { sync as globSync } from "glob";
 
 function scanContentDirectory(options: {
@@ -153,7 +154,8 @@ async function getBlogContent(slug: string[]): Promise<{
     date?: string;
     category?: string;
   }>;
-  allTags: string[];
+  allTags: Array<{ name: string; count: number }>;
+  allCategories: Array<{ name: string; count: number }>;
 }> {
   const filePath = findBlogFile(slug);
   if (!filePath) throw new Error(`Blog not found: ${slug.join("/")}`);
@@ -218,14 +220,30 @@ async function getBlogContent(slug: string[]): Promise<{
       category: item.frontmatter.category,
     }));
 
-  // 获取所有标签
-  const allTags = Array.from(
-    new Set(
-      allMeta
-        .flatMap((item) => item.frontmatter.tags || [])
-        .filter((tag): tag is string => Boolean(tag)),
-    ),
-  ).sort();
+  // 获取所有标签及其计数
+  const tagCounts: Record<string, number> = {};
+  allMeta.forEach((item) => {
+    item.frontmatter.tags?.forEach((tag) => {
+      if (tag) {
+        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+      }
+    });
+  });
+  const allTags = Object.entries(tagCounts)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+
+  // 获取所有分类及其计数
+  const categoryCounts: Record<string, number> = {};
+  allMeta.forEach((item) => {
+    if (item.frontmatter.category) {
+      categoryCounts[item.frontmatter.category] =
+        (categoryCounts[item.frontmatter.category] || 0) + 1;
+    }
+  });
+  const allCategories = Object.entries(categoryCounts)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 
   return {
     slug,
@@ -236,6 +254,7 @@ async function getBlogContent(slug: string[]): Promise<{
     relatedPosts,
     latestPosts,
     allTags,
+    allCategories,
   };
 }
 
@@ -261,6 +280,7 @@ export default async function BlogPostPage({
       relatedPosts,
       latestPosts,
       allTags,
+      allCategories,
     } = await getBlogContent(resolvedParams.slug);
     const title = frontmatter.title || slug.join("/");
     const date = frontmatter.date
@@ -274,20 +294,18 @@ export default async function BlogPostPage({
       <div className="min-h-screen bg-background">
         <div className="container mx-auto">
           <AppGrid columns={5} gap="large">
-            {/* 左侧边栏 - 最新发布、相关文章和标签云 */}
+            {/* 左侧边栏 - 分类导航和标签云 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
               <div className="space-y-4">
-                <LatestPostsCard
-                  posts={latestPosts}
-                  currentSlug={slug.slice(1)}
-                />
-                <RelatedPostsCard
-                  posts={relatedPosts}
-                  currentSlug={slug.slice(1)}
+                <BlogCategoryCard
+                  categories={allCategories}
+                  selectedCategory={frontmatter.category}
+                  enableRouting={true}
                 />
                 <TagCloudCard
                   allTags={allTags}
-                  currentTags={frontmatter.tags || []}
+                  selectedTag={undefined}
+                  useDefaultRouting={true}
                 />
               </div>
             </aside>
@@ -313,14 +331,19 @@ export default async function BlogPostPage({
               <TwikooComment />
             </main>
 
-            {/* 右侧边栏 - TOC */}
-            <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-hidden xl:block">
-              <TableOfContents
-                headings={headings}
-                adaptive={true}
-                adaptiveOffset={80}
-                className="prose-sm"
-              />
+            {/* 右侧边栏 - TOC、相关文章和最新发布 */}
+            <aside className="hide-scrollbar sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto xl:block">
+              <div className="space-y-4">
+                <TableOfContentsCard headings={headings} className="prose-sm" />
+                <RelatedPostsCard
+                  posts={relatedPosts}
+                  currentSlug={slug.slice(1)}
+                />
+                <LatestPostsCard
+                  posts={latestPosts}
+                  currentSlug={slug.slice(1)}
+                />
+              </div>
             </aside>
           </AppGrid>
         </div>

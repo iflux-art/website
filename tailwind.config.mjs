@@ -22,9 +22,33 @@ const config = {
   safelist: [
     // 布局相关
     'grid-cols-1',
+    'sm:grid-cols-2',
     'md:grid-cols-2',
+    'lg:grid-cols-1',
+    'lg:grid-cols-2',
     'lg:grid-cols-3',
     'lg:grid-cols-4',
+    'xl:grid-cols-2',
+    'xl:grid-cols-3',
+    'xl:grid-cols-5',
+    '2xl:grid-cols-3',
+    // 响应式间距
+    'gap-3',
+    'gap-4',
+    'sm:gap-4',
+    'sm:gap-6',
+    // 触摸优化
+    'touch-manipulation',
+    'min-h-[44px]',
+    'min-h-[32px]',
+    'min-h-[36px]',
+    'min-h-[24px]',
+    'min-h-[28px]',
+    'min-h-[20px]',
+    // 响应式高度
+    'min-h-[280px]',
+    'sm:min-h-[320px]',
+    'md:min-h-[360px]',
   ],
 
   theme: {

@@ -1,9 +1,9 @@
 import React from "react";
-import { AppGrid } from "@/components/layout/app-grid";
+import { AppGrid } from "@/features/layout";
 import { LinkCard } from "@/features/links/components";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TwikooComment } from "@/components/comment/twikoo-comment";
+import { TwikooComment } from "@/features/comment";
 import { LinksItem } from "@/features/links/types";
 import friendsData from "@/content/links/friends.json";
 import {

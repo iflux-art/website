@@ -6,8 +6,6 @@ export { useNavbarScroll } from "./ui/use-navbar-scroll";
 
 // State hooks
 export { useSafeNavbar } from "./navbar-state";
-export { useSafeSearch } from "./search-state";
-export { useSafeTheme } from "./theme-state";
 
 // Filter hooks
 export { useFilterState } from "./filter/use-filter-state";
@@ -24,3 +22,4 @@ export { useModal } from "./use-modal";
 export { useModalWithFilter } from "./use-modal-with-filter";
 export { useModalErrorHandler } from "./use-modal-error-handler";
 export { useArticleFilter } from "./use-article-filter";
+export { useArticleFilterState } from "./use-article-filter-state";

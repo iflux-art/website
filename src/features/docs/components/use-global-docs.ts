@@ -26,6 +26,18 @@ export interface UseGlobalDocsResult {
  *
  * @returns 全局文档结构和加载状态
  */
+// Cache object to store the global docs structure
+let globalDocsCache: {
+  data: GlobalDocsStructure | null;
+  timestamp: number;
+} = {
+  data: null,
+  timestamp: 0,
+};
+
+// Cache validity period (5 minutes)
+const CACHE_VALIDITY_MS = 5 * 60 * 1000;
+
 export function useGlobalDocs(): UseGlobalDocsResult {
   const [structure, setStructure] = useState<GlobalDocsStructure | null>(null);
   const [loading, setLoading] = useState(true);
@@ -35,6 +47,17 @@ export function useGlobalDocs(): UseGlobalDocsResult {
     try {
       setLoading(true);
       setError(null);
+
+      // Check cache validity
+      const now = Date.now();
+      if (
+        globalDocsCache.data &&
+        now - globalDocsCache.timestamp < CACHE_VALIDITY_MS
+      ) {
+        setStructure(globalDocsCache.data);
+        setLoading(false);
+        return;
+      }
 
       const response = await fetch("/api/docs/global-structure");
 
@@ -46,6 +69,12 @@ export function useGlobalDocs(): UseGlobalDocsResult {
 
       const data = await response.json();
       setStructure(data);
+
+      // Update cache
+      globalDocsCache = {
+        data,
+        timestamp: Date.now(),
+      };
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Unknown error occurred";

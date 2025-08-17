@@ -1,0 +1,232 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Text } from "lucide-react";
+import { useHeadingObserver } from "@/hooks/ui/use-heading-observer";
+
+// ====== 迁移自 src/config/layout.ts ======
+/**
+ * 页面顶部固定导航栏的高度
+ */
+const NAVBAR_HEIGHT = 80;
+/**
+ * 滚动偏移量，用于锚点定位时避免被导航栏遮挡
+ */
+const SCROLL_OFFSET = NAVBAR_HEIGHT;
+// ====== END ======
+
+// ====== 迁移自 src/utils/dom.ts ======
+/**
+ * 平滑滚动到指定元素
+ * @param elementId 目标元素ID
+ * @param offset 偏移量（默认为0）
+ * @param updateHash 是否更新URL hash（默认为false）
+ */
+function scrollToElement(
+  elementId: string,
+  offset: number = 0,
+  updateHash: boolean = false,
+): void {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.scrollY - offset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth",
+  });
+
+  // 仅在需要时更新 URL hash
+  if (updateHash) {
+    history.pushState(null, "", `#${elementId}`);
+  }
+}
+// ====== END ======
+
+// 内联 TocHeading、TocProps 类型定义
+export interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export interface TableOfContentsCardProps {
+  headings: TocHeading[];
+  className?: string;
+  title?: string;
+}
+
+/**
+ * 目录卡片组件
+ *
+ * 以卡片形式显示文档的目录结构，支持点击导航和滚动高亮
+ * 样式与其他侧边栏卡片保持一致
+ */
+export function TableOfContentsCard({
+  headings,
+  className,
+  title = "目录",
+}: TableOfContentsCardProps) {
+  const tocRef = useRef<HTMLDivElement>(null);
+
+  // 使用自定义 hook 处理标题观察
+  const activeId = useHeadingObserver(headings);
+
+  // 如果没有标题，不渲染目录组件
+  if (headings.length === 0) {
+    return null;
+  }
+
+  // 自动滚动目录到当前活动标题
+  useEffect(() => {
+    let timeoutId: number;
+
+    const handleScroll = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = window.setTimeout(() => {
+        if (activeId && tocRef.current) {
+          const activeElement = tocRef.current.querySelector(
+            `a[href="#${activeId}"]`,
+          );
+          if (activeElement) {
+            const containerRect = tocRef.current.getBoundingClientRect();
+            const activeRect = activeElement.getBoundingClientRect();
+
+            const isInView =
+              activeRect.top >= containerRect.top &&
+              activeRect.bottom <= containerRect.bottom;
+
+            if (!isInView) {
+              const scrollTop =
+                activeRect.top -
+                containerRect.top -
+                containerRect.height / 2 +
+                activeRect.height / 2;
+              tocRef.current.scrollTo({
+                top: tocRef.current.scrollTop + scrollTop,
+                behavior: "smooth",
+              });
+            }
+          }
+        }
+      }, 150);
+    };
+
+    handleScroll();
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [activeId, tocRef]);
+
+  // 过滤掉h1标题，只显示h2-h4
+  const filteredHeadings = headings.filter(
+    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4,
+  );
+
+  // 根据标题级别对目录进行分组和嵌套
+  const organizeHeadings = (headings: TocHeading[]) => {
+    // 确保标题ID唯一性
+    return headings.map((heading, index) => {
+      // 如果ID为空或者不存在，生成一个基于文本的ID
+      if (!heading.id) {
+        heading.id = `heading-${heading.text
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "")}-${index}`;
+      }
+      return heading;
+    });
+  };
+
+  // 如果过滤后没有标题，返回null，不显示任何内容
+  if (filteredHeadings.length === 0) {
+    return null;
+  }
+
+  const organizedHeadings = organizeHeadings(filteredHeadings);
+
+  return (
+    <Card className={cn("w-full", className)}>
+      <CardHeader className="pt-4 pb-2">
+        <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
+          <Text className="h-3.5 w-3.5 text-primary" />
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="pt-0 pb-4">
+        <div
+          ref={tocRef}
+          className="hide-scrollbar max-h-[400px] overflow-y-auto"
+        >
+          <div className="relative">
+            {/* 左侧细线 */}
+            <div className="absolute top-0 bottom-0 left-2 w-px bg-border" />
+
+            <div className="space-y-1">
+              {organizedHeadings.map((heading, index) => {
+                // 计算缩进，根据标题级别
+                const indent = (heading.level - 2) * 0.75;
+                const isActive = activeId === heading.id;
+
+                // 根据标题级别设置不同的样式
+                const headingSize =
+                  {
+                    2: "font-medium",
+                    3: "font-normal",
+                    4: "text-xs",
+                  }[heading.level] || "";
+
+                return (
+                  <div key={index} className="relative">
+                    {/* 选中状态的粗线 */}
+                    {isActive && (
+                      <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary" />
+                    )}
+
+                    <a
+                      href={`#${heading.id}`}
+                      className={cn(
+                        "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
+                        headingSize,
+                        // 普通文本
+                        "text-muted-foreground",
+                        // hover 状态
+                        "hover:text-foreground",
+                        // active 状态
+                        isActive && "font-medium text-foreground",
+                        "w-full",
+                      )}
+                      style={{
+                        paddingLeft:
+                          heading.level > 2
+                            ? `calc(${indent}rem + 1rem)`
+                            : "1rem",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToElement(heading.id, SCROLL_OFFSET);
+                      }}
+                    >
+                      <span className="overflow-wrap-anywhere block w-full text-left leading-relaxed break-words hyphens-auto whitespace-normal">
+                        {heading.text}
+                      </span>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

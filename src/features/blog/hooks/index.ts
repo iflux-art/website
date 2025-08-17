@@ -22,10 +22,15 @@ export interface BlogResult<T> extends HookResult<T> {
   error: Error | null;
 }
 
+export interface CategoryWithCount {
+  name: string;
+  count: number;
+}
+
 export interface UseBlogPostsResult extends BlogResult<BlogPost[]> {
   posts: BlogPost[];
   postsCount: Record<string, number>;
-  categories: string[];
+  categories: CategoryWithCount[];
 }
 
 export interface UseTimelinePostsResult
@@ -53,7 +58,7 @@ function sortPostsByDate(posts: BlogPost[] | null | undefined) {
 export function useBlogPosts(): UseBlogPostsResult {
   const {
     data: posts,
-    loading,
+    loading: dataLoading,
     error,
     refresh,
   } = useContentData<BlogPost[]>({
@@ -63,11 +68,15 @@ export function useBlogPosts(): UseBlogPostsResult {
 
   const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);
 
-  const { postsCount, categories } = useMemo(() => {
+  const { postsCount, categories, isComputing } = useMemo(() => {
     const postsCount: Record<string, number> = {};
-    const categoriesSet = new Set<string>();
+    const categoriesCount: Record<string, number> = {};
 
-    sortedPosts?.forEach((post) => {
+    if (!sortedPosts) {
+      return { postsCount: {}, categories: [], isComputing: true };
+    }
+
+    sortedPosts.forEach((post) => {
       // 处理标签统计
       post.tags?.forEach((tag) => {
         postsCount[tag] = (postsCount[tag] || 0) + 1;
@@ -75,15 +84,24 @@ export function useBlogPosts(): UseBlogPostsResult {
 
       // 处理分类统计
       if (post.category) {
-        categoriesSet.add(post.category);
+        categoriesCount[post.category] =
+          (categoriesCount[post.category] || 0) + 1;
       }
     });
 
+    // 转换为带计数的分类数组
+    const categories: CategoryWithCount[] = Object.entries(categoriesCount)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+
     return {
       postsCount,
-      categories: Array.from(categoriesSet),
+      categories,
+      isComputing: false,
     };
   }, [sortedPosts]);
+
+  const loading = dataLoading || isComputing;
 
   return {
     data: sortedPosts,

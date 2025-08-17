@@ -22,7 +22,9 @@ export interface DocsSidebarWrapperProps {
  *
  * 负责获取全局文档结构数据并渲染侧边栏
  */
-export function DocsSidebarWrapper({
+import { memo } from "react";
+
+function DocsSidebarWrapperComponent({
   currentDoc,
   className,
 }: DocsSidebarWrapperProps) {
@@ -81,3 +83,18 @@ export function DocsSidebarWrapper({
     />
   );
 }
+
+const arePropsEqual = (
+  prevProps: DocsSidebarWrapperProps,
+  nextProps: DocsSidebarWrapperProps,
+) => {
+  return (
+    prevProps.currentDoc === nextProps.currentDoc &&
+    prevProps.className === nextProps.className
+  );
+};
+
+export const DocsSidebarWrapper = memo(
+  DocsSidebarWrapperComponent,
+  arePropsEqual,
+);

@@ -12,11 +12,12 @@ export type {
 
 export type {
   URL,
-  BreadcrumbItem,
   BaseComponentProps,
   ClickableProps,
   FormComponentProps,
 } from "@/types/base-types";
+
+export type { BreadcrumbItem } from "@/features/content/types";
 
 // 业务类型重新导出（保持向后兼容）
 export type { BlogPost, TagCount, RelatedPost } from "@/features/blog/types";

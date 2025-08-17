@@ -1,6 +1,6 @@
 import "./globals.css";
-import { MainNavbar } from "@/components/navbar/main-navbar";
-import { Footer } from "@/components/layout/footer";
+import { MainNavbar } from "@/features/navigation";
+import { Footer } from "@/features/layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";

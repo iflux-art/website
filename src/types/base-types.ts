@@ -62,13 +62,3 @@ export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 /** 非空类型 */
 export type NonNullable<T> = T extends null | undefined ? never : T;
-
-// ==================== 导航相关类型 ====================
-
-/** 面包屑导航项 */
-export interface BreadcrumbItem {
-  /** 显示的标签文本 */
-  label: string;
-  /** 链接地址，如果不提供则显示为纯文本 */
-  href?: string;
-}

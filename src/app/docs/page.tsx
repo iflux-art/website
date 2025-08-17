@@ -2,22 +2,21 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllDocsStructure } from "@/features/docs/components";
-import { Breadcrumb } from "@/components/content/breadcrumb";
+import { Breadcrumb } from "@/features/content";
 import { createDocBreadcrumbsServer } from "@/features/docs/lib";
-import { ContentDisplay } from "@/components/content/content-display";
-import { DocPagination } from "@/components/content/pagination";
+import { ContentDisplay, DocPagination } from "@/features/content";
 import { DocsSidebarWrapper } from "@/features/docs/components";
-import { TableOfContents } from "@/components/content/table-of-contents";
-import { AppGrid } from "@/components/layout/app-grid";
+import { TableOfContentsCard } from "@/features/content";
+import { AppGrid } from "@/features/layout";
 import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/components/comment/twikoo-comment";
+import { TwikooComment } from "@/features/comment";
 
 // 导入文档处理函数
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { getFlattenedDocsOrder } from "@/features/docs/lib";
-import { extractHeadings } from "@/components/content/extract-headings";
+import { extractHeadings } from "@/features/content";
 import type { DocContentResult } from "@/features/docs/types";
 
 // 文档内容处理函数
@@ -209,7 +208,9 @@ export default async function DocsPage() {
           <AppGrid columns={5} gap="large">
             {/* 左侧边栏 - 全局文档导航 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
-              <DocsSidebarWrapper currentDoc={structure.firstDocPath} />
+              <div className="space-y-4">
+                <DocsSidebarWrapper currentDoc={structure.firstDocPath} />
+              </div>
             </aside>
 
             {/* 主内容区 - 占3列 */}
@@ -230,13 +231,13 @@ export default async function DocsPage() {
             </main>
 
             {/* 右侧边栏 - TOC */}
-            <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-hidden xl:block">
-              <TableOfContents
-                headings={doc.headings}
-                adaptive={true}
-                adaptiveOffset={80}
-                className="prose-sm"
-              />
+            <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto xl:block">
+              <div className="space-y-4">
+                <TableOfContentsCard
+                  headings={doc.headings}
+                  className="prose-sm"
+                />
+              </div>
             </aside>
           </AppGrid>
         </div>
