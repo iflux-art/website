@@ -1,6 +1,15 @@
 /**
  * 基础类型定义
- * 包含基础值类型、组件类型和工具类型
+ *
+ * 包含基础值类型和组件类型，为整个应用提供通用的类型定义。
+ * 这些类型被广泛用于组件开发和数据处理中。
+ *
+ * 类型分类：
+ * - 基础值类型：URL、Color 等
+ * - 基础组件类型：BaseComponentProps、ClickableProps 等
+ *
+ * @author 系统重构
+ * @since 2024
  */
 
 import type { ReactNode, CSSProperties } from "react";
@@ -46,19 +55,3 @@ export interface FormComponentProps extends BaseComponentProps {
   /** 占位符文本 */
   placeholder?: string;
 }
-
-// ==================== 工具类型 ====================
-
-/** 深度只读类型 */
-export type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
-};
-
-/** 可选字段类型 */
-export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-
-/** 必需字段类型 */
-export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
-
-/** 非空类型 */
-export type NonNullable<T> = T extends null | undefined ? never : T;

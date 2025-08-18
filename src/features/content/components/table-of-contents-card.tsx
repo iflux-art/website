@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Text } from "lucide-react";
-import { useHeadingObserver } from "@/hooks/ui/use-heading-observer";
+import { useHeadingObserver } from "@/features/content/hooks/use-heading-observer";
 
 // ====== 迁移自 src/config/layout.ts ======
 /**

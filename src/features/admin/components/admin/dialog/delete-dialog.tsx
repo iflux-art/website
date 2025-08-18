@@ -9,14 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
-// 内联 DeleteDialogProps 类型定义
-interface DeleteDialogProps {
-  item: any;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (id: string) => void;
-  onError: (msg?: string) => void;
-}
+import type { DeleteDialogProps } from "@/features/admin/types";
 
 export function DeleteDialog({
   item,

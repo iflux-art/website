@@ -200,4 +200,4 @@ export type {
   JsonLdConfig,
   SocialConfig,
   GenerateMetadataOptions,
-} from "@/types/metadata-types";
+} from "@/types";

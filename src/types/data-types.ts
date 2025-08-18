@@ -1,9 +1,19 @@
 /**
  * 内容基础类型定义
- * 包含内容、分类等基础类型
+ *
+ * 包含内容、分类等基础类型，为整个应用的内容管理提供统一的类型定义。
+ * 这些类型被多个功能模块共享使用，确保数据结构的一致性。
+ *
+ * 主要类型：
+ * - BaseFrontmatter: 文档前置元数据
+ * - BaseContent: 基础内容接口
+ * - BaseCategory: 基础分类接口
+ *
+ * @author 系统重构
+ * @since 2024
  */
 
-import type { URL } from "@/types/base-types";
+import type { URL } from "@/types";
 
 /** 基础 Frontmatter 类型 */
 export interface BaseFrontmatter {

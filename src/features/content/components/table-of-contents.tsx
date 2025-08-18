@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Text } from "lucide-react";
-import { useHeadingObserver } from "@/hooks/ui/use-heading-observer";
+import { useHeadingObserver } from "@/features/content/hooks/use-heading-observer";
 // ====== 迁移自 src/config/layout.ts ======
 /**
  * 页面顶部固定导航栏的高度

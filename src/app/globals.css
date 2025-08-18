@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* 响应式设计系统样式 */
+@import "../styles/responsive.css";
+
 @custom-variant dark (&:is(.dark *));
 /**
  * CSS 变量定义 - 按功能分组

@@ -6,24 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinksForm } from "@/features/links/components";
-// 内联 LinksFormData 类型定义
-interface LinksFormData {
-  title: string;
-  description: string;
-  url: string;
-  icon: string;
-  iconType: "image" | "text";
-  tags: string[];
-  featured: boolean;
-  category: string;
-}
-// 内联 AddDialogProps 类型定义
-interface AddDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (item: any) => void;
-  onError: (msg?: string) => void;
-}
+import type { LinksFormData, AddDialogProps } from "@/features/admin/types";
 
 export function AddDialog({
   open,

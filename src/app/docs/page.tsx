@@ -1,8 +1,6 @@
-import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllDocsStructure } from "@/features/docs/components";
-import { Breadcrumb } from "@/features/content";
 import { createDocBreadcrumbsServer } from "@/features/docs/lib";
 import { ContentDisplay, DocPagination } from "@/features/content";
 import { DocsSidebarWrapper } from "@/features/docs/components";
@@ -215,14 +213,12 @@ export default async function DocsPage() {
 
             {/* 主内容区 - 占3列 */}
             <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
-              <div className="mb-6">
-                <Breadcrumb items={breadcrumbs} />
-              </div>
               <ContentDisplay
                 contentType="docs"
                 title={doc.frontmatter.title}
                 date={doc.date}
                 wordCount={doc.wordCount}
+                breadcrumbs={breadcrumbs}
               >
                 <ClientMDXRenderer content={doc.content} />
               </ContentDisplay>

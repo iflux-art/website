@@ -8,7 +8,7 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@/components/ui/collapsible";
-import { NavLink } from "@/features/navigation";
+import { NavLink } from "@/features/layout/navbar/components/nav-link";
 import { GlobalDocsStructure, DocCategoryWithDocs } from "./global-docs";
 import { SidebarItem } from "@/features/docs/types";
 

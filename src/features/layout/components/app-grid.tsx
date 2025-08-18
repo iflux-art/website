@@ -2,33 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-
-/**
- * 通用网格布局组件属性
- */
-export interface AppGridProps {
-  /**
-   * 子元素
-   */
-  children?: React.ReactNode;
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 列数
-   * @default 3
-   */
-  columns?: 1 | 2 | 3 | 4 | 5;
-
-  /**
-   * 网格间距
-   * @default "default"
-   */
-  gap?: "small" | "default" | "large";
-}
+import type { AppGridProps } from "../types";
 
 /**
  * 通用网格布局组件

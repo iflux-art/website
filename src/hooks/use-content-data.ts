@@ -1,8 +1,24 @@
+/**
+ * 内容数据获取 Hook
+ *
+ * 提供统一的内容数据获取接口，支持缓存和加载状态管理。
+ * 该 Hook 已从功能模块提升到全局共享目录，供多个功能模块使用。
+ *
+ * 特性：
+ * - 自动缓存管理
+ * - 加载状态跟踪
+ * - 错误处理
+ * - 路径感知的数据获取
+ *
+ * @author 系统重构
+ * @since 2024
+ */
+
 "use client";
 
 import { usePathname } from "next/navigation";
-import { BaseContent, BaseCategory } from "@/types/data-types";
-import { useCache } from "@/hooks/cache";
+import { BaseContent, BaseCategory } from "@/types";
+import { useCache } from "@/hooks/use-cache";
 
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
 
@@ -39,8 +55,17 @@ const pendingRequests = new Map<string, Promise<unknown>>();
 /**
  * 通用内容数据获取钩子
  *
- * @param options 配置选项
- * @returns 数据、加载状态和错误信息
+ * @template T - 返回数据的类型
+ * @param options - 配置选项
+ * @param options.type - 内容类型
+ * @param options.path - 内容路径
+ * @param options.url - 请求 URL
+ * @param options.category - 内容分类
+ * @param options.cacheTime - 缓存时间（毫秒）
+ * @param options.disableCache - 是否禁用缓存
+ * @param options.params - 请求参数
+ * @param options.headers - 请求头
+ * @returns 包含数据、加载状态和错误信息的对象
  */
 export function useContentData<T>({
   type,

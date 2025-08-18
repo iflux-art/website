@@ -1,0 +1,492 @@
+/**
+ * 响应式设计系统CSS变量和工具类
+ * 提供CSS自定义属性和响应式工具类
+ */
+
+:root {
+  /* 断点变量 */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet-min: 769px;
+  --breakpoint-tablet-max: 1024px;
+  --breakpoint-desktop-min: 1025px;
+  --breakpoint-desktop-max: 1440px;
+  --breakpoint-large: 1441px;
+  
+  /* 移动端间距变量 */
+  --spacing-mobile-xs: 0.5rem;   /* 8px */
+  --spacing-mobile-sm: 0.75rem;  /* 12px */
+  --spacing-mobile-md: 1rem;     /* 16px */
+  --spacing-mobile-lg: 1.5rem;   /* 24px */
+  --spacing-mobile-xl: 2rem;     /* 32px */
+  
+  /* 平板端间距变量 */
+  --spacing-tablet-xs: 0.75rem;  /* 12px */
+  --spacing-tablet-sm: 1rem;     /* 16px */
+  --spacing-tablet-md: 1.5rem;   /* 24px */
+  --spacing-tablet-lg: 2rem;     /* 32px */
+  --spacing-tablet-xl: 3rem;     /* 48px */
+  
+  /* 桌面端间距变量 */
+  --spacing-desktop-xs: 1rem;    /* 16px */
+  --spacing-desktop-sm: 1.5rem;  /* 24px */
+  --spacing-desktop-md: 2rem;    /* 32px */
+  --spacing-desktop-lg: 3rem;    /* 48px */
+  --spacing-desktop-xl: 4rem;    /* 64px */
+  
+  /* 大屏间距变量 */
+  --spacing-large-xs: 1.5rem;    /* 24px */
+  --spacing-large-sm: 2rem;      /* 32px */
+  --spacing-large-md: 3rem;      /* 48px */
+  --spacing-large-lg: 4rem;      /* 64px */
+  --spacing-large-xl: 6rem;      /* 96px */
+  
+  /* 触摸目标尺寸 */
+  --touch-target-small: 44px;    /* WCAG AA标准 */
+  --touch-target-medium: 48px;   /* 推荐尺寸 */
+  --touch-target-large: 56px;    /* 大触摸目标 */
+  
+  /* 容器最大宽度 */
+  --container-mobile: 100%;
+  --container-tablet: 100%;
+  --container-desktop: 1200px;
+  --container-large: 1400px;
+  
+  /* 响应式字体大小 */
+  --font-mobile-xs: 0.75rem;     /* 12px */
+  --font-mobile-sm: 0.875rem;    /* 14px */
+  --font-mobile-base: 1rem;      /* 16px */
+  --font-mobile-lg: 1.125rem;    /* 18px */
+  --font-mobile-xl: 1.25rem;     /* 20px */
+  --font-mobile-2xl: 1.5rem;     /* 24px */
+  --font-mobile-3xl: 1.875rem;   /* 30px */
+  --font-mobile-4xl: 2.25rem;    /* 36px */
+  
+  --font-tablet-xs: 0.875rem;    /* 14px */
+  --font-tablet-sm: 1rem;        /* 16px */
+  --font-tablet-base: 1.125rem;  /* 18px */
+  --font-tablet-lg: 1.25rem;     /* 20px */
+  --font-tablet-xl: 1.5rem;      /* 24px */
+  --font-tablet-2xl: 1.875rem;   /* 30px */
+  --font-tablet-3xl: 2.25rem;    /* 36px */
+  --font-tablet-4xl: 3rem;       /* 48px */
+  
+  --font-desktop-xs: 0.875rem;   /* 14px */
+  --font-desktop-sm: 1rem;       /* 16px */
+  --font-desktop-base: 1.125rem; /* 18px */
+  --font-desktop-lg: 1.25rem;    /* 20px */
+  --font-desktop-xl: 1.5rem;     /* 24px */
+  --font-desktop-2xl: 1.875rem;  /* 30px */
+  --font-desktop-3xl: 2.25rem;   /* 36px */
+  --font-desktop-4xl: 3rem;      /* 48px */
+  
+  --font-large-xs: 1rem;         /* 16px */
+  --font-large-sm: 1.125rem;     /* 18px */
+  --font-large-base: 1.25rem;    /* 20px */
+  --font-large-lg: 1.5rem;       /* 24px */
+  --font-large-xl: 1.875rem;     /* 30px */
+  --font-large-2xl: 2.25rem;     /* 36px */
+  --font-large-3xl: 3rem;        /* 48px */
+  --font-large-4xl: 3.75rem;     /* 60px */
+}
+
+/* 响应式工具类 */
+
+/* 触摸优化类 */
+.touch-optimized {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-target-small {
+  min-height: var(--touch-target-small);
+  min-width: var(--touch-target-small);
+}
+
+.touch-target-medium {
+  min-height: var(--touch-target-medium);
+  min-width: var(--touch-target-medium);
+}
+
+.touch-target-large {
+  min-height: var(--touch-target-large);
+  min-width: var(--touch-target-large);
+}
+
+/* 响应式容器类 */
+.container-responsive {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-mobile-md);
+  padding-right: var(--spacing-mobile-md);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container-responsive {
+    padding-left: var(--spacing-tablet-md);
+    padding-right: var(--spacing-tablet-md);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .container-responsive {
+    max-width: var(--container-desktop);
+    padding-left: var(--spacing-desktop-md);
+    padding-right: var(--spacing-desktop-md);
+  }
+}
+
+@media (min-width: 1441px) {
+  .container-responsive {
+    max-width: var(--container-large);
+    padding-left: var(--spacing-large-md);
+    padding-right: var(--spacing-large-md);
+  }
+}
+
+/* 响应式文字类 */
+.text-responsive-heading {
+  font-size: var(--font-mobile-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .text-responsive-heading {
+    font-size: var(--font-tablet-2xl);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .text-responsive-heading {
+    font-size: var(--font-desktop-2xl);
+  }
+}
+
+@media (min-width: 1441px) {
+  .text-responsive-heading {
+    font-size: var(--font-large-2xl);
+  }
+}
+
+.text-responsive-body {
+  font-size: var(--font-mobile-base);
+  line-height: 1.6;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .text-responsive-body {
+    font-size: var(--font-tablet-base);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .text-responsive-body {
+    font-size: var(--font-desktop-base);
+  }
+}
+
+@media (min-width: 1441px) {
+  .text-responsive-body {
+    font-size: var(--font-large-base);
+  }
+}
+
+/* 响应式网格类 */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--spacing-mobile-md);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-tablet-md);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .grid-responsive {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-desktop-md);
+  }
+}
+
+@media (min-width: 1441px) {
+  .grid-responsive {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--spacing-large-md);
+  }
+}
+
+/* 响应式间距类 */
+.spacing-responsive-sm {
+  padding: var(--spacing-mobile-sm);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spacing-responsive-sm {
+    padding: var(--spacing-tablet-sm);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .spacing-responsive-sm {
+    padding: var(--spacing-desktop-sm);
+  }
+}
+
+@media (min-width: 1441px) {
+  .spacing-responsive-sm {
+    padding: var(--spacing-large-sm);
+  }
+}
+
+.spacing-responsive-md {
+  padding: var(--spacing-mobile-md);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spacing-responsive-md {
+    padding: var(--spacing-tablet-md);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .spacing-responsive-md {
+    padding: var(--spacing-desktop-md);
+  }
+}
+
+@media (min-width: 1441px) {
+  .spacing-responsive-md {
+    padding: var(--spacing-large-md);
+  }
+}
+
+.spacing-responsive-lg {
+  padding: var(--spacing-mobile-lg);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spacing-responsive-lg {
+    padding: var(--spacing-tablet-lg);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .spacing-responsive-lg {
+    padding: var(--spacing-desktop-lg);
+  }
+}
+
+@media (min-width: 1441px) {
+  .spacing-responsive-lg {
+    padding: var(--spacing-large-lg);
+  }
+}
+
+/* 交互能力相关类 */
+.hover-only-mouse {
+  transition: all 0.2s ease-in-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-only-mouse:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+.touch-feedback {
+  transition: all 0.1s ease-in-out;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* 可访问性相关类 */
+@media (prefers-reduced-motion: reduce) {
+  .respect-motion-preference {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .respect-contrast-preference {
+    border-width: 2px;
+    outline: 2px solid currentColor;
+  }
+}
+
+/* 设备方向相关类 */
+@media (orientation: portrait) {
+  .portrait-only {
+    display: block;
+  }
+  
+  .landscape-only {
+    display: none;
+  }
+}
+
+@media (orientation: landscape) {
+  .portrait-only {
+    display: none;
+  }
+  
+  .landscape-only {
+    display: block;
+  }
+}
+
+/* 响应式显示/隐藏类 */
+.mobile-only {
+  display: block;
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+.tablet-up {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .tablet-up {
+    display: block;
+  }
+}
+
+.desktop-up {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .desktop-up {
+    display: block;
+  }
+}
+
+.large-only {
+  display: none;
+}
+
+@media (min-width: 1441px) {
+  .large-only {
+    display: block;
+  }
+}
+
+/* 响应式Flexbox类 */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-mobile-md);
+}
+
+@media (min-width: 769px) {
+  .flex-responsive {
+    flex-direction: row;
+    gap: var(--spacing-tablet-md);
+  }
+}
+
+@media (min-width: 1025px) {
+  .flex-responsive {
+    gap: var(--spacing-desktop-md);
+  }
+}
+
+@media (min-width: 1441px) {
+  .flex-responsive {
+    gap: var(--spacing-large-md);
+  }
+}
+
+/* 响应式卡片类 */
+.card-responsive {
+  border-radius: 0.75rem;
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  padding: var(--spacing-mobile-md);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card-responsive {
+    padding: var(--spacing-tablet-md);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .card-responsive {
+    padding: var(--spacing-desktop-md);
+  }
+}
+
+@media (min-width: 1441px) {
+  .card-responsive {
+    padding: var(--spacing-large-md);
+  }
+}
+
+/* 响应式按钮类 */
+.button-responsive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: var(--touch-target-medium);
+  min-width: var(--touch-target-medium);
+  padding: var(--spacing-mobile-sm) var(--spacing-mobile-md);
+  font-size: var(--font-mobile-sm);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .button-responsive {
+    padding: var(--spacing-tablet-sm) var(--spacing-tablet-md);
+    font-size: var(--font-tablet-sm);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .button-responsive {
+    padding: var(--spacing-desktop-sm) var(--spacing-desktop-md);
+    font-size: var(--font-desktop-sm);
+  }
+}
+
+@media (min-width: 1441px) {
+  .button-responsive {
+    padding: var(--spacing-large-sm) var(--spacing-large-md);
+    font-size: var(--font-large-sm);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-responsive:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .button-responsive:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDebouncedValue } from "@/hooks/ui/use-debounced-value";
+import { useDebouncedValue } from "@/features/admin/hooks/use-debounced-value";
 import { useCategories } from "@/features/links/hooks/use-categories";
 import { AdminLayout } from "@/features/admin/components";
 import { Button } from "@/components/ui/button";

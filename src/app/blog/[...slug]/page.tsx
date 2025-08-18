@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/features/content";
 import { createBlogBreadcrumbs } from "@/features/blog/lib";
 import { ContentDisplay } from "@/features/content";
 import {
@@ -312,19 +311,15 @@ export default async function BlogPostPage({
 
             {/* 主内容区 - 占3列 */}
             <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
-              <div className="mb-6">
-                <Breadcrumb
-                  items={createBlogBreadcrumbs({
-                    slug: slug.slice(1),
-                    title,
-                  })}
-                />
-              </div>
               <ContentDisplay
                 contentType="blog"
                 title={title}
                 date={date}
                 wordCount={content.length}
+                breadcrumbs={createBlogBreadcrumbs({
+                  slug: slug.slice(1),
+                  title,
+                })}
               >
                 <ClientMDXRenderer content={content} />
               </ContentDisplay>

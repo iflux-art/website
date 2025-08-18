@@ -7,7 +7,7 @@ import path from "path";
 import matter from "gray-matter";
 import { sync as globSync } from "glob";
 import { SidebarItem, DocCategory, DocListItem, NavDocItem } from "../types";
-import type { BreadcrumbItem } from "@/features/content/types";
+import type { BreadcrumbItem } from "@/types/content-types";
 
 type DocMetaItem = {
   title: string;

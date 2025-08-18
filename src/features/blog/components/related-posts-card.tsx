@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { ArrowRightLeft, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";

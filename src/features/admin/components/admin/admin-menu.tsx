@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ADMIN_MENU_ITEMS } from "@/config/nav-config";
-import { useActiveSection } from "@/hooks/ui/use-active-section";
+import { ADMIN_MENU_ITEMS } from "@/features/layout/navbar/nav-config";
+import { useActiveSection } from "@/features/layout/navbar/hooks/use-active-section";
 import type { LucideIcon } from "lucide-react";
 
 type NavProps = {

@@ -1,11 +1,10 @@
 /**
  * 内容展示相关类型定义
+ * 注意：BreadcrumbItem 已移动到 @/types/content-types
  */
 
-/** 面包屑导航项 */
-export interface BreadcrumbItem {
-  /** 显示的标签文本 */
-  label: string;
-  /** 链接地址，如果不提供则显示为纯文本 */
-  href?: string;
-}
+// 目前此模块的类型已移动到全局类型目录
+// 保留此文件以维护模块结构的一致性
+
+// 导出空对象以使此文件成为有效的模块
+export {};

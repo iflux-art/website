@@ -2,7 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { AuthButtons, GitHubButton, TravelButton } from "@/features/ui";
+import { AuthButtons, GitHubButton, TravelButton } from "@/components/button";
 
 /**
  * 底栏组件

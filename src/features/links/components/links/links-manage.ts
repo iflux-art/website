@@ -1,42 +1,22 @@
+/**
+ * Links 数据管理模块
+ *
+ * 提供链接数据的 CRUD 操作，包括：
+ * - 读取和写入分类数据
+ * - 管理链接项目的增删改查
+ * - 处理分类统计和标签管理
+ *
+ * 数据存储结构：
+ * - 分类数据：src/config/links/categories.json
+ * - 链接数据：src/config/links/categories/{category}.json
+ *
+ * @author 系统重构
+ * @since 2024
+ */
+
 import fs from "fs";
 import path from "path";
-
-type CategoryId =
-  | "ai"
-  | "development"
-  | "design"
-  | "audio"
-  | "video"
-  | "office"
-  | "productivity"
-  | "operation"
-  | "profile"
-  | "friends";
-
-type LinksItem = {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: CategoryId;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
-};
-
-type LinksCategory = {
-  id: string;
-  name: string;
-  description: string;
-  order: number;
-  icon?: string;
-  color?: string;
-};
+import type { LinksItem, LinksCategory, CategoryId } from "../../types";
 
 type Category = LinksCategory;
 type Item = LinksItem;
@@ -153,6 +133,11 @@ function writeItems(items: Item[]): void {
   });
 }
 
+/**
+ * 读取所有链接数据
+ *
+ * @returns 包含分类和链接项目的完整数据结构
+ */
 export function readLinksData(): { categories: Category[]; items: Item[] } {
   const categories = readCategories().map((cat) => ({
     ...cat,
@@ -183,6 +168,13 @@ export function writeLinksData(data: {
   }
 }
 
+/**
+ * 添加新的链接项目
+ *
+ * @param item - 链接项目数据（不包含 id、创建时间和更新时间）
+ * @returns 创建的完整链接项目
+ * @throws {Error} 当 URL 已存在时抛出错误
+ */
 export function addLinksItem(
   item: Omit<Item, "id" | "createdAt" | "updatedAt">,
 ): Item {
@@ -206,6 +198,14 @@ export function addLinksItem(
   return newItem;
 }
 
+/**
+ * 更新链接项目
+ *
+ * @param id - 链接项目 ID
+ * @param updates - 要更新的字段
+ * @returns 更新后的链接项目
+ * @throws {Error} 当项目不存在或 URL 冲突时抛出错误
+ */
 export function updateLinksItem(id: string, updates: Partial<Item>): Item {
   const items = readItems();
   const itemIndex = items.findIndex((item) => item.id === id);
@@ -234,6 +234,12 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
   return updatedItem;
 }
 
+/**
+ * 删除链接项目
+ *
+ * @param id - 要删除的链接项目 ID
+ * @throws {Error} 当项目不存在时抛出错误
+ */
 export function deleteLinksItem(id: string): void {
   const items = readItems();
   const itemIndex = items.findIndex((item) => item.id === id);

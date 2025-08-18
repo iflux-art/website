@@ -86,8 +86,10 @@ export function BlogCategoryCard({
                 )}
               >
                 <Folder className="h-3.5 w-3.5" />
-                <span className="flex-1">{category.name}</span>
-                <span className="text-xs opacity-70">({category.count})</span>
+                <span className="flex-1">
+                  {category.name}{" "}
+                  <span className="text-xs opacity-70">({category.count})</span>
+                </span>
               </button>
             );
           })}

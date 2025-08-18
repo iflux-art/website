@@ -5,7 +5,7 @@
 
 import { SITE_METADATA } from "@/config/metadata";
 import type { Metadata } from "next";
-import type { GenerateMetadataOptions } from "@/types/metadata-types";
+import type { GenerateMetadataOptions } from "@/types";
 
 /**
  * 生成视口配置

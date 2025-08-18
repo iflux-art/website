@@ -1,6 +1,7 @@
 import React from "react";
 import { Calendar, Calculator, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Breadcrumb } from "@/features/content";
 
 /** 内容显示类型 */
 export type ContentType = "blog" | "docs";
@@ -12,6 +13,7 @@ export interface ContentDisplayProps {
   wordCount?: number;
   children?: React.ReactNode;
   className?: string;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
 }
 
 /**
@@ -58,11 +60,28 @@ export function ContentDisplay({
   wordCount = 0,
   children,
   className,
+  breadcrumbs,
 }: ContentDisplayProps) {
   const readingTime = calculateReadingTime(wordCount);
 
   return (
-    <article className={cn("prose-container", className)}>
+    <article
+      className={cn(
+        "prose-container",
+        // 添加卡片样式，与博客列表页的文章卡片保持一致
+        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        // 响应式内边距，与博客卡片保持一致
+        "p-3 sm:p-4 md:p-5 lg:p-6",
+        className,
+      )}
+    >
+      {/* 面包屑导航 */}
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <div className="mb-6">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+      )}
+
       <header className="mb-8">
         <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
           {title}

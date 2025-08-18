@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { BlogPost } from "../types";
-import type { BreadcrumbItem } from "@/features/content/types";
+import type { BreadcrumbItem } from "@/types/content-types";
 
 // ==================== 面包屑导航相关类型和函数 ====================
 

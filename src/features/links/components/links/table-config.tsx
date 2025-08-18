@@ -1,21 +1,16 @@
+/**
+ * 链接管理表格配置
+ *
+ * 提供链接管理界面的表格列定义、操作按钮和页面操作配置。
+ * 包含图标显示、标签渲染、状态显示等功能。
+ *
+ * @author 系统重构
+ * @since 2024
+ */
+
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from "lucide-react";
-
-type LinksItem = {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
-};
+import type { LinksItem } from "../../types";
 
 // 内联 TableColumn 类型定义
 export interface TableColumn<T> {
@@ -26,6 +21,12 @@ export interface TableColumn<T> {
   render?: (value: any, record: T, index: number) => React.ReactNode;
 }
 
+/**
+ * 获取表格列配置
+ *
+ * @param getCategoryName - 根据分类 ID 获取分类名称的函数
+ * @returns 表格列配置数组
+ */
 export const getTableColumns = (
   getCategoryName: (categoryId: string) => string,
 ): TableColumn<LinksItem>[] => [
@@ -108,6 +109,13 @@ export const getTableColumns = (
   },
 ];
 
+/**
+ * 获取表格行操作配置
+ *
+ * @param onEdit - 编辑操作回调函数
+ * @param onDelete - 删除操作回调函数
+ * @returns 操作按钮配置数组
+ */
 export const getTableActions = (
   onEdit: (record: LinksItem) => void,
   onDelete: (record: LinksItem) => void,
@@ -132,6 +140,13 @@ export const getTableActions = (
   },
 ];
 
+/**
+ * 获取页面级操作配置
+ *
+ * @param onAdd - 添加操作回调函数
+ * @param onRefresh - 刷新操作回调函数
+ * @returns 页面操作按钮配置数组
+ */
 export const getPageActions = (onAdd: () => void, onRefresh: () => void) => [
   {
     label: "添加网址",

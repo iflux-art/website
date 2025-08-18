@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import type { BlogPost } from "@/lib";
+import type { BlogPost } from "@/features/blog/types";
 // 获取所有博客文章
 async function getAllPosts() {
   const blogDir = path.join(process.cwd(), "src", "content", "blog");

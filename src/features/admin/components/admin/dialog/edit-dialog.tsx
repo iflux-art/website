@@ -6,41 +6,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinksForm } from "@/features/links/components";
-// 内联 LinksItem 类型定义
-interface LinksItem {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  icon?: string;
-  iconType?: "image" | "text";
-  tags: string[];
-  featured?: boolean;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-  visits?: number;
-  isActive?: boolean;
-}
-// 内联 LinksFormData 类型定义
-interface LinksFormData {
-  title: string;
-  description: string;
-  url: string;
-  icon: string;
-  iconType: "image" | "text";
-  tags: string[];
-  featured: boolean;
-  category: string;
-}
-// 内联 EditDialogProps 类型定义
-interface EditDialogProps {
-  open: boolean;
-  item: any;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (item: LinksItem) => void;
-  onError: (msg?: string) => void;
-}
+import type {
+  LinksItem,
+  LinksFormData,
+  EditDialogProps,
+} from "@/features/admin/types";
 
 export function EditDialog({
   item,

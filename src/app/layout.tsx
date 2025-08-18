@@ -1,5 +1,5 @@
 import "./globals.css";
-import { MainNavbar } from "@/features/navigation";
+import { MainNavbar } from "@/features/layout/navbar/components/main-navbar";
 import { Footer } from "@/features/layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
