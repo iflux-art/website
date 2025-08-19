@@ -1,28 +1,21 @@
-import { AppGrid } from "@/features/layout";
-import { LinkCard } from "@/features/links/components";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { TwikooComment } from "@/features/comment";
-import { LinksItem } from "@/features/links/types";
-import friendsData from "@/content/links/friends.json";
-import {
-  ExternalLink,
-  Heart,
-  Users,
-  MessageCircle,
-  HandHeart,
-  Globe,
-} from "lucide-react";
+import { AppGrid } from '@/features/layout';
+import { LinkCard } from '@/features/links/components';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { TwikooComment } from '@/features/comment';
+import type { LinksItem } from '@/features/links/types';
+import friendsData from '@/content/links/friends.json';
+import { ExternalLink, Heart, Users, MessageCircle, HandHeart, Globe } from 'lucide-react';
 
 // 友链表单URL配置
 const FRIEND_LINK_FORM_URL =
-  "https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb";
+  'https://ocnzi0a8y98s.feishu.cn/share/base/form/shrcnB0sog9RdZVM8FLJNXVsFFb';
 
 export default function FriendsPage() {
-  const friendsItems: LinksItem[] = friendsData.map((item) => ({
+  const friendsItems: LinksItem[] = friendsData.map(item => ({
     ...item,
-    category: item.category as any,
-    iconType: ((item as any).iconType || "image") as "image" | "text",
+    category: item.category as 'friends',
+    iconType: (item.iconType ?? 'image') as 'image' | 'text',
   }));
 
   if (friendsItems.length === 0) {
@@ -48,14 +41,14 @@ export default function FriendsPage() {
   return (
     <div className="container mx-auto py-8">
       <AppGrid columns={5} className="items-stretch">
-        {friendsItems.map((item) => (
+        {friendsItems.map(item => (
           <LinkCard
             key={item.id}
             title={item.title}
             description={item.description || item.url}
             href={item.url}
             icon={item.icon}
-            iconType={item.iconType as "image" | "text" | undefined}
+            iconType={item.iconType}
             isExternal={true}
             className="h-full"
           />
@@ -84,9 +77,7 @@ export default function FriendsPage() {
                   </div>
                   <div className="text-left">
                     <div className="font-medium">内容优质</div>
-                    <div className="text-sm text-muted-foreground">
-                      原创内容为主
-                    </div>
+                    <div className="text-sm text-muted-foreground">原创内容为主</div>
                   </div>
                 </div>
 
@@ -96,9 +87,7 @@ export default function FriendsPage() {
                   </div>
                   <div className="text-left">
                     <div className="font-medium">更新活跃</div>
-                    <div className="text-sm text-muted-foreground">
-                      定期更新内容
-                    </div>
+                    <div className="text-sm text-muted-foreground">定期更新内容</div>
                   </div>
                 </div>
 
@@ -108,9 +97,7 @@ export default function FriendsPage() {
                   </div>
                   <div className="text-left">
                     <div className="font-medium">互相支持</div>
-                    <div className="text-sm text-muted-foreground">
-                      共同成长进步
-                    </div>
+                    <div className="text-sm text-muted-foreground">共同成长进步</div>
                   </div>
                 </div>
               </div>

@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 /* 响应式设计系统样式 */
-@import "../styles/responsive.css";
+@import '../styles/responsive.css';
 
 @custom-variant dark (&:is(.dark *));
 /**
@@ -153,9 +153,9 @@
       var(--font-sans),
       -apple-system,
       BlinkMacSystemFont,
-      "Segoe UI",
+      'Segoe UI',
       Roboto,
-      "Helvetica Neue",
+      'Helvetica Neue',
       Arial,
       sans-serif;
   }
@@ -164,8 +164,8 @@
   samp {
     /* 系统等宽字体回退方案 */
     font-family:
-      var(--font-mono), SFMono-Regular, Menlo, Monaco, Consolas,
-      "Liberation Mono", "Courier New", monospace;
+      var(--font-mono), SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+      monospace;
   }
 }
 
@@ -205,8 +205,8 @@
   padding: 0.2em 0.4em;
   font-size: 0.95em;
   font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
 }
 
 /* 自定义 Twikoo 评论区样式 */

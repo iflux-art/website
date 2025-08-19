@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
-import { Search, Loader2, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import React, { forwardRef } from 'react';
+import { Search, Loader2, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 type SearchBarProps = React.ComponentPropsWithoutRef<typeof Input> & {
   isLoading?: boolean;
@@ -12,7 +12,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   ({ isLoading, onClear, className, value, ...props }, ref) => {
     return (
       <div
-        className={`group relative border-b border-border/30 transition-colors focus-within:bg-accent/15 hover:bg-accent/10 dark:border-border/20 ${className || ""}`}
+        className={`group relative border-b border-border/30 transition-colors focus-within:bg-accent/15 hover:bg-accent/10 dark:border-border/20 ${className ?? ''}`}
       >
         <div className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2">
           <Search className="h-[14px] w-[14px] text-muted-foreground/60 transition-colors group-hover:text-muted-foreground/80" />
@@ -41,7 +41,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
         </div>
       </div>
     );
-  },
+  }
 );
 
-SearchBar.displayName = "SearchBar";
+SearchBar.displayName = 'SearchBar';

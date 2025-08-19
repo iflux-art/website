@@ -1,9 +1,9 @@
-import "./globals.css";
-import { MainNavbar } from "@/features/layout/navbar/components/main-navbar";
-import { Footer } from "@/features/layout";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ClerkProvider } from "@clerk/nextjs";
-import React from "react";
+import './globals.css';
+import { MainNavbar } from '@/features/layout/navbar/components/main-navbar';
+import { Footer } from '@/features/layout';
+import { ThemeProvider } from '@/components/theme-provider';
+import { ClerkProvider } from '@clerk/nextjs';
+import React from 'react';
 
 /**
  * 导入集中管理的元数据配置
@@ -11,17 +11,13 @@ import React from "react";
  * 1. 先从配置文件导入 - 便于集中管理和复用
  * 2. 然后再导出 - 满足Next.js的约定要求
  */
-import { generateMetadata, generateViewport } from "@/config/metadata";
+import { generateMetadata, generateViewport } from '@/config/metadata';
 
 // 导出元数据配置 - Next.js会在构建时处理这些导出
 export const metadata = generateMetadata();
 export const viewport = generateViewport();
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html

@@ -2,8 +2,8 @@
  * 导航和搜索相关类型定义
  */
 
-import type { ReactNode, ComponentType } from "react";
-import type { URL } from "@/types";
+import type { ReactNode, ComponentType } from 'react';
+import type { URL } from '@/types';
 
 /** 基础导航项 */
 export interface BaseNavItem {
@@ -51,7 +51,7 @@ export interface BaseSearchResult {
 /** 搜索结果 */
 export interface SearchResult extends BaseSearchResult {
   /** 结果类型 */
-  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history" | "link";
+  type: 'doc' | 'blog' | 'navigation' | 'tool' | 'command' | 'history' | 'link';
   /** 图标 */
   icon: ReactNode;
   /** 是否为外部链接 */

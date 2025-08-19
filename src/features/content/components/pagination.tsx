@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import type { NavDocItem } from "@/features/docs/types";
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import type { NavDocItem } from '@/features/docs/types';
 
 type DocPaginationProps = {
   prevDoc?: NavDocItem | null;
@@ -12,7 +12,7 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
   if (!prevDoc && !nextDoc) return null;
 
   return (
-    <div className="mt-12 flex justify-between gap-4">
+    <div className="mt-4 flex justify-between gap-4">
       {prevDoc ? (
         <Card className="max-w-[48%] flex-1 rounded-xl transition-all hover:shadow-md">
           <CardContent className="p-5">
@@ -21,9 +21,7 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
                 <ChevronLeft className="mr-1 h-4 w-4" />
                 上一页
               </span>
-              <span className="font-semibold tracking-tight">
-                {prevDoc.title}
-              </span>
+              <span className="font-semibold tracking-tight">{prevDoc.title}</span>
             </Link>
           </CardContent>
         </Card>
@@ -33,17 +31,12 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
       {nextDoc ? (
         <Card className="max-w-[48%] flex-1 rounded-xl transition-all hover:shadow-md">
           <CardContent className="p-5">
-            <Link
-              href={nextDoc.path}
-              className="flex flex-col items-end text-right"
-            >
+            <Link href={nextDoc.path} className="flex flex-col items-end text-right">
               <span className="flex items-center text-sm text-muted-foreground">
                 下一页
                 <ChevronRight className="ml-1 h-4 w-4" />
               </span>
-              <span className="font-semibold tracking-tight">
-                {nextDoc.title}
-              </span>
+              <span className="font-semibold tracking-tight">{nextDoc.title}</span>
             </Link>
           </CardContent>
         </Card>

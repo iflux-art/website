@@ -2,12 +2,12 @@
  * 导航栏状态管理 Hook
  */
 
-"use client";
+'use client';
 
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 interface NavbarState {
-  direction: "up" | "down";
+  direction: 'up' | 'down';
   position: number;
   showTitle: boolean;
   pageTitle: string;
@@ -22,29 +22,27 @@ const STATE_CONFIG = {
 
 export function useSafeNavbar() {
   const [state, setState] = useState<NavbarState>({
-    direction: "up",
+    direction: 'up',
     position: 0,
     showTitle: false,
-    pageTitle: "",
+    pageTitle: '',
     lastDirectionChange: 0,
   });
 
   const setScrollPosition = useCallback((position: number) => {
-    setState((prev) => {
+    setState(prev => {
       const now = Date.now();
-      const newDirection = position > prev.position ? "down" : "up";
+      const newDirection = position > prev.position ? 'down' : 'up';
       const directionChanged = newDirection !== prev.direction;
 
       // 首页始终显示导航菜单
-      if (prev.pageTitle === "首页") {
+      if (prev.pageTitle === '首页') {
         return {
           ...prev,
           direction: newDirection,
           position,
           showTitle: false,
-          lastDirectionChange: directionChanged
-            ? now
-            : prev.lastDirectionChange,
+          lastDirectionChange: directionChanged ? now : prev.lastDirectionChange,
         };
       }
 
@@ -61,12 +59,9 @@ export function useSafeNavbar() {
       };
 
       // 根据滚动方向和位置决定是否显示标题
-      if (newDirection === "up") {
+      if (newDirection === 'up') {
         newState.showTitle = false; // 向上滚动始终显示菜单
-      } else if (
-        newDirection === "down" &&
-        position > STATE_CONFIG.HIDE_THRESHOLD
-      ) {
+      } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
         newState.showTitle = true; // 向下且滚动较多时收起菜单
       }
 
@@ -75,12 +70,12 @@ export function useSafeNavbar() {
   }, []);
 
   const setPageTitle = useCallback((title: string) => {
-    setState((prev) => ({ ...prev, pageTitle: title }));
+    setState(prev => ({ ...prev, pageTitle: title }));
   }, []);
 
   const scrollToTop = useCallback(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, []);
 

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { getAllDocsStructure } from "@/features/docs/components";
+import { NextResponse } from 'next/server';
+import { getAllDocsStructure } from '@/features/docs/components';
 
 /**
  * 获取全局文档结构的 API 路由
@@ -13,17 +13,17 @@ export async function GET() {
     // 设置缓存控制头，避免浏览器缓存
     return NextResponse.json(structure, {
       headers: {
-        "Cache-Control": "no-store, max-age=0",
+        'Cache-Control': 'no-store, max-age=0',
       },
     });
   } catch (error) {
     // Failed to get global docs structure
     return NextResponse.json(
       {
-        error: "获取全局文档结构失败",
-        details: error instanceof Error ? error.message : "未知错误",
+        error: '获取全局文档结构失败',
+        details: error instanceof Error ? error.message : '未知错误',
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

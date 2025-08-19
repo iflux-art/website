@@ -1,17 +1,17 @@
-"use client";
-import * as React from "react";
-import { useMemo } from "react";
-import { MDXProvider, useMDXComponents } from "@mdx-js/react";
-import { MDXComponents } from "@/components/mdx/mdx-components";
-import { evaluateSync } from "@mdx-js/mdx";
-import remarkGfm from "remark-gfm";
-import * as runtime from "react/jsx-runtime";
-import matter from "gray-matter";
-import rehypePrettyCode from "rehype-pretty-code";
-import type { Options as PrettyCodeOptions } from "rehype-pretty-code";
+'use client';
+import * as React from 'react';
+import { useMemo } from 'react';
+import { MDXProvider, useMDXComponents } from '@mdx-js/react';
+import { MDXComponents } from '@/components/mdx/mdx-components';
+import { evaluateSync } from '@mdx-js/mdx';
+import remarkGfm from 'remark-gfm';
+import * as runtime from 'react/jsx-runtime';
+import matter from 'gray-matter';
+import rehypePrettyCode from 'rehype-pretty-code';
+import type { Options as PrettyCodeOptions } from 'rehype-pretty-code';
 
 export const prettyCodeOptions: PrettyCodeOptions = {
-  theme: "github-dark",
+  theme: 'github-dark',
 };
 
 export const mdxRehypePlugins = [[rehypePrettyCode, prettyCodeOptions]];

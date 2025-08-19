@@ -1,48 +1,5 @@
 # Next.js 技术栈推荐清单与最佳实践
 
-五、迁移顺序建议
-先抽离 UI 组件、hooks、utils、types 到 packages。
-再迁移 blog、docs、links 等业务模块到 apps。
-配置好 workspace、tsconfig、样式、主题等基础设施。
-逐步适配和测试每个模块，确保功能和样式一致。
-六、后续可扩展方向
-支持微前端（如 Module Federation）
-独立部署各 app
-统一 CI/CD、测试、发布流程
-
-## pnpm 命令
-
-pnpm add -g pnpm@latest
-pnpm install：自动安装依赖。
-pnpm lint --fix：自动修复大部分代码风格和语法问题。
-pnpm format：自动格式化代码（如配置了 prettier）。
-pnpm tsc --noEmit：类型检查，发现类型和路径错误。
-pnpm build：正式构建，发现运行时和打包错误。
-pnpm build --debug 检查构建bug
-运行pnpm preview测试生产环境预览
-运行pnpm start测试生产环境
-
-## node 命令
-
-pnpm view @types/node version 查看版本
-pnpm update @types/node --latest 升级最新版
-
-## 格式修复
-
-本地运行 pnpm format 或 pnpm lint --fix，以自动修复所有格式问题
-
-用 pnpm lint、pnpm tsc --noEmit 检查所有未修复的引用错误
-
-npx prettier --write
-
-## 启用 Turbopack
-
-pnpm next dev --turbo
-
-npx next dev --turbo
-
----
-
 自动统一类型定义、优化 hooks 状态管理、规范 API 返回结构，批量修复其它类型分散问题，或有类型推导/校验需求
 
 目录下只被单一文件引用、且只服务于该文件的代码，全部迁移到对应实现文件顶部（即“内联”），以提升文件归属清晰度和可维护性
@@ -66,26 +23,6 @@ hooks：只放自定义 hook，不混杂类型、工具函数。
 
 mongodb+srv://ifa:Hogyoku&mdb@ifa.8joagcy.mongodb.net/?retryWrites=true&w=majority&appName=ifa
 
-## 核心框架与基础
-
-- Next.js (App Router)：React 生态全栈框架，支持 SSR/SSG/ISR，推荐新项目采用 App Router。
-- React + React DOM：现代 Web 应用开发基础。
-- TypeScript：类型安全，提升开发效率和可维护性。
-
----
-
-## 样式与 UI
-
-- Tailwind CSS：原子化 CSS 框架，快速构建响应式 UI。
-- Shadcn/ui：基于 Radix UI 的可定制组件库，官方推荐。
-- Radix UI：无样式、可访问性强的 UI 组件基元。
-- Next Themes：无闪烁的暗/亮主题切换方案。
-- lucide-react：统一风格的 React 图标库。
-- Class Variants Authority / clsx / tailwind-merge：高效管理和合并 CSS 类名。
-
----
-
-## 表单与数据校验
 
 - react-hook-form：高性能表单管理，适合复杂表单场景。
 - Zod：TypeScript 优先的数据校验库，前后端类型一致。
@@ -107,13 +44,6 @@ mongodb+srv://ifa:Hogyoku&mdb@ifa.8joagcy.mongodb.net/?retryWrites=true&w=majori
 - remark-gfm / rehype-pretty-code / Shiki：扩展 Markdown 语法与代码高亮。
 - @tailwindcss/typography：prose 类，优化 MDX 样式。
 - Storybook：组件开发与文档，提升协作效率。
-
----
-
-## 代码规范与质量
-
-- ESLint + Prettier：代码规范与自动格式化，推荐 Airbnb Style Guide。
-- Husky + lint-staged：Git 提交前自动检查，保证代码质量。
 
 ---
 
@@ -158,43 +88,3 @@ mongodb+srv://ifa:Hogyoku&mdb@ifa.8joagcy.mongodb.net/?retryWrites=true&w=majori
 ## PWA 与离线支持
 
 - next-pwa：一键为 Next.js 项目添加 PWA 能力，支持离线访问。
-
----
-
-## 字体与资源优化
-
-- next/font：内置字体优化，提升加载性能。
-
----
-
-## 性能监控与分析
-
-- Vercel Analytics & Speed Insights：官方性能监控与分析。
-- Sentry：错误监控平台，追踪线上异常。
-
----
-
-## 内容管理
-
-- next-mdx：MDX 支持，适合内容驱动网站。
-- Contentlayer：本地 Markdown 内容自动转型，适合静态内容站点。
-
- @mdx-js/mdx + @mdx-js/react，支持 MDX 语法。
-
----
-
-## 测试
-
-- Jest + React Testing Library：单元测试，验证组件逻辑。
-- Cypress / Playwright：端到端测试，保障关键业务流程。
-
----
-
-## 部署与运维
-
-- Vercel：Next.js 官方推荐部署平台，支持零配置和边缘能力。
-- Turborepo：Monorepo 构建系统，适合多包和大型项目。
-
----
-
-> 建议：根据项目实际需求渐进引入工具，统一团队技术栈，定期评估和优化。

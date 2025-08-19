@@ -1,17 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Search, ExternalLink, BookOpen, FileText, Link } from "lucide-react";
-import { useSearch } from "../hooks/use-search";
-import type { SearchResult } from "../types";
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Search, ExternalLink, BookOpen, FileText, Link } from 'lucide-react';
+import { useSearch } from '@/features/search/hooks/use-search';
+import type { SearchResult } from '@/features/search/types';
 
 interface SearchDialogProps {
   open: boolean;
@@ -19,20 +14,20 @@ interface SearchDialogProps {
 }
 
 export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const { search, results, isLoading } = useSearch();
 
   // 监听键盘快捷键 (Ctrl+K 或 Command+K)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         onOpenChange(!open);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [open, onOpenChange]);
 
   useEffect(() => {
@@ -40,8 +35,8 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       return;
     }
 
-    const searchTimeout = setTimeout(async () => {
-      await search(query);
+    const searchTimeout = setTimeout(() => {
+      void search(query);
     }, 300);
 
     return () => clearTimeout(searchTimeout);
@@ -49,7 +44,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   const handleResultClick = (result: SearchResult) => {
     if (result.url) {
-      window.open(result.url, "_blank");
+      window.open(result.url, '_blank');
     } else if (result.path) {
       window.location.href = result.path;
     }
@@ -58,11 +53,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   const getIcon = (type: string) => {
     switch (type) {
-      case "link":
+      case 'link':
         return <Link className="h-4 w-4" />;
-      case "blog":
+      case 'blog':
         return <FileText className="h-4 w-4" />;
-      case "doc":
+      case 'doc':
         return <BookOpen className="h-4 w-4" />;
       default:
         return <ExternalLink className="h-4 w-4" />;
@@ -81,16 +76,14 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           <Input
             placeholder="搜索链接、文章、文档..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={e => setQuery(e.target.value)}
             className="pl-10"
           />
         </div>
 
         <div className="flex-1 overflow-y-auto">
           {isLoading ? (
-            <div className="py-8 text-center text-muted-foreground">
-              搜索中...
-            </div>
+            <div className="py-8 text-center text-muted-foreground">搜索中...</div>
           ) : results.length > 0 ? (
             <div className="space-y-2">
               {results.map((result, index) => (
@@ -98,16 +91,15 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                   key={index}
                   className="cursor-pointer rounded-lg border p-3 transition-colors hover:bg-accent"
                   onClick={() => handleResultClick(result)}
+                  onKeyDown={e => e.key === 'Enter' && handleResultClick(result)}
+                  tabIndex={0}
+                  role="button"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 text-muted-foreground">
-                      {getIcon(result.type)}
-                    </div>
+                    <div className="mt-1 text-muted-foreground">{getIcon(result.type)}</div>
                     <div className="min-w-0 flex-1">
                       <div className="mb-1 flex items-center gap-2">
-                        <h4 className="truncate text-sm font-medium">
-                          {result.title}
-                        </h4>
+                        <h4 className="truncate text-sm font-medium">{result.title}</h4>
                         <Badge variant="secondary" className="text-xs">
                           {result.type}
                         </Badge>
@@ -120,11 +112,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       {result.tags && result.tags.length > 0 && (
                         <div className="mt-2 flex gap-1">
                           {result.tags.slice(0, 3).map((tag, tagIndex) => (
-                            <Badge
-                              key={tagIndex}
-                              variant="outline"
-                              className="text-xs"
-                            >
+                            <Badge key={tagIndex} variant="outline" className="text-xs">
                               {tag}
                             </Badge>
                           ))}
@@ -136,9 +124,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               ))}
             </div>
           ) : query.trim() ? (
-            <div className="py-8 text-center text-muted-foreground">
-              未找到相关结果
-            </div>
+            <div className="py-8 text-center text-muted-foreground">未找到相关结果</div>
           ) : null}
         </div>
       </DialogContent>

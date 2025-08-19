@@ -1,19 +1,13 @@
-"use client";
+'use client';
 
-import { useUser, SignOutButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { User, Mail, Calendar, LogOut, Settings } from "lucide-react";
-import Link from "next/link";
+import { useUser, SignOutButton } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { User, Mail, Calendar, LogOut, Settings } from 'lucide-react';
+import Link from 'next/link';
 
 export function UserProfile() {
   const { user, isLoaded } = useUser();
@@ -47,9 +41,8 @@ export function UserProfile() {
     );
   }
 
-  const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
-  const initials =
-    `${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`.toUpperCase();
+  const fullName = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
+  const initials = `${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}`.toUpperCase();
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -65,9 +58,7 @@ export function UserProfile() {
                 </AvatarFallback>
               </Avatar>
               <div className="space-y-1">
-                <CardTitle className="text-2xl">
-                  {fullName || user.username || "用户"}
-                </CardTitle>
+                <CardTitle className="text-2xl">{fullName ?? user.username ?? '用户'}</CardTitle>
                 <CardDescription className="flex items-center">
                   <Mail className="mr-2 h-4 w-4" />
                   {user.primaryEmailAddress?.emailAddress}
@@ -75,8 +66,7 @@ export function UserProfile() {
                 {user.createdAt && (
                   <CardDescription className="flex items-center">
                     <Calendar className="mr-2 h-4 w-4" />
-                    注册于{" "}
-                    {new Date(user.createdAt).toLocaleDateString("zh-CN")}
+                    注册于 {new Date(user.createdAt).toLocaleDateString('zh-CN')}
                   </CardDescription>
                 )}
               </div>
@@ -92,43 +82,42 @@ export function UserProfile() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-sm font-medium text-muted-foreground">
+                <label htmlFor="userId" className="text-sm font-medium text-muted-foreground">
                   用户ID
                 </label>
-                <p className="font-mono text-sm">{user.id}</p>
+                <p id="userId" className="font-mono text-sm">
+                  {user.id}
+                </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-muted-foreground">
+                <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
                   用户名
                 </label>
-                <p>{user.username || "未设置"}</p>
+                <p id="username">{user.username ?? '未设置'}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-muted-foreground">
+                <label htmlFor="firstName" className="text-sm font-medium text-muted-foreground">
                   名字
                 </label>
-                <p>{user.firstName || "未设置"}</p>
+                <p id="firstName">{user.firstName ?? '未设置'}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-muted-foreground">
+                <label htmlFor="lastName" className="text-sm font-medium text-muted-foreground">
                   姓氏
                 </label>
-                <p>{user.lastName || "未设置"}</p>
+                <p id="lastName">{user.lastName ?? '未设置'}</p>
               </div>
             </div>
 
             <Separator />
 
             <div>
-              <label className="text-sm font-medium text-muted-foreground">
+              <label htmlFor="emailAddresses" className="text-sm font-medium text-muted-foreground">
                 邮箱地址
               </label>
               <div className="mt-2 space-y-2">
-                {user.emailAddresses.map((email) => (
-                  <div
-                    key={email.id}
-                    className="flex items-center justify-between"
-                  >
+                {user.emailAddresses.map(email => (
+                  <div key={email.id} className="flex items-center justify-between">
                     <span>{email.emailAddress}</span>
                     <div className="flex gap-2">
                       {email.id === user.primaryEmailAddressId && (
@@ -136,14 +125,10 @@ export function UserProfile() {
                       )}
                       <Badge
                         variant={
-                          email.verification?.status === "verified"
-                            ? "secondary"
-                            : "destructive"
+                          email.verification?.status === 'verified' ? 'secondary' : 'destructive'
                         }
                       >
-                        {email.verification?.status === "verified"
-                          ? "已验证"
-                          : "未验证"}
+                        {email.verification?.status === 'verified' ? '已验证' : '未验证'}
                       </Badge>
                     </div>
                   </div>
@@ -155,17 +140,17 @@ export function UserProfile() {
               <>
                 <Separator />
                 <div>
-                  <label className="text-sm font-medium text-muted-foreground">
+                  <label
+                    htmlFor="externalAccounts"
+                    className="text-sm font-medium text-muted-foreground"
+                  >
                     关联账户
                   </label>
                   <div className="mt-2 space-y-2">
-                    {user.externalAccounts.map((account) => (
-                      <div
-                        key={account.id}
-                        className="flex items-center justify-between"
-                      >
+                    {user.externalAccounts.map(account => (
+                      <div key={account.id} className="flex items-center justify-between">
                         <span className="capitalize">{account.provider}</span>
-                        <Badge variant="outline">{account.emailAddress}</Badge>
+                        <Badge variant="outline">{account.emailAddress ?? ''}</Badge>
                       </div>
                     ))}
                   </div>

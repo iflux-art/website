@@ -13,7 +13,7 @@
  * @since 2024
  */
 
-import type { URL } from "@/types";
+import type { URL } from '@/types';
 
 /** 基础 Frontmatter 类型 */
 export interface BaseFrontmatter {

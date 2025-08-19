@@ -39,23 +39,23 @@ export interface SiteMetadata {
  * 包含网站的基本信息
  */
 export const SITE_METADATA: SiteMetadata = {
-  title: "iFluxArt · 斐流艺创",
+  title: 'iFluxArt · 斐流艺创',
   description:
     '"斐流艺创" 是 "iFluxArt" 的中文翻译，代表智能技术与艺术创作的有机融合，"斐然成章" 的创作力与 "川流不息" 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。',
-  author: "iFluxArt Team",
-  url: "https://iflux.art",
-  image: "/images/og-image.png",
-  keywords: ["iFluxArt", "斐流艺创", "人工智能", "AI", "艺术创作", "数字艺术"],
-  twitter: "@ifluxart",
-  github: "iflux-art",
-  email: "hello@iflux.art",
+  author: 'iFluxArt Team',
+  url: 'https://iflux.art',
+  image: '/images/og-image.png',
+  keywords: ['iFluxArt', '斐流艺创', '人工智能', 'AI', '艺术创作', '数字艺术'],
+  twitter: '@ifluxart',
+  github: 'iflux-art',
+  email: 'hello@iflux.art',
   copyright: `© ${new Date().getFullYear()} iFluxArt · 斐流艺创`,
 };
-export const SITE_AUTHOR = "iFluxArt Team";
-export const SITE_URL = "https://iflux.art";
-export const SITE_TWITTER = "@ifluxart";
-export const SITE_GITHUB = "iflux-art";
-export const SITE_EMAIL = "hello@iflux.art";
+export const SITE_AUTHOR = 'iFluxArt Team';
+export const SITE_URL = 'https://iflux.art';
+export const SITE_TWITTER = '@ifluxart';
+export const SITE_GITHUB = 'iflux-art';
+export const SITE_EMAIL = 'hello@iflux.art';
 export const SITE_COPYRIGHT = `© ${new Date().getFullYear()} iFluxArt · 斐流艺创`;
 
 /**
@@ -64,11 +64,11 @@ export const SITE_COPYRIGHT = `© ${new Date().getFullYear()} iFluxArt · 斐流
  */
 export const VIEWPORT_CONFIG = {
   viewport: {
-    width: "device-width",
+    width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
   },
-  themeColor: "#000000",
+  themeColor: '#000000',
 };
 
 /**
@@ -82,15 +82,15 @@ export interface PwaConfig {
   mobileWebAppCapable: string;
 }
 export const PWA_CONFIG: PwaConfig = {
-  manifestPath: "/manifest.json",
-  applicationName: "iFluxArt · 斐流艺创",
-  themeColor: "#000000",
-  mobileWebAppCapable: "yes",
+  manifestPath: '/manifest.json',
+  applicationName: 'iFluxArt · 斐流艺创',
+  themeColor: '#000000',
+  mobileWebAppCapable: 'yes',
 } as const;
 export const pwaConfig = {
   manifest: PWA_CONFIG.manifestPath,
   apple: {
-    mobileWebAppCapable: "yes",
+    mobileWebAppCapable: 'yes',
     applicationName: PWA_CONFIG.applicationName,
   },
 } as const;
@@ -112,47 +112,42 @@ export interface IosConfig {
   }>;
 }
 export const IOS_CONFIG: IosConfig = {
-  mobileWebAppCapable: "yes",
-  statusBarStyle: "black-translucent",
-  appTitle: "iFluxArt · 斐流艺创",
+  mobileWebAppCapable: 'yes',
+  statusBarStyle: 'black-translucent',
+  appTitle: 'iFluxArt · 斐流艺创',
   icons: {
-    touchIcon: "/images/icons/apple-touch-icon.png",
+    touchIcon: '/images/icons/apple-touch-icon.png',
   },
   splashScreens: [
     {
-      href: "/images/splash/apple-splash-2048-2732.png",
+      href: '/images/splash/apple-splash-2048-2732.png',
       media:
-        "(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
+        '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
-      href: "/images/splash/apple-splash-1668-2388.png",
+      href: '/images/splash/apple-splash-1668-2388.png',
       media:
-        "(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
+        '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
-      href: "/images/splash/apple-splash-1536-2048.png",
+      href: '/images/splash/apple-splash-1536-2048.png',
       media:
-        "(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
+        '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
     },
     {
-      href: "/images/splash/apple-splash-1125-2436.png",
+      href: '/images/splash/apple-splash-1125-2436.png',
       media:
-        "(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+        '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
     },
   ],
 } as const;
 export const iosConfig = {
-  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === "yes",
-  appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle as
-    | "default"
-    | "black"
-    | "black-translucent",
-  appleMobileWebAppTitle: IOS_CONFIG.appTitle as string,
-  touchIcon: IOS_CONFIG.icons.touchIcon as string,
-  splashScreens: IOS_CONFIG.splashScreens as Array<{
-    href: string;
-    media: string;
-  }>,
+  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === 'yes',
+  appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle,
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  appleMobileWebAppTitle: IOS_CONFIG.appTitle,
+  touchIcon: IOS_CONFIG.icons.touchIcon,
+  splashScreens: IOS_CONFIG.splashScreens,
 } as const;
 
 /**
@@ -164,8 +159,8 @@ export interface WindowsConfig {
   msapplicationTileImage: string;
 }
 export const WINDOWS_CONFIG: WindowsConfig = {
-  msapplicationTileColor: "#000000",
-  msapplicationTileImage: "/images/icons/ms-icon-144x144.png",
+  msapplicationTileColor: '#000000',
+  msapplicationTileImage: '/images/icons/ms-icon-144x144.png',
 } as const;
 
 /**
@@ -173,15 +168,14 @@ export const WINDOWS_CONFIG: WindowsConfig = {
  */
 export const API_PATHS = {
   BLOG: {
-    POSTS: "/api/blog/posts",
-    TAGS_COUNT: "/api/blog/tags/count",
-    CATEGORIES: "/api/blog/categories",
-    TIMELINE: "/api/blog/timeline",
+    POSTS: '/api/blog/posts',
+    TAGS_COUNT: '/api/blog/tags/count',
+    CATEGORIES: '/api/blog/categories',
+    TIMELINE: '/api/blog/timeline',
   },
   DOCS: {
-    CATEGORIES: "/api/docs/categories",
-    CATEGORY: (category: string) =>
-      `/api/docs/categories/${encodeURIComponent(category)}`,
+    CATEGORIES: '/api/docs/categories',
+    CATEGORY: (category: string) => `/api/docs/categories/${encodeURIComponent(category)}`,
     META: (path: string) => `/api/docs/${encodeURIComponent(path)}/meta`,
     CONTENT: (path: string) => `/api/docs/${encodeURIComponent(path)}`,
   },
@@ -192,7 +186,7 @@ export {
   generateViewport,
   generateArticleMetadata,
   generateProfileMetadata,
-} from "@/lib/metadata";
+} from '@/lib/metadata';
 export type {
   PageType,
   IconConfig,
@@ -200,4 +194,4 @@ export type {
   JsonLdConfig,
   SocialConfig,
   GenerateMetadataOptions,
-} from "@/types";
+} from '@/types';

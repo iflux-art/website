@@ -11,82 +11,82 @@
   --breakpoint-desktop-min: 1025px;
   --breakpoint-desktop-max: 1440px;
   --breakpoint-large: 1441px;
-  
+
   /* 移动端间距变量 */
-  --spacing-mobile-xs: 0.5rem;   /* 8px */
-  --spacing-mobile-sm: 0.75rem;  /* 12px */
-  --spacing-mobile-md: 1rem;     /* 16px */
-  --spacing-mobile-lg: 1.5rem;   /* 24px */
-  --spacing-mobile-xl: 2rem;     /* 32px */
-  
+  --spacing-mobile-xs: 0.5rem; /* 8px */
+  --spacing-mobile-sm: 0.75rem; /* 12px */
+  --spacing-mobile-md: 1rem; /* 16px */
+  --spacing-mobile-lg: 1.5rem; /* 24px */
+  --spacing-mobile-xl: 2rem; /* 32px */
+
   /* 平板端间距变量 */
-  --spacing-tablet-xs: 0.75rem;  /* 12px */
-  --spacing-tablet-sm: 1rem;     /* 16px */
-  --spacing-tablet-md: 1.5rem;   /* 24px */
-  --spacing-tablet-lg: 2rem;     /* 32px */
-  --spacing-tablet-xl: 3rem;     /* 48px */
-  
+  --spacing-tablet-xs: 0.75rem; /* 12px */
+  --spacing-tablet-sm: 1rem; /* 16px */
+  --spacing-tablet-md: 1.5rem; /* 24px */
+  --spacing-tablet-lg: 2rem; /* 32px */
+  --spacing-tablet-xl: 3rem; /* 48px */
+
   /* 桌面端间距变量 */
-  --spacing-desktop-xs: 1rem;    /* 16px */
-  --spacing-desktop-sm: 1.5rem;  /* 24px */
-  --spacing-desktop-md: 2rem;    /* 32px */
-  --spacing-desktop-lg: 3rem;    /* 48px */
-  --spacing-desktop-xl: 4rem;    /* 64px */
-  
+  --spacing-desktop-xs: 1rem; /* 16px */
+  --spacing-desktop-sm: 1.5rem; /* 24px */
+  --spacing-desktop-md: 2rem; /* 32px */
+  --spacing-desktop-lg: 3rem; /* 48px */
+  --spacing-desktop-xl: 4rem; /* 64px */
+
   /* 大屏间距变量 */
-  --spacing-large-xs: 1.5rem;    /* 24px */
-  --spacing-large-sm: 2rem;      /* 32px */
-  --spacing-large-md: 3rem;      /* 48px */
-  --spacing-large-lg: 4rem;      /* 64px */
-  --spacing-large-xl: 6rem;      /* 96px */
-  
+  --spacing-large-xs: 1.5rem; /* 24px */
+  --spacing-large-sm: 2rem; /* 32px */
+  --spacing-large-md: 3rem; /* 48px */
+  --spacing-large-lg: 4rem; /* 64px */
+  --spacing-large-xl: 6rem; /* 96px */
+
   /* 触摸目标尺寸 */
-  --touch-target-small: 44px;    /* WCAG AA标准 */
-  --touch-target-medium: 48px;   /* 推荐尺寸 */
-  --touch-target-large: 56px;    /* 大触摸目标 */
-  
+  --touch-target-small: 44px; /* WCAG AA标准 */
+  --touch-target-medium: 48px; /* 推荐尺寸 */
+  --touch-target-large: 56px; /* 大触摸目标 */
+
   /* 容器最大宽度 */
   --container-mobile: 100%;
   --container-tablet: 100%;
   --container-desktop: 1200px;
   --container-large: 1400px;
-  
+
   /* 响应式字体大小 */
-  --font-mobile-xs: 0.75rem;     /* 12px */
-  --font-mobile-sm: 0.875rem;    /* 14px */
-  --font-mobile-base: 1rem;      /* 16px */
-  --font-mobile-lg: 1.125rem;    /* 18px */
-  --font-mobile-xl: 1.25rem;     /* 20px */
-  --font-mobile-2xl: 1.5rem;     /* 24px */
-  --font-mobile-3xl: 1.875rem;   /* 30px */
-  --font-mobile-4xl: 2.25rem;    /* 36px */
-  
-  --font-tablet-xs: 0.875rem;    /* 14px */
-  --font-tablet-sm: 1rem;        /* 16px */
-  --font-tablet-base: 1.125rem;  /* 18px */
-  --font-tablet-lg: 1.25rem;     /* 20px */
-  --font-tablet-xl: 1.5rem;      /* 24px */
-  --font-tablet-2xl: 1.875rem;   /* 30px */
-  --font-tablet-3xl: 2.25rem;    /* 36px */
-  --font-tablet-4xl: 3rem;       /* 48px */
-  
-  --font-desktop-xs: 0.875rem;   /* 14px */
-  --font-desktop-sm: 1rem;       /* 16px */
+  --font-mobile-xs: 0.75rem; /* 12px */
+  --font-mobile-sm: 0.875rem; /* 14px */
+  --font-mobile-base: 1rem; /* 16px */
+  --font-mobile-lg: 1.125rem; /* 18px */
+  --font-mobile-xl: 1.25rem; /* 20px */
+  --font-mobile-2xl: 1.5rem; /* 24px */
+  --font-mobile-3xl: 1.875rem; /* 30px */
+  --font-mobile-4xl: 2.25rem; /* 36px */
+
+  --font-tablet-xs: 0.875rem; /* 14px */
+  --font-tablet-sm: 1rem; /* 16px */
+  --font-tablet-base: 1.125rem; /* 18px */
+  --font-tablet-lg: 1.25rem; /* 20px */
+  --font-tablet-xl: 1.5rem; /* 24px */
+  --font-tablet-2xl: 1.875rem; /* 30px */
+  --font-tablet-3xl: 2.25rem; /* 36px */
+  --font-tablet-4xl: 3rem; /* 48px */
+
+  --font-desktop-xs: 0.875rem; /* 14px */
+  --font-desktop-sm: 1rem; /* 16px */
   --font-desktop-base: 1.125rem; /* 18px */
-  --font-desktop-lg: 1.25rem;    /* 20px */
-  --font-desktop-xl: 1.5rem;     /* 24px */
-  --font-desktop-2xl: 1.875rem;  /* 30px */
-  --font-desktop-3xl: 2.25rem;   /* 36px */
-  --font-desktop-4xl: 3rem;      /* 48px */
-  
-  --font-large-xs: 1rem;         /* 16px */
-  --font-large-sm: 1.125rem;     /* 18px */
-  --font-large-base: 1.25rem;    /* 20px */
-  --font-large-lg: 1.5rem;       /* 24px */
-  --font-large-xl: 1.875rem;     /* 30px */
-  --font-large-2xl: 2.25rem;     /* 36px */
-  --font-large-3xl: 3rem;        /* 48px */
-  --font-large-4xl: 3.75rem;     /* 60px */
+  --font-desktop-lg: 1.25rem; /* 20px */
+  --font-desktop-xl: 1.5rem; /* 24px */
+  --font-desktop-2xl: 1.875rem; /* 30px */
+  --font-desktop-3xl: 2.25rem; /* 36px */
+  --font-desktop-4xl: 3rem; /* 48px */
+
+  --font-large-xs: 1rem; /* 16px */
+  --font-large-sm: 1.125rem; /* 18px */
+  --font-large-base: 1.25rem; /* 20px */
+  --font-large-lg: 1.5rem; /* 24px */
+  --font-large-xl: 1.875rem; /* 30px */
+  --font-large-2xl: 2.25rem; /* 36px */
+  --font-large-3xl: 3rem; /* 48px */
+  --font-large-4xl: 3.75rem; /* 60px */
 }
 
 /* 响应式工具类 */
@@ -330,7 +330,7 @@
   .portrait-only {
     display: block;
   }
-  
+
   .landscape-only {
     display: none;
   }
@@ -340,7 +340,7 @@
   .portrait-only {
     display: none;
   }
-  
+
   .landscape-only {
     display: block;
   }
@@ -418,7 +418,9 @@
   border-radius: 0.75rem;
   background: hsl(var(--card));
   color: hsl(var(--card-foreground));
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1),
+    0 1px 2px -1px rgb(0 0 0 / 0.1);
   padding: var(--spacing-mobile-md);
 }
 

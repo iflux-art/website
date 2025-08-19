@@ -2,7 +2,7 @@
  * 文档类型定义 - 优化合并版
  */
 
-import type { Heading } from "@/types/content-types";
+import type { Heading } from '@/types/content-types';
 
 // ================= 文档内容相关类型 =================
 // 注意：Heading 类型已移动到 @/types/content-types
@@ -43,7 +43,19 @@ export interface DocContentBase {
 export interface DocFrontmatter extends DocContentBase {
   date?: string;
   tags?: string[];
-  [key: string]: any;
+  [key: string]: unknown;
+}
+
+/**
+ * 将任意对象安全地转换为 DocFrontmatter 类型
+ * @param obj 要转换的对象
+ * @returns 转换后的 DocFrontmatter 对象
+ */
+export function toDocFrontmatter<T extends Record<string, unknown>>(obj: T): DocFrontmatter {
+  return {
+    ...obj,
+    title: (obj.title as string) ?? '',
+  } as DocFrontmatter;
 }
 
 export interface DocItem extends DocContentBase {
@@ -74,7 +86,7 @@ export interface DocNavBase {
 export interface SidebarItem extends DocNavBase {
   items?: SidebarItem[];
   collapsed?: boolean;
-  type?: "separator" | "page" | "menu";
+  type?: 'separator' | 'page' | 'menu';
   isExternal?: boolean;
   href?: string;
   filePath?: string;
@@ -82,15 +94,12 @@ export interface SidebarItem extends DocNavBase {
 
 export interface NavDocItem extends DocNavBase {
   isNext?: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // ================= 保留原有类型别名以保持兼容 =================
 
-export type DocListItem = Pick<
-  DocItem,
-  "title" | "description" | "path" | "category"
-> & {
+export type DocListItem = Pick<DocItem, 'title' | 'description' | 'path' | 'category'> & {
   slug?: string;
   date?: string | null;
   isActive?: boolean;
@@ -100,7 +109,7 @@ export type DocListItem = Pick<
 export type DocContentResult = DocItem & {
   prevDoc: NavDocItem | null;
   nextDoc: NavDocItem | null;
-  breadcrumbs: any[];
+  breadcrumbs: unknown[];
   mdxContent: React.ReactNode;
   wordCount: number;
   date: string | null;

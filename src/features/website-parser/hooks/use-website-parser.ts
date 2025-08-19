@@ -2,15 +2,12 @@
  * 网址解析 React Hook
  */
 
-import { useState, useCallback } from "react";
-import { parseWebsiteMetadata } from "../lib/parser";
-import { WebsiteMetadata, ParseOptions } from "../types";
+import { useState, useCallback } from 'react';
+import { parseWebsiteMetadata } from '@/features/website-parser/lib/parser';
+import type { WebsiteMetadata, ParseOptions } from '@/features/website-parser/types';
 
 interface UseWebsiteParserReturn {
-  parseWebsite: (
-    url: string,
-    options?: ParseOptions,
-  ) => Promise<WebsiteMetadata | null>;
+  parseWebsite: (url: string, options?: ParseOptions) => Promise<WebsiteMetadata | null>;
   isLoading: boolean;
   error: string | null;
   lastResult: WebsiteMetadata | null;
@@ -22,10 +19,7 @@ export function useWebsiteParser(): UseWebsiteParserReturn {
   const [lastResult, setLastResult] = useState<WebsiteMetadata | null>(null);
 
   const parseWebsite = useCallback(
-    async (
-      url: string,
-      options?: ParseOptions,
-    ): Promise<WebsiteMetadata | null> => {
+    async (url: string, options?: ParseOptions): Promise<WebsiteMetadata | null> => {
       setIsLoading(true);
       setError(null);
 
@@ -36,13 +30,12 @@ export function useWebsiteParser(): UseWebsiteParserReturn {
           setLastResult(result.data);
           return result.data;
         } else {
-          setError(result.error || "Failed to parse website");
-          setLastResult(result.data || null);
-          return result.data || null;
+          setError(result.error ?? 'Failed to parse website');
+          setLastResult(result.data ?? null);
+          return result.data ?? null;
         }
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Unknown error";
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
         setError(errorMessage);
         setLastResult(null);
         return null;
@@ -50,7 +43,7 @@ export function useWebsiteParser(): UseWebsiteParserReturn {
         setIsLoading(false);
       }
     },
-    [],
+    []
   );
 
   return {

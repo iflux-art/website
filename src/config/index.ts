@@ -3,7 +3,7 @@
  */
 
 // 响应式配置
-export * from "./responsive";
+export * from './responsive';
 
 // 元数据配置
-export * from "./metadata";
+export * from './metadata';

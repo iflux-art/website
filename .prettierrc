@@ -2,5 +2,16 @@
   "plugins": ["prettier-plugin-tailwindcss"],
   "tailwindStylesheet": "./src/app/globals.css",
   "tailwindConfig": "./tailwind.config.mjs",
-  "tailwindPreserveDuplicates": true
+  "tailwindPreserveDuplicates": true,
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
+  "jsxSingleQuote": false,
+  "bracketSameLine": false,
+  "quoteProps": "as-needed"
 }

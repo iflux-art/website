@@ -1,19 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { ChevronRight, FileText, Folder } from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
-import { NavLink } from "@/features/layout/navbar/components/nav-link";
-import { GlobalDocsStructure, DocCategoryWithDocs } from "./global-docs";
-import { SidebarItem } from "@/features/docs/types";
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { ChevronRight, FileText, Folder } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { NavLink } from '@/features/layout/navbar/components/nav-link';
+import type { GlobalDocsStructure, DocCategoryWithDocs } from './global-docs';
+import type { SidebarItem } from '@/features/docs/types';
 
 // 检查是否在客户端环境
-const isBrowser = typeof window !== "undefined";
+const isBrowser = typeof window !== 'undefined';
 
 export interface DocsSidebarProps {
   /** 全局文档结构数据 */
@@ -29,24 +25,18 @@ export interface DocsSidebarProps {
  *
  * 显示所有文档的完整导航结构，支持跨分类的文档导航
  */
-export function DocsSidebar({
-  structure,
-  currentDoc,
-  className,
-}: DocsSidebarProps) {
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
-    {},
-  );
+export function DocsSidebar({ structure, currentDoc, className }: DocsSidebarProps) {
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   // 用于存储折叠状态的本地存储键
-  const localStorageKey = "docs-sidebar-open-categories";
+  const localStorageKey = 'docs-sidebar-open-categories';
 
   // 处理折叠面板打开/关闭
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories((prev) => {
+      setOpenCategories(prev => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
@@ -55,7 +45,7 @@ export function DocsSidebar({
         return newState;
       });
     },
-    [localStorageKey],
+    [localStorageKey]
   );
 
   // 处理鼠标悬停
@@ -63,63 +53,13 @@ export function DocsSidebar({
     setIsHovering(itemId);
   };
 
-  // 渲染分类标题
-  const renderCategoryHeader = useCallback(
-    (
-      category: DocCategoryWithDocs & { isOpen?: boolean },
-      categoryId: string,
-    ) => {
-      const isOpen = category.isOpen ?? openCategories[categoryId];
-      const hasDocuments = category.docs.length > 0;
-
-      return (
-        <div className="mb-2">
-          <Collapsible
-            open={isOpen}
-            onOpenChange={(open: boolean) => handleOpenChange(categoryId, open)}
-          >
-            <CollapsibleTrigger
-              className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/50"
-              aria-expanded={isOpen}
-              aria-controls={`collapsible-content-${categoryId}`}
-            >
-              <div className="flex items-center gap-2">
-                <Folder className="h-4 w-4 text-muted-foreground" />
-                <span className="text-foreground">{category.title}</span>
-              </div>
-              {hasDocuments && (
-                <ChevronRight
-                  className={cn(
-                    "h-4 w-4 text-muted-foreground transition-transform duration-200 ease-in-out",
-                    isOpen && "rotate-90",
-                  )}
-                />
-              )}
-            </CollapsibleTrigger>
-            {hasDocuments && (
-              <CollapsibleContent
-                id={`collapsible-content-${categoryId}`}
-                className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden"
-              >
-                <div className="mt-2 ml-2 border-l border-border/40 pl-4">
-                  {renderSidebarItems(category.docs, 1, categoryId)}
-                </div>
-              </CollapsibleContent>
-            )}
-          </Collapsible>
-        </div>
-      );
-    },
-    [openCategories, handleOpenChange],
-  );
-
   // 渲染侧边栏项目
   const renderSidebarItems = useCallback(
-    (items: SidebarItem[], level: number = 0, parentPath: string = "") => {
+    (items: SidebarItem[], level: number = 0, parentPath: string = ''): React.ReactNode => {
       return items.map((item, index) => {
         const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
         const hasItems = item.items && item.items.length > 0;
-        const isSeparator = item.type === "separator";
+        const isSeparator = item.type === 'separator';
         const isExternal = item.isExternal;
         const isCurrentDoc = currentDoc && item.href === currentDoc;
 
@@ -143,9 +83,7 @@ export function DocsSidebar({
               <div>
                 <Collapsible
                   open={openCategories[itemId]}
-                  onOpenChange={(open: boolean) =>
-                    handleOpenChange(itemId, open)
-                  }
+                  onOpenChange={(open: boolean) => handleOpenChange(itemId, open)}
                 >
                   <div className="flex items-center">
                     <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent/50">
@@ -153,10 +91,8 @@ export function DocsSidebar({
                         <Folder className="h-4 w-4 text-muted-foreground" />
                         <span
                           className={cn(
-                            "font-medium",
-                            isHovering === itemId
-                              ? "text-foreground"
-                              : "text-muted-foreground",
+                            'font-medium',
+                            isHovering === itemId ? 'text-foreground' : 'text-muted-foreground'
                           )}
                         >
                           {item.title}
@@ -164,31 +100,30 @@ export function DocsSidebar({
                       </div>
                       <ChevronRight
                         className={cn(
-                          "h-4 w-4 text-muted-foreground transition-transform",
-                          openCategories[itemId] && "rotate-90",
+                          'h-4 w-4 text-muted-foreground transition-transform',
+                          openCategories[itemId] && 'rotate-90'
                         )}
                       />
                     </CollapsibleTrigger>
                   </div>
                   <CollapsibleContent>
                     <div className="mt-2 ml-2 space-y-1 border-l border-border/40 pt-1 pl-4">
-                      {renderSidebarItems(item.items || [], level + 1, itemId)}
+                      {renderSidebarItems(item.items ?? [], level + 1, itemId)}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
               </div>
             ) : (
               <NavLink
-                href={item.href || "#"}
+                href={item.href ?? '#'}
                 currentDoc={currentDoc}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
                 onMouseEnter={() => handleHover(itemId)}
                 onMouseLeave={() => handleHover(null)}
                 className={cn(
-                  "!flex !items-center !justify-start gap-2 rounded-md px-3 py-2 text-sm transition-colors",
-                  isCurrentDoc &&
-                    "bg-accent font-medium text-accent-foreground",
+                  '!flex !items-center !justify-start gap-2 rounded-md px-3 py-2 text-sm transition-colors',
+                  isCurrentDoc && 'bg-accent font-medium text-accent-foreground'
                 )}
               >
                 <FileText className="h-4 w-4 text-muted-foreground" />
@@ -217,7 +152,68 @@ export function DocsSidebar({
         );
       });
     },
-    [openCategories, isHovering, handleOpenChange, currentDoc],
+    [openCategories, isHovering, handleOpenChange, currentDoc]
+  );
+
+  // 初始化折叠状态
+  useEffect(() => {
+    if (isBrowser) {
+      const savedStateStr = localStorage.getItem(localStorageKey);
+      if (savedStateStr) {
+        try {
+          setOpenCategories(JSON.parse(savedStateStr) as Record<string, boolean>);
+        } catch (err) {
+          console.error('Failed to parse saved state:', err);
+        }
+      }
+    }
+  }, [localStorageKey]);
+
+  // 渲染分类标题
+  const renderCategoryHeader = useCallback(
+    (category: DocCategoryWithDocs & { isOpen?: boolean }, categoryId: string): React.ReactNode => {
+      const isOpen = category.isOpen ?? openCategories[categoryId];
+      const hasDocuments = category.docs.length > 0;
+
+      return (
+        <div className="mb-2">
+          <Collapsible
+            open={isOpen}
+            onOpenChange={(open: boolean) => handleOpenChange(categoryId, open)}
+          >
+            <CollapsibleTrigger
+              className="group flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/50"
+              aria-expanded={isOpen}
+              aria-controls={`collapsible-content-${categoryId}`}
+            >
+              <div className="flex items-center gap-2">
+                <Folder className="h-4 w-4 text-muted-foreground" />
+                <span className="text-foreground">{category.title}</span>
+              </div>
+              {hasDocuments && (
+                <ChevronRight
+                  className={cn(
+                    'h-4 w-4 text-muted-foreground transition-transform duration-200 ease-in-out',
+                    isOpen && 'rotate-90'
+                  )}
+                />
+              )}
+            </CollapsibleTrigger>
+            {hasDocuments && (
+              <CollapsibleContent
+                id={`collapsible-content-${categoryId}`}
+                className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden"
+              >
+                <div className="mt-2 ml-2 border-l border-border/40 pl-4">
+                  {renderSidebarItems(category.docs, 1, categoryId)}
+                </div>
+              </CollapsibleContent>
+            )}
+          </Collapsible>
+        </div>
+      );
+    },
+    [openCategories, handleOpenChange, renderSidebarItems]
   );
 
   // 渲染所有分类
@@ -230,27 +226,13 @@ export function DocsSidebar({
         </div>
       );
     });
-  }, [structure.categories, openCategories, currentDoc, renderCategoryHeader]);
-
-  // 初始化折叠状态
-  useEffect(() => {
-    if (isBrowser) {
-      const savedStateStr = localStorage.getItem(localStorageKey);
-      if (savedStateStr) {
-        try {
-          setOpenCategories(JSON.parse(savedStateStr));
-        } catch (err) {
-          console.error("Failed to parse saved state:", err);
-        }
-      }
-    }
-  }, [localStorageKey]);
+  }, [structure.categories, renderCategoryHeader]);
 
   return (
     <div
       ref={sidebarRef}
-      className={cn("hide-scrollbar", className)}
-      style={{ direction: "ltr", textAlign: "left" }}
+      className={cn('hide-scrollbar', className)}
+      style={{ direction: 'ltr', textAlign: 'left' }}
     >
       <div className="space-y-2">
         {/* 分类列表 */}

@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { getAllTagsWithCount } from "@/features/blog/lib";
+import { getAllTagsWithCount } from '@/features/blog/lib';
 
 /**
  * 获取所有标签及其计数的 API 路由
@@ -17,13 +17,13 @@ export async function GET() {
     }));
     return NextResponse.json(tagCounts);
   } catch (error) {
-    console.error("获取标签列表失败:", error);
+    console.error('获取标签列表失败:', error);
     return NextResponse.json(
       {
-        error: "获取标签列表失败",
-        details: error instanceof Error ? error.message : "未知错误",
+        error: '获取标签列表失败',
+        details: error instanceof Error ? error.message : '未知错误',
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

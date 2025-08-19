@@ -1,21 +1,20 @@
-"use client";
+'use client';
 
-import { useUser, SignOutButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { User, Settings, LogOut } from "lucide-react";
-import Link from "next/link";
+import { useUser, SignOutButton } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button';
+import { User, Settings, LogOut } from 'lucide-react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 export function AuthButtons() {
+  const { isSignedIn, user, isLoaded } = useUser();
   try {
-    const { isSignedIn, user, isLoaded } = useUser();
-
     // 如果 Clerk 还在加载中，显示登录图标
     if (!isLoaded) {
       return (
@@ -38,7 +37,7 @@ export function AuthButtons() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <div className="px-2 py-1.5 text-sm font-medium">
-              {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+              {user?.firstName ?? user?.emailAddresses[0]?.emailAddress}
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
@@ -77,7 +76,7 @@ export function AuthButtons() {
     );
   } catch (error) {
     // 如果 Clerk 出现错误，显示基本的登录图标
-    console.error("Clerk error:", error);
+    console.error('Clerk error:', error);
     return (
       <Link href="/sign-in">
         <Button variant="ghost" size="icon" title="登录">

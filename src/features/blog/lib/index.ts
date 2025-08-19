@@ -2,11 +2,11 @@
  * 博客相关工具函数
  */
 
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { BlogPost } from "../types";
-import type { BreadcrumbItem } from "@/types/content-types";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import type { BlogPost } from '@/features/blog/types';
+import type { BreadcrumbItem } from '@/types/content-types';
 
 // ==================== 面包屑导航相关类型和函数 ====================
 
@@ -19,7 +19,7 @@ interface GenerateBreadcrumbsOptions {
   segmentProcessor?: (
     segment: string,
     index: number,
-    meta?: Record<string, { title?: string }>,
+    meta?: Record<string, { title?: string }>
   ) => string;
 }
 
@@ -40,7 +40,7 @@ export function generateBreadcrumbs({
   segmentProcessor,
 }: GenerateBreadcrumbsOptions): BreadcrumbItem[] {
   const items: BreadcrumbItem[] = [{ label: startLabel, href: `/${basePath}` }];
-  let currentPath = "";
+  let currentPath = '';
 
   slug.forEach((segment, index) => {
     const isLastSegment = index === slug.length - 1;
@@ -68,13 +68,13 @@ export function generateBreadcrumbs({
  */
 function getBlogDirectoryTitle(segment: string): string {
   const directoryTitleMap: Record<string, string> = {
-    ai: "人工智能",
-    dev: "开发技术",
-    essays: "随笔感悟",
-    music: "音乐制作",
-    ops: "运维部署",
-    project: "项目经验",
-    software: "软件工具",
+    ai: '人工智能',
+    dev: '开发技术',
+    essays: '随笔感悟',
+    music: '音乐制作',
+    ops: '运维部署',
+    project: '项目经验',
+    software: '软件工具',
   };
 
   return directoryTitleMap[segment] || segment;
@@ -83,15 +83,12 @@ function getBlogDirectoryTitle(segment: string): string {
 /**
  * 创建博客面包屑导航
  */
-export function createBlogBreadcrumbs({
-  slug,
-  title,
-}: BlogBreadcrumbProps): BreadcrumbItem[] {
+export function createBlogBreadcrumbs({ slug, title }: BlogBreadcrumbProps): BreadcrumbItem[] {
   return generateBreadcrumbs({
-    basePath: "blog",
+    basePath: 'blog',
     slug,
     currentTitle: title,
-    startLabel: "博客",
+    startLabel: '博客',
     segmentProcessor: (segment, index) => {
       // 如果是最后一个段落且有标题，使用标题
       const isLastSegment = index === slug.length - 1;
@@ -111,7 +108,7 @@ export function createBlogBreadcrumbs({
  * @returns 所有标签数组
  */
 export function getAllTags(): string[] {
-  const blogDir = path.join(process.cwd(), "src", "content", "blog");
+  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 
   const allTags = new Set<string>();
@@ -125,11 +122,8 @@ export function getAllTags(): string[] {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (
-        item.isFile() &&
-        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
-      ) {
-        const fileContent = fs.readFileSync(itemPath, "utf8");
+      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+        const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
 
         // 只收集已发布文章的标签
@@ -149,7 +143,7 @@ export function getAllTags(): string[] {
  * @returns 标签及其文章数量的记录
  */
 export function getAllTagsWithCount(): Record<string, number> {
-  const blogDir = path.join(process.cwd(), "src", "content", "blog");
+  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return {};
 
   const tagCounts: Record<string, number> = {};
@@ -163,11 +157,8 @@ export function getAllTagsWithCount(): Record<string, number> {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (
-        item.isFile() &&
-        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
-      ) {
-        const fileContent = fs.readFileSync(itemPath, "utf8");
+      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+        const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
 
         // 只收集已发布文章的标签
@@ -190,7 +181,7 @@ export function getAllTagsWithCount(): Record<string, number> {
  * @returns 文章数组
  */
 export function getPostsByTag(tag: string): BlogPost[] {
-  const blogDir = path.join(process.cwd(), "src", "content", "blog");
+  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 
   const posts: BlogPost[] = [];
@@ -204,11 +195,8 @@ export function getPostsByTag(tag: string): BlogPost[] {
 
       if (item.isDirectory()) {
         findPostsWithTag(itemPath);
-      } else if (
-        item.isFile() &&
-        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
-      ) {
-        const fileContent = fs.readFileSync(itemPath, "utf8");
+      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+        const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
 
         // 检查是否包含指定标签
@@ -219,27 +207,27 @@ export function getPostsByTag(tag: string): BlogPost[] {
           data.tags.includes(tag)
         ) {
           // 计算slug
-          let slug = "";
+          let slug = '';
           const relativePath = path.relative(blogDir, itemPath);
           const pathParts = relativePath.split(path.sep);
 
           if (pathParts.length === 1) {
             // 直接在blog目录下的文件
-            slug = pathParts[0].replace(/\.(mdx|md)$/, "");
+            slug = pathParts[0].replace(/\.(mdx|md)$/, '');
           } else {
             // 在子目录中的文件
-            const fileName = pathParts.pop() || "";
-            slug = `${pathParts.join("/")}/${fileName.replace(/\.(mdx|md)$/, "")}`;
+            const fileName = pathParts.pop() ?? '';
+            slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
           }
 
           posts.push({
             slug,
-            title: data.title || slug,
-            description: data.description || data.excerpt || "点击阅读全文",
-            excerpt: data.excerpt || "点击阅读全文",
-            date: data.date,
-            tags: data.tags,
-          });
+            title: (data.title ?? slug) as string,
+            description: (data.description ?? data.excerpt ?? '点击阅读全文') as string,
+            excerpt: (data.excerpt ?? '点击阅读全文') as string,
+            date: String(data.date),
+            tags: (data.tags ?? []) as string[],
+          } satisfies BlogPost);
         }
       }
     }

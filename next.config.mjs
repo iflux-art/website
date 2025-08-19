@@ -28,6 +28,8 @@ const nextConfig = {
     ],
     // 优化页面加载
     optimisticClientCache: true,
+    // Turbopack 相关实验性功能
+    webpackBuildWorker: true, // 启用 webpack 构建工作器，与 Turbopack 配合使用
   },
 
   // 图片优化配置

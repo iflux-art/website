@@ -1,23 +1,14 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  BookOpen,
-  FileText,
-  Globe,
-  Heart,
-  Sparkles,
-  Zap,
-  Target,
-} from "lucide-react";
-import { SITE_METADATA } from "@/config/metadata";
-import { useSiteStats } from "@/features/home/hooks/use-site-stats";
-import { AnimatedNumber } from "@/features/home/components/animated-number";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { BookOpen, FileText, Globe, Heart, Sparkles, Zap, Target } from 'lucide-react';
+import { SITE_METADATA } from '@/config/metadata';
+import { useSiteStats } from '@/features/home/hooks/use-site-stats';
+import { AnimatedNumber } from '@/features/home/components/animated-number';
 
 export function HeroSection() {
-  const { blogCount, docCount, linkCount, friendCount, loading } =
-    useSiteStats();
+  const { blogCount, docCount, linkCount, friendCount, loading } = useSiteStats();
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
@@ -28,15 +19,15 @@ export function HeroSection() {
       {/* 浮动装饰元素 */}
       <div
         className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
-        style={{ animationDelay: "0s", animationDuration: "3s" }}
+        style={{ animationDelay: '0s', animationDuration: '3s' }}
       />
       <div
         className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
-        style={{ animationDelay: "1s", animationDuration: "4s" }}
+        style={{ animationDelay: '1s', animationDuration: '4s' }}
       />
       <div
         className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
-        style={{ animationDelay: "2s", animationDuration: "5s" }}
+        style={{ animationDelay: '2s', animationDuration: '5s' }}
       />
 
       <div className="relative container mx-auto px-4 py-24">
@@ -82,32 +73,32 @@ export function HeroSection() {
           <div className="grid grid-cols-4">
             {[
               {
-                label: "文章",
+                label: '文章',
                 value: blogCount,
                 icon: FileText,
-                color: "text-blue-600 dark:text-blue-400",
-                bgColor: "bg-blue-500/10",
+                color: 'text-blue-600 dark:text-blue-400',
+                bgColor: 'bg-blue-500/10',
               },
               {
-                label: "技术文档",
+                label: '技术文档',
                 value: docCount,
                 icon: BookOpen,
-                color: "text-purple-600 dark:text-purple-400",
-                bgColor: "bg-purple-500/10",
+                color: 'text-purple-600 dark:text-purple-400',
+                bgColor: 'bg-purple-500/10',
               },
               {
-                label: "实用导航",
+                label: '实用导航',
                 value: linkCount,
                 icon: Globe,
-                color: "text-green-600 dark:text-green-400",
-                bgColor: "bg-green-500/10",
+                color: 'text-green-600 dark:text-green-400',
+                bgColor: 'bg-green-500/10',
               },
               {
-                label: "友情链接",
+                label: '友情链接',
                 value: friendCount,
                 icon: Heart,
-                color: "text-rose-600 dark:text-rose-400",
-                bgColor: "bg-rose-500/10",
+                color: 'text-rose-600 dark:text-rose-400',
+                bgColor: 'bg-rose-500/10',
               },
             ].map((stat, index) => {
               return (

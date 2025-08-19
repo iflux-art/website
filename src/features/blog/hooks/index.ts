@@ -3,13 +3,13 @@
  * @module hooks/use-blog
  */
 
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import { useContentData } from "@/hooks/use-content-data";
-import { API_PATHS } from "@/config/metadata";
-import type { HookResult } from "@/hooks/use-content-data";
-import { BlogPost } from "../types";
+import { useMemo } from 'react';
+import { useContentData } from '@/hooks/use-content-data';
+import { API_PATHS } from '@/config/metadata';
+import type { HookResult } from '@/hooks/use-content-data';
+import type { BlogPost } from '@/features/blog/types';
 
 export interface TagCount {
   tag: string;
@@ -33,8 +33,7 @@ export interface UseBlogPostsResult extends BlogResult<BlogPost[]> {
   categories: CategoryWithCount[];
 }
 
-export interface UseTimelinePostsResult
-  extends BlogResult<Record<string, BlogPost[]>> {
+export interface UseTimelinePostsResult extends BlogResult<Record<string, BlogPost[]>> {
   postsByYear: Record<string, BlogPost[]>;
 }
 /**
@@ -62,7 +61,7 @@ export function useBlogPosts(): UseBlogPostsResult {
     error,
     refresh,
   } = useContentData<BlogPost[]>({
-    type: "blog",
+    type: 'blog',
     path: API_PATHS.BLOG.POSTS,
   });
 
@@ -76,16 +75,15 @@ export function useBlogPosts(): UseBlogPostsResult {
       return { postsCount: {}, categories: [], isComputing: true };
     }
 
-    sortedPosts.forEach((post) => {
+    sortedPosts.forEach(post => {
       // 处理标签统计
-      post.tags?.forEach((tag) => {
+      post.tags?.forEach(tag => {
         postsCount[tag] = (postsCount[tag] || 0) + 1;
       });
 
       // 处理分类统计
       if (post.category) {
-        categoriesCount[post.category] =
-          (categoriesCount[post.category] || 0) + 1;
+        categoriesCount[post.category] = (categoriesCount[post.category] || 0) + 1;
       }
     });
 
@@ -120,10 +118,8 @@ export function useBlogPosts(): UseBlogPostsResult {
  * @returns 标签统计列表
  */
 export function useTagCounts(): HookResult<TagCount[]> {
-  const { data, loading, error, refresh } = useContentData<
-    Record<string, number>
-  >({
-    type: "blog",
+  const { data, loading, error, refresh } = useContentData<Record<string, number>>({
+    type: 'blog',
     path: API_PATHS.BLOG.TAGS_COUNT,
   });
 
@@ -131,7 +127,7 @@ export function useTagCounts(): HookResult<TagCount[]> {
     if (!data) return [];
     const countsArray = Object.entries(data).map(([tag, count]) => ({
       tag,
-      count: count as number,
+      count,
     }));
 
     return countsArray.sort((a, b) => b.count - a.count);
@@ -151,10 +147,8 @@ export function useTagCounts(): HookResult<TagCount[]> {
  * @returns 按年份分组的博客文章
  */
 export function useTimelinePosts(): UseTimelinePostsResult {
-  const { data, loading, error, refresh } = useContentData<
-    Record<string, BlogPost[]>
-  >({
-    type: "blog",
+  const { data, loading, error, refresh } = useContentData<Record<string, BlogPost[]>>({
+    type: 'blog',
     path: API_PATHS.BLOG.TIMELINE,
   });
 
@@ -172,17 +166,17 @@ export function useTimelinePosts(): UseTimelinePostsResult {
  * @returns 所有博客文章列表
  */
 export async function getAllPosts() {
-  const response = await fetch("/api/blog/posts", {
-    method: "GET",
+  const response = await fetch('/api/blog/posts', {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
-    throw new Error("获取博客文章失败");
+    throw new Error('获取博客文章失败');
   }
 
-  const posts: BlogPost[] = await response.json();
+  const posts = (await response.json()) as BlogPost[];
   return sortPostsByDate(posts);
 }

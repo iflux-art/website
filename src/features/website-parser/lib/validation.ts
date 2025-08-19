@@ -19,15 +19,15 @@ export function isValidUrl(url: string): boolean {
  */
 export function normalizeUrl(url: string): string {
   // 如果没有协议，添加 https://
-  if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    url = "https://" + url;
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'https://' + url;
   }
 
   try {
     const urlObj = new URL(url);
     return urlObj.href;
   } catch {
-    throw new Error("Invalid URL format");
+    throw new Error('Invalid URL format');
   }
 }
 
@@ -37,7 +37,7 @@ export function normalizeUrl(url: string): string {
 export function isSecureUrl(url: string): boolean {
   try {
     const urlObj = new URL(normalizeUrl(url));
-    return ["http:", "https:"].includes(urlObj.protocol);
+    return ['http:', 'https:'].includes(urlObj.protocol);
   } catch {
     return false;
   }

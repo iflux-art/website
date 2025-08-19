@@ -3,10 +3,10 @@
  * @module hooks/use-global-docs
  */
 
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { GlobalDocsStructure } from "./global-docs";
+import { useState, useEffect } from 'react';
+import type { GlobalDocsStructure } from './global-docs';
 
 export interface UseGlobalDocsResult {
   /** 全局文档结构数据 */
@@ -50,24 +50,19 @@ export function useGlobalDocs(): UseGlobalDocsResult {
 
       // Check cache validity
       const now = Date.now();
-      if (
-        globalDocsCache.data &&
-        now - globalDocsCache.timestamp < CACHE_VALIDITY_MS
-      ) {
+      if (globalDocsCache.data && now - globalDocsCache.timestamp < CACHE_VALIDITY_MS) {
         setStructure(globalDocsCache.data);
         setLoading(false);
         return;
       }
 
-      const response = await fetch("/api/docs/global-structure");
+      const response = await fetch('/api/docs/global-structure');
 
       if (!response.ok) {
-        throw new Error(
-          `Failed to fetch global docs structure: ${response.statusText}`,
-        );
+        throw new Error(`Failed to fetch global docs structure: ${response.statusText}`);
       }
 
-      const data = await response.json();
+      const data: GlobalDocsStructure = (await response.json()) as GlobalDocsStructure;
       setStructure(data);
 
       // Update cache
@@ -76,17 +71,16 @@ export function useGlobalDocs(): UseGlobalDocsResult {
         timestamp: Date.now(),
       };
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Unknown error occurred";
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(errorMessage);
-      console.error("Error fetching global docs structure:", err);
+      console.error('Error fetching global docs structure:', err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchGlobalDocs();
+    void fetchGlobalDocs();
   }, []);
 
   return {

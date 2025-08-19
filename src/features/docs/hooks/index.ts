@@ -3,12 +3,12 @@
  * @module hooks/use-docs
  */
 
-"use client";
+'use client';
 
-import { useContentData } from "@/hooks/use-content-data";
-import { API_PATHS } from "@/config/metadata";
-import { DocItem, DocCategory, DocListItem } from "../types";
-import type { HookResult } from "@/hooks/use-content-data";
+import { useContentData } from '@/hooks/use-content-data';
+import { API_PATHS } from '@/config/metadata';
+import type { DocItem, DocCategory, DocListItem } from '@/features/docs/types';
+import type { HookResult } from '@/hooks/use-content-data';
 
 /**
  * 使用文档分类
@@ -17,7 +17,7 @@ import type { HookResult } from "@/hooks/use-content-data";
  */
 export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
-    type: "docs",
+    type: 'docs',
     path: API_PATHS.DOCS.CATEGORIES,
   });
 }
@@ -30,7 +30,7 @@ export function useDocCategories(): HookResult<DocCategory[]> {
  */
 export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
   return useContentData<Record<string, unknown>>({
-    type: "docs",
+    type: 'docs',
     path: API_PATHS.DOCS.META(path),
   });
 }
@@ -50,7 +50,7 @@ export type { DocItem, DocCategory, DocListItem };
  */
 export function useDocContent(path: string): HookResult<DocItem> {
   return useContentData<DocItem>({
-    type: "docs",
+    type: 'docs',
     path: API_PATHS.DOCS.CONTENT(path),
   });
 }

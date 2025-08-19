@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
-import { Text } from "lucide-react";
-import { useHeadingObserver } from "@/features/content/hooks/use-heading-observer";
+import { useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
+import { Text } from 'lucide-react';
+import { useHeadingObserver } from '@/features/content/hooks/use-heading-observer';
 // ====== 迁移自 src/config/layout.ts ======
 /**
  * 页面顶部固定导航栏的高度
@@ -21,11 +21,7 @@ const SCROLL_OFFSET = NAVBAR_HEIGHT;
  * @param offset 偏移量（默认为0）
  * @param updateHash 是否更新URL hash（默认为false）
  */
-function scrollToElement(
-  elementId: string,
-  offset: number = 0,
-  updateHash: boolean = false,
-): void {
+function scrollToElement(elementId: string, offset: number = 0, updateHash: boolean = false): void {
   const element = document.getElementById(elementId);
   if (!element) return;
 
@@ -34,12 +30,12 @@ function scrollToElement(
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: "smooth",
+    behavior: 'smooth',
   });
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, "", `#${elementId}`);
+    history.pushState(null, '', `#${elementId}`);
   }
 }
 // ====== END ======
@@ -76,7 +72,7 @@ export interface TocProps {
 export function TableOfContents({
   headings,
   className,
-  title = "目录",
+  title = '目录',
   adaptive = false,
   adaptiveOffset = NAVBAR_HEIGHT,
 }: TocProps) {
@@ -85,13 +81,13 @@ export function TableOfContents({
   // 使用自定义 hook 处理标题观察
   const activeId = useHeadingObserver(headings);
 
-  // 如果没有标题，不渲染目录组件
-  if (headings.length === 0) {
-    return null;
-  }
-
   // 自动滚动目录到当前活动标题
   useEffect(() => {
+    // 如果没有标题，不执行滚动逻辑
+    if (headings.length === 0) {
+      return;
+    }
+
     let timeoutId: number;
 
     const handleScroll = () => {
@@ -101,16 +97,13 @@ export function TableOfContents({
 
       timeoutId = window.setTimeout(() => {
         if (activeId && tocRef.current) {
-          const activeElement = tocRef.current.querySelector(
-            `a[href="#${activeId}"]`,
-          );
+          const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
           if (activeElement) {
             const containerRect = tocRef.current.getBoundingClientRect();
             const activeRect = activeElement.getBoundingClientRect();
 
             const isInView =
-              activeRect.top >= containerRect.top &&
-              activeRect.bottom <= containerRect.bottom;
+              activeRect.top >= containerRect.top && activeRect.bottom <= containerRect.bottom;
 
             if (!isInView) {
               const scrollTop =
@@ -120,7 +113,7 @@ export function TableOfContents({
                 activeRect.height / 2;
               tocRef.current.scrollTo({
                 top: tocRef.current.scrollTop + scrollTop,
-                behavior: "smooth",
+                behavior: 'smooth',
               });
             }
           }
@@ -134,13 +127,13 @@ export function TableOfContents({
         clearTimeout(timeoutId);
       }
     };
-  }, [activeId, tocRef]);
+  }, [activeId, tocRef, headings.length]);
 
   // 删除原有的标题观察代码，因为已经使用 useHeadingObserver hook 替代
 
   // 过滤掉h1标题，只显示h2-h4
   const filteredHeadings = headings.filter(
-    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4,
+    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4
   );
 
   // 根据标题级别对目录进行分组和嵌套
@@ -151,22 +144,21 @@ export function TableOfContents({
       if (!heading.id) {
         heading.id = `heading-${heading.text
           .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^\w-]/g, "")}-${index}`;
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]/g, '')}-${index}`;
       }
       return heading;
     });
   };
 
-  // 如果过滤后没有标题，返回null，不显示任何内容
-  if (filteredHeadings.length === 0) {
-    return null;
-  }
-
-  const organizedHeadings = organizeHeadings(filteredHeadings);
-
+  // 使用 useEffect 处理自适应行为
   useEffect(() => {
-    if (!adaptive) return;
+    // 如果过滤后没有标题或禁用自适应，不执行自适应逻辑
+    if (filteredHeadings.length === 0 || !adaptive) {
+      return;
+    }
+
+    // 本地变量，用于在 useEffect 内部处理
 
     let scrollTimeoutId: number;
 
@@ -182,27 +174,34 @@ export function TableOfContents({
       }, 150);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
     handleScroll();
 
     return () => {
       if (scrollTimeoutId) {
         clearTimeout(scrollTimeoutId);
       }
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
-  }, [adaptive, adaptiveOffset]);
+  }, [adaptive, adaptiveOffset, filteredHeadings.length]);
+
+  // 如果过滤后没有标题，返回null，不显示任何内容
+  if (filteredHeadings.length === 0) {
+    return null;
+  }
+
+  const organizedHeadings = organizeHeadings(filteredHeadings);
 
   return (
-    <div className={cn("table-of-contents w-full min-w-0 pl-0", className)}>
+    <div className={cn('table-of-contents w-full min-w-0 pl-0', className)}>
       <div
         ref={tocRef}
         className={cn(
-          adaptive && "transition-all duration-200",
-          adaptive && "fixed overflow-y-auto",
-          "hide-scrollbar w-full",
+          adaptive && 'transition-all duration-200',
+          adaptive && 'fixed overflow-y-auto',
+          'hide-scrollbar w-full'
         )}
         style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >
@@ -223,10 +222,10 @@ export function TableOfContents({
               // 根据标题级别设置不同的样式
               const headingSize =
                 {
-                  2: "font-medium",
-                  3: "font-normal",
-                  4: "text-xs",
-                }[heading.level] || "";
+                  2: 'font-medium',
+                  3: 'font-normal',
+                  4: 'text-xs',
+                }[heading.level] ?? '';
 
               return (
                 <div key={index} className="relative">
@@ -238,23 +237,20 @@ export function TableOfContents({
                   <a
                     href={`#${heading.id}`}
                     className={cn(
-                      "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
+                      'group relative flex min-w-0 items-start py-1.5 text-sm transition-colors',
                       headingSize,
                       // 普通文本
-                      "text-muted-foreground",
+                      'text-muted-foreground',
                       // hover 状态
-                      "hover:text-foreground",
+                      'hover:text-foreground',
                       // active 状态
-                      isActive && "font-medium text-foreground",
-                      "w-full",
+                      isActive && 'font-medium text-foreground',
+                      'w-full'
                     )}
                     style={{
-                      paddingLeft:
-                        heading.level > 2
-                          ? `calc(${indent}rem + 1rem)`
-                          : "1rem",
+                      paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : '1rem',
                     }}
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       scrollToElement(heading.id, SCROLL_OFFSET);
                     }}

@@ -8,17 +8,18 @@
  * @since 2024
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from "lucide-react";
-import type { LinksItem } from "../../types";
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
+import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from 'lucide-react';
+import type { LinksItem } from '@/features/links/types';
 
 // 内联 TableColumn 类型定义
 export interface TableColumn<T> {
   key: keyof T;
   title: string;
   width?: string | number;
-  align?: "left" | "center" | "right";
-  render?: (value: any, record: T, index: number) => React.ReactNode;
+  align?: 'left' | 'center' | 'right';
+  render?: (value: unknown, record: T, index: number) => React.ReactNode;
 }
 
 /**
@@ -28,20 +29,27 @@ export interface TableColumn<T> {
  * @returns 表格列配置数组
  */
 export const getTableColumns = (
-  getCategoryName: (categoryId: string) => string,
+  getCategoryName: (categoryId: string) => string
 ): TableColumn<LinksItem>[] => [
   {
-    key: "icon",
-    title: "图标",
-    width: "44px", // 更窄
+    key: 'icon',
+    title: '图标',
+    width: '44px', // 更窄
     render: (value, record, _index) => {
       const icon = record.icon;
       const iconType = record.iconType;
-      const isImage = typeof icon === "string" && /^https?:\/\//.test(icon);
+      const isImage = typeof icon === 'string' && /^https?:\/\//.test(icon);
       return (
         <div className="mx-auto flex h-10 w-10 items-center justify-center">
-          {iconType === "image" || isImage ? (
-            <img src={icon} alt="" className="h-6 w-6 object-contain" />
+          {iconType === 'image' || isImage ? (
+            <Image
+              src={icon}
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 object-contain"
+              unoptimized
+            />
           ) : (
             <span className="text-sm font-bold">{icon}</span>
           )}
@@ -50,29 +58,26 @@ export const getTableColumns = (
     },
   },
   {
-    key: "title",
-    title: "标题",
-    width: "450px",
+    key: 'title',
+    title: '标题',
+    width: '450px',
     render: (value, record, _index) => (
       <div>
         <div className="font-medium">{String(value)}</div>
-        <div className="max-w-[300px] truncate text-sm text-muted-foreground">
-          {record.url}
-        </div>
+        <div className="max-w-[300px] truncate text-sm text-muted-foreground">{record.url}</div>
       </div>
     ),
   },
   {
-    key: "category",
-    title: "分类",
-    width: "120px",
-    render: (value, _record, _index) =>
-      value ? getCategoryName(value as string) : "-",
+    key: 'category',
+    title: '分类',
+    width: '120px',
+    render: (value, _record, _index) => (value ? getCategoryName(value as string) : '-'),
   },
   {
-    key: "tags",
-    title: "标签",
-    width: "350px",
+    key: 'tags',
+    title: '标签',
+    width: '350px',
     render: (value, _record, _index) => {
       const tags = value as string[];
       if (!tags?.length) return null;
@@ -93,9 +98,9 @@ export const getTableColumns = (
     },
   },
   {
-    key: "featured",
-    title: "状态",
-    width: "100px",
+    key: 'featured',
+    title: '状态',
+    width: '100px',
     render: (value, _record, _index) =>
       (value as boolean) ? (
         <Badge variant="default" className="px-2 text-xs">
@@ -118,25 +123,25 @@ export const getTableColumns = (
  */
 export const getTableActions = (
   onEdit: (record: LinksItem) => void,
-  onDelete: (record: LinksItem) => void,
+  onDelete: (record: LinksItem) => void
 ) => [
   {
-    label: "访问",
-    onClick: (record: LinksItem) => window.open(record.url, "_blank"),
+    label: '访问',
+    onClick: (record: LinksItem) => window.open(record.url, '_blank'),
     icon: ExternalLink,
-    variant: "outline" as const,
+    variant: 'outline' as const,
   },
   {
-    label: "编辑",
+    label: '编辑',
     onClick: onEdit,
     icon: Edit,
-    variant: "outline" as const,
+    variant: 'outline' as const,
   },
   {
-    label: "删除",
+    label: '删除',
     onClick: onDelete,
     icon: Trash2,
-    variant: "destructive" as const,
+    variant: 'destructive' as const,
   },
 ];
 
@@ -149,14 +154,14 @@ export const getTableActions = (
  */
 export const getPageActions = (onAdd: () => void, onRefresh: () => void) => [
   {
-    label: "添加网址",
+    label: '添加网址',
     onClick: onAdd,
     icon: Plus,
   },
   {
-    label: "刷新数据",
+    label: '刷新数据',
     onClick: onRefresh,
     icon: RefreshCw,
-    variant: "outline" as const,
+    variant: 'outline' as const,
   },
 ];

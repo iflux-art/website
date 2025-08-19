@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 // 内联面包屑相关类型定义
 interface BreadcrumbItem {
@@ -35,13 +35,9 @@ interface BreadcrumbProps {
  *   ]}
  * />
  */
-export function Breadcrumb({
-  items,
-  separator = "/",
-  className,
-}: BreadcrumbProps) {
+export function Breadcrumb({ items, separator = '/', className }: BreadcrumbProps) {
   return (
-    <nav className={cn("text-sm font-medium text-muted-foreground", className)}>
+    <nav className={cn('text-sm font-medium text-muted-foreground', className)}>
       <ol className="flex flex-wrap items-center">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -52,22 +48,15 @@ export function Breadcrumb({
           if (!isLast && !href) {
             // 移除 getDirectoryTitle, getFirstDocInDirectory 的 import
             // 不再做任何 Node API 调用
-            href = ""; // 或者根据实际需求设置一个默认值
+            href = ''; // 或者根据实际需求设置一个默认值
           }
           return (
             <li key={index} className="flex items-center">
-              {index > 0 && (
-                <span className="mx-2 text-muted-foreground/70">
-                  {separator}
-                </span>
-              )}
+              {index > 0 && <span className="mx-2 text-muted-foreground/70">{separator}</span>}
               {isLast || !href ? (
                 <span className="text-foreground">{label}</span>
               ) : (
-                <Link
-                  href={href}
-                  className="text-muted-foreground hover:text-foreground"
-                >
+                <Link href={href} className="text-muted-foreground hover:text-foreground">
                   {label}
                 </Link>
               )}

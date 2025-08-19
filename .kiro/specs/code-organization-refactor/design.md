@@ -115,35 +115,35 @@ src/
 
 ```typescript
 // src/types/index.ts
-export * from "./base-types";
-export * from "./data-types";
-export * from "./metadata-types";
-export * from "./content-types"; // 新增
+export * from './base-types';
+export * from './data-types';
+export * from './metadata-types';
+export * from './content-types'; // 新增
 
 // src/lib/index.ts
-export * from "./helpers";
-export * from "./utils";
-export * from "./metadata";
-export * from "./website-parser"; // 如果提升
+export * from './helpers';
+export * from './utils';
+export * from './metadata';
+export * from './website-parser'; // 如果提升
 
 // src/hooks/index.ts
-export * from "./use-cache";
-export * from "./use-content-data"; // 如果提升
+export * from './use-cache';
+export * from './use-content-data'; // 如果提升
 
 // src/components/index.ts
-export * from "./ui";
-export * from "./mdx";
-export * from "./theme-provider";
+export * from './ui';
+export * from './mdx';
+export * from './theme-provider';
 ```
 
 #### 功能目录导出模式
 
 ```typescript
 // src/features/{feature}/index.ts
-export * from "./types";
-export * from "./lib";
-export * from "./hooks";
-export * from "./components";
+export * from './types';
+export * from './lib';
+export * from './hooks';
+export * from './components';
 ```
 
 ## 错误处理

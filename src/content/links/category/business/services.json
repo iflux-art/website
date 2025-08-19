@@ -1,0 +1,26 @@
+[
+  {
+    "title": "WildCard",
+    "url": "https://yeka.ai/",
+    "description": "一分钟注册，轻松订阅海外线上服务",
+    "category": "ai/services",
+    "tags": ["订阅服务", "海外服务", "支付工具"],
+    "featured": false,
+    "icon": "https://cdn.wildcard.com.cn/logo.png",
+    "id": "mb7x6358jl4nco1gstd",
+    "createdAt": "2025-05-28T12:26:30.380Z",
+    "updatedAt": "2025-05-28T12:26:30.380Z"
+  },
+  {
+    "title": "2233.ai",
+    "url": "https://2233.ai/",
+    "description": "ChatGPT Plus / Claude 无需账号 即买即用",
+    "category": "ai/services",
+    "tags": ["订阅服务", "即买即用", "无需账号"],
+    "featured": false,
+    "icon": "https://2233.ai/logo.svg",
+    "id": "mb7x6he5fbc68xebnys",
+    "createdAt": "2025-05-28T12:26:48.845Z",
+    "updatedAt": "2025-05-28T12:26:48.845Z"
+  }
+]

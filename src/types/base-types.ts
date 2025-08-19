@@ -12,7 +12,7 @@
  * @since 2024
  */
 
-import type { ReactNode, CSSProperties } from "react";
+import type { ReactNode, CSSProperties } from 'react';
 
 // ==================== 基础值类型 ====================
 

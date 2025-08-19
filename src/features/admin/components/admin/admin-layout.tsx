@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import React, { ReactNode } from "react";
-import { useUser, SignOutButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { LogOut, User } from "lucide-react";
+import React from 'react';
+import type { ReactNode } from 'react';
+import { useUser, SignOutButton } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button';
+import { LogOut, User } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -36,7 +37,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                   <User className="h-4 w-4" />
                   <span>
                     欢迎，
-                    {user.firstName || user.emailAddresses[0]?.emailAddress}
+                    {user.firstName ?? user.emailAddresses[0]?.emailAddress}
                   </span>
                 </div>
               )}

@@ -2,9 +2,9 @@
  * 网站元数据解析核心功能
  */
 
-import { WebsiteMetadata, ParseOptions, ParseResult } from "../types";
-import { normalizeUrl, isValidUrl } from "./validation";
-import { extractDomainName, generateFaviconUrl, delay } from "./utils";
+import type { WebsiteMetadata, ParseOptions, ParseResult } from '@/features/website-parser/types';
+import { normalizeUrl, isValidUrl } from './validation';
+import { extractDomainName, generateFaviconUrl, delay } from './utils';
 
 // 默认配置
 const DEFAULT_OPTIONS: Required<ParseOptions> = {
@@ -12,7 +12,7 @@ const DEFAULT_OPTIONS: Required<ParseOptions> = {
   retries: 3,
   retryDelay: 1000,
   userAgent:
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
 
 /**
@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS: Required<ParseOptions> = {
  */
 export async function parseWebsiteMetadata(
   url: string,
-  options: ParseOptions = {},
+  options: ParseOptions = {}
 ): Promise<ParseResult> {
   const config = { ...DEFAULT_OPTIONS, ...options };
 
@@ -29,7 +29,7 @@ export async function parseWebsiteMetadata(
     if (!isValidUrl(url)) {
       return {
         success: false,
-        error: "Invalid URL format",
+        error: 'Invalid URL format',
       };
     }
 
@@ -40,19 +40,19 @@ export async function parseWebsiteMetadata(
       `/api/parse-website?url=${encodeURIComponent(normalizedUrl)}`,
       {
         headers: {
-          "User-Agent": config.userAgent,
+          'User-Agent': config.userAgent,
         },
         signal: AbortSignal.timeout(config.timeout),
       },
       config.retries,
-      config.retryDelay,
+      config.retryDelay
     );
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    const metadata = await response.json();
+    const metadata = (await response.json()) as WebsiteMetadata;
 
     return {
       success: true,
@@ -62,7 +62,7 @@ export async function parseWebsiteMetadata(
     // 返回基础信息作为降级方案
     const fallbackData: WebsiteMetadata = {
       title: extractDomainName(url),
-      description: "",
+      description: '',
       icon: generateFaviconUrl(url),
       url: normalizeUrl(url),
     };
@@ -70,7 +70,7 @@ export async function parseWebsiteMetadata(
     return {
       success: false,
       data: fallbackData,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 }
@@ -82,7 +82,7 @@ async function fetchWithRetry(
   url: string,
   options: RequestInit,
   retries: number,
-  retryDelay: number,
+  retryDelay: number
 ): Promise<Response> {
   try {
     const response = await fetch(url, options);

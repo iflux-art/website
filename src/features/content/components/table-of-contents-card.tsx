@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { Text } from "lucide-react";
-import { useHeadingObserver } from "@/features/content/hooks/use-heading-observer";
+import { useEffect, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { Text } from 'lucide-react';
+import { useHeadingObserver } from '@/features/content/hooks/use-heading-observer';
 
 // ====== 迁移自 src/config/layout.ts ======
 /**
@@ -24,11 +24,7 @@ const SCROLL_OFFSET = NAVBAR_HEIGHT;
  * @param offset 偏移量（默认为0）
  * @param updateHash 是否更新URL hash（默认为false）
  */
-function scrollToElement(
-  elementId: string,
-  offset: number = 0,
-  updateHash: boolean = false,
-): void {
+function scrollToElement(elementId: string, offset: number = 0, updateHash: boolean = false): void {
   const element = document.getElementById(elementId);
   if (!element) return;
 
@@ -37,12 +33,12 @@ function scrollToElement(
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: "smooth",
+    behavior: 'smooth',
   });
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, "", `#${elementId}`);
+    history.pushState(null, '', `#${elementId}`);
   }
 }
 // ====== END ======
@@ -69,20 +65,19 @@ export interface TableOfContentsCardProps {
 export function TableOfContentsCard({
   headings,
   className,
-  title = "目录",
+  title = '目录',
 }: TableOfContentsCardProps) {
   const tocRef = useRef<HTMLDivElement>(null);
 
   // 使用自定义 hook 处理标题观察
   const activeId = useHeadingObserver(headings);
 
-  // 如果没有标题，不渲染目录组件
-  if (headings.length === 0) {
-    return null;
-  }
-
   // 自动滚动目录到当前活动标题
   useEffect(() => {
+    // 如果没有标题，不执行任何操作
+    if (headings.length === 0) {
+      return;
+    }
     let timeoutId: number;
 
     const handleScroll = () => {
@@ -92,16 +87,13 @@ export function TableOfContentsCard({
 
       timeoutId = window.setTimeout(() => {
         if (activeId && tocRef.current) {
-          const activeElement = tocRef.current.querySelector(
-            `a[href="#${activeId}"]`,
-          );
+          const activeElement = tocRef.current.querySelector(`a[href="#${activeId}"]`);
           if (activeElement) {
             const containerRect = tocRef.current.getBoundingClientRect();
             const activeRect = activeElement.getBoundingClientRect();
 
             const isInView =
-              activeRect.top >= containerRect.top &&
-              activeRect.bottom <= containerRect.bottom;
+              activeRect.top >= containerRect.top && activeRect.bottom <= containerRect.bottom;
 
             if (!isInView) {
               const scrollTop =
@@ -111,7 +103,7 @@ export function TableOfContentsCard({
                 activeRect.height / 2;
               tocRef.current.scrollTo({
                 top: tocRef.current.scrollTop + scrollTop,
-                behavior: "smooth",
+                behavior: 'smooth',
               });
             }
           }
@@ -125,11 +117,11 @@ export function TableOfContentsCard({
         clearTimeout(timeoutId);
       }
     };
-  }, [activeId, tocRef]);
+  }, [activeId, tocRef, headings.length]);
 
   // 过滤掉h1标题，只显示h2-h4
   const filteredHeadings = headings.filter(
-    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4,
+    (heading: TocHeading) => heading.level >= 2 && heading.level <= 4
   );
 
   // 根据标题级别对目录进行分组和嵌套
@@ -140,8 +132,8 @@ export function TableOfContentsCard({
       if (!heading.id) {
         heading.id = `heading-${heading.text
           .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^\w-]/g, "")}-${index}`;
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]/g, '')}-${index}`;
       }
       return heading;
     });
@@ -155,7 +147,7 @@ export function TableOfContentsCard({
   const organizedHeadings = organizeHeadings(filteredHeadings);
 
   return (
-    <Card className={cn("w-full", className)}>
+    <Card className={cn('w-full', className)}>
       <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
           <Text className="h-3.5 w-3.5 text-primary" />
@@ -163,10 +155,7 @@ export function TableOfContentsCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-0 pb-4">
-        <div
-          ref={tocRef}
-          className="hide-scrollbar max-h-[400px] overflow-y-auto"
-        >
+        <div ref={tocRef} className="hide-scrollbar max-h-[400px] overflow-y-auto">
           <div className="relative">
             {/* 左侧细线 */}
             <div className="absolute top-0 bottom-0 left-2 w-px bg-border" />
@@ -180,10 +169,10 @@ export function TableOfContentsCard({
                 // 根据标题级别设置不同的样式
                 const headingSize =
                   {
-                    2: "font-medium",
-                    3: "font-normal",
-                    4: "text-xs",
-                  }[heading.level] || "";
+                    2: 'font-medium',
+                    3: 'font-normal',
+                    4: 'text-xs',
+                  }[heading.level] ?? '';
 
                 return (
                   <div key={index} className="relative">
@@ -195,23 +184,20 @@ export function TableOfContentsCard({
                     <a
                       href={`#${heading.id}`}
                       className={cn(
-                        "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
+                        'group relative flex min-w-0 items-start py-1.5 text-sm transition-colors',
                         headingSize,
                         // 普通文本
-                        "text-muted-foreground",
+                        'text-muted-foreground',
                         // hover 状态
-                        "hover:text-foreground",
+                        'hover:text-foreground',
                         // active 状态
-                        isActive && "font-medium text-foreground",
-                        "w-full",
+                        isActive && 'font-medium text-foreground',
+                        'w-full'
                       )}
                       style={{
-                        paddingLeft:
-                          heading.level > 2
-                            ? `calc(${indent}rem + 1rem)`
-                            : "1rem",
+                        paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : '1rem',
                       }}
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault();
                         scrollToElement(heading.id, SCROLL_OFFSET);
                       }}

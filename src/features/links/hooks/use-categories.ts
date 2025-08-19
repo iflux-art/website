@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { LinksCategory, CategoryId } from "../types";
-import { generateCategoriesData } from "../lib";
+import { useState, useEffect } from 'react';
+import type { LinksCategory, CategoryId } from '@/features/links/types';
+import { generateCategoriesData } from '@/features/links/lib';
 
 /**
  * 获取链接分类数据的 Hook
@@ -21,14 +21,14 @@ export function useCategories() {
         const data = generateCategoriesData();
         setCategories(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        setError(err instanceof Error ? err.message : 'Unknown error');
         setCategories([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchCategories();
+    void fetchCategories();
   }, []);
 
   /**
@@ -36,7 +36,7 @@ export function useCategories() {
    */
   const getCategoryName = (categoryId: string) => {
     // 先查找主分类
-    const category = categories.find((cat) => cat.id === categoryId);
+    const category = categories.find(cat => cat.id === categoryId);
     if (category) {
       return category.name;
     }
@@ -44,7 +44,7 @@ export function useCategories() {
     // 查找子分类
     for (const cat of categories) {
       if (cat.children) {
-        const subCategory = cat.children.find((sub) => sub.id === categoryId);
+        const subCategory = cat.children.find(sub => sub.id === categoryId);
         if (subCategory) {
           return `${cat.name} > ${subCategory.name}`;
         }
@@ -58,9 +58,7 @@ export function useCategories() {
    * 获取过滤后的分类（排除友链和个人主页）
    */
   const getFilteredCategories = () => {
-    return categories.filter(
-      (cat) => cat.id !== "friends" && cat.id !== "profile",
-    );
+    return categories.filter(cat => cat.id !== 'friends' && cat.id !== 'profile');
   };
 
   /**
@@ -74,7 +72,7 @@ export function useCategories() {
       parentName?: string;
     }> = [];
 
-    categories.forEach((category) => {
+    categories.forEach(category => {
       // 添加主分类
       flatCategories.push({
         id: category.id,
@@ -84,7 +82,7 @@ export function useCategories() {
 
       // 添加子分类
       if (category.children) {
-        category.children.forEach((subCategory) => {
+        category.children.forEach(subCategory => {
           flatCategories.push({
             id: subCategory.id,
             name: subCategory.name,
@@ -106,18 +104,18 @@ export function useCategories() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("/api/links/categories", {
-        cache: "no-store",
+      const response = await fetch('/api/links/categories', {
+        cache: 'no-store',
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch categories");
+        throw new Error('Failed to fetch categories');
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as LinksCategory[];
       setCategories(Array.isArray(data) ? data : []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }

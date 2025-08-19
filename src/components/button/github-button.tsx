@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Github } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const GITHUB_URL = "https://github.com/iflux-art";
+const GITHUB_URL = 'https://github.com/iflux-art';
 
 export function GitHubButton() {
   const handleClick = () => {
-    window.open(GITHUB_URL, "_blank", "noopener,noreferrer");
+    window.open(GITHUB_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (

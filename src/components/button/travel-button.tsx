@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { TramFront } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { TramFront } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const TRAVEL_URL = "https://www.travellings.cn/go.html";
+const TRAVEL_URL = 'https://www.travellings.cn/go.html';
 
 export function TravelButton() {
   const handleClick = () => {
-    window.open(TRAVEL_URL, "_blank", "noopener,noreferrer");
+    window.open(TRAVEL_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (

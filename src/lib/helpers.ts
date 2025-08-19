@@ -21,7 +21,7 @@
  */
 export function debounce<TArgs extends unknown[], TReturn>(
   func: (...args: TArgs) => Promise<TReturn>,
-  wait: number,
+  wait: number
 ): (...args: TArgs) => Promise<TReturn> {
   let timeoutId: NodeJS.Timeout;
 

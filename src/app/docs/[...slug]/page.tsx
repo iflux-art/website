@@ -1,29 +1,28 @@
-import React from "react";
-import { notFound, redirect } from "next/navigation";
-import { createDocBreadcrumbsServer } from "@/features/docs/lib";
-import { ContentDisplay, DocPagination } from "@/features/content";
-import { DocsSidebarWrapper } from "@/features/docs/components";
-import { TableOfContentsCard } from "@/features/content";
+import React from 'react';
+import { notFound, redirect } from 'next/navigation';
+import { createDocBreadcrumbsServer } from '@/features/docs/lib';
+import { ContentDisplay, DocPagination } from '@/features/content';
+import { DocsSidebarWrapper } from '@/features/docs/components';
+import { TableOfContentsCard } from '@/features/content';
 
-import { AppGrid } from "@/features/layout";
-import type { DocContentResult } from "@/features/docs/types";
-import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/features/comment";
+import { AppGrid } from '@/features/layout';
+import type { DocContentResult } from '@/features/docs/types';
+import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
+import { TwikooComment } from '@/features/comment';
 
 type DocPageParams = {
   slug: string[];
 };
 
 // 文件顶部只保留一处 import fs 和 import path
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "@/features/docs/lib";
-import { extractHeadings } from "@/features/content";
-import {
-  resolveDocumentPath,
-  getAllDocsStructure,
-} from "@/features/docs/components";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { getFlattenedDocsOrder } from '@/features/docs/lib';
+import { extractHeadings } from '@/features/content';
+import { resolveDocumentPath, getAllDocsStructure } from '@/features/docs/components';
+import type { SidebarItem } from '@/features/docs/types';
+import { toDocFrontmatter } from '@/features/docs/types';
 // ====== 迁移自 src/utils/text.ts ======
 /**
  * 计算文本中的字数
@@ -34,32 +33,32 @@ import {
 function countWords(text: string): number {
   // 移除 Markdown 语法和 HTML 标签
   const cleanText = text
-    .replace(/```[\s\S]*?```/g, "") // 移除代码块
-    .replace(/`[^`]*`/g, "") // 移除行内代码
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // 替换链接为链接文本
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1") // 替换图片为图片描述
-    .replace(/<[^>]*>/g, "") // 移除 HTML 标签
-    .replace(/[#*_~>|-]/g, "") // 移除 Markdown 标记符号
-    .replace(/\s+/g, " ") // 将多个空白字符替换为单个空格
+    .replace(/```[\s\S]*?```/g, '') // 移除代码块
+    .replace(/`[^`]*`/g, '') // 移除行内代码
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // 替换链接为链接文本
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1') // 替换图片为图片描述
+    .replace(/<[^>]*>/g, '') // 移除 HTML 标签
+    .replace(/[#*_~>|-]/g, '') // 移除 Markdown 标记符号
+    .replace(/\s+/g, ' ') // 将多个空白字符替换为单个空格
     .trim();
 
   // 中文字符计数
-  const chineseChars = cleanText.match(/[\u4e00-\u9fa5]/g) || [];
+  const chineseChars = cleanText.match(/[\u4e00-\u9fa5]/g) ?? [];
 
   // 英文单词计数（简单的按空格分割）
   const englishWords = cleanText
-    .replace(/[\u4e00-\u9fa5]/g, "") // 移除中文字符
+    .replace(/[\u4e00-\u9fa5]/g, '') // 移除中文字符
     .split(/\s+/)
-    .filter((word) => word.length > 0);
+    .filter(word => word.length > 0);
 
   // 返回中文字符数和英文单词数之和
   return chineseChars.length + englishWords.length;
 }
 // ====== END ======
 // 修复 Prettier 格式错误，将多行类型 import 改为单行
-import type { DocFrontmatter, NavDocItem } from "@/features/docs/types";
-const DOCS_CONTENT_DIR = "src/content/docs";
-const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
+import type { NavDocItem } from '@/features/docs/types';
+const DOCS_CONTENT_DIR = 'src/content/docs';
+const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
 
 // ===== 迁移自 src/lib/content/utils.ts =====
 
@@ -74,9 +73,9 @@ interface ScanOptions {
 const scanContentDirectory = (options: ScanOptions): { slug: string[] }[] => {
   const {
     contentDir,
-    indexFiles = ["index.mdx", "index.md"],
-    extensions = [".mdx", ".md"],
-    excludePrefix = "_",
+    indexFiles = ['index.mdx', 'index.md'],
+    extensions = ['.mdx', '.md'],
+    excludePrefix = '_',
     filter = () => true,
   } = options;
 
@@ -110,15 +109,12 @@ const scanContentDirectory = (options: ScanOptions): { slug: string[] }[] => {
         }
       } else if (
         item.isFile() &&
-        extensions.some((ext) => item.name.endsWith(ext)) &&
+        extensions.some(ext => item.name.endsWith(ext)) &&
         !item.name.startsWith(excludePrefix) &&
         !indexFiles.includes(item.name) &&
         filter(itemPath)
       ) {
-        const fileName = item.name.replace(
-          new RegExp(`(${extensions.join("|")})$`),
-          "",
-        );
+        const fileName = item.name.replace(new RegExp(`(${extensions.join('|')})$`), '');
         paths.push({ slug: [...currentSlug, fileName] });
       }
     }
@@ -136,7 +132,12 @@ let cacheTimestamp: number = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
 
 // 性能监控
-const performanceMetrics = {
+const performanceMetrics: {
+  pathGenerationTime: number;
+  cacheHits: number;
+  cacheMisses: number;
+  totalPaths: number;
+} = {
   pathGenerationTime: 0,
   cacheHits: 0,
   cacheMisses: 0,
@@ -155,21 +156,21 @@ const generateDocPathsFromStructure = (): { slug: string[] }[] => {
     // 使用 getAllDocsStructure 获取完整结构
     const structure = getAllDocsStructure();
 
-    if (!structure || !structure.categories) {
-      throw new Error("Invalid structure returned from getAllDocsStructure");
+    if (!structure?.categories) {
+      throw new Error('Invalid structure returned from getAllDocsStructure');
     }
 
     // 递归提取所有文档路径
-    function extractPaths(items: any[], categoryPrefix: string[] = []) {
+    function extractPaths(items: SidebarItem[], categoryPrefix: string[] = []) {
       if (!Array.isArray(items)) return;
 
       for (const item of items) {
         try {
-          if (item.type === "page" && item.href) {
+          if (item.type === 'page' && item?.href) {
             // 从 href 中提取路径段
-            const href = item.href.replace(/^\/docs\//, "");
+            const href = item.href.replace(/^\/docs\//, '');
             if (href && !seenPaths.has(href)) {
-              const slugParts = href.split("/").filter(Boolean); // 过滤空字符串
+              const slugParts = href.split('/').filter(Boolean); // 过滤空字符串
               if (slugParts.length > 0) {
                 paths.push({ slug: slugParts });
                 seenPaths.add(href);
@@ -213,32 +214,25 @@ const generateDocPathsFromStructure = (): { slug: string[] }[] => {
         slug &&
         Array.isArray(slug) &&
         slug.length > 0 &&
-        slug.every(
-          (segment) => typeof segment === "string" && segment.length > 0,
-        )
+        slug.every(segment => typeof segment === 'string' && segment.length > 0)
       );
     });
 
     if (validPaths.length !== paths.length) {
-      console.warn(
-        `Filtered out ${paths.length - validPaths.length} invalid paths`,
-      );
+      console.warn(`Filtered out ${paths.length - validPaths.length} invalid paths`);
     }
 
     return validPaths;
   } catch (error) {
-    console.warn(
-      "Failed to generate paths from structure, falling back to directory scan:",
-      error,
-    );
+    console.warn('Failed to generate paths from structure, falling back to directory scan:', error);
     // 回退到原有的目录扫描方式
     try {
       return scanContentDirectory({
-        contentDir: path.join(process.cwd(), "src", "content", "docs"),
-        excludePrefix: "_",
+        contentDir: path.join(process.cwd(), 'src', 'content', 'docs'),
+        excludePrefix: '_',
       });
     } catch (fallbackError) {
-      console.error("Fallback directory scan also failed:", fallbackError);
+      console.error('Fallback directory scan also failed:', fallbackError);
       return []; // 返回空数组，让 Next.js 在运行时生成页面
     }
   }
@@ -271,8 +265,8 @@ const generateDocPaths = (): { slug: string[] }[] => {
   performanceMetrics.totalPaths = paths.length;
 
   // 在开发环境下输出性能信息
-  if (process.env.NODE_ENV === "development") {
-    console.log("Doc paths generation metrics:", {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('Doc paths generation metrics:', {
       generationTime: `${performanceMetrics.pathGenerationTime}ms`,
       totalPaths: performanceMetrics.totalPaths,
       cacheHits: performanceMetrics.cacheHits,
@@ -311,14 +305,9 @@ function cleanupExpiredCache() {
 
   // 如果缓存仍然太大，删除最旧的条目
   if (docContentCache.size > MAX_CACHE_SIZE) {
-    const sortedEntries = Array.from(docCacheTimestamp.entries()).sort(
-      ([, a], [, b]) => a - b,
-    );
+    const sortedEntries = Array.from(docCacheTimestamp.entries()).sort(([, a], [, b]) => a - b);
 
-    const toDelete = sortedEntries.slice(
-      0,
-      sortedEntries.length - MAX_CACHE_SIZE,
-    );
+    const toDelete = sortedEntries.slice(0, sortedEntries.length - MAX_CACHE_SIZE);
     for (const [key] of toDelete) {
       docContentCache.delete(key);
       docCacheTimestamp.delete(key);
@@ -330,12 +319,12 @@ function cleanupExpiredCache() {
  * 优化的文档内容获取函数，支持缓存和性能优化
  */
 function getDocContent(slug: string[]): DocContentResult {
-  const requestedPath = slug.join("/");
+  const requestedPath = slug.join('/');
   const cacheKey = requestedPath;
   const now = Date.now();
 
   // 检查缓存是否有效（仅在生产环境使用缓存）
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     const cachedContent = docContentCache.get(cacheKey);
     const cacheTime = docCacheTimestamp.get(cacheKey);
 
@@ -348,13 +337,10 @@ function getDocContent(slug: string[]): DocContentResult {
   const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
 
   let filePath: string | undefined;
-  let actualSlugForNav = slug.join("/");
+  let actualSlugForNav = slug.join('/');
   let isIndexPage = false;
 
-  if (
-    fs.existsSync(absoluteRequestedPath) &&
-    fs.statSync(absoluteRequestedPath).isDirectory()
-  ) {
+  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
     for (const indexFile of DOCS_INDEX_FILES) {
       const indexPath = path.join(absoluteRequestedPath, indexFile);
       if (fs.existsSync(indexPath)) {
@@ -366,10 +352,7 @@ function getDocContent(slug: string[]): DocContentResult {
     if (!filePath) {
       const dirSpecificFlattenedDocs = getFlattenedDocsOrder(requestedPath);
       if (dirSpecificFlattenedDocs.length > 0) {
-        const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(
-          /^\/docs\//,
-          "",
-        );
+        const firstDocRelativePath = dirSpecificFlattenedDocs[0].path.replace(/^\/docs\//, '');
         filePath = path.join(docsContentDir, `${firstDocRelativePath}.mdx`);
         if (!fs.existsSync(filePath)) {
           filePath = path.join(docsContentDir, `${firstDocRelativePath}.md`);
@@ -389,22 +372,21 @@ function getDocContent(slug: string[]): DocContentResult {
         filePath = possiblePathMd;
       }
     }
-    actualSlugForNav = slug.join("/");
-    isIndexPage =
-      path.basename(filePath || "", path.extname(filePath || "")) === "index";
+    actualSlugForNav = slug.join('/');
+    isIndexPage = path.basename(filePath ?? '', path.extname(filePath ?? '')) === 'index';
   }
 
   if (!filePath || !fs.existsSync(filePath)) {
     throw new Error(`Document not found at path: ${requestedPath}`);
   }
-  const fileContent = fs.readFileSync(filePath, "utf8");
+  const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
   const date = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString("zh-CN", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+    ? new Date((frontmatter.date as string | number | Date) ?? '').toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
       })
     : null;
 
@@ -414,8 +396,8 @@ function getDocContent(slug: string[]): DocContentResult {
   const topLevelCategorySlug = slug[0];
   const relativePathFromTopCategory = path
     .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-    .replace(/\\/g, "/")
-    .replace(/\.(mdx|md)$/, "");
+    .replace(/\\/g, '/')
+    .replace(/\.(mdx|md)$/, '');
   const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
   let prevDoc: NavDocItem | null = null;
   let nextDoc: NavDocItem | null = null;
@@ -425,32 +407,27 @@ function getDocContent(slug: string[]): DocContentResult {
     const indexDirNavPath = `/docs/${actualSlugForNav}`;
     nextDoc =
       flattenedDocs.find(
-        (doc) =>
-          doc.path.startsWith(indexDirNavPath + "/") ||
+        doc =>
+          doc.path.startsWith(indexDirNavPath + '/') ||
           (doc.path.startsWith(indexDirNavPath) &&
             doc.path !== indexDirNavPath &&
-            !doc.path.substring(indexDirNavPath.length + 1).includes("/")),
-      ) || null;
+            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+      ) ?? null;
   } else {
     const currentNavPath = `/docs/${actualSlugForNav}`;
-    const currentIndex = flattenedDocs.findIndex(
-      (doc) => doc.path === currentNavPath,
-    );
+    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
     if (currentIndex !== -1) {
       prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
-      nextDoc =
-        currentIndex < flattenedDocs.length - 1
-          ? flattenedDocs[currentIndex + 1]
-          : null;
+      nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
     }
   }
 
   // breadcrumbs 由页面层负责生成
 
   const result: DocContentResult = {
-    title: frontmatter.title || path.basename(filePath, path.extname(filePath)),
+    title: (frontmatter.title ?? path.basename(filePath, path.extname(filePath))) as string,
     content: originalContent,
-    frontmatter: frontmatter as DocFrontmatter,
+    frontmatter: toDocFrontmatter(frontmatter),
     headings,
     prevDoc,
     nextDoc,
@@ -464,7 +441,7 @@ function getDocContent(slug: string[]): DocContentResult {
   };
 
   // 更新缓存（仅在生产环境）
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     docContentCache.set(requestedPath, result);
     docCacheTimestamp.set(requestedPath, Date.now());
 
@@ -489,13 +466,13 @@ export async function generateStaticParams() {
     const paths = generateDocPaths();
 
     // 在开发环境下输出路径统计信息
-    if (process.env.NODE_ENV === "development") {
-      console.log(`Generated ${paths.length} static paths for docs`);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`Generated ${paths.length} static paths for docs`);
     }
 
     return paths;
   } catch (error) {
-    console.error("Error generating static params for docs:", error);
+    console.error('Error generating static params for docs:', error);
     // 返回空数组，让 Next.js 在运行时生成页面
     return [];
   }
@@ -513,35 +490,27 @@ export const revalidate = 3600; // 1小时重新验证一次
  */
 export const dynamicParams = true;
 
-export default async function DocPage({
-  params,
-}: {
-  params: Promise<DocPageParams>;
-}) {
+export default async function DocPage({ params }: { params: Promise<DocPageParams> }) {
   const resolvedParams = await params;
-  const slug = Array.isArray(resolvedParams.slug)
-    ? resolvedParams.slug
-    : [resolvedParams.slug];
+  const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
 
   try {
     // 使用 resolveDocumentPath 进行路径解析和重定向处理
     const pathResolution = resolveDocumentPath(slug);
 
     // 处理重定向情况
-    if (pathResolution.type === "redirect" && pathResolution.redirectTo) {
+    if (pathResolution.type === 'redirect' && pathResolution.redirectTo) {
       // 重定向循环检测：检查是否重定向到自身
-      const currentPath = `/docs/${slug.join("/")}`;
+      const currentPath = `/docs/${slug.join('/')}`;
       if (pathResolution.redirectTo === currentPath) {
-        console.error(
-          `Redirect loop detected: ${currentPath} -> ${pathResolution.redirectTo}`,
-        );
+        console.error(`Redirect loop detected: ${currentPath} -> ${pathResolution.redirectTo}`);
         notFound();
       }
       redirect(pathResolution.redirectTo);
     }
 
     // 处理未找到的情况
-    if (pathResolution.type === "notfound") {
+    if (pathResolution.type === 'notfound') {
       notFound();
     }
 
@@ -556,7 +525,7 @@ export default async function DocPage({
             {/* 左侧边栏 - 全局文档导航 */}
             <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
               <div className="space-y-4">
-                <DocsSidebarWrapper currentDoc={`/docs/${slug.join("/")}`} />
+                <DocsSidebarWrapper currentDoc={`/docs/${slug.join('/')}`} />
               </div>
             </aside>
 
@@ -578,10 +547,7 @@ export default async function DocPage({
             {/* 右侧边栏 - TOC */}
             <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto xl:block">
               <div className="space-y-4">
-                <TableOfContentsCard
-                  headings={doc.headings}
-                  className="prose-sm"
-                />
+                <TableOfContentsCard headings={doc.headings} className="prose-sm" />
               </div>
             </aside>
           </AppGrid>
@@ -590,10 +556,7 @@ export default async function DocPage({
     );
   } catch (error) {
     // 增强 404 错误处理，记录错误信息用于调试
-    console.error(
-      `Error loading document at path: /docs/${slug.join("/")}`,
-      error,
-    );
+    console.error(`Error loading document at path: /docs/${slug.join('/')}`, error as Error);
     notFound();
   }
 }

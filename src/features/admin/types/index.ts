@@ -9,7 +9,7 @@ export interface LinksItem {
   description: string;
   url: string;
   icon?: string;
-  iconType?: "image" | "text";
+  iconType?: 'image' | 'text';
   tags: string[];
   featured?: boolean;
   category: string;
@@ -24,7 +24,7 @@ export interface LinksFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: "image" | "text";
+  iconType: 'image' | 'text';
   tags: string[];
   featured: boolean;
   category: string;
@@ -34,20 +34,20 @@ export interface LinksFormData {
 export interface AddDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSuccess: (item: any) => void;
+  onSuccess: (item: LinksFormData) => void;
   onError: (msg?: string) => void;
 }
 
 export interface EditDialogProps {
   open: boolean;
-  item: any;
+  item: LinksItem;
   onOpenChange: (open: boolean) => void;
   onSuccess: (item: LinksItem) => void;
   onError: (msg?: string) => void;
 }
 
 export interface DeleteDialogProps {
-  item: any;
+  item: LinksItem;
   onOpenChange: (open: boolean) => void;
   onSuccess: (id: string) => void;
   onError: (msg?: string) => void;

@@ -1,18 +1,14 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { ChevronRight, Folder } from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronRight, Folder } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 
-import type { SidebarItem, SidebarProps } from "../types";
+import type { SidebarItem, SidebarProps } from '@/features/layout/types';
 
 // 检查是否在客户端环境
-const isBrowser = typeof window !== "undefined";
+const isBrowser = typeof window !== 'undefined';
 
 /**
  * 基础侧边栏组件
@@ -24,14 +20,12 @@ export function Sidebar({
   currentItem,
   onItemClick,
   className,
-  storageKey = "sidebar-open-categories",
+  storageKey = 'sidebar-open-categories',
   showAllOption = false,
-  allOptionTitle = "全部",
+  allOptionTitle = '全部',
 }: SidebarProps) {
   const [isHovering, setIsHovering] = useState<string | null>(null);
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const sidebarRef = useRef<HTMLDivElement>(null);
   const isInitialized = useRef(false);
 
@@ -48,23 +42,20 @@ export function Sidebar({
   // 处理折叠状态切换
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories((prev) => {
+      setOpenCategories(prev => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
           try {
             localStorage.setItem(storageKey, JSON.stringify(newState));
           } catch (error) {
-            console.warn(
-              "Failed to save sidebar state to localStorage:",
-              error,
-            );
+            console.warn('Failed to save sidebar state to localStorage:', error);
           }
         }
         return newState;
       });
     },
-    [storageKey],
+    [storageKey]
   );
 
   // 初始化折叠状态
@@ -75,7 +66,10 @@ export function Sidebar({
       const savedStateStr = localStorage.getItem(storageKey);
       if (savedStateStr) {
         try {
-          const savedState = JSON.parse(savedStateStr);
+          const savedState: Record<string, boolean> = JSON.parse(savedStateStr) as Record<
+            string,
+            boolean
+          >;
           setOpenCategories(savedState);
           isInitialized.current = true;
           return;
@@ -87,7 +81,7 @@ export function Sidebar({
 
     // 如果没有保存的状态，初始化新状态 - 默认展开所有有子项的分类
     const initialState: Record<string, boolean> = {};
-    items.forEach((item) => {
+    items.forEach(item => {
       if (item.children && item.children.length > 0) {
         initialState[item.id] = true;
       }
@@ -104,7 +98,7 @@ export function Sidebar({
     const isCurrentItem = currentItem === item.id;
 
     return (
-      <div key={item.id} className={level === 0 ? "mb-4" : "my-1"}>
+      <div key={item.id} className={level === 0 ? 'mb-4' : 'my-1'}>
         {hasChildren ? (
           <Collapsible
             open={isOpen}
@@ -113,22 +107,20 @@ export function Sidebar({
           >
             <CollapsibleTrigger
               className={cn(
-                "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium",
-                "transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-                isCurrentItem && "bg-accent text-accent-foreground",
+                'flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium',
+                'transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                isCurrentItem && 'bg-accent text-accent-foreground'
               )}
               aria-expanded={isOpen}
             >
               <div className="flex items-center gap-2">
-                {item.icon || (
-                  <Folder className="h-4 w-4 text-muted-foreground" />
-                )}
+                {item.icon ?? <Folder className="h-4 w-4 text-muted-foreground" />}
                 <span>{item.title}</span>
               </div>
               <ChevronRight
                 className={cn(
-                  "h-4 w-4 shrink-0 transition-transform duration-200",
-                  isOpen && "rotate-90",
+                  'h-4 w-4 shrink-0 transition-transform duration-200',
+                  isOpen && 'rotate-90'
                 )}
                 aria-hidden="true"
               />
@@ -136,9 +128,7 @@ export function Sidebar({
             <CollapsibleContent className="data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:animate-in data-[state=open]:fade-in overflow-hidden transition-all">
               <div className="mt-1 ml-2 border-l border-border py-1 pl-4">
                 <div className="space-y-1">
-                  {item.children?.map((child) =>
-                    renderSidebarItem(child, level + 1),
-                  )}
+                  {item.children?.map(child => renderSidebarItem(child, level + 1))}
                 </div>
               </div>
             </CollapsibleContent>
@@ -149,22 +139,20 @@ export function Sidebar({
             onMouseEnter={() => handleHover(item.id)}
             onMouseLeave={() => handleHover(null)}
             className={cn(
-              "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
-              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-              isCurrentItem
-                ? "bg-accent font-medium text-accent-foreground"
-                : "hover:bg-accent/50",
-              isHovering === item.id && "text-foreground",
+              'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
+              'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+              isCurrentItem ? 'bg-accent font-medium text-accent-foreground' : 'hover:bg-accent/50',
+              isHovering === item.id && 'text-foreground'
             )}
             title={item.description}
-            aria-current={isCurrentItem ? "page" : undefined}
+            aria-current={isCurrentItem ? 'page' : undefined}
           >
             {level > 0 ? (
               <div className="flex h-4 w-4 items-center justify-center">
                 <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
               </div>
             ) : (
-              item.icon || <Folder className="h-4 w-4 text-muted-foreground" />
+              (item.icon ?? <Folder className="h-4 w-4 text-muted-foreground" />)
             )}
             <span>{item.title}</span>
             {item.isExternal && (
@@ -194,26 +182,26 @@ export function Sidebar({
   return (
     <div
       ref={sidebarRef}
-      className={cn("hide-scrollbar", className)}
-      style={{ direction: "ltr", textAlign: "left" }}
+      className={cn('hide-scrollbar', className)}
+      style={{ direction: 'ltr', textAlign: 'left' }}
     >
       <div className="space-y-2">
         {/* 全部选项 */}
         {showAllOption && (
           <div className="mb-2">
             <button
-              onClick={() => handleItemClick("")}
-              onMouseEnter={() => handleHover("all")}
+              onClick={() => handleItemClick('')}
+              onMouseEnter={() => handleHover('all')}
               onMouseLeave={() => handleHover(null)}
               className={cn(
-                "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
-                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
+                'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                 !currentItem
-                  ? "bg-accent font-medium text-accent-foreground"
-                  : "hover:bg-accent/50",
-                isHovering === "all" && "text-foreground",
+                  ? 'bg-accent font-medium text-accent-foreground'
+                  : 'hover:bg-accent/50',
+                isHovering === 'all' && 'text-foreground'
               )}
-              aria-current={!currentItem ? "page" : undefined}
+              aria-current={!currentItem ? 'page' : undefined}
             >
               <Folder className="h-4 w-4 text-muted-foreground" />
               <span>{allOptionTitle}</span>
@@ -222,9 +210,7 @@ export function Sidebar({
         )}
 
         {/* 侧边栏项目列表 */}
-        <div className="space-y-1">
-          {items.map((item) => renderSidebarItem(item))}
-        </div>
+        <div className="space-y-1">{items.map(item => renderSidebarItem(item))}</div>
       </div>
     </div>
   );

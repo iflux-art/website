@@ -3,9 +3,9 @@
  * 提供Tailwind CSS响应式类名生成和管理功能
  */
 
-import type { ResponsiveValue } from "@/types/responsive";
-import type { DeviceType } from "@/config/responsive";
-import { getDeviceTypeFromWidth } from "@/config/responsive";
+import type { ResponsiveValue } from '@/types/responsive';
+import type { DeviceType } from '@/config/responsive';
+import { getDeviceTypeFromWidth } from '@/config/responsive';
 
 /**
  * 生成响应式类名
@@ -15,7 +15,7 @@ import { getDeviceTypeFromWidth } from "@/config/responsive";
  */
 export function generateResponsiveClasses<T extends string>(
   baseClass: string,
-  values: ResponsiveValue<T>,
+  values: ResponsiveValue<T>
 ): string {
   const classes: string[] = [];
 
@@ -41,7 +41,7 @@ export function generateResponsiveClasses<T extends string>(
     classes.push(`large:${baseClass}-${values.large}`);
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -51,34 +51,34 @@ export function generateResponsiveClasses<T extends string>(
  * @returns 响应式间距类名
  */
 export function generateResponsiveSpacing(
-  property: "p" | "m" | "px" | "py" | "mx" | "my",
-  values: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">,
+  property: 'p' | 'm' | 'px' | 'py' | 'mx' | 'my',
+  values: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>
 ): string {
   const classes: string[] = [];
 
   // 添加默认值
-  if (values.default && values.default !== "none") {
+  if (values.default && values.default !== 'none') {
     classes.push(`${property}-${values.default}`);
   }
 
   // 添加设备特定值
-  if (values.mobile && values.mobile !== "none") {
+  if (values.mobile && values.mobile !== 'none') {
     classes.push(`mobile:${property}-mobile-${values.mobile}`);
   }
 
-  if (values.tablet && values.tablet !== "none") {
+  if (values.tablet && values.tablet !== 'none') {
     classes.push(`tablet:${property}-tablet-${values.tablet}`);
   }
 
-  if (values.desktop && values.desktop !== "none") {
+  if (values.desktop && values.desktop !== 'none') {
     classes.push(`desktop:${property}-desktop-${values.desktop}`);
   }
 
-  if (values.large && values.large !== "none") {
+  if (values.large && values.large !== 'none') {
     classes.push(`large:${property}-large-${values.large}`);
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -111,7 +111,7 @@ export function generateResponsiveGrid(cols: ResponsiveValue<number>): string {
     classes.push(`large:grid-cols-${cols.large}`);
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -120,9 +120,7 @@ export function generateResponsiveGrid(cols: ResponsiveValue<number>): string {
  * @returns 响应式字体类名
  */
 export function generateResponsiveText(
-  values: ResponsiveValue<
-    "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
-  >,
+  values: ResponsiveValue<'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'>
 ): string {
   const classes: string[] = [];
 
@@ -148,7 +146,7 @@ export function generateResponsiveText(
     classes.push(`large:text-large-${values.large}`);
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -158,8 +156,8 @@ export function generateResponsiveText(
  * @returns 触摸优化类名
  */
 export function generateTouchOptimizedClasses(
-  size: "small" | "medium" | "large" = "medium",
-  enableHover: boolean = true,
+  size: 'small' | 'medium' | 'large' = 'medium',
+  enableHover: boolean = true
 ): string {
   const classes: string[] = [];
 
@@ -167,17 +165,17 @@ export function generateTouchOptimizedClasses(
   classes.push(`min-h-touch-${size}`, `min-w-touch-${size}`);
 
   // 添加触摸操作优化
-  classes.push("touch-manipulation");
+  classes.push('touch-manipulation');
 
   // 添加条件hover效果
   if (enableHover) {
-    classes.push("mouse:hover:opacity-80", "mouse:hover:scale-105");
+    classes.push('mouse:hover:opacity-80', 'mouse:hover:scale-105');
   }
 
   // 添加触摸反馈
-  classes.push("touch:opacity-75", "active:scale-95");
+  classes.push('touch:opacity-75', 'active:scale-95');
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -185,10 +183,8 @@ export function generateTouchOptimizedClasses(
  * @param classes 类名数组
  * @returns 合并后的类名字符串
  */
-export function mergeResponsiveClasses(
-  ...classes: (string | undefined | null)[]
-): string {
-  return classes.filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+export function mergeResponsiveClasses(...classes: (string | undefined | null)[]): string {
+  return classes.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -197,10 +193,7 @@ export function mergeResponsiveClasses(
  * @param currentDevice 当前设备类型
  * @returns 当前设备对应的值
  */
-export function getResponsiveValue<T>(
-  values: ResponsiveValue<T>,
-  currentDevice: DeviceType,
-): T {
+export function getResponsiveValue<T>(values: ResponsiveValue<T>, currentDevice: DeviceType): T {
   return values[currentDevice] ?? values.default;
 }
 
@@ -210,10 +203,7 @@ export function getResponsiveValue<T>(
  * @param width 窗口宽度
  * @returns 对应的值
  */
-export function getResponsiveValueByWidth<T>(
-  values: ResponsiveValue<T>,
-  width: number,
-): T {
+export function getResponsiveValueByWidth<T>(values: ResponsiveValue<T>, width: number): T {
   const device = getDeviceTypeFromWidth(width);
   return getResponsiveValue(values, device);
 }
@@ -223,14 +213,9 @@ export function getResponsiveValueByWidth<T>(
  * @param value 待检查的值
  * @returns 是否为响应式值
  */
-export function isResponsiveValue<T>(
-  value: T | ResponsiveValue<T>,
-): value is ResponsiveValue<T> {
+export function isResponsiveValue<T>(value: T | ResponsiveValue<T>): value is ResponsiveValue<T> {
   return (
-    typeof value === "object" &&
-    value !== null &&
-    "default" in value &&
-    (value as any).default !== undefined
+    typeof value === 'object' && value !== null && 'default' in value && value.default !== undefined
   );
 }
 
@@ -252,16 +237,16 @@ export function toResponsiveValue<T>(value: T): ResponsiveValue<T> {
  */
 export function generateContainerClasses(
   maxWidth?: ResponsiveValue<string>,
-  padding?: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">,
-  centered: boolean = true,
+  padding?: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>,
+  centered: boolean = true
 ): string {
   const classes: string[] = [];
 
   // 基础容器类
-  classes.push("w-full");
+  classes.push('w-full');
 
   if (centered) {
-    classes.push("mx-auto");
+    classes.push('mx-auto');
   }
 
   // 最大宽度
@@ -285,11 +270,11 @@ export function generateContainerClasses(
 
   // 内边距
   if (padding) {
-    const paddingClasses = generateResponsiveSpacing("px", padding);
+    const paddingClasses = generateResponsiveSpacing('px', padding);
     classes.push(paddingClasses);
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -298,27 +283,24 @@ export function generateContainerClasses(
  * @param hideOn 隐藏在哪些设备上
  * @returns 显示/隐藏类名
  */
-export function generateVisibilityClasses(
-  showOn?: DeviceType[],
-  hideOn?: DeviceType[],
-): string {
+export function generateVisibilityClasses(showOn?: DeviceType[], hideOn?: DeviceType[]): string {
   const classes: string[] = [];
 
   if (hideOn && hideOn.length > 0) {
-    hideOn.forEach((device) => {
+    hideOn.forEach(device => {
       classes.push(`${device}:hidden`);
     });
   }
 
   if (showOn && showOn.length > 0) {
     // 默认隐藏，只在指定设备上显示
-    classes.push("hidden");
-    showOn.forEach((device) => {
+    classes.push('hidden');
+    showOn.forEach(device => {
       classes.push(`${device}:block`);
     });
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -330,47 +312,45 @@ export function generateVisibilityClasses(
  * @returns Flexbox类名
  */
 export function generateFlexClasses(
-  direction?: ResponsiveValue<"row" | "col" | "row-reverse" | "col-reverse">,
-  justify?: ResponsiveValue<
-    "start" | "center" | "end" | "between" | "around" | "evenly"
-  >,
-  align?: ResponsiveValue<"start" | "center" | "end" | "stretch" | "baseline">,
-  gap?: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">,
+  direction?: ResponsiveValue<'row' | 'col' | 'row-reverse' | 'col-reverse'>,
+  justify?: ResponsiveValue<'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'>,
+  align?: ResponsiveValue<'start' | 'center' | 'end' | 'stretch' | 'baseline'>,
+  gap?: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>
 ): string {
-  const classes: string[] = ["flex"];
+  const classes: string[] = ['flex'];
 
   if (direction) {
-    classes.push(generateResponsiveClasses("flex", direction));
+    classes.push(generateResponsiveClasses('flex', direction));
   }
 
   if (justify) {
-    classes.push(generateResponsiveClasses("justify", justify));
+    classes.push(generateResponsiveClasses('justify', justify));
   }
 
   if (align) {
-    classes.push(generateResponsiveClasses("items", align));
+    classes.push(generateResponsiveClasses('items', align));
   }
 
   if (gap) {
     // Handle gap separately since it's not a standard spacing property
-    if (gap.default && gap.default !== "none") {
+    if (gap.default && gap.default !== 'none') {
       classes.push(`gap-${gap.default}`);
     }
-    if (gap.mobile && gap.mobile !== "none") {
+    if (gap.mobile && gap.mobile !== 'none') {
       classes.push(`mobile:gap-mobile-${gap.mobile}`);
     }
-    if (gap.tablet && gap.tablet !== "none") {
+    if (gap.tablet && gap.tablet !== 'none') {
       classes.push(`tablet:gap-tablet-${gap.tablet}`);
     }
-    if (gap.desktop && gap.desktop !== "none") {
+    if (gap.desktop && gap.desktop !== 'none') {
       classes.push(`desktop:gap-desktop-${gap.desktop}`);
     }
-    if (gap.large && gap.large !== "none") {
+    if (gap.large && gap.large !== 'none') {
       classes.push(`large:gap-large-${gap.large}`);
     }
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 /**
@@ -379,39 +359,38 @@ export function generateFlexClasses(
 export const RESPONSIVE_PRESETS = {
   // 容器预设
   container: {
-    fluid:
-      "w-full px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md",
+    fluid: 'w-full px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md',
     fixed:
-      "max-w-container-mobile tablet:max-w-container-tablet desktop:max-w-container-desktop large:max-w-container-large mx-auto px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md",
+      'max-w-container-mobile tablet:max-w-container-tablet desktop:max-w-container-desktop large:max-w-container-large mx-auto px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md',
     narrow:
-      "max-w-2xl mx-auto px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md",
+      'max-w-2xl mx-auto px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md',
   },
 
   // 网格预设
   grid: {
     responsive:
-      "grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 large:grid-cols-4 gap-mobile-md tablet:gap-tablet-md desktop:gap-desktop-md large:gap-large-md",
+      'grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 large:grid-cols-4 gap-mobile-md tablet:gap-tablet-md desktop:gap-desktop-md large:gap-large-md',
     cards:
-      "grid grid-cols-1 tablet:grid-cols-2 large:grid-cols-3 gap-mobile-lg tablet:gap-tablet-lg desktop:gap-desktop-lg large:gap-large-lg",
-    list: "grid grid-cols-1 gap-mobile-sm tablet:gap-tablet-sm desktop:gap-desktop-sm large:gap-large-sm",
+      'grid grid-cols-1 tablet:grid-cols-2 large:grid-cols-3 gap-mobile-lg tablet:gap-tablet-lg desktop:gap-desktop-lg large:gap-large-lg',
+    list: 'grid grid-cols-1 gap-mobile-sm tablet:gap-tablet-sm desktop:gap-desktop-sm large:gap-large-sm',
   },
 
   // 文字预设
   text: {
     heading:
-      "text-mobile-2xl tablet:text-tablet-2xl desktop:text-desktop-2xl large:text-large-2xl font-bold",
+      'text-mobile-2xl tablet:text-tablet-2xl desktop:text-desktop-2xl large:text-large-2xl font-bold',
     subheading:
-      "text-mobile-xl tablet:text-tablet-xl desktop:text-desktop-xl large:text-large-xl font-semibold",
-    body: "text-mobile-base tablet:text-tablet-base desktop:text-desktop-base large:text-large-base",
+      'text-mobile-xl tablet:text-tablet-xl desktop:text-desktop-xl large:text-large-xl font-semibold',
+    body: 'text-mobile-base tablet:text-tablet-base desktop:text-desktop-base large:text-large-base',
     caption:
-      "text-mobile-sm tablet:text-tablet-sm desktop:text-desktop-sm large:text-large-sm text-muted-foreground",
+      'text-mobile-sm tablet:text-tablet-sm desktop:text-desktop-sm large:text-large-sm text-muted-foreground',
   },
 
   // 按钮预设
   button: {
     primary:
-      "min-h-touch-medium min-w-touch-medium px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md touch-manipulation mouse:hover:opacity-90 active:scale-95",
+      'min-h-touch-medium min-w-touch-medium px-mobile-md tablet:px-tablet-md desktop:px-desktop-md large:px-large-md touch-manipulation mouse:hover:opacity-90 active:scale-95',
     secondary:
-      "min-h-touch-small min-w-touch-small px-mobile-sm tablet:px-tablet-sm desktop:px-desktop-sm large:px-large-sm touch-manipulation mouse:hover:opacity-80 active:scale-95",
+      'min-h-touch-small min-w-touch-small px-mobile-sm tablet:px-tablet-sm desktop:px-desktop-sm large:px-large-sm touch-manipulation mouse:hover:opacity-80 active:scale-95',
   },
 } as const;

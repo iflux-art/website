@@ -5,59 +5,59 @@
 
 export type CategoryId =
   // 根目录文件
-  | "profile"
-  | "friends"
+  | 'profile'
+  | 'friends'
   // AI 分类
-  | "ai"
-  | "ai/api"
-  | "ai/chat"
-  | "ai/creative"
-  | "ai/models"
-  | "ai/platforms"
-  | "ai/resources"
-  | "ai/services"
-  | "ai/tools"
+  | 'ai'
+  | 'ai/api'
+  | 'ai/chat'
+  | 'ai/creative'
+  | 'ai/models'
+  | 'ai/platforms'
+  | 'ai/resources'
+  | 'ai/services'
+  | 'ai/tools'
   // 音频分类
-  | "audio"
-  | "audio/daw"
-  | "audio/distribution"
-  | "audio/processing"
+  | 'audio'
+  | 'audio/daw'
+  | 'audio/distribution'
+  | 'audio/processing'
   // 设计分类
-  | "design"
-  | "design/colors"
-  | "design/fonts"
-  | "design/image-processing"
-  | "design/tools"
+  | 'design'
+  | 'design/colors'
+  | 'design/fonts'
+  | 'design/image-processing'
+  | 'design/tools'
   // 开发分类
-  | "development"
-  | "development/apis"
-  | "development/cloud"
-  | "development/containers"
-  | "development/databases"
-  | "development/frameworks"
-  | "development/git"
-  | "development/hosting"
-  | "development/monitoring"
-  | "development/security"
-  | "development/tools"
+  | 'development'
+  | 'development/apis'
+  | 'development/cloud'
+  | 'development/containers'
+  | 'development/databases'
+  | 'development/frameworks'
+  | 'development/git'
+  | 'development/hosting'
+  | 'development/monitoring'
+  | 'development/security'
+  | 'development/tools'
   // 办公分类
-  | "office"
-  | "office/documents"
-  | "office/pdf"
+  | 'office'
+  | 'office/documents'
+  | 'office/pdf'
   // 运营分类
-  | "operation"
-  | "operation/ecommerce"
-  | "operation/marketing"
+  | 'operation'
+  | 'operation/ecommerce'
+  | 'operation/marketing'
   // 效率分类
-  | "productivity"
-  | "productivity/browsers"
-  | "productivity/cloud-storage"
-  | "productivity/email"
-  | "productivity/search"
-  | "productivity/system-tools"
+  | 'productivity'
+  | 'productivity/browsers'
+  | 'productivity/cloud-storage'
+  | 'productivity/email'
+  | 'productivity/search'
+  | 'productivity/system-tools'
   // 视频分类
-  | "video"
-  | "video/editing";
+  | 'video'
+  | 'video/editing';
 
 /** 链接子分类 */
 export interface LinksSubCategory {
@@ -86,7 +86,7 @@ export interface LinksItem {
   description: string;
   url: string;
   icon: string;
-  iconType?: "image" | "text";
+  iconType?: 'image' | 'text';
   tags: string[];
   featured: boolean;
   category: CategoryId;
@@ -100,7 +100,7 @@ export interface LinksFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: "image" | "text";
+  iconType: 'image' | 'text';
   tags: string[];
   featured: boolean;
   category: CategoryId;

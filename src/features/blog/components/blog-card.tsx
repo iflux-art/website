@@ -4,13 +4,13 @@
  * 内联所有相关类型和逻辑，避免过度抽象
  */
 
-"use client";
+'use client';
 
-import React, { forwardRef } from "react";
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 // 内联文章卡片相关类型定义
 interface BlogCardProps {
@@ -33,31 +33,21 @@ interface BlogCardProps {
  */
 export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
   (
-    {
-      title,
-      description,
-      href,
-      category,
-      tags = [],
-      date,
-      className,
-      onCategoryClick,
-      onTagClick,
-    },
-    ref,
+    { title, description, href, category, tags = [], date, className, onCategoryClick, onTagClick },
+    ref
   ) => {
     return (
       <Link ref={ref} href={href} className="block h-full">
         <Card
           className={cn(
-            "group h-full border transition-all duration-300 hover:border-primary/50 hover:shadow-lg",
+            'group h-full border transition-all duration-300 hover:border-primary/50 hover:shadow-lg',
             // 响应式内边距 - 移动端更小的内边距，桌面端更大
-            "p-3 sm:p-4 md:p-5 lg:p-6",
+            'p-3 sm:p-4 md:p-5 lg:p-6',
             // 移动端触摸优化 - 更大的触摸区域和更好的反馈
-            "touch-manipulation active:scale-[0.98]",
+            'touch-manipulation active:scale-[0.98]',
             // 移动端最小高度确保一致性
-            "h-[240px]",
-            className,
+            'h-[240px]',
+            className
           )}
         >
           <div className="flex flex-1 flex-col">
@@ -67,7 +57,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
                 <Badge
                   variant="secondary"
                   className="min-h-[28px] cursor-pointer touch-manipulation px-3 py-1 text-xs font-medium transition-colors hover:bg-primary hover:text-primary-foreground"
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     onCategoryClick?.(category);
@@ -93,12 +83,12 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
             {/* Tags */}
             {tags.length > 0 && (
               <div className="mb-2 flex flex-wrap gap-1.5 sm:mb-3 sm:gap-2">
-                {tags.map((tag) => (
+                {tags.map(tag => (
                   <Badge
                     key={tag}
                     variant="outline"
                     className="min-h-[24px] cursor-pointer touch-manipulation border-muted-foreground/20 px-2 py-1 text-xs transition-colors hover:border-primary/30 hover:bg-accent/50"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       e.stopPropagation();
                       onTagClick?.(tag);
@@ -121,7 +111,7 @@ export const BlogCard = forwardRef<HTMLAnchorElement, BlogCardProps>(
         </Card>
       </Link>
     );
-  },
+  }
 );
 
-BlogCard.displayName = "BlogCard";
+BlogCard.displayName = 'BlogCard';

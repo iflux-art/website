@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo } from "react";
-import { useCategories } from "./use-categories";
-import { useFilterState } from "./use-filter-state";
-import { LinksItem } from "../types";
-import { loadAllLinksData } from "../lib";
+import { useState, useEffect, useMemo } from 'react';
+import { useCategories } from './use-categories';
+import { useFilterState } from './use-filter-state';
+import type { LinksItem } from '@/features/links/types';
+import { loadAllLinksData } from '@/features/links/lib';
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);
@@ -10,8 +10,7 @@ export function useLinksData() {
   const [error, setError] = useState<string | null>(null);
 
   // 使用共享的分类数据 hook
-  const { getCategoryName: getCategoryNameFromHook, getFilteredCategories } =
-    useCategories();
+  const { getCategoryName: getCategoryNameFromHook, getFilteredCategories } = useCategories();
 
   useEffect(() => {
     async function fetchData() {
@@ -20,20 +19,18 @@ export function useLinksData() {
         const itemsData = await loadAllLinksData();
         setItems(itemsData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
     }
 
-    fetchData();
+    void fetchData();
   }, []);
 
   // 过滤掉友链和个人主页分类的数据 - 性能优化使用 useMemo
   const filteredItems = useMemo(() => {
-    return items.filter(
-      (item) => item.category !== "friends" && item.category !== "profile",
-    );
+    return items.filter(item => item.category !== 'friends' && item.category !== 'profile');
   }, [items]);
 
   // 使用共享的分类过滤函数

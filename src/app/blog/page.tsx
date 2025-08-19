@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { AppGrid } from "@/features/layout";
+import { AppGrid } from '@/features/layout';
 import {
   BlogListContent,
   TagCloudCard,
   BlogCategoryCard,
   RelatedPostsCard,
   LatestPostsCard,
-} from "@/features/blog/components";
-import type { CategoryWithCount } from "@/features/blog/hooks";
-import type { BlogPost } from "@/features/blog/types";
-import { getAllPosts } from "@/features/blog/hooks";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@/features/blog/components';
+import type { CategoryWithCount } from '@/features/blog/hooks';
+import type { BlogPost } from '@/features/blog/types';
+import { getAllPosts } from '@/features/blog/hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function BlogPage() {
   const router = useRouter();
@@ -28,16 +28,16 @@ export default function BlogPage() {
         const data = await getAllPosts();
         setPosts(data);
       } catch (error) {
-        console.error("Failed to load posts", error);
+        console.error('Failed to load posts', error);
       } finally {
         setLoading(false);
       }
     }
-    loadPosts();
+    void loadPosts();
   }, []);
 
   // 过滤文章
-  const filteredPosts = posts.filter((post) => {
+  const filteredPosts = posts.filter(post => {
     if (category && post.category !== category) return false;
     if (tag && !post.tags?.includes(tag)) return false;
     return true;
@@ -45,10 +45,9 @@ export default function BlogPage() {
 
   // 分类统计
   const categoriesCount: Record<string, number> = {};
-  posts.forEach((post) => {
+  posts.forEach(post => {
     if (post.category) {
-      categoriesCount[post.category] =
-        (categoriesCount[post.category] || 0) + 1;
+      categoriesCount[post.category] = (categoriesCount[post.category] || 0) + 1;
     }
   });
   const categories: CategoryWithCount[] = Object.entries(categoriesCount)
@@ -57,14 +56,14 @@ export default function BlogPage() {
 
   // 标签统计
   const postsCount: Record<string, number> = {};
-  posts.forEach((post) => {
-    post.tags?.forEach((tag) => {
+  posts.forEach(post => {
+    post.tags?.forEach(tag => {
       postsCount[tag] = (postsCount[tag] || 0) + 1;
     });
   });
 
   // 相关文章（取最新的10篇）
-  const relatedPosts = posts.slice(0, 10).map((post) => ({
+  const relatedPosts = posts.slice(0, 10).map(post => ({
     title: post.title,
     href: `/blog/${post.slug}`,
     category: post.category,
@@ -72,9 +71,9 @@ export default function BlogPage() {
 
   // 最新发布的文章
   const latestPosts = posts
-    .filter((post) => post.date)
+    .filter(post => post.date)
     .slice(0, 5)
-    .map((post) => ({
+    .map(post => ({
       title: post.title,
       href: `/blog/${post.slug}`,
       date: post.date?.toString(),
@@ -85,9 +84,9 @@ export default function BlogPage() {
   const handleCategoryClick = (newCategory: string | null) => {
     const newParams = new URLSearchParams(searchParams.toString());
     if (newCategory) {
-      newParams.set("category", newCategory);
+      newParams.set('category', newCategory);
     } else {
-      newParams.delete("category");
+      newParams.delete('category');
     }
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
   };
@@ -95,9 +94,9 @@ export default function BlogPage() {
   const handleTagClick = (newTag: string | null) => {
     const newParams = new URLSearchParams(searchParams.toString());
     if (newTag) {
-      newParams.set("tag", newTag);
+      newParams.set('tag', newTag);
     } else {
-      newParams.delete("tag");
+      newParams.delete('tag');
     }
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
   };

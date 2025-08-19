@@ -2,16 +2,16 @@
  * 搜索引擎核心功能
  */
 
-import { SearchOptions, SearchResponse } from "../types";
+import type { SearchOptions, SearchResponse, SearchResult } from '@/features/search/types';
 
 /**
  * 执行搜索
  */
 export async function performSearch(
   query: string,
-  options: SearchOptions = {},
+  options: SearchOptions = {}
 ): Promise<SearchResponse> {
-  const { type = "all", limit = 10 } = options;
+  const { type = 'all', limit = 10 } = options;
 
   if (!query.trim()) {
     return {
@@ -35,16 +35,18 @@ export async function performSearch(
       throw new Error(`Search failed: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: { results: SearchResult[] } = (await response.json()) as {
+      results: SearchResult[];
+    };
 
     return {
       results: data.results || [],
       total: data.results?.length || 0,
       query,
       type,
-    };
+    } as SearchResponse;
   } catch (error) {
-    console.error("Search error:", error);
+    console.error('Search error:', error);
     return {
       results: [],
       total: 0,
@@ -57,10 +59,7 @@ export async function performSearch(
 /**
  * 搜索建议
  */
-export async function getSearchSuggestions(
-  query: string,
-  _limit: number = 5,
-): Promise<string[]> {
+export async function getSearchSuggestions(query: string, _limit: number = 5): Promise<string[]> {
   if (!query.trim() || query.length < 2) {
     return [];
   }
@@ -70,7 +69,7 @@ export async function getSearchSuggestions(
     // 暂时返回空数组，后续可以扩展
     return [];
   } catch (error) {
-    console.error("Search suggestions error:", error);
+    console.error('Search suggestions error:', error);
     return [];
   }
 }
@@ -81,13 +80,13 @@ export async function getSearchSuggestions(
 export function highlightSearchTerm(text: string, searchTerm: string): string {
   if (!searchTerm.trim()) return text;
 
-  const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, "gi");
-  return text.replace(regex, "<mark>$1</mark>");
+  const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
 }
 
 /**
  * 转义正则表达式特殊字符
  */
 function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

@@ -1,49 +1,34 @@
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { LinksForm } from "@/features/links/components";
-import type {
-  LinksItem,
-  LinksFormData,
-  EditDialogProps,
-} from "@/features/admin/types";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { LinksForm } from '@/features/links/components';
+import type { LinksItem, LinksFormData, EditDialogProps } from '@/features/admin/types';
 
-export function EditDialog({
-  item,
-  onOpenChange,
-  onSuccess,
-  onError,
-}: EditDialogProps) {
+export function EditDialog({ item, onOpenChange, onSuccess, onError }: EditDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (formData: LinksFormData) => {
     if (!item) return;
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`/api/links?id=${item.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch(`/api/links?id=${item?.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to update item");
+        const errorData: { error?: string } = (await response.json()) as { error?: string };
+        throw new Error(errorData.error ?? 'Failed to update item');
       }
 
-      const updatedItem: LinksItem = await response.json();
+      const updatedItem: LinksItem = (await response.json()) as LinksItem;
       onSuccess(updatedItem);
       onOpenChange(false);
     } catch (error) {
-      console.error("Error updating item:", error);
       if (error instanceof Error) {
         onError(error.message);
       } else {
-        onError("An unknown error occurred");
+        onError('An unknown error occurred');
       }
     } finally {
       setIsSubmitting(false);

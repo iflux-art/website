@@ -1,16 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
-import { loadAllCategoriesData } from "@/features/links/lib/categories";
-import { promises as fs } from "fs";
-import path from "path";
-import { glob } from "fast-glob";
-import matter from "gray-matter";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { loadAllCategoriesData } from '@/features/links/lib/categories';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { glob } from 'fast-glob';
+import matter from 'gray-matter';
 
 interface SearchResult {
-  type: "link" | "blog" | "doc";
+  type: 'link' | 'blog' | 'doc';
   title: string;
   description?: string;
   url?: string;
   path?: string;
+  tags?: string[];
+}
+
+interface LinkItem {
+  title: string;
+  description?: string;
+  url?: string;
   tags?: string[];
 }
 
@@ -23,31 +31,27 @@ let cache: {
 
 const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
 
-async function scanContentFiles(contentType: "blog" | "docs") {
+async function scanContentFiles(contentType: 'blog' | 'docs') {
   const basePath = path.join(process.cwd(), `src/content/${contentType}`);
-  const files = await glob("**/*.mdx", { cwd: basePath });
+  const files = await glob('**/*.mdx', { cwd: basePath });
 
   const results: SearchResult[] = [];
 
   for (const file of files) {
     try {
       const filePath = path.join(basePath, file);
-      const content = await fs.readFile(filePath, "utf-8");
+      const content = await fs.readFile(filePath, 'utf-8');
 
       try {
         const { data: frontmatter } = matter(content);
-        if (frontmatter?.title && typeof frontmatter.title === "string") {
+        if (frontmatter?.title && typeof frontmatter.title === 'string') {
           results.push({
-            type: contentType === "blog" ? "blog" : "doc",
+            type: contentType === 'blog' ? 'blog' : 'doc',
             title: frontmatter.title,
             description:
-              typeof frontmatter.description === "string"
-                ? frontmatter.description
-                : undefined,
-            path: `/${contentType}/${file.replace(/\.mdx$/, "")}`,
-            tags: Array.isArray(frontmatter.tags)
-              ? frontmatter.tags
-              : undefined,
+              typeof frontmatter.description === 'string' ? frontmatter.description : undefined,
+            path: `/${contentType}/${file.replace(/\.mdx$/, '')}`,
+            tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : undefined,
           });
         }
       } catch {
@@ -69,10 +73,7 @@ async function getCachedContent() {
     return cache;
   }
 
-  const [blogs, docs] = await Promise.all([
-    scanContentFiles("blog"),
-    scanContentFiles("docs"),
-  ]);
+  const [blogs, docs] = await Promise.all([scanContentFiles('blog'), scanContentFiles('docs')]);
 
   cache = { blogs, docs, timestamp: now };
   return cache;
@@ -81,8 +82,8 @@ async function getCachedContent() {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get("q")?.trim() || "";
-    const type = searchParams.get("type") || "all";
+    const query = searchParams.get('q')?.trim() ?? '';
+    const type = searchParams.get('type') ?? 'all';
 
     if (!query) {
       return NextResponse.json({ results: [] });
@@ -93,16 +94,16 @@ export async function GET(request: NextRequest) {
     const queryLower = query.toLowerCase();
 
     // 搜索链接
-    if (type === "all" || type === "links") {
+    if (type === 'all' || type === 'links') {
       const links = await loadAllCategoriesData();
       const linkResults = links
-        .filter((item: any) => {
+        .filter((item: LinkItem) => {
           const searchText =
-            `${item.title} ${item.description} ${item.tags?.join(" ")}`.toLowerCase();
+            `${item.title} ${item.description} ${item.tags?.join(' ')}`.toLowerCase();
           return searchText.includes(queryLower);
         })
-        .map((item: any) => ({
-          type: "link" as const,
+        .map((item: LinkItem) => ({
+          type: 'link' as const,
           title: item.title,
           description: item.description,
           url: item.url,
@@ -114,11 +115,11 @@ export async function GET(request: NextRequest) {
     }
 
     // 搜索博客
-    if (type === "all" || type === "blog") {
+    if (type === 'all' || type === 'blog') {
       const blogResults = blogs
-        .filter((post) => {
+        .filter(post => {
           const searchText =
-            `${post.title} ${post.description} ${post.tags?.join(" ")}`.toLowerCase();
+            `${post.title} ${post.description} ${post.tags?.join(' ')}`.toLowerCase();
           return searchText.includes(queryLower);
         })
         .slice(0, 5);
@@ -127,9 +128,9 @@ export async function GET(request: NextRequest) {
     }
 
     // 搜索文档
-    if (type === "all" || type === "doc") {
+    if (type === 'all' || type === 'doc') {
       const docResults = docs
-        .filter((doc) => {
+        .filter(doc => {
           const searchText = `${doc.title} ${doc.description}`.toLowerCase();
           return searchText.includes(queryLower);
         })
@@ -147,7 +148,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ results: results.slice(0, 10) });
   } catch (error) {
-    console.error("Search error:", error);
-    return NextResponse.json({ error: "Search failed" }, { status: 500 });
+    console.error('Search error:', error);
+    return NextResponse.json({ error: 'Search failed' }, { status: 500 });
   }
 }

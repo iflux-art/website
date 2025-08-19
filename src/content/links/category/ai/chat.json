@@ -134,15 +134,7 @@
     "url": "https://yiyan.baidu.com/",
     "description": "你的智能伙伴，帮你高效完成工作和学习任务。",
     "category": "ai/chat",
-    "tags": [
-      "大模型",
-      "多模态",
-      "图像生成",
-      "AI办公",
-      "AI写作",
-      "AI阅读",
-      "网页生成"
-    ],
+    "tags": ["大模型", "多模态", "图像生成", "AI办公", "AI写作", "AI阅读", "网页生成"],
     "featured": false,
     "icon": "https://nlp-eb.cdn.bcebos.com/logo/favicon.ico",
     "id": "mb7vh1z3figx7g4dcc6",
@@ -155,15 +147,7 @@
     "url": "https://www.doubao.com/",
     "description": "你的 AI 聊天智能对话问答助手，写作文案翻译编程全能工具。豆包为你答疑解惑，提供灵感，辅助创作，也可以和你畅聊任何你感兴趣的话题。",
     "category": "ai/chat",
-    "tags": [
-      "大模型",
-      "AI搜索",
-      "AI写作",
-      "AI编程",
-      "AI阅读",
-      "图像生成",
-      "AI云盘"
-    ],
+    "tags": ["大模型", "AI搜索", "AI写作", "AI编程", "AI阅读", "图像生成", "AI云盘"],
     "featured": true,
     "icon": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/logo-icon.png",
     "id": "mbb3gn8gkioukulw47",

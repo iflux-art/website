@@ -15,7 +15,7 @@ export interface TocHeading {
  * 转义正则表达式特殊字符
  */
 function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**
@@ -42,8 +42,8 @@ export function extractHeadings(content: string): {
       customId ||
       `heading-${finalText
         .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]/g, "")}-${match.index}`;
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')}-${match.index}`;
 
     if (level >= 1 && level <= 4) {
       headings.push({ id, text: finalText, level });
@@ -51,15 +51,15 @@ export function extractHeadings(content: string): {
   }
 
   // 确保所有标题都有唯一ID
-  headings.forEach((heading) => {
+  headings.forEach(heading => {
     const escapedText = escapeRegExp(heading.text);
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,
-      "gm",
+      'gm'
     );
     processedContent = processedContent.replace(
       headingRegex,
-      `$1 ${heading.text} {#${heading.id}}`,
+      `$1 ${heading.text} {#${heading.id}}`
     );
   });
 

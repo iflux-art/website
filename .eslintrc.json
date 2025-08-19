@@ -1,37 +1,107 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
+    "next/core-web-vitals",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": true,
+    "tsconfigRootDir": ".",
+    "warnOnUnsupportedTypeScriptVersion": true
+  },
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "prettier", "jsx-a11y"],
   "rules": {
+    // TypeScript 规则
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/prefer-nullish-coalescing": "warn",
+    "@typescript-eslint/prefer-optional-chain": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/no-unsafe-argument": "warn",
+    "@typescript-eslint/no-redundant-type-constituents": "warn",
+    "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+    "@typescript-eslint/exact-optional-property-types": "off",
+    "@typescript-eslint/no-misused-promises": "warn",
+    "@typescript-eslint/consistent-type-imports": "warn",
+
+    // React 规则
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
-    "react/no-unescaped-entities": "off",
+    "react/no-unescaped-entities": "warn",
     "react/no-unknown-property": [2, { "ignore": ["jsx", "global"] }],
-    "react-hooks/rules-of-hooks": "off",
-    "react-hooks/exhaustive-deps": "off",
+    "react/jsx-uses-react": "off",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-key": "error",
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+
+    // React Hooks 规则
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+
+    // 通用规则
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-debugger": "error",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "argsIgnorePattern": "^_" }
-    ],
-    "@typescript-eslint/no-explicit-any": "off",
     "no-undef": "off",
-    "@next/next/no-img-element": "off",
-    "jsx-a11y/alt-text": "off",
+    "prefer-const": "error",
+    "no-var": "error",
+    "object-shorthand": "warn",
+    "prefer-arrow-callback": "error",
+    "no-restricted-imports": ["error", { "patterns": ["../", "../../"] }],
+
+    // Next.js 规则
+    "@next/next/no-img-element": "warn",
+
+    // 无障碍规则
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/heading-has-content": "warn",
+    "jsx-a11y/label-has-associated-control": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+
+    // Prettier 规则
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
   },
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "jsx-a11y": {
+      "components": {
+        "Collapsible": "section",
+        "CollapsibleTrigger": "button",
+        "CollapsibleContent": "div"
+      }
     }
   },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/", "*.d.ts"]
+  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/", "dist/", "*.d.ts", "*.config.js"]
 }

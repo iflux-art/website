@@ -1,2 +1,2 @@
-export * from "./animated-number";
-export * from "./hero-section";
+export * from './animated-number';
+export * from './hero-section';

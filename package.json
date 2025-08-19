@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "official",
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@9.11.0",
@@ -10,17 +10,21 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "clean": "rimraf .next",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "preview": "next build && next start",
     "update-deps": "pnpm update",
+    "update-deps:latest": "pnpm update --latest",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -63,7 +67,8 @@
     "remark-rehype": "^11.1.2",
     "shiki": "^3.9.2",
     "tailwind-merge": "^3.3.1",
-    "unified": "^11.0.5"
+    "unified": "^11.0.5",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
@@ -92,8 +97,20 @@
     "vitest": "^3.2.4"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,css,scss,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "sideEffects": false,
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "mdx"
+  ]
 }

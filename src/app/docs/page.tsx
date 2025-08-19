@@ -1,39 +1,40 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { getAllDocsStructure } from "@/features/docs/components";
-import { createDocBreadcrumbsServer } from "@/features/docs/lib";
-import { ContentDisplay, DocPagination } from "@/features/content";
-import { DocsSidebarWrapper } from "@/features/docs/components";
-import { TableOfContentsCard } from "@/features/content";
-import { AppGrid } from "@/features/layout";
-import ClientMDXRenderer from "@/components/mdx/ClientMDXRenderer";
-import { TwikooComment } from "@/features/comment";
+import { notFound } from 'next/navigation';
+import { toDocFrontmatter } from '@/features/docs/types';
+import Link from 'next/link';
+import { getAllDocsStructure } from '@/features/docs/components';
+import { createDocBreadcrumbsServer } from '@/features/docs/lib';
+import { ContentDisplay, DocPagination } from '@/features/content';
+import { DocsSidebarWrapper } from '@/features/docs/components';
+import { TableOfContentsCard } from '@/features/content';
+import { AppGrid } from '@/features/layout';
+import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
+import { TwikooComment } from '@/features/comment';
 
 // 导入文档处理函数
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { getFlattenedDocsOrder } from "@/features/docs/lib";
-import { extractHeadings } from "@/features/content";
-import type { DocContentResult } from "@/features/docs/types";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { getFlattenedDocsOrder } from '@/features/docs/lib';
+import { extractHeadings } from '@/features/content';
+import type { DocContentResult } from '@/features/docs/types';
 
 // 文档内容处理函数
 function countWords(text: string): number {
   const cleanText = text
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/`[^`]*`/g, "")
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/<[^>]*>/g, "")
-    .replace(/[#*_~>|-]/g, "")
-    .replace(/\s+/g, " ")
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`]*`/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]*>/g, '')
+    .replace(/[#*_~>|-]/g, '')
+    .replace(/\s+/g, ' ')
     .trim();
 
-  const chineseChars = cleanText.match(/[\u4e00-\u9fa5]/g) || [];
+  const chineseChars = cleanText.match(/[\u4e00-\u9fa5]/g) ?? [];
   const englishWords = cleanText
-    .replace(/[\u4e00-\u9fa5]/g, "")
+    .replace(/[\u4e00-\u9fa5]/g, '')
     .split(/\s+/)
-    .filter((word) => word.length > 0);
+    .filter(word => word.length > 0);
 
   return chineseChars.length + englishWords.length;
 }
@@ -42,29 +43,26 @@ function getFirstDocContent(): DocContentResult | null {
   try {
     const structure = getAllDocsStructure();
 
-    if (!structure || !structure.firstDocPath || structure.totalDocs === 0) {
+    if (!structure?.firstDocPath || structure.totalDocs === 0) {
       return null;
     }
 
     // 从 firstDocPath 中提取 slug
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
-    const slug = firstDocPath.split("/");
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
+    const slug = firstDocPath.split('/');
 
-    const docsContentDir = path.join(process.cwd(), "src", "content", "docs");
-    const requestedPath = slug.join("/");
+    const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
+    const requestedPath = slug.join('/');
     const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
 
     let filePath: string | undefined;
-    const actualSlugForNav = slug.join("/");
+    const actualSlugForNav = slug.join('/');
     let isIndexPage = false;
 
     // 检查是否为目录
-    if (
-      fs.existsSync(absoluteRequestedPath) &&
-      fs.statSync(absoluteRequestedPath).isDirectory()
-    ) {
+    if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
       // 查找 index 文件
-      for (const indexFile of ["index.mdx", "index.md"]) {
+      for (const indexFile of ['index.mdx', 'index.md']) {
         const indexPath = path.join(absoluteRequestedPath, indexFile);
         if (fs.existsSync(indexPath)) {
           filePath = indexPath;
@@ -91,16 +89,16 @@ function getFirstDocContent(): DocContentResult | null {
       return null;
     }
 
-    const fileContent = fs.readFileSync(filePath, "utf8");
+    const fileContent = fs.readFileSync(filePath, 'utf8');
     const { content: originalContent, data: frontmatter } = matter(fileContent);
 
     const date = frontmatter.date
-      ? new Date(frontmatter.date).toLocaleDateString("zh-CN", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
+      ? new Date((frontmatter.date as string | number | Date) ?? '').toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
         })
-      : null;
+      : (null as string | null);
 
     const wordCount = countWords(originalContent);
     const { headings } = extractHeadings(originalContent);
@@ -115,31 +113,25 @@ function getFirstDocContent(): DocContentResult | null {
       const indexDirNavPath = `/docs/${actualSlugForNav}`;
       nextDoc =
         flattenedDocs.find(
-          (doc) =>
-            doc.path.startsWith(indexDirNavPath + "/") ||
+          doc =>
+            doc.path.startsWith(indexDirNavPath + '/') ||
             (doc.path.startsWith(indexDirNavPath) &&
               doc.path !== indexDirNavPath &&
-              !doc.path.substring(indexDirNavPath.length + 1).includes("/")),
-        ) || null;
+              !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+        ) ?? null;
     } else {
       const currentNavPath = `/docs/${actualSlugForNav}`;
-      const currentIndex = flattenedDocs.findIndex(
-        (doc) => doc.path === currentNavPath,
-      );
+      const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
       if (currentIndex !== -1) {
         prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
-        nextDoc =
-          currentIndex < flattenedDocs.length - 1
-            ? flattenedDocs[currentIndex + 1]
-            : null;
+        nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
       }
     }
 
     return {
-      title:
-        frontmatter.title || path.basename(filePath, path.extname(filePath)),
+      title: (frontmatter.title ?? path.basename(filePath, path.extname(filePath))) as string,
       content: originalContent,
-      frontmatter: frontmatter as any,
+      frontmatter: toDocFrontmatter(frontmatter),
       headings,
       prevDoc,
       nextDoc,
@@ -149,13 +141,13 @@ function getFirstDocContent(): DocContentResult | null {
       date,
       relativePathFromTopCategory: path
         .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-        .replace(/\\/g, "/")
-        .replace(/\.(mdx|md)$/, ""),
+        .replace(/\\/g, '/')
+        .replace(/\.(mdx|md)$/, ''),
       topLevelCategorySlug,
       isIndexPage,
     };
   } catch (error) {
-    console.error("Error getting first doc content:", error);
+    console.error('Error getting first doc content:', error as Error);
     return null;
   }
 }
@@ -165,14 +157,12 @@ export default async function DocsPage() {
     const structure = getAllDocsStructure();
 
     // 验证结构和路径
-    if (!structure || !structure.firstDocPath || structure.totalDocs === 0) {
+    if (!structure?.firstDocPath || structure.totalDocs === 0) {
       return (
         <div className="min-h-screen bg-background">
           <div className="container mx-auto py-8">
             <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-              <h1 className="mb-4 text-3xl font-bold text-destructive">
-                文档不可用
-              </h1>
+              <h1 className="mb-4 text-3xl font-bold text-destructive">文档不可用</h1>
               <p className="mb-6 max-w-md text-muted-foreground">
                 当前没有可用的文档内容。请检查文档配置或联系管理员。
               </p>
@@ -196,8 +186,8 @@ export default async function DocsPage() {
     }
 
     // 从 firstDocPath 中提取 slug 用于面包屑
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
-    const slug = firstDocPath.split("/");
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
+    const slug = firstDocPath.split('/');
     const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
     return (
@@ -229,10 +219,7 @@ export default async function DocsPage() {
             {/* 右侧边栏 - TOC */}
             <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto xl:block">
               <div className="space-y-4">
-                <TableOfContentsCard
-                  headings={doc.headings}
-                  className="prose-sm"
-                />
+                <TableOfContentsCard headings={doc.headings} className="prose-sm" />
               </div>
             </aside>
           </AppGrid>
@@ -240,7 +227,7 @@ export default async function DocsPage() {
       </div>
     );
   } catch (error) {
-    console.error("Error in docs page:", error);
+    console.error('Error in docs page:', error);
     notFound();
   }
 }

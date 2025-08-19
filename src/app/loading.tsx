@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function Loading() {
   const [progress, setProgress] = useState(0);
@@ -14,7 +14,7 @@ export default function Loading() {
 
     // 渐进增长阶段
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
+      setProgress(prev => {
         if (prev >= 90) {
           clearInterval(progressInterval);
           return prev;
@@ -27,7 +27,7 @@ export default function Loading() {
 
     // 透明度闪烁效果
     const opacityInterval = setInterval(() => {
-      setOpacity((prev) => (prev === 0.8 ? 1 : 0.8));
+      setOpacity(prev => (prev === 0.8 ? 1 : 0.8));
     }, 800);
 
     return () => {
@@ -44,11 +44,10 @@ export default function Loading() {
           className="h-full bg-primary dark:bg-primary"
           style={{
             width: `${progress}%`,
-            opacity: opacity,
-            transition: "width 300ms ease-out",
-            transform: "translateZ(0)",
-            boxShadow:
-              "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
+            opacity,
+            transition: 'width 300ms ease-out',
+            transform: 'translateZ(0)',
+            boxShadow: '0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)',
           }}
         />
       </div>

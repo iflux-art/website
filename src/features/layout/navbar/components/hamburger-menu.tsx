@@ -1,0 +1,23 @@
+'use client';
+
+import React from 'react';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
+import { NavMenu } from './nav-menu';
+
+export function HamburgerMenu() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon" aria-label="打开菜单" title="打开菜单">
+          <Menu className="h-5 w-5" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="w-full max-w-md p-4">
+        <DialogTitle className="sr-only">导航菜单</DialogTitle>
+        <NavMenu />
+      </DialogContent>
+    </Dialog>
+  );
+}

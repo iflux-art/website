@@ -3,7 +3,7 @@
  * 确保类型安全的响应式开发
  */
 
-import type { DeviceType } from "@/config/responsive";
+import type { DeviceType } from '@/config/responsive';
 
 /**
  * 响应式值类型
@@ -35,7 +35,7 @@ export interface DeviceInfo {
   isMouse: boolean;
   width: number;
   height: number;
-  orientation: "portrait" | "landscape";
+  orientation: 'portrait' | 'landscape';
   supportsHover: boolean;
   prefersReducedMotion: boolean;
 }
@@ -91,7 +91,7 @@ export interface TouchOptimizedProps {
   /**
    * 触摸目标大小
    */
-  touchTarget?: "small" | "medium" | "large";
+  touchTarget?: 'small' | 'medium' | 'large';
 
   /**
    * 是否启用hover效果（自动检测设备能力）
@@ -101,7 +101,7 @@ export interface TouchOptimizedProps {
   /**
    * 触摸反馈类型
    */
-  touchFeedback?: "none" | "opacity" | "scale" | "highlight";
+  touchFeedback?: 'none' | 'opacity' | 'scale' | 'highlight';
 }
 
 /**
@@ -111,7 +111,7 @@ export interface ResponsiveLayoutProps {
   /**
    * 响应式间距
    */
-  spacing?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl">;
+  spacing?: ResponsiveValue<'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
 
   /**
    * 响应式最大宽度
@@ -121,12 +121,12 @@ export interface ResponsiveLayoutProps {
   /**
    * 响应式内边距
    */
-  padding?: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">;
+  padding?: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
 
   /**
    * 响应式外边距
    */
-  margin?: ResponsiveValue<"none" | "xs" | "sm" | "md" | "lg" | "xl">;
+  margin?: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
 }
 
 /**
@@ -146,19 +146,17 @@ export interface ResponsiveGridProps extends ResponsiveLayoutProps {
   /**
    * 响应式间隙
    */
-  gap?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl">;
+  gap?: ResponsiveValue<'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
 
   /**
    * 响应式对齐方式
    */
-  align?: ResponsiveValue<"start" | "center" | "end" | "stretch">;
+  align?: ResponsiveValue<'start' | 'center' | 'end' | 'stretch'>;
 
   /**
    * 响应式分布方式
    */
-  justify?: ResponsiveValue<
-    "start" | "center" | "end" | "between" | "around" | "evenly"
-  >;
+  justify?: ResponsiveValue<'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'>;
 }
 
 /**
@@ -168,28 +166,22 @@ export interface ResponsiveTypographyProps {
   /**
    * 响应式字体大小
    */
-  fontSize?: ResponsiveValue<
-    "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
-  >;
+  fontSize?: ResponsiveValue<'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'>;
 
   /**
    * 响应式行高
    */
-  lineHeight?: ResponsiveValue<
-    "tight" | "snug" | "normal" | "relaxed" | "loose"
-  >;
+  lineHeight?: ResponsiveValue<'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'>;
 
   /**
    * 响应式字重
    */
-  fontWeight?: ResponsiveValue<
-    "light" | "normal" | "medium" | "semibold" | "bold"
-  >;
+  fontWeight?: ResponsiveValue<'light' | 'normal' | 'medium' | 'semibold' | 'bold'>;
 
   /**
    * 响应式文本对齐
    */
-  textAlign?: ResponsiveValue<"left" | "center" | "right" | "justify">;
+  textAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
 }
 
 /**
@@ -199,7 +191,7 @@ export interface ResponsiveNavigationProps {
   /**
    * 导航变体
    */
-  variant?: "mobile" | "tablet" | "desktop" | "large" | "auto";
+  variant?: 'mobile' | 'tablet' | 'desktop' | 'large' | 'auto';
 
   /**
    * 是否显示移动端底部导航
@@ -229,7 +221,7 @@ export interface NavigationItem {
   id: string;
   label: string;
   href?: string;
-  icon?: React.ComponentType<any>;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   children?: NavigationItem[];
   showOnDevices?: DeviceType[];
   hideOnDevices?: DeviceType[];
@@ -242,7 +234,7 @@ export interface ResponsiveContainerProps extends ResponsiveLayoutProps {
   /**
    * 容器类型
    */
-  variant?: "fluid" | "fixed" | "responsive";
+  variant?: 'fluid' | 'fixed' | 'responsive';
 
   /**
    * 是否居中
@@ -287,14 +279,12 @@ export interface ResponsiveImageProps {
   /**
    * 响应式对象适配
    */
-  objectFit?: ResponsiveValue<
-    "contain" | "cover" | "fill" | "none" | "scale-down"
-  >;
+  objectFit?: ResponsiveValue<'contain' | 'cover' | 'fill' | 'none' | 'scale-down'>;
 
   /**
    * 响应式圆角
    */
-  borderRadius?: ResponsiveValue<"none" | "sm" | "md" | "lg" | "xl" | "full">;
+  borderRadius?: ResponsiveValue<'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'>;
 }
 
 /**
@@ -304,17 +294,17 @@ export interface ResponsiveFormProps {
   /**
    * 表单布局
    */
-  layout?: ResponsiveValue<"vertical" | "horizontal" | "inline">;
+  layout?: ResponsiveValue<'vertical' | 'horizontal' | 'inline'>;
 
   /**
    * 标签位置
    */
-  labelPosition?: ResponsiveValue<"top" | "left" | "right">;
+  labelPosition?: ResponsiveValue<'top' | 'left' | 'right'>;
 
   /**
    * 字段间距
    */
-  fieldSpacing?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl">;
+  fieldSpacing?: ResponsiveValue<'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
 
   /**
    * 是否启用触摸优化
@@ -356,8 +346,7 @@ export interface ResponsiveProviderProps {
 /**
  * 工具类型：提取响应式值
  */
-export type ExtractResponsiveValue<T> =
-  T extends ResponsiveValue<infer U> ? U : T;
+export type ExtractResponsiveValue<T> = T extends ResponsiveValue<infer U> ? U : T;
 
 /**
  * 工具类型：响应式Props映射

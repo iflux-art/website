@@ -14,11 +14,11 @@
  * @since 2024
  */
 
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import { BaseContent, BaseCategory } from "@/types";
-import { useCache } from "@/hooks/use-cache";
+import { usePathname } from 'next/navigation';
+import type { BaseContent, BaseCategory } from '@/types';
+import { useCache } from '@/hooks/use-cache';
 
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
 
@@ -41,12 +41,12 @@ export interface ContentLoadOptions {
   category?: string;
   cacheTime?: number;
   disableCache?: boolean;
-  params?: any;
+  params?: Record<string, unknown>;
   headers?: Record<string, string>;
   /** 是否强制刷新缓存 */
   forceRefresh?: boolean;
   /** 其他可扩展选项 */
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // 请求去重Map
@@ -81,14 +81,14 @@ export function useContentData<T>({
 
   // 生成缓存key
   const getCacheKey = () => {
-    return `${type}:${category || "all"}:${pathname}`;
+    return `${type}:${category ?? 'all'}:${pathname}`;
   };
 
   // 数据获取函数
   const fetchData = async () => {
-    const apiUrl = url || path || "";
+    const apiUrl = url ?? path ?? '';
     if (!apiUrl) {
-      throw new Error("URL or path is required");
+      throw new Error('URL or path is required');
     }
 
     const requestKey = `${apiUrl}:${JSON.stringify(params)}`;
@@ -102,20 +102,20 @@ export function useContentData<T>({
       try {
         const response = await fetch(apiUrl, {
           headers: {
-            "Content-Type": "application/json",
-            ...headers,
+            'Content-Type': 'application/json',
+            ...(headers ?? {}),
           },
-          ...(params || {}),
+          ...(params ?? {}),
         });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const result = await response.json();
-        return result as T;
+        const result: T = (await response.json()) as T;
+        return result;
       } catch {
-        throw new Error("Failed to fetch content");
+        throw new Error('Failed to fetch content');
       } finally {
         // 请求完成后移除
         pendingRequests.delete(requestKey);
@@ -127,21 +127,17 @@ export function useContentData<T>({
     return request;
   };
 
-  const { data, error, loading, refetch } = useCache<T>(
-    getCacheKey(),
-    fetchData,
-    {
-      expiry: disableCache ? 0 : cacheTime,
-      useMemoryCache: true,
-    },
-  );
+  const { data, error, loading, refetch } = useCache<T>(getCacheKey(), fetchData, {
+    expiry: disableCache ? 0 : cacheTime,
+    useMemoryCache: true,
+  });
 
   return {
-    data: data || null,
+    data: data ?? null,
     loading,
-    error: error || null,
+    error: error ?? null,
     refresh: async () => {
-      await refetch();
+      void refetch();
     },
   };
 }

@@ -2,14 +2,14 @@
  * Layout 功能相关类型定义
  */
 
-import React from "react";
+import type { ReactNode } from 'react';
 
 // AppGrid 组件 Props 类型
 export interface AppGridProps {
   /**
    * 子元素
    */
-  children?: React.ReactNode;
+  children?: ReactNode;
 
   /**
    * 自定义类名
@@ -26,7 +26,7 @@ export interface AppGridProps {
    * 网格间距
    * @default "default"
    */
-  gap?: "small" | "default" | "large";
+  gap?: 'small' | 'default' | 'large';
 }
 
 // Sidebar 相关类型

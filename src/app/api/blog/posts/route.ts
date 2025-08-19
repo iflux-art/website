@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs";
-import matter from "gray-matter";
-import type { BlogPost } from "@/features/blog/types";
+import { NextResponse } from 'next/server';
+import path from 'path';
+import fs from 'fs';
+import matter from 'gray-matter';
+import type { BlogPost } from '@/features/blog/types';
 // 获取所有博客文章
 async function getAllPosts() {
-  const blogDir = path.join(process.cwd(), "src", "content", "blog");
+  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 
   const posts: BlogPost[] = [];
@@ -19,37 +19,34 @@ async function getAllPosts() {
 
       if (item.isDirectory()) {
         findPosts(itemPath);
-      } else if (
-        item.isFile() &&
-        (item.name.endsWith(".mdx") || item.name.endsWith(".md"))
-      ) {
-        const fileContent = fs.readFileSync(itemPath, "utf8");
+      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+        const fileContent = fs.readFileSync(itemPath, 'utf8');
         const { data } = matter(fileContent);
 
         // 只包含已发布的文章
         if (data.published !== false) {
           // 计算slug
-          let slug = "";
+          let slug = '';
           const relativePath = path.relative(blogDir, itemPath);
           const pathParts = relativePath.split(path.sep);
 
           if (pathParts.length === 1) {
             // 直接在blog目录下的文件
-            slug = pathParts[0].replace(/\.(mdx|md)$/, "");
+            slug = pathParts[0].replace(/\.(mdx|md)$/, '');
           } else {
             // 在子目录中的文件
-            const fileName = pathParts.pop() || "";
-            slug = `${pathParts.join("/")}/${fileName.replace(/\.(mdx|md)$/, "")}`;
+            const fileName = pathParts.pop() ?? '';
+            slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
           }
 
           posts.push({
             slug,
-            title: data.title || slug,
-            description: data.description || "暂无描述",
-            excerpt: data.excerpt || "点击阅读全文",
-            date: data.date,
-            tags: data.tags || [],
-            category: data.category || "未分类",
+            title: (data.title as string) ?? slug,
+            description: (data.description as string) ?? '暂无描述',
+            excerpt: (data.excerpt as string) ?? '点击阅读全文',
+            date: data.date as string,
+            tags: (data.tags as string[]) ?? [],
+            category: (data.category as string) ?? '未分类',
           });
         }
       }
@@ -75,17 +72,17 @@ export async function GET() {
     // 设置缓存控制头，避免浏览器缓存
     return NextResponse.json(posts, {
       headers: {
-        "Cache-Control": "no-store, max-age=0",
+        'Cache-Control': 'no-store, max-age=0',
       },
     });
   } catch (error) {
-    console.error("获取博客文章列表失败:", error);
+    console.error('获取博客文章列表失败:', error);
     return NextResponse.json(
       {
-        error: "获取博客文章列表失败",
-        details: error instanceof Error ? error.message : "未知错误",
+        error: '获取博客文章列表失败',
+        details: error instanceof Error ? error.message : '未知错误',
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

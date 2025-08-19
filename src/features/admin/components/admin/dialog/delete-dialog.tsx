@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,38 +8,37 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import type { DeleteDialogProps } from "@/features/admin/types";
+} from '@/components/ui/alert-dialog';
+import type { DeleteDialogProps } from '@/features/admin/types';
 
-export function DeleteDialog({
-  item,
-  onOpenChange,
-  onSuccess,
-  onError,
-}: DeleteDialogProps) {
+interface DeleteDialogItem {
+  id: string;
+  title: string;
+}
+
+export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
     if (!item) return;
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/links?id=${item.id}`, {
-        method: "DELETE",
+      const response = await fetch(`/api/links?id=${(item as DeleteDialogItem).id}`, {
+        method: 'DELETE',
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete item");
+        const errorData: { error?: string } = (await response.json()) as { error?: string };
+        throw new Error(errorData.error ?? 'Failed to delete item');
       }
 
-      onSuccess(item.id);
+      onSuccess((item as DeleteDialogItem).id);
       onOpenChange(false);
     } catch (error) {
-      console.error("Error deleting item:", error);
       if (error instanceof Error) {
         onError(error.message);
       } else {
-        onError("An unknown error occurred");
+        onError('An unknown error occurred');
       }
     } finally {
       setIsLoading(false);
@@ -52,13 +51,13 @@ export function DeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>确认删除</AlertDialogTitle>
           <AlertDialogDescription>
-            确定要删除网址 "{item?.title}" 吗？此操作无法撤销。
+            确定要删除网址 &quot;{(item as DeleteDialogItem)?.title}&quot; 吗？此操作无法撤销。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>取消</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading ? "删除中..." : "删除"}
+          <AlertDialogAction onClick={() => void handleDelete()} disabled={isLoading}>
+            {isLoading ? '删除中...' : '删除'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

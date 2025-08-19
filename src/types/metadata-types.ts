@@ -1,7 +1,7 @@
 export const PAGE_TYPES = {
-  WEBSITE: "website",
-  ARTICLE: "article",
-  PROFILE: "profile",
+  WEBSITE: 'website',
+  ARTICLE: 'article',
+  PROFILE: 'profile',
 } as const;
 
 export type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SearchDialog } from "./search-dialog";
+import React, { useState } from 'react';
+import { Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { SearchDialog } from './search-dialog';
 
 /**
  * 搜索图标组件

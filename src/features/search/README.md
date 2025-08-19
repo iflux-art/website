@@ -30,15 +30,15 @@
 ### 基础使用
 
 ```typescript
-import { performSearch } from "@/features/search";
+import { performSearch } from '@/features/search';
 
 // 执行搜索
-const result = await performSearch("React", {
-  type: "all",
+const result = await performSearch('React', {
+  type: 'all',
   limit: 10,
 });
 
-console.log("搜索结果:", result.results);
+console.log('搜索结果:', result.results);
 ```
 
 ### React Hook 使用
@@ -84,7 +84,7 @@ function SearchComponent() {
 
 ```typescript
 interface SearchResult {
-  type: "link" | "blog" | "doc";
+  type: 'link' | 'blog' | 'doc';
   title: string;
   description?: string;
   url?: string;
@@ -93,7 +93,7 @@ interface SearchResult {
 }
 
 interface SearchOptions {
-  type?: "all" | "links" | "blog" | "doc";
+  type?: 'all' | 'links' | 'blog' | 'doc';
   limit?: number;
   includeContent?: boolean;
 }
@@ -134,7 +134,7 @@ interface SearchResponse {
 
 ```typescript
 const defaultOptions = {
-  type: "all",
+  type: 'all',
   limit: 10,
   includeContent: false,
 };
@@ -144,11 +144,11 @@ const defaultOptions = {
 
 ```typescript
 // 只搜索博客文章
-await search("React", { type: "blog", limit: 5 });
+await search('React', { type: 'blog', limit: 5 });
 
 // 搜索链接，包含内容
-await search("JavaScript", {
-  type: "links",
+await search('JavaScript', {
+  type: 'links',
   limit: 20,
   includeContent: true,
 });
@@ -166,21 +166,18 @@ await search("JavaScript", {
 ### 搜索建议
 
 ```typescript
-import { getSearchSuggestions } from "@/features/search";
+import { getSearchSuggestions } from '@/features/search';
 
-const suggestions = await getSearchSuggestions("Rea", 5);
+const suggestions = await getSearchSuggestions('Rea', 5);
 // 返回: ['React', 'Redux', 'React Native', ...]
 ```
 
 ### 关键词高亮
 
 ```typescript
-import { highlightSearchTerm } from "@/features/search";
+import { highlightSearchTerm } from '@/features/search';
 
-const highlighted = highlightSearchTerm(
-  "React is a JavaScript library",
-  "React",
-);
+const highlighted = highlightSearchTerm('React is a JavaScript library', 'React');
 // 返回: '<mark>React</mark> is a JavaScript library'
 ```
 

@@ -1,10 +1,10 @@
-import React from "react";
-import { Calendar, Calculator, Clock } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Breadcrumb } from "@/features/content";
+import React from 'react';
+import { Calendar, Calculator, Clock } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Breadcrumb } from '@/features/content';
 
 /** 内容显示类型 */
-export type ContentType = "blog" | "docs";
+export type ContentType = 'blog' | 'docs';
 
 export interface ContentDisplayProps {
   contentType: ContentType;
@@ -22,12 +22,12 @@ export interface ContentDisplayProps {
  * 这里采用保守估计 250 字/分钟
  */
 function calculateReadingTime(wordCount: number): string {
-  if (wordCount === 0) return "0 分钟";
+  if (wordCount === 0) return '0 分钟';
 
   const wordsPerMinute = 250;
   const minutes = Math.ceil(wordCount / wordsPerMinute);
 
-  if (minutes < 1) return "1 分钟";
+  if (minutes < 1) return '1 分钟';
   if (minutes < 60) return `${minutes} 分钟`;
 
   const hours = Math.floor(minutes / 60);
@@ -67,12 +67,12 @@ export function ContentDisplay({
   return (
     <article
       className={cn(
-        "prose-container",
+        'prose-container',
         // 添加卡片样式，与博客列表页的文章卡片保持一致
-        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        'rounded-lg border bg-card text-card-foreground shadow-sm',
         // 响应式内边距，与博客卡片保持一致
-        "p-3 sm:p-4 md:p-5 lg:p-6",
-        className,
+        'p-3 sm:p-4 md:p-5 lg:p-6',
+        className
       )}
     >
       {/* 面包屑导航 */}
@@ -83,9 +83,7 @@ export function ContentDisplay({
       )}
 
       <header className="mb-8">
-        <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
-          {title}
-        </h1>
+        <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
         <div className="flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground">
           {/* 发布日期 */}
           {date && (

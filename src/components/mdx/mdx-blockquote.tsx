@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Quote } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Quote } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type MDXBlockquoteProps = {
   children: React.ReactNode;
@@ -20,23 +20,21 @@ export const MDXBlockquote = ({
   return (
     <blockquote
       className={cn(
-        "not-prose my-6 rounded-r-lg px-6 py-4",
-        "border-l-4 text-muted-foreground italic",
-        "flex items-start gap-4",
-        "bg-muted/50",
-        "border-border",
-        className,
+        'not-prose my-6 rounded-r-lg px-6 py-4',
+        'border-l-4 text-muted-foreground italic',
+        'flex items-start gap-4',
+        'bg-muted/50',
+        'border-border',
+        className
       )}
       {...props}
     >
       <Quote className="mt-1 h-5 w-5 flex-shrink-0 text-muted-foreground" />
       <div className="flex-1">
         {children}
-        {(citation || author) && (
+        {(citation ?? author) && (
           <footer className="mt-4 text-sm text-muted-foreground">
-            {citation && (
-              <cite className="font-medium not-italic">{citation}</cite>
-            )}
+            {citation && <cite className="font-medium not-italic">{citation}</cite>}
             {author && (
               <span className="block text-xs">
                 — <span className="font-medium">{author}</span>

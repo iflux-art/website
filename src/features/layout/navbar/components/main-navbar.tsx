@@ -1,20 +1,22 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Logo } from "./logo";
-import { MobileMenu } from "./mobile-menu";
-import { NavMenu } from "./nav-menu";
-import { useNavbarScroll } from "@/features/layout/navbar/hooks/use-navbar-scroll";
+import { Logo } from './logo';
+import { NavMenu } from './nav-menu';
+import { useNavbarScroll } from '@/features/layout/navbar/hooks/use-navbar-scroll';
+import { ThemeToggle } from '@/components/button';
+import { SearchButton } from '@/features/search';
+import { HamburgerMenu } from './hamburger-menu';
 
-export function MainNavbar({ className = "" }: { className?: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+export function MainNavbar({ className = '' }: { className?: string }) {
   const { pageTitle, showTitle, scrollToTop } = useNavbarScroll();
 
   return (
     <nav
       className={`sticky top-0 z-40 h-16 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className}`}
-      onDoubleClick={scrollToTop}
-      title={showTitle ? "双击返回顶部" : ""}
+      onDoubleClickCapture={scrollToTop}
+      title={showTitle ? '双击返回顶部' : ''}
+      role="navigation"
+      aria-label="导航栏"
     >
       <div className="container mx-auto flex h-full items-center justify-between">
         <div className="flex items-center opacity-100">
@@ -23,20 +25,25 @@ export function MainNavbar({ className = "" }: { className?: string }) {
 
         <div className="hidden items-center justify-center opacity-100 lg:flex">
           {showTitle ? (
-            <h2
+            <button
               className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight transition-colors hover:text-primary"
               onClick={scrollToTop}
+              onKeyDown={e => e.key === 'Enter' && scrollToTop()}
               title="点击返回顶部"
+              tabIndex={0}
+              type="button"
             >
               {pageTitle}
-            </h2>
+            </button>
           ) : (
-            <NavMenu mode="links" />
+            <NavMenu />
           )}
         </div>
 
         <div className="flex items-center gap-2">
-          <MobileMenu isOpen={isOpen} setIsOpenAction={setIsOpen} />
+          <SearchButton />
+          <ThemeToggle />
+          <HamburgerMenu />
         </div>
       </div>
     </nav>
