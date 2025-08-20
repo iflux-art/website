@@ -2,15 +2,8 @@
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import {
-  NAV_ITEMS,
-  NAV_DESCRIPTIONS,
-  NAV_PATHS,
-  ADMIN_MENU_ITEMS,
-} from '@/features/layout/navbar/nav-config';
-import { useUser } from '@clerk/nextjs';
+import { NAV_ITEMS, NAV_PATHS } from '@/features/layout/navbar/nav-config';
 import { useActiveSection } from '@/features/layout/navbar/hooks/use-active-section';
-import type { LucideIcon } from 'lucide-react';
 
 type NavProps = {
   /**
@@ -24,86 +17,32 @@ type NavProps = {
   className?: string;
 };
 
-function NavCards({ onClose, className }: NavProps) {
+function NavList({ onClose, className }: NavProps) {
   const isActiveSection = useActiveSection(NAV_ITEMS.map(item => item.key));
 
   return (
-    <div className={cn('space-y-6', className)}>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {NAV_ITEMS.map(item => {
-          const Icon: LucideIcon = item.icon;
-          return (
-            <Link
-              key={item.key}
-              href={NAV_PATHS[item.key]}
-              onClick={onClose}
-              className={cn(
-                'group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground',
-                isActiveSection === item.key
-                  ? 'border-primary bg-accent text-accent-foreground'
-                  : 'border-border'
-              )}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Icon className="h-5 w-5" />
-                  <h3 className="text-base font-medium">{item.label}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">{NAV_DESCRIPTIONS[item.key]}</p>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+    <div className={cn('flex flex-row gap-6', className)}>
+      {NAV_ITEMS.map(item => (
+        <Link
+          key={item.key}
+          href={NAV_PATHS[item.key]}
+          onClick={onClose}
+          className={cn(
+            'text-sm font-medium transition-colors hover:text-primary',
+            isActiveSection === item.key ? 'text-primary' : 'text-muted-foreground'
+          )}
+        >
+          {item.label}
+        </Link>
+      ))}
     </div>
   );
 }
 
-function AdminMenu({ onClose }: NavProps) {
-  const isActiveSection = useActiveSection(ADMIN_MENU_ITEMS.map(item => item.key));
-
-  return (
-    <div className="space-y-6">
-      <div className="mb-2">
-        <h3 className="text-sm font-medium text-muted-foreground">管理后台</h3>
-      </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {ADMIN_MENU_ITEMS.map(item => {
-          const Icon: LucideIcon = item.icon;
-          return (
-            <Link
-              key={item.key}
-              href={`/${item.key}`}
-              onClick={onClose}
-              className={cn(
-                'group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground',
-                isActiveSection === item.key
-                  ? 'border-primary bg-accent text-accent-foreground'
-                  : 'border-border'
-              )}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Icon className="h-5 w-5" />
-                  <h3 className="text-base font-medium">{item.label}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-export function NavMenu({ onClose, className }: NavProps) {
-  const { isSignedIn } = useUser();
-
+export function NavListMenu({ onClose, className }: NavProps) {
   return (
     <div className={cn('space-y-6', className)}>
-      <NavCards onClose={onClose} />
-      {isSignedIn && <AdminMenu onClose={onClose} />}
+      <NavList onClose={onClose} />
     </div>
   );
 }

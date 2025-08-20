@@ -4,7 +4,7 @@
 
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 interface NavbarState {
   direction: 'up' | 'down';
@@ -21,6 +21,7 @@ const STATE_CONFIG = {
 } as const;
 
 export function useSafeNavbar() {
+  const [isInitialized, setIsInitialized] = useState(false);
   const [state, setState] = useState<NavbarState>({
     direction: 'up',
     position: 0,
@@ -29,45 +30,55 @@ export function useSafeNavbar() {
     lastDirectionChange: 0,
   });
 
-  const setScrollPosition = useCallback((position: number) => {
-    setState(prev => {
-      const now = Date.now();
-      const newDirection = position > prev.position ? 'down' : 'up';
-      const directionChanged = newDirection !== prev.direction;
+  useEffect(() => {
+    const timer = setTimeout(() => setIsInitialized(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
-      // 首页始终显示导航菜单
-      if (prev.pageTitle === '首页') {
-        return {
+  const setScrollPosition = useCallback(
+    (position: number) => {
+      if (!isInitialized) return;
+
+      setState(prev => {
+        const now = Date.now();
+        const newDirection = position > prev.position ? 'down' : 'up';
+        const directionChanged = newDirection !== prev.direction;
+
+        // 首页始终显示导航菜单
+        if (prev.pageTitle === '首页') {
+          return {
+            ...prev,
+            direction: newDirection,
+            position,
+            showTitle: false,
+            lastDirectionChange: directionChanged ? now : prev.lastDirectionChange,
+          };
+        }
+
+        // 忽略微小的滚动变化
+        if (Math.abs(position - prev.position) <= STATE_CONFIG.SCROLL_THRESHOLD) {
+          return prev;
+        }
+
+        const newState: NavbarState = {
           ...prev,
           direction: newDirection,
           position,
-          showTitle: false,
           lastDirectionChange: directionChanged ? now : prev.lastDirectionChange,
         };
-      }
 
-      // 忽略微小的滚动变化
-      if (Math.abs(position - prev.position) <= STATE_CONFIG.SCROLL_THRESHOLD) {
-        return prev;
-      }
+        // 根据滚动方向和位置决定是否显示标题
+        if (newDirection === 'up') {
+          newState.showTitle = false; // 向上滚动始终显示菜单
+        } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
+          newState.showTitle = true; // 向下且滚动较多时收起菜单
+        }
 
-      const newState: NavbarState = {
-        ...prev,
-        direction: newDirection,
-        position,
-        lastDirectionChange: directionChanged ? now : prev.lastDirectionChange,
-      };
-
-      // 根据滚动方向和位置决定是否显示标题
-      if (newDirection === 'up') {
-        newState.showTitle = false; // 向上滚动始终显示菜单
-      } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
-        newState.showTitle = true; // 向下且滚动较多时收起菜单
-      }
-
-      return newState;
-    });
-  }, []);
+        return newState;
+      });
+    },
+    [isInitialized]
+  );
 
   const setPageTitle = useCallback((title: string) => {
     setState(prev => ({ ...prev, pageTitle: title }));

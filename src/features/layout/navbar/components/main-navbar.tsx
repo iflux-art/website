@@ -1,14 +1,14 @@
 'use client';
 
 import { Logo } from './logo';
-import { NavMenu } from './nav-menu';
+import { NavListMenu } from './nav-menu';
 import { useNavbarScroll } from '@/features/layout/navbar/hooks/use-navbar-scroll';
 import { ThemeToggle } from '@/components/button';
 import { SearchButton } from '@/features/search';
 import { HamburgerMenu } from './hamburger-menu';
 
 export function MainNavbar({ className = '' }: { className?: string }) {
-  const { pageTitle, showTitle, scrollToTop } = useNavbarScroll();
+  const { pageTitle, showTitle, scrollToTop, shouldShowPageTitle, showNavMenu } = useNavbarScroll();
 
   return (
     <nav
@@ -23,8 +23,8 @@ export function MainNavbar({ className = '' }: { className?: string }) {
           <Logo />
         </div>
 
-        <div className="hidden items-center justify-center opacity-100 lg:flex">
-          {showTitle ? (
+        <div className="hidden items-center justify-center gap-8 opacity-100 lg:flex">
+          {shouldShowPageTitle && showTitle && !showNavMenu ? (
             <button
               className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight transition-colors hover:text-primary"
               onClick={scrollToTop}
@@ -35,9 +35,8 @@ export function MainNavbar({ className = '' }: { className?: string }) {
             >
               {pageTitle}
             </button>
-          ) : (
-            <NavMenu />
-          )}
+          ) : null}
+          {showNavMenu && <NavListMenu className="flex-1" />}
         </div>
 
         <div className="flex items-center gap-2">

@@ -4,7 +4,7 @@ import React from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
-import { NavMenu } from './nav-menu';
+import { NavCardMenu } from './nav-card-menu';
 
 export function HamburgerMenu() {
   return (
@@ -16,7 +16,7 @@ export function HamburgerMenu() {
       </DialogTrigger>
       <DialogContent className="w-full max-w-md p-4">
         <DialogTitle className="sr-only">导航菜单</DialogTitle>
-        <NavMenu />
+        <NavCardMenu className="p-4" />
       </DialogContent>
     </Dialog>
   );

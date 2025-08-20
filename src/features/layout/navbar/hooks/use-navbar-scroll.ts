@@ -131,10 +131,16 @@ export function useNavbarScroll() {
     updatePageTitle();
   }, [updatePageTitle]);
 
+  const showNavMenu = useMemo(() => {
+    if (!shouldShowPageTitle()) return true; // 非详情页始终显示导航菜单
+    return direction !== 'down'; // 详情页向上滚动时显示导航菜单
+  }, [direction, shouldShowPageTitle]);
+
   return {
     direction,
     position,
     showTitle: shouldShowPageTitle() ? showTitle : false, // 只在指定页面显示标题
+    showNavMenu, // 导航菜单显示状态
     pageTitle,
     lastDirectionChange,
     scrollToTop,
