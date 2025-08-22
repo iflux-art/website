@@ -1,4 +1,8 @@
 {
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/app/globals.css",
+  "tailwindConfig": "./tailwind.config.mjs",
+  "tailwindPreserveDuplicates": true,
   "semi": true,
   "singleQuote": true,
   "tabWidth": 2,

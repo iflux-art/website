@@ -71,10 +71,7 @@ export function LinksContent({ items, selectedCategory, className }: LinksConten
       {groupedItems.map(({ tag, items: tagItems }) => (
         <section key={tag} className="space-y-4">
           {/* 标签标题和锚点 */}
-          <h2
-            id={generateAnchorId(tag)}
-            className="border-b border-border pb-2 text-2xl font-bold tracking-tight"
-          >
+          <h2 id={generateAnchorId(tag)} className="text-2xl font-bold tracking-tight">
             {tag}
           </h2>
 
