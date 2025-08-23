@@ -10,7 +10,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
-import { Plus, Edit, Trash2, ExternalLink, RefreshCw } from 'lucide-react';
+import { Plus, Edit, Trash2, ExternalLink } from 'lucide-react';
 import type { LinksItem } from '@/features/links/types';
 
 // 内联 TableColumn 类型定义
@@ -152,16 +152,10 @@ export const getTableActions = (
  * @param onRefresh - 刷新操作回调函数
  * @returns 页面操作按钮配置数组
  */
-export const getPageActions = (onAdd: () => void, onRefresh: () => void) => [
+export const getPageActions = (onAdd: () => void) => [
   {
     label: '添加网址',
     onClick: onAdd,
     icon: Plus,
-  },
-  {
-    label: '刷新数据',
-    onClick: onRefresh,
-    icon: RefreshCw,
-    variant: 'outline' as const,
   },
 ];

@@ -7,6 +7,3 @@ export * from './components';
 
 // Hooks 导出
 export * from './hooks';
-
-// 类型导出
-export * from './types';

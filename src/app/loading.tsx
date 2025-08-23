@@ -1,56 +1,57 @@
-'use client';
+import { ThreeColumnGrid } from '@/features/layout';
 
-import { useEffect, useState } from 'react';
-
+/**
+ * 全局加载状态页面
+ * 根据 Next.js App Router 约定，作为全局路由加载状态
+ * 保持与正常状态一致的布局和间距规范
+ */
 export default function Loading() {
-  const [progress, setProgress] = useState(0);
-  const [opacity, setOpacity] = useState(0.8);
+  // 左侧边栏骨架
+  const leftSidebarSkeleton = {
+    position: 'left' as const,
+    content: (
+      <div className="space-y-4">
+        <div className="h-[200px] animate-pulse rounded-md bg-muted" />
+        <div className="h-[300px] animate-pulse rounded-md bg-muted" />
+      </div>
+    ),
+    sticky: true,
+    stickyTop: '96px',
+    responsive: {
+      hideOnMobile: true,
+      hideOnTablet: false,
+      hideOnDesktop: false,
+    },
+  };
 
-  useEffect(() => {
-    // 初始快速增长阶段
-    const initialProgress = setTimeout(() => {
-      setProgress(30);
-    }, 100);
-
-    // 渐进增长阶段
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 90) {
-          clearInterval(progressInterval);
-          return prev;
-        }
-        // 进度越高，增长越慢
-        const increment = Math.max(0.5, (100 - prev) / 15);
-        return Math.min(90, prev + increment);
-      });
-    }, 300);
-
-    // 透明度闪烁效果
-    const opacityInterval = setInterval(() => {
-      setOpacity(prev => (prev === 0.8 ? 1 : 0.8));
-    }, 800);
-
-    return () => {
-      clearTimeout(initialProgress);
-      clearInterval(progressInterval);
-      clearInterval(opacityInterval);
-    };
-  }, []);
+  // 右侧边栏骨架
+  const rightSidebarSkeleton = {
+    position: 'right' as const,
+    content: (
+      <div className="space-y-4">
+        <div className="h-[200px] animate-pulse rounded-md bg-muted" />
+        <div className="h-[300px] animate-pulse rounded-md bg-muted" />
+      </div>
+    ),
+    sticky: true,
+    stickyTop: '96px',
+    responsive: {
+      hideOnMobile: true,
+      hideOnTablet: true,
+      hideOnDesktop: false,
+    },
+  };
 
   return (
-    <div className="fixed top-16 right-0 left-0 z-50">
-      <div className="h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
-        <div
-          className="h-full bg-primary dark:bg-primary"
-          style={{
-            width: `${progress}%`,
-            opacity,
-            transition: 'width 300ms ease-out',
-            transform: 'translateZ(0)',
-            boxShadow: '0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)',
-          }}
-        />
-      </div>
+    <div className="min-h-screen bg-background">
+      <ThreeColumnGrid sidebars={[leftSidebarSkeleton, rightSidebarSkeleton]}>
+        {/* 主内容区加载状态 - 移除标题和描述，直接显示内容骨架 */}
+        <div className="space-y-6">
+          <div className="h-[300px] animate-pulse rounded-md bg-muted" />
+          <div className="h-[200px] animate-pulse rounded-md bg-muted" />
+          <div className="h-[400px] animate-pulse rounded-md bg-muted" />
+        </div>
+      </ThreeColumnGrid>
     </div>
   );
 }

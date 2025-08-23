@@ -47,3 +47,17 @@ export interface TagCount {
   /** 标签颜色 */
   color?: string;
 }
+
+/**
+ * 博客文章Frontmatter
+ */
+export interface BlogFrontmatter {
+  title: string;
+  description?: string;
+  date?: string | Date;
+  category?: string;
+  tags?: string[];
+  published?: boolean;
+  excerpt?: string;
+  image?: string;
+}

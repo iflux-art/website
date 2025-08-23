@@ -18,6 +18,8 @@ export interface BreadcrumbItem {
   label: string;
   /** 链接地址，如果不提供则显示为纯文本 */
   href?: string;
+  /** 是否为当前页面 */
+  isCurrent?: boolean;
 }
 
 /** 文档标题结构 */

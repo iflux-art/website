@@ -1,7 +1,7 @@
 /**
  * 博客相关工具函数
  */
-
+export { getBlogContent } from './blog-content';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -38,8 +38,10 @@ export function generateBreadcrumbs({
   currentTitle,
   startLabel,
   segmentProcessor,
-}: GenerateBreadcrumbsOptions): BreadcrumbItem[] {
-  const items: BreadcrumbItem[] = [{ label: startLabel, href: `/${basePath}` }];
+}: GenerateBreadcrumbsOptions): Array<{ label: string; href?: string }> {
+  const items: Array<{ label: string; href?: string }> = [
+    { label: startLabel, href: `/${basePath}` },
+  ];
   let currentPath = '';
 
   slug.forEach((segment, index) => {

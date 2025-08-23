@@ -48,8 +48,8 @@ export interface BaseSearchResult {
   };
 }
 
-/** 搜索结果 */
-export interface SearchResult extends BaseSearchResult {
+/** 导航栏搜索结果 */
+export interface NavbarSearchResult extends BaseSearchResult {
   /** 结果类型 */
   type: 'doc' | 'blog' | 'navigation' | 'tool' | 'command' | 'history' | 'link';
   /** 图标 */

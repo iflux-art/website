@@ -8,6 +8,7 @@ export interface RelatedPost {
   title: string;
   href: string;
   category?: string;
+  slug: string[];
 }
 
 export interface RelatedPostsCardProps {
@@ -36,7 +37,7 @@ export function RelatedPostsCard({ posts, currentSlug }: RelatedPostsCardProps) 
           const isActive = currentPath === post.href;
           return (
             <Link
-              key={post.href}
+              key={post.slug.join('/')}
               href={post.href}
               className={cn(
                 'group flex items-start gap-2 rounded-md p-2 text-xs transition-all duration-200 hover:bg-muted/60',

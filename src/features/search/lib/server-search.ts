@@ -1,0 +1,160 @@
+/**
+ * 服务端搜索工具函数
+ * 仅用于 API routes 和其他服务端环境，不应在客户端导入
+ */
+
+import { promises as fs } from 'fs';
+import path from 'path';
+import { glob } from 'fast-glob';
+import matter from 'gray-matter';
+import { loadAllCategoriesData } from '@/features/links/lib/categories';
+import type { SearchResult } from '../types';
+
+interface LinkItem {
+  title: string;
+  description?: string;
+  url?: string;
+  tags?: string[];
+}
+
+// 内存缓存
+let contentCache: {
+  blogs: SearchResult[];
+  docs: SearchResult[];
+  timestamp: number;
+} | null = null;
+
+const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
+
+/**
+ * 扫描内容文件（博客/文档）
+ */
+async function scanContentFiles(contentType: 'blog' | 'docs'): Promise<SearchResult[]> {
+  const basePath = path.join(process.cwd(), `src/content/${contentType}`);
+  const files = await glob('**/*.mdx', { cwd: basePath });
+  const results: SearchResult[] = [];
+
+  for (const file of files) {
+    try {
+      const filePath = path.join(basePath, file);
+      const content = await fs.readFile(filePath, 'utf-8');
+
+      try {
+        const { data: frontmatter } = matter(content);
+        if (frontmatter?.title && typeof frontmatter.title === 'string') {
+          results.push({
+            type: contentType === 'blog' ? 'blog' : 'doc',
+            title: frontmatter.title,
+            description:
+              typeof frontmatter.description === 'string' ? frontmatter.description : undefined,
+            path: `/${contentType}/${file.replace(/\.mdx$/, '')}`,
+            tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : undefined,
+          });
+        }
+      } catch {
+        // Skip files with invalid frontmatter format
+        continue;
+      }
+    } catch {
+      // Skip files that cannot be read
+      continue;
+    }
+  }
+
+  return results;
+}
+
+/**
+ * 获取缓存的内容
+ */
+export async function getCachedContent() {
+  const now = Date.now();
+  if (contentCache && now - contentCache.timestamp < CACHE_TTL) {
+    return contentCache;
+  }
+
+  const [blogs, docs] = await Promise.all([scanContentFiles('blog'), scanContentFiles('docs')]);
+
+  contentCache = { blogs, docs, timestamp: now };
+  return contentCache;
+}
+
+/**
+ * 搜索链接
+ */
+export async function searchLinks(query: string, limit = 5): Promise<SearchResult[]> {
+  const links = await loadAllCategoriesData();
+  const queryLower = query.toLowerCase();
+
+  return links
+    .filter((item: LinkItem) => {
+      const searchText = `${item.title} ${item.description} ${item.tags?.join(' ')}`.toLowerCase();
+      return searchText.includes(queryLower);
+    })
+    .map((item: LinkItem) => ({
+      type: 'link' as const,
+      title: item.title,
+      description: item.description,
+      url: item.url,
+      tags: item.tags,
+    }))
+    .slice(0, limit);
+}
+
+/**
+ * 执行服务端搜索
+ */
+export async function performServerSearch(
+  query: string,
+  type: string = 'all',
+  limit: number = 10
+): Promise<{ results: SearchResult[]; total: number }> {
+  if (!query.trim()) {
+    return { results: [], total: 0 };
+  }
+
+  const { blogs, docs } = await getCachedContent();
+  const results: SearchResult[] = [];
+  const queryLower = query.toLowerCase();
+
+  // 搜索链接
+  if (type === 'all' || type === 'links') {
+    const linkResults = await searchLinks(query, 5);
+    results.push(...linkResults);
+  }
+
+  // 搜索博客
+  if (type === 'all' || type === 'blog') {
+    const blogResults = blogs
+      .filter(post => {
+        const searchText =
+          `${post.title} ${post.description} ${post.tags?.join(' ')}`.toLowerCase();
+        return searchText.includes(queryLower);
+      })
+      .slice(0, 5);
+    results.push(...blogResults);
+  }
+
+  // 搜索文档
+  if (type === 'all' || type === 'doc') {
+    const docResults = docs
+      .filter(doc => {
+        const searchText = `${doc.title} ${doc.description}`.toLowerCase();
+        return searchText.includes(queryLower);
+      })
+      .slice(0, 5);
+    results.push(...docResults);
+  }
+
+  // 按匹配度排序
+  results.sort((a, b) => {
+    const aScore = a.title.toLowerCase().includes(queryLower) ? 1 : 0;
+    const bScore = b.title.toLowerCase().includes(queryLower) ? 1 : 0;
+    return bScore - aScore;
+  });
+
+  return {
+    results: results.slice(0, limit),
+    total: results.length,
+  };
+}

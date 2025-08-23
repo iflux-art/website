@@ -3,7 +3,7 @@
 import { Logo } from './logo';
 import { NavListMenu } from './nav-menu';
 import { useNavbarScroll } from '@/features/layout/navbar/hooks/use-navbar-scroll';
-import { ThemeToggle } from '@/components/button';
+import { ThemeToggle } from '@/features/layout/components';
 import { SearchButton } from '@/features/search';
 import { HamburgerMenu } from './hamburger-menu';
 
@@ -18,7 +18,7 @@ export function MainNavbar({ className = '' }: { className?: string }) {
       role="navigation"
       aria-label="导航栏"
     >
-      <div className="container mx-auto flex h-full items-center justify-between">
+      <div className="container mx-auto flex h-full items-center justify-between px-4">
         <div className="flex items-center opacity-100">
           <Logo />
         </div>

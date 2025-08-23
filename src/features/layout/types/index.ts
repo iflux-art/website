@@ -4,31 +4,6 @@
 
 import type { ReactNode } from 'react';
 
-// AppGrid 组件 Props 类型
-export interface AppGridProps {
-  /**
-   * 子元素
-   */
-  children?: ReactNode;
-
-  /**
-   * 自定义类名
-   */
-  className?: string;
-
-  /**
-   * 列数
-   * @default 3
-   */
-  columns?: 1 | 2 | 3 | 4 | 5;
-
-  /**
-   * 网格间距
-   * @default "default"
-   */
-  gap?: 'small' | 'default' | 'large';
-}
-
 // Sidebar 相关类型
 export interface SidebarItem {
   id: string;
@@ -38,7 +13,7 @@ export interface SidebarItem {
   isActive?: boolean;
   isExternal?: boolean;
   description?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 export interface SidebarProps {
@@ -57,3 +32,6 @@ export interface SidebarProps {
   /** 全部选项的标题 */
   allOptionTitle?: string;
 }
+
+// 导出页面容器相关类型
+export * from './page-container';

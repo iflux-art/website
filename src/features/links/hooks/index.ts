@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
 import { useCategories } from './use-categories';
 import { useFilterState } from './use-filter-state';

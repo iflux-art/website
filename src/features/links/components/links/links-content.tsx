@@ -49,10 +49,6 @@ export function LinksContent({ items, selectedCategory, className }: LinksConten
   }, [items]);
 
   // 生成锚点 ID
-  const generateAnchorId = (tag: string) => {
-    return `tag-${tag.replace(/\s+/g, '-').toLowerCase()}`;
-  };
-
   if (groupedItems.length === 0) {
     return (
       <div className={cn('flex items-center justify-center py-12', className)}>
@@ -70,11 +66,6 @@ export function LinksContent({ items, selectedCategory, className }: LinksConten
     <div className={cn('space-y-8', className)}>
       {groupedItems.map(({ tag, items: tagItems }) => (
         <section key={tag} className="space-y-4">
-          {/* 标签标题和锚点 */}
-          <h2 id={generateAnchorId(tag)} className="text-2xl font-bold tracking-tight">
-            {tag}
-          </h2>
-
           {/* 链接卡片网格 */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tagItems.map(item => (

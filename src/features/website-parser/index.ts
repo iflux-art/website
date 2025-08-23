@@ -1,10 +1,12 @@
 /**
- * 网址解析功能统一导出
- * 集中管理所有与网址解析相关的功能
+ * Website Parser 功能模块统一导出
  */
 
+// ==================== 类型定义导出 ====================
 export * from './types';
+
+// ==================== 工具函数导出 ====================
 export * from './lib/parser';
-export * from './lib/validation';
-export * from './lib/utils';
-export * from './hooks/use-website-parser';
+
+// ==================== Hooks 导出 ====================
+export * from './hooks';

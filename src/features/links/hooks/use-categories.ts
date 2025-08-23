@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import type { LinksCategory, CategoryId } from '@/features/links/types';
 import { generateCategoriesData } from '@/features/links/lib';

@@ -1,9 +1,11 @@
+'use client';
+
 /**
  * 网址解析 React Hook
  */
 
 import { useState, useCallback } from 'react';
-import { parseWebsiteMetadata } from '@/features/website-parser/lib/parser';
+import { parseWebsite as parseWebsiteMetadata } from '@/features/website-parser/lib/parser';
 import type { WebsiteMetadata, ParseOptions } from '@/features/website-parser/types';
 
 interface UseWebsiteParserReturn {

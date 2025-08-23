@@ -7,6 +7,9 @@
 export * from './helpers'; // 防抖函数等
 export * from './utils'; // cn等样式工具
 export * from './metadata'; // 元数据生成函数
+export * from './page-utils'; // 页面工具函数
+export * from './seo-utils'; // SEO工具函数
+export * from './error-utils'; // 统一错误处理工具
 
 // ==================== 兼容性导出 ====================
 // 保持向后兼容

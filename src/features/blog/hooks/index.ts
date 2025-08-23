@@ -180,3 +180,6 @@ export async function getAllPosts() {
   const posts = (await response.json()) as BlogPost[];
   return sortPostsByDate(posts);
 }
+
+// Blog 页面状态管理 Hook
+export { useBlogPage } from './use-blog-page';

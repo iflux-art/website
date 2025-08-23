@@ -1,45 +1,19 @@
-import { notFound } from 'next/navigation';
-import { toDocFrontmatter } from '@/features/docs/types';
+import React from 'react';
 import Link from 'next/link';
-import { getAllDocsStructure } from '@/features/docs/components';
-import { createDocBreadcrumbsServer } from '@/features/docs/lib';
-import { ContentDisplay, DocPagination } from '@/features/content';
-import { DocsSidebarWrapper } from '@/features/docs/components';
-import { TableOfContentsCard } from '@/features/content';
-import { AppGrid } from '@/features/layout';
-import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
+import { notFound } from 'next/navigation';
+import { generateDocsMetadata } from '@/lib/seo-utils';
+import { getAllDocsStructure, DocsSidebarCard } from '@/features/docs/components';
+import { getDocContentFromFeatures, createDocBreadcrumbsServer } from '@/features/docs/lib';
+import { ThreeColumnLayout } from '@/features/layout';
+import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
 import { TwikooComment } from '@/features/comment';
+import { ClientMDXRenderer } from '@/components/mdx';
+import type { Metadata } from 'next';
 
-// 导入文档处理函数
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { getFlattenedDocsOrder } from '@/features/docs/lib';
-import { extractHeadings } from '@/features/content';
-import type { DocContentResult } from '@/features/docs/types';
-
-// 文档内容处理函数
-function countWords(text: string): number {
-  const cleanText = text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`[^`]*`/g, '')
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/<[^>]*>/g, '')
-    .replace(/[#*_~>|-]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  const chineseChars = cleanText.match(/[\u4e00-\u9fa5]/g) ?? [];
-  const englishWords = cleanText
-    .replace(/[\u4e00-\u9fa5]/g, '')
-    .split(/\s+/)
-    .filter(word => word.length > 0);
-
-  return chineseChars.length + englishWords.length;
-}
-
-function getFirstDocContent(): DocContentResult | null {
+/**
+ * 获取第一个文档内容
+ */
+function getFirstDocContent(): ReturnType<typeof getDocContentFromFeatures> | null {
   try {
     const structure = getAllDocsStructure();
 
@@ -47,109 +21,36 @@ function getFirstDocContent(): DocContentResult | null {
       return null;
     }
 
-    // 从 firstDocPath 中提取 slug
     const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
     const slug = firstDocPath.split('/');
 
-    const docsContentDir = path.join(process.cwd(), 'src', 'content', 'docs');
-    const requestedPath = slug.join('/');
-    const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
-
-    let filePath: string | undefined;
-    const actualSlugForNav = slug.join('/');
-    let isIndexPage = false;
-
-    // 检查是否为目录
-    if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
-      // 查找 index 文件
-      for (const indexFile of ['index.mdx', 'index.md']) {
-        const indexPath = path.join(absoluteRequestedPath, indexFile);
-        if (fs.existsSync(indexPath)) {
-          filePath = indexPath;
-          isIndexPage = true;
-          break;
-        }
-      }
-    }
-
-    // 如果不是目录或没有 index 文件，尝试作为文件
-    if (!filePath) {
-      const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
-      if (fs.existsSync(possiblePathMdx)) {
-        filePath = possiblePathMdx;
-      } else {
-        const possiblePathMd = `${absoluteRequestedPath}.md`;
-        if (fs.existsSync(possiblePathMd)) {
-          filePath = possiblePathMd;
-        }
-      }
-    }
-
-    if (!filePath || !fs.existsSync(filePath)) {
-      return null;
-    }
-
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { content: originalContent, data: frontmatter } = matter(fileContent);
-
-    const date = frontmatter.date
-      ? new Date((frontmatter.date as string | number | Date) ?? '').toLocaleDateString('zh-CN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-      : (null as string | null);
-
-    const wordCount = countWords(originalContent);
-    const { headings } = extractHeadings(originalContent);
-    const topLevelCategorySlug = slug[0];
-    const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
-
-    let prevDoc = null;
-    let nextDoc = null;
-
-    if (isIndexPage) {
-      prevDoc = null;
-      const indexDirNavPath = `/docs/${actualSlugForNav}`;
-      nextDoc =
-        flattenedDocs.find(
-          doc =>
-            doc.path.startsWith(indexDirNavPath + '/') ||
-            (doc.path.startsWith(indexDirNavPath) &&
-              doc.path !== indexDirNavPath &&
-              !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
-        ) ?? null;
-    } else {
-      const currentNavPath = `/docs/${actualSlugForNav}`;
-      const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
-      if (currentIndex !== -1) {
-        prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
-        nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
-      }
-    }
-
-    return {
-      title: (frontmatter.title ?? path.basename(filePath, path.extname(filePath))) as string,
-      content: originalContent,
-      frontmatter: toDocFrontmatter(frontmatter),
-      headings,
-      prevDoc,
-      nextDoc,
-      breadcrumbs: [],
-      mdxContent: originalContent,
-      wordCount,
-      date,
-      relativePathFromTopCategory: path
-        .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-        .replace(/\\/g, '/')
-        .replace(/\.(mdx|md)$/, ''),
-      topLevelCategorySlug,
-      isIndexPage,
-    };
+    return getDocContentFromFeatures(slug);
   } catch (error) {
     console.error('Error getting first doc content:', error as Error);
     return null;
   }
+}
+
+/**
+ * 生成文档页面元数据
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const structure = getAllDocsStructure();
+  const doc = getFirstDocContent();
+
+  if (!doc || !structure) {
+    return generateDocsMetadata({
+      title: '文档不可用',
+      description: '当前没有可用的文档内容',
+    });
+  }
+
+  return generateDocsMetadata({
+    title: doc.frontmatter.title,
+    description: doc.frontmatter.description || '文档页面',
+    section: '文档',
+    lastUpdated: doc.date || undefined,
+  });
 }
 
 export default async function DocsPage() {
@@ -190,44 +91,39 @@ export default async function DocsPage() {
     const slug = firstDocPath.split('/');
     const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
+    // 左侧边栏内容 - 文档导航
+    const leftSidebar = <DocsSidebarCard currentDoc={structure.firstDocPath} />;
+
+    // 右侧边栏内容 - 目录导航
+    const rightSidebar = <TableOfContentsCard headings={doc.headings} className="prose-sm" />;
+
     return (
       <div className="min-h-screen bg-background">
-        <div className="container mx-auto">
-          <AppGrid columns={5} gap="large">
-            {/* 左侧边栏 - 全局文档导航 */}
-            <aside className="hide-scrollbar sticky top-20 col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:block">
-              <div className="space-y-4">
-                <DocsSidebarWrapper currentDoc={structure.firstDocPath} />
-              </div>
-            </aside>
+        <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
+          {/* 文档主内容 */}
+          <div className="space-y-6">
+            {/* 文档内容展示 */}
+            <ContentDisplay
+              contentType="docs"
+              title={doc.frontmatter.title}
+              date={doc.date}
+              wordCount={doc.wordCount}
+              breadcrumbs={breadcrumbs}
+            >
+              <ClientMDXRenderer content={doc.content} />
+            </ContentDisplay>
 
-            {/* 主内容区 - 占3列 */}
-            <main className="col-span-1 min-w-0 lg:col-span-1 xl:col-span-3">
-              <ContentDisplay
-                contentType="docs"
-                title={doc.frontmatter.title}
-                date={doc.date}
-                wordCount={doc.wordCount}
-                breadcrumbs={breadcrumbs}
-              >
-                <ClientMDXRenderer content={doc.content} />
-              </ContentDisplay>
-              <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
-              <TwikooComment />
-            </main>
+            {/* 文档分页导航 */}
+            <DocPagination prevDoc={doc.prevDoc} nextDoc={doc.nextDoc} />
 
-            {/* 右侧边栏 - TOC */}
-            <aside className="sticky top-[80px] col-span-1 hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto xl:block">
-              <div className="space-y-4">
-                <TableOfContentsCard headings={doc.headings} className="prose-sm" />
-              </div>
-            </aside>
-          </AppGrid>
-        </div>
+            {/* 评论区 */}
+            <TwikooComment />
+          </div>
+        </ThreeColumnLayout>
       </div>
     );
   } catch (error) {
-    console.error('Error in docs page:', error);
+    console.error('Error in docs home page:', error);
     notFound();
   }
 }

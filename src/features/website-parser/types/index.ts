@@ -1,7 +1,6 @@
 /**
- * 网址解析相关类型定义
+ * 网站元数据接口
  */
-
 export interface WebsiteMetadata {
   title?: string;
   description?: string;
@@ -14,20 +13,31 @@ export interface WebsiteMetadata {
   language?: string;
 }
 
-export interface ParseOptions {
-  timeout?: number;
-  retries?: number;
-  retryDelay?: number;
-  userAgent?: string;
+/**
+ * 缓存项接口
+ */
+export interface CacheItem {
+  data: WebsiteMetadata;
+  timestamp: number;
 }
 
+/**
+ * 网站解析选项
+ */
+export interface ParseOptions {
+  timeout?: number;
+  useCache?: boolean;
+  cacheMaxAge?: number;
+  retryCount?: number;
+  retryDelay?: number;
+}
+
+/**
+ * 解析结果接口
+ */
 export interface ParseResult {
   success: boolean;
   data?: WebsiteMetadata;
   error?: string;
-}
-
-export interface CacheItem {
-  data: WebsiteMetadata;
-  timestamp: number;
+  fromCache?: boolean;
 }

@@ -14,3 +14,6 @@ export * from './metadata-types';
 
 // ==================== 内容类型 ====================
 export * from './content-types';
+
+// ==================== 页面类型 ====================
+export * from './page-types';

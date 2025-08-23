@@ -5,8 +5,20 @@ import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { NavCardMenu } from './nav-card-menu';
+import { useMounted } from '@/hooks';
 
 export function HamburgerMenu() {
+  const isMounted = useMounted();
+
+  // 在服务器端渲染时，只显示按钮，不显示 Dialog
+  if (!isMounted) {
+    return (
+      <Button variant="ghost" size="icon" aria-label="打开菜单" title="打开菜单" disabled>
+        <Menu className="h-5 w-5" />
+      </Button>
+    );
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>

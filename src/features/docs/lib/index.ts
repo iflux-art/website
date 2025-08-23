@@ -6,8 +6,19 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { sync as globSync } from 'glob';
-import type { SidebarItem, DocCategory, DocListItem, NavDocItem } from '@/features/docs/types';
+import type {
+  SidebarItem,
+  DocCategory,
+  DocListItem,
+  NavDocItem,
+  DocContentResult,
+} from '@/features/docs/types';
 import type { BreadcrumbItem } from '@/types/content-types';
+import { getDocContent } from './doc-content';
+import { generateDocPaths } from './doc-paths';
+
+// 导出路径解析工具函数
+export * from './doc-path-resolver';
 
 type DocMetaItem = {
   title: string;
@@ -509,4 +520,21 @@ export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
 
   recurse(sidebarItems);
   return flatList;
+}
+
+/**
+ * 从特性中获取文档内容
+ * @param slug 文档路径数组
+ * @returns 文档内容结果
+ */
+export function getDocContentFromFeatures(slug: string[]): DocContentResult {
+  return getDocContent(slug);
+}
+
+/**
+ * 从特性中生成文档路径
+ * @returns 文档路径数组
+ */
+export function generateDocPathsFromFeatures(): { slug: string[] }[] {
+  return generateDocPaths();
 }

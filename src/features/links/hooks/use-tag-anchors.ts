@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import type { LinksItem } from '@/features/links/types';
 
