@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { BlogPost } from '@/features/blog/types';
-import type { CategoryWithCount } from '@/features/blog/hooks';
-import { getAllPosts } from '@/features/blog/hooks';
+import { type CategoryWithCount, getAllPosts } from '@/features/blog/hooks';
 
 export interface UseBlogPageReturn {
   // 数据状态
@@ -12,18 +11,18 @@ export interface UseBlogPageReturn {
   filteredPosts: BlogPost[];
   categories: CategoryWithCount[];
   postsCount: Record<string, number>;
-  relatedPosts: Array<{
+  relatedPosts: {
     title: string;
     href: string;
     category: string | undefined;
     slug: string[];
-  }>;
-  latestPosts: Array<{
+  }[];
+  latestPosts: {
     title: string;
     href: string;
     date: string | undefined;
     category: string | undefined;
-  }>;
+  }[];
 
   // 加载状态
   loading: boolean;

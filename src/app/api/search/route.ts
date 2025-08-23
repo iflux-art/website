@@ -1,5 +1,4 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { performServerSearch } from '@/features/search/lib/server-search';
 
 export async function GET(request: NextRequest) {

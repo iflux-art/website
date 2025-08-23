@@ -43,13 +43,13 @@ export interface BlogListContentProps {
  *
  * 显示博客文章列表
  */
-export function BlogListContent({
+export const BlogListContent = ({
   posts,
   selectedCategory,
   selectedTag,
   onCategoryClick,
   onTagClick,
-}: BlogListContentProps) {
+}: BlogListContentProps) => {
   // 生成筛选结果为空时的提示信息
   const getEmptyMessage = () => {
     if (selectedCategory && selectedTag) {
@@ -87,7 +87,7 @@ export function BlogListContent({
           description={post.description}
           href={`/blog/${post.slug}`}
           category={post.category}
-          image={post.image}
+          cover={post.image}
           tags={post.tags}
           date={formatDate(post.date?.toString())}
           author={post.author}
@@ -97,4 +97,4 @@ export function BlogListContent({
       ))}
     </div>
   );
-}
+};

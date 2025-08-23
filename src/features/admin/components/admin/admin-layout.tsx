@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
-import type { ReactNode } from 'react';
-import { useUser, SignOutButton } from '@clerk/nextjs';
+import React, { type ReactNode } from 'react';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { LogOut, User } from 'lucide-react';
 
@@ -10,14 +9,14 @@ interface AdminLayoutProps {
   children: ReactNode;
 }
 
-export function AdminLayout({ children }: AdminLayoutProps) {
+export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const { user, isLoaded } = useUser();
 
   if (!isLoaded) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
+          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-primary" />
           <p className="text-muted-foreground">加载中...</p>
         </div>
       </div>
@@ -55,4 +54,4 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       </main>
     </div>
   );
-}
+};

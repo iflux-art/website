@@ -23,26 +23,24 @@ export interface DocsSidebarCardProps {
  *
  * 以卡片形式显示文档导航，包装 DocsSidebarWrapper 组件
  */
-export function DocsSidebarCard({
+export const DocsSidebarCard = ({
   currentDoc,
   className,
   showHeader = true,
-}: DocsSidebarCardProps) {
-  return (
-    <Card className={cn('w-full', className)}>
-      {showHeader && (
-        <CardHeader className="pt-4 pb-2">
-          <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
-            <FileText className="h-3.5 w-3.5 text-primary" />
-            文档导航
-          </CardTitle>
-        </CardHeader>
-      )}
-      <CardContent className={showHeader ? 'pt-0 pb-4' : 'py-4'}>
-        <div className="hide-scrollbar max-h-[400px] overflow-y-auto sm:max-h-[450px]">
-          <DocsSidebarWrapper currentDoc={currentDoc} />
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+}: DocsSidebarCardProps) => (
+  <Card className={cn('w-full', className)}>
+    {showHeader && (
+      <CardHeader className="pt-4 pb-2">
+        <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
+          <FileText className="h-3.5 w-3.5 text-primary" />
+          文档导航
+        </CardTitle>
+      </CardHeader>
+    )}
+    <CardContent className={showHeader ? 'pt-0 pb-4' : 'py-4'}>
+      <div className="hide-scrollbar max-h-[400px] overflow-y-auto sm:max-h-[450px]">
+        <DocsSidebarWrapper currentDoc={currentDoc} />
+      </div>
+    </CardContent>
+  </Card>
+);

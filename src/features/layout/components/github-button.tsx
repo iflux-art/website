@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 const GITHUB_URL = 'https://github.com/iflux-art';
 
-export function GitHubButton() {
+export const GitHubButton = () => {
   const handleClick = () => {
     window.open(GITHUB_URL, '_blank', 'noopener,noreferrer');
   };
@@ -23,4 +23,4 @@ export function GitHubButton() {
       <span className="sr-only">GitHub</span>
     </Button>
   );
-}
+};

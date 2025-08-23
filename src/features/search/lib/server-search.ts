@@ -106,8 +106,8 @@ export async function searchLinks(query: string, limit = 5): Promise<SearchResul
  */
 export async function performServerSearch(
   query: string,
-  type: string = 'all',
-  limit: number = 10
+  type = 'all',
+  limit = 10
 ): Promise<{ results: SearchResult[]; total: number }> {
   if (!query.trim()) {
     return { results: [], total: 0 };

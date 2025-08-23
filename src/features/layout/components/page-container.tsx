@@ -10,12 +10,12 @@ import { ThreeColumnGrid } from './three-column-grid';
  * 1. three-column: 导航、博客列表/详情页、文档详情页的3栏布局
  * 2. full-width: 首页、友链、关于和管理后台的全屏内容区
  */
-export function PageContainer({
+export const PageContainer = ({
   children,
   config = {},
   sidebars = [],
   className = '',
-}: PageContainerProps) {
+}: PageContainerProps) => {
   const { layout = 'full-width' } = config;
   const containerClassName = getContainerClassName(config);
 
@@ -45,6 +45,6 @@ export function PageContainer({
       <div className="container mx-auto px-4 py-6 lg:py-8">{children}</div>
     </div>
   );
-}
+};
 
 export default PageContainer;

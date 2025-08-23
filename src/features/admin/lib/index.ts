@@ -5,6 +5,4 @@
 import { loadAllLinksData } from '@/features/links/lib';
 import type { LinksItem } from '@/features/links/types';
 
-export const fetchLinksData = async (): Promise<LinksItem[]> => {
-  return loadAllLinksData();
-};
+export const fetchLinksData = async (): Promise<LinksItem[]> => loadAllLinksData();

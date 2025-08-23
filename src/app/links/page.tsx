@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ThreeColumnLayout } from '@/features/layout';
-import { LinksSidebarCard, LinksContent } from '@/features/links/components';
+import { LinksContent, LinksSidebarCard } from '@/features/links/components';
 import { TableOfContentsCard } from '@/features/content';
 import { useLinksData } from '@/features/links/hooks';
 import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
@@ -10,7 +10,7 @@ import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
 // 由于使用了客户端 hooks，这里不能导出 metadata
 // 在实际项目中应该考虑使用 generateMetadata 函数或服务端组件
 
-export default function LinksPage() {
+const LinksPage = () => {
   const { categories, selectedCategory, filteredItems, handleCategoryClick } = useLinksData();
 
   // 生成标签锚点数据供 TableOfContents 使用
@@ -41,4 +41,6 @@ export default function LinksPage() {
       </ThreeColumnLayout>
     </div>
   );
-}
+};
+
+export default LinksPage;

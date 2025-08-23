@@ -2,11 +2,11 @@
 
 import React from 'react';
 import {
-  BlogListContent,
-  TagCloudCard,
   BlogCategoryCard,
-  RelatedPostsCard,
+  BlogListContent,
   LatestPostsCard,
+  RelatedPostsCard,
+  TagCloudCard,
 } from '@/features/blog/components';
 import { ThreeColumnLayout } from '@/features/layout';
 import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
@@ -14,7 +14,7 @@ import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
 // 由于使用了客户端 hooks，这里不能导出 metadata
 // 在实际项目中应该考虑使用 generateMetadata 函数或服务端组件
 
-export default function BlogPage() {
+const BlogPage = () => {
   const {
     filteredPosts,
     categories,
@@ -71,4 +71,6 @@ export default function BlogPage() {
       </ThreeColumnLayout>
     </div>
   );
-}
+};
+
+export default BlogPage;

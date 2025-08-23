@@ -48,7 +48,7 @@ export function createApiError(
   type: ApiErrorType,
   message: string,
   details?: string,
-  status: number = 500
+  status = 500
 ): NextResponse<ApiErrorResponse> {
   const errorResponse: ApiErrorResponse = {
     error: message,
@@ -112,22 +112,21 @@ export const ApiErrors = {
   validation: (message: string, details?: string) =>
     createApiError('VALIDATION_ERROR', message, details, 400),
 
-  notFound: (resource: string = 'Resource') =>
+  notFound: (resource = 'Resource') =>
     createApiError('NOT_FOUND', `${resource} not found`, undefined, 404),
 
-  unauthorized: (message: string = 'Unauthorized access') =>
+  unauthorized: (message = 'Unauthorized access') =>
     createApiError('UNAUTHORIZED', message, undefined, 401),
 
-  forbidden: (message: string = 'Access forbidden') =>
-    createApiError('FORBIDDEN', message, undefined, 403),
+  forbidden: (message = 'Access forbidden') => createApiError('FORBIDDEN', message, undefined, 403),
 
   conflict: (message: string, details?: string) =>
     createApiError('CONFLICT', message, details, 409),
 
-  internal: (message: string = 'Internal server error', details?: string) =>
+  internal: (message = 'Internal server error', details?: string) =>
     createApiError('INTERNAL_ERROR', message, details, 500),
 
-  rateLimit: (message: string = 'Too many requests') =>
+  rateLimit: (message = 'Too many requests') =>
     createApiError('RATE_LIMIT', message, undefined, 429),
 
   invalidMethod: (allowedMethods: string[]) =>
@@ -194,7 +193,7 @@ export function withErrorHandling<T extends unknown[], R>(handler: (...args: T) 
 class MemoryCache {
   private cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
 
-  set(key: string, data: unknown, ttl: number = 300000): void {
+  set(key: string, data: unknown, ttl = 300000): void {
     // 默认5分钟
     this.cache.set(key, {
       data,

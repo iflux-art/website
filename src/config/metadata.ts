@@ -106,10 +106,10 @@ export interface IosConfig {
   icons: {
     touchIcon: string;
   };
-  splashScreens: Array<{
+  splashScreens: {
     href: string;
     media: string;
-  }>;
+  }[];
 }
 export const IOS_CONFIG: IosConfig = {
   mobileWebAppCapable: 'yes',
@@ -144,7 +144,7 @@ export const IOS_CONFIG: IosConfig = {
 export const iosConfig = {
   appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === 'yes',
   appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle,
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
   appleMobileWebAppTitle: IOS_CONFIG.appTitle,
   touchIcon: IOS_CONFIG.icons.touchIcon,
   splashScreens: IOS_CONFIG.splashScreens,

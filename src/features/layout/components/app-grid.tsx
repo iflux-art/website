@@ -9,10 +9,8 @@ import { gridColsMap, gridGapMap } from '../lib/page-container-utils';
  * 通用网格布局组件
  * 用于创建响应式的网格布局
  */
-export function AppGrid({ children, className, columns = 3, gap = 'default' }: AppGridProps) {
-  return (
-    <div className={cn('mb-8 grid', gridColsMap[columns], gridGapMap[gap], className)}>
-      {children}
-    </div>
-  );
-}
+export const AppGrid = ({ children, className, columns = 3, gap = 'default' }: AppGridProps) => (
+  <div className={cn('mb-8 grid', gridColsMap[columns], gridGapMap[gap], className)}>
+    {children}
+  </div>
+);

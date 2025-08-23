@@ -38,21 +38,23 @@ export function generateBreadcrumbs({
   currentTitle,
   startLabel,
   segmentProcessor,
-}: GenerateBreadcrumbsOptions): Array<{ label: string; href?: string }> {
-  const items: Array<{ label: string; href?: string }> = [
-    { label: startLabel, href: `/${basePath}` },
-  ];
+}: GenerateBreadcrumbsOptions): { label: string; href?: string }[] {
+  const items: { label: string; href?: string }[] = [{ label: startLabel, href: `/${basePath}` }];
   let currentPath = '';
 
   slug.forEach((segment, index) => {
     const isLastSegment = index === slug.length - 1;
     currentPath += `/${segment}`;
 
-    const label = segmentProcessor
-      ? segmentProcessor(segment, index, meta)
-      : isLastSegment && currentTitle
-        ? currentTitle
-        : segment;
+    const label = (() => {
+      if (segmentProcessor) {
+        return segmentProcessor(segment, index, meta);
+      }
+      if (isLastSegment && currentTitle) {
+        return currentTitle;
+      }
+      return segment;
+    })();
 
     if (isLastSegment) {
       items.push({ label });
@@ -105,6 +107,17 @@ export function createBlogBreadcrumbs({ slug, title }: BlogBreadcrumbProps): Bre
 
 // ==================== 博客相关函数 ====================
 
+// 处理文件收集标签
+function collectTagsFromFile(itemPath: string, allTags: Set<string>): void {
+  const fileContent = fs.readFileSync(itemPath, 'utf8');
+  const { data } = matter(fileContent);
+
+  // 只收集已发布文章的标签
+  if (data.published !== false && data.tags && Array.isArray(data.tags)) {
+    data.tags.forEach((tag: string) => allTags.add(tag));
+  }
+}
+
 /**
  * 获取所有标签
  * @returns 所有标签数组
@@ -124,20 +137,27 @@ export function getAllTags(): string[] {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
-        const { data } = matter(fileContent);
-
-        // 只收集已发布文章的标签
-        if (data.published !== false && data.tags && Array.isArray(data.tags)) {
-          data.tags.forEach((tag: string) => allTags.add(tag));
-        }
+      } else if (item.isFile() && isMarkdownFile(item.name)) {
+        collectTagsFromFile(itemPath, allTags);
       }
     }
   };
 
   findTagsInFiles(blogDir);
   return Array.from(allTags).sort();
+}
+
+// 处理文件计数标签
+function countTagsFromFile(itemPath: string, tagCounts: Record<string, number>): void {
+  const fileContent = fs.readFileSync(itemPath, 'utf8');
+  const { data } = matter(fileContent);
+
+  // 只收集已发布文章的标签
+  if (data.published !== false && data.tags && Array.isArray(data.tags)) {
+    data.tags.forEach((tag: string) => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
+  }
 }
 
 /**
@@ -159,22 +179,68 @@ export function getAllTagsWithCount(): Record<string, number> {
 
       if (item.isDirectory()) {
         findTagsInFiles(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
-        const { data } = matter(fileContent);
-
-        // 只收集已发布文章的标签
-        if (data.published !== false && data.tags && Array.isArray(data.tags)) {
-          data.tags.forEach((tag: string) => {
-            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-          });
-        }
+      } else if (item.isFile() && isMarkdownFile(item.name)) {
+        countTagsFromFile(itemPath, tagCounts);
       }
     }
   };
 
   findTagsInFiles(blogDir);
   return tagCounts;
+}
+
+// 检查文件是否为Markdown文件
+function isMarkdownFile(fileName: string): boolean {
+  return fileName.endsWith('.mdx') || fileName.endsWith('.md');
+}
+
+// 生成文章slug
+function generateBlogSlug(itemPath: string, blogDir: string): string {
+  const relativePath = path.relative(blogDir, itemPath);
+  const pathParts = relativePath.split(path.sep);
+
+  if (pathParts.length === 1) {
+    // 直接在blog目录下的文件
+    return pathParts[0].replace(/\.(mdx|md)$/, '');
+  } else {
+    // 在子目录中的文件
+    const fileName = pathParts.pop() ?? '';
+    return `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
+  }
+}
+
+// 创建BlogPost对象
+function createBlogPost(data: Record<string, unknown>, slug: string): BlogPost {
+  return {
+    slug,
+    title: (data.title ?? slug) as string,
+    description: (data.description ?? data.excerpt ?? '点击阅读全文') as string,
+    excerpt: (data.excerpt ?? '点击阅读全文') as string,
+    date: String(data.date),
+    tags: (data.tags ?? []) as string[],
+  } satisfies BlogPost;
+}
+
+// 检查文章是否包含指定标签
+function hasTag(data: Record<string, unknown>, tag: string): boolean {
+  // 检查文章是否已发布（默认为true，除非明确设置为false）
+  const isPublished = data.published !== false;
+  const hasTags = data.tags && Array.isArray(data.tags);
+  const includesTag = hasTags && (data.tags as string[]).includes(tag);
+
+  return Boolean(isPublished && hasTags && includesTag);
+}
+
+// 处理单个文件的函数
+function processPostFile(itemPath: string, blogDir: string, tag: string, posts: BlogPost[]): void {
+  const fileContent = fs.readFileSync(itemPath, 'utf8');
+  const { data } = matter(fileContent);
+
+  if (hasTag(data, tag)) {
+    const slug = generateBlogSlug(itemPath, blogDir);
+    const post = createBlogPost(data, slug);
+    posts.push(post);
+  }
 }
 
 /**
@@ -197,40 +263,8 @@ export function getPostsByTag(tag: string): BlogPost[] {
 
       if (item.isDirectory()) {
         findPostsWithTag(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
-        const fileContent = fs.readFileSync(itemPath, 'utf8');
-        const { data } = matter(fileContent);
-
-        // 检查是否包含指定标签
-        if (
-          data.published !== false &&
-          data.tags &&
-          Array.isArray(data.tags) &&
-          data.tags.includes(tag)
-        ) {
-          // 计算slug
-          let slug = '';
-          const relativePath = path.relative(blogDir, itemPath);
-          const pathParts = relativePath.split(path.sep);
-
-          if (pathParts.length === 1) {
-            // 直接在blog目录下的文件
-            slug = pathParts[0].replace(/\.(mdx|md)$/, '');
-          } else {
-            // 在子目录中的文件
-            const fileName = pathParts.pop() ?? '';
-            slug = `${pathParts.join('/')}/${fileName.replace(/\.(mdx|md)$/, '')}`;
-          }
-
-          posts.push({
-            slug,
-            title: (data.title ?? slug) as string,
-            description: (data.description ?? data.excerpt ?? '点击阅读全文') as string,
-            excerpt: (data.excerpt ?? '点击阅读全文') as string,
-            date: String(data.date),
-            tags: (data.tags ?? []) as string[],
-          } satisfies BlogPost);
-        }
+      } else if (item.isFile() && isMarkdownFile(item.name)) {
+        processPostFile(itemPath, blogDir, tag, posts);
       }
     }
   };

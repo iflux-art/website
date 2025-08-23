@@ -1,8 +1,8 @@
-import { PageContainer, AppGrid } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/features/layout';
 import { LinkCard } from '@/features/links/components';
 import { TwikooComment } from '@/features/comment';
 import { FriendLinkApplication } from '@/features/friends/components';
-import { processFriendsData, hasFriendsData, DEFAULT_FRIENDS_CONFIG } from '@/features/friends/lib';
+import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from '@/features/friends/lib';
 import { generateSEOMetadata } from '@/lib/seo-utils';
 import type { Metadata } from 'next';
 import type { LinksItem } from '@/features/links/types';
@@ -14,7 +14,7 @@ export const metadata: Metadata = generateSEOMetadata({
   keywords: ['友链', '网站', '合作'],
 });
 
-export default function FriendsPage() {
+const FriendsPage = () => {
   // 处理友链数据
   const friendsItems: LinksItem[] = processFriendsData(friendsData);
   const config = DEFAULT_FRIENDS_CONFIG;
@@ -54,7 +54,7 @@ export default function FriendsPage() {
               href={item.url}
               icon={item.icon}
               iconType={item.iconType}
-              isExternal={true}
+              isExternal
               className="h-full"
             />
           ))}
@@ -72,4 +72,6 @@ export default function FriendsPage() {
       </div>
     </PageContainer>
   );
-}
+};
+
+export default FriendsPage;

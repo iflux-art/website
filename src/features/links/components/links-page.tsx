@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ThreeColumnLayout } from '@/features/layout';
-import { LinksSidebarCard, LinksContent } from '@/features/links/components';
+import { LinksContent, LinksSidebarCard } from '@/features/links/components';
 import { TableOfContentsCard } from '@/features/content';
 import { useLinksData } from '@/features/links/hooks';
 import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
@@ -11,7 +11,7 @@ import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
  * 链接导航页面容器组件（客户端）
  * 处理链接数据获取和交互逻辑
  */
-export function LinksPageContainer() {
+export const LinksPageContainer = () => {
   const { items, categories, selectedCategory, filteredItems, handleCategoryClick } =
     useLinksData();
 
@@ -41,6 +41,6 @@ export function LinksPageContainer() {
       </ThreeColumnLayout>
     </div>
   );
-}
+};
 
 export default LinksPageContainer;

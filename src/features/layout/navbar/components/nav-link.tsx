@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
-type NavLinkProps = {
+interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   currentDoc?: string;
@@ -18,7 +18,41 @@ type NavLinkProps = {
   target?: string;
   rel?: string;
   _isNavigation?: boolean;
-};
+}
+
+/**
+ * 判断链接是否处于活动状态
+ */
+function isLinkActive(pathname: string, href: string, currentDoc?: string): boolean {
+  // 完全匹配
+  if (pathname === href) {
+    return true;
+  }
+
+  // 如果没有 currentDoc，使用前缀匹配（但不匹配根路径）
+  if (!currentDoc) {
+    return pathname.startsWith(href) && href !== '/';
+  }
+
+  // 方法1: 直接比较当前文档名称
+  if (href.endsWith(`/${currentDoc}`)) {
+    return true;
+  }
+
+  // 方法2: 从 href 中提取文档路径部分
+  const hrefSegments = href.split('/').filter(Boolean);
+  const lastSegment = hrefSegments[hrefSegments.length - 1];
+  if (lastSegment === currentDoc) {
+    return true;
+  }
+
+  // 方法3: 检查路径前缀
+  if (pathname.startsWith(href) && href !== '/') {
+    return true;
+  }
+
+  return false;
+}
 
 /**
  * 导航链接组件
@@ -50,7 +84,7 @@ type NavLinkProps = {
  * </NavLink>
  * ```
  */
-export function NavLink({
+export const NavLink = ({
   href,
   children,
   currentDoc,
@@ -63,42 +97,13 @@ export function NavLink({
   target,
   rel,
   _isNavigation = false,
-}: NavLinkProps) {
+}: NavLinkProps) => {
   const pathname = usePathname();
-
-  // 确定链接是否处于活动状态
-  let isActive = pathname === href;
-
-  // 如果不是完全匹配，尝试使用更灵活的匹配方式
-  if (!isActive && currentDoc) {
-    // 方法1: 直接比较当前文档名称
-    if (href.endsWith(`/${currentDoc}`)) {
-      isActive = true;
-    }
-
-    // 方法2: 从 href 中提取文档路径部分
-    if (!isActive) {
-      const hrefSegments = href.split('/').filter(Boolean);
-      const lastSegment = hrefSegments[hrefSegments.length - 1];
-
-      // 检查是否匹配当前文档
-      if (lastSegment === currentDoc) {
-        isActive = true;
-      }
-    }
-
-    // 方法3: 检查路径前缀
-    if (!isActive && pathname.startsWith(href) && href !== '/') {
-      isActive = true;
-    }
-  }
-
-  // 使用原始链接，不自动添加前缀
-  const finalHref = href;
+  const isActive = isLinkActive(pathname, href, currentDoc);
 
   return (
     <Link
-      href={finalHref}
+      href={href}
       className={cn(
         'flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors',
         className,
@@ -113,7 +118,7 @@ export function NavLink({
       {children}
     </Link>
   );
-}
+};
 
 /**
  * @deprecated 请使用 NavLink 替代 ActiveLink，ActiveLink 将在未来版本中移除

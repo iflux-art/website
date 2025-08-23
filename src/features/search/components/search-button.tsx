@@ -9,7 +9,7 @@ import { SearchDialog } from './search-dialog';
  * 搜索图标组件
  * 点击后打开搜索对话框
  */
-export function SearchButton() {
+export const SearchButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,4 +27,4 @@ export function SearchButton() {
       <SearchDialog open={open} onOpenChange={setOpen} />
     </>
   );
-}
+};

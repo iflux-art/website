@@ -9,13 +9,13 @@ import type { DeviceType } from '@/config/responsive';
  * 响应式值类型
  * 支持为不同设备类型定义不同的值
  */
-export type ResponsiveValue<T> = {
+export interface ResponsiveValue<T> {
   mobile?: T;
   tablet?: T;
   desktop?: T;
   large?: T;
   default: T;
-};
+}
 
 /**
  * 响应式CSS属性值
@@ -367,9 +367,9 @@ export type DeviceSpecificProps<T> = {
 /**
  * CSS-in-JS响应式样式类型
  */
-export type ResponsiveStyles = {
+export interface ResponsiveStyles {
   [key: string]: ResponsiveCSSValue | ResponsiveStyles;
-};
+}
 
 /**
  * 响应式类名映射类型

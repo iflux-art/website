@@ -9,10 +9,10 @@ export async function getBlogContent(slug: string[]): Promise<{
   content: string;
   frontmatter: BlogFrontmatter;
   headings: { level: number; text: string; id: string }[];
-  relatedPosts: Array<{ title: string; href: string; category?: string; slug: string[] }>;
-  latestPosts: Array<{ title: string; href: string; date?: string; category?: string }>;
-  allTags: Array<{ name: string; count: number }>;
-  allCategories: Array<{ name: string; count: number }>;
+  relatedPosts: { title: string; href: string; category?: string; slug: string[] }[];
+  latestPosts: { title: string; href: string; date?: string; category?: string }[];
+  allTags: { name: string; count: number }[];
+  allCategories: { name: string; count: number }[];
 }> {
   const filePath = findBlogFile(slug);
   if (!filePath) {
@@ -126,10 +126,10 @@ function findBlogFile(slug: string[]): string | null {
   return null;
 }
 
-export function getAllBlogMeta(): Array<{
+export function getAllBlogMeta(): {
   slug: string[];
   frontmatter: BlogFrontmatter;
-}> {
+}[] {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
   if (!fs.existsSync(blogDir)) return [];
 

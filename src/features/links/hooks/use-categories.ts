@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import type { LinksCategory, CategoryId } from '@/features/links/types';
+import { useEffect, useState } from 'react';
+import type { CategoryId, LinksCategory } from '@/features/links/types';
 import { generateCategoriesData } from '@/features/links/lib';
 
 /**
@@ -59,20 +59,19 @@ export function useCategories() {
   /**
    * 获取过滤后的分类（排除友链和个人主页）
    */
-  const getFilteredCategories = () => {
-    return categories.filter(cat => cat.id !== 'friends' && cat.id !== 'profile');
-  };
+  const getFilteredCategories = () =>
+    categories.filter(cat => cat.id !== 'friends' && cat.id !== 'profile');
 
   /**
    * 获取扁平化的分类列表（包含子分类）
    */
   const getFlatCategories = () => {
-    const flatCategories: Array<{
+    const flatCategories: {
       id: CategoryId;
       name: string;
       isSubCategory: boolean;
       parentName?: string;
-    }> = [];
+    }[] = [];
 
     categories.forEach(category => {
       // 添加主分类

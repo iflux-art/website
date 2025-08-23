@@ -17,7 +17,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import type { BaseContent, BaseCategory } from '@/types';
+import type { BaseCategory, BaseContent } from '@/types';
 import { useCache } from '@/hooks/use-cache';
 
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
@@ -26,12 +26,12 @@ export type ContentItem = BaseContent;
 export type ContentCategory = BaseCategory;
 
 // 内联 HookResult 类型定义
-export type HookResult<T> = {
+export interface HookResult<T> {
   data: T | null;
   loading: boolean;
   error: Error | null;
   refresh: () => Promise<void>;
-};
+}
 
 // 内联 ContentLoadOptions 类型定义
 export interface ContentLoadOptions {
@@ -80,9 +80,7 @@ export function useContentData<T>({
   const pathname = usePathname();
 
   // 生成缓存key
-  const getCacheKey = () => {
-    return `${type}:${category ?? 'all'}:${pathname}`;
-  };
+  const getCacheKey = () => `${type}:${category ?? 'all'}:${pathname}`;
 
   // 数据获取函数
   const fetchData = async () => {

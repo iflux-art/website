@@ -26,35 +26,152 @@ export function generateViewport() {
 const metadataCache = new Map<string, Metadata>();
 
 /**
- * 生成网站元数据的主函数
- * 支持缓存以提高性能
+ * 生成基础 OpenGraph 数据
  */
-export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
-  const cacheKey = JSON.stringify(options);
-  if (metadataCache.has(cacheKey)) {
-    return (metadataCache.get(cacheKey) as Metadata) || ({} as Metadata);
+function generateOpenGraph(options: {
+  title?: string;
+  description: string;
+  url: string;
+  image: string;
+  locale: string;
+  type: string;
+}) {
+  const { title, description, url, image, locale, type } = options;
+
+  return {
+    title: title ?? SITE_METADATA.title,
+    description,
+    url,
+    siteName: SITE_METADATA.title,
+    images: [
+      {
+        url: image,
+        width: 1200,
+        height: 630,
+        alt: title ?? SITE_METADATA.title,
+      },
+    ],
+    locale,
+    type,
+  };
+}
+
+/**
+ * 生成 Twitter 卡片数据
+ */
+function generateTwitterCard(options: { title?: string; description: string; image: string }) {
+  const { title, description, image } = options;
+
+  return {
+    card: 'summary_large_image' as const,
+    title: title ?? SITE_METADATA.title,
+    description,
+    images: [image],
+    creator: SITE_METADATA.twitter,
+  };
+}
+
+/**
+ * 生成机器人配置
+ */
+function generateRobots(options: { noindex: boolean; nofollow: boolean }) {
+  const { noindex, nofollow } = options;
+
+  return {
+    index: !noindex,
+    follow: !nofollow,
+    googleBot: {
+      index: !noindex,
+      follow: !nofollow,
+      'max-video-preview': -1,
+      'max-image-preview': 'large' as const,
+      'max-snippet': -1,
+    },
+  };
+}
+
+/**
+ * 生成 JSON-LD 结构化数据
+ */
+function generateJsonLd(jsonLd: NonNullable<GenerateMetadataOptions['jsonLd']>) {
+  return {
+    'application/ld+json': JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': jsonLd.type,
+      name: jsonLd.name,
+      description: jsonLd.description,
+      url: jsonLd.url,
+      image: jsonLd.image,
+      author: jsonLd.author
+        ? {
+            '@type': 'Person',
+            name: jsonLd.author,
+          }
+        : undefined,
+      datePublished: jsonLd.datePublished,
+      dateModified: jsonLd.dateModified,
+      ...jsonLd,
+    }),
+  };
+}
+
+/**
+ * 处理社交媒体配置
+ */
+function applySocialConfig(
+  metadata: Metadata,
+  social: NonNullable<GenerateMetadataOptions['social']>
+): void {
+  if (social.twitter && metadata.twitter) {
+    metadata.twitter = {
+      ...metadata.twitter,
+      site: social.twitter,
+    };
   }
 
+  if (social.facebook && metadata.openGraph) {
+    metadata.openGraph = {
+      ...metadata.openGraph,
+      siteName: social.facebook,
+    };
+  }
+}
+
+/**
+ * 处理日期相关的 OpenGraph 数据
+ */
+function applyDateConfig(metadata: Metadata, date?: string, modified?: string): void {
+  if (!date && !modified) {
+    return;
+  }
+
+  const openGraphUpdate = {
+    ...(date && { publishedTime: date }),
+    ...(modified && { modifiedTime: modified }),
+  };
+
+  metadata.openGraph = {
+    ...metadata.openGraph,
+    ...openGraphUpdate,
+    type: 'article',
+  };
+}
+
+/**
+ * 构建基础元数据
+ */
+function buildBaseMetadata(options: GenerateMetadataOptions) {
   const {
     title,
     description = SITE_METADATA.description,
     keywords = SITE_METADATA.keywords,
-    image = SITE_METADATA.image,
-    type = 'website',
     author = SITE_METADATA.author,
-    date,
-    modified,
-    locale = 'zh-CN',
     url = SITE_METADATA.url,
-    noindex = false,
-    nofollow = false,
     icons,
     verification,
-    jsonLd,
-    social,
   } = options;
 
-  const metadata: Metadata = {
+  return {
     title: title ? `${title} | ${SITE_METADATA.title}` : SITE_METADATA.title,
     description,
     keywords,
@@ -70,94 +187,63 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     alternates: {
       canonical: url,
     },
-    openGraph: {
-      title: title ?? SITE_METADATA.title,
-      description,
-      url,
-      siteName: SITE_METADATA.title,
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: title ?? SITE_METADATA.title,
-        },
-      ],
-      locale,
-      type,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: title ?? SITE_METADATA.title,
-      description,
-      images: [image],
-      creator: SITE_METADATA.twitter,
-    },
-    robots: {
-      index: !noindex,
-      follow: !nofollow,
-      googleBot: {
-        index: !noindex,
-        follow: !nofollow,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
     verification,
     icons,
+  };
+}
+
+/**
+ * 构建社交媒体相关的元数据
+ */
+function buildSocialMetadata(options: GenerateMetadataOptions) {
+  const {
+    title,
+    description = SITE_METADATA.description,
+    image = SITE_METADATA.image,
+    type = 'website',
+    locale = 'zh-CN',
+    url = SITE_METADATA.url,
+    noindex = false,
+    nofollow = false,
+  } = options;
+
+  return {
+    openGraph: generateOpenGraph({ title, description, url, image, locale, type }),
+    twitter: generateTwitterCard({ title, description, image }),
+    robots: generateRobots({ noindex, nofollow }),
+  };
+}
+
+/**
+ * 生成网站元数据的主函数
+ * 支持缓存以提高性能
+ */
+export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
+  const cacheKey = JSON.stringify(options);
+  if (metadataCache.has(cacheKey)) {
+    return (metadataCache.get(cacheKey) as Metadata) || ({} as Metadata);
+  }
+
+  const { jsonLd, social, date, modified } = options;
+
+  const baseMetadata = buildBaseMetadata(options);
+  const socialMetadata = buildSocialMetadata(options);
+
+  const metadata: Metadata = {
+    ...baseMetadata,
+    ...socialMetadata,
     other: {
-      ...(jsonLd && {
-        'application/ld+json': JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': jsonLd.type,
-          name: jsonLd.name,
-          description: jsonLd.description,
-          url: jsonLd.url,
-          image: jsonLd.image,
-          author: jsonLd.author
-            ? {
-                '@type': 'Person',
-                name: jsonLd.author,
-              }
-            : undefined,
-          datePublished: jsonLd.datePublished,
-          dateModified: jsonLd.dateModified,
-          ...jsonLd,
-        }),
-      }),
+      ...(jsonLd && generateJsonLd(jsonLd)),
     },
   };
 
   // 处理社交媒体配置
   if (social) {
-    if (social.twitter) {
-      metadata.twitter = {
-        ...metadata.twitter,
-        site: social.twitter,
-      };
-    }
-    if (social.facebook) {
-      metadata.openGraph = {
-        ...metadata.openGraph,
-        siteName: social.facebook,
-      };
-    }
+    applySocialConfig(metadata, social);
   }
 
   // 处理日期相关的 OpenGraph 数据
-  if (date || modified) {
-    const openGraphUpdate = {
-      ...(date && { publishedTime: date }),
-      ...(modified && { modifiedTime: modified }),
-    };
-
-    metadata.openGraph = {
-      ...metadata.openGraph,
-      ...openGraphUpdate,
-      type: 'article',
-    };
-  }
+  applyDateConfig(metadata, date, modified);
 
   metadataCache.set(cacheKey, metadata);
   return metadata;

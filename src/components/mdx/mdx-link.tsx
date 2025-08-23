@@ -13,9 +13,8 @@ type MDXLinkProps = {
   showExternalIcon?: boolean;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-const isExternalLink = (href: string): boolean => {
-  return href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');
-};
+const isExternalLink = (href: string): boolean =>
+  href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');
 
 export const MDXLink = ({
   href,

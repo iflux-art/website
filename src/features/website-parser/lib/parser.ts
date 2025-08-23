@@ -1,9 +1,9 @@
 import * as cheerio from 'cheerio';
 import type {
-  WebsiteMetadata,
   CacheItem,
   ParseOptions,
   ParseResult,
+  WebsiteMetadata,
 } from '@/features/website-parser/types';
 
 /**
@@ -80,39 +80,89 @@ function saveToCache(url: string, data: WebsiteMetadata): void {
 }
 
 /**
- * 解析网站元数据
+ * 提取网站标题
  */
-function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
-  // 基本元数据
+function extractTitle($: cheerio.CheerioAPI): string {
   const title =
     $('meta[property="og:title"]').attr('content') ??
     $('meta[name="twitter:title"]').attr('content') ??
     $('title').text().trim() ??
     '';
+  return title.trim();
+}
 
+/**
+ * 提取网站描述
+ */
+function extractDescription($: cheerio.CheerioAPI): string {
   const description =
     $('meta[property="og:description"]').attr('content') ??
     $('meta[name="twitter:description"]').attr('content') ??
     $('meta[name="description"]').attr('content') ??
     '';
+  return description.trim();
+}
 
-  // 作者信息
+/**
+ * 提取作者信息
+ */
+function extractAuthor($: cheerio.CheerioAPI): string {
   const author =
     $('meta[name="author"]').attr('content') ??
     $('meta[property="article:author"]').attr('content') ??
     '';
+  return author.trim();
+}
 
-  // 网站名称
+/**
+ * 提取其他元数据
+ */
+function extractOtherMeta($: cheerio.CheerioAPI): {
+  siteName: string;
+  type: string;
+  language: string;
+} {
   const siteName = $('meta[property="og:site_name"]').attr('content') ?? '';
-
-  // 内容类型
   const type = $('meta[property="og:type"]').attr('content') ?? '';
-
-  // 语言
   const language = $('html').attr('lang') ?? $('meta[property="og:locale"]').attr('content') ?? '';
 
-  // 图标处理
-  let icon = '';
+  return {
+    siteName: siteName.trim(),
+    type: type.trim(),
+    language: language.trim(),
+  };
+}
+
+/**
+ * 解析基本元数据（标题、描述、作者等）
+ */
+function parseBasicMetadata($: cheerio.CheerioAPI): {
+  title: string;
+  description: string;
+  author: string;
+  siteName: string;
+  type: string;
+  language: string;
+} {
+  const title = extractTitle($);
+  const description = extractDescription($);
+  const author = extractAuthor($);
+  const { siteName, type, language } = extractOtherMeta($);
+
+  return {
+    title,
+    description,
+    author,
+    siteName,
+    type,
+    language,
+  };
+}
+
+/**
+ * 解析网站图标
+ */
+function parseIcon($: cheerio.CheerioAPI, url: string): string {
   const iconSelectors = [
     'link[rel="icon"][sizes="32x32"]',
     'link[rel="icon"][sizes="192x192"]',
@@ -126,27 +176,27 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
     const iconHref = $(selector).attr('href');
     if (iconHref) {
       try {
-        icon = new URL(iconHref, url).href;
-        break;
+        return new URL(iconHref, url).href;
       } catch {
-        // 忽略无效的URL
+        // 忽略无效的URL，继续尝试下一个
         continue;
       }
     }
   }
 
   // 如果没有找到图标，使用默认路径
-  if (!icon) {
-    try {
-      const urlObj = new URL(url);
-      icon = `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
-    } catch {
-      // 忽略无效的URL
-    }
+  try {
+    const urlObj = new URL(url);
+    return `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
+  } catch {
+    return '';
   }
+}
 
-  // 图片处理
-  let image = '';
+/**
+ * 解析Open Graph图片
+ */
+function parseImage($: cheerio.CheerioAPI, url: string): string {
   const ogImage =
     $('meta[property="og:image"]').attr('content') ??
     $('meta[property="og:image:url"]').attr('content') ??
@@ -155,22 +205,28 @@ function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
 
   if (ogImage) {
     try {
-      image = new URL(ogImage, url).href;
+      return new URL(ogImage, url).href;
     } catch {
-      // 忽略无效的URL
+      return '';
     }
   }
 
+  return '';
+}
+
+/**
+ * 解析网站元数据
+ */
+function parseMetadata($: cheerio.CheerioAPI, url: string): WebsiteMetadata {
+  const basicData = parseBasicMetadata($);
+  const icon = parseIcon($, url);
+  const image = parseImage($, url);
+
   return {
-    title: title.trim(),
-    description: description.trim(),
+    ...basicData,
     icon,
     image,
-    author: author.trim(),
-    siteName: siteName.trim(),
-    type: type.trim(),
     url,
-    language: language.trim(),
   };
 }
 
@@ -207,6 +263,51 @@ function createFallbackData(url: string): WebsiteMetadata {
 }
 
 /**
+ * 创建HTTP请求配置
+ */
+function createFetchOptions(timeout: number): RequestInit {
+  return {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+      'Accept-Encoding': 'gzip, deflate, br',
+      DNT: '1',
+      Connection: 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
+    },
+    signal: AbortSignal.timeout(timeout),
+  };
+}
+
+/**
+ * 处理缓存检查
+ */
+function checkCache(url: string, useCache: boolean, cacheMaxAge: number): WebsiteMetadata | null {
+  if (!useCache) {
+    return null;
+  }
+
+  return getFromCache(url, cacheMaxAge);
+}
+
+/**
+ * 处理错误情况
+ */
+function handleParseError(error: unknown, url: string): ParseResult {
+  console.error('Error parsing website:', error);
+
+  const fallbackData = createFallbackData(url);
+
+  return {
+    success: false,
+    data: fallbackData,
+    error: error instanceof Error ? error.message : 'Unknown error',
+  };
+}
+
+/**
  * 解析网站信息
  */
 export async function parseWebsite(url: string, options: ParseOptions = {}): Promise<ParseResult> {
@@ -227,33 +328,17 @@ export async function parseWebsite(url: string, options: ParseOptions = {}): Pro
 
   try {
     // 检查缓存
-    if (useCache) {
-      const cachedData = getFromCache(url, cacheMaxAge);
-      if (cachedData) {
-        return {
-          success: true,
-          data: cachedData,
-          fromCache: true,
-        };
-      }
+    const cachedData = checkCache(url, useCache, cacheMaxAge);
+    if (cachedData) {
+      return {
+        success: true,
+        data: cachedData,
+        fromCache: true,
+      };
     }
 
-    // 请求配置
-    const fetchOptions: RequestInit = {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        DNT: '1',
-        Connection: 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-      },
-      signal: AbortSignal.timeout(timeout),
-    };
-
     // 获取页面内容
+    const fetchOptions = createFetchOptions(timeout);
     const response = await fetchWithRetry(url, fetchOptions, retryCount);
     const html = await response.text();
     const $ = cheerio.load(html);
@@ -272,16 +357,7 @@ export async function parseWebsite(url: string, options: ParseOptions = {}): Pro
       fromCache: false,
     };
   } catch (error) {
-    console.error('Error parsing website:', error);
-
-    // 返回 fallback 数据
-    const fallbackData = createFallbackData(url);
-
-    return {
-      success: false,
-      data: fallbackData,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    };
+    return handleParseError(error, url);
   }
 }
 

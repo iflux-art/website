@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { NAV_ITEMS, NAV_PATHS } from '@/features/layout/navbar/nav-config';
 import { useActiveSection } from '@/features/layout/navbar/hooks/use-active-section';
 
-type NavProps = {
+interface NavProps {
   /**
    * 点击后的回调函数（用于关闭移动菜单）
    */
@@ -15,9 +15,9 @@ type NavProps = {
    * 自定义类名
    */
   className?: string;
-};
+}
 
-function NavList({ onClose, className }: NavProps) {
+const NavList = ({ onClose, className }: NavProps) => {
   const isActiveSection = useActiveSection(NAV_ITEMS.map(item => item.key));
 
   return (
@@ -37,12 +37,10 @@ function NavList({ onClose, className }: NavProps) {
       ))}
     </div>
   );
-}
+};
 
-export function NavListMenu({ onClose, className }: NavProps) {
-  return (
-    <div className={cn('space-y-6', className)}>
-      <NavList onClose={onClose} />
-    </div>
-  );
-}
+export const NavListMenu = ({ onClose, className }: NavProps) => (
+  <div className={cn('space-y-6', className)}>
+    <NavList onClose={onClose} />
+  </div>
+);

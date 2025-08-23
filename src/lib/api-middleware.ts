@@ -1,5 +1,4 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { ApiErrors } from '@/lib/api-utils';
 
 /**
@@ -38,7 +37,7 @@ interface RequestLog {
 class RateLimiter {
   private requests = new Map<string, { count: number; resetTime: number }>();
 
-  isAllowed(identifier: string, windowMs: number = 60000, maxRequests: number = 100): boolean {
+  isAllowed(identifier: string, windowMs = 60000, maxRequests = 100): boolean {
     const now = Date.now();
     const record = this.requests.get(identifier);
 
@@ -59,7 +58,7 @@ class RateLimiter {
     return true;
   }
 
-  getRemainingRequests(identifier: string, maxRequests: number = 100): number {
+  getRemainingRequests(identifier: string, maxRequests = 100): number {
     const record = this.requests.get(identifier);
     if (!record) return maxRequests;
     return Math.max(0, maxRequests - record.count);
@@ -101,7 +100,7 @@ function logRequest(request: NextRequest, duration?: number): void {
     duration,
   };
 
-  console.log(
+  console.warn(
     `[API] ${log.method} ${log.url} - ${log.ip} - ${duration ? `${duration}ms` : 'processing...'}`
   );
 }
@@ -132,6 +131,163 @@ function handleCors(
 }
 
 /**
+ * 处理 OPTIONS 预检请求
+ */
+function handleOptionsRequest(
+  request: NextRequest,
+  enableCors: boolean,
+  corsOrigins: string[]
+): NextResponse {
+  const corsHeaders = enableCors ? handleCors(request, corsOrigins) : {};
+  return new NextResponse(null, { status: 200, headers: corsHeaders });
+}
+
+/**
+ * 检查HTTP方法是否被允许
+ */
+function validateHttpMethod(
+  request: NextRequest,
+  allowedMethods: HttpMethod[]
+): NextResponse | null {
+  if (!allowedMethods.includes(request.method as HttpMethod)) {
+    return ApiErrors.invalidMethod(allowedMethods);
+  }
+  return null;
+}
+
+/**
+ * 处理速率限制
+ */
+function handleRateLimit(
+  request: NextRequest,
+  enableRateLimit: boolean,
+  rateLimitWindow: number,
+  rateLimitMax: number
+): NextResponse | null {
+  if (!enableRateLimit) {
+    return null;
+  }
+
+  const clientId = getClientIdentifier(request);
+  const isAllowed = rateLimiter.isAllowed(clientId, rateLimitWindow, rateLimitMax);
+
+  if (!isAllowed) {
+    const remaining = rateLimiter.getRemainingRequests(clientId, rateLimitMax);
+    const resetTime = rateLimiter.getResetTime(clientId);
+
+    const response = ApiErrors.rateLimit('Too many requests, please try again later');
+
+    // 添加速率限制响应头
+    response.headers.set('X-RateLimit-Limit', rateLimitMax.toString());
+    response.headers.set('X-RateLimit-Remaining', remaining.toString());
+    response.headers.set('X-RateLimit-Reset', resetTime.toString());
+
+    return response;
+  }
+
+  return null;
+}
+
+/**
+ * 为响应添加CORS头
+ */
+function applyCorsHeaders(
+  response: NextResponse,
+  request: NextRequest,
+  corsOrigins: string[]
+): void {
+  const corsHeaders = handleCors(request, corsOrigins);
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
+}
+
+/**
+ * 处理错误并返回标准化错误响应
+ */
+function handleRequestError(
+  error: unknown,
+  request: NextRequest,
+  startTime: number,
+  enableLogging: boolean
+): NextResponse {
+  const duration = Date.now() - startTime;
+
+  if (enableLogging) {
+    console.error(`[API] ${request.method} ${request.url} - ERROR - ${duration}ms:`, error);
+  }
+
+  // 返回标准化错误响应
+  if (error instanceof Error) {
+    return ApiErrors.internal('Request processing failed', error.message);
+  }
+
+  return ApiErrors.internal('Unknown error occurred');
+}
+
+/**
+ * 请求前置检查配置
+ */
+interface PreCheckConfig {
+  request: NextRequest;
+  allowedMethods: HttpMethod[];
+  enableRateLimit: boolean;
+  rateLimitWindow: number;
+  rateLimitMax: number;
+}
+
+/**
+ * 处理请求前置检查（方法、速率限制等）
+ */
+function handlePreChecks(config: PreCheckConfig): NextResponse | null {
+  const { request, allowedMethods, enableRateLimit, rateLimitWindow, rateLimitMax } = config;
+
+  // 检查允许的方法
+  const methodError = validateHttpMethod(request, allowedMethods);
+  if (methodError) {
+    return methodError;
+  }
+
+  // 速率限制检查
+  const rateLimitError = handleRateLimit(request, enableRateLimit, rateLimitWindow, rateLimitMax);
+  if (rateLimitError) {
+    return rateLimitError;
+  }
+
+  return null;
+}
+
+/**
+ * 请求后置处理配置
+ */
+interface PostProcessConfig {
+  response: NextResponse;
+  request: NextRequest;
+  startTime: number;
+  enableCors: boolean;
+  corsOrigins: string[];
+  enableLogging: boolean;
+}
+
+/**
+ * 处理请求后置操作（CORS、日志）
+ */
+function handlePostProcessing(config: PostProcessConfig): void {
+  const { response, request, startTime, enableCors, corsOrigins, enableLogging } = config;
+
+  // 添加 CORS 头
+  if (enableCors) {
+    applyCorsHeaders(response, request, corsOrigins);
+  }
+
+  // 记录请求完成
+  if (enableLogging) {
+    const duration = Date.now() - startTime;
+    console.warn(`[API] ${request.method} ${request.url} - ${response.status} - ${duration}ms`);
+  }
+}
+
+/**
  * API 中间件主函数
  */
 export function withApiMiddleware(
@@ -159,66 +315,37 @@ export function withApiMiddleware(
 
       // 处理 OPTIONS 预检请求
       if (request.method === 'OPTIONS') {
-        const corsHeaders = enableCors ? handleCors(request, corsOrigins) : {};
-        return new NextResponse(null, { status: 200, headers: corsHeaders });
+        return handleOptionsRequest(request, enableCors, corsOrigins);
       }
 
-      // 检查允许的方法
-      if (!allowedMethods.includes(request.method as HttpMethod)) {
-        return ApiErrors.invalidMethod(allowedMethods);
-      }
-
-      // 速率限制检查
-      if (enableRateLimit) {
-        const clientId = getClientIdentifier(request);
-        const isAllowed = rateLimiter.isAllowed(clientId, rateLimitWindow, rateLimitMax);
-
-        if (!isAllowed) {
-          const remaining = rateLimiter.getRemainingRequests(clientId, rateLimitMax);
-          const resetTime = rateLimiter.getResetTime(clientId);
-
-          const response = ApiErrors.rateLimit('Too many requests, please try again later');
-
-          // 添加速率限制响应头
-          response.headers.set('X-RateLimit-Limit', rateLimitMax.toString());
-          response.headers.set('X-RateLimit-Remaining', remaining.toString());
-          response.headers.set('X-RateLimit-Reset', resetTime.toString());
-
-          return response;
-        }
+      // 请求前置检查
+      const preCheckError = handlePreChecks({
+        request,
+        allowedMethods,
+        enableRateLimit,
+        rateLimitWindow,
+        rateLimitMax,
+      });
+      if (preCheckError) {
+        return preCheckError;
       }
 
       // 执行实际的处理器
       const response = await handler(request);
 
-      // 添加 CORS 头
-      if (enableCors) {
-        const corsHeaders = handleCors(request, corsOrigins);
-        Object.entries(corsHeaders).forEach(([key, value]) => {
-          response.headers.set(key, value);
-        });
-      }
-
-      // 记录请求完成
-      if (enableLogging) {
-        const duration = Date.now() - startTime;
-        console.log(`[API] ${request.method} ${request.url} - ${response.status} - ${duration}ms`);
-      }
+      // 请求后置处理
+      handlePostProcessing({
+        response,
+        request,
+        startTime,
+        enableCors,
+        corsOrigins,
+        enableLogging,
+      });
 
       return response;
     } catch (error) {
-      const duration = Date.now() - startTime;
-
-      if (enableLogging) {
-        console.error(`[API] ${request.method} ${request.url} - ERROR - ${duration}ms:`, error);
-      }
-
-      // 返回标准化错误响应
-      if (error instanceof Error) {
-        return ApiErrors.internal('Request processing failed', error.message);
-      }
-
-      return ApiErrors.internal('Unknown error occurred');
+      return handleRequestError(error, request, startTime, enableLogging);
     }
   };
 }

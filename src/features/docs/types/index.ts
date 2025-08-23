@@ -42,6 +42,7 @@ export interface DocContentBase {
 
 export interface DocFrontmatter extends DocContentBase {
   date?: string;
+  update?: string;
   tags?: string[];
   [key: string]: unknown;
 }
@@ -113,6 +114,7 @@ export type DocContentResult = DocItem & {
   mdxContent: React.ReactNode;
   wordCount: number;
   date: string | null;
+  update?: string | null;
   relativePathFromTopCategory: string;
   topLevelCategorySlug: string;
   isIndexPage: boolean;

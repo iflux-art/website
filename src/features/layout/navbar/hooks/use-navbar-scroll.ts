@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { useSafeNavbar } from '@/features/layout/navbar/hooks/navbar-state';

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 const TRAVEL_URL = 'https://www.travellings.cn/go.html';
 
-export function TravelButton() {
+export const TravelButton = () => {
   const handleClick = () => {
     window.open(TRAVEL_URL, '_blank', 'noopener,noreferrer');
   };
@@ -23,4 +23,4 @@ export function TravelButton() {
       <span className="sr-only">开往</span>
     </Button>
   );
-}
+};

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { LinksForm } from '@/features/links/components';
-import type { LinksFormData, AddDialogProps } from '@/features/admin/types';
+import type { AddDialogProps, LinksFormData } from '@/features/admin/types';
 
-export function AddDialog({ open, onOpenChange, onSuccess, onError }: AddDialogProps) {
+export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (formData: LinksFormData) => {
@@ -50,4 +50,4 @@ export function AddDialog({ open, onOpenChange, onSuccess, onError }: AddDialogP
       </DialogContent>
     </Dialog>
   );
-}
+};

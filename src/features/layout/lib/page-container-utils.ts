@@ -25,27 +25,28 @@ export const gridGapMap: GridGapMap = {
 };
 
 /**
+ * 响应式类名配置表
+ * 使用位运算生成的索引来查找对应的CSS类名
+ */
+const RESPONSIVE_CLASS_MAP: Record<number, string> = {
+  0b000: 'block', // 000: 全部显示
+  0b001: 'lg:hidden xl:block', // 001: PC隐藏，移动端、平板和大屏显示
+  0b010: 'md:hidden xl:block', // 010: 平板隐藏，移动端和大屏显示
+  0b011: 'md:hidden', // 011: 平板和PC隐藏，移动端和大屏显示
+  0b100: 'hidden md:block', // 100: 移动端隐藏，平板及以上显示
+  0b101: 'hidden md:block lg:hidden xl:block', // 101: 移动端隐藏，平板显示，PC隐藏，大屏显示
+  0b110: 'hidden xl:block', // 110: 移动端和平板隐藏，大屏显示
+  0b111: 'hidden', // 111: 全部隐藏
+};
+
+/**
  * 响应式类名生成函数
  * 根据不同设备尺寸生成对应的显示/隐藏类名
  */
 export function getResponsiveClasses(mobile: boolean, tablet: boolean, desktop: boolean): string {
-  if (mobile && tablet && desktop) {
-    return 'hidden'; // 全部隐藏
-  } else if (mobile && tablet && !desktop) {
-    return 'hidden xl:block'; // 移动端和平板隐藏，大屏显示
-  } else if (mobile && !tablet && desktop) {
-    return 'hidden md:block lg:hidden xl:block'; // 移动端隐藏，平板显示，PC隐藏，大屏显示
-  } else if (mobile && !tablet && !desktop) {
-    return 'hidden md:block'; // 移动端隐藏，平板及以上显示
-  } else if (!mobile && tablet && desktop) {
-    return 'md:hidden'; // 平板和PC隐藏，移动端和大屏显示
-  } else if (!mobile && tablet && !desktop) {
-    return 'md:hidden xl:block'; // 平板隐藏，移动端和大屏显示
-  } else if (!mobile && !tablet && desktop) {
-    return 'lg:hidden xl:block'; // PC隐藏，移动端、平板和大屏显示
-  } else {
-    return 'block'; // 全部显示
-  }
+  // 使用位运算生成索引：移动端(bit 2) + 平板(bit 1) + PC(bit 0)
+  const index = (mobile ? 0b100 : 0) | (tablet ? 0b010 : 0) | (desktop ? 0b001 : 0);
+  return RESPONSIVE_CLASS_MAP[index] || 'block';
 }
 
 /**
@@ -68,7 +69,7 @@ export function getMainContentClasses(hasLeftSidebar: boolean, hasRightSidebar: 
  * 获取侧边栏的响应式类名
  * 双侧边栏情况下，左右侧边栏都固定为3列
  */
-export function getSidebarClasses(position: 'left' | 'right', hasBothSidebars: boolean): string {
+export function getSidebarClasses(_position: 'left' | 'right', _hasBothSidebars: boolean): string {
   // 双侧边栏情况下，左右侧边栏都是3列
   return 'md:col-span-3 lg:col-span-3 xl:col-span-3';
 }

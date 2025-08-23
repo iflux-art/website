@@ -1,11 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllDocsStructure } from '@/features/docs/components';
+import { DocsSidebarCard, getAllDocsStructure } from '@/features/docs/components';
 import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { ContentDisplay, DocPagination } from '@/features/content';
-import { DocsSidebarCard } from '@/features/docs/components';
-import { TableOfContentsCard } from '@/features/content';
+import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
 import { ThreeColumnLayout } from '@/features/layout';
 import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
 import { TwikooComment } from '@/features/comment';

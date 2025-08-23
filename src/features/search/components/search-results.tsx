@@ -13,7 +13,7 @@ const TYPE_LABELS = {
   history: '历史记录',
 } as const;
 
-type SearchResultsProps = {
+interface SearchResultsProps {
   results: SearchResult[];
   searchQuery: string;
   isLoading: boolean;
@@ -23,9 +23,9 @@ type SearchResultsProps = {
   onClearHistory: () => void;
   searchHistory: string[];
   onHistoryClick: (query: string) => void;
-};
+}
 
-export function SearchResults({
+export const SearchResults = ({
   results,
   searchQuery,
   isLoading,
@@ -35,7 +35,7 @@ export function SearchResults({
   onClearHistory,
   searchHistory,
   onHistoryClick,
-}: SearchResultsProps) {
+}: SearchResultsProps) => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
@@ -49,7 +49,7 @@ export function SearchResults({
       <div className="py-2">
         {results.map((result, index) => (
           <div
-            key={index}
+            key={result.title || index}
             onClick={() => onSelect(result)}
             onKeyDown={e => e.key === 'Enter' && onSelect(result)}
             tabIndex={0}
@@ -114,4 +114,4 @@ export function SearchResults({
       )}
     </div>
   );
-}
+};

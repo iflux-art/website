@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { AnimatedNumberProps } from '@/features/home/types';
 
-export function AnimatedNumber({ value, suffix = '' }: AnimatedNumberProps) {
+export const AnimatedNumber = ({ value, suffix = '' }: AnimatedNumberProps) => {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ export function AnimatedNumber({ value, suffix = '' }: AnimatedNumberProps) {
       {suffix}
     </span>
   );
-}
+};

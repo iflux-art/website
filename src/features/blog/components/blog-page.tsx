@@ -2,11 +2,11 @@
 
 import React from 'react';
 import {
-  BlogListContent,
-  TagCloudCard,
   BlogCategoryCard,
-  RelatedPostsCard,
+  BlogListContent,
   LatestPostsCard,
+  RelatedPostsCard,
+  TagCloudCard,
 } from '@/features/blog/components';
 import { ThreeColumnLayout } from '@/features/layout';
 import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
@@ -15,7 +15,7 @@ import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
  * Blog页面容器组件
  * 使用三栏布局展示博客内容
  */
-export function BlogPageContainer() {
+export const BlogPageContainer = () => {
   const {
     filteredPosts,
     categories,
@@ -101,6 +101,6 @@ export function BlogPageContainer() {
       </ThreeColumnLayout>
     </div>
   );
-}
+};
 
 export default BlogPageContainer;

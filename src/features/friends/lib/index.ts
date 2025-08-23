@@ -3,7 +3,7 @@
  */
 
 import type { LinksItem } from '@/features/links/types';
-import type { FriendsPageConfig, FriendLinkRequirement } from '../types';
+import type { FriendLinkRequirement, FriendsPageConfig } from '../types';
 
 /**
  * 友链表单URL配置

@@ -4,11 +4,11 @@ import path from 'path';
 /**
  * 路径解析结果类型
  */
-export type PathResolutionResult = {
+export interface PathResolutionResult {
   type: 'valid' | 'redirect' | 'notfound';
   redirectTo?: string;
   normalizedSlug?: string[];
-};
+}
 
 /**
  * 检查路径是否有效（实际存在于文件系统中）

@@ -24,7 +24,7 @@ export interface DocsSidebarWrapperProps {
  */
 import { memo } from 'react';
 
-function DocsSidebarWrapperComponent({ currentDoc, className }: DocsSidebarWrapperProps) {
+const DocsSidebarWrapperComponent = ({ currentDoc, className }: DocsSidebarWrapperProps) => {
   const { structure, loading, error } = useGlobalDocs();
 
   // 加载状态
@@ -35,8 +35,8 @@ function DocsSidebarWrapperComponent({ currentDoc, className }: DocsSidebarWrapp
           {/* 加载骨架屏 */}
           <div className="h-4 animate-pulse rounded bg-muted" />
           <div className="space-y-2">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="space-y-2">
+            {Array.from({ length: 3 }, (_, i) => (
+              <div key={`skeleton-item-${i}`} className="space-y-2">
                 <div className="h-6 animate-pulse rounded bg-muted" />
                 <div className="ml-4 space-y-1">
                   <div className="h-4 w-3/4 animate-pulse rounded bg-muted/60" />
@@ -73,12 +73,9 @@ function DocsSidebarWrapperComponent({ currentDoc, className }: DocsSidebarWrapp
 
   // 正常渲染
   return <DocsSidebar structure={structure} currentDoc={currentDoc} className={className} />;
-}
-
-const arePropsEqual = (prevProps: DocsSidebarWrapperProps, nextProps: DocsSidebarWrapperProps) => {
-  return (
-    prevProps.currentDoc === nextProps.currentDoc && prevProps.className === nextProps.className
-  );
 };
+
+const arePropsEqual = (prevProps: DocsSidebarWrapperProps, nextProps: DocsSidebarWrapperProps) =>
+  prevProps.currentDoc === nextProps.currentDoc && prevProps.className === nextProps.className;
 
 export const DocsSidebarWrapper = memo(DocsSidebarWrapperComponent, arePropsEqual);

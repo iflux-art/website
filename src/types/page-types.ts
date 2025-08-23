@@ -40,6 +40,10 @@ export interface PageContainerConfig {
  */
 export interface SidebarConfig {
   /**
+   * 侧边栏唯一标识符（可选）
+   */
+  id?: string;
+  /**
    * 侧边栏内容
    */
   content: ReactNode;
@@ -195,5 +199,5 @@ export interface PageState {
   /**
    * 数据
    */
-  data?: any;
+  data?: unknown;
 }

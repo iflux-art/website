@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, HandHeart, Globe, Users, Heart, MessageCircle } from 'lucide-react';
+import { ExternalLink, Globe, HandHeart, Heart, MessageCircle, Users } from 'lucide-react';
 import type { FriendsPageConfig } from '../types';
 
 interface FriendLinkApplicationProps {
@@ -18,7 +18,7 @@ interface FriendLinkApplicationProps {
  * 从原始 friends 页面中提取的友链申请表单UI组件，
  * 包含申请要求展示和申请按钮功能。
  */
-export function FriendLinkApplication({ config, className = '' }: FriendLinkApplicationProps) {
+export const FriendLinkApplication = ({ config, className = '' }: FriendLinkApplicationProps) => {
   const { application, requirements } = config;
 
   const handleApplyClick = () => {
@@ -48,11 +48,11 @@ export function FriendLinkApplication({ config, className = '' }: FriendLinkAppl
 
             {/* 申请要求网格 */}
             <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {requirements.map((requirement, index) => {
+              {requirements.map((requirement, _index) => {
                 const IconComponent = iconMap[requirement.icon as keyof typeof iconMap];
 
                 return (
-                  <div key={index} className="flex items-center gap-3">
+                  <div key={requirement.title} className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                       {IconComponent && <IconComponent className="h-5 w-5 text-primary" />}
                     </div>
@@ -76,4 +76,4 @@ export function FriendLinkApplication({ config, className = '' }: FriendLinkAppl
       </Card>
     </div>
   );
-}
+};

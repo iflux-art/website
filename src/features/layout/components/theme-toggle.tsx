@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { Sun, Moon } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 
 /**
  * 主题切换组件
@@ -17,7 +17,7 @@ import { Sun, Moon } from 'lucide-react';
  * @example
  * <ThemeToggle />
  */
-export function ThemeToggle() {
+export const ThemeToggle = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -51,4 +51,4 @@ export function ThemeToggle() {
       <span className="sr-only">{label}</span>
     </Button>
   );
-}
+};

@@ -8,7 +8,7 @@ import { SidebarWrapper } from './sidebar-wrapper';
  * 三栏网格布局组件
  * 只支持双侧边栏（3+6+3）和无侧边栏（12）两种布局
  */
-export function ThreeColumnGrid({ children, sidebars }: ThreeColumnGridProps) {
+export const ThreeColumnGrid = ({ children, sidebars }: ThreeColumnGridProps) => {
   const leftSidebars = sidebars.filter(s => s.position === 'left');
   const rightSidebars = sidebars.filter(s => s.position === 'right');
   const hasBothSidebars = leftSidebars.length > 0 && rightSidebars.length > 0;
@@ -19,7 +19,7 @@ export function ThreeColumnGrid({ children, sidebars }: ThreeColumnGridProps) {
       {hasBothSidebars && leftSidebars.length > 0 && (
         <div className={getSidebarClasses('left', hasBothSidebars)}>
           {leftSidebars.map((sidebar, index) => (
-            <SidebarWrapper key={`left-${index}`} config={sidebar}>
+            <SidebarWrapper key={sidebar.id || `left-${index}`} config={sidebar}>
               {sidebar.content}
             </SidebarWrapper>
           ))}
@@ -37,7 +37,7 @@ export function ThreeColumnGrid({ children, sidebars }: ThreeColumnGridProps) {
       {hasBothSidebars && rightSidebars.length > 0 && (
         <div className={getSidebarClasses('right', hasBothSidebars)}>
           {rightSidebars.map((sidebar, index) => (
-            <SidebarWrapper key={`right-${index}`} config={sidebar}>
+            <SidebarWrapper key={sidebar.id || `right-${index}`} config={sidebar}>
               {sidebar.content}
             </SidebarWrapper>
           ))}
@@ -45,4 +45,4 @@ export function ThreeColumnGrid({ children, sidebars }: ThreeColumnGridProps) {
       )}
     </div>
   );
-}
+};

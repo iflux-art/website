@@ -1,4 +1,4 @@
-import { PageContainer, AppGrid } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/features/layout';
 import { LinkCard } from '@/features/links/components';
 import { generateSEOMetadata } from '@/lib/seo-utils';
 import type { Metadata } from 'next';
@@ -11,7 +11,7 @@ export const metadata: Metadata = generateSEOMetadata({
   type: 'profile',
 });
 
-export default function AboutPage() {
+const AboutPage = () => {
   // 处理个人资料数据，转换为 LinksItem 格式
   const profileItems: LinksItem[] = profileData.map(item => {
     const typedItem = item as LinksItem & { iconType?: 'image' | 'text' };
@@ -36,7 +36,7 @@ export default function AboutPage() {
                 href={item.url}
                 icon={item.icon}
                 iconType={item.iconType}
-                isExternal={true}
+                isExternal
                 className="h-full"
               />
             ))}
@@ -45,4 +45,6 @@ export default function AboutPage() {
       </div>
     </PageContainer>
   );
-}
+};
+
+export default AboutPage;

@@ -17,7 +17,7 @@ export interface LinksContentProps {
  * 显示按标签分组的链接卡片
  * 为每个标签分组生成 h2 标题和锚点
  */
-export function LinksContent({ items, selectedCategory, className }: LinksContentProps) {
+export const LinksContent = ({ items, selectedCategory, className }: LinksContentProps) => {
   // 按标签对链接进行分组
   const groupedItems = useMemo(() => {
     // 创建标签到链接的映射
@@ -64,25 +64,38 @@ export function LinksContent({ items, selectedCategory, className }: LinksConten
 
   return (
     <div className={cn('space-y-8', className)}>
-      {groupedItems.map(({ tag, items: tagItems }) => (
-        <section key={tag} className="space-y-4">
-          {/* 链接卡片网格 */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tagItems.map(item => (
-              <LinkCard
-                key={item.id}
-                title={item.title}
-                description={item.description || item.url}
-                href={item.url}
-                icon={item.icon}
-                iconType={item.iconType}
-                isExternal={true}
-                className="h-full"
-              />
-            ))}
-          </div>
-        </section>
-      ))}
+      {groupedItems.map(({ tag, items: tagItems }) => {
+        // 生成与 use-tag-anchors 钩子一致的锚点 ID
+        const anchorId = `tag-${tag.replace(/\s+/g, '-').toLowerCase()}`;
+
+        return (
+          <section key={tag} className="space-y-4">
+            {/* 标签标题，用于锚点跳转 */}
+            <h2
+              id={anchorId}
+              className="scroll-mt-24 border-b border-border pb-2 text-xl font-semibold text-foreground"
+            >
+              {tag}
+            </h2>
+
+            {/* 链接卡片网格 */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {tagItems.map(item => (
+                <LinkCard
+                  key={item.id}
+                  title={item.title}
+                  description={item.description || item.url}
+                  href={item.url}
+                  icon={item.icon}
+                  iconType={item.iconType}
+                  isExternal
+                  className="h-full"
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
-}
+};

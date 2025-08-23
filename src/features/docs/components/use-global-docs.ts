@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { GlobalDocsStructure } from './global-docs';
 
 export interface UseGlobalDocsResult {

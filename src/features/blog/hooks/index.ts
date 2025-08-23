@@ -6,9 +6,8 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useContentData } from '@/hooks/use-content-data';
+import { type HookResult, useContentData } from '@/hooks/use-content-data';
 import { API_PATHS } from '@/config/metadata';
-import type { HookResult } from '@/hooks/use-content-data';
 import type { BlogPost } from '@/features/blog/types';
 
 export interface TagCount {

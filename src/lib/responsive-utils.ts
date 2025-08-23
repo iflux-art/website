@@ -4,8 +4,7 @@
  */
 
 import type { ResponsiveValue } from '@/types/responsive';
-import type { DeviceType } from '@/config/responsive';
-import { getDeviceTypeFromWidth } from '@/config/responsive';
+import { type DeviceType, getDeviceTypeFromWidth } from '@/config/responsive';
 
 /**
  * 生成响应式类名
@@ -157,7 +156,7 @@ export function generateResponsiveText(
  */
 export function generateTouchOptimizedClasses(
   size: 'small' | 'medium' | 'large' = 'medium',
-  enableHover: boolean = true
+  enableHover = true
 ): string {
   const classes: string[] = [];
 
@@ -238,7 +237,7 @@ export function toResponsiveValue<T>(value: T): ResponsiveValue<T> {
 export function generateContainerClasses(
   maxWidth?: ResponsiveValue<string>,
   padding?: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>,
-  centered: boolean = true
+  centered = true
 ): string {
   const classes: string[] = [];
 
@@ -304,6 +303,33 @@ export function generateVisibilityClasses(showOn?: DeviceType[], hideOn?: Device
 }
 
 /**
+ * 生成响应式gap类名
+ */
+function generateGapClasses(
+  gap: ResponsiveValue<'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'>
+): string {
+  const classes: string[] = [];
+
+  if (gap.default && gap.default !== 'none') {
+    classes.push(`gap-${gap.default}`);
+  }
+  if (gap.mobile && gap.mobile !== 'none') {
+    classes.push(`mobile:gap-mobile-${gap.mobile}`);
+  }
+  if (gap.tablet && gap.tablet !== 'none') {
+    classes.push(`tablet:gap-tablet-${gap.tablet}`);
+  }
+  if (gap.desktop && gap.desktop !== 'none') {
+    classes.push(`desktop:gap-desktop-${gap.desktop}`);
+  }
+  if (gap.large && gap.large !== 'none') {
+    classes.push(`large:gap-large-${gap.large}`);
+  }
+
+  return classes.join(' ');
+}
+
+/**
  * 生成响应式Flexbox类名
  * @param direction 响应式方向
  * @param justify 响应式对齐
@@ -332,22 +358,7 @@ export function generateFlexClasses(
   }
 
   if (gap) {
-    // Handle gap separately since it's not a standard spacing property
-    if (gap.default && gap.default !== 'none') {
-      classes.push(`gap-${gap.default}`);
-    }
-    if (gap.mobile && gap.mobile !== 'none') {
-      classes.push(`mobile:gap-mobile-${gap.mobile}`);
-    }
-    if (gap.tablet && gap.tablet !== 'none') {
-      classes.push(`tablet:gap-tablet-${gap.tablet}`);
-    }
-    if (gap.desktop && gap.desktop !== 'none') {
-      classes.push(`desktop:gap-desktop-${gap.desktop}`);
-    }
-    if (gap.large && gap.large !== 'none') {
-      classes.push(`large:gap-large-${gap.large}`);
-    }
+    classes.push(generateGapClasses(gap));
   }
 
   return classes.join(' ');

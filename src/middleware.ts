@@ -92,11 +92,10 @@ export const SECURITY_HEADERS = {
 /**
  * 构建 CSP 字符串
  */
-export const buildCSP = (config: typeof CSP_CONFIG) => {
-  return Object.entries(config)
+export const buildCSP = (config: typeof CSP_CONFIG) =>
+  Object.entries(config)
     .map(([key, values]) => `${key} ${values.join(' ')}`)
     .join('; ');
-};
 
 /**
  * 获取缓存策略

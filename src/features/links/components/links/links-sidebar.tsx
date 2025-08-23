@@ -2,8 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { Folder } from 'lucide-react';
-import { Sidebar } from '@/features/layout';
-import type { SidebarItem } from '@/features/layout';
+import { Sidebar, type SidebarItem } from '@/features/layout';
 import type { LinksCategory } from '@/features/links/types';
 
 export interface LinksSidebarProps {
@@ -19,12 +18,12 @@ export interface LinksSidebarProps {
  * 显示分类导航，支持分类筛选功能
  * 基于基础 Sidebar 组件构建
  */
-export function LinksSidebar({
+export const LinksSidebar = ({
   categories,
   selectedCategory,
   onCategoryChange,
   className,
-}: LinksSidebarProps) {
+}: LinksSidebarProps) => {
   // 将 LinksCategory 转换为 SidebarItem 格式
   const sidebarItems = useMemo(() => {
     // 过滤掉友链和个人主页分类
@@ -33,9 +32,7 @@ export function LinksSidebar({
     );
 
     // 按 order 排序分类
-    const sortedCategories = filteredCategories.sort((a, b) => {
-      return (a.order ?? 0) - (b.order ?? 0);
-    });
+    const sortedCategories = filteredCategories.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     // 转换为 SidebarItem 格式
     const items: SidebarItem[] = sortedCategories.map(category => ({
@@ -60,8 +57,8 @@ export function LinksSidebar({
       onItemClick={onCategoryChange}
       className={className}
       storageKey="links-sidebar-open-categories"
-      showAllOption={true}
+      showAllOption
       allOptionTitle="全部分类"
     />
   );
-}
+};

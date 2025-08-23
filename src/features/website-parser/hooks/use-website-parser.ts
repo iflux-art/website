@@ -4,9 +4,9 @@
  * 网址解析 React Hook
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { parseWebsite as parseWebsiteMetadata } from '@/features/website-parser/lib/parser';
-import type { WebsiteMetadata, ParseOptions } from '@/features/website-parser/types';
+import type { ParseOptions, WebsiteMetadata } from '@/features/website-parser/types';
 
 interface UseWebsiteParserReturn {
   parseWebsite: (url: string, options?: ParseOptions) => Promise<WebsiteMetadata | null>;

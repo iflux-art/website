@@ -16,7 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import type { LinksItem, LinksCategory } from '@/features/links/types';
+import type { LinksCategory, LinksItem } from '@/features/links/types';
 
 type Category = LinksCategory;
 type Item = LinksItem;

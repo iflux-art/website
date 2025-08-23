@@ -2,6 +2,7 @@ import './globals.css';
 import { MainNavbar } from '@/features/layout/navbar/components/main-navbar';
 import { Footer } from '@/features/layout';
 import { ThemeProvider } from '@/components/theme-provider';
+import { GlobalContextMenu } from '@/components/global-context-menu';
 import { ClerkProvider } from '@clerk/nextjs';
 import React from 'react';
 
@@ -17,22 +18,22 @@ import { generateMetadata, generateViewport } from '@/config/metadata';
 export const metadata = generateMetadata();
 export const viewport = generateViewport();
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <ClerkProvider>
-      <html
-        lang="zh-CN"
-        // 禁用hydration warning提示 - next-themes要求
-        suppressHydrationWarning
-      >
-        <head></head>
-        <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
+  <ClerkProvider>
+    <html
+      lang="zh-CN"
+      // 禁用hydration warning提示 - next-themes要求
+      suppressHydrationWarning
+    >
+      <head />
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <GlobalContextMenu>
             {/* 页面主体布局容器 */}
             <div className="flex min-h-screen flex-col">
               <MainNavbar className="flex-shrink-0" />
@@ -40,9 +41,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <main className="flex-auto">{children}</main>
               <Footer />
             </div>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
-}
+          </GlobalContextMenu>
+        </ThemeProvider>
+      </body>
+    </html>
+  </ClerkProvider>
+);
+
+export default RootLayout;

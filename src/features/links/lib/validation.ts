@@ -18,18 +18,13 @@ const validCategories = [
 ] as const;
 
 /**
- * 验证链接表单数据
+ * 验证基本字段
  */
-export function validateLinksFormData(formData: unknown): {
+function validateBasicFields(formData: Record<string, unknown>): {
   success: boolean;
   error?: string;
-  data?: LinksFormData;
 } {
-  if (!formData || typeof formData !== 'object') {
-    return { success: false, error: 'Invalid form data' };
-  }
-
-  const { title, url, category } = formData as Record<string, unknown>;
+  const { title, url, category } = formData;
 
   if (!title || typeof title !== 'string') {
     return { success: false, error: '标题为必填项' };
@@ -47,20 +42,49 @@ export function validateLinksFormData(formData: unknown): {
     return { success: false, error: '无效的分类ID' };
   }
 
+  return { success: true };
+}
+
+/**
+ * 构建表单数据对象
+ */
+function buildFormData(formData: Record<string, unknown>): LinksFormData {
+  const { title, url, category, description, tags, featured, icon, iconType } = formData;
+
+  return {
+    title: title as string,
+    url: url as string,
+    description: (description as string) || '',
+    category: category as (typeof validCategories)[number],
+    tags: Array.isArray(tags) ? (tags as string[]) : [],
+    featured: Boolean(featured),
+    icon: (icon as string) || '',
+    iconType: (iconType ?? 'text') as 'image' | 'text',
+  };
+}
+
+/**
+ * 验证链接表单数据
+ */
+export function validateLinksFormData(formData: unknown): {
+  success: boolean;
+  error?: string;
+  data?: LinksFormData;
+} {
+  if (!formData || typeof formData !== 'object') {
+    return { success: false, error: 'Invalid form data' };
+  }
+
+  const typedFormData = formData as Record<string, unknown>;
+
+  const validation = validateBasicFields(typedFormData);
+  if (!validation.success) {
+    return validation;
+  }
+
   return {
     success: true,
-    data: {
-      title,
-      url,
-      description: ((formData as Record<string, unknown>).description as string) || '',
-      category: category as (typeof validCategories)[number],
-      tags: Array.isArray((formData as Record<string, unknown>).tags)
-        ? ((formData as Record<string, unknown>).tags as string[])
-        : [],
-      featured: Boolean((formData as Record<string, unknown>).featured),
-      icon: ((formData as Record<string, unknown>).icon as string) || '',
-      iconType: ((formData as Record<string, unknown>).iconType ?? 'text') as 'image' | 'text',
-    },
+    data: buildFormData(typedFormData),
   };
 }
 

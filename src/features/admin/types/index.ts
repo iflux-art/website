@@ -55,11 +55,11 @@ export interface DeleteDialogProps {
   onError: (msg?: string) => void;
 }
 
-export type AdminAction = {
+export interface AdminAction {
   label: string;
   onClick: () => void;
   icon?: ComponentType<{ className?: string }>;
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
   disabled?: boolean;
   loading?: boolean;
-};
+}

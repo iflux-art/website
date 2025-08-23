@@ -1,5 +1,4 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { loadCategoryData } from '@/features/links/lib/categories';
 import { promises as fs } from 'fs';
 import path from 'path';

@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import type { LinksItem, CategoryId } from '@/features/links/types';
+import type { CategoryId, LinksItem } from '@/features/links/types';
 
 const linksDir = path.join(process.cwd(), 'src/content/links');
 

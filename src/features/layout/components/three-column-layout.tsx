@@ -14,12 +14,12 @@ import { PageContainer } from './page-container';
  * - 博客详情页：左侧目录 + 主内容 + 右侧推荐
  * - 文档详情页：左侧导航 + 主内容 + 右侧目录
  */
-export function ThreeColumnLayout({
+export const ThreeColumnLayout = ({
   leftSidebar,
   children,
   rightSidebar,
   className = '',
-}: ThreeColumnLayoutProps) {
+}: ThreeColumnLayoutProps) => {
   const sidebars: SidebarConfig[] = [];
 
   // 左侧边栏配置
@@ -45,4 +45,4 @@ export function ThreeColumnLayout({
       {children}
     </PageContainer>
   );
-}
+};

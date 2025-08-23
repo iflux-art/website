@@ -2,9 +2,9 @@
  * 搜索功能 React Hook
  */
 
-import { useState, useCallback, useEffect } from 'react';
-import { performSearch, getSearchSuggestions } from '@/features/search/lib/search-engine';
-import type { SearchResult, SearchOptions } from '@/features/search/types';
+import { useCallback, useEffect, useState } from 'react';
+import { getSearchSuggestions, performSearch } from '@/features/search/lib/search-engine';
+import type { SearchOptions, SearchResult } from '@/features/search/types';
 
 interface UseSearchReturn {
   search: (query: string, options?: SearchOptions) => Promise<void>;

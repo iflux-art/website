@@ -33,20 +33,21 @@ export interface BlogCategoryCardProps {
  *
  * 以卡片形式显示博客分类，支持点击筛选功能
  */
-export function BlogCategoryCard({
+export const BlogCategoryCard = ({
   categories = [],
   selectedCategory,
   onCategoryClick,
   className,
   enableRouting = false,
   showHeader = true,
-}: BlogCategoryCardProps) {
+}: BlogCategoryCardProps) => {
   const router = useRouter();
 
   // 按文章数量降序排列分类
-  const sortedCategories = React.useMemo(() => {
-    return [...categories].sort((a, b) => b.count - a.count);
-  }, [categories]);
+  const sortedCategories = React.useMemo(
+    () => [...categories].sort((a, b) => b.count - a.count),
+    [categories]
+  );
 
   const handleClick = (category: string | null) => {
     if (enableRouting) {
@@ -96,4 +97,4 @@ export function BlogCategoryCard({
       </CardContent>
     </Card>
   );
-}
+};

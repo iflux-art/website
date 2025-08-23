@@ -3,12 +3,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { NavDocItem } from '@/features/docs/types';
 
-type DocPaginationProps = {
+interface DocPaginationProps {
   prevDoc?: NavDocItem | null;
   nextDoc?: NavDocItem | null;
-};
+}
 
-export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
+export const DocPagination = ({ prevDoc, nextDoc }: DocPaginationProps) => {
   if (!prevDoc && !nextDoc) return null;
 
   return (
@@ -26,7 +26,7 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
           </CardContent>
         </Card>
       ) : (
-        <div className="max-w-[48%] flex-1"></div>
+        <div className="max-w-[48%] flex-1" />
       )}
       {nextDoc ? (
         <Card className="max-w-[48%] flex-1 rounded-xl transition-all hover:shadow-md">
@@ -41,8 +41,8 @@ export function DocPagination({ prevDoc, nextDoc }: DocPaginationProps) {
           </CardContent>
         </Card>
       ) : (
-        <div className="max-w-[48%] flex-1"></div>
+        <div className="max-w-[48%] flex-1" />
       )}
     </div>
   );
-}
+};

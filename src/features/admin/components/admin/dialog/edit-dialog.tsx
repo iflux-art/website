@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { LinksForm } from '@/features/links/components';
-import type { LinksItem, LinksFormData, EditDialogProps } from '@/features/admin/types';
+import type { LinksFormData } from '@/features/links/types';
+import type { EditDialogProps, LinksItem } from '@/features/admin/types';
 
-export function EditDialog({ item, onOpenChange, onSuccess, onError }: EditDialogProps) {
+export const EditDialog = ({ item, onOpenChange, onSuccess, onError }: EditDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (formData: LinksFormData) => {
     if (!item) return;
@@ -47,11 +48,14 @@ export function EditDialog({ item, onOpenChange, onSuccess, onError }: EditDialo
           <LinksForm
             submitAction={handleSubmit}
             onCancel={() => onOpenChange(false)}
-            initialData={item}
+            initialData={{
+              ...item,
+              category: item.category as LinksFormData['category'],
+            }}
             isLoading={isSubmitting}
           />
         )}
       </DialogContent>
     </Dialog>
   );
-}
+};

@@ -55,9 +55,10 @@ export interface BlogFrontmatter {
   title: string;
   description?: string;
   date?: string | Date;
+  update?: string | Date;
   category?: string;
   tags?: string[];
   published?: boolean;
   excerpt?: string;
-  image?: string;
+  cover?: string;
 }

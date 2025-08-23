@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Calculator, Clock } from 'lucide-react';
+import { Calculator, Calendar, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Breadcrumb } from '@/features/content';
 
@@ -10,10 +10,11 @@ export interface ContentDisplayProps {
   contentType: ContentType;
   title: string;
   date?: string | null;
+  updatedAt?: string | null;
   wordCount?: number;
   children?: React.ReactNode;
   className?: string;
-  breadcrumbs?: Array<{ label: string; href?: string }>;
+  breadcrumbs?: { label: string; href?: string }[];
 }
 
 /**
@@ -54,14 +55,15 @@ function calculateReadingTime(wordCount: number): string {
  * </ContentDisplay>
  * ```
  */
-export function ContentDisplay({
+export const ContentDisplay = ({
   title,
   date,
+  updatedAt,
   wordCount = 0,
   children,
   className,
   breadcrumbs,
-}: ContentDisplayProps) {
+}: ContentDisplayProps) => {
   const readingTime = calculateReadingTime(wordCount);
 
   return (
@@ -85,11 +87,15 @@ export function ContentDisplay({
       <header className="mb-8">
         <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
         <div className="flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground">
-          {/* 发布日期 */}
-          {date && (
+          {/* 发布日期和更新日期 */}
+          {(date || updatedAt) && (
             <div className="flex items-center">
               <Calendar className="mr-1 h-4 w-4" />
-              <time>发布于 {date}</time>
+              <time>
+                {date && `发布于 ${date}`}
+                {date && updatedAt && ' · '}
+                {updatedAt && `更新于 ${updatedAt}`}
+              </time>
             </div>
           )}
 
@@ -122,4 +128,4 @@ export function ContentDisplay({
       </div>
     </article>
   );
-}
+};

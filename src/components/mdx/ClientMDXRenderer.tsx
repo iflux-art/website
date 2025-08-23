@@ -7,8 +7,7 @@ import { evaluateSync } from '@mdx-js/mdx';
 import remarkGfm from 'remark-gfm';
 import * as runtime from 'react/jsx-runtime';
 import matter from 'gray-matter';
-import rehypePrettyCode from 'rehype-pretty-code';
-import type { Options as PrettyCodeOptions } from 'rehype-pretty-code';
+import rehypePrettyCode, { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
 
 export const prettyCodeOptions: PrettyCodeOptions = {
   theme: 'github-dark',
@@ -20,7 +19,7 @@ interface Props {
   content: string;
 }
 
-export default function ClientMDXRenderer({ content }: Props) {
+const ClientMDXRenderer = ({ content }: Props) => {
   const MDXContent = useMemo(() => {
     try {
       // 先去除 frontmatter
@@ -47,4 +46,6 @@ export default function ClientMDXRenderer({ content }: Props) {
       <MDXContent />
     </MDXProvider>
   );
-}
+};
+
+export default ClientMDXRenderer;

@@ -16,6 +16,60 @@ interface SidebarNavItem {
   open?: boolean;
 }
 
+/**
+ * 递归展开sidebar项目
+ */
+const flattenSidebarItems = (
+  items: SidebarNavItem[],
+  categoryId: string,
+  docs: DocListItem[],
+  parentPath = ''
+): void => {
+  items.forEach(item => {
+    if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) {
+      const slug = item.filePath.split('/').pop() ?? '';
+
+      docs.push({
+        slug,
+        title: item.title,
+        path: item.href,
+        description: item.label ?? item.title,
+        category: categoryId,
+      });
+    }
+
+    if (item.items && item.items.length > 0) {
+      flattenSidebarItems(
+        item.items,
+        categoryId,
+        docs,
+        parentPath + (item.filePath ? `/${item.filePath}` : '')
+      );
+    }
+  });
+};
+
+/**
+ * 备用方法：直接读取目录中的文件
+ */
+const getFallbackDocs = (categoryDir: string, decodedCategory: string): DocListItem[] =>
+  fs
+    .readdirSync(categoryDir)
+    .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
+    .map(file => {
+      const docPath = path.join(categoryDir, file);
+      const docContent = fs.readFileSync(docPath, 'utf8');
+      const { data } = matter(docContent);
+      const slug = file.replace(/\.(mdx|md)$/, '');
+
+      return {
+        slug,
+        title: (data.title as string) ?? slug,
+        description: (data.description as string) ?? (data.title as string) ?? slug,
+        path: `/docs/${decodedCategory}/${slug}`,
+      } as DocListItem;
+    });
+
 export async function GET(request: Request, { params }: { params: Promise<{ category: string }> }) {
   try {
     const resolvedParams = await params;
@@ -31,48 +85,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     const sidebarItems = getDocSidebar(decodedCategory);
     const docs: DocListItem[] = [];
 
-    const flattenSidebarItems = (items: SidebarNavItem[], parentPath = '') => {
-      items.forEach(item => {
-        if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) {
-          const slug = item.filePath.split('/').pop() ?? '';
-
-          docs.push({
-            slug,
-            title: item.title,
-            path: item.href,
-            description: item.label ?? item.title,
-            category: resolvedParams.category,
-          });
-        }
-
-        if (item.items && item.items.length > 0) {
-          flattenSidebarItems(item.items, parentPath + (item.filePath ? `/${item.filePath}` : ''));
-        }
-      });
-    };
-
-    flattenSidebarItems(sidebarItems);
+    flattenSidebarItems(sidebarItems, resolvedParams.category, docs);
 
     if (docs.length === 0) {
-      // Fallback to old method for category documents
-
-      const fallbackDocs = fs
-        .readdirSync(categoryDir)
-        .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
-        .map(file => {
-          const docPath = path.join(categoryDir, file);
-          const docContent = fs.readFileSync(docPath, 'utf8');
-          const { data } = matter(docContent);
-          const slug = file.replace(/\.(mdx|md)$/, '');
-
-          return {
-            slug,
-            title: (data.title as string) ?? slug,
-            description: (data.description as string) ?? (data.title as string) ?? slug,
-            path: `/docs/${decodedCategory}/${slug}`,
-          } as DocListItem;
-        });
-
+      // 备用方法读取分类文档
+      const fallbackDocs = getFallbackDocs(categoryDir, decodedCategory);
       return NextResponse.json(fallbackDocs);
     }
 

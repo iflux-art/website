@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation';
 import { createBlogBreadcrumbs, getBlogContent } from '@/features/blog/lib';
 import { ContentDisplay, TableOfContentsCard } from '@/features/content';
 import {
-  RelatedPostsCard,
-  LatestPostsCard,
-  TagCloudCard,
   BlogCategoryCard,
+  LatestPostsCard,
+  RelatedPostsCard,
+  TagCloudCard,
 } from '@/features/blog/components';
 import { ThreeColumnLayout } from '@/features/layout';
 import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
@@ -47,15 +47,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           day: 'numeric',
         })
       : undefined;
+    const updatedAt = frontmatter.update
+      ? new Date(frontmatter.update).toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : undefined;
     // 左侧边栏内容
     const leftSidebar = (
       <>
         <BlogCategoryCard
           categories={allCategories}
           selectedCategory={frontmatter.category}
-          enableRouting={true}
+          enableRouting
         />
-        <TagCloudCard allTags={allTags} selectedTag={undefined} useDefaultRouting={true} />
+        <TagCloudCard allTags={allTags} selectedTag={undefined} useDefaultRouting />
       </>
     );
 
@@ -75,6 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             contentType="blog"
             title={title}
             date={date}
+            updatedAt={updatedAt}
             wordCount={content.length}
             breadcrumbs={createBlogBreadcrumbs({
               slug: slug.slice(1),

@@ -17,7 +17,12 @@ interface DocErrorHandlerProps {
  * 文档错误处理组件
  * 统一处理文档页面的各种错误状态
  */
-export function DocErrorHandler({ errorType, slug, error, className = '' }: DocErrorHandlerProps) {
+export const DocErrorHandler = ({
+  errorType,
+  slug,
+  error,
+  className = '',
+}: DocErrorHandlerProps) => {
   const requestedPath = slug ? `/docs/${slug.join('/')}` : '/docs';
 
   // 记录错误信息用于调试
@@ -116,4 +121,4 @@ export function DocErrorHandler({ errorType, slug, error, className = '' }: DocE
       )}
     </div>
   );
-}
+};

@@ -26,9 +26,7 @@ export function useSiteStats(): SiteStats {
 
     // 文档数量 - 计算所有分类下的文档总数
     const docCount =
-      docCategories?.reduce((total, category) => {
-        return total + (category.count ?? 0);
-      }, 0) ?? 0;
+      docCategories?.reduce((total, category) => total + (category.count ?? 0), 0) ?? 0;
 
     // 导航链接数量 - 排除友链和个人主页分类
     const linkCount =

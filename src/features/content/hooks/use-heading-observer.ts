@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { Heading } from '@/types/content-types';
 
 export function useHeadingObserver(

@@ -1,23 +1,23 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import {
+  createDocBreadcrumbsServer,
   generateDocPathsFromFeatures,
-  resolveDocPath,
-  isRedirectLoop,
   getDocContentFromFeatures,
+  isRedirectLoop,
+  resolveDocPath,
 } from '@/features/docs/lib';
 import { DocErrorHandler, DocsSidebarCard } from '@/features/docs/components';
 import { ThreeColumnLayout } from '@/features/layout';
 import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
 import { TwikooComment } from '@/features/comment';
 import { ClientMDXRenderer } from '@/components/mdx';
-import { createDocBreadcrumbsServer } from '@/features/docs/lib';
 import type { Metadata } from 'next';
 import { generateDocsMetadata } from '@/lib/seo-utils';
 
-type DocPageParams = {
+interface DocPageParams {
   slug: string[];
-};
+}
 
 // ===== 优化的静态生成配置 =====
 
@@ -71,7 +71,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function DocPage({ params }: { params: Promise<DocPageParams> }) {
+const DocPage = async ({ params }: { params: Promise<DocPageParams> }) => {
   const resolvedParams = await params;
   const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug : [resolvedParams.slug];
 
@@ -119,6 +119,7 @@ export default async function DocPage({ params }: { params: Promise<DocPageParam
             contentType="docs"
             title={doc.frontmatter.title}
             date={doc.date}
+            updatedAt={doc.update}
             wordCount={doc.wordCount}
             breadcrumbs={breadcrumbs}
           >
@@ -134,4 +135,6 @@ export default async function DocPage({ params }: { params: Promise<DocPageParam
       </ThreeColumnLayout>
     </div>
   );
-}
+};
+
+export default DocPage;

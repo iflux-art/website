@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getRandomGreeting } from '@/features/comment/lib';
 import type { GreetingProps } from '@/features/comment/types';
 
@@ -8,7 +8,7 @@ import type { GreetingProps } from '@/features/comment/types';
  * 问候语组件
  * 根据当前时间显示不同的问候语
  */
-export function Greeting({ className }: GreetingProps) {
+export const Greeting = ({ className }: GreetingProps) => {
   const [greeting, setGreeting] = useState('');
 
   // 刷新问候语的函数
@@ -32,4 +32,4 @@ export function Greeting({ className }: GreetingProps) {
       {greeting}
     </button>
   );
-}
+};

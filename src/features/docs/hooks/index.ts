@@ -5,10 +5,9 @@
 
 'use client';
 
-import { useContentData } from '@/hooks/use-content-data';
+import { type HookResult, useContentData } from '@/hooks/use-content-data';
 import { API_PATHS } from '@/config/metadata';
-import type { DocItem, DocCategory, DocListItem } from '@/features/docs/types';
-import type { HookResult } from '@/hooks/use-content-data';
+import type { DocCategory, DocItem, DocListItem } from '@/features/docs/types';
 
 /**
  * 使用文档分类

@@ -65,21 +65,19 @@ export const TwikooComment: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <div className="mt-4 rounded-xl border bg-card p-6">
-        <div className="mb-4 flex justify-center">
-          <button
-            className="cursor-pointer text-center text-base text-muted-foreground transition-colors hover:text-muted-foreground/70"
-            title="点击刷新问候语"
-            onClick={() => setGreeting(getRandomGreeting())}
-            type="button"
-            onKeyDown={e => e.key === 'Enter' && setGreeting(getRandomGreeting())}
-          >
-            {greeting}
-          </button>
-        </div>
-        <div id="twikoo-comment" className="relative"></div>
+    <div className="mt-4 rounded-xl border bg-card p-6">
+      <div className="mb-4 flex justify-center">
+        <button
+          className="cursor-pointer text-center text-base text-muted-foreground transition-colors hover:text-muted-foreground/70"
+          title="点击刷新问候语"
+          onClick={() => setGreeting(getRandomGreeting())}
+          type="button"
+          onKeyDown={e => e.key === 'Enter' && setGreeting(getRandomGreeting())}
+        >
+          {greeting}
+        </button>
       </div>
-    </>
+      <div id="twikoo-comment" className="relative" />
+    </div>
   );
 };

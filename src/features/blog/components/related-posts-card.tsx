@@ -19,7 +19,7 @@ export interface RelatedPostsCardProps {
 /**
  * 相关文章卡片组件
  */
-export function RelatedPostsCard({ posts, currentSlug }: RelatedPostsCardProps) {
+export const RelatedPostsCard = ({ posts, currentSlug }: RelatedPostsCardProps) => {
   if (!posts?.length) return null;
 
   const currentPath = `/blog/${currentSlug.join('/')}`;
@@ -56,4 +56,4 @@ export function RelatedPostsCard({ posts, currentSlug }: RelatedPostsCardProps) 
       </CardContent>
     </Card>
   );
-}
+};

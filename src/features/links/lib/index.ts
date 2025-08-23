@@ -1,4 +1,4 @@
-import type { LinksItem, LinksCategory, CategoryId } from '@/features/links/types';
+import type { CategoryId, LinksCategory, LinksItem } from '@/features/links/types';
 
 // 定义分类结构，基于实际文件夹结构
 const categoryStructure = {
@@ -202,6 +202,74 @@ const categoryStructure = {
   },
 };
 
+/**
+ * 处理根目录分类文件
+ */
+async function loadRootCategoryItems(
+  categoryId: string,
+  categoryInfo: { file: () => Promise<{ default: unknown[] }> }
+): Promise<LinksItem[]> {
+  try {
+    const moduleData = await categoryInfo.file();
+    const items = moduleData.default;
+
+    return items.map((item: unknown) => {
+      const typedItem = item as Record<string, unknown>;
+      return {
+        ...(typedItem as unknown as LinksItem),
+        category: categoryId as CategoryId,
+        iconType: (typedItem.iconType ?? 'image') as 'image' | 'text',
+      };
+    });
+  } catch (error) {
+    console.warn(`Failed to load ${categoryId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * 处理子分类文件
+ */
+async function loadSubCategoryItems(
+  categoryId: string,
+  subCategoryId: string,
+  subCategoryInfo: { file: () => Promise<{ default: unknown[] }> }
+): Promise<LinksItem[]> {
+  try {
+    const moduleData = await subCategoryInfo.file();
+    const items = moduleData.default;
+
+    return items.map((item: unknown) => {
+      const typedItem = item as Record<string, unknown>;
+      return {
+        ...(typedItem as unknown as LinksItem),
+        category: `${categoryId}/${subCategoryId}` as CategoryId,
+        iconType: (typedItem.iconType ?? 'image') as 'image' | 'text',
+      };
+    });
+  } catch (error) {
+    console.warn(`Failed to load ${categoryId}/${subCategoryId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * 处理有子分类的分类目录
+ */
+async function loadCategoryWithChildren(
+  categoryId: string,
+  categoryInfo: { children: Record<string, { file: () => Promise<{ default: unknown[] }> }> }
+): Promise<LinksItem[]> {
+  const items: LinksItem[] = [];
+
+  for (const [subCategoryId, subCategoryInfo] of Object.entries(categoryInfo.children)) {
+    const subItems = await loadSubCategoryItems(categoryId, subCategoryId, subCategoryInfo);
+    items.push(...subItems);
+  }
+
+  return items;
+}
+
 // 动态导入所有分类数据
 async function loadAllLinksData(): Promise<LinksItem[]> {
   const allItems: LinksItem[] = [];
@@ -211,44 +279,12 @@ async function loadAllLinksData(): Promise<LinksItem[]> {
     for (const [categoryId, categoryInfo] of Object.entries(categoryStructure)) {
       if ('file' in categoryInfo) {
         // 根目录文件
-        try {
-          const moduleData = await categoryInfo.file();
-          const items = moduleData.default;
-
-          const processedItems = items.map((item: unknown) => {
-            const typedItem = item as Record<string, unknown>;
-            return {
-              ...(typedItem as unknown as LinksItem),
-              category: categoryId as CategoryId,
-              iconType: (typedItem.iconType ?? 'image') as 'image' | 'text',
-            };
-          });
-
-          allItems.push(...processedItems);
-        } catch (error) {
-          console.warn(`Failed to load ${categoryId}:`, error);
-        }
+        const items = await loadRootCategoryItems(categoryId, categoryInfo);
+        allItems.push(...items);
       } else if ('children' in categoryInfo) {
         // 有子分类的目录
-        for (const [subCategoryId, subCategoryInfo] of Object.entries(categoryInfo.children)) {
-          try {
-            const moduleData = await subCategoryInfo.file();
-            const items = moduleData.default;
-
-            const processedItems = items.map((item: unknown) => {
-              const typedItem = item as Record<string, unknown>;
-              return {
-                ...(typedItem as unknown as LinksItem),
-                category: `${categoryId}/${subCategoryId}` as CategoryId,
-                iconType: (typedItem.iconType ?? 'image') as 'image' | 'text',
-              };
-            });
-
-            allItems.push(...processedItems);
-          } catch (error) {
-            console.warn(`Failed to load ${categoryId}/${subCategoryId}:`, error);
-          }
-        }
+        const items = await loadCategoryWithChildren(categoryId, categoryInfo);
+        allItems.push(...items);
       }
     }
 

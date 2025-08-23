@@ -30,13 +30,13 @@ interface BreadcrumbProps {
 /**
  * 通用面包屑导航组件
  */
-export function Breadcrumb({
+export const Breadcrumb = ({
   items,
   separator = <ChevronRight className="h-4 w-4" />,
   className = '',
   showHomeIcon = true,
   maxItems = 5,
-}: BreadcrumbProps) {
+}: BreadcrumbProps) => {
   // 处理项目过多的情况
   const displayItems =
     items.length > maxItems
@@ -51,45 +51,51 @@ export function Breadcrumb({
     <nav aria-label="面包屑导航" className={cn('flex items-center space-x-1 text-sm', className)}>
       <ol className="flex items-center space-x-1">
         {displayItems.map((item, index) => (
-          <li key={index} className="flex items-center">
+          <li key={item.href || `${item.label}-${index}`} className="flex items-center">
             {index > 0 && (
               <span className="mx-2 text-muted-foreground" aria-hidden="true">
                 {separator}
               </span>
             )}
 
-            {item.label === '...' ? (
-              <span className="text-muted-foreground">...</span>
-            ) : item.isCurrent || !item.href ? (
-              <span
-                className={cn(
-                  'font-medium',
-                  item.isCurrent ? 'text-foreground' : 'text-muted-foreground'
-                )}
-                aria-current={item.isCurrent ? 'page' : undefined}
-              >
-                {index === 0 && showHomeIcon && (
-                  <Home className="mr-1 inline h-4 w-4" aria-hidden="true" />
-                )}
-                {item.label}
-              </span>
-            ) : (
-              <Link
-                href={item.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {index === 0 && showHomeIcon && (
-                  <Home className="mr-1 inline h-4 w-4" aria-hidden="true" />
-                )}
-                {item.label}
-              </Link>
-            )}
+            {(() => {
+              if (item.label === '...') {
+                return <span className="text-muted-foreground">...</span>;
+              }
+              if (item.isCurrent || !item.href) {
+                return (
+                  <span
+                    className={cn(
+                      'font-medium',
+                      item.isCurrent ? 'text-foreground' : 'text-muted-foreground'
+                    )}
+                    aria-current={item.isCurrent ? 'page' : undefined}
+                  >
+                    {index === 0 && showHomeIcon && (
+                      <Home className="mr-1 inline h-4 w-4" aria-hidden="true" />
+                    )}
+                    {item.label}
+                  </span>
+                );
+              }
+              return (
+                <Link
+                  href={item.href}
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {index === 0 && showHomeIcon && (
+                    <Home className="mr-1 inline h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.label}
+                </Link>
+              );
+            })()}
           </li>
         ))}
       </ol>
     </nav>
   );
-}
+};
 
 /**
  * 简化的面包屑组件 - 直接从路径生成
@@ -109,11 +115,11 @@ interface SimpleBreadcrumbProps {
   className?: string;
 }
 
-export function SimpleBreadcrumb({
+export const SimpleBreadcrumb = ({
   pathname,
   labelMap = {},
   className = '',
-}: SimpleBreadcrumbProps) {
+}: SimpleBreadcrumbProps) => {
   const segments = pathname.split('/').filter(Boolean);
 
   const items: BreadcrumbItem[] = [{ label: '首页', href: '/' }];
@@ -131,7 +137,7 @@ export function SimpleBreadcrumb({
   });
 
   return <Breadcrumb items={items} className={className} />;
-}
+};
 
 /**
  * 格式化路径段为显示标签

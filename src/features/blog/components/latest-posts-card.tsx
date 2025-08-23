@@ -19,7 +19,7 @@ export interface LatestPostsCardProps {
 /**
  * 最新发布文章卡片组件
  */
-export function LatestPostsCard({ posts, currentSlug }: LatestPostsCardProps) {
+export const LatestPostsCard = ({ posts, currentSlug }: LatestPostsCardProps) => {
   if (!posts?.length) return null;
 
   const currentPath = `/blog/${currentSlug.join('/')}`;
@@ -64,4 +64,4 @@ export function LatestPostsCard({ posts, currentSlug }: LatestPostsCardProps) {
       </CardContent>
     </Card>
   );
-}
+};

@@ -20,7 +20,7 @@ export function isValidUrl(url: string): boolean {
 export function normalizeUrl(url: string): string {
   // 如果没有协议，添加 https://
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    url = 'https://' + url;
+    url = `https://${url}`;
   }
 
   try {

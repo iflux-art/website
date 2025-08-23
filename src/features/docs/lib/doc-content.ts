@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { countWords } from './word-count';
 import { getFlattenedDocsOrder } from './doc-paths';
 import { extractHeadings } from '@/features/content';
-import type { NavDocItem, DocContentResult } from '@/features/docs/types';
+import type { DocContentResult, NavDocItem } from '@/features/docs/types';
 
 const DOCS_CONTENT_DIR = 'src/content/docs';
 const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
@@ -41,6 +41,109 @@ function cleanupExpiredCache() {
 }
 
 /**
+ * 检查是否为index页面并获取文件路径
+ */
+function findIndexFilePath(absoluteRequestedPath: string): string | undefined {
+  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
+    for (const indexFile of DOCS_INDEX_FILES) {
+      const indexPath = path.join(absoluteRequestedPath, indexFile);
+      if (fs.existsSync(indexPath)) {
+        return indexPath;
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
+ * 获取直接文件路径
+ */
+function findDirectFilePath(absoluteRequestedPath: string): string | undefined {
+  const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
+  if (fs.existsSync(possiblePathMdx)) {
+    return possiblePathMdx;
+  }
+
+  const possiblePathMd = `${absoluteRequestedPath}.md`;
+  if (fs.existsSync(possiblePathMd)) {
+    return possiblePathMd;
+  }
+
+  return undefined;
+}
+
+/**
+ * 获取文档文件路径
+ */
+function getDocumentFilePath(absoluteRequestedPath: string): {
+  filePath: string;
+  isIndexPage: boolean;
+} {
+  // 检查是否是目录下的index文件
+  const indexFilePath = findIndexFilePath(absoluteRequestedPath);
+  if (indexFilePath) {
+    return { filePath: indexFilePath, isIndexPage: true };
+  }
+
+  // 检查是否是直接的文件路径
+  const directFilePath = findDirectFilePath(absoluteRequestedPath);
+  if (directFilePath) {
+    return { filePath: directFilePath, isIndexPage: false };
+  }
+
+  throw new Error(`Document not found at path: ${path.basename(absoluteRequestedPath)}`);
+}
+
+/**
+ * 格式化日期
+ */
+function formatDate(dateValue: string | number | Date | undefined): string | null {
+  if (!dateValue) return null;
+
+  return new Date(dateValue).toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+/**
+ * 获取导航文档
+ */
+function getNavigationDocs(
+  isIndexPage: boolean,
+  actualSlugForNav: string,
+  flattenedDocs: NavDocItem[]
+): { prevDoc: NavDocItem | null; nextDoc: NavDocItem | null } {
+  if (isIndexPage) {
+    const indexDirNavPath = `/docs/${actualSlugForNav}`;
+    const nextDoc =
+      flattenedDocs.find(
+        doc =>
+          doc.path.startsWith(`${indexDirNavPath}/`) ||
+          (doc.path.startsWith(indexDirNavPath) &&
+            doc.path !== indexDirNavPath &&
+            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+      ) ?? null;
+
+    return { prevDoc: null, nextDoc };
+  } else {
+    const currentNavPath = `/docs/${actualSlugForNav}`;
+    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
+
+    if (currentIndex === -1) {
+      return { prevDoc: null, nextDoc: null };
+    }
+
+    const prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
+    const nextDoc =
+      currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
+
+    return { prevDoc, nextDoc };
+  }
+}
+
+/**
  * 获取文档内容
  * @param slug 文档路径数组
  * @returns 文档内容结果
@@ -53,86 +156,32 @@ export function getDocContent(slug: string[]): DocContentResult {
   // 生产环境使用缓存
   if (process.env.NODE_ENV === 'production') {
     if (docContentCache.has(cacheKey) && docCacheTimestamp.has(cacheKey)) {
-      const timestamp = docCacheTimestamp.get(cacheKey)!;
-      if (now - timestamp < DOC_CACHE_TTL) {
-        return docContentCache.get(cacheKey)!;
+      const timestamp = docCacheTimestamp.get(cacheKey);
+      if (timestamp && now - timestamp < DOC_CACHE_TTL) {
+        const cachedContent = docContentCache.get(cacheKey);
+        if (cachedContent) {
+          return cachedContent;
+        }
       }
     }
   }
 
   const docsContentDir = path.join(process.cwd(), DOCS_CONTENT_DIR);
   const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
+  const actualSlugForNav = slug.join('/');
 
-  let filePath: string | undefined;
-  let actualSlugForNav = slug.join('/');
-  let isIndexPage = false;
-
-  // 检查是否是目录下的index文件
-  if (fs.existsSync(absoluteRequestedPath) && fs.statSync(absoluteRequestedPath).isDirectory()) {
-    for (const indexFile of DOCS_INDEX_FILES) {
-      const indexPath = path.join(absoluteRequestedPath, indexFile);
-      if (fs.existsSync(indexPath)) {
-        filePath = indexPath;
-        isIndexPage = true;
-        break;
-      }
-    }
-  }
-
-  // 检查是否是直接的文件路径
-  if (!filePath) {
-    const possiblePathMdx = `${absoluteRequestedPath}.mdx`;
-    if (fs.existsSync(possiblePathMdx)) {
-      filePath = possiblePathMdx;
-    } else {
-      const possiblePathMd = `${absoluteRequestedPath}.md`;
-      if (fs.existsSync(possiblePathMd)) {
-        filePath = possiblePathMd;
-      }
-    }
-  }
-
-  if (!filePath || !fs.existsSync(filePath)) {
-    throw new Error(`Document not found at path: ${requestedPath}`);
-  }
-
+  const { filePath, isIndexPage } = getDocumentFilePath(absoluteRequestedPath);
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
-  const date = frontmatter.date
-    ? new Date((frontmatter.date as string | number | Date) ?? '').toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : null;
+  const date = formatDate(frontmatter.date as string | number | Date | undefined);
+  const updatedAt = formatDate(frontmatter.update as string | number | Date | undefined);
 
   const wordCount = countWords(originalContent);
   const { headings } = extractHeadings(originalContent);
   const topLevelCategorySlug = slug[0];
   const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
-  let prevDoc: NavDocItem | null = null;
-  let nextDoc: NavDocItem | null = null;
-
-  if (isIndexPage) {
-    prevDoc = null;
-    const indexDirNavPath = `/docs/${actualSlugForNav}`;
-    nextDoc =
-      flattenedDocs.find(
-        doc =>
-          doc.path.startsWith(indexDirNavPath + '/') ||
-          (doc.path.startsWith(indexDirNavPath) &&
-            doc.path !== indexDirNavPath &&
-            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
-      ) ?? null;
-  } else {
-    const currentNavPath = `/docs/${actualSlugForNav}`;
-    const currentIndex = flattenedDocs.findIndex(doc => doc.path === currentNavPath);
-    if (currentIndex !== -1) {
-      prevDoc = currentIndex > 0 ? flattenedDocs[currentIndex - 1] : null;
-      nextDoc = currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
-    }
-  }
+  const { prevDoc, nextDoc } = getNavigationDocs(isIndexPage, actualSlugForNav, flattenedDocs);
 
   const result: DocContentResult = {
     title: (frontmatter.title ?? path.basename(filePath, path.extname(filePath))) as string,
@@ -142,6 +191,9 @@ export function getDocContent(slug: string[]): DocContentResult {
       description: frontmatter.description as string | undefined,
       date: frontmatter.date
         ? new Date(frontmatter.date as string | number | Date).toISOString()
+        : undefined,
+      update: frontmatter.update
+        ? new Date(frontmatter.update as string | number | Date).toISOString()
         : undefined,
       tags: frontmatter.tags as string[] | undefined,
       toc: frontmatter.toc as boolean | undefined,
@@ -153,6 +205,7 @@ export function getDocContent(slug: string[]): DocContentResult {
     mdxContent: originalContent,
     wordCount,
     date,
+    update: updatedAt,
     relativePathFromTopCategory: path
       .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
       .replace(/\\/g, '/')

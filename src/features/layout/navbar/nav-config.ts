@@ -72,11 +72,9 @@ export const ADMIN_MENU_ITEMS = [
     icon: Globe,
     permission: 'admin.links.manage',
   },
-] as const satisfies Array<
-  NavConfigItem & {
-    permission?: string;
-  }
->;
+] as const satisfies (NavConfigItem & {
+  permission?: string;
+})[];
 
 // 扁平化所有导航项（包括子项）以便路径映射
 const flattenNavItems = (items: readonly NavConfigItem[]): NavConfigItem[] => {

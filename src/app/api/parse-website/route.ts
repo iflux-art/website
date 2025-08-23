@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { parseWebsite } from '@/features/website-parser';
-import { createApiSuccess, ApiErrors, isValidUrl } from '@/lib/api-utils';
+import { ApiErrors, createApiSuccess, isValidUrl } from '@/lib/api-utils';
 import { withPublicApi } from '@/lib/api-middleware';
 
 async function handleParseWebsite(request: NextRequest) {

@@ -2,35 +2,68 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { BookOpen, FileText, Globe, Heart, Sparkles, Zap, Target } from 'lucide-react';
+import { Sparkles, Target, Zap } from 'lucide-react';
 import { SITE_METADATA } from '@/config/metadata';
 import { useSiteStats } from '@/features/home/hooks/use-site-stats';
 import { AnimatedNumber } from '@/features/home/components/animated-number';
 
-export function HeroSection() {
+// 背景装饰组件
+const BackgroundDecorations = () => (
+  <>
+    <div className="bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
+    <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-20 blur-3xl" />
+    <div
+      className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
+      style={{ animationDelay: '0s', animationDuration: '3s' }}
+    />
+    <div
+      className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
+      style={{ animationDelay: '1s', animationDuration: '4s' }}
+    />
+    <div
+      className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
+      style={{ animationDelay: '2s', animationDuration: '5s' }}
+    />
+  </>
+);
+
+// 统计卡片组件
+interface StatCardProps {
+  label: string;
+  value: number;
+  loading: boolean;
+}
+
+const StatCard = ({ label, value, loading }: StatCardProps) => (
+  <div className="group text-center">
+    <div className="mb-2 text-3xl font-bold text-primary lg:text-4xl">
+      {loading ? (
+        <div className="mx-auto h-8 w-12 animate-pulse rounded bg-muted" />
+      ) : (
+        <AnimatedNumber value={value} suffix="+" />
+      )}
+    </div>
+    <div className="text-sm font-medium text-muted-foreground lg:text-base">{label}</div>
+  </div>
+);
+
+export const HeroSection = () => {
   const { blogCount, docCount, linkCount, friendCount, loading } = useSiteStats();
 
+  // 统计数据数组
+  const statsData = [
+    { label: '文章', value: blogCount },
+    { label: '技术文档', value: docCount },
+    { label: '实用导航', value: linkCount },
+    { label: '友情链接', value: friendCount },
+  ];
+
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
+    <section className="relative flex h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
       {/* 背景装饰 */}
-      <div className="bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
-      <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-20 blur-3xl" />
+      <BackgroundDecorations />
 
-      {/* 浮动装饰元素 */}
-      <div
-        className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
-        style={{ animationDelay: '0s', animationDuration: '3s' }}
-      />
-      <div
-        className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
-        style={{ animationDelay: '1s', animationDuration: '4s' }}
-      />
-      <div
-        className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
-        style={{ animationDelay: '2s', animationDuration: '5s' }}
-      />
-
-      <div className="relative container mx-auto px-4 py-24">
+      <div className="relative container mx-auto px-4 py-24 pt-32">
         <div className="mx-auto max-w-5xl text-center">
           {/* 标题区域 */}
           <div className="mb-12">
@@ -71,54 +104,12 @@ export function HeroSection() {
 
           {/* 实时统计数据 */}
           <div className="grid grid-cols-4">
-            {[
-              {
-                label: '文章',
-                value: blogCount,
-                icon: FileText,
-                color: 'text-blue-600 dark:text-blue-400',
-                bgColor: 'bg-blue-500/10',
-              },
-              {
-                label: '技术文档',
-                value: docCount,
-                icon: BookOpen,
-                color: 'text-purple-600 dark:text-purple-400',
-                bgColor: 'bg-purple-500/10',
-              },
-              {
-                label: '实用导航',
-                value: linkCount,
-                icon: Globe,
-                color: 'text-green-600 dark:text-green-400',
-                bgColor: 'bg-green-500/10',
-              },
-              {
-                label: '友情链接',
-                value: friendCount,
-                icon: Heart,
-                color: 'text-rose-600 dark:text-rose-400',
-                bgColor: 'bg-rose-500/10',
-              },
-            ].map((stat, index) => {
-              return (
-                <div key={index} className="group text-center">
-                  <div className="mb-2 text-3xl font-bold text-primary lg:text-4xl">
-                    {loading ? (
-                      <div className="mx-auto h-8 w-12 animate-pulse rounded bg-muted" />
-                    ) : (
-                      <AnimatedNumber value={stat.value} suffix="+" />
-                    )}
-                  </div>
-                  <div className="text-sm font-medium text-muted-foreground lg:text-base">
-                    {stat.label}
-                  </div>
-                </div>
-              );
-            })}
+            {statsData.map(stat => (
+              <StatCard key={stat.label} label={stat.label} value={stat.value} loading={loading} />
+            ))}
           </div>
         </div>
       </div>
     </section>
   );
-}
+};

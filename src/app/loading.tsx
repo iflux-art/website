@@ -5,7 +5,7 @@ import { ThreeColumnGrid } from '@/features/layout';
  * 根据 Next.js App Router 约定，作为全局路由加载状态
  * 保持与正常状态一致的布局和间距规范
  */
-export default function Loading() {
+const Loading = () => {
   // 左侧边栏骨架
   const leftSidebarSkeleton = {
     position: 'left' as const,
@@ -54,4 +54,6 @@ export default function Loading() {
       </ThreeColumnGrid>
     </div>
   );
-}
+};
+
+export default Loading;

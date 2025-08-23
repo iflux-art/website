@@ -10,19 +10,13 @@ export const metadata: Metadata = generateSEOMetadata({
   noFollow: true,
 });
 
-export default function AdminPage() {
-  return (
-    <PageContainer config={{ layout: 'full-width' }}>
-      <div>
-        {/* 页面标题 */}
-        <div className="mb-8 text-center">
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight lg:text-5xl">管理后台</h1>
-          <p className="text-lg text-muted-foreground">网站内容管理和配置</p>
-        </div>
+const AdminPage = () => (
+  <PageContainer config={{ layout: 'full-width' }}>
+    <div>
+      {/* 管理内容 */}
+      <LinksAdminPage />
+    </div>
+  </PageContainer>
+);
 
-        {/* 管理内容 */}
-        <LinksAdminPage />
-      </div>
-    </PageContainer>
-  );
-}
+export default AdminPage;

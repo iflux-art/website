@@ -59,7 +59,7 @@ export async function performSearch(
 /**
  * 搜索建议
  */
-export async function getSearchSuggestions(query: string, _limit: number = 5): Promise<string[]> {
+export async function getSearchSuggestions(query: string, _limit = 5): Promise<string[]> {
   if (!query.trim() || query.length < 2) {
     return [];
   }

@@ -67,7 +67,7 @@ export interface NavItemProps extends BaseNavItemProps {
  * <NavItem href="/home" label="首页" isActive={true} />
  * ```
  */
-export function NavItem({
+export const NavItem = ({
   href,
   label,
   isActive = false,
@@ -76,7 +76,7 @@ export function NavItem({
   animated = true,
   animationDelay = 0,
   underline = true,
-}: NavItemProps) {
+}: NavItemProps) => {
   // 组合所有样式类名
   const linkClasses = cn(
     'py-2 px-3 rounded-lg',
@@ -94,7 +94,7 @@ export function NavItem({
       {label}
     </Link>
   );
-}
+};
 
 /**
  * 导航项列表组件属性
@@ -159,7 +159,7 @@ export interface NavItemListProps {
  * />
  * ```
  */
-export function NavItemList({
+export const NavItemList = ({
   items,
   activePath,
   className,
@@ -167,7 +167,7 @@ export function NavItemList({
   animated = true,
   horizontal = true,
   underline = true,
-}: NavItemListProps) {
+}: NavItemListProps) => {
   // 检查导航项是否激活
   const isActive = (href: string) => {
     if (!activePath) return false;
@@ -191,4 +191,4 @@ export function NavItemList({
       ))}
     </ul>
   );
-}
+};

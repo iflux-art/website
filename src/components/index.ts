@@ -10,6 +10,9 @@ export * from './mdx';
 // ==================== 主题提供者 ====================
 export * from './theme-provider';
 
+// ==================== 全局功能组件 ====================
+export * from './global-context-menu';
+
 // ==================== UI 组件库 ====================
 export * from './ui/alert';
 export * from './ui/alert-dialog';
@@ -19,6 +22,7 @@ export * from './ui/badge';
 export * from './ui/button';
 export * from './ui/card';
 export * from './ui/collapsible';
+export * from './ui/context-menu';
 export * from './ui/dialog';
 export * from './ui/dropdown-menu';
 export * from './ui/input';

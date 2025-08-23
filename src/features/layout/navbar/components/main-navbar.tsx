@@ -7,7 +7,7 @@ import { ThemeToggle } from '@/features/layout/components';
 import { SearchButton } from '@/features/search';
 import { HamburgerMenu } from './hamburger-menu';
 
-export function MainNavbar({ className = '' }: { className?: string }) {
+export const MainNavbar = ({ className = '' }: { className?: string }) => {
   const { pageTitle, showTitle, scrollToTop, shouldShowPageTitle, showNavMenu } = useNavbarScroll();
 
   return (
@@ -47,4 +47,4 @@ export function MainNavbar({ className = '' }: { className?: string }) {
       </div>
     </nav>
   );
-}
+};

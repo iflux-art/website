@@ -1,10 +1,10 @@
 'use client';
 
-import { PageContainer, AppGrid } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/features/layout';
 import { LinkCard } from '@/features/links/components';
 import { TwikooComment } from '@/features/comment';
 import { FriendLinkApplication } from './friend-link-application';
-import { processFriendsData, hasFriendsData, DEFAULT_FRIENDS_CONFIG } from '../lib';
+import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from '../lib';
 import type { LinksItem } from '@/features/links/types';
 import type { FriendsPageConfig } from '../types';
 
@@ -23,11 +23,11 @@ interface FriendsPageContainerProps {
  * 整合友链列表展示、申请表单和评论功能的完整页面组件。
  * 从原始 friends 页面中提取的业务逻辑，遵循项目架构分离原则。
  */
-export function FriendsPageContainer({
+export const FriendsPageContainer = ({
   friendsData,
   config: partialConfig = {},
   className = '',
-}: FriendsPageContainerProps) {
+}: FriendsPageContainerProps) => {
   // 合并配置
   const config: FriendsPageConfig = {
     ...DEFAULT_FRIENDS_CONFIG,
@@ -75,7 +75,7 @@ export function FriendsPageContainer({
               href={item.url}
               icon={item.icon}
               iconType={item.iconType}
-              isExternal={true}
+              isExternal
               className="h-full"
             />
           ))}
@@ -93,4 +93,4 @@ export function FriendsPageContainer({
       </div>
     </PageContainer>
   );
-}
+};

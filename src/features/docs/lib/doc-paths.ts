@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getAllDocsStructure } from '@/features/docs/components';
-import type { SidebarItem, NavDocItem } from '@/features/docs/types';
+import type { NavDocItem, SidebarItem } from '@/features/docs/types';
 import { getDocSidebar } from './index';
 
 interface ScanOptions {
@@ -16,7 +16,7 @@ const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
 const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
 
 let docsStructureCache: { slug: string[] }[] | null = null;
-let cacheTimestamp: number = 0;
+let cacheTimestamp = 0;
 
 const performanceMetrics = {
   pathGenerationTime: 0,
@@ -128,13 +128,95 @@ export const generateDocPaths = (): { slug: string[] }[] => {
   performanceMetrics.totalPaths = paths.length;
 
   if (process.env.NODE_ENV === 'development') {
-    console.debug(
+    console.warn(
       `Generated ${paths.length} doc paths in ${performanceMetrics.pathGenerationTime}ms`
     );
   }
 
   return paths;
 };
+
+/**
+ * 检查是否为有效的导航项
+ */
+function isValidNavigationItem(item: SidebarItem): boolean {
+  return item.type !== 'separator' && !item.isExternal && !!item.href;
+}
+
+/**
+ * 标准化路径
+ */
+function normalizeItemPath(item: SidebarItem, topLevelCategory: string): string {
+  let itemPath = item.href;
+  if (!itemPath) {
+    return '';
+  }
+  if (!itemPath.startsWith('/docs/')) {
+    // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
+    itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
+  }
+  return itemPath.replace(/\\/g, '/');
+}
+
+/**
+ * 检查是否为index页面
+ */
+function isIndexPage(itemPath: string): boolean {
+  return itemPath.endsWith('/index');
+}
+
+/**
+ * 处理单个导航项
+ */
+function processNavigationItem(
+  item: SidebarItem,
+  topLevelCategory: string,
+  flatList: NavDocItem[]
+): void {
+  if (!isValidNavigationItem(item)) {
+    // Skip separators, external links, or items without href for navigation list
+    // However, if a menu item (category) has an href, it might be a link to its own overview page (not index.mdx)
+    // and its children should still be processed.
+    if (item.items && item.items.length > 0) {
+      recurseNavigationItems(item.items, topLevelCategory, flatList);
+    }
+    return;
+  }
+
+  // Process page items and menu items that are also pages
+  if (item.type === 'page' || (item.type === 'menu' && item.href)) {
+    const itemPath = normalizeItemPath(item, topLevelCategory);
+
+    // Ensure it's not an accidental link to an index page that should be hidden from prev/next
+    // (getDocDirectoryStructure already filters index.mdx from items for sidebar)
+    // This check might be redundant if getDocDirectoryStructure is perfect.
+    if (!isIndexPage(itemPath)) {
+      flatList.push({ title: item.title, path: itemPath });
+    }
+  }
+
+  // Recursively process children of a menu
+  if (item.items && item.items.length > 0 && item.type === 'menu') {
+    recurseNavigationItems(item.items, topLevelCategory, flatList);
+  }
+}
+
+/**
+ * 递归处理导航项列表
+ */
+function recurseNavigationItems(
+  items: SidebarItem[],
+  topLevelCategory: string,
+  flatList: NavDocItem[]
+): void {
+  if (!items || !Array.isArray(items)) {
+    return;
+  }
+
+  for (const item of items) {
+    processNavigationItem(item, topLevelCategory, flatList);
+  }
+}
 
 /**
  * 获取扁平化的文档顺序
@@ -145,47 +227,6 @@ export function getFlattenedDocsOrder(topLevelCategory: string): NavDocItem[] {
   const sidebarItems = getDocSidebar(topLevelCategory);
   const flatList: NavDocItem[] = [];
 
-  function recurse(items: SidebarItem[]) {
-    if (!items || !Array.isArray(items)) {
-      return;
-    }
-    for (const item of items) {
-      if (item.type === 'separator' || item.isExternal || !item.href) {
-        // Skip separators, external links, or items without href for navigation list
-        // However, if a menu item (category) has an href, it might be a link to its own overview page (not index.mdx)
-        // and its children should still be processed.
-        if (item.items && item.items.length > 0) {
-          recurse(item.items);
-        }
-        continue;
-      }
-
-      // Process page items and menu items that are also pages
-      if (item.type === 'page' || (item.type === 'menu' && item.href)) {
-        // Ensure path starts with /docs/ and normalize
-        let itemPath = item.href;
-        if (!itemPath.startsWith('/docs/')) {
-          // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
-          itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
-        }
-        itemPath = itemPath.replace(/\\/g, '/');
-
-        // Ensure it's not an accidental link to an index page that should be hidden from prev/next
-        // (getDocDirectoryStructure already filters index.mdx from items for sidebar)
-        // This check might be redundant if getDocDirectoryStructure is perfect.
-        if (!itemPath.endsWith('/index')) {
-          // A simple check, might need refinement
-          flatList.push({ title: item.title, path: itemPath });
-        }
-      }
-
-      // Recursively process children of a menu
-      if (item.items && item.items.length > 0 && item.type === 'menu') {
-        recurse(item.items);
-      }
-    }
-  }
-
-  recurse(sidebarItems);
+  recurseNavigationItems(sidebarItems, topLevelCategory, flatList);
   return flatList;
 }

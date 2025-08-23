@@ -1,13 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import type { SidebarWrapperProps } from '../types/page-container';
-import { getResponsiveClasses, DEFAULT_SIDEBAR_CONFIG } from '../lib/page-container-utils';
+import { DEFAULT_SIDEBAR_CONFIG, getResponsiveClasses } from '../lib/page-container-utils';
 
 /**
  * 侧边栏包装组件
  * 处理粘性定位和响应式显示
  */
-export function SidebarWrapper({ children, config }: SidebarWrapperProps) {
+export const SidebarWrapper = ({ children, config }: SidebarWrapperProps) => {
   const {
     sticky = DEFAULT_SIDEBAR_CONFIG.sticky,
     stickyTop = DEFAULT_SIDEBAR_CONFIG.stickyTop,
@@ -41,4 +41,4 @@ export function SidebarWrapper({ children, config }: SidebarWrapperProps) {
       <div className="space-y-4">{children}</div>
     </aside>
   );
-}
+};

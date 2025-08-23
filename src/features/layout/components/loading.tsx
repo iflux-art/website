@@ -21,11 +21,11 @@ interface LoadingProps {
  * 通用的页面加载组件
  * 提供渐进式加载进度条和可自定义的样式
  */
-export function Loading({
+export const Loading = ({
   className = '',
   variant = 'primary',
   showProgress = false,
-}: LoadingProps) {
+}: LoadingProps) => {
   const [progress, setProgress] = useState(0);
   const [opacity, setOpacity] = useState(0.8);
 
@@ -92,6 +92,6 @@ export function Loading({
       )}
     </div>
   );
-}
+};
 
 export default Loading;

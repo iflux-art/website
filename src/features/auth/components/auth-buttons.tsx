@@ -1,8 +1,8 @@
 'use client';
 
-import { useUser, SignOutButton } from '@clerk/nextjs';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
-import { User, Settings, LogOut } from 'lucide-react';
+import { LogOut, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import {
   DropdownMenu,

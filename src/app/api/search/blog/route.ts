@@ -1,5 +1,4 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
@@ -75,7 +74,7 @@ export async function GET(request: NextRequest) {
       .map(post => ({
         title: post.title,
         path: post.url,
-        excerpt: post.description || post.content.slice(0, 160) + '...',
+        excerpt: post.description || `${post.content.slice(0, 160)}...`,
       }));
 
     return NextResponse.json(searchResults);

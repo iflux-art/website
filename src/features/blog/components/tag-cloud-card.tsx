@@ -31,17 +31,18 @@ export interface TagCloudCardProps {
  * 1. 直接使用并传递onTagClick回调
  * 2. 设置useDefaultRouting=true使用默认路由处理
  */
-export function TagCloudCard({
+export const TagCloudCard = ({
   allTags = [],
   selectedTag,
   onTagClick,
   className,
   useDefaultRouting = false,
-}: TagCloudCardProps) {
+}: TagCloudCardProps) => {
   const router = useRouter();
-  const sortedTags = React.useMemo(() => {
-    return [...(allTags || [])].sort((a, b) => b.count - a.count);
-  }, [allTags]);
+  const sortedTags = React.useMemo(
+    () => [...(allTags || [])].sort((a, b) => b.count - a.count),
+    [allTags]
+  );
 
   if (!allTags?.length) return null;
 
@@ -52,13 +53,10 @@ export function TagCloudCard({
       } else {
         router.push(`/blog?tag=${encodeURIComponent(tagName)}`);
       }
+    } else if (selectedTag === tagName) {
+      onTagClick?.(null);
     } else {
-      // 如果点击的是已选中的标签，则取消选中
-      if (selectedTag === tagName) {
-        onTagClick?.(null);
-      } else {
-        onTagClick?.(tagName);
-      }
+      onTagClick?.(tagName);
     }
   };
 
@@ -98,4 +96,4 @@ export function TagCloudCard({
       </CardContent>
     </Card>
   );
-}
+};

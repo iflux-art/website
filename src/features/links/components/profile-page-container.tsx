@@ -1,6 +1,6 @@
 'use client';
 
-import { PageContainer, AppGrid } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/features/layout';
 import { LinkCard } from './link-card';
 import type { LinksItem } from '../types';
 
@@ -17,7 +17,10 @@ interface ProfilePageContainerProps {
  * 处理个人资料（关于我）页面的展示逻辑，
  * 本质上是一个特殊的链接展示页面。
  */
-export function ProfilePageContainer({ profileData, className = '' }: ProfilePageContainerProps) {
+export const ProfilePageContainer = ({
+  profileData,
+  className = '',
+}: ProfilePageContainerProps) => {
   // 处理个人资料数据，转换为 LinksItem 格式
   const profileItems: LinksItem[] = profileData.map(item => {
     const typedItem = item as LinksItem & { iconType?: 'image' | 'text' };
@@ -41,7 +44,7 @@ export function ProfilePageContainer({ profileData, className = '' }: ProfilePag
                 href={item.url}
                 icon={item.icon}
                 iconType={item.iconType}
-                isExternal={true}
+                isExternal
                 className="h-full"
               />
             ))}
@@ -50,4 +53,4 @@ export function ProfilePageContainer({ profileData, className = '' }: ProfilePag
       </div>
     </PageContainer>
   );
-}
+};

@@ -1,10 +1,9 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { resolveDocPath, isRedirectLoop } from '@/features/docs/lib/doc-path-resolver';
-import { ContentDisplay, DocPagination } from '@/features/content';
+import { isRedirectLoop, resolveDocPath } from '@/features/docs/lib/doc-path-resolver';
+import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
 import { DocsSidebarCard } from '@/features/docs/components';
-import { TableOfContentsCard } from '@/features/content';
 import { ThreeColumnLayout } from '@/features/layout';
 import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
 import { TwikooComment } from '@/features/comment';
@@ -19,7 +18,7 @@ interface DocPageContainerProps {
  * 文档页面容器组件
  * 负责处理文档内容的获取、渲染和布局
  */
-export function DocPageContainer({ slug }: DocPageContainerProps) {
+export const DocPageContainer = ({ slug }: DocPageContainerProps) => {
   // 路径解析和重定向处理
   const pathResolution = resolveDocPath(slug);
 
@@ -71,4 +70,4 @@ export function DocPageContainer({ slug }: DocPageContainerProps) {
       </ThreeColumnLayout>
     </div>
   );
-}
+};

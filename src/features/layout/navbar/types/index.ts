@@ -2,7 +2,7 @@
  * 导航和搜索相关类型定义
  */
 
-import type { ReactNode, ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import type { URL } from '@/types';
 
 /** 基础导航项 */

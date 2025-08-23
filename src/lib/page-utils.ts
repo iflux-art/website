@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { PageMetadataOptions, PageLayoutType, PageContainerConfig } from '@/types/page-types';
+import type { PageContainerConfig, PageLayoutType, PageMetadataOptions } from '@/types/page-types';
 import type { BreadcrumbItem } from '@/types/content-types';
 
 /**
@@ -26,7 +26,7 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
     openGraph: {
       title,
       description,
-      type: type as any,
+      type: type as 'website' | 'article',
       url,
       images: image ? [{ url: image }] : undefined,
       publishedTime,
@@ -78,7 +78,7 @@ export function getContainerClassName(config: PageContainerConfig = {}): string 
  */
 export function generateBreadcrumbs(
   segments: string[],
-  basePath: string = '',
+  basePath = '',
   customLabels: Record<string, string> = {}
 ): BreadcrumbItem[] {
   const breadcrumbs: BreadcrumbItem[] = [
@@ -120,28 +120,28 @@ export function formatSegmentLabel(segment: string): string {
 /**
  * 获取页面标题
  */
-export function getPageTitle(title: string, siteName: string = ''): string {
+export function getPageTitle(title: string, siteName = ''): string {
   return siteName ? `${title} - ${siteName}` : title;
 }
 
 /**
  * 检查是否为移动端设备（服务端安全）
  */
-export function isMobileUserAgent(userAgent: string = ''): boolean {
+export function isMobileUserAgent(userAgent = ''): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 }
 
 /**
  * 生成页面级的loading状态文本
  */
-export function getLoadingText(type: string = '内容'): string {
+export function getLoadingText(type = '内容'): string {
   return `正在加载${type}...`;
 }
 
 /**
  * 生成页面级的错误文本
  */
-export function getErrorText(type: string = '内容', action: string = '加载'): string {
+export function getErrorText(type = '内容', action = '加载'): string {
   return `${action}${type}失败，请稍后重试`;
 }
 
@@ -171,7 +171,7 @@ export function createPageUrl(baseUrl: string, ...segments: (string | number)[])
  * 验证页面参数
  */
 export function validatePageParams(
-  params: Record<string, any>,
+  params: Record<string, unknown>,
   requiredFields: string[] = []
 ): { isValid: boolean; missingFields: string[] } {
   const missingFields = requiredFields.filter(

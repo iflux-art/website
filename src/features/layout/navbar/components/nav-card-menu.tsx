@@ -3,16 +3,16 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import {
-  NAV_ITEMS,
-  NAV_DESCRIPTIONS,
-  NAV_PATHS,
   ADMIN_MENU_ITEMS,
+  NAV_DESCRIPTIONS,
+  NAV_ITEMS,
+  NAV_PATHS,
 } from '@/features/layout/navbar/nav-config';
 import { useUser } from '@clerk/nextjs';
 import { useActiveSection } from '@/features/layout/navbar/hooks/use-active-section';
 import type { LucideIcon } from 'lucide-react';
 
-type NavProps = {
+interface NavProps {
   /**
    * 点击后的回调函数（用于关闭移动菜单）
    */
@@ -22,9 +22,9 @@ type NavProps = {
    * 自定义类名
    */
   className?: string;
-};
+}
 
-function NavCards({ onClose, className }: NavProps) {
+const NavCards = ({ onClose, className }: NavProps) => {
   const isActiveSection = useActiveSection(NAV_ITEMS.map(item => item.key));
 
   return (
@@ -57,9 +57,9 @@ function NavCards({ onClose, className }: NavProps) {
       </div>
     </div>
   );
-}
+};
 
-function AdminMenu({ onClose }: NavProps) {
+const AdminMenu = ({ onClose }: NavProps) => {
   const isActiveSection = useActiveSection(ADMIN_MENU_ITEMS.map(item => item.key));
 
   return (
@@ -95,9 +95,9 @@ function AdminMenu({ onClose }: NavProps) {
       </div>
     </div>
   );
-}
+};
 
-export function NavCardMenu({ onClose, className }: NavProps) {
+export const NavCardMenu = ({ onClose, className }: NavProps) => {
   const { isSignedIn } = useUser();
 
   return (
@@ -106,4 +106,4 @@ export function NavCardMenu({ onClose, className }: NavProps) {
       {isSignedIn && <AdminMenu onClose={onClose} />}
     </div>
   );
-}
+};

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCategories } from './use-categories';
 import { useFilterState } from './use-filter-state';
 import type { LinksItem } from '@/features/links/types';
@@ -31,14 +31,13 @@ export function useLinksData() {
   }, []);
 
   // 过滤掉友链和个人主页分类的数据 - 性能优化使用 useMemo
-  const filteredItems = useMemo(() => {
-    return items.filter(item => item.category !== 'friends' && item.category !== 'profile');
-  }, [items]);
+  const filteredItems = useMemo(
+    () => items.filter(item => item.category !== 'friends' && item.category !== 'profile'),
+    [items]
+  );
 
   // 使用共享的分类过滤函数
-  const filteredCategories = useMemo(() => {
-    return getFilteredCategories();
-  }, [getFilteredCategories]);
+  const filteredCategories = useMemo(() => getFilteredCategories(), [getFilteredCategories]);
 
   // 使用过滤后的数据进行状态管理
   const {
@@ -58,9 +57,7 @@ export function useLinksData() {
   const getCategoryName = getCategoryNameFromHook;
 
   // 计算总数 - 使用 useMemo 缓存计算结果
-  const totalFilteredCount = useMemo(() => {
-    return filteredItems.length;
-  }, [filteredItems]);
+  const totalFilteredCount = useMemo(() => filteredItems.length, [filteredItems]);
 
   return {
     items: filteredItems, // 返回过滤后的数据（用于链接导航页面）

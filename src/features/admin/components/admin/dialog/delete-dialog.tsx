@@ -18,7 +18,7 @@ interface DeleteDialogItem {
   title: string;
 }
 
-export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) {
+export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -65,4 +65,4 @@ export function DeleteDialog({ item, onOpenChange, onSuccess, onError }: DeleteD
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};

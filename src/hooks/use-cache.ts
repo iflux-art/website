@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * LRU 缓存类
@@ -110,6 +110,185 @@ const debouncedUpdateStorage = createSyncDebounce((key: string, value: string) =
 const memoryCache = new LRUCache(100); // 默认最大缓存100项
 
 /**
+ * 从内存缓存获取数据
+ */
+function getFromMemoryCache<T>(fullKey: string, expiry: number): T | null {
+  const memoryCached = memoryCache.get(fullKey) as CacheData<T> | undefined;
+  if (memoryCached && Date.now() - memoryCached.timestamp < expiry) {
+    memoryCached.lastAccessed = Date.now();
+    return memoryCached.data;
+  }
+  return null;
+}
+
+/**
+ * 从本地存储获取数据
+ */
+function getFromLocalStorage<T>(
+  fullKey: string,
+  expiry: number,
+  validator: (data: unknown) => boolean,
+  useMemoryCache: boolean
+): T | null {
+  const stored = localStorage.getItem(fullKey);
+  if (!stored) {
+    return null;
+  }
+
+  try {
+    const cached = JSON.parse(stored) as CacheData<T>;
+    const now = Date.now();
+
+    if (cached && now - cached.timestamp < expiry && validator(cached.data)) {
+      // 更新内存缓存
+      if (useMemoryCache) {
+        memoryCache.set(fullKey, cached);
+      }
+      return cached.data;
+    }
+  } catch {
+    // 忽略解析错误
+  }
+
+  return null;
+}
+
+/**
+ * 缓存获取器配置
+ */
+interface CacheGetterConfig {
+  fullKey: string;
+  expiry: number;
+  useMemoryCache: boolean;
+  useLocalStorage: boolean;
+  validator: (data: unknown) => boolean;
+}
+
+/**
+ * 创建缓存获取函数
+ */
+function createCacheGetter<T>(config: CacheGetterConfig) {
+  const { fullKey, expiry, useMemoryCache, useLocalStorage, validator } = config;
+
+  return (): T | null => {
+    // 检查内存缓存
+    if (useMemoryCache) {
+      const memoryData = getFromMemoryCache<T>(fullKey, expiry);
+      if (memoryData) {
+        return memoryData;
+      }
+    }
+
+    // 检查本地存储缓存
+    if (useLocalStorage) {
+      return getFromLocalStorage<T>(fullKey, expiry, validator, useMemoryCache);
+    }
+
+    return null;
+  };
+}
+
+/**
+ * 缓存保存器配置
+ */
+interface CacheSaverConfig {
+  fullKey: string;
+  useMemoryCache: boolean;
+  useLocalStorage: boolean;
+}
+
+/**
+ * 创建缓存保存函数
+ */
+function createCacheSaver<T>(config: CacheSaverConfig) {
+  const { fullKey, useMemoryCache, useLocalStorage } = config;
+
+  return (data: T) => {
+    const now = Date.now();
+    const cacheData: CacheData<T> = {
+      data,
+      timestamp: now,
+      lastAccessed: now,
+    };
+
+    // 保存到内存缓存
+    if (useMemoryCache) {
+      memoryCache.set(fullKey, cacheData);
+    }
+
+    // 保存到本地存储
+    if (useLocalStorage) {
+      debouncedUpdateStorage(fullKey, JSON.stringify(cacheData));
+    }
+  };
+}
+
+/**
+ * 数据获取器配置
+ */
+interface DataFetcherConfig<T> {
+  fetchFn: () => Promise<T>;
+  validator: (data: unknown) => boolean;
+  saveToCache: (data: T) => void;
+  maxRetries: number;
+  retryDelay: number;
+  setLoading: (loading: boolean) => void;
+  setError: (error: Error | null) => void;
+  setData: (data: T) => void;
+  retryCount: React.MutableRefObject<number>;
+}
+
+/**
+ * 创建数据获取函数
+ */
+function createDataFetcher<T>(config: DataFetcherConfig<T>) {
+  const {
+    fetchFn,
+    validator,
+    saveToCache,
+    maxRetries,
+    retryDelay,
+    setLoading,
+    setError,
+    setData,
+    retryCount,
+  } = config;
+
+  return async (): Promise<T> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await fetchFn();
+
+      if (validator(result)) {
+        setData(result);
+        saveToCache(result);
+        retryCount.current = 0;
+        return result;
+      } else {
+        throw new Error('数据验证失败');
+      }
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error(String(err));
+      setError(error);
+
+      // 重试逻辑
+      if (retryCount.current < maxRetries) {
+        retryCount.current++;
+        setTimeout(() => {
+          void createDataFetcher(config)();
+        }, retryDelay);
+      }
+
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+}
+
+/**
  * 使用数据缓存
  *
  * @param key 缓存键
@@ -135,97 +314,29 @@ export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: Cac
   const initialLoadDone = useRef(false);
   const retryCount = useRef(0);
 
-  // 从缓存获取数据
-  const getFromCache = useCallback((): T | null => {
-    const now = Date.now();
-
-    // 检查内存缓存
-    if (useMemoryCache) {
-      const memoryCached = memoryCache.get(fullKey) as CacheData<T> | undefined;
-      if (memoryCached && now - memoryCached.timestamp < expiry) {
-        memoryCached.lastAccessed = now;
-        return memoryCached.data;
-      }
-    }
-
-    // 检查本地存储缓存
-    if (useLocalStorage) {
-      const stored = localStorage.getItem(fullKey);
-      if (stored) {
-        try {
-          const cached = JSON.parse(stored) as CacheData<T>;
-          if (cached && now - cached.timestamp < expiry && validator(cached.data)) {
-            // 更新内存缓存
-            if (useMemoryCache) {
-              memoryCache.set(fullKey, cached);
-            }
-            return cached.data;
-          }
-        } catch {
-          // 忽略解析错误
-        }
-      }
-    }
-
-    return null;
-  }, [fullKey, expiry, useMemoryCache, useLocalStorage, validator]);
-
-  // 保存数据到缓存
-  const saveToCache = useCallback(
-    (data: T) => {
-      const now = Date.now();
-      const cacheData: CacheData<T> = {
-        data,
-        timestamp: now,
-        lastAccessed: now,
-      };
-
-      // 保存到内存缓存
-      if (useMemoryCache) {
-        memoryCache.set(fullKey, cacheData);
-      }
-
-      // 保存到本地存储
-      if (useLocalStorage) {
-        debouncedUpdateStorage(fullKey, JSON.stringify(cacheData));
-      }
-    },
-    [fullKey, useMemoryCache, useLocalStorage]
-  );
-
-  // 获取数据函数
-  const fetchData = useCallback(async (): Promise<T> => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await fetchFn();
-
-      if (validator(result)) {
-        setData(result);
-        saveToCache(result);
-        retryCount.current = 0;
-        return result;
-      } else {
-        throw new Error('数据验证失败');
-      }
-    } catch (err) {
-      const error = err instanceof Error ? err : new Error(String(err));
-      setError(error);
-
-      // 重试逻辑
-      if (retryCount.current < maxRetries) {
-        retryCount.current++;
-        setTimeout(() => {
-          void fetchData();
-        }, retryDelay);
-      }
-
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchFn, validator, saveToCache, maxRetries, retryDelay]);
+  const getFromCache = createCacheGetter<T>({
+    fullKey,
+    expiry,
+    useMemoryCache,
+    useLocalStorage,
+    validator,
+  });
+  const saveToCache = createCacheSaver<T>({
+    fullKey,
+    useMemoryCache,
+    useLocalStorage,
+  });
+  const fetchData = createDataFetcher({
+    fetchFn,
+    validator,
+    saveToCache,
+    maxRetries,
+    retryDelay,
+    setLoading,
+    setError,
+    setData,
+    retryCount,
+  });
 
   // 刷新数据
   const refetch = useCallback(async () => {

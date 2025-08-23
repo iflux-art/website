@@ -1,13 +1,12 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
+import { type NextRequest, NextResponse } from 'next/server';
+import { type Dirent, promises as fs } from 'fs';
 import path from 'path';
-import type { LinksItem, CategoryId } from '@/features/links/types';
+import type { CategoryId, LinksItem } from '@/features/links/types';
 import {
   addItemToCategory,
-  updateItem,
-  deleteItem,
   checkUrlExists,
+  deleteItem,
+  updateItem,
 } from '@/features/links/lib/categories';
 
 // 定义类型
@@ -26,59 +25,73 @@ interface LinksUpdateBody extends LinksRequestBody {
   id?: string;
 }
 
+/**
+ * 处理根目录下的JSON文件
+ */
+async function processRootFiles(linksDir: string, allItems: LinksItem[]): Promise<void> {
+  const rootFiles = await fs.readdir(linksDir);
+  for (const file of rootFiles) {
+    if (file.endsWith('.json')) {
+      const filePath = path.join(linksDir, file);
+      const data = await fs.readFile(filePath, 'utf8');
+      const items: LinksItem[] = JSON.parse(data) as LinksItem[];
+      allItems.push(...items);
+    }
+  }
+}
+
+/**
+ * 处理单个子目录中的JSON文件
+ */
+async function processSubdirectoryFiles(
+  dir: Dirent,
+  linksDir: string,
+  allItems: LinksItem[]
+): Promise<void> {
+  const dirPath = path.join(linksDir, dir.name);
+  const files = await fs.readdir(dirPath);
+
+  for (const file of files) {
+    if (file.endsWith('.json')) {
+      const filePath = path.join(dirPath, file);
+      const data = await fs.readFile(filePath, 'utf8');
+      const items: LinksItem[] = JSON.parse(data) as LinksItem[];
+
+      // 为每个项目设置正确的分类
+      const categoryName = `${dir.name}/${file.replace('.json', '')}` as CategoryId;
+      items.forEach((item: LinksItem) => {
+        item.category = categoryName;
+      });
+
+      allItems.push(...items);
+    }
+  }
+}
+
+/**
+ * 处理所有子目录
+ */
+async function processSubdirectories(linksDir: string, allItems: LinksItem[]): Promise<void> {
+  const entries = await fs.readdir(linksDir, { withFileTypes: true });
+  const directories = entries.filter(entry => entry.isDirectory());
+
+  for (const dir of directories) {
+    await processSubdirectoryFiles(dir, linksDir, allItems);
+  }
+}
+
 // 获取所有分类文件夹和文件
 async function getAllLinksData(): Promise<LinksItem[]> {
   const linksDir = path.join(process.cwd(), 'src/content/links');
   const allItems: LinksItem[] = [];
 
   try {
-    // Reading from directory
-
     // 读取根目录下的 JSON 文件
-    const rootFiles = await fs.readdir(linksDir);
-    // Root files
-
-    for (const file of rootFiles) {
-      if (file.endsWith('.json')) {
-        // Processing root file
-        const filePath = path.join(linksDir, file);
-        const data = await fs.readFile(filePath, 'utf8');
-        const items: LinksItem[] = JSON.parse(data) as LinksItem[];
-        // Found items
-        allItems.push(...items);
-      }
-    }
+    await processRootFiles(linksDir, allItems);
 
     // 读取子文件夹中的 JSON 文件
-    const entries = await fs.readdir(linksDir, { withFileTypes: true });
-    const directories = entries.filter(entry => entry.isDirectory());
-    // Directories
+    await processSubdirectories(linksDir, allItems);
 
-    for (const dir of directories) {
-      const dirPath = path.join(linksDir, dir.name);
-      const files = await fs.readdir(dirPath);
-      // Files
-
-      for (const file of files) {
-        if (file.endsWith('.json')) {
-          // Processing file
-          const filePath = path.join(dirPath, file);
-          const data = await fs.readFile(filePath, 'utf8');
-          const items: LinksItem[] = JSON.parse(data) as LinksItem[];
-
-          // 为每个项目设置正确的分类
-          const categoryName = `${dir.name}/${file.replace('.json', '')}` as CategoryId;
-          items.forEach((item: LinksItem) => {
-            item.category = categoryName;
-          });
-
-          // Found items
-          allItems.push(...items);
-        }
-      }
-    }
-
-    // Total items found
     return allItems;
   } catch (error) {
     console.error('Error reading links data:', error);
@@ -166,6 +179,54 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// 验证更新请求的函数
+async function validateUpdateRequest(
+  body: LinksUpdateBody,
+  id: string
+): Promise<{ valid: boolean; error?: string }> {
+  const { title, url, category: categoryString } = body;
+  const category = categoryString as CategoryId;
+
+  // 验证必填字段
+  if (!title || !url || !category) {
+    return { valid: false, error: 'Missing required fields' };
+  }
+
+  // 检查URL是否已存在（排除当前项目）
+  const urlExists = await checkUrlExists(url, id);
+  if (urlExists) {
+    return { valid: false, error: 'URL already exists' };
+  }
+
+  return { valid: true };
+}
+
+// 构建更新数据的函数
+function buildUpdateData(body: LinksUpdateBody) {
+  const {
+    title,
+    description,
+    url,
+    icon,
+    iconType,
+    tags,
+    featured,
+    category: categoryString,
+  } = body;
+  const category = categoryString as CategoryId;
+
+  return {
+    title,
+    description: description ?? '',
+    url,
+    icon: icon ?? '',
+    iconType: (iconType ?? 'image') as 'image' | 'text',
+    tags: tags ?? [],
+    featured: featured ?? false,
+    category,
+  };
+}
+
 export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -176,40 +237,18 @@ export async function PUT(request: NextRequest) {
     }
 
     const body: LinksUpdateBody = (await request.json()) as LinksUpdateBody;
-    const {
-      title,
-      description,
-      url,
-      icon,
-      iconType,
-      tags,
-      featured,
-      category: categoryString,
-    } = body;
-    const category = categoryString as CategoryId;
 
-    // 验证必填字段
-    if (!title || !url || !category) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    // 验证请求
+    const validation = await validateUpdateRequest(body, id);
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
-    // 检查URL是否已存在（排除当前项目）
-    const urlExists = await checkUrlExists(url, id);
-    if (urlExists) {
-      return NextResponse.json({ error: 'URL already exists' }, { status: 400 });
-    }
+    // 构建更新数据
+    const updateData = buildUpdateData(body);
 
     // 更新项目
-    const updatedItem = await updateItem(id, {
-      title,
-      description: description ?? '',
-      url,
-      icon: icon ?? '',
-      iconType: (iconType ?? 'image') as 'image' | 'text',
-      tags: tags ?? [],
-      featured: featured ?? false,
-      category,
-    });
+    const updatedItem = await updateItem(id, updateData);
 
     if (!updatedItem) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });

@@ -10,7 +10,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
-import { Plus, Edit, Trash2, ExternalLink } from 'lucide-react';
+import { Edit, ExternalLink, Plus, Trash2 } from 'lucide-react';
 import type { LinksItem } from '@/features/links/types';
 
 // 内联 TableColumn 类型定义
@@ -36,8 +36,8 @@ export const getTableColumns = (
     title: '图标',
     width: '44px', // 更窄
     render: (value, record, _index) => {
-      const icon = record.icon;
-      const iconType = record.iconType;
+      const { icon } = record;
+      const { iconType } = record;
       const isImage = typeof icon === 'string' && /^https?:\/\//.test(icon);
       return (
         <div className="mx-auto flex h-10 w-10 items-center justify-center">

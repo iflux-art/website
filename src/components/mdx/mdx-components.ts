@@ -35,12 +35,10 @@ export const defaultComponentProps = {};
 /**
  * 获取 MDX 组件配置
  */
-export const useMDXComponents = () => {
-  return {
-    components: MDXComponents,
-    defaultProps: defaultComponentProps,
-  };
-};
+export const useMDXComponents = () => ({
+  components: MDXComponents,
+  defaultProps: defaultComponentProps,
+});
 
 /**
  * 兼容旧用法的映射

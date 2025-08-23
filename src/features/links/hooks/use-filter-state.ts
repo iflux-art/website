@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { LinksItem } from '@/features/links/types';
 
 export function useFilterState(items: LinksItem[]) {
