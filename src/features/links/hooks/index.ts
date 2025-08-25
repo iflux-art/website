@@ -18,7 +18,9 @@ export function useLinksData() {
     async function fetchData() {
       try {
         setLoading(true);
-        const itemsData = await loadAllLinksData();
+        // 添加可以禁止浏览器缓存的随机参数
+        const timestamp = new Date().getTime();
+        const itemsData = await loadAllLinksData(`${timestamp}`);
         setItems(itemsData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

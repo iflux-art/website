@@ -123,6 +123,11 @@ const getCacheControl = (pathname: string): string => {
     return `public, max-age=${api}, s-maxage=${api * 2}, stale-while-revalidate=${api * 10}`;
   }
 
+  // 首页需要特殊处理，避免缓存
+  if (pathname === '/' || pathname === '/index' || pathname === '/index.html') {
+    return 'no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate';
+  }
+
   // 主要页面和其他动态路由
   return 'public, max-age=0, must-revalidate';
 };

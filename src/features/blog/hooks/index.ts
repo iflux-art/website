@@ -61,6 +61,9 @@ export function useBlogPosts(): UseBlogPostsResult {
   } = useContentData<BlogPost[]>({
     type: 'blog',
     path: API_PATHS.BLOG.POSTS,
+    disableCache: true, // 禁用缓存，确保获取最新数据
+    params: { cache: 'no-store' }, // 添加参数帮助禁用服务器缓存
+    forceRefresh: true, // 强制刷新，缓存破坏
   });
 
   const sortedPosts = useMemo(() => sortPostsByDate(posts), [posts]);

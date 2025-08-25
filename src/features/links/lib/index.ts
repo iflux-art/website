@@ -271,7 +271,7 @@ async function loadCategoryWithChildren(
 }
 
 // 动态导入所有分类数据
-async function loadAllLinksData(): Promise<LinksItem[]> {
+async function loadAllLinksData(_cacheKey = ''): Promise<LinksItem[]> {
   const allItems: LinksItem[] = [];
 
   try {

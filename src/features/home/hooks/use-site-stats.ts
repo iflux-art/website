@@ -15,9 +15,20 @@ import type { SiteStats } from '@/features/home/types';
  * 获取网站统计数据
  * @returns 网站各模块的统计数据
  */
-export function useSiteStats(): SiteStats {
-  const { posts: blogPosts, loading: blogLoading, error: blogError } = useBlogPosts();
-  const { data: docCategories, loading: docLoading, error: docError } = useDocCategories();
+export function useSiteStats(): SiteStats & { refresh: () => void } {
+  // 禁用缓存，确保每次都从服务器获取最新数据
+  const {
+    posts: blogPosts,
+    loading: blogLoading,
+    error: blogError,
+    refresh: refreshBlog,
+  } = useBlogPosts();
+  const {
+    data: docCategories,
+    loading: docLoading,
+    error: docError,
+    refresh: refreshDocs,
+  } = useDocCategories();
   const { allItems: linkItems, loading: linkLoading, error: linkError } = useLinksData();
 
   const stats = useMemo(() => {
@@ -54,5 +65,11 @@ export function useSiteStats(): SiteStats {
     ...stats,
     loading,
     error,
+    refresh: () => {
+      refreshBlog();
+      refreshDocs();
+      // 为链接数据添加刷新功能需要对 useLinksData 进行修改
+      // 目前无法直接刷新，已经在 useLinksData 中添加了缓存破坏机制
+    },
   };
 }

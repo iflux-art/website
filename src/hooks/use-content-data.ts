@@ -76,6 +76,7 @@ export function useContentData<T>({
   disableCache = false,
   params,
   headers,
+  forceRefresh = false, // 新增强制刷新参数
 }: ContentLoadOptions): HookResult<T> {
   const pathname = usePathname();
 
@@ -89,7 +90,11 @@ export function useContentData<T>({
       throw new Error('URL or path is required');
     }
 
-    const requestKey = `${apiUrl}:${JSON.stringify(params)}`;
+    // 添加时间戳来防止缓存
+    const cacheBuster = forceRefresh ? `?_t=${Date.now()}` : '';
+    const finalUrl = `${apiUrl}${cacheBuster}`;
+
+    const requestKey = `${finalUrl}:${JSON.stringify(params)}`;
 
     // 检查是否有相同请求正在进行
     if (pendingRequests.has(requestKey)) {
@@ -98,13 +103,27 @@ export function useContentData<T>({
 
     const request = (async () => {
       try {
-        const response = await fetch(apiUrl, {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(headers ?? {}),
-          },
+        // 添加缓存控制头来防止服务器缓存
+        const headerOptions: Record<string, string> = {
+          'Content-Type': 'application/json',
+          ...(headers ?? {}),
+        };
+
+        // 有条件地添加缓存控制头
+        if (forceRefresh) {
+          headerOptions['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+          headerOptions.Pragma = 'no-cache';
+          headerOptions.Expires = '0';
+        }
+
+        const fetchOptions = {
+          headers: headerOptions,
+          cache: forceRefresh || disableCache ? ('no-store' as RequestCache) : undefined,
+          next: { revalidate: forceRefresh || disableCache ? 0 : undefined },
           ...(params ?? {}),
-        });
+        };
+
+        const response = await fetch(finalUrl, fetchOptions);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -126,8 +145,9 @@ export function useContentData<T>({
   };
 
   const { data, error, loading, refetch } = useCache<T>(getCacheKey(), fetchData, {
-    expiry: disableCache ? 0 : cacheTime,
-    useMemoryCache: true,
+    expiry: disableCache || forceRefresh ? 0 : cacheTime,
+    useMemoryCache: !forceRefresh && !disableCache,
+    useLocalStorage: !forceRefresh && !disableCache,
   });
 
   return {

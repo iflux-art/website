@@ -18,6 +18,9 @@ export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
     type: 'docs',
     path: API_PATHS.CONTENT.DOC_CATEGORIES,
+    disableCache: true, // 禁用缓存，确保获取最新数据
+    params: { cache: 'no-store' }, // 添加参数帮助禁用服务器缓存
+    forceRefresh: true, // 强制刷新，缓存破坏
   });
 }
 

@@ -103,10 +103,17 @@ export const HeroSection = () => {
           </div>
 
           {/* 实时统计数据 */}
-          <div className="grid grid-cols-4">
-            {statsData.map(stat => (
-              <StatCard key={stat.label} label={stat.label} value={stat.value} loading={loading} />
-            ))}
+          <div className="space-y-4">
+            <div className="grid grid-cols-4">
+              {statsData.map(stat => (
+                <StatCard
+                  key={stat.label}
+                  label={stat.label}
+                  value={stat.value}
+                  loading={loading}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
