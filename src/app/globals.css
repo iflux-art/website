@@ -1,9 +1,6 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
-/* 响应式设计系统样式 */
-@import '../styles/responsive.css';
-
 /* Typography 使用 @tailwindcss/typography 插件提供 */
 
 @custom-variant dark (&:is(.dark *));

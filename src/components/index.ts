@@ -8,10 +8,13 @@
 export * from './mdx';
 
 // ==================== 主题提供者 ====================
-export * from './theme-provider';
+export * from './theme/theme-provider';
 
 // ==================== 全局功能组件 ====================
 export * from './global-context-menu';
+
+// ==================== 业务按钮组件 ====================
+export * from './button';
 
 // ==================== UI 组件库 ====================
 export * from './ui/alert';

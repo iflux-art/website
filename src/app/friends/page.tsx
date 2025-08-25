@@ -1,9 +1,9 @@
-import { AppGrid, PageContainer } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/components/layout';
 import { LinkCard } from '@/features/links/components';
 import { TwikooComment } from '@/features/comment';
 import { FriendLinkApplication } from '@/features/friends/components';
 import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from '@/features/friends/lib';
-import { generateSEOMetadata } from '@/lib/seo-utils';
+import { generateSEOMetadata } from '@/lib/metadata/seo-utils';
 import type { Metadata } from 'next';
 import type { LinksItem } from '@/features/links/types';
 import friendsData from '@/content/links/friends.json';

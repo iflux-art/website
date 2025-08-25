@@ -1,6 +1,6 @@
 'use client';
 
-import { AppGrid, PageContainer } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/components/layout';
 import { LinkCard } from './link-card';
 import type { LinksItem } from '../types';
 

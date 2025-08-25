@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRightLeft, FileText } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // 相关文章类型定义

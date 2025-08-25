@@ -2,10 +2,10 @@
  * 文档类型定义 - 优化合并版
  */
 
-import type { Heading } from '@/types/content-types';
+import type { Heading } from '@/types';
 
 // ================= 文档内容相关类型 =================
-// 注意：Heading 类型已移动到 @/types/content-types
+// 注意：Heading 类型已移动到 @/features/content/types
 
 /** 文档分类 */
 export interface DocCategory {

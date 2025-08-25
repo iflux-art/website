@@ -6,9 +6,9 @@
 'use client';
 
 import { useMemo } from 'react';
-import { type HookResult, useContentData } from '@/hooks/use-content-data';
-import { API_PATHS } from '@/config/metadata';
-import type { BlogPost } from '@/features/blog/types';
+import { type HookResult, useContentData } from '../../../hooks/use-content-data';
+import { API_PATHS } from '@/lib/api/api-paths';
+import type { BlogPost, CategoryWithCount } from '@/features/blog/types';
 
 export interface TagCount {
   tag: string;
@@ -19,11 +19,7 @@ export interface TagCount {
 export interface BlogResult<T> extends HookResult<T> {
   loading: boolean;
   error: Error | null;
-}
-
-export interface CategoryWithCount {
-  name: string;
-  count: number;
+  refresh: () => Promise<void>;
 }
 
 export interface UseBlogPostsResult extends BlogResult<BlogPost[]> {
@@ -31,6 +27,9 @@ export interface UseBlogPostsResult extends BlogResult<BlogPost[]> {
   postsCount: Record<string, number>;
   categories: CategoryWithCount[];
 }
+
+// 导出 CategoryWithCount 类型供外部使用
+export type { CategoryWithCount };
 
 export interface UseTimelinePostsResult extends BlogResult<Record<string, BlogPost[]>> {
   postsByYear: Record<string, BlogPost[]>;
@@ -101,7 +100,7 @@ export function useBlogPosts(): UseBlogPostsResult {
   const loading = dataLoading || isComputing;
 
   return {
-    data: sortedPosts,
+    data: sortedPosts ?? [],
     posts: sortedPosts ?? [],
     loading,
     error,
@@ -126,10 +125,10 @@ export function useTagCounts(): HookResult<TagCount[]> {
     if (!data) return [];
     const countsArray = Object.entries(data).map(([tag, count]) => ({
       tag,
-      count,
+      count: count as number,
     }));
 
-    return countsArray.sort((a, b) => b.count - a.count);
+    return countsArray.sort((a, b) => (b.count as number) - (a.count as number));
   }, [data]);
 
   return {
@@ -152,7 +151,7 @@ export function useTimelinePosts(): UseTimelinePostsResult {
   });
 
   return {
-    data,
+    data: data ?? {},
     postsByYear: data ?? {},
     loading,
     error,

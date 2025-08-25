@@ -19,7 +19,7 @@ import { AlertCircle, CheckCircle, Loader2, Plus, X } from 'lucide-react';
 import { useCategories } from '@/features/links/hooks/use-categories';
 import { useWebsiteParser } from '@/features/website-parser/hooks/use-website-parser';
 import type { LinksCategory, LinksFormData } from '@/features/links/types';
-import { isValidUrl } from '@/lib/api-utils';
+import { isValidUrl } from '@/lib/api/api-utils';
 
 // 表单状态管理hook
 function useLinksFormState(initialData?: Partial<LinksFormData>) {

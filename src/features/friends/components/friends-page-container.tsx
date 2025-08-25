@@ -1,6 +1,6 @@
 'use client';
 
-import { AppGrid, PageContainer } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/components/layout';
 import { LinkCard } from '@/features/links/components';
 import { TwikooComment } from '@/features/comment';
 import { FriendLinkApplication } from './friend-link-application';

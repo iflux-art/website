@@ -2,7 +2,8 @@
 
 import React, { useMemo } from 'react';
 import { Folder } from 'lucide-react';
-import { Sidebar, type SidebarItem } from '@/features/layout';
+import { Sidebar } from '@/components/layout/sidebar';
+import type { SidebarItem } from '@/types';
 import type { LinksCategory } from '@/features/links/types';
 
 export interface LinksSidebarProps {

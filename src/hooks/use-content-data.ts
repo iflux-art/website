@@ -18,7 +18,7 @@
 
 import { usePathname } from 'next/navigation';
 import type { BaseCategory, BaseContent } from '@/types';
-import { useCache } from '@/hooks/use-cache';
+import { useCache } from './use-cache';
 
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
 

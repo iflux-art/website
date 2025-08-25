@@ -12,9 +12,9 @@
  * @usage
  * 在 layout.tsx 中使用：
  * ```typescript
- * import { metadata, viewport, splashScreens } from '@/config/metadata';
+ * import { generateMetadata, generateViewport } from '@/config/metadata';
  *
- * export { metadata, viewport };
+ * export { generateMetadata as metadata, generateViewport as viewport };
  * ```
  */
 
@@ -52,7 +52,7 @@ export const SITE_METADATA: SiteMetadata = {
   copyright: `© ${new Date().getFullYear()} iFluxArt · 斐流艺创`,
 };
 export const SITE_AUTHOR = 'iFluxArt Team';
-export const SITE_URL = 'https://iflux.art';
+export const SITE_URL = 'https://www.iflux.art';
 export const SITE_TWITTER = '@ifluxart';
 export const SITE_GITHUB = 'iflux-art';
 export const SITE_EMAIL = 'hello@iflux.art';
@@ -81,18 +81,15 @@ export interface PwaConfig {
   themeColor: string;
   mobileWebAppCapable: string;
 }
+/**
+ * PWA 配置
+ * Progressive Web App 相关配置
+ */
 export const PWA_CONFIG: PwaConfig = {
   manifestPath: '/manifest.json',
   applicationName: 'iFluxArt · 斐流艺创',
   themeColor: '#000000',
   mobileWebAppCapable: 'yes',
-} as const;
-export const pwaConfig = {
-  manifest: PWA_CONFIG.manifestPath,
-  apple: {
-    mobileWebAppCapable: 'yes',
-    applicationName: PWA_CONFIG.applicationName,
-  },
 } as const;
 
 /**
@@ -111,6 +108,10 @@ export interface IosConfig {
     media: string;
   }[];
 }
+/**
+ * iOS 设备配置
+ * 包含iOS设备上的显示和行为配置
+ */
 export const IOS_CONFIG: IosConfig = {
   mobileWebAppCapable: 'yes',
   statusBarStyle: 'black-translucent',
@@ -141,14 +142,6 @@ export const IOS_CONFIG: IosConfig = {
     },
   ],
 } as const;
-export const iosConfig = {
-  appleMobileWebAppCapable: IOS_CONFIG.mobileWebAppCapable === 'yes',
-  appleMobileWebAppStatusBarStyle: IOS_CONFIG.statusBarStyle,
-
-  appleMobileWebAppTitle: IOS_CONFIG.appTitle,
-  touchIcon: IOS_CONFIG.icons.touchIcon,
-  splashScreens: IOS_CONFIG.splashScreens,
-} as const;
 
 /**
  * Windows 设备配置
@@ -163,35 +156,9 @@ export const WINDOWS_CONFIG: WindowsConfig = {
   msapplicationTileImage: '/images/icons/ms-icon-144x144.png',
 } as const;
 
-/**
- * API路径配置
- */
-export const API_PATHS = {
-  BLOG: {
-    POSTS: '/api/blog/posts',
-    TAGS_COUNT: '/api/blog/tags/count',
-    CATEGORIES: '/api/blog/categories',
-    TIMELINE: '/api/blog/timeline',
-  },
-  DOCS: {
-    CATEGORIES: '/api/docs/categories',
-    CATEGORY: (category: string) => `/api/docs/categories/${encodeURIComponent(category)}`,
-    META: (path: string) => `/api/docs/${encodeURIComponent(path)}/meta`,
-    CONTENT: (path: string) => `/api/docs/${encodeURIComponent(path)}`,
-  },
-} as const;
-
 export {
   generateMetadata,
   generateViewport,
   generateArticleMetadata,
   generateProfileMetadata,
 } from '@/lib/metadata';
-export type {
-  PageType,
-  IconConfig,
-  VerificationConfig,
-  JsonLdConfig,
-  SocialConfig,
-  GenerateMetadataOptions,
-} from '@/types';

@@ -8,7 +8,7 @@ import {
   RelatedPostsCard,
   TagCloudCard,
 } from '@/features/blog/components';
-import { ThreeColumnLayout } from '@/features/layout';
+import { ThreeColumnLayout } from '@/components/layout';
 import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
 
 // 由于使用了客户端 hooks，这里不能导出 metadata

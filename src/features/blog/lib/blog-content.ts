@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { extractHeadings } from '@/features/content';
+import { extractHeadings } from '@/utils/helpers';
 import type { BlogFrontmatter } from '@/features/blog/types';
 
 export async function getBlogContent(slug: string[]): Promise<{

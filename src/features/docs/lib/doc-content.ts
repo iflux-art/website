@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { countWords } from './word-count';
 import { getFlattenedDocsOrder } from './doc-paths';
-import { extractHeadings } from '@/features/content';
+import { extractHeadings } from '@/utils/helpers';
 import type { DocContentResult, NavDocItem } from '@/features/docs/types';
 
 const DOCS_CONTENT_DIR = 'src/content/docs';

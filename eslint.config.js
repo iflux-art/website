@@ -132,16 +132,6 @@ export default [
         },
       ],
 
-      // 命名规范
-      camelcase: [
-        'error',
-        {
-          properties: 'never',
-          ignoreDestructuring: false,
-          allow: ['^UNSAFE_'],
-        },
-      ],
-
       // 最佳实践
       eqeqeq: ['error', 'always', { null: 'ignore' }],
       curly: ['error', 'all'],

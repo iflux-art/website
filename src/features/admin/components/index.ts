@@ -3,10 +3,10 @@
  */
 
 // 管理相关组件
-export { AdminLayout } from './admin/admin-layout';
-export { AddDialog } from './admin/dialog/add-dialog';
-export { EditDialog } from './admin/dialog/edit-dialog';
-export { DeleteDialog } from './admin/dialog/delete-dialog';
+export { AdminLayout } from './admin-layout';
+export { AddDialog } from './dialog/add-dialog';
+export { EditDialog } from './dialog/edit-dialog';
+export { DeleteDialog } from './dialog/delete-dialog';
 export { AdminActions } from './admin-actions';
 
 // 页面组件

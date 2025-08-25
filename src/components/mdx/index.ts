@@ -1,4 +1,4 @@
-export { default as ClientMDXRenderer } from './ClientMDXRenderer';
+export { default as ClientMDXRenderer } from './client-mdx-renderer';
 export { MDXComponents } from './mdx-components';
 export { MDXImg } from './mdx-img';
 export { MDXLink } from './mdx-link';

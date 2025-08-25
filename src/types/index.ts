@@ -3,17 +3,45 @@
  * 集中管理所有全局类型定义，便于引用
  */
 
-// ==================== 基础类型 ====================
-export * from './base-types';
+// 内容相关类型
+export type { BaseFrontmatter, BaseContent, BaseCategory, URL } from './content-types';
 
-// ==================== 数据模型类型 ====================
-export * from './data-types';
+// 布局相关类型
+export type {
+  PageLayoutType,
+  PageContainerConfig,
+  SidebarConfig,
+  NotFoundProps,
+  PageProps,
+  PageLayoutProps,
+  AppGridProps,
+  PageContainerProps,
+  ThreeColumnLayoutProps,
+  ThreeColumnGridProps,
+  SidebarWrapperProps,
+  GridColsMap,
+  GridGapMap,
+} from './layout-types';
 
-// ==================== 元数据类型 ====================
-export * from './metadata-types';
+// 导航相关类型
+export type {
+  BreadcrumbItem,
+  Heading,
+  SidebarItem,
+  SidebarProps,
+  BaseNavItem,
+  NestedNavItem,
+  BaseSearchResult,
+  NavbarSearchResult,
+} from './nav-types';
 
-// ==================== 内容类型 ====================
-export * from './content-types';
-
-// ==================== 页面类型 ====================
-export * from './page-types';
+// SEO相关类型
+export type {
+  IconConfig,
+  VerificationConfig,
+  JsonLdConfig,
+  SocialConfig,
+  GenerateMetadataOptions,
+  SiteConfig,
+  SEOPageOptions,
+} from './seo-types';

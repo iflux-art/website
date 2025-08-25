@@ -3,14 +3,23 @@
  * 整合所有通用工具函数，避免重复实现
  */
 
-// ==================== 核心工具函数 ====================
-export * from './helpers'; // 防抖函数等
-export * from './utils'; // cn等样式工具
-export * from './metadata'; // 元数据生成函数
-export * from './page-utils'; // 页面工具函数
-export * from './seo-utils'; // SEO工具函数
-export * from './error-utils'; // 统一错误处理工具
+// ==================== 元数据和SEO工具函数 ====================
+export * from './metadata'; // 基础元数据生成函数和SEO工具函数
 
-// ==================== 兼容性导出 ====================
-// 保持向后兼容
-// website-parser 功能仅被 links 功能使用，保持在 features 目录
+// ==================== API工具函数 ====================
+export * from './api'; // API工具函数、中间件和路径常量
+
+// ==================== 错误处理工具函数 ====================
+export * from './error'; // 统一错误处理工具
+
+// ==================== 布局工具函数 ====================
+// 页面容器和网格布局工具函数（直接从布局模块导入）
+export {
+  getMainContentClasses,
+  getSidebarClasses,
+  DEFAULT_SIDEBAR_CONFIG,
+  THREE_COLUMN_LAYOUT_CONFIG,
+  gridColsMap,
+  gridGapMap,
+} from '@/lib/layout/layout-utils';
+export type { GridColsMap, GridGapMap } from '@/types';

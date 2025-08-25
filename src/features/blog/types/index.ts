@@ -49,6 +49,16 @@ export interface TagCount {
 }
 
 /**
+ * 分类统计
+ */
+export interface CategoryWithCount {
+  /** 分类名称 */
+  name: string;
+  /** 文章数量 */
+  count: number;
+}
+
+/**
  * 博客文章Frontmatter
  */
 export interface BlogFrontmatter {

@@ -8,7 +8,7 @@
 
 import { DocsSidebar } from './docs-sidebar';
 import { useGlobalDocs } from './use-global-docs';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 export interface DocsSidebarWrapperProps {
   /** 当前打开的文档路径 */
@@ -25,30 +25,7 @@ export interface DocsSidebarWrapperProps {
 import { memo } from 'react';
 
 const DocsSidebarWrapperComponent = ({ currentDoc, className }: DocsSidebarWrapperProps) => {
-  const { structure, loading, error } = useGlobalDocs();
-
-  // 加载状态
-  if (loading) {
-    return (
-      <div className={cn('hide-scrollbar', className)}>
-        <div className="space-y-3 p-3">
-          {/* 加载骨架屏 */}
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="space-y-2">
-            {Array.from({ length: 3 }, (_, i) => (
-              <div key={`skeleton-item-${i}`} className="space-y-2">
-                <div className="h-6 animate-pulse rounded bg-muted" />
-                <div className="ml-4 space-y-1">
-                  <div className="h-4 w-3/4 animate-pulse rounded bg-muted/60" />
-                  <div className="h-4 w-1/2 animate-pulse rounded bg-muted/60" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const { structure, error } = useGlobalDocs();
 
   // 错误状态
   if (error) {

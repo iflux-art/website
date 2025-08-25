@@ -1,11 +1,11 @@
 /**
-/**
  * 数据缓存管理 Hook
  */
 
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { debounceSync } from '@/utils';
 
 /**
  * LRU 缓存类
@@ -57,21 +57,6 @@ class LRUCache {
   }
 }
 
-/**
- * 创建同步版本的防抖函数
- * 用于 localStorage 操作等同步场景
- */
-function createSyncDebounce<T extends (...args: never[]) => void>(fn: T, delay: number): T {
-  let timer: NodeJS.Timeout | null = null;
-  return ((...args: Parameters<T>) => {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn(...args);
-      timer = null;
-    }, delay);
-  }) as T;
-}
-
 interface CacheData<T> {
   data: T;
   timestamp: number;
@@ -98,7 +83,7 @@ interface CacheOptions {
 }
 
 // 防抖的缓存更新函数
-const debouncedUpdateStorage = createSyncDebounce((key: string, value: string) => {
+const debouncedUpdateStorage = debounceSync((key: string, value: string) => {
   try {
     localStorage.setItem(key, value);
   } catch {

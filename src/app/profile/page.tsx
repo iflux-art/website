@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SignOutButton, useUser } from '@clerk/nextjs';
-import { PageContainer } from '@/features/layout';
+import { PageContainer } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

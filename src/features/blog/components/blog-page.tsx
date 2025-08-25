@@ -8,7 +8,7 @@ import {
   RelatedPostsCard,
   TagCloudCard,
 } from '@/features/blog/components';
-import { ThreeColumnLayout } from '@/features/layout';
+import { ThreeColumnLayout } from '@/components/layout';
 import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
 
 /**
@@ -22,44 +22,11 @@ export const BlogPageContainer = () => {
     postsCount,
     relatedPosts,
     latestPosts,
-    loading,
     category,
     tag,
     handleCategoryClick,
     handleTagClick,
   } = useBlogPage();
-
-  // 加载状态
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-12 lg:gap-8 lg:pt-8">
-            {/* 左侧边栏 - 加载状态 */}
-            <aside className="hide-scrollbar sticky top-[96px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-3 lg:block">
-              <div className="space-y-4">
-                <div className="h-[200px] animate-pulse rounded-md bg-muted" />
-                <div className="h-[300px] animate-pulse rounded-md bg-muted" />
-              </div>
-            </aside>
-
-            {/* 主内容区 - 加载状态 */}
-            <main className="col-span-1 min-w-0 lg:col-span-6">
-              <div className="h-[600px] animate-pulse rounded-md bg-muted" />
-            </main>
-
-            {/* 右侧边栏 - 加载状态 */}
-            <aside className="hide-scrollbar sticky top-[96px] hidden max-h-[calc(100vh-5rem-env(safe-area-inset-bottom))] overflow-y-auto lg:col-span-3 lg:block">
-              <div className="space-y-4">
-                <div className="h-[200px] animate-pulse rounded-md bg-muted" />
-                <div className="h-[300px] animate-pulse rounded-md bg-muted" />
-              </div>
-            </aside>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // 左侧边栏内容
   const leftSidebar = (

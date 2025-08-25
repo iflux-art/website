@@ -1,16 +1,17 @@
 import { notFound } from 'next/navigation';
 import { createBlogBreadcrumbs, getBlogContent } from '@/features/blog/lib';
-import { ContentDisplay, TableOfContentsCard } from '@/features/content';
+import { ContentDisplay } from '@/features/content-display/components';
+import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
 import {
   BlogCategoryCard,
   LatestPostsCard,
   RelatedPostsCard,
   TagCloudCard,
 } from '@/features/blog/components';
-import { ThreeColumnLayout } from '@/features/layout';
-import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
+import { ThreeColumnLayout } from '@/components/layout';
+import ClientMDXRenderer from '@/components/mdx/client-mdx-renderer';
 import { TwikooComment } from '@/features/comment';
-import { handleContentError } from '@/lib/error-utils';
+import { handleContentError } from '@/lib/error/error-utils';
 
 interface BlogPostPageProps {
   params: Promise<{

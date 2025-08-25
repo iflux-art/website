@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 /**
  * 简化的右键菜单实现
@@ -39,7 +39,7 @@ export const ContextMenu = ({ children }: { children: React.ReactNode }) => {
         document.removeEventListener('contextmenu', handleClickOutside);
       };
     }
-    
+
     return undefined;
   }, [state.isOpen]);
 

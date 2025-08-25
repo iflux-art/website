@@ -3,13 +3,9 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Folder } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-export interface CategoryWithCount {
-  name: string;
-  count: number;
-}
+import type { CategoryWithCount } from '@/features/blog/types';
 
 export interface BlogCategoryCardProps {
   categories?: CategoryWithCount[];

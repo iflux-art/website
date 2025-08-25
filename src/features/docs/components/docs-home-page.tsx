@@ -3,9 +3,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DocsSidebarCard, getAllDocsStructure } from '@/features/docs/components';
 import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
-import { ThreeColumnLayout } from '@/features/layout';
-import ClientMDXRenderer from '@/components/mdx/ClientMDXRenderer';
+import { ContentDisplay, DocPagination } from '@/features/content-display/components';
+import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
+import { ThreeColumnLayout } from '@/components/layout';
+import ClientMDXRenderer from '@/components/mdx/client-mdx-renderer';
 import { TwikooComment } from '@/features/comment';
 
 /**

@@ -1,6 +1,6 @@
-import { AppGrid, PageContainer } from '@/features/layout';
+import { AppGrid, PageContainer } from '@/components/layout';
 import { LinkCard } from '@/features/links/components';
-import { generateSEOMetadata } from '@/lib/seo-utils';
+import { generateSEOMetadata } from '@/lib/metadata/seo-utils';
 import type { Metadata } from 'next';
 import type { LinksItem } from '@/features/links/types';
 import profileData from '@/content/links/profile.json';

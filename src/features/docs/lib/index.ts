@@ -13,12 +13,15 @@ import type {
   NavDocItem,
   SidebarItem,
 } from '@/features/docs/types';
-import type { BreadcrumbItem } from '@/types/content-types';
+import type { BreadcrumbItem } from '@/types';
 import { getDocContent } from './doc-content';
 import { generateDocPaths } from './doc-paths';
 
 // 导出路径解析工具函数
 export * from './doc-path-resolver';
+
+// 从全局helpers导出字数统计函数
+export { countWords } from '@/utils/helpers/text-helpers';
 
 interface DocMetaItem {
   title: string;

@@ -1,6 +1,6 @@
-import { PageContainer } from '@/features/layout';
+import { PageContainer } from '@/components/layout';
 import { LinksAdminPage } from '@/features/admin/components';
-import { generateSEOMetadata } from '@/lib/seo-utils';
+import { generateSEOMetadata } from '@/lib/metadata/seo-utils';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = generateSEOMetadata({

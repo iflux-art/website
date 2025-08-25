@@ -14,7 +14,7 @@
     "ui": "@/components/ui",
     "components": "@/components",
     "types": "@/types",
-    "utils": "@/lib/utils",
+    "utils": "@/utils",
     "lib": "@/lib",
     "hooks": "@/hooks",
     "config": "@/config"

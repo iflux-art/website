@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronRight, FileText, Folder } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { NavLink } from '@/features/layout/navbar/components/nav-link';
+import { NavLink } from '@/components/layout/navbar/nav-link';
 import type { DocCategoryWithDocs, GlobalDocsStructure } from './global-docs';
 import type { SidebarItem } from '@/features/docs/types';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { PageContainer } from '@/features/layout';
+import { PageContainer } from '@/components/layout';
 import { BackButton, Button } from '@/components';
 import { AlertCircle, Home, Search } from 'lucide-react';
 import type { Metadata } from 'next';

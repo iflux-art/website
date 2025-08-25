@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { parseWebsite } from '@/features/website-parser';
-import { ApiErrors, createApiSuccess, isValidUrl } from '@/lib/api-utils';
-import { withPublicApi } from '@/lib/api-middleware';
+import { ApiErrors, createApiSuccess, isValidUrl } from '@/lib/api/api-utils';
+import { withPublicApi } from '@/lib/api/api-middleware';
 
 async function handleParseWebsite(request: NextRequest) {
   const { searchParams } = new URL(request.url);

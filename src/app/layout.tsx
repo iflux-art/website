@@ -1,7 +1,7 @@
 import './globals.css';
-import { MainNavbar } from '@/features/layout/navbar/components/main-navbar';
-import { Footer } from '@/features/layout';
-import { ThemeProvider } from '@/components/theme-provider';
+import { MainNavbar } from '@/components/layout/navbar/main-navbar';
+import { Footer } from '@/components/layout';
+import { ThemeProvider } from '@/components/theme/theme-provider';
 import { GlobalContextMenu } from '@/components/global-context-menu';
 import { ClerkProvider } from '@clerk/nextjs';
 import React from 'react';

@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { generateDocsMetadata } from '@/lib/seo-utils';
+import { generateDocsMetadata } from '@/lib/metadata/seo-utils';
 import { DocsSidebarCard, getAllDocsStructure } from '@/features/docs/components';
 import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { ThreeColumnLayout } from '@/features/layout';
-import { ContentDisplay, DocPagination, TableOfContentsCard } from '@/features/content';
+import { ThreeColumnLayout } from '@/components/layout';
+import { ContentDisplay, DocPagination } from '@/features/content-display/components';
+import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
 import { TwikooComment } from '@/features/comment';
 import { ClientMDXRenderer } from '@/components/mdx';
 import type { Metadata } from 'next';

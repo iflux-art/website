@@ -9,7 +9,7 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 import { ArrowUp, Bookmark, Copy, Moon, RefreshCw, Shuffle, Sun } from 'lucide-react';
-import { useGlobalContextMenu } from '@/hooks/use-global-context-menu';
+import { useGlobalContextMenu } from '../hooks/use-global-context-menu';
 
 interface GlobalContextMenuProps {
   children: React.ReactNode;
