@@ -84,7 +84,7 @@ export function useContentData<T>({
   const getCacheKey = () => `${type}:${category ?? "all"}:${pathname}`;
 
   // 数据获取函数
-  const fetchData = async () => {
+  const fetchData = () => {
     const apiUrl = url ?? path ?? "";
     if (!apiUrl) {
       throw new Error("URL or path is required");
@@ -101,7 +101,8 @@ export function useContentData<T>({
       return pendingRequests.get(requestKey) as Promise<T>;
     }
 
-    const request = (async () => {
+    // 创建请求函数
+    const makeRequest = async () => {
       try {
         // 添加缓存控制头来防止服务器缓存
         const headerOptions: Record<string, string> = {
@@ -137,7 +138,9 @@ export function useContentData<T>({
         // 请求完成后移除
         pendingRequests.delete(requestKey);
       }
-    })();
+    };
+
+    const request = makeRequest();
 
     // 存储请求Promise
     pendingRequests.set(requestKey, request);
@@ -154,8 +157,6 @@ export function useContentData<T>({
     data: data ?? null,
     loading,
     error: error ?? null,
-    refresh: async () => {
-      await refetch();
-    },
+    refresh: () => refetch(),
   };
 }
