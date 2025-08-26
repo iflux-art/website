@@ -1,4 +1,4 @@
-import { ProgressBarLoading } from '@/components/layout';
+import { ProgressBarLoading } from "@/components/layout";
 
 /**
  * 全局加载状态页面

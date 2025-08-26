@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
 
 interface ContentItem {
   slug: string[];
@@ -15,9 +15,9 @@ export function scanContentDirectory(options: {
 }): ContentItem[] {
   const {
     contentDir,
-    indexFiles = ['index.mdx', 'index.md'],
-    extensions = ['.mdx', '.md'],
-    excludePrefix = '_',
+    indexFiles = ["index.mdx", "index.md"],
+    extensions = [".mdx", ".md"],
+    excludePrefix = "_",
     filter = () => true,
   } = options;
 
@@ -52,10 +52,10 @@ export function scanContentDirectory(options: {
 
 export function generateBlogPaths(): ContentItem[] {
   return scanContentDirectory({
-    contentDir: path.join(process.cwd(), 'src', 'content', 'blog'),
-    excludePrefix: '_',
+    contentDir: path.join(process.cwd(), "src", "content", "blog"),
+    excludePrefix: "_",
     filter: itemPath => {
-      const fileContent = fs.readFileSync(itemPath, 'utf8');
+      const fileContent = fs.readFileSync(itemPath, "utf8");
       const { data } = matter(fileContent);
       return data.published !== false;
     },

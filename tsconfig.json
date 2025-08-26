@@ -38,7 +38,8 @@
       "@/types/*": ["./src/types/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/config/*": ["./src/config/*"],
-      "@/app/*": ["./src/app/*"]
+      "@/app/*": ["./src/app/*"],
+      "@/features/*": ["./src/features/*"]
     },
     // 插件配置
     "plugins": [

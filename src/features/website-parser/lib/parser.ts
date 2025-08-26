@@ -1,10 +1,10 @@
-import * as cheerio from 'cheerio';
+import * as cheerio from "cheerio";
 import type {
   CacheItem,
   ParseOptions,
   ParseResult,
   WebsiteMetadata,
-} from '@/features/website-parser/types';
+} from "@/features/website-parser/types";
 
 /**
  * 缓存配置
@@ -24,7 +24,7 @@ const metadataCache = new Map<string, CacheItem>();
 export function isValidUrl(urlString: string): boolean {
   try {
     const url = new URL(urlString);
-    return ['http:', 'https:'].includes(url.protocol);
+    return ["http:", "https:"].includes(url.protocol);
   } catch {
     return false;
   }
@@ -45,11 +45,25 @@ async function fetchWithRetry(
 ): Promise<Response> {
   try {
     const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+    // 对于重定向，我们仍然可以尝试处理
+    if (
+      !response.ok &&
+      response.status !== 308 &&
+      response.status !== 307 &&
+      response.status !== 301 &&
+      response.status !== 302
+    ) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     return response;
   } catch (error) {
+    // 检查是否是CORS错误
+    if (error instanceof TypeError && error.message.includes("fetch")) {
+      throw new Error(
+        `CORS error or network issue when fetching ${url}. This may be due to the target server not allowing cross-origin requests.`
+      );
+    }
+
     if (retries > 0) {
       await delay(RETRY_DELAY);
       return fetchWithRetry(url, options, retries - 1);
@@ -84,10 +98,10 @@ function saveToCache(url: string, data: WebsiteMetadata): void {
  */
 function extractTitle($: cheerio.CheerioAPI): string {
   const title =
-    $('meta[property="og:title"]').attr('content') ??
-    $('meta[name="twitter:title"]').attr('content') ??
-    $('title').text().trim() ??
-    '';
+    $('meta[property="og:title"]').attr("content") ??
+    $('meta[name="twitter:title"]').attr("content") ??
+    $("title").text().trim() ??
+    "";
   return title.trim();
 }
 
@@ -96,10 +110,10 @@ function extractTitle($: cheerio.CheerioAPI): string {
  */
 function extractDescription($: cheerio.CheerioAPI): string {
   const description =
-    $('meta[property="og:description"]').attr('content') ??
-    $('meta[name="twitter:description"]').attr('content') ??
-    $('meta[name="description"]').attr('content') ??
-    '';
+    $('meta[property="og:description"]').attr("content") ??
+    $('meta[name="twitter:description"]').attr("content") ??
+    $('meta[name="description"]').attr("content") ??
+    "";
   return description.trim();
 }
 
@@ -108,9 +122,9 @@ function extractDescription($: cheerio.CheerioAPI): string {
  */
 function extractAuthor($: cheerio.CheerioAPI): string {
   const author =
-    $('meta[name="author"]').attr('content') ??
-    $('meta[property="article:author"]').attr('content') ??
-    '';
+    $('meta[name="author"]').attr("content") ??
+    $('meta[property="article:author"]').attr("content") ??
+    "";
   return author.trim();
 }
 
@@ -122,9 +136,9 @@ function extractOtherMeta($: cheerio.CheerioAPI): {
   type: string;
   language: string;
 } {
-  const siteName = $('meta[property="og:site_name"]').attr('content') ?? '';
-  const type = $('meta[property="og:type"]').attr('content') ?? '';
-  const language = $('html').attr('lang') ?? $('meta[property="og:locale"]').attr('content') ?? '';
+  const siteName = $('meta[property="og:site_name"]').attr("content") ?? "";
+  const type = $('meta[property="og:type"]').attr("content") ?? "";
+  const language = $("html").attr("lang") ?? $('meta[property="og:locale"]').attr("content") ?? "";
 
   return {
     siteName: siteName.trim(),
@@ -173,13 +187,12 @@ function parseIcon($: cheerio.CheerioAPI, url: string): string {
   ];
 
   for (const selector of iconSelectors) {
-    const iconHref = $(selector).attr('href');
+    const iconHref = $(selector).attr("href");
     if (iconHref) {
       try {
         return new URL(iconHref, url).href;
       } catch {
         // 忽略无效的URL，继续尝试下一个
-        continue;
       }
     }
   }
@@ -189,7 +202,7 @@ function parseIcon($: cheerio.CheerioAPI, url: string): string {
     const urlObj = new URL(url);
     return `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
   } catch {
-    return '';
+    return "";
   }
 }
 
@@ -198,20 +211,20 @@ function parseIcon($: cheerio.CheerioAPI, url: string): string {
  */
 function parseImage($: cheerio.CheerioAPI, url: string): string {
   const ogImage =
-    $('meta[property="og:image"]').attr('content') ??
-    $('meta[property="og:image:url"]').attr('content') ??
-    $('meta[name="twitter:image"]').attr('content') ??
-    '';
+    $('meta[property="og:image"]').attr("content") ??
+    $('meta[property="og:image:url"]').attr("content") ??
+    $('meta[name="twitter:image"]').attr("content") ??
+    "";
 
   if (ogImage) {
     try {
       return new URL(ogImage, url).href;
     } catch {
-      return '';
+      return "";
     }
   }
 
-  return '';
+  return "";
 }
 
 /**
@@ -240,24 +253,24 @@ function createFallbackData(url: string): WebsiteMetadata {
       title: urlObj.hostname,
       description: `Website: ${urlObj.hostname}`,
       icon: `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`,
-      image: '',
-      author: '',
+      image: "",
+      author: "",
       siteName: urlObj.hostname,
-      type: 'website',
+      type: "website",
       url,
-      language: '',
+      language: "",
     };
   } catch {
     return {
-      title: 'Unknown Website',
-      description: 'Unable to parse website information',
-      icon: '',
-      image: '',
-      author: '',
-      siteName: '',
-      type: 'website',
+      title: "Unknown Website",
+      description: "Unable to parse website information",
+      icon: "",
+      image: "",
+      author: "",
+      siteName: "",
+      type: "website",
       url,
-      language: '',
+      language: "",
     };
   }
 }
@@ -268,16 +281,18 @@ function createFallbackData(url: string): WebsiteMetadata {
 function createFetchOptions(timeout: number): RequestInit {
   return {
     headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-      'Accept-Encoding': 'gzip, deflate, br',
-      DNT: '1',
-      Connection: 'keep-alive',
-      'Upgrade-Insecure-Requests': '1',
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+      "Accept-Encoding": "gzip, deflate, br",
+      Dnt: "1",
+      Connection: "keep-alive",
+      "Upgrade-Insecure-Requests": "1",
     },
     signal: AbortSignal.timeout(timeout),
+    // 添加mode选项以更好地处理CORS
+    mode: "cors",
   };
 }
 
@@ -296,14 +311,24 @@ function checkCache(url: string, useCache: boolean, cacheMaxAge: number): Websit
  * 处理错误情况
  */
 function handleParseError(error: unknown, url: string): ParseResult {
-  console.error('Error parsing website:', error);
+  console.error("Error parsing website:", error);
+
+  // 提供更友好的错误信息
+  let errorMessage = "Unknown error";
+  if (error instanceof Error) {
+    errorMessage = error.message;
+    // 检查是否是CORS相关错误
+    if (errorMessage.includes("CORS") || errorMessage.includes("fetch")) {
+      errorMessage = `Unable to fetch website metadata due to CORS restrictions. The target server (${url}) may not allow cross-origin requests. ${errorMessage}`;
+    }
+  }
 
   const fallbackData = createFallbackData(url);
 
   return {
     success: false,
     data: fallbackData,
-    error: error instanceof Error ? error.message : 'Unknown error',
+    error: errorMessage,
   };
 }
 
@@ -319,10 +344,10 @@ export async function parseWebsite(url: string, options: ParseOptions = {}): Pro
   } = options;
 
   // URL 验证
-  if (!url || !isValidUrl(url)) {
+  if (!(url && isValidUrl(url))) {
     return {
       success: false,
-      error: 'Invalid or missing URL',
+      error: "Invalid or missing URL",
     };
   }
 
@@ -340,11 +365,13 @@ export async function parseWebsite(url: string, options: ParseOptions = {}): Pro
     // 获取页面内容
     const fetchOptions = createFetchOptions(timeout);
     const response = await fetchWithRetry(url, fetchOptions, retryCount);
+
+    // 即使是重定向状态，我们也尝试获取内容
     const html = await response.text();
-    const $ = cheerio.load(html);
+    const cheerioInstance = cheerio.load(html);
 
     // 解析元数据
-    const metadata = parseMetadata($, url);
+    const metadata = parseMetadata(cheerioInstance, url);
 
     // 更新缓存
     if (useCache) {
@@ -379,7 +406,7 @@ export async function parseWebsites(
   const settledResults = await Promise.allSettled(promises);
 
   settledResults.forEach(settled => {
-    if (settled.status === 'fulfilled') {
+    if (settled.status === "fulfilled") {
       results[settled.value.url] = settled.value.result;
     }
   });
@@ -399,21 +426,4 @@ export function clearCache(): void {
  */
 export function getCacheSize(): number {
   return metadataCache.size;
-}
-
-/**
- * 获取缓存统计信息
- */
-export function getCacheStats(): { size: number; oldestEntry?: number; newestEntry?: number } {
-  if (metadataCache.size === 0) {
-    return { size: 0 };
-  }
-
-  const timestamps = Array.from(metadataCache.values()).map(item => item.timestamp);
-
-  return {
-    size: metadataCache.size,
-    oldestEntry: Math.min(...timestamps),
-    newestEntry: Math.max(...timestamps),
-  };
 }

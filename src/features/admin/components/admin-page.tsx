@@ -1,32 +1,28 @@
-'use client';
+"use client";
 
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDebouncedValue } from '@/features/admin/hooks/use-debounced-value';
-import { useCategories } from '@/features/links/hooks/use-categories';
-import type {
-  LinksCategory,
-  LinksItem as LinksItemData,
-  LinksSubCategory,
-} from '@/features/links/types';
-import type { LinksItem as AdminLinksItem, LinksFormData } from '@/features/admin/types';
-import { AddDialog, AdminActions, DeleteDialog, EditDialog } from '@/features/admin/components';
-import {
-  DataTable,
-  getPageActions,
-  getTableActions,
-  getTableColumns,
-} from '@/features/links/components';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { Search } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { fetchLinksData } from '@/features/admin/lib';
+} from "@/components/ui/select";
+import { AddDialog, AdminActions, DeleteDialog, EditDialog } from "@/features/admin/components";
+import { useDebouncedValue } from "@/features/admin/hooks/use-debounced-value";
+import { fetchLinksData } from "@/features/admin/lib";
+import type { LinksItem as AdminLinksItem } from "@/features/admin/types";
+import {
+  DataTable,
+  getPageActions,
+  getTableActions,
+  getTableColumns,
+} from "@/features/links/components";
+import { useCategories } from "@/features/links/hooks/use-categories";
+import type { LinksCategory, LinksItem, LinksSubCategory } from "@/features/links/types";
+import { Search } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 // 页面标题组件
 interface PageHeaderProps {
@@ -74,8 +70,8 @@ const SearchFilter = ({
         </div>
         <div className="w-48">
           <Select
-            value={selectedCategory || 'all'}
-            onValueChange={value => onCategoryChange(value === 'all' ? '' : value)}
+            value={selectedCategory || "all"}
+            onValueChange={value => onCategoryChange(value === "all" ? "" : value)}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="所有分类" />
@@ -113,13 +109,13 @@ const SearchFilter = ({
 /**
  * 过滤数据的自定义 hook
  */
-const useFilteredItems = (items: LinksItemData[], searchTerm: string, selectedCategory: string) => {
+const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCategory: string) => {
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
-  const [filteredItems, setFilteredItems] = useState<LinksItemData[]>([]);
+  const [filteredItems, setFilteredItems] = useState<LinksItem[]>([]);
 
   useEffect(() => {
     const filterItems = () => {
-      if (!debouncedSearchTerm && !selectedCategory) {
+      if (!(debouncedSearchTerm || selectedCategory)) {
         setFilteredItems(items);
         return;
       }
@@ -154,11 +150,11 @@ const useFilteredItems = (items: LinksItemData[], searchTerm: string, selectedCa
 const useEventHandlers = (
   loadData: () => Promise<void>,
   setShowAddDialog: (show: boolean) => void,
-  setEditingItem: (item: LinksItemData | null) => void,
-  setDeletingItem: (item: LinksItemData | null) => void
+  setEditingItem: (item: LinksItem | null) => void,
+  setDeletingItem: (item: LinksItem | null) => void
 ) => {
   const handleAddSuccess = useCallback(
-    (_item: LinksFormData) => {
+    (_item: import("@/features/admin/types").LinksFormData) => {
       void loadData();
       setShowAddDialog(false);
     },
@@ -203,14 +199,14 @@ const useEventHandlers = (
  */
 export const LinksAdminPage = () => {
   // 状态管理
-  const [items, setItems] = useState<LinksItemData[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [items, setItems] = useState<LinksItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   // 对话框状态
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [editingItem, setEditingItem] = useState<LinksItemData | null>(null);
-  const [deletingItem, setDeletingItem] = useState<LinksItemData | null>(null);
+  const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
+  const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
 
   // 使用共享的分类数据 hook
   const { categories, getCategoryName } = useCategories();
@@ -260,10 +256,10 @@ export const LinksAdminPage = () => {
       {/* 网址表格 */}
       <DataTable
         data={filteredItems}
-        columns={getTableColumns((categoryId: string) => getCategoryName(categoryId) ?? '')}
+        columns={getTableColumns((categoryId: string) => getCategoryName(categoryId) ?? "")}
         actions={getTableActions(
-          (record: LinksItemData) => setEditingItem(record),
-          (record: LinksItemData) => setDeletingItem(record)
+          (record: LinksItem) => setEditingItem(record),
+          (record: LinksItem) => setDeletingItem(record)
         )}
       />
 

@@ -14,11 +14,11 @@
  * @since 2024
  */
 
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import type { BaseCategory, BaseContent } from '@/types';
-import { useCache } from './use-cache';
+import type { BaseCategory, BaseContent } from "@/types";
+import { usePathname } from "next/navigation";
+import { useCache } from "./use-cache";
 
 const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
 
@@ -81,17 +81,17 @@ export function useContentData<T>({
   const pathname = usePathname();
 
   // 生成缓存key
-  const getCacheKey = () => `${type}:${category ?? 'all'}:${pathname}`;
+  const getCacheKey = () => `${type}:${category ?? "all"}:${pathname}`;
 
   // 数据获取函数
   const fetchData = async () => {
-    const apiUrl = url ?? path ?? '';
+    const apiUrl = url ?? path ?? "";
     if (!apiUrl) {
-      throw new Error('URL or path is required');
+      throw new Error("URL or path is required");
     }
 
     // 添加时间戳来防止缓存
-    const cacheBuster = forceRefresh ? `?_t=${Date.now()}` : '';
+    const cacheBuster = forceRefresh ? `?_t=${Date.now()}` : "";
     const finalUrl = `${apiUrl}${cacheBuster}`;
 
     const requestKey = `${finalUrl}:${JSON.stringify(params)}`;
@@ -105,20 +105,20 @@ export function useContentData<T>({
       try {
         // 添加缓存控制头来防止服务器缓存
         const headerOptions: Record<string, string> = {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...(headers ?? {}),
         };
 
         // 有条件地添加缓存控制头
         if (forceRefresh) {
-          headerOptions['Cache-Control'] = 'no-cache, no-store, must-revalidate';
-          headerOptions.Pragma = 'no-cache';
-          headerOptions.Expires = '0';
+          headerOptions["Cache-Control"] = "no-cache, no-store, must-revalidate";
+          headerOptions.Pragma = "no-cache";
+          headerOptions.Expires = "0";
         }
 
         const fetchOptions = {
           headers: headerOptions,
-          cache: forceRefresh || disableCache ? ('no-store' as RequestCache) : undefined,
+          cache: forceRefresh || disableCache ? ("no-store" as RequestCache) : undefined,
           next: { revalidate: forceRefresh || disableCache ? 0 : undefined },
           ...(params ?? {}),
         };
@@ -132,7 +132,7 @@ export function useContentData<T>({
         const result: T = (await response.json()) as T;
         return result;
       } catch {
-        throw new Error('Failed to fetch content');
+        throw new Error("Failed to fetch content");
       } finally {
         // 请求完成后移除
         pendingRequests.delete(requestKey);
@@ -146,8 +146,8 @@ export function useContentData<T>({
 
   const { data, error, loading, refetch } = useCache<T>(getCacheKey(), fetchData, {
     expiry: disableCache || forceRefresh ? 0 : cacheTime,
-    useMemoryCache: !forceRefresh && !disableCache,
-    useLocalStorage: !forceRefresh && !disableCache,
+    useMemoryCache: !(forceRefresh || disableCache),
+    useLocalStorage: !(forceRefresh || disableCache),
   });
 
   return {
@@ -155,7 +155,7 @@ export function useContentData<T>({
     loading,
     error: error ?? null,
     refresh: async () => {
-      void refetch();
+      await refetch();
     },
   };
 }

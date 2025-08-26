@@ -1,14 +1,14 @@
-import dynamicImport from 'next/dynamic';
+import dynamicImport from "next/dynamic";
 
 // 强制动态生成页面，确保每次请求都获取最新数据
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 // 禁用缓存，设置为0表示每次请求都会重新验证
 export const revalidate = 0;
 
 // 使用动态导入来加载客户端组件
 const HeroSection = dynamicImport(
-  () => import('@/features/home/components').then(mod => mod.HeroSection),
+  () => import("@/features/home/components").then(mod => mod.HeroSection),
   { ssr: true } // 启用服务端渲染，但允许客户端抓取数据
 );
 

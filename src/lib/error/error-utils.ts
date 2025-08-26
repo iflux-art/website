@@ -8,7 +8,7 @@
 
 export interface ErrorInfo {
   /** 错误类型 */
-  type: 'ContentNotFound' | 'NetworkError' | 'ValidationError' | 'UnknownError';
+  type: "ContentNotFound" | "NetworkError" | "ValidationError" | "UnknownError";
   /** 错误消息 */
   message: string;
   /** 错误代码 */
@@ -33,24 +33,24 @@ export interface LogOptions {
 /**
  * 错误分类器 - 根据错误内容自动分类
  */
-export function classifyError(error: unknown): ErrorInfo['type'] {
+export function classifyError(error: unknown): ErrorInfo["type"] {
   if (error instanceof Error) {
     const message = error.message.toLowerCase();
 
-    if (message.includes('not found') || message.includes('404')) {
-      return 'ContentNotFound';
+    if (message.includes("not found") || message.includes("404")) {
+      return "ContentNotFound";
     }
 
-    if (message.includes('network') || message.includes('fetch') || message.includes('timeout')) {
-      return 'NetworkError';
+    if (message.includes("network") || message.includes("fetch") || message.includes("timeout")) {
+      return "NetworkError";
     }
 
-    if (message.includes('validation') || message.includes('invalid')) {
-      return 'ValidationError';
+    if (message.includes("validation") || message.includes("invalid")) {
+      return "ValidationError";
     }
   }
 
-  return 'UnknownError';
+  return "UnknownError";
 }
 
 /**
@@ -61,7 +61,7 @@ function buildLogMessage(errorInfo: ErrorInfo) {
     ...errorInfo,
     timestamp: errorInfo.timestamp || new Date(),
     environment: process.env.NODE_ENV,
-    userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'server',
+    userAgent: typeof window !== "undefined" ? window.navigator.userAgent : "server",
   };
 }
 
@@ -70,15 +70,15 @@ function buildLogMessage(errorInfo: ErrorInfo) {
  */
 function logDevelopmentError(errorInfo: ErrorInfo): void {
   // 为 ContentNotFound 提供更友好的输出格式
-  if (errorInfo.type === 'ContentNotFound') {
+  if (errorInfo.type === "ContentNotFound") {
     console.warn(`📝 ${errorInfo.type}: ${errorInfo.message}`);
-    console.warn('ℹ️ 这是一个预期的错误，用户访问了不存在的内容');
+    console.warn("ℹ️ 这是一个预期的错误，用户访问了不存在的内容");
   } else {
     console.error(`🚨 ${errorInfo.type}: ${errorInfo.message}`);
   }
 
   // 输出详细信息
-  console.error('ℹ️ Error Details:', {
+  console.error("ℹ️ Error Details:", {
     type: errorInfo.type,
     message: errorInfo.message,
     code: errorInfo.code,
@@ -92,7 +92,7 @@ function logDevelopmentError(errorInfo: ErrorInfo): void {
  */
 function logContextInfo(errorInfo: ErrorInfo): void {
   if (errorInfo.context && Object.keys(errorInfo.context).length > 0) {
-    console.error('🔍 Context:', errorInfo.context);
+    console.error("🔍 Context:", errorInfo.context);
   }
 }
 
@@ -105,15 +105,15 @@ function logContentNotFoundStack(errorInfo: ErrorInfo): void {
   }
 
   // 为 ContentNotFound 提供更有用的调试信息
-  console.error('📚 错误来源:', {
+  console.error("📚 错误来源:", {
     message: errorInfo.originalError.message,
     requestedContent: errorInfo.context?.contentId,
     contentType: errorInfo.context?.contentType,
   });
 
   // 可选显示堆栈（通常不需要）
-  if (process.env.SHOW_CONTENT_NOT_FOUND_STACK === 'true') {
-    console.error('📚 Stack Trace (Info):', errorInfo.originalError.stack);
+  if (process.env.SHOW_CONTENT_NOT_FOUND_STACK === "true") {
+    console.error("📚 Stack Trace (Info):", errorInfo.originalError.stack);
   }
 }
 
@@ -122,7 +122,7 @@ function logContentNotFoundStack(errorInfo: ErrorInfo): void {
  */
 function logOtherErrorStack(errorInfo: ErrorInfo): void {
   if (errorInfo.originalError instanceof Error) {
-    console.error('📚 Stack Trace:', errorInfo.originalError.stack);
+    console.error("📚 Stack Trace:", errorInfo.originalError.stack);
   }
 }
 
@@ -130,11 +130,11 @@ function logOtherErrorStack(errorInfo: ErrorInfo): void {
  * 处理开发环境堆栈信息输出
  */
 function logDevelopmentStack(errorInfo: ErrorInfo, includeStack: boolean): void {
-  if (!includeStack || !(errorInfo.originalError instanceof Error)) {
+  if (!(includeStack && errorInfo.originalError instanceof Error)) {
     return;
   }
 
-  if (errorInfo.type === 'ContentNotFound') {
+  if (errorInfo.type === "ContentNotFound") {
     logContentNotFoundStack(errorInfo);
   } else {
     logOtherErrorStack(errorInfo);
@@ -178,19 +178,19 @@ export function logError(errorInfo: ErrorInfo, options: LogOptions = {}): void {
   const {
     logToConsole = true,
     logToService = false,
-    includeStack = process.env.NODE_ENV === 'development',
+    includeStack = process.env.NODE_ENV === "development",
   } = options;
 
   // 构建日志消息
   const logMessage = buildLogMessage(errorInfo);
 
   // 开发环境控制台输出
-  if (logToConsole && process.env.NODE_ENV === 'development') {
+  if (logToConsole && process.env.NODE_ENV === "development") {
     logDevelopmentOutput(errorInfo, includeStack);
   }
 
   // 生产环境简化日志
-  if (logToConsole && process.env.NODE_ENV === 'production') {
+  if (logToConsole && process.env.NODE_ENV === "production") {
     logProductionOutput(errorInfo, logMessage);
   }
 
@@ -206,7 +206,7 @@ export function logError(errorInfo: ErrorInfo, options: LogOptions = {}): void {
  */
 export function handleContentError(
   error: unknown,
-  contentType: 'blog' | 'docs' | 'links',
+  contentType: "blog" | "docs" | "links",
   contentId?: string
 ): ErrorInfo {
   // 获取更多上下文信息
@@ -214,27 +214,27 @@ export function handleContentError(
     contentType,
     contentId,
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'unknown',
+    environment: process.env.NODE_ENV || "unknown",
   };
 
   // 在客户端添加更多信息
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     context.url = window.location.href;
     context.userAgent = window.navigator.userAgent;
   } else {
-    context.runtime = 'server';
+    context.runtime = "server";
   }
 
   const errorInfo: ErrorInfo = {
     type: classifyError(error),
-    message: error instanceof Error ? error.message : 'Unknown content loading error',
+    message: error instanceof Error ? error.message : "Unknown content loading error",
     context,
     originalError: error,
     timestamp: new Date(),
   };
 
   // 根据内容类型添加特定的错误代码
-  if (errorInfo.type === 'ContentNotFound') {
+  if (errorInfo.type === "ContentNotFound") {
     errorInfo.code = `${contentType.toUpperCase()}_NOT_FOUND`;
   }
 
@@ -252,8 +252,8 @@ export function handleContentError(
  */
 export function handleNetworkError(error: unknown, endpoint?: string): ErrorInfo {
   const errorInfo: ErrorInfo = {
-    type: 'NetworkError',
-    message: error instanceof Error ? error.message : 'Network request failed',
+    type: "NetworkError",
+    message: error instanceof Error ? error.message : "Network request failed",
     context: {
       endpoint,
       timestamp: new Date().toISOString(),
@@ -271,10 +271,10 @@ export function handleNetworkError(error: unknown, endpoint?: string): ErrorInfo
  */
 export function getUserFriendlyMessage(errorInfo: ErrorInfo): string {
   const messages = {
-    ContentNotFound: '抱歉，您访问的内容不存在或已被移除。',
-    NetworkError: '网络连接出现问题，请检查您的网络连接后重试。',
-    ValidationError: '输入的数据格式不正确，请检查后重新提交。',
-    UnknownError: '出现了未知错误，请稍后重试或联系管理员。',
+    ContentNotFound: "抱歉，您访问的内容不存在或已被移除。",
+    NetworkError: "网络连接出现问题，请检查您的网络连接后重试。",
+    ValidationError: "输入的数据格式不正确，请检查后重新提交。",
+    UnknownError: "出现了未知错误，请稍后重试或联系管理员。",
   };
 
   return messages[errorInfo.type] || messages.UnknownError;
@@ -285,7 +285,7 @@ export function getUserFriendlyMessage(errorInfo: ErrorInfo): string {
  */
 export function handleComponentError(error: Error, errorInfo: { componentStack: string }): void {
   const errorDetails: ErrorInfo = {
-    type: 'UnknownError',
+    type: "UnknownError",
     message: error.message,
     context: {
       componentStack: errorInfo.componentStack,

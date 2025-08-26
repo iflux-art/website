@@ -1,20 +1,19 @@
-import React from 'react';
-import { redirect } from 'next/navigation';
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import { ClientMDXRenderer } from "@/components/mdx";
+import { TwikooComment } from "@/features/comment";
+import { ContentDisplay, DocPagination } from "@/features/content-display/components";
+import { DocErrorHandler, DocsSidebarCard } from "@/features/docs/components";
 import {
   createDocBreadcrumbsServer,
   generateDocPathsFromFeatures,
   getDocContentFromFeatures,
   isRedirectLoop,
   resolveDocPath,
-} from '@/features/docs/lib';
-import { DocErrorHandler, DocsSidebarCard } from '@/features/docs/components';
-import { ThreeColumnLayout } from '@/components/layout';
-import { ContentDisplay, DocPagination } from '@/features/content-display/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { TwikooComment } from '@/features/comment';
-import { ClientMDXRenderer } from '@/components/mdx';
-import type { Metadata } from 'next';
-import { generateDocsMetadata } from '@/lib/metadata/seo-utils';
+} from "@/features/docs/lib";
+import { generateDocsMetadata } from "@/lib/metadata/seo-utils";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 interface DocPageParams {
   slug: string[];
@@ -27,7 +26,7 @@ interface DocPageParams {
  * 使用 generateDocPathsFromFeatures 函数获取完整的路径列表
  * 实现文档结构缓存以提高构建性能
  */
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const allPaths = generateDocPathsFromFeatures();
   return allPaths;
 }
@@ -59,15 +58,15 @@ export async function generateMetadata({
     const doc = getDocContentFromFeatures(slug);
     return generateDocsMetadata({
       title: doc.frontmatter.title,
-      description: doc.frontmatter.description || '文档页面',
-      section: '文档',
+      description: doc.frontmatter.description || "文档页面",
+      section: "文档",
       lastUpdated: doc.date || undefined,
     });
   } catch {
     return generateDocsMetadata({
-      title: '文档未找到',
-      description: '请求的文档页面不存在',
-      section: '文档',
+      title: "文档未找到",
+      description: "请求的文档页面不存在",
+      section: "文档",
     });
   }
 }
@@ -80,8 +79,8 @@ const DocPage = async ({ params }: { params: Promise<DocPageParams> }) => {
   const pathResolution = resolveDocPath(slug);
 
   // 处理重定向情况
-  if (pathResolution.type === 'redirect' && pathResolution.redirectTo) {
-    const currentPath = `/docs/${slug.join('/')}`;
+  if (pathResolution.type === "redirect" && pathResolution.redirectTo) {
+    const currentPath = `/docs/${slug.join("/")}`;
     if (isRedirectLoop(currentPath, pathResolution.redirectTo)) {
       return <DocErrorHandler errorType="redirect-loop" slug={slug} />;
     }
@@ -89,12 +88,12 @@ const DocPage = async ({ params }: { params: Promise<DocPageParams> }) => {
   }
 
   // 处理未找到的情况
-  if (pathResolution.type === 'notfound') {
+  if (pathResolution.type === "notfound") {
     return <DocErrorHandler errorType="not-found" slug={slug} />;
   }
 
   // 获取文档内容
-  let doc;
+  let doc: ReturnType<typeof getDocContentFromFeatures> | null = null;
   try {
     doc = getDocContentFromFeatures(slug);
   } catch (error) {
@@ -105,7 +104,7 @@ const DocPage = async ({ params }: { params: Promise<DocPageParams> }) => {
   const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
   // 左侧边栏内容 - 文档导航
-  const leftSidebar = <DocsSidebarCard currentDoc={`/docs/${slug.join('/')}`} />;
+  const leftSidebar = <DocsSidebarCard currentDoc={`/docs/${slug.join("/")}`} />;
 
   // 右侧边栏内容 - 目录导航
   const rightSidebar = <TableOfContentsCard headings={doc.headings} className="prose-sm" />;

@@ -3,7 +3,7 @@
  */
 
 export interface SearchResult {
-  type: 'link' | 'blog' | 'doc' | 'tool' | 'command' | 'navigation' | 'history';
+  type: "link" | "blog" | "doc" | "tool" | "command" | "navigation" | "history";
   title: string;
   description?: string;
   url?: string;
@@ -23,7 +23,7 @@ export interface SearchResult {
 }
 
 export interface SearchOptions {
-  type?: 'all' | 'links' | 'blog' | 'doc' | 'docs';
+  type?: "all" | "links" | "blog" | "doc" | "docs";
   limit?: number;
   includeContent?: boolean;
   useCache?: boolean;

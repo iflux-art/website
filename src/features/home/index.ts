@@ -3,10 +3,10 @@
  */
 
 // 组件导出
-export * from './components';
+export { AnimatedNumber, HeroSection } from "./components";
 
 // 类型导出
-export * from './types';
+export type { SiteStats, AnimatedNumberProps } from "./types";
 
 // Hooks 导出
-export * from './hooks';
+export { useSiteStats } from "./hooks";

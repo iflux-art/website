@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { AppGrid, PageContainer } from '@/components/layout';
-import { LinkCard } from '@/features/links/components';
-import { TwikooComment } from '@/features/comment';
-import { FriendLinkApplication } from './friend-link-application';
-import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from '../lib';
-import type { LinksItem } from '@/features/links/types';
-import type { FriendsPageConfig } from '../types';
+import { AppGrid, PageContainer } from "@/components/layout";
+import { TwikooComment } from "@/features/comment";
+import { LinkCard } from "@/features/links/components";
+import type { LinksItem } from "@/features/links/types";
+import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from "../lib";
+import type { FriendsPageConfig } from "../types";
+import { FriendLinkApplication } from "./friend-link-application";
 
 interface FriendsPageContainerProps {
   /** 友链数据 */
@@ -26,7 +26,7 @@ interface FriendsPageContainerProps {
 export const FriendsPageContainer = ({
   friendsData,
   config: partialConfig = {},
-  className = '',
+  className = "",
 }: FriendsPageContainerProps) => {
   // 合并配置
   const config: FriendsPageConfig = {
@@ -44,7 +44,7 @@ export const FriendsPageContainer = ({
   // 如果没有友链数据，显示空状态
   if (!hasFriendsData(friendsItems)) {
     return (
-      <PageContainer config={{ layout: 'full-width' }}>
+      <PageContainer config={{ layout: "full-width" }}>
         <div className="flex min-h-[50vh] items-center justify-center">
           <div className="text-center">
             <p className="mb-4 text-muted-foreground">暂无友情链接</p>
@@ -63,7 +63,7 @@ export const FriendsPageContainer = ({
   }
 
   return (
-    <PageContainer config={{ layout: 'full-width' }} className={className}>
+    <PageContainer config={{ layout: "full-width" }} className={className}>
       <div className="pb-8">
         {/* 友链列表网格 */}
         <AppGrid columns={5} className="items-stretch">

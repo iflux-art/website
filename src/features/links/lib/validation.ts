@@ -2,19 +2,19 @@
  * 链接数据验证工具
  */
 
-import type { LinksFormData, LinksItem } from '@/features/links/types';
+import type { LinksFormData, LinksItem } from "@/features/links/types";
 
 const validCategories = [
-  'ai',
-  'development',
-  'design',
-  'audio',
-  'video',
-  'office',
-  'productivity',
-  'operation',
-  'profile',
-  'friends',
+  "ai",
+  "development",
+  "design",
+  "audio",
+  "video",
+  "office",
+  "productivity",
+  "operation",
+  "profile",
+  "friends",
 ] as const;
 
 /**
@@ -26,20 +26,20 @@ function validateBasicFields(formData: Record<string, unknown>): {
 } {
   const { title, url, category } = formData;
 
-  if (!title || typeof title !== 'string') {
-    return { success: false, error: '标题为必填项' };
+  if (!title || typeof title !== "string") {
+    return { success: false, error: "标题为必填项" };
   }
 
-  if (!url || typeof url !== 'string') {
-    return { success: false, error: 'URL为必填项' };
+  if (!url || typeof url !== "string") {
+    return { success: false, error: "URL为必填项" };
   }
 
   if (
     !category ||
-    typeof category !== 'string' ||
+    typeof category !== "string" ||
     !validCategories.includes(category as (typeof validCategories)[number])
   ) {
-    return { success: false, error: '无效的分类ID' };
+    return { success: false, error: "无效的分类ID" };
   }
 
   return { success: true };
@@ -54,12 +54,12 @@ function buildFormData(formData: Record<string, unknown>): LinksFormData {
   return {
     title: title as string,
     url: url as string,
-    description: (description as string) || '',
+    description: (description as string) || "",
     category: category as (typeof validCategories)[number],
     tags: Array.isArray(tags) ? (tags as string[]) : [],
     featured: Boolean(featured),
-    icon: (icon as string) || '',
-    iconType: (iconType ?? 'text') as 'image' | 'text',
+    icon: (icon as string) || "",
+    iconType: (iconType ?? "text") as "image" | "text",
   };
 }
 
@@ -71,8 +71,8 @@ export function validateLinksFormData(formData: unknown): {
   error?: string;
   data?: LinksFormData;
 } {
-  if (!formData || typeof formData !== 'object') {
-    return { success: false, error: 'Invalid form data' };
+  if (!formData || typeof formData !== "object") {
+    return { success: false, error: "Invalid form data" };
   }
 
   const typedFormData = formData as Record<string, unknown>;
@@ -99,7 +99,7 @@ export function validateLinksUpdate(
   if (updates.url) {
     const exists = items.some(item => item.url === updates.url && item.id !== id);
     if (exists) {
-      return { success: false, error: 'URL already exists' };
+      return { success: false, error: "URL already exists" };
     }
   }
   return { success: true };

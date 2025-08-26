@@ -1,10 +1,10 @@
-import './globals.css';
-import { MainNavbar } from '@/components/layout/navbar/main-navbar';
-import { Footer } from '@/components/layout';
-import { ThemeProvider } from '@/components/theme/theme-provider';
-import { GlobalContextMenu } from '@/components/global-context-menu';
-import { ClerkProvider } from '@clerk/nextjs';
-import React from 'react';
+import "./globals.css";
+import { GlobalContextMenu } from "@/components/global-context-menu";
+import { Footer } from "@/components/layout";
+import { MainNavbar } from "@/components/layout/navbar/main-navbar";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
+import React from "react";
 
 /**
  * 导入集中管理的元数据配置
@@ -12,7 +12,7 @@ import React from 'react';
  * 1. 先从配置文件导入 - 便于集中管理和复用
  * 2. 然后再导出 - 满足Next.js的约定要求
  */
-import { generateMetadata, generateViewport } from '@/config/metadata';
+import { generateMetadata, generateViewport } from "@/config/metadata";
 
 // 导出元数据配置 - Next.js会在构建时处理这些导出
 export const metadata = generateMetadata();

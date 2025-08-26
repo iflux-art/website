@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { SignOutButton, useUser } from '@clerk/nextjs';
-import { Button } from '@/components/ui/button';
-import { LogOut, Settings, User } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import { LogOut, Settings, User } from "lucide-react";
+import Link from "next/link";
 
 export function AuthButtons() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -55,7 +55,7 @@ export function AuthButtons() {
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <SignOutButton>
-                <button className="flex w-full items-center">
+                <button type="button" className="flex w-full items-center">
                   <LogOut className="mr-2 h-4 w-4" />
                   退出登录
                 </button>
@@ -76,7 +76,7 @@ export function AuthButtons() {
     );
   } catch (error) {
     // 如果 Clerk 出现错误，显示基本的登录图标
-    console.error('Clerk error:', error);
+    console.error("Clerk error:", error);
     return (
       <Link href="/sign-in">
         <Button variant="ghost" size="icon" title="登录">

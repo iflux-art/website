@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "node:fs/promises";
+import path from "node:path";
+import matter from "gray-matter";
+import { type NextRequest, NextResponse } from "next/server";
 
 interface BlogPost {
   title: string;
@@ -32,23 +32,23 @@ async function getAllFiles(dirPath: string): Promise<string[]> {
 
 // 读取博客内容
 async function getBlogPosts(): Promise<BlogPost[]> {
-  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const blogDir = path.join(process.cwd(), "src/content/blog");
   const files = await getAllFiles(blogDir);
 
   const posts = await Promise.all(
     files.map(async file => {
-      const content = await fs.readFile(file, 'utf-8');
+      const content = await fs.readFile(file, "utf-8");
       const { data, content: markdown } = matter(content);
       const frontmatter = data as Frontmatter;
       const relativePath = path.relative(blogDir, file);
-      const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+      const url = `/blog/${relativePath.replace(/\.(md|mdx)$/, "")}`;
 
       return {
-        title: frontmatter.title ?? '',
-        description: frontmatter.description ?? '',
+        title: frontmatter.title ?? "",
+        description: frontmatter.description ?? "",
         content: markdown,
         url,
-        date: frontmatter.date ?? '',
+        date: frontmatter.date ?? "",
       };
     })
   );
@@ -56,13 +56,14 @@ async function getBlogPosts(): Promise<BlogPost[]> {
   return posts;
 }
 
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('query');
+    const query = searchParams.get("query");
 
     if (!query) {
-      return NextResponse.json({ error: 'Query parameter is required' }, { status: 400 });
+      return NextResponse.json({ error: "Query parameter is required" }, { status: 400 });
     }
 
     const blogPosts = await getBlogPosts();
@@ -79,7 +80,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(searchResults);
   } catch (error) {
-    console.error('Error searching blog posts:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Error searching blog posts:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Sparkles, Target, Zap } from 'lucide-react';
-import { SITE_METADATA } from '@/config/metadata';
-import { useSiteStats } from '@/features/home/hooks/use-site-stats';
-import { AnimatedNumber } from '@/features/home/components/animated-number';
+import { Button } from "@/components/ui/button";
+import { SITE_METADATA } from "@/config/metadata";
+import { AnimatedNumber } from "@/features/home/components/animated-number";
+import { useSiteStats } from "@/features/home/hooks/use-site-stats";
+import { Sparkles, Target, Zap } from "lucide-react";
+import Link from "next/link";
 
 // 背景装饰组件
 const BackgroundDecorations = () => (
@@ -14,15 +14,15 @@ const BackgroundDecorations = () => (
     <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-20 blur-3xl" />
     <div
       className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
-      style={{ animationDelay: '0s', animationDuration: '3s' }}
+      style={{ animationDelay: "0s", animationDuration: "3s" }}
     />
     <div
       className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
-      style={{ animationDelay: '1s', animationDuration: '4s' }}
+      style={{ animationDelay: "1s", animationDuration: "4s" }}
     />
     <div
       className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
-      style={{ animationDelay: '2s', animationDuration: '5s' }}
+      style={{ animationDelay: "2s", animationDuration: "5s" }}
     />
   </>
 );
@@ -52,10 +52,10 @@ export const HeroSection = () => {
 
   // 统计数据数组
   const statsData = [
-    { label: '文章', value: blogCount },
-    { label: '技术文档', value: docCount },
-    { label: '实用导航', value: linkCount },
-    { label: '友情链接', value: friendCount },
+    { label: "文章", value: blogCount },
+    { label: "技术文档", value: docCount },
+    { label: "实用导航", value: linkCount },
+    { label: "友情链接", value: friendCount },
   ];
 
   return (

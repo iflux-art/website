@@ -1,2 +1,2 @@
-export { ContentDisplay } from './content-display';
-export { DocPagination } from './pagination';
+export { ContentDisplay } from "./content-display";
+export { DocPagination } from "./pagination";

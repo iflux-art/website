@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { extractHeadings } from '@/utils/helpers';
-import type { BlogFrontmatter } from '@/features/blog/types';
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import { extractHeadings } from "@/utils/helpers";
+import type { BlogFrontmatter } from "@/features/blog/types";
 
-export async function getBlogContent(slug: string[]): Promise<{
+export function getBlogContent(slug: string[]): {
   slug: string[];
   content: string;
   frontmatter: BlogFrontmatter;
@@ -13,14 +13,14 @@ export async function getBlogContent(slug: string[]): Promise<{
   latestPosts: { title: string; href: string; date?: string; category?: string }[];
   allTags: { name: string; count: number }[];
   allCategories: { name: string; count: number }[];
-}> {
+} {
   const filePath = findBlogFile(slug);
   if (!filePath) {
     throw new Error(
-      `Blog not found: ${slug.join('/')}. The requested blog post does not exist or has been removed.`
+      `Blog not found: ${slug.join("/")}. The requested blog post does not exist or has been removed.`
     );
   }
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const fileContent = fs.readFileSync(filePath, "utf8");
   const { content, data } = matter(fileContent);
   const safeFrontmatter = data as BlogFrontmatter;
   const { headings } = extractHeadings(content);
@@ -28,10 +28,10 @@ export async function getBlogContent(slug: string[]): Promise<{
   const allMeta = getAllBlogMeta();
   const currentTags = safeFrontmatter.tags ?? [];
   const currentCategory = safeFrontmatter.category;
-  const currentSlugStr = slug.join('/');
+  const currentSlugStr = slug.join("/");
 
   // Calculate related posts
-  const candidates = allMeta.filter(item => item.slug.join('/') !== currentSlugStr);
+  const candidates = allMeta.filter(item => item.slug.join("/") !== currentSlugStr);
   let related = candidates.filter(item => {
     if (!item.frontmatter.tags) return false;
     return item.frontmatter.tags.some((tag: string) => currentTags.includes(tag));
@@ -48,8 +48,8 @@ export async function getBlogContent(slug: string[]): Promise<{
   }
 
   const relatedPosts = related.slice(0, 10).map(item => ({
-    title: item.frontmatter.title ?? item.slug.join('/'),
-    href: `/blog/${item.slug.join('/')}`,
+    title: item.frontmatter.title ?? item.slug.join("/"),
+    href: `/blog/${item.slug.join("/")}`,
     category: item.frontmatter.category,
     slug: item.slug,
   }));
@@ -64,8 +64,8 @@ export async function getBlogContent(slug: string[]): Promise<{
     })
     .slice(0, 5)
     .map(item => ({
-      title: item.frontmatter.title ?? item.slug.join('/'),
-      href: `/blog/${item.slug.join('/')}`,
+      title: item.frontmatter.title ?? item.slug.join("/"),
+      href: `/blog/${item.slug.join("/")}`,
       date: item.frontmatter.date?.toString(),
       category: item.frontmatter.category,
     }));
@@ -106,7 +106,7 @@ export async function getBlogContent(slug: string[]): Promise<{
 }
 
 function findBlogFile(slug: string[]): string | null {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   const relativePath = path.join(...slug);
 
   // Check for direct file matches
@@ -117,10 +117,10 @@ function findBlogFile(slug: string[]): string | null {
   if (fs.existsSync(mdPath)) return mdPath;
 
   // Check for index files in directory
-  const indexMdx = path.join(blogDir, relativePath, 'index.mdx');
+  const indexMdx = path.join(blogDir, relativePath, "index.mdx");
   if (fs.existsSync(indexMdx)) return indexMdx;
 
-  const indexMd = path.join(blogDir, relativePath, 'index.md');
+  const indexMd = path.join(blogDir, relativePath, "index.md");
   if (fs.existsSync(indexMd)) return indexMd;
 
   return null;
@@ -130,7 +130,7 @@ export function getAllBlogMeta(): {
   slug: string[];
   frontmatter: BlogFrontmatter;
 }[] {
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogDir = path.join(process.cwd(), "src", "content", "blog");
   if (!fs.existsSync(blogDir)) return [];
 
   const files: string[] = [];
@@ -141,7 +141,7 @@ export function getAllBlogMeta(): {
       const itemPath = path.join(dir, item.name);
       if (item.isDirectory()) {
         scanDirectory(itemPath);
-      } else if (item.isFile() && (item.name.endsWith('.mdx') || item.name.endsWith('.md'))) {
+      } else if (item.isFile() && (item.name.endsWith(".mdx") || item.name.endsWith(".md"))) {
         files.push(itemPath);
       }
     });
@@ -150,13 +150,13 @@ export function getAllBlogMeta(): {
   scanDirectory(blogDir);
 
   return files.map(filePath => {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const fileContent = fs.readFileSync(filePath, "utf8");
     const { data } = matter(fileContent);
     const relativePath = path.relative(blogDir, filePath);
     const slug = relativePath
-      .replace(/\.(mdx|md)$/, '')
-      .replace(/\\/g, '/')
-      .split('/');
+      .replace(/\.(mdx|md)$/, "")
+      .replace(/\\/g, "/")
+      .split("/");
 
     return {
       slug,

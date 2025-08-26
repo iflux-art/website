@@ -8,4 +8,4 @@ export interface GreetingProps {
 }
 
 // 时间段类型
-export type TimeSlot = 'morning' | 'noon' | 'afternoon' | 'evening' | 'lateNight';
+export type TimeSlot = "morning" | "noon" | "afternoon" | "evening" | "lateNight";

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
-import type { LinksItem } from '@/features/links/types';
+import type { LinksItem } from "@/features/links/types";
+import { useMemo, useState } from "react";
 
 export function useFilterState(items: LinksItem[]) {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedTag, setSelectedTag] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
 
   const filteredItems = useMemo(() => {
     let result = items;
@@ -27,7 +27,9 @@ export function useFilterState(items: LinksItem[]) {
     const tags = new Set<string>();
 
     items.forEach(item => {
-      item.tags?.forEach(tag => tags.add(tag));
+      item.tags?.forEach(tag => {
+        tags.add(tag);
+      });
     });
 
     return Array.from(tags).sort();
@@ -35,11 +37,11 @@ export function useFilterState(items: LinksItem[]) {
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    setSelectedTag('');
+    setSelectedTag("");
   };
 
   const handleTagChange = (tag: string) => {
-    setSelectedTag(tag === selectedTag ? '' : tag);
+    setSelectedTag(tag === selectedTag ? "" : tag);
   };
 
   return {

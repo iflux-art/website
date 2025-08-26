@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { BookOpen, ExternalLink, FileText, Link, Search } from 'lucide-react';
-import { useSearch } from '@/features/search/hooks/use-search';
-import type { SearchResult } from '@/features/search/types';
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { useSearch } from "@/features/search/hooks/use-search";
+import type { SearchResult } from "@/features/search/types";
+import { BookOpen, ExternalLink, FileText, Link, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // 搜索结果项组件
 interface SearchResultItemProps {
@@ -18,11 +18,11 @@ interface SearchResultItemProps {
 const SearchResultItem = ({ result, index, onResultClick }: SearchResultItemProps) => {
   const getIcon = (type: string) => {
     switch (type) {
-      case 'link':
+      case "link":
         return <Link className="h-4 w-4" />;
-      case 'blog':
+      case "blog":
         return <FileText className="h-4 w-4" />;
-      case 'doc':
+      case "doc":
         return <BookOpen className="h-4 w-4" />;
       default:
         return <ExternalLink className="h-4 w-4" />;
@@ -30,13 +30,11 @@ const SearchResultItem = ({ result, index, onResultClick }: SearchResultItemProp
   };
 
   return (
-    <div
+    <button
+      type="button"
       key={result.title || index}
-      className="cursor-pointer rounded-lg border p-3 transition-colors hover:bg-accent"
+      className="w-full cursor-pointer rounded-lg border p-3 text-left transition-colors hover:bg-accent"
       onClick={() => onResultClick(result)}
-      onKeyDown={e => e.key === 'Enter' && onResultClick(result)}
-      tabIndex={0}
-      role="button"
     >
       <div className="flex items-start gap-3">
         <div className="mt-1 text-muted-foreground">{getIcon(result.type)}</div>
@@ -61,7 +59,7 @@ const SearchResultItem = ({ result, index, onResultClick }: SearchResultItemProp
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
@@ -124,20 +122,20 @@ interface SearchDialogProps {
 }
 
 export const SearchDialog = ({ open, onOpenChange }: SearchDialogProps) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const { search, results, isLoading } = useSearch();
 
   // 监听键盘快捷键 (Ctrl+K 或 Command+K)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
         e.preventDefault();
         onOpenChange(!open);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onOpenChange]);
 
   useEffect(() => {
@@ -154,7 +152,7 @@ export const SearchDialog = ({ open, onOpenChange }: SearchDialogProps) => {
 
   const handleResultClick = (result: SearchResult) => {
     if (result.url) {
-      window.open(result.url, '_blank');
+      window.open(result.url, "_blank");
     } else if (result.path) {
       window.location.href = result.path;
     }

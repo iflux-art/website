@@ -3,5 +3,5 @@
  * 集中导出所有通用导航组件，便于引用
  */
 
-export * from './sidebar';
-export * from './sidebar-wrapper';
+export { Sidebar } from "./sidebar";
+export { SidebarWrapper } from "./sidebar-wrapper";

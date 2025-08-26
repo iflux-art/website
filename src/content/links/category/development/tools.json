@@ -10,5 +10,18 @@
     "id": "mb8rxkyzemcosxg7oro",
     "createdAt": "2025-05-29T02:47:41.675Z",
     "updatedAt": "2025-05-29T02:47:41.675Z"
+  },
+  {
+    "id": "sti46c8iesdfx4purp7thr",
+    "title": "PearAI - The AI Code Editor For Your Next Project",
+    "description": "PearAI is an open source AI code editor with powerful features like AI chat, PearAI Creator, and AI debugging to help you make what excites.",
+    "url": "https://trypear.ai/",
+    "icon": "https://trypear.ai/favicon.ico",
+    "iconType": "image",
+    "tags": ["AI编程助手"],
+    "featured": false,
+    "category": "development/tools",
+    "createdAt": "2025-08-26T00:05:31.569Z",
+    "updatedAt": "2025-08-26T00:05:31.569Z"
   }
 ]

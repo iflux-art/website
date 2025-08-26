@@ -3,4 +3,4 @@
  */
 
 // 组件导出
-export { ContentDisplay, DocPagination } from './components';
+export { ContentDisplay, DocPagination } from "./components";

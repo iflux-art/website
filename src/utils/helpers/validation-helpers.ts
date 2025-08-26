@@ -15,7 +15,7 @@ export function validatePageParams(
   requiredFields: string[] = []
 ): { isValid: boolean; missingFields: string[] } {
   const missingFields = requiredFields.filter(
-    field => params[field] === undefined || params[field] === null || params[field] === ''
+    field => params[field] === undefined || params[field] === null || params[field] === ""
   );
 
   return {

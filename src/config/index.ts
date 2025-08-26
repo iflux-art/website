@@ -3,4 +3,19 @@
  */
 
 // 元数据配置
-export * from './metadata';
+export {
+  SITE_METADATA,
+  SITE_AUTHOR,
+  SITE_URL,
+  SITE_TWITTER,
+  SITE_GITHUB,
+  SITE_EMAIL,
+  SITE_COPYRIGHT,
+  VIEWPORT_CONFIG,
+  IOS_CONFIG,
+  WINDOWS_CONFIG,
+  generateMetadata,
+  generateViewport,
+  generateArticleMetadata,
+  generateProfileMetadata,
+} from "./metadata";

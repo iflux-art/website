@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useMemo } from "react";
 
-import { useSafeNavbar } from './navbar-state';
+import { useSafeNavbar } from "./navbar-state";
 
 /**
  * 节流滚动事件处理函数类型（带 cancel 方法）
@@ -79,13 +79,13 @@ export function useNavbarScroll() {
 
   // 检查当前页面是否应该显示页面标题
   const shouldShowPageTitle = useCallback(() => {
-    const pathSegments = pathname.split('/').filter(Boolean);
+    const pathSegments = pathname.split("/").filter(Boolean);
 
     // 只在博客详情页和文档详情页显示页面标题
-    if (pathSegments[0] === 'blog' && pathSegments.length > 1) {
+    if (pathSegments[0] === "blog" && pathSegments.length > 1) {
       return true; // 博客详情页: /blog/[...slug]
     }
-    if (pathSegments[0] === 'docs' && pathSegments.length > 1) {
+    if (pathSegments[0] === "docs" && pathSegments.length > 1) {
       return true; // 文档详情页: /docs/[...slug]
     }
 
@@ -97,16 +97,16 @@ export function useNavbarScroll() {
     // 只在博客详情页和文档详情页设置页面标题
     if (shouldShowPageTitle()) {
       // 立即获取标题
-      const h1Element = document.querySelector('h1');
+      const h1Element = document.querySelector("h1");
       if (h1Element) {
-        setPageTitle(h1Element.textContent?.trim() || '');
+        setPageTitle(h1Element.textContent?.trim() || "");
       } else {
         // 如果没有 h1，根据路径设置默认标题
-        const pathSegments = pathname.split('/').filter(Boolean);
-        if (pathSegments[0] === 'blog' && pathSegments.length > 1) {
-          setPageTitle('博客详情');
-        } else if (pathSegments[0] === 'docs' && pathSegments.length > 1) {
-          setPageTitle('文档详情');
+        const pathSegments = pathname.split("/").filter(Boolean);
+        if (pathSegments[0] === "blog" && pathSegments.length > 1) {
+          setPageTitle("博客详情");
+        } else if (pathSegments[0] === "docs" && pathSegments.length > 1) {
+          setPageTitle("文档详情");
         }
       }
     }
@@ -116,24 +116,24 @@ export function useNavbarScroll() {
 
   // 监听滚动事件
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener("scroll", throttledHandleScroll);
       throttledHandleScroll.cancel();
     };
   }, [throttledHandleScroll]);
 
   // 路径变化时更新标题
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     updatePageTitle();
   }, [updatePageTitle]);
 
   const showNavMenu = useMemo(() => {
     if (!shouldShowPageTitle()) return true; // 非详情页始终显示导航菜单
-    return direction !== 'down'; // 详情页向上滚动时显示导航菜单
+    return direction !== "down"; // 详情页向上滚动时显示导航菜单
   }, [direction, shouldShowPageTitle]);
 
   return {

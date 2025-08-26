@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "node:fs/promises";
+import path from "node:path";
+import matter from "gray-matter";
+import { type NextRequest, NextResponse } from "next/server";
 
 interface Doc {
   title: string;
@@ -31,36 +31,37 @@ async function getAllFiles(dirPath: string): Promise<string[]> {
 
 // 读取文档内容
 async function getDocs(): Promise<Doc[]> {
-  const docsDir = path.join(process.cwd(), 'src/content/docs');
+  const docsDir = path.join(process.cwd(), "src/content/docs");
   const files = await getAllFiles(docsDir);
 
   const docs = await Promise.all(
     files.map(async file => {
-      const content = await fs.readFile(file, 'utf-8');
+      const content = await fs.readFile(file, "utf-8");
       const { data, content: markdown } = matter(content);
       const frontmatter = data as Frontmatter;
       const relativePath = path.relative(docsDir, file);
-      const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, '')}`;
+      const url = `/docs/${relativePath.replace(/\.(md|mdx)$/, "")}`;
 
       return {
-        title: frontmatter.title ?? '',
-        description: frontmatter.description ?? '',
+        title: frontmatter.title ?? "",
+        description: frontmatter.description ?? "",
         content: markdown,
         url,
-        category: frontmatter.category ?? '',
+        category: frontmatter.category ?? "",
       };
     })
   );
 
   return docs;
 }
-export async function GET(request: NextRequest) {
+// biome-ignore lint/style/useNamingConvention: GET is a standard HTTP method name for Next.js API routes
+export async function GET(_request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const query = searchParams.get('query');
+    const { searchParams } = new URL(_request.url);
+    const query = searchParams.get("query");
 
     if (!query) {
-      return NextResponse.json({ error: 'Query parameter is required' }, { status: 400 });
+      return NextResponse.json({ error: "Query parameter is required" }, { status: 400 });
     }
 
     const docs = await getDocs();
@@ -77,7 +78,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(searchResults);
   } catch (error) {
-    console.error('Error searching docs:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Error searching docs:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

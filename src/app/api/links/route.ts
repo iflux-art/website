@@ -1,13 +1,13 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import { type Dirent, promises as fs } from 'fs';
-import path from 'path';
-import type { CategoryId, LinksItem } from '@/features/links/types';
+import { promises as fs, type Dirent } from "node:fs";
+import path from "node:path";
 import {
   addItemToCategory,
   checkUrlExists,
   deleteItem,
   updateItem,
-} from '@/features/links/lib/categories';
+} from "@/features/links/lib/categories";
+import type { CategoryId, LinksItem } from "@/features/links/types";
+import { type NextRequest, NextResponse } from "next/server";
 
 // 定义类型
 interface LinksRequestBody {
@@ -31,9 +31,9 @@ interface LinksUpdateBody extends LinksRequestBody {
 async function processRootFiles(linksDir: string, allItems: LinksItem[]): Promise<void> {
   const rootFiles = await fs.readdir(linksDir);
   for (const file of rootFiles) {
-    if (file.endsWith('.json')) {
+    if (file.endsWith(".json")) {
       const filePath = path.join(linksDir, file);
-      const data = await fs.readFile(filePath, 'utf8');
+      const data = await fs.readFile(filePath, "utf8");
       const items: LinksItem[] = JSON.parse(data) as LinksItem[];
       allItems.push(...items);
     }
@@ -52,13 +52,13 @@ async function processSubdirectoryFiles(
   const files = await fs.readdir(dirPath);
 
   for (const file of files) {
-    if (file.endsWith('.json')) {
+    if (file.endsWith(".json")) {
       const filePath = path.join(dirPath, file);
-      const data = await fs.readFile(filePath, 'utf8');
+      const data = await fs.readFile(filePath, "utf8");
       const items: LinksItem[] = JSON.parse(data) as LinksItem[];
 
       // 为每个项目设置正确的分类
-      const categoryName = `${dir.name}/${file.replace('.json', '')}` as CategoryId;
+      const categoryName = `${dir.name}/${file.replace(".json", "")}` as CategoryId;
       items.forEach((item: LinksItem) => {
         item.category = categoryName;
       });
@@ -82,7 +82,7 @@ async function processSubdirectories(linksDir: string, allItems: LinksItem[]): P
 
 // 获取所有分类文件夹和文件
 async function getAllLinksData(): Promise<LinksItem[]> {
-  const linksDir = path.join(process.cwd(), 'src/content/links');
+  const linksDir = path.join(process.cwd(), "src/content/links");
   const allItems: LinksItem[] = [];
 
   try {
@@ -94,7 +94,7 @@ async function getAllLinksData(): Promise<LinksItem[]> {
 
     return allItems;
   } catch (error) {
-    console.error('Error reading links data:', error);
+    console.error("Error reading links data:", error);
     return [];
   }
 }
@@ -104,6 +104,7 @@ function generateId(): string {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function GET() {
   try {
     // Starting to get all links data
@@ -111,17 +112,18 @@ export async function GET() {
     // Found items
     return NextResponse.json(items);
   } catch (error) {
-    console.error('Error in links API:', error);
+    console.error("Error in links API:", error);
     return NextResponse.json(
       {
-        error: 'Failed to read links data',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to read links data",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
   }
 }
 
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function POST(request: NextRequest) {
   try {
     const body: LinksRequestBody = (await request.json()) as LinksRequestBody;
@@ -138,24 +140,24 @@ export async function POST(request: NextRequest) {
     const category = categoryString as CategoryId;
 
     // 验证必填字段
-    if (!title || !url || !category) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    if (!(title && url && category)) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // 检查URL是否已存在
     const urlExists = await checkUrlExists(url);
     if (urlExists) {
-      return NextResponse.json({ error: 'URL already exists' }, { status: 400 });
+      return NextResponse.json({ error: "URL already exists" }, { status: 400 });
     }
 
     // 创建新项目
     const newItem: LinksItem = {
       id: generateId(),
       title,
-      description: description ?? '',
+      description: description ?? "",
       url,
-      icon: icon ?? '',
-      iconType: (iconType ?? 'image') as 'image' | 'text',
+      icon: icon ?? "",
+      iconType: (iconType ?? "image") as "image" | "text",
       tags: tags ?? [],
       featured: featured ?? false,
       category,
@@ -168,11 +170,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
-    console.error('Error creating item:', error);
+    console.error("Error creating item:", error);
     return NextResponse.json(
       {
-        error: 'Failed to create item',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to create item",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
@@ -188,14 +190,14 @@ async function validateUpdateRequest(
   const category = categoryString as CategoryId;
 
   // 验证必填字段
-  if (!title || !url || !category) {
-    return { valid: false, error: 'Missing required fields' };
+  if (!(title && url && category)) {
+    return { valid: false, error: "Missing required fields" };
   }
 
   // 检查URL是否已存在（排除当前项目）
   const urlExists = await checkUrlExists(url, id);
   if (urlExists) {
-    return { valid: false, error: 'URL already exists' };
+    return { valid: false, error: "URL already exists" };
   }
 
   return { valid: true };
@@ -217,23 +219,24 @@ function buildUpdateData(body: LinksUpdateBody) {
 
   return {
     title,
-    description: description ?? '',
+    description: description ?? "",
     url,
-    icon: icon ?? '',
-    iconType: (iconType ?? 'image') as 'image' | 'text',
+    icon: icon ?? "",
+    iconType: (iconType ?? "image") as "image" | "text",
     tags: tags ?? [],
     featured: featured ?? false,
     category,
   };
 }
 
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: 'Missing item ID' }, { status: 400 });
+      return NextResponse.json({ error: "Missing item ID" }, { status: 400 });
     }
 
     const body: LinksUpdateBody = (await request.json()) as LinksUpdateBody;
@@ -251,45 +254,46 @@ export async function PUT(request: NextRequest) {
     const updatedItem = await updateItem(id, updateData);
 
     if (!updatedItem) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
     return NextResponse.json(updatedItem);
   } catch (error) {
-    console.error('Error updating item:', error);
+    console.error("Error updating item:", error);
     return NextResponse.json(
       {
-        error: 'Failed to update item',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to update item",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
   }
 }
 
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: 'Missing item ID' }, { status: 400 });
+      return NextResponse.json({ error: "Missing item ID" }, { status: 400 });
     }
 
     // 删除项目
     const success = await deleteItem(id);
 
     if (!success) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error deleting item:', error);
+    console.error("Error deleting item:", error);
     return NextResponse.json(
       {
-        error: 'Failed to delete item',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to delete item",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );

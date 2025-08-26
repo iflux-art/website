@@ -1,3 +1,4 @@
+import type { BaseNavItem } from "@/types";
 import {
   BookOpen,
   Compass,
@@ -7,8 +8,7 @@ import {
   Info,
   Link,
   type LucideIcon,
-} from 'lucide-react';
-import type { BaseNavItem } from '@/types';
+} from "lucide-react";
 
 /**
  * 导航配置项接口
@@ -26,51 +26,51 @@ export interface NavConfigItem extends BaseNavItem {
 
 export const NAV_ITEMS = [
   {
-    key: 'blog',
-    label: '博客',
-    description: '阅读最新的文章，了解行业动态和技术趋势',
+    key: "blog",
+    label: "博客",
+    description: "阅读最新的文章，了解行业动态和技术趋势",
     icon: BookOpen,
   },
   {
-    key: 'docs',
-    label: '文档',
-    description: '查看详细的文档和指南，了解如何使用我们的产品和服务',
+    key: "docs",
+    label: "文档",
+    description: "查看详细的文档和指南，了解如何使用我们的产品和服务",
     icon: FileText,
   },
   {
-    key: 'links',
-    label: '导航',
-    description: '发现精选的网站和工具，提高您的工作效率',
+    key: "links",
+    label: "导航",
+    description: "发现精选的网站和工具，提高您的工作效率",
     icon: Compass,
   },
   {
-    key: 'friends',
-    label: '友链',
-    description: '探索我们的合作伙伴和友情链接，发现更多优质资源',
+    key: "friends",
+    label: "友链",
+    description: "探索我们的合作伙伴和友情链接，发现更多优质资源",
     icon: Link,
   },
   {
-    key: 'about',
-    label: '关于',
-    description: '了解我们的项目理念和个人主页，探索更多信息',
+    key: "about",
+    label: "关于",
+    description: "了解我们的项目理念和个人主页，探索更多信息",
     icon: Info,
   },
 ] as const;
 
 export const ADMIN_MENU_ITEMS = [
   {
-    key: 'admin',
-    label: '管理',
-    description: '查看系统概览和统计信息',
+    key: "admin",
+    label: "管理",
+    description: "查看系统概览和统计信息",
     icon: Home,
-    permission: 'admin.dashboard.view',
+    permission: "admin.dashboard.view",
   },
   {
-    key: 'admin/links',
-    label: '网址管理',
-    description: '管理网站导航中的所有网址',
+    key: "admin/links",
+    label: "网址管理",
+    description: "管理网站导航中的所有网址",
     icon: Globe,
-    permission: 'admin.links.manage',
+    permission: "admin.links.manage",
   },
 ] as const satisfies (NavConfigItem & {
   permission?: string;
@@ -91,11 +91,11 @@ const flattenNavItems = (items: readonly NavConfigItem[]): NavConfigItem[] => {
 const FLAT_NAV_ITEMS: NavConfigItem[] = flattenNavItems(NAV_ITEMS);
 
 export const NAV_PATHS: Record<string, string> = {
-  blog: '/blog',
-  docs: '/docs',
-  links: '/links',
-  friends: '/friends',
-  about: '/about',
+  blog: "/blog",
+  docs: "/docs",
+  links: "/links",
+  friends: "/friends",
+  about: "/about",
 } as const;
 
 /**

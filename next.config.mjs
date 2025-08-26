@@ -1,18 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   logging: {
-    level: 'verbose'
+    level: "verbose",
   },
   // 基本配置
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 
   // 配置外部包
   serverExternalPackages: [],
 
-  // ESLint 和 TypeScript 错误检查配置
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
+  // TypeScript 错误检查配置
   typescript: {
     ignoreBuildErrors: false,
   },
@@ -21,10 +18,10 @@ const nextConfig = {
   experimental: {
     // 优化构建输出 - 添加所有可能影响性能的包
     optimizePackageImports: [
-      'lucide-react',
-      '@radix-ui/react-dialog',
-      '@radix-ui/react-collapsible',
-      '@radix-ui/react-slot',
+      "lucide-react",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-slot",
     ],
     // 优化页面加载
     optimisticClientCache: true,
@@ -34,30 +31,30 @@ const nextConfig = {
 
   // 图片优化配置
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24, // 24 小时
     disableStaticImages: false,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'img.dava.cc',
-        pathname: '/img/**',
+        protocol: "https",
+        hostname: "img.dava.cc",
+        pathname: "/img/**",
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        pathname: '/**',
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "/**",
       },
     ],
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
+    contentDispositionType: "attachment",
   },
 
   // 启用压缩
@@ -65,23 +62,23 @@ const nextConfig = {
 
   // 模块化导入配置
   modularizeImports: {
-    'lucide-react': {
-      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    "lucide-react": {
+      transform: "lucide-react/dist/esm/icons/{{kebabCase member}}",
     },
-    '@radix-ui/react-icons': {
-      transform: '@radix-ui/react-icons/dist/{{kebabCase member}}',
+    "@radix-ui/react-icons": {
+      transform: "@radix-ui/react-icons/dist/{{kebabCase member}}",
     },
   },
 
-  // 增加全局 CSP header 以允许 va.vercel-scripts.com
+  // 增加全局 CSP header 以允许 va.vercel-scripts.com 和 Web Workers
   headers: async () => [
     {
-      source: '/(.*)',
+      source: "/(.*)",
       headers: [
         {
-          key: 'Content-Security-Policy',
+          key: "Content-Security-Policy",
           value:
-            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com;",
+            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; worker-src 'self' blob:;",
         },
       ],
     },
@@ -89,15 +86,15 @@ const nextConfig = {
 
   // 强制静态生成配置
   trailingSlash: true,
-  
+
   // 优化函数大小
   webpack: (config, { isServer }) => {
     if (isServer) {
       // 排除大文件从服务端包中
       config.externals = config.externals || [];
       config.externals.push({
-        'src/config/links/items.json': 'commonjs src/config/links/items.json',
-        'src/config/links/categories.json': 'commonjs src/config/links/categories.json',
+        "src/config/links/items.json": "commonjs src/config/links/items.json",
+        "src/config/links/categories.json": "commonjs src/config/links/categories.json",
       });
     }
     return config;

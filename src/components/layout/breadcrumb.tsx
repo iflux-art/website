@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import Link from "next/link";
+import React from "react";
 
 // 内联面包屑相关类型定义
 interface BreadcrumbItem {
@@ -35,8 +35,8 @@ interface BreadcrumbProps {
  *   ]}
  * />
  */
-export const Breadcrumb = ({ items, separator = '/', className }: BreadcrumbProps) => (
-  <nav className={cn('text-sm font-medium text-muted-foreground', className)}>
+export const Breadcrumb = ({ items, separator = "/", className }: BreadcrumbProps) => (
+  <nav className={cn("text-sm font-medium text-muted-foreground", className)}>
     <ol className="flex flex-wrap items-center">
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
@@ -44,10 +44,10 @@ export const Breadcrumb = ({ items, separator = '/', className }: BreadcrumbProp
         const { label } = item;
         // 目录 href 跳转到第一篇文档
         let { href } = item;
-        if (!isLast && !href) {
+        if (!(isLast || href)) {
           // 移除 getDirectoryTitle, getFirstDocInDirectory 的 import
           // 不再做任何 Node API 调用
-          href = ''; // 或者根据实际需求设置一个默认值
+          href = ""; // 或者根据实际需求设置一个默认值
         }
         return (
           <li key={item.label} className="flex items-center">

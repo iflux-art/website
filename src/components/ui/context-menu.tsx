@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { createPortal } from 'react-dom';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import * as React from "react";
+import { createPortal } from "react-dom";
 
 /**
  * 简化的右键菜单实现
@@ -32,11 +32,11 @@ export const ContextMenu = ({ children }: { children: React.ReactNode }) => {
     };
 
     if (state.isOpen) {
-      document.addEventListener('click', handleClickOutside);
-      document.addEventListener('contextmenu', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
+      document.addEventListener("contextmenu", handleClickOutside);
       return () => {
-        document.removeEventListener('click', handleClickOutside);
-        document.removeEventListener('contextmenu', handleClickOutside);
+        document.removeEventListener("click", handleClickOutside);
+        document.removeEventListener("contextmenu", handleClickOutside);
       };
     }
 
@@ -51,11 +51,11 @@ export const ContextMenu = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const ContextMenuTrigger = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { asChild?: boolean }
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
 >(({ className, children, asChild, ...props }, ref) => {
   const context = React.useContext(ContextMenuContext);
-  if (!context) throw new Error('ContextMenuTrigger must be used within ContextMenu');
+  if (!context) throw new Error("ContextMenuTrigger must be used within ContextMenu");
 
   const { setState } = context;
 
@@ -67,30 +67,50 @@ export const ContextMenuTrigger = React.forwardRef<
     });
   };
 
+  // 添加键盘事件支持
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // 空格键或回车键触发菜单
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      setState({
+        isOpen: true,
+        position: { x: 0, y: 0 }, // 位置将在后续调整
+      });
+    }
+  };
+
   if (asChild && React.isValidElement(children)) {
     return React.cloneElement(
       children as React.ReactElement<unknown>,
       {
         onContextMenu: handleContextMenu,
+        onKeyDown: handleKeyDown,
         ...props,
       } as React.HTMLAttributes<HTMLElement>
     );
   }
 
   return (
-    <div ref={ref} className={cn('', className)} onContextMenu={handleContextMenu} {...props}>
+    <button
+      ref={ref}
+      className={cn("block", className)}
+      onContextMenu={handleContextMenu}
+      onKeyDown={handleKeyDown}
+      type="button"
+      {...props}
+    >
       {children}
-    </div>
+    </button>
   );
 });
-ContextMenuTrigger.displayName = 'ContextMenuTrigger';
+ContextMenuTrigger.displayName = "ContextMenuTrigger";
 
 export const ContextMenuContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
   const context = React.useContext(ContextMenuContext);
-  if (!context) throw new Error('ContextMenuContent must be used within ContextMenu');
+  if (!context) throw new Error("ContextMenuContent must be used within ContextMenu");
 
   const { state } = context;
 
@@ -100,7 +120,7 @@ export const ContextMenuContent = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        'animate-in fade-in-80 zoom-in-95 fixed z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+        "animate-in fade-in-80 zoom-in-95 fixed z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
         className
       )}
       style={{
@@ -114,7 +134,7 @@ export const ContextMenuContent = React.forwardRef<
     document.body
   );
 });
-ContextMenuContent.displayName = 'ContextMenuContent';
+ContextMenuContent.displayName = "ContextMenuContent";
 
 export const ContextMenuItem = React.forwardRef<
   HTMLDivElement,
@@ -134,33 +154,73 @@ export const ContextMenuItem = React.forwardRef<
     }
   };
 
+  // 添加键盘事件支持
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // 回车键或空格键触发点击
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      if (!disabled && onClick) {
+        // 创建一个兼容的事件对象
+        const syntheticEvent = {
+          ...e,
+          type: "click",
+          // 添加鼠标事件特有的属性（设置为默认值）
+          button: 0,
+          buttons: 1,
+          clientX: 0,
+          clientY: 0,
+          screenX: 0,
+          screenY: 0,
+          pageX: 0,
+          pageY: 0,
+          nativeEvent: e.nativeEvent,
+        } as unknown as React.MouseEvent<HTMLDivElement>;
+
+        onClick(syntheticEvent);
+        // 点击后关闭菜单
+        if (context) {
+          context.setState(prev => ({ ...prev, isOpen: false }));
+        }
+      }
+    }
+    // Escape 键关闭菜单
+    if (e.key === "Escape") {
+      if (context) {
+        context.setState(prev => ({ ...prev, isOpen: false }));
+      }
+    }
+  };
+
   return (
     <div
       ref={ref}
       className={cn(
-        'relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none',
-        inset && 'pl-8',
-        disabled && 'pointer-events-none opacity-50',
+        "relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none",
+        inset && "pl-8",
+        disabled && "pointer-events-none opacity-50",
         !disabled &&
-          'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+          "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
         className
       )}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="menuitem"
+      tabIndex={disabled ? -1 : 0}
       {...props}
     >
       {children}
     </div>
   );
 });
-ContextMenuItem.displayName = 'ContextMenuItem';
+ContextMenuItem.displayName = "ContextMenuItem";
 
 export const ContextMenuSeparator = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('-mx-1 my-1 h-px bg-border', className)} {...props} />
+  <div ref={ref} className={cn("-mx-1 my-1 h-px bg-border", className)} {...props} />
 ));
-ContextMenuSeparator.displayName = 'ContextMenuSeparator';
+ContextMenuSeparator.displayName = "ContextMenuSeparator";
 
 // 为了保持API兼容性，导出一些占位组件
 export const ContextMenuLabel = ContextMenuItem;
@@ -169,7 +229,7 @@ export const ContextMenuShortcut = ({
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) => (
   <span
-    className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
+    className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
     {...props}
   />
 );

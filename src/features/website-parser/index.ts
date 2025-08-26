@@ -3,10 +3,10 @@
  */
 
 // ==================== 类型定义导出 ====================
-export * from './types';
+export type { WebsiteMetadata, CacheItem, ParseOptions, ParseResult } from "./types";
 
 // ==================== 工具函数导出 ====================
-export * from './lib/parser';
+export { parseWebsite, parseWebsites, clearCache, getCacheSize, isValidUrl } from "./lib/parser";
 
 // ==================== Hooks 导出 ====================
-export * from './hooks';
+export { useWebsiteParser } from "./hooks";

@@ -14,7 +14,7 @@ export function formatPublishTime(date: Date | string | undefined): string | und
   if (!date) return undefined;
 
   try {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    const dateObj = typeof date === "string" ? new Date(date) : date;
     return dateObj.toISOString();
   } catch {
     return undefined;
@@ -24,13 +24,13 @@ export function formatPublishTime(date: Date | string | undefined): string | und
 /**
  * 获取页面级的loading状态文本
  */
-export function getLoadingText(type = '内容'): string {
+export function getLoadingText(type = "内容"): string {
   return `正在加载${type}...`;
 }
 
 /**
  * 获取页面级的错误文本
  */
-export function getErrorText(type = '内容', action = '加载'): string {
+export function getErrorText(type = "内容", action = "加载"): string {
   return `${action}${type}失败，请稍后重试`;
 }

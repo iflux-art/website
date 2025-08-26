@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import { getAllDocsStructure } from '@/features/docs/components';
-import type { NavDocItem, SidebarItem } from '@/features/docs/types';
-import { getDocSidebar } from './index';
+import fs from "node:fs";
+import path from "node:path";
+import { getAllDocsStructure } from "@/features/docs/components";
+import type { NavDocItem, SidebarItem } from "@/features/docs/types";
+import { getDocSidebar } from "./index";
 
 interface ScanOptions {
   contentDir: string;
@@ -12,7 +12,7 @@ interface ScanOptions {
   filter?: (itemPath: string) => boolean;
 }
 
-const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
+const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
 
 let docsStructureCache: { slug: string[] }[] | null = null;
@@ -32,8 +32,8 @@ export const scanContentDirectory = (options: ScanOptions): { slug: string[] }[]
   const {
     contentDir,
     indexFiles = DOCS_INDEX_FILES,
-    extensions = ['.mdx', '.md'],
-    excludePrefix = '_',
+    extensions = [".mdx", ".md"],
+    excludePrefix = "_",
     filter,
   } = options;
 
@@ -54,7 +54,7 @@ export const scanContentDirectory = (options: ScanOptions): { slug: string[] }[]
         if (filter && !filter(itemPath)) continue;
         if (indexFiles.includes(item)) continue;
 
-        const slug = [...currentSlug, item.replace(/\.(mdx|md)$/, '')];
+        const slug = [...currentSlug, item.replace(/\.(mdx|md)$/, "")];
         paths.push({ slug });
       }
     }
@@ -73,18 +73,18 @@ export const generateDocPathsFromStructure = (): { slug: string[] }[] => {
 
   try {
     const structure = getAllDocsStructure();
-    if (!structure || !structure.categories) return [];
+    if (!structure?.categories) return [];
 
     function traverse(items: SidebarItem[], currentSlug: string[] = []) {
-      if (!items || !Array.isArray(items)) {
+      if (!(items && Array.isArray(items))) {
         return;
       }
 
       for (const item of items) {
-        if (item.type === 'menu' && item.items && item.items.length > 0) {
+        if (item.type === "menu" && item.items && item.items.length > 0) {
           traverse(item.items, [...currentSlug, item.title]);
-        } else if (item.type === 'page') {
-          const pathKey = [...currentSlug, item.title].join('/');
+        } else if (item.type === "page") {
+          const pathKey = [...currentSlug, item.title].join("/");
           if (!seenPaths.has(pathKey)) {
             seenPaths.add(pathKey);
             paths.push({ slug: [...currentSlug, item.title] });
@@ -102,7 +102,7 @@ export const generateDocPathsFromStructure = (): { slug: string[] }[] => {
 
     return paths;
   } catch (error) {
-    console.error('Error generating doc paths from structure:', error);
+    console.error("Error generating doc paths from structure:", error);
     return [];
   }
 };
@@ -127,7 +127,7 @@ export const generateDocPaths = (): { slug: string[] }[] => {
   performanceMetrics.pathGenerationTime = Date.now() - startTime;
   performanceMetrics.totalPaths = paths.length;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.warn(
       `Generated ${paths.length} doc paths in ${performanceMetrics.pathGenerationTime}ms`
     );
@@ -140,7 +140,7 @@ export const generateDocPaths = (): { slug: string[] }[] => {
  * 检查是否为有效的导航项
  */
 function isValidNavigationItem(item: SidebarItem): boolean {
-  return item.type !== 'separator' && !item.isExternal && !!item.href;
+  return item.type !== "separator" && !item.isExternal && !!item.href;
 }
 
 /**
@@ -149,20 +149,20 @@ function isValidNavigationItem(item: SidebarItem): boolean {
 function normalizeItemPath(item: SidebarItem, topLevelCategory: string): string {
   let itemPath = item.href;
   if (!itemPath) {
-    return '';
+    return "";
   }
-  if (!itemPath.startsWith('/docs/')) {
+  if (!itemPath.startsWith("/docs/")) {
     // This case should ideally not happen if hrefs from getDocDirectoryStructure are well-formed
-    itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, '')}`;
+    itemPath = `/docs/${topLevelCategory}/${itemPath.replace(/^\//, "")}`;
   }
-  return itemPath.replace(/\\/g, '/');
+  return itemPath.replace(/\\/g, "/");
 }
 
 /**
  * 检查是否为index页面
  */
 function isIndexPage(itemPath: string): boolean {
-  return itemPath.endsWith('/index');
+  return itemPath.endsWith("/index");
 }
 
 /**
@@ -184,7 +184,7 @@ function processNavigationItem(
   }
 
   // Process page items and menu items that are also pages
-  if (item.type === 'page' || (item.type === 'menu' && item.href)) {
+  if (item.type === "page" || (item.type === "menu" && item.href)) {
     const itemPath = normalizeItemPath(item, topLevelCategory);
 
     // Ensure it's not an accidental link to an index page that should be hidden from prev/next
@@ -196,7 +196,7 @@ function processNavigationItem(
   }
 
   // Recursively process children of a menu
-  if (item.items && item.items.length > 0 && item.type === 'menu') {
+  if (item.items && item.items.length > 0 && item.type === "menu") {
     recurseNavigationItems(item.items, topLevelCategory, flatList);
   }
 }
@@ -209,7 +209,7 @@ function recurseNavigationItems(
   topLevelCategory: string,
   flatList: NavDocItem[]
 ): void {
-  if (!items || !Array.isArray(items)) {
+  if (!(items && Array.isArray(items))) {
     return;
   }
 

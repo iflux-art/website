@@ -8,8 +8,8 @@
  * @since 2024
  */
 
-/** URL 类型 */
-export type URL = string;
+/** Url 类型 */
+export type Url = string;
 
 /** 基础 Frontmatter 类型 */
 export interface BaseFrontmatter {

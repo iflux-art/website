@@ -3,12 +3,12 @@
  * @module hooks/use-blog
  */
 
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { type HookResult, useContentData } from '../../../hooks/use-content-data';
-import { API_PATHS } from '@/lib/api/api-paths';
-import type { BlogPost, CategoryWithCount } from '@/features/blog/types';
+import type { BlogPost, CategoryWithCount } from "@/features/blog/types";
+import { API_PATHS } from "@/lib/api/api-paths";
+import { useMemo } from "react";
+import { type HookResult, useContentData } from "../../../hooks/use-content-data";
 
 export interface TagCount {
   tag: string;
@@ -38,7 +38,7 @@ export interface UseTimelinePostsResult extends BlogResult<Record<string, BlogPo
  * 按日期对博客文章进行排序
  */
 function sortPostsByDate(posts: BlogPost[] | null | undefined) {
-  if (!posts || !Array.isArray(posts)) return [];
+  if (!(posts && Array.isArray(posts))) return [];
   return [...posts].sort((a, b) => {
     if (a.date && b.date) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -59,10 +59,10 @@ export function useBlogPosts(): UseBlogPostsResult {
     error,
     refresh,
   } = useContentData<BlogPost[]>({
-    type: 'blog',
-    path: API_PATHS.BLOG.POSTS,
+    type: "blog",
+    path: API_PATHS.blog.Posts,
     disableCache: true, // 禁用缓存，确保获取最新数据
-    params: { cache: 'no-store' }, // 添加参数帮助禁用服务器缓存
+    params: { cache: "no-store" }, // 添加参数帮助禁用服务器缓存
     forceRefresh: true, // 强制刷新，缓存破坏
   });
 
@@ -120,8 +120,8 @@ export function useBlogPosts(): UseBlogPostsResult {
  */
 export function useTagCounts(): HookResult<TagCount[]> {
   const { data, loading, error, refresh } = useContentData<Record<string, number>>({
-    type: 'blog',
-    path: API_PATHS.BLOG.TAGS_COUNT,
+    type: "blog",
+    path: API_PATHS.blog.TagsCount,
   });
 
   const tagCounts = useMemo(() => {
@@ -149,8 +149,8 @@ export function useTagCounts(): HookResult<TagCount[]> {
  */
 export function useTimelinePosts(): UseTimelinePostsResult {
   const { data, loading, error, refresh } = useContentData<Record<string, BlogPost[]>>({
-    type: 'blog',
-    path: API_PATHS.BLOG.TIMELINE,
+    type: "blog",
+    path: API_PATHS.blog.Timeline,
   });
 
   return {
@@ -167,15 +167,15 @@ export function useTimelinePosts(): UseTimelinePostsResult {
  * @returns 所有博客文章列表
  */
 export async function getAllPosts() {
-  const response = await fetch('/api/blog/posts', {
-    method: 'GET',
+  const response = await fetch("/api/blog/posts", {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
   if (!response.ok) {
-    throw new Error('获取博客文章失败');
+    throw new Error("获取博客文章失败");
   }
 
   const posts = (await response.json()) as BlogPost[];
@@ -183,4 +183,4 @@ export async function getAllPosts() {
 }
 
 // Blog 页面状态管理 Hook
-export { useBlogPage } from './use-blog-page';
+export { useBlogPage } from "./use-blog-page";

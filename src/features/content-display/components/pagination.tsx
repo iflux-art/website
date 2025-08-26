@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import type { NavDocItem } from '@/features/docs/types';
+import { Card, CardContent } from "@/components/ui/card";
+import type { NavDocItem } from "@/features/docs/types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export interface DocPaginationProps {
   prevDoc?: NavDocItem | null;
@@ -9,7 +9,7 @@ export interface DocPaginationProps {
 }
 
 export const DocPagination = ({ prevDoc, nextDoc }: DocPaginationProps) => {
-  if (!prevDoc && !nextDoc) return null;
+  if (!(prevDoc || nextDoc)) return null;
 
   return (
     <div className="mt-4 flex justify-between gap-4">

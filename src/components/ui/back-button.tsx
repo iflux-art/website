@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 /**
  * 客户端返回上页按钮组件

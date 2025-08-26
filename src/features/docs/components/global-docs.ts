@@ -1,16 +1,16 @@
 /**
- * 全局文档结构管理函数
- * 提供跨分类的文档导航和路径解析功能
+ * 全局文档结构管理
+ * 提供文档分类和结构的全局管理功能
  */
 
-import fs from 'fs';
-import path from 'path';
-import type { DocCategory, SidebarItem } from '@/features/docs/types';
-import { getDocCategories, getDocDirectoryStructure } from '@/features/docs/lib';
+import fs from "node:fs";
+import path from "node:path";
+import { getDocCategories, getDocDirectoryStructure } from "@/features/docs/lib";
+import type { DocCategory, SidebarItem } from "@/features/docs/types";
 
 // 常量定义
-const DOCS_CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'docs');
-const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
+const DOCS_CONTENT_DIR = path.join(process.cwd(), "src", "content", "docs");
+const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 
 /**
  * 全局文档结构接口
@@ -34,7 +34,7 @@ export interface DocCategoryWithDocs extends DocCategory {
  * 文档路径解析结果接口
  */
 export interface DocPathResolution {
-  type: 'document' | 'category' | 'redirect' | 'notfound';
+  type: "document" | "category" | "redirect" | "notfound";
   targetPath?: string;
   redirectTo?: string;
   isIndex?: boolean;
@@ -50,7 +50,7 @@ export function getAllDocsStructure(): GlobalDocsStructure {
   const categories = getDocCategories();
   const categoriesWithDocs: DocCategoryWithDocs[] = [];
   let totalDocs = 0;
-  let firstDocPath = '';
+  let firstDocPath = "";
 
   for (const category of categories) {
     const categoryDocs = getDocDirectoryStructure(DOCS_CONTENT_DIR, category.id);
@@ -62,7 +62,7 @@ export function getAllDocsStructure(): GlobalDocsStructure {
     totalDocs += docCount;
 
     // 确定第一个文档路径
-    let categoryFirstDocPath = '';
+    let categoryFirstDocPath = "";
     if (hasIndex) {
       categoryFirstDocPath = `/docs/${category.id}`;
     } else if (firstDoc) {
@@ -84,7 +84,7 @@ export function getAllDocsStructure(): GlobalDocsStructure {
 
   return {
     categories: categoriesWithDocs,
-    firstDocPath: firstDocPath || '/docs',
+    firstDocPath: firstDocPath || "/docs",
     totalDocs,
   };
 }
@@ -110,12 +110,12 @@ export function getFirstAvailableDoc(): string {
 export function resolveDocumentPath(slugPath: string[]): DocPathResolution {
   if (!slugPath || slugPath.length === 0) {
     return {
-      type: 'redirect',
+      type: "redirect",
       redirectTo: getFirstAvailableDoc(),
     };
   }
 
-  const requestedPath = slugPath.join('/');
+  const requestedPath = slugPath.join("/");
   const absolutePath = path.join(DOCS_CONTENT_DIR, requestedPath);
 
   // 检查路径是否存在
@@ -126,19 +126,19 @@ export function resolveDocumentPath(slugPath: string[]): DocPathResolution {
 
     if (fs.existsSync(mdxPath) || fs.existsSync(mdPath)) {
       return {
-        type: 'document',
+        type: "document",
         targetPath: `/docs/${requestedPath}`,
       };
     }
 
-    return { type: 'notfound' };
+    return { type: "notfound" };
   }
 
   const stats = fs.statSync(absolutePath);
 
   if (stats.isFile()) {
     return {
-      type: 'document',
+      type: "document",
       targetPath: `/docs/${requestedPath}`,
     };
   }
@@ -149,7 +149,7 @@ export function resolveDocumentPath(slugPath: string[]): DocPathResolution {
       const indexPath = path.join(absolutePath, indexFile);
       if (fs.existsSync(indexPath)) {
         return {
-          type: 'document',
+          type: "document",
           targetPath: `/docs/${requestedPath}`,
           isIndex: true,
         };
@@ -162,15 +162,15 @@ export function resolveDocumentPath(slugPath: string[]): DocPathResolution {
 
     if (firstDoc) {
       return {
-        type: 'redirect',
+        type: "redirect",
         redirectTo: firstDoc,
       };
     }
 
-    return { type: 'notfound' };
+    return { type: "notfound" };
   }
 
-  return { type: 'notfound' };
+  return { type: "notfound" };
 }
 
 // ==================== 辅助函数 ====================
@@ -196,11 +196,11 @@ function checkCategoryHasIndex(categoryId: string): boolean {
  */
 function findFirstDocInCategory(items: SidebarItem[]): string | null {
   for (const item of items) {
-    if (item.type === 'page' && item.href) {
+    if (item.type === "page" && item.href) {
       return item.href;
     }
 
-    if (item.type === 'menu' && item.items && item.items.length > 0) {
+    if (item.type === "menu" && item.items && item.items.length > 0) {
       const firstInSubmenu = findFirstDocInCategory(item.items);
       if (firstInSubmenu) {
         return firstInSubmenu;
@@ -218,7 +218,7 @@ function countDocsInSidebarItems(items: SidebarItem[]): number {
   let count = 0;
 
   for (const item of items) {
-    if (item.type === 'page') {
+    if (item.type === "page") {
       count += 1;
     }
 

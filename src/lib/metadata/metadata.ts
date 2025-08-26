@@ -3,22 +3,22 @@
  * 整合了网站基础元数据生成的所有逻辑
  */
 
-import { SITE_METADATA } from '@/config/metadata';
-import type { Metadata } from 'next';
-import type { GenerateMetadataOptions } from '@/types';
-import { filterUndefinedValues } from '../../utils';
+import { SITE_METADATA } from "@/config/metadata";
+import type { GenerateMetadataOptions } from "@/types";
+import type { Metadata } from "next";
+import { filterUndefinedValues } from "../../utils";
 
 /**
  * 生成视口配置
  */
 export function generateViewport() {
   return {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
     maximumScale: 2,
     themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-      { media: '(prefers-color-scheme: dark)', color: '#000000' },
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#000000" },
     ],
   };
 }
@@ -32,7 +32,7 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
     description = SITE_METADATA.description,
     keywords = SITE_METADATA.keywords,
     author = SITE_METADATA.author,
-    type = 'website',
+    type = "website",
     date: publishedTime,
     modified: modifiedTime,
     image,
@@ -49,7 +49,7 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
   const metadata: Metadata = {
     title: title ? `${title} | ${SITE_METADATA.title}` : SITE_METADATA.title,
     description,
-    keywords: keywords.join(', '),
+    keywords: keywords.join(", "),
     authors: author ? [{ name: author }] : undefined,
     creator: author,
     publisher: SITE_METADATA.title,
@@ -105,9 +105,9 @@ function createRobotsConfig(noindex: boolean, nofollow: boolean) {
     googleBot: {
       index: !noindex,
       follow: !nofollow,
-      'max-video-preview': -1,
-      'max-image-preview': 'large' as const,
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large" as const,
+      "max-snippet": -1,
     },
   };
 }
@@ -118,7 +118,7 @@ function createRobotsConfig(noindex: boolean, nofollow: boolean) {
 function createOpenGraphConfig(options: {
   title: string | undefined;
   description: string;
-  type: 'website' | 'article' | 'profile';
+  type: "website" | "article" | "profile";
   url: string | undefined;
   image: string | undefined;
   publishedTime: string | undefined;
@@ -149,7 +149,7 @@ function createTwitterConfig(options: {
   const { title, description, image } = options;
 
   return {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: title ?? SITE_METADATA.title,
     description,
     images: image ? [image] : undefined,
@@ -160,19 +160,19 @@ function createTwitterConfig(options: {
 /**
  * 添加 JSON-LD 结构化数据到元数据
  */
-function addJsonLdToMetadata(metadata: Metadata, jsonLd: GenerateMetadataOptions['jsonLd']) {
+function addJsonLdToMetadata(metadata: Metadata, jsonLd: GenerateMetadataOptions["jsonLd"]) {
   if (!jsonLd) return;
 
   const jsonLdData = {
-    '@context': 'https://schema.org',
-    '@type': jsonLd.type,
+    "@context": "https://schema.org",
+    "@type": jsonLd.type,
     name: jsonLd.name,
     description: jsonLd.description,
     url: jsonLd.url,
     image: jsonLd.image,
     author: jsonLd.author
       ? {
-          '@type': 'Person',
+          "@type": "Person",
           name: jsonLd.author,
         }
       : undefined,
@@ -183,7 +183,7 @@ function addJsonLdToMetadata(metadata: Metadata, jsonLd: GenerateMetadataOptions
 
   // 创建一个新的对象来避免类型冲突
   const otherData: Record<string, string> = {};
-  otherData['application/ld+json'] = JSON.stringify(jsonLdData);
+  otherData["application/ld+json"] = JSON.stringify(jsonLdData);
 
   metadata.other = {
     ...metadata.other,
@@ -194,7 +194,7 @@ function addJsonLdToMetadata(metadata: Metadata, jsonLd: GenerateMetadataOptions
 /**
  * 更新社交媒体元数据
  */
-function updateSocialMetadata(metadata: Metadata, social: GenerateMetadataOptions['social']) {
+function updateSocialMetadata(metadata: Metadata, social: GenerateMetadataOptions["social"]) {
   if (!social) return;
 
   if (social.twitter && metadata.twitter) {
@@ -215,13 +215,13 @@ function updateSocialMetadata(metadata: Metadata, social: GenerateMetadataOption
 /**
  * 生成文章类型的元数据
  */
-export function generateArticleMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
-  return generateMetadata({ ...options, type: 'article' });
+export function generateArticleMetadata(options: Omit<GenerateMetadataOptions, "type">): Metadata {
+  return generateMetadata({ ...options, type: "article" });
 }
 
 /**
  * 生成个人资料类型的元数据
  */
-export function generateProfileMetadata(options: Omit<GenerateMetadataOptions, 'type'>): Metadata {
-  return generateMetadata({ ...options, type: 'profile' });
+export function generateProfileMetadata(options: Omit<GenerateMetadataOptions, "type">): Metadata {
+  return generateMetadata({ ...options, type: "profile" });
 }

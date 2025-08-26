@@ -1,12 +1,11 @@
-'use client';
+"use client";
 
 /**
  * 网址解析 React Hook
  */
 
-import { useCallback, useState } from 'react';
-import { parseWebsite as parseWebsiteMetadata } from '@/features/website-parser/lib/parser';
-import type { ParseOptions, WebsiteMetadata } from '@/features/website-parser/types';
+import type { ParseOptions, WebsiteMetadata } from "@/features/website-parser/types";
+import { useCallback, useState } from "react";
 
 interface UseWebsiteParserReturn {
   parseWebsite: (url: string, options?: ParseOptions) => Promise<WebsiteMetadata | null>;
@@ -21,23 +20,40 @@ export function useWebsiteParser(): UseWebsiteParserReturn {
   const [lastResult, setLastResult] = useState<WebsiteMetadata | null>(null);
 
   const parseWebsite = useCallback(
-    async (url: string, options?: ParseOptions): Promise<WebsiteMetadata | null> => {
+    async (url: string, _options?: ParseOptions): Promise<WebsiteMetadata | null> => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const result = await parseWebsiteMetadata(url, options);
+        // 通过API路由处理网站解析，避免CORS问题
+        const searchParams = new URLSearchParams({ url });
+        const response = await fetch(`/api/parse-website?${searchParams.toString()}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-        if (result.success && result.data) {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const result = (await response.json()) as {
+          data?: WebsiteMetadata;
+          error?: string;
+        };
+
+        if (result.data) {
           setLastResult(result.data);
           return result.data;
         } else {
-          setError(result.error ?? 'Failed to parse website');
-          setLastResult(result.data ?? null);
-          return result.data ?? null;
+          const errorMessage = result.error ?? "Failed to parse website";
+          setError(errorMessage);
+          setLastResult(null);
+          return null;
         }
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
         setError(errorMessage);
         setLastResult(null);
         return null;

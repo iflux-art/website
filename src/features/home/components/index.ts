@@ -1,2 +1,2 @@
-export * from './animated-number';
-export * from './hero-section';
+export { AnimatedNumber } from "./animated-number";
+export { HeroSection } from "./hero-section";

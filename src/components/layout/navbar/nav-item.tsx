@@ -1,8 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import Link from "next/link";
 
 /**
  * 基础导航项属性
@@ -79,10 +78,10 @@ export const NavItem = ({
 }: NavItemProps) => {
   // 组合所有样式类名
   const linkClasses = cn(
-    'py-2 px-3 rounded-lg',
-    isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary',
-    underline && 'hover:underline',
-    animated && 'transition-all duration-300',
+    "py-2 px-3 rounded-lg",
+    isActive ? "text-primary" : "text-muted-foreground hover:text-primary",
+    underline && "hover:underline",
+    animated && "transition-all duration-300",
     className
   );
 
@@ -175,7 +174,7 @@ export const NavItemList = ({
   };
 
   return (
-    <ul className={cn('flex gap-2', horizontal ? 'flex-row items-center' : 'flex-col', className)}>
+    <ul className={cn("flex gap-2", horizontal ? "flex-row items-center" : "flex-col", className)}>
       {items.map((item, index) => (
         <li key={item.key ?? item.href}>
           <NavItem

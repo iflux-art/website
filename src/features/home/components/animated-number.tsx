@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import type { AnimatedNumberProps } from '@/features/home/types';
+import type { AnimatedNumberProps } from "@/features/home/types";
+import { useEffect, useState } from "react";
 
-export const AnimatedNumber = ({ value, suffix = '' }: AnimatedNumberProps) => {
+export const AnimatedNumber = ({ value, suffix = "" }: AnimatedNumberProps) => {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {

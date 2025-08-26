@@ -4,7 +4,7 @@
  */
 
 // 内容相关类型
-export type { BaseFrontmatter, BaseContent, BaseCategory, URL } from './content-types';
+export type { BaseFrontmatter, BaseContent, BaseCategory, Url as URL } from "./content-types";
 
 // 布局相关类型
 export type {
@@ -21,7 +21,7 @@ export type {
   SidebarWrapperProps,
   GridColsMap,
   GridGapMap,
-} from './layout-types';
+} from "./layout-types";
 
 // 导航相关类型
 export type {
@@ -33,7 +33,7 @@ export type {
   NestedNavItem,
   BaseSearchResult,
   NavbarSearchResult,
-} from './nav-types';
+} from "./nav-types";
 
 // SEO相关类型
 export type {
@@ -44,4 +44,4 @@ export type {
   GenerateMetadataOptions,
   SiteConfig,
   SEOPageOptions,
-} from './seo-types';
+} from "./seo-types";

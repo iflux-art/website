@@ -2,10 +2,10 @@
  * 数据缓存管理 Hook
  */
 
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { debounceSync } from '@/utils';
+import { debounceSync } from "@/utils";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * LRU 缓存类
@@ -252,7 +252,7 @@ function createDataFetcher<T>(config: DataFetcherConfig<T>) {
         retryCount.current = 0;
         return result;
       } else {
-        throw new Error('数据验证失败');
+        throw new Error("数据验证失败");
       }
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
@@ -283,7 +283,7 @@ function createDataFetcher<T>(config: DataFetcherConfig<T>) {
  */
 export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: CacheOptions = {}) {
   const {
-    prefix = 'app-cache:',
+    prefix = "app-cache:",
     expiry = 30 * 60 * 1000, // 默认30分钟
     useMemoryCache = true,
     useLocalStorage = true,

@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 // 项目中所有可访问的页面路径
 const SITE_PAGES = [
-  '/',
-  '/blog',
-  '/docs',
-  '/links',
-  '/friends',
-  '/about',
-  '/profile',
-  '/admin',
+  "/",
+  "/blog",
+  "/docs",
+  "/links",
+  "/friends",
+  "/about",
+  "/profile",
+  "/admin",
 ] as const;
 
 /**
@@ -33,11 +33,11 @@ export const useGlobalContextMenu = () => {
       // 暂时使用简单的提示
     } catch {
       // 降级方案：使用传统的复制方法
-      const textArea = document.createElement('textarea');
+      const textArea = document.createElement("textarea");
       textArea.value = window.location.href;
       document.body.appendChild(textArea);
       textArea.select();
-      document.execCommand('copy');
+      document.execCommand("copy");
       document.body.removeChild(textArea);
     }
   }, []);
@@ -46,12 +46,9 @@ export const useGlobalContextMenu = () => {
   const addToBookmarks = useCallback(() => {
     const currentTitle = document.title;
 
-    if ('addToHomescreen' in window) {
-      // PWA 添加到主屏幕
-      (window as unknown as { addToHomescreen: () => void }).addToHomescreen();
-    } else if (navigator.userAgent.includes('Chrome')) {
+    if (navigator.userAgent.includes("Chrome")) {
       // Chrome浏览器快捷键提示
-      console.warn('请按 Ctrl+D (Windows) 或 Cmd+D (Mac) 添加书签');
+      console.warn("请按 Ctrl+D (Windows) 或 Cmd+D (Mac) 添加书签");
     } else {
       // 通用提示
       console.warn(`请手动添加书签：${currentTitle}`);
@@ -77,10 +74,10 @@ export const useGlobalContextMenu = () => {
 
   // 主题切换
   const toggleTheme = useCallback(() => {
-    if (resolvedTheme === 'dark') {
-      setTheme('light');
+    if (resolvedTheme === "dark") {
+      setTheme("light");
     } else {
-      setTheme('dark');
+      setTheme("dark");
     }
   }, [setTheme, resolvedTheme]);
 
@@ -88,13 +85,13 @@ export const useGlobalContextMenu = () => {
   const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }, []);
 
   // 获取主题相关的显示文本
   const getThemeText = useCallback(
-    () => (resolvedTheme === 'dark' ? '浅色模式' : '深色模式'),
+    () => (resolvedTheme === "dark" ? "浅色模式" : "深色模式"),
     [resolvedTheme]
   );
 

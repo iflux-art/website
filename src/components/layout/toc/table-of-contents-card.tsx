@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/utils';
-import { Text } from 'lucide-react';
-import { useHeadingObserver } from '@/hooks/use-heading-observer';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useHeadingObserver } from "@/hooks/use-heading-observer";
+import { cn } from "@/utils";
+import { Text } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 // ====== 迁移自 src/config/layout.ts ======
 /**
@@ -33,12 +33,12 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, '', `#${elementId}`);
+    history.pushState(null, "", `#${elementId}`);
   }
 }
 // ====== END ======
@@ -69,10 +69,10 @@ const HeadingItem = ({ heading, isActive }: HeadingItemProps) => {
   // 根据标题级别设置不同的样式
   const headingSize =
     {
-      2: 'font-medium',
-      3: 'font-normal',
-      4: 'text-xs',
-    }[heading.level] ?? '';
+      2: "font-medium",
+      3: "font-normal",
+      4: "text-xs",
+    }[heading.level] ?? "";
 
   return (
     <div className="relative">
@@ -84,18 +84,18 @@ const HeadingItem = ({ heading, isActive }: HeadingItemProps) => {
       <a
         href={`#${heading.id}`}
         className={cn(
-          'group relative flex min-w-0 items-start py-1.5 text-sm transition-colors',
+          "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
           headingSize,
           // 普通文本
-          'text-muted-foreground',
+          "text-muted-foreground",
           // hover 状态
-          'hover:text-foreground',
+          "hover:text-foreground",
           // active 状态
-          isActive && 'font-medium text-foreground',
-          'w-full'
+          isActive && "font-medium text-foreground",
+          "w-full"
         )}
         style={{
-          paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : '1rem',
+          paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : "1rem",
         }}
         onClick={e => {
           e.preventDefault();
@@ -141,7 +141,7 @@ const TocContainer = ({ headings, activeId, tocRef }: TocContainerProps) => (
 export const TableOfContentsCard = ({
   headings,
   className,
-  title = '目录',
+  title = "目录",
 }: TableOfContentsCardProps) => {
   const tocRef = useRef<HTMLDivElement>(null);
 
@@ -179,7 +179,7 @@ export const TableOfContentsCard = ({
                 activeRect.height / 2;
               tocRef.current.scrollTo({
                 top: tocRef.current.scrollTop + scrollTop,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
             }
           }
@@ -193,7 +193,7 @@ export const TableOfContentsCard = ({
         clearTimeout(timeoutId);
       }
     };
-  }, [activeId, tocRef, headings.length]);
+  }, [activeId, headings.length]);
 
   // 过滤掉h1标题，只显示h2-h4
   const filteredHeadings = headings.filter(
@@ -208,8 +208,8 @@ export const TableOfContentsCard = ({
       if (!heading.id) {
         heading.id = `heading-${heading.text
           .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/[^\w-]/g, '')}-${index}`;
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "")}-${index}`;
       }
       return heading;
     });
@@ -221,7 +221,7 @@ export const TableOfContentsCard = ({
   const organizedHeadings = organizeHeadings(filteredHeadings);
 
   return (
-    <Card className={cn('w-full', className)}>
+    <Card className={cn("w-full", className)}>
       <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
           <Text className="h-3.5 w-3.5 text-primary" />

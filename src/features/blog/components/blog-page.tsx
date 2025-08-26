@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
+import { ThreeColumnLayout } from "@/components/layout";
 import {
   BlogCategoryCard,
   BlogListContent,
   LatestPostsCard,
   RelatedPostsCard,
   TagCloudCard,
-} from '@/features/blog/components';
-import { ThreeColumnLayout } from '@/components/layout';
-import { useBlogPage } from '@/features/blog/hooks/use-blog-page';
+} from "@/features/blog/components";
+import { useBlogPage } from "@/features/blog/hooks/use-blog-page";
 
 /**
  * Blog页面容器组件

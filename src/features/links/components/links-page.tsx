@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ThreeColumnLayout } from '@/components/layout';
-import { LinksContent, LinksSidebarCard } from '@/features/links/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { useLinksData } from '@/features/links/hooks';
-import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import { LinksContent, LinksSidebarCard } from "@/features/links/components";
+import { useLinksData } from "@/features/links/hooks";
+import { useTagAnchors } from "@/features/links/hooks/use-tag-anchors";
 
 /**
  * 链接导航页面容器组件（客户端）

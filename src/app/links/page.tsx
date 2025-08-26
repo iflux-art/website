@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ThreeColumnLayout } from '@/components/layout';
-import { LinksContent, LinksSidebarCard } from '@/features/links/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { useLinksData } from '@/features/links/hooks';
-import { useTagAnchors } from '@/features/links/hooks/use-tag-anchors';
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import { LinksContent, LinksSidebarCard } from "@/features/links/components";
+import { useLinksData } from "@/features/links/hooks";
+import { useTagAnchors } from "@/features/links/hooks/use-tag-anchors";
 
 // 由于使用了客户端 hooks，这里不能导出 metadata
 // 在实际项目中应该考虑使用 generateMetadata 函数或服务端组件

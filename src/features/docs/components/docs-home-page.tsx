@@ -1,13 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { DocsSidebarCard, getAllDocsStructure } from '@/features/docs/components';
-import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { ContentDisplay, DocPagination } from '@/features/content-display/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { ThreeColumnLayout } from '@/components/layout';
-import ClientMDXRenderer from '@/components/mdx/client-mdx-renderer';
-import { TwikooComment } from '@/features/comment';
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import ClientMDXRenderer from "@/components/mdx/client-mdx-renderer";
+import { TwikooComment } from "@/features/comment";
+import { ContentDisplay, DocPagination } from "@/features/content-display/components";
+import { DocsSidebarCard, getAllDocsStructure } from "@/features/docs/components";
+import { createDocBreadcrumbsServer, getDocContentFromFeatures } from "@/features/docs/lib";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 /**
  * 获取第一个文档内容
@@ -20,12 +19,12 @@ function getFirstDocContent(): ReturnType<typeof getDocContentFromFeatures> | nu
       return null;
     }
 
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
-    const slug = firstDocPath.split('/');
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
+    const slug = firstDocPath.split("/");
 
     return getDocContentFromFeatures(slug);
   } catch (error) {
-    console.error('Error getting first doc content:', error as Error);
+    console.error("Error getting first doc content:", error as Error);
     return null;
   }
 }
@@ -70,8 +69,8 @@ export function DocsHomePage() {
     }
 
     // 从 firstDocPath 中提取 slug 用于面包屑
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
-    const slug = firstDocPath.split('/');
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
+    const slug = firstDocPath.split("/");
     const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
     // 左侧边栏内容
@@ -98,7 +97,7 @@ export function DocsHomePage() {
       </div>
     );
   } catch (error) {
-    console.error('Error in docs home page:', error);
+    console.error("Error in docs home page:", error);
     notFound();
   }
 }

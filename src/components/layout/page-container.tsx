@@ -1,8 +1,7 @@
-import React from 'react';
-import { cn } from '@/utils';
-import { getContainerClassName } from '@/lib/layout/layout-utils';
-import type { PageContainerProps } from '@/types';
-import { ThreeColumnGrid } from './three-column-grid';
+import { getContainerClassName } from "@/lib/layout/layout-utils";
+import type { PageContainerProps } from "@/types";
+import { cn } from "@/utils";
+import { ThreeColumnGrid } from "./three-column-grid";
 
 /**
  * 通用页面容器组件
@@ -14,22 +13,22 @@ export const PageContainer = ({
   children,
   config = {},
   sidebars = [],
-  className = '',
+  className = "",
 }: PageContainerProps) => {
-  const { layout = 'full-width' } = config;
+  const { layout = "full-width" } = config;
   const containerClassName = getContainerClassName(config);
 
   // 全屏布局：适用于首页、友链、关于和管理后台
-  if (layout === 'full-width') {
+  if (layout === "full-width") {
     return (
-      <div className={cn(containerClassName, 'w-full', className)}>
+      <div className={cn(containerClassName, "w-full", className)}>
         <div className="container mx-auto px-4 py-6 lg:py-8">{children}</div>
       </div>
     );
   }
 
   // 三栏布局：适用于导航、博客列表/详情页、文档详情页
-  if (layout === 'three-column' && sidebars.length > 0) {
+  if (layout === "three-column" && sidebars.length > 0) {
     return (
       <div className={cn(containerClassName, className)}>
         <div className="container mx-auto px-4">
@@ -41,12 +40,12 @@ export const PageContainer = ({
 
   // 回退到全屏布局
   return (
-    <div className={cn(containerClassName, 'w-full', className)}>
+    <div className={cn(containerClassName, "w-full", className)}>
       <div className="container mx-auto px-4 py-6 lg:py-8">{children}</div>
     </div>
   );
 };
 
-export type { PageContainerProps } from '@/types';
+export type { PageContainerProps } from "@/types";
 
 export default PageContainer;

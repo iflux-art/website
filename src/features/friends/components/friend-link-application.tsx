@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, Globe, HandHeart, Heart, MessageCircle, Users } from 'lucide-react';
-import type { FriendsPageConfig } from '../types';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ExternalLink, Globe, HandHeart, Heart, MessageCircle, Users } from "lucide-react";
+import type { FriendsPageConfig } from "../types";
 
 interface FriendLinkApplicationProps {
   /** 友链页面配置 */
@@ -18,11 +18,11 @@ interface FriendLinkApplicationProps {
  * 从原始 friends 页面中提取的友链申请表单UI组件，
  * 包含申请要求展示和申请按钮功能。
  */
-export const FriendLinkApplication = ({ config, className = '' }: FriendLinkApplicationProps) => {
+export const FriendLinkApplication = ({ config, className = "" }: FriendLinkApplicationProps) => {
   const { application, requirements } = config;
 
   const handleApplyClick = () => {
-    window.open(application.formUrl, '_blank', 'noopener,noreferrer');
+    window.open(application.formUrl, "_blank", "noopener,noreferrer");
   };
 
   // 图标映射

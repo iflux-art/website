@@ -1,13 +1,13 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { countWords } from './word-count';
-import { getFlattenedDocsOrder } from './doc-paths';
-import { extractHeadings } from '@/utils/helpers';
-import type { DocContentResult, NavDocItem } from '@/features/docs/types';
+import fs from "node:fs";
+import path from "node:path";
+import type { DocContentResult, NavDocItem } from "@/features/docs/types";
+import { extractHeadings } from "@/utils/helpers";
+import matter from "gray-matter";
+import { getFlattenedDocsOrder } from "./doc-paths";
+import { countWords } from "./word-count";
 
-const DOCS_CONTENT_DIR = 'src/content/docs';
-const DOCS_INDEX_FILES = ['index.mdx', 'index.md'];
+const DOCS_CONTENT_DIR = "src/content/docs";
+const DOCS_INDEX_FILES = ["index.mdx", "index.md"];
 const DOC_CACHE_TTL = 10 * 60 * 1000; // 10分钟缓存
 const MAX_CACHE_SIZE = 500; // 最大缓存条目数
 
@@ -100,10 +100,10 @@ function getDocumentFilePath(absoluteRequestedPath: string): {
 function formatDate(dateValue: string | number | Date | undefined): string | null {
   if (!dateValue) return null;
 
-  return new Date(dateValue).toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return new Date(dateValue).toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 }
 
@@ -123,7 +123,7 @@ function getNavigationDocs(
           doc.path.startsWith(`${indexDirNavPath}/`) ||
           (doc.path.startsWith(indexDirNavPath) &&
             doc.path !== indexDirNavPath &&
-            !doc.path.substring(indexDirNavPath.length + 1).includes('/'))
+            !doc.path.substring(indexDirNavPath.length + 1).includes("/"))
       ) ?? null;
 
     return { prevDoc: null, nextDoc };
@@ -149,12 +149,12 @@ function getNavigationDocs(
  * @returns 文档内容结果
  */
 export function getDocContent(slug: string[]): DocContentResult {
-  const requestedPath = slug.join('/');
+  const requestedPath = slug.join("/");
   const cacheKey = requestedPath;
   const now = Date.now();
 
   // 生产环境使用缓存
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     if (docContentCache.has(cacheKey) && docCacheTimestamp.has(cacheKey)) {
       const timestamp = docCacheTimestamp.get(cacheKey);
       if (timestamp && now - timestamp < DOC_CACHE_TTL) {
@@ -168,10 +168,10 @@ export function getDocContent(slug: string[]): DocContentResult {
 
   const docsContentDir = path.join(process.cwd(), DOCS_CONTENT_DIR);
   const absoluteRequestedPath = path.join(docsContentDir, requestedPath);
-  const actualSlugForNav = slug.join('/');
+  const actualSlugForNav = slug.join("/");
 
   const { filePath, isIndexPage } = getDocumentFilePath(absoluteRequestedPath);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const fileContent = fs.readFileSync(filePath, "utf8");
   const { content: originalContent, data: frontmatter } = matter(fileContent);
 
   const date = formatDate(frontmatter.date as string | number | Date | undefined);
@@ -208,14 +208,14 @@ export function getDocContent(slug: string[]): DocContentResult {
     update: updatedAt,
     relativePathFromTopCategory: path
       .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-      .replace(/\\/g, '/')
-      .replace(/\.(mdx|md)$/, ''),
+      .replace(/\\/g, "/")
+      .replace(/\.(mdx|md)$/, ""),
     topLevelCategorySlug,
     isIndexPage,
   };
 
   // 生产环境缓存结果
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     docContentCache.set(cacheKey, result);
     docCacheTimestamp.set(cacheKey, now);
     cleanupExpiredCache();

@@ -3,11 +3,11 @@
  * @module hooks/use-docs
  */
 
-'use client';
+"use client";
 
-import { type HookResult, useContentData } from '../../../hooks/use-content-data';
-import { API_PATHS } from '@/lib/api/api-paths';
-import type { DocCategory, DocItem, DocListItem } from '@/features/docs/types';
+import type { DocCategory, DocItem, DocListItem } from "@/features/docs/types";
+import { API_PATHS } from "@/lib/api/api-paths";
+import { type HookResult, useContentData } from "../../../hooks/use-content-data";
 
 /**
  * 使用文档分类
@@ -16,10 +16,10 @@ import type { DocCategory, DocItem, DocListItem } from '@/features/docs/types';
  */
 export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
-    type: 'docs',
-    path: API_PATHS.CONTENT.DOC_CATEGORIES,
+    type: "docs",
+    path: API_PATHS.content.DocCategories,
     disableCache: true, // 禁用缓存，确保获取最新数据
-    params: { cache: 'no-store' }, // 添加参数帮助禁用服务器缓存
+    params: { cache: "no-store" }, // 添加参数帮助禁用服务器缓存
     forceRefresh: true, // 强制刷新，缓存破坏
   });
 }
@@ -32,8 +32,8 @@ export function useDocCategories(): HookResult<DocCategory[]> {
  */
 export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
   return useContentData<Record<string, unknown>>({
-    type: 'docs',
-    path: API_PATHS.CONTENT.DOC(path),
+    type: "docs",
+    path: API_PATHS.content.Doc(path),
   });
 }
 
@@ -52,7 +52,7 @@ export type { DocItem, DocCategory, DocListItem };
  */
 export function useDocContent(path: string): HookResult<DocItem> {
   return useContentData<DocItem>({
-    type: 'docs',
-    path: API_PATHS.CONTENT.DOC(path),
+    type: "docs",
+    path: API_PATHS.content.Doc(path),
   });
 }

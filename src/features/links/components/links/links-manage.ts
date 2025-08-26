@@ -14,15 +14,15 @@
  * @since 2024
  */
 
-import fs from 'fs';
-import path from 'path';
-import type { LinksCategory, LinksItem } from '@/features/links/types';
+import fs from "node:fs";
+import path from "node:path";
+import type { LinksCategory, LinksItem } from "@/features/links/types";
 
 type Category = LinksCategory;
 type Item = LinksItem;
 
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'src', 'config', 'links', 'categories.json');
-const CATEGORIES_DIR = path.join(process.cwd(), 'src', 'config', 'links', 'categories');
+const CATEGORIES_FILE_PATH = path.join(process.cwd(), "src", "config", "links", "categories.json");
+const CATEGORIES_DIR = path.join(process.cwd(), "src", "config", "links", "categories");
 
 function ensureDataDirectory() {
   if (!fs.existsSync(CATEGORIES_DIR)) {
@@ -32,31 +32,31 @@ function ensureDataDirectory() {
 
 function readCategories(): Category[] {
   if (!fs.existsSync(CATEGORIES_FILE_PATH)) {
-    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
+    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify([], null, 2), "utf-8");
     return [];
   }
 
   try {
-    const content = fs.readFileSync(CATEGORIES_FILE_PATH, 'utf-8');
+    const content = fs.readFileSync(CATEGORIES_FILE_PATH, "utf-8");
     return JSON.parse(content) as Category[];
   } catch (error) {
-    console.error('Error reading categories data:', error);
-    throw new Error('Failed to read categories data');
+    console.error("Error reading categories data:", error);
+    throw new Error("Failed to read categories data");
   }
 }
 
 const availableCategories = [
-  'friends',
-  'ai',
-  'ai-chat',
-  'development',
-  'design',
-  'productivity',
-  'profile',
-  'operation',
-  'office',
-  'audio',
-  'video',
+  "friends",
+  "ai",
+  "ai-chat",
+  "development",
+  "design",
+  "productivity",
+  "profile",
+  "operation",
+  "office",
+  "audio",
+  "video",
 ];
 
 function readCategoryItems(category: string): Item[] {
@@ -66,7 +66,7 @@ function readCategoryItems(category: string): Item[] {
   }
 
   try {
-    const content = fs.readFileSync(categoryFile, 'utf-8');
+    const content = fs.readFileSync(categoryFile, "utf-8");
     return JSON.parse(content) as Item[];
   } catch (error) {
     console.error(`Error reading category ${category}:`, error);
@@ -77,7 +77,7 @@ function readCategoryItems(category: string): Item[] {
 function writeCategoryItems(category: string, items: Item[]): void {
   try {
     const categoryFile = path.join(CATEGORIES_DIR, `${category}.json`);
-    fs.writeFileSync(categoryFile, JSON.stringify(items, null, 2), 'utf-8');
+    fs.writeFileSync(categoryFile, JSON.stringify(items, null, 2), "utf-8");
   } catch (error) {
     console.error(`Error writing category ${category}:`, error);
     throw new Error(`Failed to write category ${category} data`);
@@ -137,11 +137,11 @@ export function readLinksData(): { categories: Category[]; items: Item[] } {
 export function writeLinksData(data: { categories: Category[]; items: Item[] }): void {
   ensureDataDirectory();
   try {
-    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify(data.categories, null, 2), 'utf-8');
+    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify(data.categories, null, 2), "utf-8");
     writeItems(data.items);
   } catch (error) {
-    console.error('Error writing links data:', error);
-    throw new Error('Failed to write links data');
+    console.error("Error writing links data:", error);
+    throw new Error("Failed to write links data");
   }
 }
 
@@ -152,11 +152,11 @@ export function writeLinksData(data: { categories: Category[]; items: Item[] }):
  * @returns 创建的完整链接项目
  * @throws {Error} 当 URL 已存在时抛出错误
  */
-export function addLinksItem(item: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Item {
+export function addLinksItem(item: Omit<Item, "id" | "createdAt" | "updatedAt">): Item {
   const items = readItems();
   const existingItem = items.find(existing => existing.url === item.url);
   if (existingItem) {
-    throw new Error('URL already exists');
+    throw new Error("URL already exists");
   }
 
   const newItem: Item = {
@@ -185,13 +185,13 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
   const items = readItems();
   const itemIndex = items.findIndex(item => item.id === id);
   if (itemIndex === -1) {
-    throw new Error('Links item not found');
+    throw new Error("Links item not found");
   }
 
   if (updates.url && updates.url !== items[itemIndex].url) {
     const existingItem = items.find(item => item.url === updates.url && item.id !== id);
     if (existingItem) {
-      throw new Error('URL already exists');
+      throw new Error("URL already exists");
     }
   }
 
@@ -217,7 +217,7 @@ export function deleteLinksItem(id: string): void {
   const items = readItems();
   const itemIndex = items.findIndex(item => item.id === id);
   if (itemIndex === -1) {
-    throw new Error('Links item not found');
+    throw new Error("Links item not found");
   }
 
   items.splice(itemIndex, 1);
@@ -237,7 +237,9 @@ export function getAllTags(): string[] {
   const items = readItems();
   const tags = new Set<string>();
   items.forEach(item => {
-    item.tags.forEach(tag => tags.add(tag));
+    item.tags.forEach(tag => {
+      tags.add(tag);
+    });
   });
   return Array.from(tags).sort();
 }

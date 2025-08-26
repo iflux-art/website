@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import type { BlogPost } from '@/features/blog/types';
-import { type CategoryWithCount, getAllPosts } from '@/features/blog/hooks';
+import { type CategoryWithCount, getAllPosts } from "@/features/blog/hooks";
+import type { BlogPost } from "@/features/blog/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export interface UseBlogPageReturn {
   // 数据状态
@@ -52,21 +52,21 @@ export function useBlogPage(): UseBlogPageReturn {
   const { category, tag } = Object.fromEntries(searchParams.entries());
 
   // 加载文章数据
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getAllPosts();
       setPosts(data);
     } catch (error) {
-      console.error('Failed to load posts', error);
+      console.error("Failed to load posts", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     void loadPosts();
-  }, []);
+  }, [loadPosts]);
 
   // 过滤文章
   const filteredPosts = posts.filter(post => {
@@ -100,7 +100,7 @@ export function useBlogPage(): UseBlogPageReturn {
     title: post.title,
     href: `/blog/${post.slug}`,
     category: post.category,
-    slug: post.slug.split('/'),
+    slug: post.slug.split("/"),
   }));
 
   // 最新发布的文章
@@ -118,9 +118,9 @@ export function useBlogPage(): UseBlogPageReturn {
   const handleCategoryClick = (newCategory: string | null) => {
     const newParams = new URLSearchParams(searchParams.toString());
     if (newCategory) {
-      newParams.set('category', newCategory);
+      newParams.set("category", newCategory);
     } else {
-      newParams.delete('category');
+      newParams.delete("category");
     }
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
   };
@@ -129,9 +129,9 @@ export function useBlogPage(): UseBlogPageReturn {
   const handleTagClick = (newTag: string | null) => {
     const newParams = new URLSearchParams(searchParams.toString());
     if (newTag) {
-      newParams.set('tag', newTag);
+      newParams.set("tag", newTag);
     } else {
-      newParams.delete('tag');
+      newParams.delete("tag");
     }
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
   };

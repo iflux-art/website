@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { useCategories } from './use-categories';
-import { useFilterState } from './use-filter-state';
-import type { LinksItem } from '@/features/links/types';
-import { loadAllLinksData } from '@/features/links/lib';
+import { loadAllLinksData } from "@/features/links/lib";
+import type { LinksItem } from "@/features/links/types";
+import { useEffect, useMemo, useState } from "react";
+import { useCategories } from "./use-categories";
+import { useFilterState } from "./use-filter-state";
 
 export function useLinksData() {
   const [items, setItems] = useState<LinksItem[]>([]);
@@ -19,11 +19,11 @@ export function useLinksData() {
       try {
         setLoading(true);
         // 添加可以禁止浏览器缓存的随机参数
-        const timestamp = new Date().getTime();
+        const timestamp = Date.now();
         const itemsData = await loadAllLinksData(`${timestamp}`);
         setItems(itemsData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }
@@ -34,7 +34,7 @@ export function useLinksData() {
 
   // 过滤掉友链和个人主页分类的数据 - 性能优化使用 useMemo
   const filteredItems = useMemo(
-    () => items.filter(item => item.category !== 'friends' && item.category !== 'profile'),
+    () => items.filter(item => item.category !== "friends" && item.category !== "profile"),
     [items]
   );
 

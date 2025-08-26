@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import type { Heading } from '@/types';
+import type { Heading } from "@/types";
+import { useEffect, useState } from "react";
 
 export function useHeadingObserver(
   headings: Heading[],
   options = {
-    rootMargin: '-100px 0px -80% 0px',
+    rootMargin: "-100px 0px -80% 0px",
     threshold: 0.1,
   }
 ) {
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     if (headings.length === 0) return;
@@ -30,7 +30,7 @@ export function useHeadingObserver(
         const element = document.getElementById(heading.id);
         if (!element) {
           // 查找匹配文本内容的标题元素
-          const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+          const headingElements = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
           headingElements.forEach(el => {
             if (el.textContent?.trim() === heading.text) {
               if (!el.id) {

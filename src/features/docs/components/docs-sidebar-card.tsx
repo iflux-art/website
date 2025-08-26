@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { FileText } from 'lucide-react';
-import { cn } from '@/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DocsSidebarWrapper } from './docs-sidebar-wrapper';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/utils";
+import { FileText } from "lucide-react";
+import { DocsSidebarWrapper } from "./docs-sidebar-wrapper";
 
 export interface DocsSidebarCardProps {
   /** 当前打开的文档路径 */
@@ -28,7 +27,7 @@ export const DocsSidebarCard = ({
   className,
   showHeader = true,
 }: DocsSidebarCardProps) => (
-  <Card className={cn('w-full', className)}>
+  <Card className={cn("w-full", className)}>
     {showHeader && (
       <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
@@ -37,7 +36,7 @@ export const DocsSidebarCard = ({
         </CardTitle>
       </CardHeader>
     )}
-    <CardContent className={showHeader ? 'pt-0 pb-4' : 'py-4'}>
+    <CardContent className={showHeader ? "pt-0 pb-4" : "py-4"}>
       <div className="hide-scrollbar max-h-[400px] overflow-y-auto sm:max-h-[450px]">
         <DocsSidebarWrapper currentDoc={currentDoc} />
       </div>

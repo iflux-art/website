@@ -2,12 +2,12 @@
  * 导航栏状态管理 Hook
  */
 
-'use client';
+"use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 interface NavbarState {
-  direction: 'up' | 'down';
+  direction: "up" | "down";
   position: number;
   showTitle: boolean;
   pageTitle: string;
@@ -15,18 +15,18 @@ interface NavbarState {
 }
 
 const STATE_CONFIG = {
-  SCROLL_THRESHOLD: 3,
-  SHOW_THRESHOLD: 80,
-  HIDE_THRESHOLD: 120,
+  scrollThreshold: 3,
+  showThreshold: 80,
+  hideThreshold: 120,
 } as const;
 
 export function useSafeNavbar() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [state, setState] = useState<NavbarState>({
-    direction: 'up',
+    direction: "up",
     position: 0,
     showTitle: false,
-    pageTitle: '',
+    pageTitle: "",
     lastDirectionChange: 0,
   });
 
@@ -41,11 +41,11 @@ export function useSafeNavbar() {
 
       setState(prev => {
         const now = Date.now();
-        const newDirection = position > prev.position ? 'down' : 'up';
+        const newDirection = position > prev.position ? "down" : "up";
         const directionChanged = newDirection !== prev.direction;
 
         // 首页始终显示导航菜单
-        if (prev.pageTitle === '首页') {
+        if (prev.pageTitle === "首页") {
           return {
             ...prev,
             direction: newDirection,
@@ -56,7 +56,7 @@ export function useSafeNavbar() {
         }
 
         // 忽略微小的滚动变化
-        if (Math.abs(position - prev.position) <= STATE_CONFIG.SCROLL_THRESHOLD) {
+        if (Math.abs(position - prev.position) <= STATE_CONFIG.scrollThreshold) {
           return prev;
         }
 
@@ -68,9 +68,9 @@ export function useSafeNavbar() {
         };
 
         // 根据滚动方向和位置决定是否显示标题
-        if (newDirection === 'up') {
+        if (newDirection === "up") {
           newState.showTitle = false; // 向上滚动始终显示菜单
-        } else if (newDirection === 'down' && position > STATE_CONFIG.HIDE_THRESHOLD) {
+        } else if (newDirection === "down" && position > STATE_CONFIG.hideThreshold) {
           newState.showTitle = true; // 向下且滚动较多时收起菜单
         }
 
@@ -85,8 +85,8 @@ export function useSafeNavbar() {
   }, []);
 
   const scrollToTop = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, []);
 

@@ -4,11 +4,11 @@
  * 处理数据获取和加载状态，为 DocsSidebar 提供数据
  */
 
-'use client';
+"use client";
 
-import { DocsSidebar } from './docs-sidebar';
-import { useGlobalDocs } from './use-global-docs';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import { DocsSidebar } from "./docs-sidebar";
+import { useGlobalDocs } from "./use-global-docs";
 
 export interface DocsSidebarWrapperProps {
   /** 当前打开的文档路径 */
@@ -22,7 +22,7 @@ export interface DocsSidebarWrapperProps {
  *
  * 负责获取全局文档结构数据并渲染侧边栏
  */
-import { memo } from 'react';
+import { memo } from "react";
 
 const DocsSidebarWrapperComponent = ({ currentDoc, className }: DocsSidebarWrapperProps) => {
   const { structure, error } = useGlobalDocs();
@@ -30,7 +30,7 @@ const DocsSidebarWrapperComponent = ({ currentDoc, className }: DocsSidebarWrapp
   // 错误状态
   if (error) {
     return (
-      <div className={cn('hide-scrollbar', className)}>
+      <div className={cn("hide-scrollbar", className)}>
         <div className="p-3">
           <div className="text-sm text-destructive">加载文档结构失败</div>
           <div className="mt-1 text-xs text-muted-foreground">{error}</div>
@@ -42,7 +42,7 @@ const DocsSidebarWrapperComponent = ({ currentDoc, className }: DocsSidebarWrapp
   // 无数据状态
   if (!structure) {
     return (
-      <div className={cn('hide-scrollbar', className)}>
+      <div className={cn("hide-scrollbar", className)}>
         <div className="p-3 text-sm text-muted-foreground">暂无文档数据</div>
       </div>
     );

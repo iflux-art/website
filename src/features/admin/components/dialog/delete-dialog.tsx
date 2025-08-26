@@ -1,6 +1,5 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +9,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import type { DeleteDialogProps } from '@/features/admin/types';
+} from "@/components/ui/alert-dialog";
+import type { DeleteDialogProps } from "@/features/admin/types";
+import { useState } from "react";
 
 interface DeleteDialogItem {
   id: string;
@@ -26,12 +26,12 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
     setIsLoading(true);
     try {
       const response = await fetch(`/api/links?id=${(item as DeleteDialogItem).id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
         const errorData: { error?: string } = (await response.json()) as { error?: string };
-        throw new Error(errorData.error ?? 'Failed to delete item');
+        throw new Error(errorData.error ?? "Failed to delete item");
       }
 
       onSuccess((item as DeleteDialogItem).id);
@@ -40,7 +40,7 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
       if (error instanceof Error) {
         onError(error.message);
       } else {
-        onError('An unknown error occurred');
+        onError("An unknown error occurred");
       }
     } finally {
       setIsLoading(false);
@@ -59,7 +59,7 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>取消</AlertDialogCancel>
           <AlertDialogAction onClick={() => void handleDelete()} disabled={isLoading}>
-            {isLoading ? '删除中...' : '删除'}
+            {isLoading ? "删除中..." : "删除"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

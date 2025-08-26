@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import type { AdminAction } from '@/features/admin/types';
+import { Button } from "@/components/ui/button";
+import type { AdminAction } from "@/features/admin/types";
+import React from "react";
 
 export const AdminActions = ({
   actions,
-  className = '',
+  className = "",
 }: {
-  actions: (Omit<AdminAction, 'icon'> & { icon?: React.ComponentType<{ className?: string }> })[];
+  actions: (Omit<AdminAction, "icon"> & { icon?: React.ComponentType<{ className?: string }> })[];
   className?: string;
 }) => (
   <div className={`flex flex-wrap gap-2 ${className}`}>
@@ -17,7 +17,7 @@ export const AdminActions = ({
       return (
         <Button
           key={action.label}
-          variant={action.variant ?? 'default'}
+          variant={action.variant ?? "default"}
           onClick={action.onClick}
           disabled={action.disabled ?? action.loading}
           className="flex items-center gap-2"

@@ -4,14 +4,14 @@
  * 内联所有相关类型和逻辑，避免过度抽象
  */
 
-'use client';
+"use client";
 
-import React, { forwardRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/utils';
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/utils";
+import { ExternalLink } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { forwardRef } from "react";
 
 // 内联链接卡片相关类型定义
 interface LinkCardProps {
@@ -20,7 +20,7 @@ interface LinkCardProps {
   href: string;
   isExternal?: boolean;
   icon?: React.ReactNode; // 支持字符串或React元素
-  iconType?: 'image' | 'text';
+  iconType?: "image" | "text";
   color?: string;
   className?: string;
   children?: React.ReactNode;
@@ -50,7 +50,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       }
 
       // 如果是React元素，直接渲染
-      if (typeof icon !== 'string') {
+      if (typeof icon !== "string") {
         return icon;
       }
 
@@ -78,7 +78,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     };
 
     // 内联样式处理逻辑
-    const cardStyle = color?.startsWith('#')
+    const cardStyle = color?.startsWith("#")
       ? {
           background: `linear-gradient(to bottom right, ${color}10, ${color}30)`,
         }
@@ -87,7 +87,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     const cardContent = (
       <Card
         className={cn(
-          'group transition-all duration-300 hover:scale-[1.01] hover:border-primary/50',
+          "group transition-all duration-300 hover:scale-[1.01] hover:border-primary/50",
           className
         )}
         style={cardStyle}
@@ -110,7 +110,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
 
     const commonProps = {
       ref,
-      className: 'block',
+      className: "block",
       href,
     };
 
@@ -126,4 +126,4 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   }
 );
 
-LinkCard.displayName = 'LinkCard';
+LinkCard.displayName = "LinkCard";

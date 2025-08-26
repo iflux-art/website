@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 interface NavLinkProps {
   href: string;
@@ -31,7 +31,7 @@ function isLinkActive(pathname: string, href: string, currentDoc?: string): bool
 
   // 如果没有 currentDoc，使用前缀匹配（但不匹配根路径）
   if (!currentDoc) {
-    return pathname.startsWith(href) && href !== '/';
+    return pathname.startsWith(href) && href !== "/";
   }
 
   // 方法1: 直接比较当前文档名称
@@ -40,14 +40,14 @@ function isLinkActive(pathname: string, href: string, currentDoc?: string): bool
   }
 
   // 方法2: 从 href 中提取文档路径部分
-  const hrefSegments = href.split('/').filter(Boolean);
+  const hrefSegments = href.split("/").filter(Boolean);
   const lastSegment = hrefSegments[hrefSegments.length - 1];
   if (lastSegment === currentDoc) {
     return true;
   }
 
   // 方法3: 检查路径前缀
-  if (pathname.startsWith(href) && href !== '/') {
+  if (pathname.startsWith(href) && href !== "/") {
     return true;
   }
 
@@ -88,9 +88,9 @@ export const NavLink = ({
   href,
   children,
   currentDoc,
-  className = '',
-  activeClassName = 'bg-accent text-accent-foreground font-medium',
-  inactiveClassName = 'text-muted-foreground hover:text-foreground hover:bg-accent/50',
+  className = "",
+  activeClassName = "bg-accent text-accent-foreground font-medium",
+  inactiveClassName = "text-muted-foreground hover:text-foreground hover:bg-accent/50",
   onClick,
   onMouseEnter,
   onMouseLeave,
@@ -105,7 +105,7 @@ export const NavLink = ({
     <Link
       href={href}
       className={cn(
-        'flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors',
+        "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
         className,
         isActive ? activeClassName : inactiveClassName
       )}

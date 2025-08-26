@@ -2,7 +2,7 @@
  * 网址解析辅助工具函数
  */
 
-import { normalizeUrl } from './validation';
+import { normalizeUrl } from "./validation";
 
 /**
  * 从 URL 提取域名作为默认标题
@@ -10,7 +10,7 @@ import { normalizeUrl } from './validation';
 export function extractDomainName(url: string): string {
   try {
     const urlObj = new URL(normalizeUrl(url));
-    return urlObj.hostname.replace('www.', '');
+    return urlObj.hostname.replace("www.", "");
   } catch {
     return url;
   }
@@ -24,7 +24,7 @@ export function generateFaviconUrl(url: string): string {
     const urlObj = new URL(normalizeUrl(url));
     return `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
   } catch {
-    return '';
+    return "";
   }
 }
 
@@ -36,7 +36,7 @@ export function generatePreviewImageUrl(url: string): string {
     const urlObj = new URL(normalizeUrl(url));
     return `${urlObj.protocol}//${urlObj.hostname}/og-image.png`;
   } catch {
-    return '';
+    return "";
   }
 }
 

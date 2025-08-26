@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import type { ComponentType } from "react";
 
 /**
  * Admin 功能相关类型定义
@@ -11,7 +11,7 @@ export interface LinksItem {
   description: string;
   url: string;
   icon?: string;
-  iconType?: 'image' | 'text';
+  iconType?: "image" | "text";
   tags: string[];
   featured?: boolean;
   category: string;
@@ -26,7 +26,7 @@ export interface LinksFormData {
   description: string;
   url: string;
   icon: string;
-  iconType: 'image' | 'text';
+  iconType: "image" | "text";
   tags: string[];
   featured: boolean;
   category: string;
@@ -59,7 +59,7 @@ export interface AdminAction {
   label: string;
   onClick: () => void;
   icon?: ComponentType<{ className?: string }>;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   disabled?: boolean;
   loading?: boolean;
 }

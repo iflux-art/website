@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { AppGrid, PageContainer } from '@/components/layout';
-import { LinkCard } from './link-card';
-import type { LinksItem } from '../types';
+import { AppGrid, PageContainer } from "@/components/layout";
+import type { LinksItem } from "../types";
+import { LinkCard } from "./link-card";
 
 interface ProfilePageContainerProps {
   /** 个人资料数据 */
@@ -19,20 +19,20 @@ interface ProfilePageContainerProps {
  */
 export const ProfilePageContainer = ({
   profileData,
-  className = '',
+  className = "",
 }: ProfilePageContainerProps) => {
   // 处理个人资料数据，转换为 LinksItem 格式
   const profileItems: LinksItem[] = profileData.map(item => {
-    const typedItem = item as LinksItem & { iconType?: 'image' | 'text' };
+    const typedItem = item as LinksItem & { iconType?: "image" | "text" };
     return {
       ...typedItem,
-      category: 'profile' as const,
-      iconType: typedItem.iconType ?? 'image',
+      category: "profile" as const,
+      iconType: typedItem.iconType ?? "image",
     };
   });
 
   return (
-    <PageContainer config={{ layout: 'full-width' }} className={className}>
+    <PageContainer config={{ layout: "full-width" }} className={className}>
       <div className="pb-8">
         {profileItems.length > 0 && (
           <AppGrid columns={5} className="items-stretch">

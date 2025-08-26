@@ -1,13 +1,13 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
 
 // 内联 DataTableProps 类型定义
 export interface DataTableColumn<T> {
   key: keyof T;
   title: string;
   width?: string | number;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
   render?: (value: unknown, record: T, index: number) => React.ReactNode;
 }
 
@@ -16,7 +16,7 @@ export interface DataTableAction<T> {
   icon?: React.ComponentType<{ className?: string }>;
   onClick: (record: T, index: number) => void;
   disabled?: (record: T) => boolean;
-  variant?: 'default' | 'outline' | 'ghost' | 'destructive';
+  variant?: "default" | "outline" | "ghost" | "destructive";
 }
 
 export interface DataTablePagination {
@@ -27,10 +27,10 @@ export interface DataTablePagination {
 }
 
 // 获取对齐类名函数
-function getAlignClass(align?: 'left' | 'center' | 'right'): string {
-  if (align === 'center') return 'text-center';
-  if (align === 'right') return 'text-right';
-  return 'text-left';
+function getAlignClass(align?: "left" | "center" | "right"): string {
+  if (align === "center") return "text-center";
+  if (align === "right") return "text-right";
+  return "text-left";
 }
 
 // 表格头部组件
@@ -91,7 +91,7 @@ const ActionsColumn = <T extends object>({
         return (
           <Button
             key={action.label}
-            variant={action.variant ?? 'outline'}
+            variant={action.variant ?? "outline"}
             size="sm"
             onClick={() => action.onClick(record, recordIndex)}
             disabled={isDisabled}
@@ -121,7 +121,7 @@ const TableRow = <T extends object>({
   actions,
 }: TableRowProps<T>) => {
   const recordKey =
-    'id' in record && typeof record.id === 'string' ? record.id : `record-${recordIndex}`;
+    "id" in record && typeof record.id === "string" ? record.id : `record-${recordIndex}`;
 
   return (
     <tr key={recordKey} className="border-b hover:bg-muted/50">
@@ -214,7 +214,7 @@ export const DataTable = <T extends object>({
                 : data.map((record, recordIndex) => (
                     <TableRow
                       key={
-                        'id' in record && typeof record.id === 'string'
+                        "id" in record && typeof record.id === "string"
                           ? record.id
                           : `record-${recordIndex}`
                       }

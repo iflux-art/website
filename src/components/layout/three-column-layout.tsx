@@ -1,8 +1,7 @@
-import React from 'react';
-import type { SidebarConfig, ThreeColumnLayoutProps } from '@/types';
-export type { ThreeColumnLayoutProps, SidebarConfig } from '@/types';
-import { THREE_COLUMN_LAYOUT_CONFIG } from '@/lib/layout/layout-utils';
-import { PageContainer } from './page-container';
+import type { SidebarConfig, ThreeColumnLayoutProps } from "@/types";
+export type { ThreeColumnLayoutProps, SidebarConfig } from "@/types";
+import { THREE_COLUMN_LAYOUT_CONFIG } from "@/lib/layout/layout-utils";
+import { PageContainer } from "./page-container";
 
 /**
  * 简化的三栏布局组件
@@ -18,7 +17,7 @@ export const ThreeColumnLayout = ({
   leftSidebar,
   children,
   rightSidebar,
-  className = '',
+  className = "",
 }: ThreeColumnLayoutProps) => {
   const sidebars: SidebarConfig[] = [];
 
@@ -26,7 +25,7 @@ export const ThreeColumnLayout = ({
   if (leftSidebar) {
     sidebars.push({
       content: leftSidebar,
-      position: 'left',
+      position: "left",
       ...THREE_COLUMN_LAYOUT_CONFIG.leftSidebar,
     });
   }
@@ -35,13 +34,13 @@ export const ThreeColumnLayout = ({
   if (rightSidebar) {
     sidebars.push({
       content: rightSidebar,
-      position: 'right',
+      position: "right",
       ...THREE_COLUMN_LAYOUT_CONFIG.rightSidebar,
     });
   }
 
   return (
-    <PageContainer config={{ layout: 'three-column' }} sidebars={sidebars} className={className}>
+    <PageContainer config={{ layout: "three-column" }} sidebars={sidebars} className={className}>
       {children}
     </PageContainer>
   );

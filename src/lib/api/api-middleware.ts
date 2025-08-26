@@ -3,13 +3,13 @@
  * 提供通用的 API 中间件功能，包括日志记录、错误处理、请求验证等
  */
 
-import type { NextRequest, NextResponse } from 'next/server';
-import { type ApiErrorResponse, ApiErrors, createApiError } from './api-utils';
+import type { NextRequest, NextResponse } from "next/server";
+import { type ApiErrorResponse, ApiErrors, createApiError } from "./api-utils";
 
 /**
  * 日志记录中间件选项
  */
-interface LoggingOptions {
+export interface LoggingOptions {
   /** 是否记录请求体 */
   logBody?: boolean;
   /** 是否记录请求头 */
@@ -23,7 +23,7 @@ interface LoggingOptions {
 /**
  * 请求验证中间件选项
  */
-interface ValidationOptions {
+export interface ValidationOptions {
   /** 允许的HTTP方法 */
   allowedMethods?: string[];
   /** 必需的请求头 */
@@ -37,7 +37,7 @@ interface ValidationOptions {
 /**
  * 中间件执行结果
  */
-interface MiddlewareResult<T = unknown> {
+export interface MiddlewareResult<T = unknown> {
   /** 是否继续执行 */
   continue: boolean;
   /** 处理后的数据 */
@@ -56,14 +56,14 @@ function logRequestInfo(
   logBody: boolean
 ) {
   // 记录请求信息
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.warn(`[${prefix}] ${request.method} ${request.url}`);
 
     if (logHeaders) {
       console.warn(`[${prefix}] Headers:`, Object.fromEntries(request.headers));
     }
 
-    if (logBody && request.method !== 'GET' && request.method !== 'HEAD') {
+    if (logBody && request.method !== "GET" && request.method !== "HEAD") {
       try {
         const body = request.clone().text();
         console.warn(`[${prefix}] Body:`, body);
@@ -78,7 +78,7 @@ function logRequestInfo(
  * 记录响应信息
  */
 function logResponseInfo(prefix: string, result: unknown, duration: number, logResponse: boolean) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     if (logResponse) {
       console.warn(`[${prefix}] Response:`, result);
     }
@@ -95,7 +95,7 @@ export async function withLogging<T>(
   handler: () => Promise<T>,
   options: LoggingOptions = {}
 ): Promise<T> {
-  const { logBody = false, logHeaders = false, logResponse = false, prefix = 'API' } = options;
+  const { logBody = false, logHeaders = false, logResponse = false, prefix = "API" } = options;
 
   const startTime = Date.now();
 
@@ -113,7 +113,7 @@ export async function withLogging<T>(
     return result;
   } catch (error) {
     const duration = Date.now() - startTime;
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.error(`[${prefix}] Error after ${duration}ms:`, error);
     }
     throw error;
@@ -131,7 +131,7 @@ export function withValidation(
     allowedMethods = [],
     requiredHeaders = [],
     requireAuth = false,
-    authHeader = 'authorization',
+    authHeader = "authorization",
   } = options;
 
   // 验证HTTP方法
@@ -156,7 +156,7 @@ export function withValidation(
   if (requireAuth && !request.headers.has(authHeader)) {
     return {
       continue: false,
-      error: ApiErrors.unauthorized('Authentication required'),
+      error: ApiErrors.unauthorized("Authentication required"),
     };
   }
 
@@ -170,12 +170,12 @@ export function withValidation(
  */
 export function withCORS(request: NextRequest): void {
   // 检查是否需要处理CORS
-  const origin = request.headers.get('origin');
+  const origin = request.headers.get("origin");
   if (!origin) return;
 
   // 在实际应用中，这里应该检查origin是否在允许的列表中
   // 为简化示例，我们允许所有origin
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.warn(`CORS request from origin: ${origin}`);
   }
 }
@@ -237,7 +237,7 @@ export function withRateLimit(
 
   const key = keyGenerator
     ? keyGenerator(request)
-    : request.headers.get('x-forwarded-for') || 'default';
+    : request.headers.get("x-forwarded-for") || "default";
 
   const { allowed, resetTime } = rateLimiter.check(key, maxRequests, windowMs);
 
@@ -245,8 +245,8 @@ export function withRateLimit(
     return {
       continue: false,
       error: createApiError(
-        'RATE_LIMIT',
-        'Too many requests',
+        "RATE_LIMIT",
+        "Too many requests",
         `Rate limit exceeded. Try again after ${new Date(resetTime).toISOString()}`
       ),
     };
@@ -254,9 +254,9 @@ export function withRateLimit(
     return {
       continue: false,
       error: createApiError(
-        'RATE_LIMIT',
-        'Too many requests',
-        'Rate limit exceeded. Try again later.'
+        "RATE_LIMIT",
+        "Too many requests",
+        "Rate limit exceeded. Try again later."
       ),
     };
   }
@@ -285,13 +285,13 @@ export async function runMiddleware<T>(
   try {
     return await handler();
   } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Middleware handler error:', error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Middleware handler error:", error);
     }
     if (error instanceof Error) {
-      return ApiErrors.internal('Request processing failed', error.message);
+      return ApiErrors.internal("Request processing failed", error.message);
     }
-    return ApiErrors.internal('Unknown error occurred');
+    return ApiErrors.internal("Unknown error occurred");
   }
 }
 
@@ -313,6 +313,15 @@ export function withPublicApi<T>(
     }
 
     // 执行处理函数
-    return handler(request);
+    const response = await handler(request);
+
+    // 如果响应是NextResponse实例，添加CORS头
+    if (response instanceof Response) {
+      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    }
+
+    return response;
   };
 }

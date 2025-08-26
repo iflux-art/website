@@ -1,7 +1,6 @@
-import React from 'react';
-import { cn } from '@/utils';
-import type { SidebarWrapperProps } from '@/types';
-import { DEFAULT_SIDEBAR_CONFIG, getResponsiveClasses } from '@/lib/layout/layout-utils';
+import { DEFAULT_SIDEBAR_CONFIG, getResponsiveClasses } from "@/lib/layout/layout-utils";
+import type { SidebarWrapperProps } from "@/types";
+import { cn } from "@/utils";
 
 /**
  * 侧边栏包装组件
@@ -22,8 +21,8 @@ export const SidebarWrapper = ({ children, config }: SidebarWrapperProps) => {
   } = responsive;
 
   const sidebarClasses = cn(
-    'hide-scrollbar overflow-y-auto',
-    sticky && 'sticky',
+    "hide-scrollbar overflow-y-auto",
+    sticky && "sticky",
     getResponsiveClasses(hideOnMobile, hideOnTablet, hideOnDesktop)
   );
 

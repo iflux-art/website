@@ -19,9 +19,9 @@
  */
 export function formatSegmentLabel(segment: string): string {
   return segment
-    .split('-')
+    .split("-")
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 /**
@@ -29,13 +29,13 @@ export function formatSegmentLabel(segment: string): string {
  */
 export function generateBreadcrumbs(
   segments: string[],
-  basePath = '',
+  basePath = "",
   customLabels: Record<string, string> = {}
 ): { label: string; href?: string; isCurrent?: boolean }[] {
   const breadcrumbs: { label: string; href?: string; isCurrent?: boolean }[] = [
     {
-      label: '首页',
-      href: '/',
+      label: "首页",
+      href: "/",
     },
   ];
 

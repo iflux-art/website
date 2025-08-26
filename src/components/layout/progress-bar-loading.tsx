@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface ProgressBarLoadingProps {
   /**
@@ -13,7 +13,7 @@ interface ProgressBarLoadingProps {
  * 进度条加载状态组件
  * 显示进度条加载状态
  */
-export const ProgressBarLoading = ({ minDisplayTime = 300 }: ProgressBarLoadingProps) => {
+export const ProgressBarLoading = (_props: ProgressBarLoadingProps) => {
   const [progress, setProgress] = useState(0);
   const [opacity, setOpacity] = useState(0.8);
 
@@ -43,7 +43,7 @@ export const ProgressBarLoading = ({ minDisplayTime = 300 }: ProgressBarLoadingP
       clearInterval(progressInterval);
       clearInterval(opacityInterval);
     };
-  }, [minDisplayTime]);
+  }, []);
 
   // 显示进度条
   return (
@@ -54,9 +54,9 @@ export const ProgressBarLoading = ({ minDisplayTime = 300 }: ProgressBarLoadingP
           style={{
             width: `${progress}%`,
             opacity,
-            transition: 'width 300ms ease-out',
-            transform: 'translateZ(0)',
-            boxShadow: '0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)',
+            transition: "width 300ms ease-out",
+            transform: "translateZ(0)",
+            boxShadow: "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
           }}
         />
       </div>

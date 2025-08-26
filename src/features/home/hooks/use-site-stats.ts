@@ -3,13 +3,13 @@
  * @module hooks/use-site-stats
  */
 
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { useBlogPosts } from '@/features/blog/hooks';
-import { useDocCategories } from '@/features/docs/hooks';
-import { useLinksData } from '@/features/links/hooks';
-import type { SiteStats } from '@/features/home/types';
+import { useBlogPosts } from "@/features/blog/hooks";
+import { useDocCategories } from "@/features/docs/hooks";
+import type { SiteStats } from "@/features/home/types";
+import { useLinksData } from "@/features/links/hooks";
+import { useMemo } from "react";
 
 /**
  * 获取网站统计数据
@@ -44,11 +44,11 @@ export function useSiteStats(): SiteStats & { refresh: () => void } {
 
     // 导航链接数量 - 排除友链和个人主页分类
     const linkCount =
-      linkItems?.filter(item => item.category !== 'friends' && item.category !== 'profile')
+      linkItems?.filter(item => item.category !== "friends" && item.category !== "profile")
         .length ?? 0;
 
     // 友链数量
-    const friendCount = linkItems?.filter(item => item.category === 'friends').length ?? 0;
+    const friendCount = linkItems?.filter(item => item.category === "friends").length ?? 0;
 
     return {
       blogCount,

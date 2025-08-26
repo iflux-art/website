@@ -15,7 +15,7 @@ export interface TocHeading {
  * 转义正则表达式特殊字符
  */
 function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /**
@@ -27,11 +27,12 @@ export function extractHeadings(content: string): {
 } {
   const headings: TocHeading[] = [];
   const headingRegex = /^(#{1,4})\s+(.+?)(?:\s*{#([\w-]+)})?$/gm;
-  let match;
+  let match: RegExpExecArray | null;
   let processedContent = content;
 
   // 首先提取所有标题
-  while ((match = headingRegex.exec(content)) !== null) {
+  match = headingRegex.exec(content);
+  while (match !== null) {
     const level = match[1].length;
     const text = match[2].trim();
     // 解析markdown链接格式 [text](url)
@@ -42,12 +43,14 @@ export function extractHeadings(content: string): {
       customId ||
       `heading-${finalText
         .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '')}-${match.index}`;
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "")}-${match.index}`;
 
     if (level >= 1 && level <= 4) {
       headings.push({ id, text: finalText, level });
     }
+
+    match = headingRegex.exec(content);
   }
 
   // 确保所有标题都有唯一ID
@@ -55,7 +58,7 @@ export function extractHeadings(content: string): {
     const escapedText = escapeRegExp(heading.text);
     const headingRegex = new RegExp(
       `^(#{${heading.level}})\\s+(?:\\[[^\\]]+\\]\\([^)]+\\)|${escapedText})(?:\\s*{#[\\w-]+})?$`,
-      'gm'
+      "gm"
     );
     processedContent = processedContent.replace(
       headingRegex,

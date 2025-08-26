@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronRight, Folder } from 'lucide-react';
-import { cn } from '@/utils';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { cn } from "@/utils";
+import { ChevronRight, Folder } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import type { SidebarItem, SidebarProps } from '@/types';
+import type { SidebarItem, SidebarProps } from "@/types";
 
 // 检查是否在客户端环境
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = typeof window !== "undefined";
 
 // 侧边栏状态管理hook
 function useSidebarState(items: SidebarItem[], storageKey: string) {
@@ -31,7 +31,7 @@ function useSidebarState(items: SidebarItem[], storageKey: string) {
           try {
             localStorage.setItem(storageKey, JSON.stringify(newState));
           } catch (error) {
-            console.warn('Failed to save sidebar state to localStorage:', error);
+            console.warn("Failed to save sidebar state to localStorage:", error);
           }
         }
         return newState;
@@ -94,7 +94,10 @@ const ExternalIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
     className="ml-1"
+    role="img"
+    aria-label="外部链接"
   >
+    <title>外部链接</title>
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
     <polyline points="15 3 21 3 21 9" />
     <line x1="10" y1="14" x2="21" y2="3" />
@@ -143,9 +146,9 @@ const CollapsibleItem = ({
   >
     <CollapsibleTrigger
       className={cn(
-        'flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium',
-        'transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-        isCurrentItem && 'bg-accent text-accent-foreground'
+        "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium",
+        "transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+        isCurrentItem && "bg-accent text-accent-foreground"
       )}
       aria-expanded={isOpen}
     >
@@ -154,7 +157,7 @@ const CollapsibleItem = ({
         <span>{item.title}</span>
       </div>
       <ChevronRight
-        className={cn('h-4 w-4 shrink-0 transition-transform duration-200', isOpen && 'rotate-90')}
+        className={cn("h-4 w-4 shrink-0 transition-transform duration-200", isOpen && "rotate-90")}
         aria-hidden="true"
       />
     </CollapsibleTrigger>
@@ -187,17 +190,18 @@ const ButtonItem = ({
   onHover,
 }: ButtonItemProps) => (
   <button
+    type="button"
     onClick={() => onItemClick(item.id)}
     onMouseEnter={() => onHover(item.id)}
     onMouseLeave={() => onHover(null)}
     className={cn(
-      'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
-      'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-      isCurrentItem ? 'bg-accent font-medium text-accent-foreground' : 'hover:bg-accent/50',
-      isHovering && 'text-foreground'
+      "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
+      "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+      isCurrentItem ? "bg-accent font-medium text-accent-foreground" : "hover:bg-accent/50",
+      isHovering && "text-foreground"
     )}
     title={item.description}
-    aria-current={isCurrentItem ? 'page' : undefined}
+    aria-current={isCurrentItem ? "page" : undefined}
   >
     <ItemIcon item={item} level={level} />
     <span>{item.title}</span>
@@ -215,9 +219,9 @@ export const Sidebar = ({
   currentItem,
   onItemClick,
   className,
-  storageKey = 'sidebar-open-categories',
+  storageKey = "sidebar-open-categories",
   showAllOption = false,
-  allOptionTitle = '全部',
+  allOptionTitle = "全部",
 }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const { isHovering, openCategories, handleHover, handleOpenChange } = useSidebarState(
@@ -241,7 +245,7 @@ export const Sidebar = ({
       const isCurrentItem = currentItem === item.id;
 
       return (
-        <div key={item.id} className={level === 0 ? 'mb-4' : 'my-1'}>
+        <div key={item.id} className={level === 0 ? "mb-4" : "my-1"}>
           {hasChildren ? (
             <CollapsibleItem
               item={item}
@@ -270,26 +274,27 @@ export const Sidebar = ({
   return (
     <div
       ref={sidebarRef}
-      className={cn('hide-scrollbar', className)}
-      style={{ direction: 'ltr', textAlign: 'left' }}
+      className={cn("hide-scrollbar", className)}
+      style={{ direction: "ltr", textAlign: "left" }}
     >
       <div className="space-y-2">
         {/* 全部选项 */}
         {showAllOption && (
           <div className="mb-2">
             <button
-              onClick={() => handleItemClick('')}
-              onMouseEnter={() => handleHover('all')}
+              type="button"
+              onClick={() => handleItemClick("")}
+              onMouseEnter={() => handleHover("all")}
               onMouseLeave={() => handleHover(null)}
               className={cn(
-                'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
-                'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
+                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                 !currentItem
-                  ? 'bg-accent font-medium text-accent-foreground'
-                  : 'hover:bg-accent/50',
-                isHovering === 'all' && 'text-foreground'
+                  ? "bg-accent font-medium text-accent-foreground"
+                  : "hover:bg-accent/50",
+                isHovering === "all" && "text-foreground"
               )}
-              aria-current={!currentItem ? 'page' : undefined}
+              aria-current={!currentItem ? "page" : undefined}
             >
               <Folder className="h-4 w-4 text-muted-foreground" />
               <span>{allOptionTitle}</span>

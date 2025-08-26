@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { LinksForm } from '@/features/links/components';
-import type { AddDialogProps, LinksFormData } from '@/features/admin/types';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import type { AddDialogProps, LinksFormData } from "@/features/admin/types";
+import { LinksForm } from "@/features/links/components";
+import { useState } from "react";
 
 export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -11,25 +11,25 @@ export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogP
   const handleSubmit = async (formData: LinksFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/links', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/links", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         const errorData: { error?: string } = (await response.json()) as { error?: string };
-        throw new Error(errorData.error ?? 'Failed to add item');
+        throw new Error(errorData.error ?? "Failed to add item");
       }
 
       const newItem: LinksFormData = (await response.json()) as LinksFormData;
       onSuccess(newItem);
       onOpenChange(false);
     } catch (error) {
-      if (error instanceof Error && error.message === 'URL already exists') {
-        onError('该网址已存在');
+      if (error instanceof Error && error.message === "URL already exists") {
+        onError("该网址已存在");
       } else {
-        onError('添加网址失败');
+        onError("添加网址失败");
       }
     } finally {
       setIsSubmitting(false);

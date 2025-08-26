@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Quote } from 'lucide-react';
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import { Quote } from "lucide-react";
 
 type MDXBlockquoteProps = {
   children: React.ReactNode;
@@ -19,11 +19,11 @@ export const MDXBlockquote = ({
 }: MDXBlockquoteProps) => (
   <blockquote
     className={cn(
-      'not-prose my-6 rounded-r-lg px-6 py-4',
-      'border-l-4 text-muted-foreground italic',
-      'flex items-start gap-4',
-      'bg-muted/50',
-      'border-border',
+      "not-prose my-6 rounded-r-lg px-6 py-4",
+      "border-l-4 text-muted-foreground italic",
+      "flex items-start gap-4",
+      "bg-muted/50",
+      "border-border",
       className
     )}
     {...props}

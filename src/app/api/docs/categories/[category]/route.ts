@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { getDocSidebar } from '@/features/docs/lib';
-import type { DocListItem } from '@/features/docs/types';
+import fs from "node:fs";
+import path from "node:path";
+import { getDocSidebar } from "@/features/docs/lib";
+import type { DocListItem } from "@/features/docs/types";
+import matter from "gray-matter";
+import { NextResponse } from "next/server";
 
 interface SidebarNavItem {
-  type?: 'menu' | 'separator' | 'page' | 'item' | 'category';
+  type?: "menu" | "separator" | "page" | "item" | "category";
   title: string;
   href?: string;
   isExternal?: boolean;
@@ -23,11 +23,11 @@ const flattenSidebarItems = (
   items: SidebarNavItem[],
   categoryId: string,
   docs: DocListItem[],
-  parentPath = ''
+  parentPath = ""
 ): void => {
   items.forEach(item => {
-    if (item.type !== 'separator' && item.href && !item.isExternal && item.filePath) {
-      const slug = item.filePath.split('/').pop() ?? '';
+    if (item.type !== "separator" && item.href && !item.isExternal && item.filePath) {
+      const slug = item.filePath.split("/").pop() ?? "";
 
       docs.push({
         slug,
@@ -43,7 +43,7 @@ const flattenSidebarItems = (
         item.items,
         categoryId,
         docs,
-        parentPath + (item.filePath ? `/${item.filePath}` : '')
+        parentPath + (item.filePath ? `/${item.filePath}` : "")
       );
     }
   });
@@ -55,12 +55,12 @@ const flattenSidebarItems = (
 const getFallbackDocs = (categoryDir: string, decodedCategory: string): DocListItem[] =>
   fs
     .readdirSync(categoryDir)
-    .filter(file => file.endsWith('.mdx') || file.endsWith('.md'))
+    .filter(file => file.endsWith(".mdx") || file.endsWith(".md"))
     .map(file => {
       const docPath = path.join(categoryDir, file);
-      const docContent = fs.readFileSync(docPath, 'utf8');
+      const docContent = fs.readFileSync(docPath, "utf8");
       const { data } = matter(docContent);
-      const slug = file.replace(/\.(mdx|md)$/, '');
+      const slug = file.replace(/\.(mdx|md)$/, "");
 
       return {
         slug,
@@ -70,15 +70,19 @@ const getFallbackDocs = (categoryDir: string, decodedCategory: string): DocListI
       } as DocListItem;
     });
 
-export async function GET(request: Request, { params }: { params: Promise<{ category: string }> }) {
+// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ category: string }> }
+) {
   try {
     const resolvedParams = await params;
     const categoryParam = resolvedParams.category;
     const decodedCategory = decodeURIComponent(categoryParam);
 
-    const categoryDir = path.join(process.cwd(), 'src', 'content', 'docs', decodedCategory);
+    const categoryDir = path.join(process.cwd(), "src", "content", "docs", decodedCategory);
 
-    if (!fs.existsSync(categoryDir) || !fs.statSync(categoryDir).isDirectory()) {
+    if (!(fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory())) {
       return NextResponse.json({ error: `分类 ${decodedCategory} 不存在` }, { status: 404 });
     }
 
@@ -96,6 +100,6 @@ export async function GET(request: Request, { params }: { params: Promise<{ cate
     return NextResponse.json(docs);
   } catch {
     // Error getting document list for category
-    return NextResponse.json({ error: '获取文档列表失败' }, { status: 500 });
+    return NextResponse.json({ error: "获取文档列表失败" }, { status: 500 });
   }
 }

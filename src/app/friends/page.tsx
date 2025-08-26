@@ -1,17 +1,17 @@
-import { AppGrid, PageContainer } from '@/components/layout';
-import { LinkCard } from '@/features/links/components';
-import { TwikooComment } from '@/features/comment';
-import { FriendLinkApplication } from '@/features/friends/components';
-import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from '@/features/friends/lib';
-import { generateSEOMetadata } from '@/lib/metadata/seo-utils';
-import type { Metadata } from 'next';
-import type { LinksItem } from '@/features/links/types';
-import friendsData from '@/content/links/friends.json';
+import { AppGrid, PageContainer } from "@/components/layout";
+import friendsData from "@/content/links/friends.json";
+import { TwikooComment } from "@/features/comment";
+import { FriendLinkApplication } from "@/features/friends/components";
+import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from "@/features/friends/lib";
+import { LinkCard } from "@/features/links/components";
+import type { LinksItem } from "@/features/links/types";
+import { generateSEOMetadata } from "@/lib/metadata/seo-utils";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = generateSEOMetadata({
-  title: '友情链接',
-  description: '友情链接列表和申请方式',
-  keywords: ['友链', '网站', '合作'],
+  title: "友情链接",
+  description: "友情链接列表和申请方式",
+  keywords: ["友链", "网站", "合作"],
 });
 
 const FriendsPage = () => {
@@ -22,7 +22,7 @@ const FriendsPage = () => {
   // 如果没有友链数据，显示空状态
   if (!hasFriendsData(friendsItems)) {
     return (
-      <PageContainer config={{ layout: 'full-width' }}>
+      <PageContainer config={{ layout: "full-width" }}>
         <div className="flex min-h-[50vh] items-center justify-center">
           <div className="text-center">
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight lg:text-5xl">友情链接</h1>
@@ -42,7 +42,7 @@ const FriendsPage = () => {
   }
 
   return (
-    <PageContainer config={{ layout: 'full-width' }}>
+    <PageContainer config={{ layout: "full-width" }}>
       <div>
         {/* 友链列表网格 */}
         <AppGrid columns={5} className="items-stretch">

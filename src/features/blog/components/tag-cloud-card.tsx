@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import { Tag } from 'lucide-react';
-import { cn } from '@/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/utils";
+import { Tag } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export interface TagWithCount {
   name: string;
@@ -49,7 +49,7 @@ export const TagCloudCard = ({
   const handleTagClick = (tagName: string) => {
     if (useDefaultRouting) {
       if (selectedTag === tagName) {
-        router.push('/blog');
+        router.push("/blog");
       } else {
         router.push(`/blog?tag=${encodeURIComponent(tagName)}`);
       }
@@ -61,7 +61,7 @@ export const TagCloudCard = ({
   };
 
   return (
-    <Card className={cn('w-full', className)}>
+    <Card className={cn("w-full", className)}>
       <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
           <Tag className="h-3.5 w-3.5 text-primary" />
@@ -76,13 +76,13 @@ export const TagCloudCard = ({
               return (
                 <Badge
                   key={tag.name}
-                  variant={isSelected ? 'default' : 'secondary'}
+                  variant={isSelected ? "default" : "secondary"}
                   className={cn(
-                    'h-6 min-h-[32px] cursor-pointer touch-manipulation px-2.5 py-1.5 text-xs font-normal transition-all duration-200 sm:h-5 sm:min-h-[20px] sm:px-2 sm:py-0.5 sm:text-[10px]',
-                    'hover:scale-105 hover:shadow-sm active:scale-95',
+                    "h-6 min-h-[32px] cursor-pointer touch-manipulation px-2.5 py-1.5 text-xs font-normal transition-all duration-200 sm:h-5 sm:min-h-[20px] sm:px-2 sm:py-0.5 sm:text-[10px]",
+                    "hover:scale-105 hover:shadow-sm active:scale-95",
                     isSelected
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'border-0 bg-muted/60 text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20'
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "border-0 bg-muted/60 text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20"
                   )}
                   onClick={() => handleTagClick(tag.name)}
                 >

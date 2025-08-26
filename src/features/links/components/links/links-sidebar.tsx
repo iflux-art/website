@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useMemo } from 'react';
-import { Folder } from 'lucide-react';
-import { Sidebar } from '@/components/layout/sidebar';
-import type { SidebarItem } from '@/types';
-import type { LinksCategory } from '@/features/links/types';
+import { Sidebar } from "@/components/layout/sidebar";
+import type { LinksCategory } from "@/features/links/types";
+import type { SidebarItem } from "@/types";
+import { Folder } from "lucide-react";
+import { useMemo } from "react";
 
 export interface LinksSidebarProps {
   categories: LinksCategory[];
@@ -29,7 +29,7 @@ export const LinksSidebar = ({
   const sidebarItems = useMemo(() => {
     // 过滤掉友链和个人主页分类
     const filteredCategories = categories.filter(
-      cat => cat.id !== 'friends' && cat.id !== 'profile'
+      cat => cat.id !== "friends" && cat.id !== "profile"
     );
 
     // 按 order 排序分类

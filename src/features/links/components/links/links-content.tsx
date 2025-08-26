@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useMemo } from 'react';
-import { cn } from '@/utils';
-import { LinkCard } from '@/features/links/components/link-card';
-import type { LinksItem } from '@/features/links/types';
+import { LinkCard } from "@/features/links/components/link-card";
+import type { LinksItem } from "@/features/links/types";
+import { cn } from "@/utils";
+import { useMemo } from "react";
 
 export interface LinksContentProps {
   items: LinksItem[];
@@ -26,7 +26,7 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
     items.forEach(item => {
       if (item.tags && Array.isArray(item.tags)) {
         item.tags.forEach(tag => {
-          if (tag && typeof tag === 'string' && tag.trim()) {
+          if (tag && typeof tag === "string" && tag.trim()) {
             const trimmedTag = tag.trim();
             if (!tagMap.has(trimmedTag)) {
               tagMap.set(trimmedTag, []);
@@ -39,7 +39,7 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
 
     // 转换为数组并排序
     const sortedGroups = Array.from(tagMap.entries())
-      .sort(([a], [b]) => a.localeCompare(b, 'zh-CN', { numeric: true }))
+      .sort(([a], [b]) => a.localeCompare(b, "zh-CN", { numeric: true }))
       .map(([tag, tagItems]) => ({
         tag,
         items: tagItems,
@@ -51,11 +51,11 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
   // 生成锚点 ID
   if (groupedItems.length === 0) {
     return (
-      <div className={cn('flex items-center justify-center py-12', className)}>
+      <div className={cn("flex items-center justify-center py-12", className)}>
         <div className="text-center">
           <h3 className="mb-2 text-lg font-medium text-muted-foreground">暂无链接</h3>
           <p className="text-sm text-muted-foreground">
-            {selectedCategory ? '当前分类下没有链接' : '没有找到任何链接'}
+            {selectedCategory ? "当前分类下没有链接" : "没有找到任何链接"}
           </p>
         </div>
       </div>
@@ -63,10 +63,10 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
   }
 
   return (
-    <div className={cn('space-y-8', className)}>
+    <div className={cn("space-y-8", className)}>
       {groupedItems.map(({ tag, items: tagItems }) => {
         // 生成与 use-tag-anchors 钩子一致的锚点 ID
-        const anchorId = `tag-${tag.replace(/\s+/g, '-').toLowerCase()}`;
+        const anchorId = `tag-${tag.replace(/\s+/g, "-").toLowerCase()}`;
 
         return (
           <section key={tag} className="space-y-4">

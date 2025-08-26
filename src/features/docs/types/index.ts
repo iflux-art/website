@@ -2,7 +2,7 @@
  * 文档类型定义 - 优化合并版
  */
 
-import type { Heading } from '@/types';
+import type { Heading } from "@/types";
 
 // ================= 文档内容相关类型 =================
 // 注意：Heading 类型已移动到 @/features/content/types
@@ -55,7 +55,7 @@ export interface DocFrontmatter extends DocContentBase {
 export function toDocFrontmatter<T extends Record<string, unknown>>(obj: T): DocFrontmatter {
   return {
     ...obj,
-    title: (obj.title as string) ?? '',
+    title: (obj.title as string) ?? "",
   } as DocFrontmatter;
 }
 
@@ -87,7 +87,7 @@ export interface DocNavBase {
 export interface SidebarItem extends DocNavBase {
   items?: SidebarItem[];
   collapsed?: boolean;
-  type?: 'separator' | 'page' | 'menu';
+  type?: "separator" | "page" | "menu";
   isExternal?: boolean;
   href?: string;
   filePath?: string;
@@ -100,7 +100,7 @@ export interface NavDocItem extends DocNavBase {
 
 // ================= 保留原有类型别名以保持兼容 =================
 
-export type DocListItem = Pick<DocItem, 'title' | 'description' | 'path' | 'category'> & {
+export type DocListItem = Pick<DocItem, "title" | "description" | "path" | "category"> & {
   slug?: string;
   date?: string | null;
   isActive?: boolean;

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from '@/components/ui/context-menu';
-import { ArrowUp, Bookmark, Copy, Moon, RefreshCw, Shuffle, Sun } from 'lucide-react';
-import { useGlobalContextMenu } from '../hooks/use-global-context-menu';
+} from "@/components/ui/context-menu";
+import { ArrowUp, Bookmark, Copy, Moon, RefreshCw, Shuffle, Sun } from "lucide-react";
+import React from "react";
+import { useGlobalContextMenu } from "../hooks/use-global-context-menu";
 
 interface GlobalContextMenuProps {
   children: React.ReactNode;
@@ -73,7 +73,7 @@ export const GlobalContextMenu = ({ children }: GlobalContextMenuProps) => {
 
         {/* 主题切换 */}
         <ContextMenuItem onClick={toggleTheme}>
-          {currentTheme === 'dark' ? (
+          {currentTheme === "dark" ? (
             <Sun className="mr-2 h-4 w-4" />
           ) : (
             <Moon className="mr-2 h-4 w-4" />

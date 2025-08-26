@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronRight, FileText, Folder } from 'lucide-react';
-import { cn } from '@/utils';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { NavLink } from '@/components/layout/navbar/nav-link';
-import type { DocCategoryWithDocs, GlobalDocsStructure } from './global-docs';
-import type { SidebarItem } from '@/features/docs/types';
+import { NavLink } from "@/components/layout/navbar/nav-link";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import type { SidebarItem } from "@/features/docs/types";
+import { cn } from "@/utils";
+import { ChevronRight, FileText, Folder } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { DocCategoryWithDocs, GlobalDocsStructure } from "./global-docs";
 
 // 检查是否在客户端环境
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = typeof window !== "undefined";
 
 // 分隔符组件
 const SeparatorItem = ({ item, itemId }: { item: SidebarItem; itemId: string }) => (
@@ -58,8 +58,8 @@ const CollapsibleItem = ({
             <Folder className="h-4 w-4 text-muted-foreground" />
             <span
               className={cn(
-                'font-medium',
-                isHovering === itemId ? 'text-foreground' : 'text-muted-foreground'
+                "font-medium",
+                isHovering === itemId ? "text-foreground" : "text-muted-foreground"
               )}
             >
               {item.title}
@@ -67,8 +67,8 @@ const CollapsibleItem = ({
           </div>
           <ChevronRight
             className={cn(
-              'h-4 w-4 text-muted-foreground transition-transform',
-              openCategories[itemId] && 'rotate-90'
+              "h-4 w-4 text-muted-foreground transition-transform",
+              openCategories[itemId] && "rotate-90"
             )}
           />
         </CollapsibleTrigger>
@@ -96,15 +96,15 @@ const DocumentItem = ({ item, itemId, currentDoc, onHover }: DocumentItemProps) 
 
   return (
     <NavLink
-      href={item.href ?? '#'}
+      href={item.href ?? "#"}
       currentDoc={currentDoc}
-      target={isExternal ? '_blank' : undefined}
-      rel={isExternal ? 'noopener noreferrer' : undefined}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       onMouseEnter={() => onHover(itemId)}
       onMouseLeave={() => onHover(null)}
       className={cn(
-        '!flex !items-center !justify-start gap-2 rounded-md px-3 py-2 text-sm transition-colors',
-        isCurrentDoc && 'bg-accent font-medium text-accent-foreground'
+        "!flex !items-center !justify-start gap-2 rounded-md px-3 py-2 text-sm transition-colors",
+        isCurrentDoc && "bg-accent font-medium text-accent-foreground"
       )}
     >
       <FileText className="h-4 w-4 text-muted-foreground" />
@@ -121,7 +121,10 @@ const DocumentItem = ({ item, itemId, currentDoc, onHover }: DocumentItemProps) 
           strokeLinecap="round"
           strokeLinejoin="round"
           className="ml-1"
+          role="img"
+          aria-label="外部链接"
         >
+          <title>外部链接</title>
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
           <polyline points="15 3 21 3 21 9" />
           <line x1="10" y1="14" x2="21" y2="3" />
@@ -166,7 +169,7 @@ function useCollapsibleState(localStorageKey: string) {
         try {
           setOpenCategories(JSON.parse(savedStateStr) as Record<string, boolean>);
         } catch (err) {
-          console.error('Failed to parse saved state:', err);
+          console.error("Failed to parse saved state:", err);
         }
       }
     }
@@ -213,8 +216,8 @@ const CategoryHeader = ({
           {hasDocuments && (
             <ChevronRight
               className={cn(
-                'h-4 w-4 text-muted-foreground transition-transform duration-200 ease-in-out',
-                isOpen && 'rotate-90'
+                "h-4 w-4 text-muted-foreground transition-transform duration-200 ease-in-out",
+                isOpen && "rotate-90"
               )}
             />
           )}
@@ -243,7 +246,7 @@ export const DocsSidebar = ({ structure, currentDoc, className }: DocsSidebarPro
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const localStorageKey = 'docs-sidebar-open-categories';
+  const localStorageKey = "docs-sidebar-open-categories";
   const { openCategories, handleOpenChange } = useCollapsibleState(localStorageKey);
 
   // 处理鼠标悬停
@@ -253,11 +256,11 @@ export const DocsSidebar = ({ structure, currentDoc, className }: DocsSidebarPro
 
   // 渲染侧边栏项目
   const renderSidebarItems = useCallback(
-    (items: SidebarItem[], level = 0, parentPath = ''): React.ReactNode =>
+    (items: SidebarItem[], level = 0, parentPath = ""): React.ReactNode =>
       items.map((item, index) => {
         const itemId = parentPath ? `${parentPath}-${index}` : `${index}`;
         const hasItems = item.items && item.items.length > 0;
-        const isSeparator = item.type === 'separator';
+        const isSeparator = item.type === "separator";
 
         // 分隔符
         if (isSeparator) {
@@ -313,8 +316,8 @@ export const DocsSidebar = ({ structure, currentDoc, className }: DocsSidebarPro
   return (
     <div
       ref={sidebarRef}
-      className={cn('hide-scrollbar', className)}
-      style={{ direction: 'ltr', textAlign: 'left' }}
+      className={cn("hide-scrollbar", className)}
+      style={{ direction: "ltr", textAlign: "left" }}
     >
       <div className="space-y-2">
         {/* 分类列表 */}

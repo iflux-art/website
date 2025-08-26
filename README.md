@@ -12,7 +12,7 @@
 - **认证**: Clerk
 - **包管理**: pnpm
 - **测试**: Vitest
-- **代码规范**: ESLint + Prettier + Husky
+- **代码规范**: Biome + Husky
 
 ## 开发环境
 
@@ -36,9 +36,11 @@ pnpm install
 | `pnpm start`              | 启动生产服务器                  |
 | `pnpm lint`               | 运行代码检查                    |
 | `pnpm lint:fix`           | 自动修复代码问题                |
-| `pnpm type-check`         | 运行TypeScript类型检查          |
 | `pnpm format`             | 格式化代码                      |
 | `pnpm format:check`       | 检查代码格式                    |
+| `pnpm check`              | 运行代码检查和格式化            |
+| `pnpm check:fix`          | 自动修复代码检查和格式化问题    |
+| `pnpm type-check`         | 运行TypeScript类型检查          |
 | `pnpm test`               | 运行测试                        |
 | `pnpm test:run`           | 运行测试一次                    |
 | `pnpm test:coverage`      | 生成测试覆盖率报告              |
@@ -78,7 +80,6 @@ pnpm install
 - **错误追踪**: Sentry
 - **国际化**: next-i18next
 - **SEO优化**: next-seo, next-sitemap
-- **PWA支持**: next-pwa
 - **字体优化**: next/font
 
 ## 贡献指南
@@ -86,8 +87,7 @@ pnpm install
 1. 提交代码前请运行:
 
 ```bash
-pnpm lint
-pnpm format
+pnpm check
 pnpm test
 ```
 

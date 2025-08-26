@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Menu } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { NavCardMenu } from './nav-card-menu';
-import { useMounted } from '@/hooks';
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useMounted } from "@/hooks";
+import { Menu } from "lucide-react";
+import { useState } from "react";
+import { NavCardMenu } from "./nav-card-menu";
 
 export const HamburgerMenu = () => {
   const isMounted = useMounted();

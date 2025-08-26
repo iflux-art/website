@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { cn } from '@/utils';
 import {
   ADMIN_MENU_ITEMS,
   NAV_DESCRIPTIONS,
   NAV_ITEMS,
   NAV_PATHS,
-} from '@/components/layout/navbar/nav-config';
-import { useUser } from '@clerk/nextjs';
-import { useActiveSection } from '@/hooks/navbar/use-active-section';
-import type { LucideIcon } from 'lucide-react';
+} from "@/components/layout/navbar/nav-config";
+import { useActiveSection } from "@/hooks/navbar/use-active-section";
+import { cn } from "@/utils";
+import { useUser } from "@clerk/nextjs";
+import type { LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 interface NavProps {
   /**
@@ -30,7 +30,7 @@ const NavCards = ({ onClose, className }: NavProps) => {
   );
 
   return (
-    <div className={cn('space-y-6', className)}>
+    <div className={cn("space-y-6", className)}>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => {
           const Icon: LucideIcon = item.icon;
@@ -40,10 +40,10 @@ const NavCards = ({ onClose, className }: NavProps) => {
               href={NAV_PATHS[item.key]}
               onClick={onClose}
               className={cn(
-                'group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground',
+                "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
                 isActiveSection === item.key
-                  ? 'border-primary bg-accent text-accent-foreground'
-                  : 'border-border'
+                  ? "border-primary bg-accent text-accent-foreground"
+                  : "border-border"
               )}
             >
               <div className="space-y-2">
@@ -80,10 +80,10 @@ const AdminMenu = ({ onClose }: NavProps) => {
               href={`/${item.key}`}
               onClick={onClose}
               className={cn(
-                'group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground',
+                "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
                 isActiveSection === item.key
-                  ? 'border-primary bg-accent text-accent-foreground'
-                  : 'border-border'
+                  ? "border-primary bg-accent text-accent-foreground"
+                  : "border-border"
               )}
             >
               <div className="space-y-2">
@@ -105,7 +105,7 @@ export const NavCardMenu = ({ onClose, className }: NavProps) => {
   const { isSignedIn } = useUser();
 
   return (
-    <div className={cn('space-y-6', className)}>
+    <div className={cn("space-y-6", className)}>
       <NavCards onClose={onClose} />
       {isSignedIn && <AdminMenu onClose={onClose} />}
     </div>

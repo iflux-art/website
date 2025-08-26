@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 /**
  * 页面布局类型枚举
  */
 export type PageLayoutType =
-  | 'three-column' // 三栏布局：左侧边栏 + 主内容 + 右侧边栏（导航、博客、文档页面）
-  | 'full-width'; // 全屏布局：铺满整个容器（首页、友链、关于、管理后台）;
+  | "three-column" // 三栏布局：左侧边栏 + 主内容 + 右侧边栏（导航、博客、文档页面）
+  | "full-width"; // 全屏布局：铺满整个容器（首页、友链、关于、管理后台）;
 
 /**
  * 页面容器配置接口
@@ -49,7 +49,7 @@ export interface SidebarConfig {
   /**
    * 侧边栏位置
    */
-  position: 'left' | 'right';
+  position: "left" | "right";
   /**
    * 是否粘性定位
    */
@@ -155,7 +155,7 @@ export interface AppGridProps {
   children?: ReactNode;
   className?: string;
   columns?: 1 | 2 | 3 | 4 | 5;
-  gap?: 'small' | 'default' | 'large';
+  gap?: "small" | "default" | "large";
 }
 
 /**
@@ -229,5 +229,5 @@ export type GridColsMap = {
  * 网格间距样式映射类型
  */
 export type GridGapMap = {
-  [K in 'small' | 'default' | 'large']: string;
+  [K in "small" | "default" | "large"]: string;
 };

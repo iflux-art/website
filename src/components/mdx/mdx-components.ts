@@ -3,10 +3,10 @@
  * 合并静态和交互组件配置
  */
 
+import { MDXBlockquote } from "@/components/mdx/mdx-blockquote";
+import { MDXImg } from "@/components/mdx/mdx-img";
 // ===== 静态组件 =====
-import { MDXLink } from '@/components/mdx/mdx-link';
-import { MDXBlockquote } from '@/components/mdx/mdx-blockquote';
-import { MDXImg } from '@/components/mdx/mdx-img';
+import { MDXLink } from "@/components/mdx/mdx-link";
 
 /**
  * 静态组件映射

@@ -1,15 +1,14 @@
-import React from 'react';
-import { redirect } from 'next/navigation';
-import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { isRedirectLoop, resolveDocPath } from '@/features/docs/lib/doc-path-resolver';
-import { ContentDisplay, DocPagination } from '@/features/content-display/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { DocsSidebarCard } from '@/features/docs/components';
-import { ThreeColumnLayout } from '@/components/layout';
-import ClientMDXRenderer from '@/components/mdx/client-mdx-renderer';
-import { TwikooComment } from '@/features/comment';
-import { DocErrorHandler } from './doc-error-handler';
-import type { DocContentResult } from '@/features/docs/types';
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import ClientMDXRenderer from "@/components/mdx/client-mdx-renderer";
+import { TwikooComment } from "@/features/comment";
+import { ContentDisplay, DocPagination } from "@/features/content-display/components";
+import { DocsSidebarCard } from "@/features/docs/components";
+import { createDocBreadcrumbsServer, getDocContentFromFeatures } from "@/features/docs/lib";
+import { isRedirectLoop, resolveDocPath } from "@/features/docs/lib/doc-path-resolver";
+import type { DocContentResult } from "@/features/docs/types";
+import { redirect } from "next/navigation";
+import { DocErrorHandler } from "./doc-error-handler";
 
 interface DocPageContainerProps {
   slug: string[];
@@ -24,8 +23,8 @@ export const DocPageContainer = ({ slug }: DocPageContainerProps) => {
   const pathResolution = resolveDocPath(slug);
 
   // 处理重定向情况
-  if (pathResolution.type === 'redirect' && pathResolution.redirectTo) {
-    const currentPath = `/docs/${slug.join('/')}`;
+  if (pathResolution.type === "redirect" && pathResolution.redirectTo) {
+    const currentPath = `/docs/${slug.join("/")}`;
     if (isRedirectLoop(currentPath, pathResolution.redirectTo)) {
       return <DocErrorHandler errorType="redirect-loop" slug={slug} />;
     }
@@ -33,7 +32,7 @@ export const DocPageContainer = ({ slug }: DocPageContainerProps) => {
   }
 
   // 处理未找到的情况
-  if (pathResolution.type === 'notfound') {
+  if (pathResolution.type === "notfound") {
     return <DocErrorHandler errorType="not-found" slug={slug} />;
   }
 
@@ -49,7 +48,7 @@ export const DocPageContainer = ({ slug }: DocPageContainerProps) => {
   const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
   // 左侧边栏内容
-  const leftSidebar = <DocsSidebarCard currentDoc={`/docs/${slug.join('/')}`} />;
+  const leftSidebar = <DocsSidebarCard currentDoc={`/docs/${slug.join("/")}`} />;
 
   // 右侧边栏内容
   const rightSidebar = <TableOfContentsCard headings={doc.headings} className="prose-sm" />;

@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import { Logo } from './logo';
-import { NavListMenu } from './nav-menu';
-import { useNavbarScroll } from '@/hooks/navbar/use-navbar-scroll';
-import { ThemeToggle } from '@/components/theme/theme-toggle';
-import { SearchButton } from '@/features/search';
-import { HamburgerMenu } from './hamburger-menu';
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { SearchButton } from "@/features/search";
+import { useNavbarScroll } from "@/hooks/navbar/use-navbar-scroll";
+import { HamburgerMenu } from "./hamburger-menu";
+import { Logo } from "./logo";
+import { NavListMenu } from "./nav-menu";
 
-export const MainNavbar = ({ className = '' }: { className?: string }) => {
+export const MainNavbar = ({ className = "" }: { className?: string }) => {
   const { pageTitle, showTitle, scrollToTop, shouldShowPageTitle, showNavMenu } = useNavbarScroll();
 
   return (
     <nav
-      className={`sticky top-0 z-40 h-16 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className}`}
+      className={`sticky top-0 z-40 h-16 w-full border-b backdrop-blur ${className}`}
       onDoubleClickCapture={scrollToTop}
-      title={showTitle ? '双击返回顶部' : ''}
-      role="navigation"
+      title={showTitle ? "双击返回顶部" : ""}
       aria-label="导航栏"
     >
       <div className="container mx-auto flex h-full items-center justify-between px-4">
@@ -28,7 +27,7 @@ export const MainNavbar = ({ className = '' }: { className?: string }) => {
             <button
               className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight transition-colors hover:text-primary"
               onClick={scrollToTop}
-              onKeyDown={e => e.key === 'Enter' && scrollToTop()}
+              onKeyDown={e => e.key === "Enter" && scrollToTop()}
               title="点击返回顶部"
               tabIndex={0}
               type="button"

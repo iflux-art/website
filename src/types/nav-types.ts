@@ -2,7 +2,7 @@
  * 导航和搜索相关类型定义
  */
 
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from "react";
 
 /** 面包屑导航项 */
 export interface BreadcrumbItem {
@@ -97,7 +97,7 @@ export interface BaseSearchResult {
 /** 导航栏搜索结果 */
 export interface NavbarSearchResult extends BaseSearchResult {
   /** 结果类型 */
-  type: 'doc' | 'blog' | 'navigation' | 'tool' | 'command' | 'history' | 'link';
+  type: "doc" | "blog" | "navigation" | "tool" | "command" | "history" | "link";
   /** 图标 */
   icon: ReactNode;
   /** 是否为外部链接 */

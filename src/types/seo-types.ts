@@ -37,7 +37,7 @@ export interface GenerateMetadataOptions {
   description?: string;
   keywords?: string[];
   image?: string;
-  type?: 'website' | 'article' | 'profile';
+  type?: "website" | "article" | "profile";
   author?: string;
   date?: string;
   modified?: string;
@@ -71,7 +71,7 @@ export interface SEOPageOptions {
   title: string;
   description?: string;
   keywords?: string[];
-  type?: 'website' | 'article' | 'profile';
+  type?: "website" | "article" | "profile";
   publishedTime?: string;
   modifiedTime?: string;
   authors?: string[];

@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { ArrowRightLeft, FileText } from 'lucide-react';
-import { cn } from '@/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/utils";
+import { ArrowRightLeft, FileText } from "lucide-react";
+import Link from "next/link";
 
 // 相关文章类型定义
 export interface RelatedPost {
@@ -22,7 +22,7 @@ export interface RelatedPostsCardProps {
 export const RelatedPostsCard = ({ posts, currentSlug }: RelatedPostsCardProps) => {
   if (!posts?.length) return null;
 
-  const currentPath = `/blog/${currentSlug.join('/')}`;
+  const currentPath = `/blog/${currentSlug.join("/")}`;
 
   return (
     <Card className="w-full">
@@ -37,11 +37,11 @@ export const RelatedPostsCard = ({ posts, currentSlug }: RelatedPostsCardProps) 
           const isActive = currentPath === post.href;
           return (
             <Link
-              key={post.slug.join('/')}
+              key={post.slug.join("/")}
               href={post.href}
               className={cn(
-                'group flex items-start gap-2 rounded-md p-2 text-xs transition-all duration-200 hover:bg-muted/60',
-                isActive && 'bg-muted font-medium text-primary'
+                "group flex items-start gap-2 rounded-md p-2 text-xs transition-all duration-200 hover:bg-muted/60",
+                isActive && "bg-muted font-medium text-primary"
               )}
             >
               <FileText className="mt-0.5 h-3 w-3 shrink-0 text-muted-foreground/70 group-hover:text-foreground/80" />

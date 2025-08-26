@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
-import type { SEOPageOptions, SiteConfig } from '@/types';
-import { filterUndefinedValues } from '../../utils';
+import type { SEOPageOptions, SiteConfig } from "@/types";
+import type { Metadata } from "next";
+import { filterUndefinedValues } from "../../utils";
 
 /**
  * 默认站点配置
  */
 const DEFAULT_SITE_CONFIG: SiteConfig = {
-  name: '个人网站',
-  description: '个人博客和作品展示网站',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-  locale: 'zh-CN',
-  keywords: ['博客', '技术', '前端', '开发'],
+  name: "个人网站",
+  description: "个人博客和作品展示网站",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  locale: "zh-CN",
+  keywords: ["博客", "技术", "前端", "开发"],
 };
 
 /**
@@ -41,7 +41,7 @@ function generateBasicMetadata(options: {
   return {
     title: fullTitle,
     description: fullDescription,
-    keywords: allKeywords.join(','),
+    keywords: allKeywords.join(","),
     authors: authors.length > 0 ? authors.map(name => ({ name })) : undefined,
     category,
     robots: {
@@ -93,7 +93,7 @@ function generateOpenGraphMetadata(options: {
   return {
     title: fullTitle,
     description: fullDescription,
-    type: type as 'website' | 'article',
+    type: type as "website" | "article",
     url: canonicalUrl || siteUrl,
     siteName,
     locale,
@@ -117,7 +117,7 @@ function generateTwitterMetadata(options: {
   const { fullTitle, fullDescription, twitterHandle, imageUrl } = options;
 
   return {
-    card: 'summary_large_image' as const,
+    card: "summary_large_image" as const,
     title: fullTitle,
     description: fullDescription,
     creator: twitterHandle,
@@ -134,11 +134,11 @@ function generateOtherMetadata(options: { category?: string; tags: string[] }) {
   const other: Record<string, string> = {};
 
   if (category) {
-    other['article:section'] = category;
+    other["article:section"] = category;
   }
 
   if (tags.length > 0) {
-    other['article:tag'] = tags.join(',');
+    other["article:tag"] = tags.join(",");
   }
 
   return other;
@@ -157,8 +157,8 @@ export function generateDocsMetadata(options: {
   noFollow?: boolean;
 }): Metadata {
   const {
-    title = '文档',
-    description = '技术文档',
+    title = "文档",
+    description = "技术文档",
     section,
     lastUpdated,
     image,
@@ -178,12 +178,12 @@ export function generateDocsMetadata(options: {
     openGraph: {
       title: fullTitle,
       description,
-      type: 'article',
+      type: "article",
       ...(lastUpdated && { modifiedTime: lastUpdated }),
       images: image ? [{ url: image }] : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: fullTitle,
       description,
       images: image ? [image] : undefined,
@@ -194,11 +194,11 @@ export function generateDocsMetadata(options: {
   const otherMetadata: Record<string, string> = {};
 
   if (section) {
-    otherMetadata['article:section'] = section;
+    otherMetadata["article:section"] = section;
   }
 
   if (lastUpdated) {
-    otherMetadata['article:modified_time'] = lastUpdated;
+    otherMetadata["article:modified_time"] = lastUpdated;
   }
 
   if (Object.keys(otherMetadata).length > 0) {
@@ -257,7 +257,7 @@ function processSEOMetadataOptions(options: SEOPageOptions, siteConfig: SiteConf
     title,
     description,
     keywords = [],
-    type = 'website',
+    type = "website",
     publishedTime,
     modifiedTime,
     authors = [],

@@ -1,10 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
+import Link from "next/link";
 
 /**
  * 文档错误类型
  */
-export type DocErrorType = 'not-found' | 'building' | 'redirect-loop' | 'content-error';
+export type DocErrorType = "not-found" | "building" | "redirect-loop" | "content-error";
 
 interface DocErrorHandlerProps {
   errorType: DocErrorType;
@@ -21,9 +20,9 @@ export const DocErrorHandler = ({
   errorType,
   slug,
   error,
-  className = '',
+  className = "",
 }: DocErrorHandlerProps) => {
-  const requestedPath = slug ? `/docs/${slug.join('/')}` : '/docs';
+  const requestedPath = slug ? `/docs/${slug.join("/")}` : "/docs";
 
   // 记录错误信息用于调试
   if (error) {
@@ -32,7 +31,7 @@ export const DocErrorHandler = ({
 
   const renderErrorContent = () => {
     switch (errorType) {
-      case 'building':
+      case "building":
         return (
           <>
             <h1 className="mb-4 text-3xl font-bold">文档建设中</h1>
@@ -44,7 +43,7 @@ export const DocErrorHandler = ({
           </>
         );
 
-      case 'redirect-loop':
+      case "redirect-loop":
         return (
           <>
             <h1 className="mb-4 text-3xl font-bold">页面重定向错误</h1>
@@ -58,7 +57,7 @@ export const DocErrorHandler = ({
           </>
         );
 
-      case 'content-error':
+      case "content-error":
         return (
           <>
             <h1 className="mb-4 text-3xl font-bold">内容加载失败</h1>
@@ -72,7 +71,6 @@ export const DocErrorHandler = ({
           </>
         );
 
-      case 'not-found':
       default:
         return (
           <>

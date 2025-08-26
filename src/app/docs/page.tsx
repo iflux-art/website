@@ -1,15 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { generateDocsMetadata } from '@/lib/metadata/seo-utils';
-import { DocsSidebarCard, getAllDocsStructure } from '@/features/docs/components';
-import { createDocBreadcrumbsServer, getDocContentFromFeatures } from '@/features/docs/lib';
-import { ThreeColumnLayout } from '@/components/layout';
-import { ContentDisplay, DocPagination } from '@/features/content-display/components';
-import { TableOfContentsCard } from '@/components/layout/toc/table-of-contents-card';
-import { TwikooComment } from '@/features/comment';
-import { ClientMDXRenderer } from '@/components/mdx';
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ThreeColumnLayout } from "@/components/layout";
+import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
+import { ClientMDXRenderer } from "@/components/mdx";
+import { TwikooComment } from "@/features/comment";
+import { ContentDisplay, DocPagination } from "@/features/content-display/components";
+import { DocsSidebarCard, getAllDocsStructure } from "@/features/docs/components";
+import { createDocBreadcrumbsServer, getDocContentFromFeatures } from "@/features/docs/lib";
+import { generateDocsMetadata } from "@/lib/metadata/seo-utils";
 
 /**
  * 获取第一个文档内容
@@ -22,12 +21,12 @@ function getFirstDocContent(): ReturnType<typeof getDocContentFromFeatures> | nu
       return null;
     }
 
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
-    const slug = firstDocPath.split('/');
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
+    const slug = firstDocPath.split("/");
 
     return getDocContentFromFeatures(slug);
   } catch (error) {
-    console.error('Error getting first doc content:', error as Error);
+    console.error("Error getting first doc content:", error as Error);
     return null;
   }
 }
@@ -35,26 +34,26 @@ function getFirstDocContent(): ReturnType<typeof getDocContentFromFeatures> | nu
 /**
  * 生成文档页面元数据
  */
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   const structure = getAllDocsStructure();
   const doc = getFirstDocContent();
 
-  if (!doc || !structure) {
+  if (!(doc && structure)) {
     return generateDocsMetadata({
-      title: '文档不可用',
-      description: '当前没有可用的文档内容',
+      title: "文档不可用",
+      description: "当前没有可用的文档内容",
     });
   }
 
   return generateDocsMetadata({
     title: doc.frontmatter.title,
-    description: doc.frontmatter.description || '文档页面',
-    section: '文档',
+    description: doc.frontmatter.description || "文档页面",
+    section: "文档",
     lastUpdated: doc.date || undefined,
   });
 }
 
-export default async function DocsPage() {
+export default function DocsPage() {
   try {
     const structure = getAllDocsStructure();
 
@@ -88,8 +87,8 @@ export default async function DocsPage() {
     }
 
     // 从 firstDocPath 中提取 slug 用于面包屑
-    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, '');
-    const slug = firstDocPath.split('/');
+    const firstDocPath = structure.firstDocPath.replace(/^\/docs\//, "");
+    const slug = firstDocPath.split("/");
     const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
     // 左侧边栏内容 - 文档导航
@@ -124,7 +123,7 @@ export default async function DocsPage() {
       </div>
     );
   } catch (error) {
-    console.error('Error in docs home page:', error);
+    console.error("Error in docs home page:", error);
     notFound();
   }
 }

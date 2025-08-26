@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { BlogCard } from './blog-card';
+import { BlogCard } from "./blog-card";
 
-import type { BlogPost } from '@/features/blog/types';
+import type { BlogPost } from "@/features/blog/types";
 
 // ====== 迁移自 src/utils/date.ts ======
 /**
@@ -13,19 +12,19 @@ import type { BlogPost } from '@/features/blog/types';
  * @returns 格式化后的日期字符串
  */
 function formatDate(date: string | Date | undefined, format?: string): string {
-  if (!date) return '';
+  if (!date) return "";
 
   const d = new Date(date);
-  if (isNaN(d.getTime())) return '';
+  if (Number.isNaN(d.getTime())) return "";
 
-  if (format === 'MM月dd日') {
+  if (format === "MM月dd日") {
     return `${d.getMonth() + 1}月${d.getDate()}日`;
   }
 
-  return d.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return d.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 }
 // ====== END ======
@@ -59,7 +58,7 @@ export const BlogListContent = ({
     } else if (selectedTag) {
       return `未找到包含标签"${selectedTag}"的文章`;
     } else {
-      return '暂无文章';
+      return "暂无文章";
     }
   };
 

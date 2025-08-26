@@ -1,17 +1,17 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 /**
  * API 错误类型
  */
 export type ApiErrorType =
-  | 'VALIDATION_ERROR'
-  | 'NOT_FOUND'
-  | 'UNAUTHORIZED'
-  | 'FORBIDDEN'
-  | 'CONFLICT'
-  | 'INTERNAL_ERROR'
-  | 'RATE_LIMIT'
-  | 'INVALID_METHOD';
+  | "VALIDATION_ERROR"
+  | "NOT_FOUND"
+  | "UNAUTHORIZED"
+  | "FORBIDDEN"
+  | "CONFLICT"
+  | "INTERNAL_ERROR"
+  | "RATE_LIMIT"
+  | "INVALID_METHOD";
 
 /**
  * API 错误响应接口
@@ -75,7 +75,7 @@ export function createApiSuccess<T>(
   };
 
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
   // 设置缓存头
@@ -91,15 +91,15 @@ export function createApiSuccess<T>(
     }
 
     if (cacheConfig.mustRevalidate) {
-      cacheDirectives.push('must-revalidate');
+      cacheDirectives.push("must-revalidate");
     }
 
     if (cacheDirectives.length > 0) {
-      headers['Cache-Control'] = cacheDirectives.join(', ');
+      headers["Cache-Control"] = cacheDirectives.join(", ");
     }
   } else {
     // 默认不缓存
-    headers['Cache-Control'] = 'no-store, max-age=0';
+    headers["Cache-Control"] = "no-store, max-age=0";
   }
 
   return NextResponse.json(successResponse, { headers });
@@ -110,29 +110,29 @@ export function createApiSuccess<T>(
  */
 export const ApiErrors = {
   validation: (message: string, details?: string) =>
-    createApiError('VALIDATION_ERROR', message, details, 400),
+    createApiError("VALIDATION_ERROR", message, details, 400),
 
-  notFound: (resource = 'Resource') =>
-    createApiError('NOT_FOUND', `${resource} not found`, undefined, 404),
+  notFound: (resource = "Resource") =>
+    createApiError("NOT_FOUND", `${resource} not found`, undefined, 404),
 
-  unauthorized: (message = 'Unauthorized access') =>
-    createApiError('UNAUTHORIZED', message, undefined, 401),
+  unauthorized: (message = "Unauthorized access") =>
+    createApiError("UNAUTHORIZED", message, undefined, 401),
 
-  forbidden: (message = 'Access forbidden') => createApiError('FORBIDDEN', message, undefined, 403),
+  forbidden: (message = "Access forbidden") => createApiError("FORBIDDEN", message, undefined, 403),
 
   conflict: (message: string, details?: string) =>
-    createApiError('CONFLICT', message, details, 409),
+    createApiError("CONFLICT", message, details, 409),
 
-  internal: (message = 'Internal server error', details?: string) =>
-    createApiError('INTERNAL_ERROR', message, details, 500),
+  internal: (message = "Internal server error", details?: string) =>
+    createApiError("INTERNAL_ERROR", message, details, 500),
 
-  rateLimit: (message = 'Too many requests') =>
-    createApiError('RATE_LIMIT', message, undefined, 429),
+  rateLimit: (message = "Too many requests") =>
+    createApiError("RATE_LIMIT", message, undefined, 429),
 
   invalidMethod: (allowedMethods: string[]) =>
     createApiError(
-      'INVALID_METHOD',
-      `Method not allowed. Allowed methods: ${allowedMethods.join(', ')}`,
+      "INVALID_METHOD",
+      `Method not allowed. Allowed methods: ${allowedMethods.join(", ")}`,
       undefined,
       405
     ),
@@ -144,7 +144,7 @@ export const ApiErrors = {
 export function isValidUrl(urlString: string): boolean {
   try {
     const url = new URL(urlString);
-    return ['http:', 'https:'].includes(url.protocol);
+    return ["http:", "https:"].includes(url.protocol);
   } catch {
     return false;
   }
@@ -160,7 +160,7 @@ export function validateRequiredFields(
   const missingFields: string[] = [];
 
   for (const field of requiredFields) {
-    if (!data[field] || (typeof data[field] === 'string' && !data[field].toString().trim())) {
+    if (!data[field] || (typeof data[field] === "string" && !data[field].toString().trim())) {
       missingFields.push(field);
     }
   }
@@ -176,13 +176,13 @@ export function withErrorHandling<T extends unknown[], R>(handler: (...args: T) 
     try {
       return await handler(...args);
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
 
       if (error instanceof Error) {
-        return ApiErrors.internal('Request failed', error.message);
+        return ApiErrors.internal("Request failed", error.message);
       }
 
-      return ApiErrors.internal('Unknown error occurred');
+      return ApiErrors.internal("Unknown error occurred");
     }
   };
 }

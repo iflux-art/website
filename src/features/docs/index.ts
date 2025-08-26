@@ -4,13 +4,47 @@
  */
 
 // ==================== 组件导出 ====================
-export * from './components';
+export {
+  DocPageContainer,
+  DocErrorHandler,
+  DocsHomePage,
+  DocsSidebar,
+  DocsSidebarCard,
+  DocsSidebarWrapper,
+  useGlobalDocs,
+  getAllDocsStructure,
+  resolveDocumentPath,
+  type GlobalDocsStructure,
+  type DocCategoryWithDocs,
+} from "./components";
 
 // ==================== Hooks 导出 ====================
-export * from './hooks';
+export {
+  useDocCategories,
+  useDocMeta,
+  useDocContent,
+} from "./hooks";
 
 // ==================== 工具函数导出 ====================
-export * from './lib';
+export {
+  getDirectoryTitle,
+  getFirstDocInDirectory,
+  createDocBreadcrumbsServer,
+  countWords,
+  resolveDocPath,
+  isRedirectLoop,
+} from "./lib";
 
 // ==================== 类型定义导出 ====================
-export * from './types';
+export type {
+  DocCategory,
+  DocContentBase,
+  DocFrontmatter,
+  DocItem,
+  DocTreeNode,
+  DocNavBase,
+  SidebarItem,
+  NavDocItem,
+  DocListItem,
+  DocContentResult,
+} from "./types";

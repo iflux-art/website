@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { cn } from '@/utils';
-import { Text } from 'lucide-react';
-import { useHeadingObserver } from '@/hooks/use-heading-observer';
+import { useHeadingObserver } from "@/hooks/use-heading-observer";
+import { cn } from "@/utils";
+import { Text } from "lucide-react";
+import { useEffect, useRef } from "react";
 // ====== 迁移自 src/config/layout.ts ======
 /**
  * 页面顶部固定导航栏的高度
@@ -30,12 +30,12 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, '', `#${elementId}`);
+    history.pushState(null, "", `#${elementId}`);
   }
 }
 // ====== END ======
@@ -70,10 +70,10 @@ const TocHeadingItem = ({ heading, isActive }: TocHeadingItemProps) => {
   // 根据标题级别设置不同的样式
   const headingSize =
     {
-      2: 'font-medium',
-      3: 'font-normal',
-      4: 'text-xs',
-    }[heading.level] ?? '';
+      2: "font-medium",
+      3: "font-normal",
+      4: "text-xs",
+    }[heading.level] ?? "";
 
   return (
     <div className="relative">
@@ -85,18 +85,18 @@ const TocHeadingItem = ({ heading, isActive }: TocHeadingItemProps) => {
       <a
         href={`#${heading.id}`}
         className={cn(
-          'group relative flex min-w-0 items-start py-1.5 text-sm transition-colors',
+          "group relative flex min-w-0 items-start py-1.5 text-sm transition-colors",
           headingSize,
           // 普通文本
-          'text-muted-foreground',
+          "text-muted-foreground",
           // hover 状态
-          'hover:text-foreground',
+          "hover:text-foreground",
           // active 状态
-          isActive && 'font-medium text-foreground',
-          'w-full'
+          isActive && "font-medium text-foreground",
+          "w-full"
         )}
         style={{
-          paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : '1rem',
+          paddingLeft: heading.level > 2 ? `calc(${indent}rem + 1rem)` : "1rem",
         }}
         onClick={e => {
           e.preventDefault();
@@ -166,7 +166,7 @@ function useAutoScrollToActive(
                 activeRect.height / 2;
               tocRef.current.scrollTo({
                 top: tocRef.current.scrollTop + scrollTop,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
             }
           }
@@ -209,18 +209,18 @@ function useAdaptiveHeight(
       }, 150);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
     handleScroll();
 
     return () => {
       if (scrollTimeoutId) {
         clearTimeout(scrollTimeoutId);
       }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
-  }, [adaptive, adaptiveOffset, filteredHeadingsLength, tocRef]);
+  }, [adaptive, adaptiveOffset, tocRef, filteredHeadingsLength]);
 }
 
 // 标题组织函数
@@ -229,8 +229,8 @@ function organizeHeadings(headings: TocHeading[]): TocHeading[] {
     if (!heading.id) {
       heading.id = `heading-${heading.text
         .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '')}-${index}`;
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "")}-${index}`;
     }
     return heading;
   });
@@ -253,7 +253,7 @@ function organizeHeadings(headings: TocHeading[]): TocHeading[] {
 export const TableOfContents = ({
   headings,
   className,
-  title = '目录',
+  title = "目录",
   adaptive = false,
   adaptiveOffset = NAVBAR_HEIGHT,
 }: TocProps) => {
@@ -277,13 +277,13 @@ export const TableOfContents = ({
   const organizedHeadings = organizeHeadings(filteredHeadings);
 
   return (
-    <div className={cn('table-of-contents w-full min-w-0 pl-0', className)}>
+    <div className={cn("table-of-contents w-full min-w-0 pl-0", className)}>
       <div
         ref={tocRef}
         className={cn(
-          adaptive && 'transition-all duration-200',
-          adaptive && 'fixed overflow-y-auto',
-          'hide-scrollbar w-full'
+          adaptive && "transition-all duration-200",
+          adaptive && "fixed overflow-y-auto",
+          "hide-scrollbar w-full"
         )}
         style={adaptive ? { top: `${adaptiveOffset}px` } : undefined}
       >

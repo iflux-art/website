@@ -2,9 +2,9 @@
  * 搜索功能 React Hook
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { getSearchSuggestions, performSearch } from '@/features/search/lib/search-engine';
-import type { SearchOptions, SearchResult } from '@/features/search/types';
+import { getSearchSuggestions, performSearch } from "@/features/search/lib/search-engine";
+import type { SearchOptions, SearchResult } from "@/features/search/types";
+import { useCallback, useEffect, useState } from "react";
 
 interface UseSearchReturn {
   search: (query: string, options?: SearchOptions) => Promise<void>;
@@ -20,7 +20,7 @@ export function useSearch(): UseSearchReturn {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const search = useCallback(
@@ -33,7 +33,7 @@ export function useSearch(): UseSearchReturn {
         const response = await performSearch(searchQuery, options);
         setResults(response.results);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Search failed';
+        const errorMessage = err instanceof Error ? err.message : "Search failed";
         setError(errorMessage);
         setResults([]);
       } finally {
@@ -48,7 +48,7 @@ export function useSearch(): UseSearchReturn {
       const suggestionList = await getSearchSuggestions(searchQuery);
       setSuggestions(suggestionList);
     } catch (err) {
-      console.error('Failed to get suggestions:', err);
+      console.error("Failed to get suggestions:", err);
       setSuggestions([]);
     }
   }, []);

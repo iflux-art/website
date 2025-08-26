@@ -1,1 +1,1 @@
-export * from './components';
+export { UserProfile, AuthButtons } from "./components";

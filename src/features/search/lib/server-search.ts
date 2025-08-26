@@ -3,12 +3,12 @@
  * 仅用于 API routes 和其他服务端环境，不应在客户端导入
  */
 
-import { promises as fs } from 'fs';
-import path from 'path';
-import { glob } from 'fast-glob';
-import matter from 'gray-matter';
-import { loadAllCategoriesData } from '@/features/links/lib/categories';
-import type { SearchResult } from '../types';
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { loadAllCategoriesData } from "@/features/links/lib/categories";
+import { glob } from "fast-glob";
+import matter from "gray-matter";
+import type { SearchResult } from "../types";
 
 interface LinkItem {
   title: string;
@@ -29,35 +29,33 @@ const CACHE_TTL = 5 * 60 * 1000; // 5分钟缓存
 /**
  * 扫描内容文件（博客/文档）
  */
-async function scanContentFiles(contentType: 'blog' | 'docs'): Promise<SearchResult[]> {
+async function scanContentFiles(contentType: "blog" | "docs"): Promise<SearchResult[]> {
   const basePath = path.join(process.cwd(), `src/content/${contentType}`);
-  const files = await glob('**/*.mdx', { cwd: basePath });
+  const files = await glob("**/*.mdx", { cwd: basePath });
   const results: SearchResult[] = [];
 
   for (const file of files) {
     try {
       const filePath = path.join(basePath, file);
-      const content = await fs.readFile(filePath, 'utf-8');
+      const content = await fs.readFile(filePath, "utf-8");
 
       try {
         const { data: frontmatter } = matter(content);
-        if (frontmatter?.title && typeof frontmatter.title === 'string') {
+        if (frontmatter?.title && typeof frontmatter.title === "string") {
           results.push({
-            type: contentType === 'blog' ? 'blog' : 'doc',
+            type: contentType === "blog" ? "blog" : "doc",
             title: frontmatter.title,
             description:
-              typeof frontmatter.description === 'string' ? frontmatter.description : undefined,
-            path: `/${contentType}/${file.replace(/\.mdx$/, '')}`,
+              typeof frontmatter.description === "string" ? frontmatter.description : undefined,
+            path: `/${contentType}/${file.replace(/\.mdx$/, "")}`,
             tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : undefined,
           });
         }
       } catch {
         // Skip files with invalid frontmatter format
-        continue;
       }
     } catch {
       // Skip files that cannot be read
-      continue;
     }
   }
 
@@ -73,7 +71,7 @@ export async function getCachedContent() {
     return contentCache;
   }
 
-  const [blogs, docs] = await Promise.all([scanContentFiles('blog'), scanContentFiles('docs')]);
+  const [blogs, docs] = await Promise.all([scanContentFiles("blog"), scanContentFiles("docs")]);
 
   contentCache = { blogs, docs, timestamp: now };
   return contentCache;
@@ -88,11 +86,11 @@ export async function searchLinks(query: string, limit = 5): Promise<SearchResul
 
   return links
     .filter((item: LinkItem) => {
-      const searchText = `${item.title} ${item.description} ${item.tags?.join(' ')}`.toLowerCase();
+      const searchText = `${item.title} ${item.description} ${item.tags?.join(" ")}`.toLowerCase();
       return searchText.includes(queryLower);
     })
     .map((item: LinkItem) => ({
-      type: 'link' as const,
+      type: "link" as const,
       title: item.title,
       description: item.description,
       url: item.url,
@@ -106,7 +104,7 @@ export async function searchLinks(query: string, limit = 5): Promise<SearchResul
  */
 export async function performServerSearch(
   query: string,
-  type = 'all',
+  type = "all",
   limit = 10
 ): Promise<{ results: SearchResult[]; total: number }> {
   if (!query.trim()) {
@@ -118,17 +116,17 @@ export async function performServerSearch(
   const queryLower = query.toLowerCase();
 
   // 搜索链接
-  if (type === 'all' || type === 'links') {
+  if (type === "all" || type === "links") {
     const linkResults = await searchLinks(query, 5);
     results.push(...linkResults);
   }
 
   // 搜索博客
-  if (type === 'all' || type === 'blog') {
+  if (type === "all" || type === "blog") {
     const blogResults = blogs
       .filter(post => {
         const searchText =
-          `${post.title} ${post.description} ${post.tags?.join(' ')}`.toLowerCase();
+          `${post.title} ${post.description} ${post.tags?.join(" ")}`.toLowerCase();
         return searchText.includes(queryLower);
       })
       .slice(0, 5);
@@ -136,7 +134,7 @@ export async function performServerSearch(
   }
 
   // 搜索文档
-  if (type === 'all' || type === 'doc') {
+  if (type === "all" || type === "doc") {
     const docResults = docs
       .filter(doc => {
         const searchText = `${doc.title} ${doc.description}`.toLowerCase();

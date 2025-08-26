@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "node:fs";
+import path from "node:path";
 
 /**
  * 路径解析结果类型
  */
 export interface PathResolutionResult {
-  type: 'valid' | 'redirect' | 'notfound';
+  type: "valid" | "redirect" | "notfound";
   redirectTo?: string;
   normalizedSlug?: string[];
 }
@@ -17,12 +17,12 @@ export interface PathResolutionResult {
  */
 export function isValidDocPath(slug: string[]): boolean {
   // 特殊处理：项目信息和技术栈路径无效
-  if (slug[0] === 'project' && (slug[1] === '项目信息' || slug[1] === '技术栈')) {
+  if (slug[0] === "project" && (slug[1] === "项目信息" || slug[1] === "技术栈")) {
     return false;
   }
 
   // 其他路径检查逻辑
-  const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  const docsDir = path.join(process.cwd(), "src", "content", "docs");
   const absolutePath = path.join(docsDir, ...slug);
 
   // 检查是否存在.md或.mdx文件
@@ -32,7 +32,7 @@ export function isValidDocPath(slug: string[]): boolean {
 
   // 检查是否存在目录且包含index文件
   if (fs.existsSync(absolutePath) && fs.statSync(absolutePath).isDirectory()) {
-    for (const indexFile of ['index.mdx', 'index.md']) {
+    for (const indexFile of ["index.mdx", "index.md"]) {
       if (fs.existsSync(path.join(absolutePath, indexFile))) {
         return true;
       }
@@ -50,17 +50,17 @@ export function isValidDocPath(slug: string[]): boolean {
 export function resolveDocPath(slug: string[]): PathResolutionResult {
   // 验证路径格式
   if (!Array.isArray(slug) || slug.length === 0) {
-    return { type: 'notfound' };
+    return { type: "notfound" };
   }
 
   // 检查路径有效性
   if (!isValidDocPath(slug)) {
-    return { type: 'notfound' };
+    return { type: "notfound" };
   }
 
   // 路径有效，返回正常结果
   return {
-    type: 'valid',
+    type: "valid",
     normalizedSlug: slug,
   };
 }
@@ -82,6 +82,6 @@ export function isRedirectLoop(currentPath: string, redirectTo: string): boolean
  */
 export function normalizeDocPath(slug: string[]): string[] {
   return slug
-    .filter(segment => segment && typeof segment === 'string' && segment.trim())
+    .filter(segment => segment && typeof segment === "string" && segment.trim())
     .map(segment => segment.trim());
 }

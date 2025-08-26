@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import type { CategoryId, LinksCategory } from '@/features/links/types';
-import { generateCategoriesData } from '@/features/links/lib';
+import { generateCategoriesData } from "@/features/links/lib";
+import type { CategoryId, LinksCategory } from "@/features/links/types";
+import { useEffect, useState } from "react";
 
 /**
  * 获取链接分类数据的 Hook
@@ -14,7 +14,7 @@ export function useCategories() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchCategories() {
+    function fetchCategories() {
       try {
         setLoading(true);
         setError(null);
@@ -23,7 +23,7 @@ export function useCategories() {
         const data = generateCategoriesData();
         setCategories(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        setError(err instanceof Error ? err.message : "Unknown error");
         setCategories([]);
       } finally {
         setLoading(false);
@@ -60,7 +60,7 @@ export function useCategories() {
    * 获取过滤后的分类（排除友链和个人主页）
    */
   const getFilteredCategories = () =>
-    categories.filter(cat => cat.id !== 'friends' && cat.id !== 'profile');
+    categories.filter(cat => cat.id !== "friends" && cat.id !== "profile");
 
   /**
    * 获取扁平化的分类列表（包含子分类）
@@ -105,18 +105,18 @@ export function useCategories() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch('/api/links/categories', {
-        cache: 'no-store',
+      const response = await fetch("/api/links/categories", {
+        cache: "no-store",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch categories');
+        throw new Error("Failed to fetch categories");
       }
 
       const data = (await response.json()) as LinksCategory[];
       setCategories(Array.isArray(data) ? data : []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
