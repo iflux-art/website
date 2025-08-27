@@ -302,28 +302,202 @@ async function loadCategoryWithChildren(
   return items;
 }
 
+// 添加缓存变量
+let cachedLinksData: LinksItem[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+
+// 为每个分类添加单独的缓存
+const categoryCache: Record<string, { data: LinksItem[]; timestamp: number }> = {};
+
+/**
+ * 生成缓存键
+ */
+function generateCacheKey(categoryId?: string): string {
+  return categoryId ? `links-category-${categoryId}` : "links-all-data";
+}
+
+/**
+ * 从localStorage获取缓存数据
+ */
+function getCachedDataFromStorage(categoryId?: string): LinksItem[] | null {
+  try {
+    if (typeof window === "undefined") return null; // 服务端不使用localStorage
+
+    const key = generateCacheKey(categoryId);
+    const cached = localStorage.getItem(key);
+    if (!cached) return null;
+
+    const { data, timestamp } = JSON.parse(cached);
+    // 检查缓存是否过期
+    if (Date.now() - timestamp > CACHE_DURATION) {
+      localStorage.removeItem(key);
+      return null;
+    }
+
+    return data as LinksItem[];
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Failed to get cached data from localStorage:", error);
+    }
+    return null;
+  }
+}
+
+/**
+ * 将数据存储到localStorage
+ */
+function setCachedDataToStorage(data: LinksItem[], categoryId?: string): void {
+  try {
+    if (typeof window === "undefined") return; // 服务端不使用localStorage
+
+    const key = generateCacheKey(categoryId);
+    const cacheData = {
+      data,
+      timestamp: Date.now(),
+    };
+
+    localStorage.setItem(key, JSON.stringify(cacheData));
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Failed to set cached data to localStorage:", error);
+    }
+  }
+}
+
+/**
+ * 清除特定分类的缓存
+ */
+function clearCategoryCache(categoryId?: string): void {
+  try {
+    if (typeof window === "undefined") return;
+
+    const key = generateCacheKey(categoryId);
+    localStorage.removeItem(key);
+
+    if (categoryId) {
+      delete categoryCache[categoryId];
+    } else {
+      cachedLinksData = null;
+    }
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Failed to clear cache:", error);
+    }
+  }
+}
+
+/**
+ * 预热关键分类的缓存
+ */
+async function preloadCriticalCategories(): Promise<void> {
+  const criticalCategories: (keyof typeof categoryStructure)[] = [
+    "profile",
+    "friends",
+    "development",
+  ];
+
+  for (const categoryId of criticalCategories) {
+    try {
+      const categoryInfo = categoryStructure[categoryId];
+      if (!categoryInfo) continue;
+
+      if ("file" in categoryInfo) {
+        // 根目录文件
+        const items = await loadRootCategoryItems(categoryId, categoryInfo);
+        categoryCache[categoryId] = {
+          data: items,
+          timestamp: Date.now(),
+        };
+        setCachedDataToStorage(items, categoryId);
+      } else if ("children" in categoryInfo) {
+        // 有子分类的目录
+        const items = await loadCategoryWithChildren(categoryId, categoryInfo);
+        categoryCache[categoryId] = {
+          data: items,
+          timestamp: Date.now(),
+        };
+        setCachedDataToStorage(items, categoryId);
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(`Failed to preload category ${categoryId}:`, error);
+      }
+    }
+  }
+}
+
 // 动态导入所有分类数据
 async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
+  // 首先尝试从内存缓存获取
+  const now = Date.now();
+  if (cachedLinksData && now - cacheTimestamp < CACHE_DURATION) {
+    return cachedLinksData;
+  }
+
+  // 尝试从localStorage获取缓存
+  const storageCachedData = getCachedDataFromStorage();
+  if (storageCachedData) {
+    cachedLinksData = storageCachedData;
+    cacheTimestamp = now;
+    return storageCachedData;
+  }
+
   const allItems: LinksItem[] = [];
 
   try {
     // 遍历所有分类
     for (const [categoryId, categoryInfo] of Object.entries(categoryStructure)) {
+      // 检查是否有分类级别的缓存
+      const categoryCached = categoryCache[categoryId];
+      if (categoryCached && now - categoryCached.timestamp < CACHE_DURATION) {
+        allItems.push(...categoryCached.data);
+        continue;
+      }
+
+      // 尝试从localStorage获取分类缓存
+      const storageCategoryCached = getCachedDataFromStorage(categoryId);
+      if (storageCategoryCached) {
+        categoryCache[categoryId] = {
+          data: storageCategoryCached,
+          timestamp: now,
+        };
+        allItems.push(...storageCategoryCached);
+        continue;
+      }
+
       if ("file" in categoryInfo) {
         // 根目录文件
         const items = await loadRootCategoryItems(categoryId, categoryInfo);
         allItems.push(...items);
+        // 缓存分类数据
+        categoryCache[categoryId] = {
+          data: items,
+          timestamp: now,
+        };
+        setCachedDataToStorage(items, categoryId);
       } else if ("children" in categoryInfo) {
         // 有子分类的目录
         const items = await loadCategoryWithChildren(categoryId, categoryInfo);
         allItems.push(...items);
+        // 缓存分类数据
+        categoryCache[categoryId] = {
+          data: items,
+          timestamp: now,
+        };
+        setCachedDataToStorage(items, categoryId);
       }
     }
+
+    // 更新全局缓存
+    cachedLinksData = allItems;
+    cacheTimestamp = now;
+    setCachedDataToStorage(allItems);
 
     return allItems;
   } catch (error) {
     console.error("Error loading links data:", error);
-    return [];
+    return cachedLinksData || []; // 如果有缓存数据，返回缓存数据
   }
 }
 
@@ -360,4 +534,10 @@ function generateCategoriesData(): LinksCategory[] {
   return categories;
 }
 
-export { loadAllLinksData, generateCategoriesData, categoryStructure };
+export {
+  loadAllLinksData,
+  generateCategoriesData,
+  categoryStructure,
+  clearCategoryCache,
+  preloadCriticalCategories,
+};

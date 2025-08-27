@@ -14,6 +14,7 @@ export { performSearch, getSearchSuggestions, highlightSearchTerm } from "./lib/
 
 // Hooks 导出
 export { useSearch } from "./hooks/use-search";
+export { useSearchState } from "./hooks/use-search-state";
 
 // 组件导出
 export { SearchDialog, SearchBar, SearchResults, SearchButton } from "./components";

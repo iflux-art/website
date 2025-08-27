@@ -1,75 +1,23 @@
-"use client";
+import dynamic from "next/dynamic";
+import type { Metadata } from "next";
+import { BLOG_PAGE_METADATA } from "@/config";
 
-import { ThreeColumnLayout } from "@/components/layout";
-import {
-  BlogCategoryCard,
-  BlogListContent,
-  LatestPostsCard,
-  RelatedPostsCard,
-  TagCloudCard,
-} from "@/features/blog/components";
-import { useBlogPage } from "@/features/blog/hooks/use-blog-page";
+// 页面元数据
+export const metadata: Metadata = BLOG_PAGE_METADATA;
 
-// 由于使用了客户端 hooks，这里不能导出 metadata
-// 在实际项目中应该考虑使用 generateMetadata 函数或服务端组件
+// 动态导入博客页面容器组件
+const BlogPageContainer = dynamic(
+  () => import("@/features/blog/components/blog-page").then(mod => mod.BlogPageContainer),
+  {
+    ssr: true,
+    loading: () => (
+      <div className="flex items-center justify-center py-24">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    ),
+  }
+);
 
-const BlogPage = () => {
-  const {
-    filteredPosts,
-    categories,
-    postsCount,
-    relatedPosts,
-    latestPosts,
-    category,
-    tag,
-    handleCategoryClick,
-    handleTagClick,
-  } = useBlogPage();
-
-  // 左侧边栏内容 - 分类和标签
-  const leftSidebar = (
-    <>
-      <BlogCategoryCard
-        categories={categories}
-        selectedCategory={category}
-        onCategoryClick={handleCategoryClick}
-      />
-      <TagCloudCard
-        allTags={Object.entries(postsCount).map(([name, count]) => ({
-          name,
-          count,
-        }))}
-        selectedTag={tag}
-        onTagClick={handleTagClick}
-      />
-    </>
-  );
-
-  // 右侧边栏内容 - 相关和最新文章
-  const rightSidebar = (
-    <>
-      <RelatedPostsCard posts={relatedPosts} currentSlug={[]} />
-      <LatestPostsCard posts={latestPosts} currentSlug={[]} />
-    </>
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
-      <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
-        {/* 页面主内容 */}
-        <div className="space-y-6">
-          {/* 博客列表内容 */}
-          <BlogListContent
-            posts={filteredPosts}
-            selectedCategory={category}
-            selectedTag={tag}
-            onCategoryClick={handleCategoryClick}
-            onTagClick={handleTagClick}
-          />
-        </div>
-      </ThreeColumnLayout>
-    </div>
-  );
-};
-
-export default BlogPage;
+export default function BlogPage() {
+  return <BlogPageContainer />;
+}

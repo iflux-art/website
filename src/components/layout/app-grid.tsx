@@ -10,7 +10,5 @@ import { cn } from "@/utils";
  * 用于创建响应式的网格布局
  */
 export const AppGrid = ({ children, className, columns = 3, gap = "default" }: AppGridProps) => (
-  <div className={cn("mb-8 grid", gridColsMap[columns], gridGapMap[gap], className)}>
-    {children}
-  </div>
+  <div className={cn("grid", gridColsMap[columns], gridGapMap[gap], className)}>{children}</div>
 );

@@ -9,6 +9,7 @@ import { ContentDisplay, DocPagination } from "@/features/content-display/compon
 import { DocsSidebarCard, getAllDocsStructure } from "@/features/docs/components";
 import { createDocBreadcrumbsServer, getDocContentFromFeatures } from "@/features/docs/lib";
 import { generateDocsMetadata } from "@/lib/metadata/seo-utils";
+import { DOCS_PAGE_METADATA } from "@/config";
 
 /**
  * 获取第一个文档内容
@@ -39,10 +40,7 @@ export function generateMetadata(): Metadata {
   const doc = getFirstDocContent();
 
   if (!(doc && structure)) {
-    return generateDocsMetadata({
-      title: "文档不可用",
-      description: "当前没有可用的文档内容",
-    });
+    return DOCS_PAGE_METADATA;
   }
 
   return generateDocsMetadata({
@@ -60,11 +58,11 @@ export default function DocsPage() {
     // 验证结构和路径
     if (!structure?.firstDocPath || structure.totalDocs === 0) {
       return (
-        <div className="min-h-screen bg-background">
-          <div className="container mx-auto py-8">
-            <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-              <h1 className="mb-4 text-3xl font-bold text-destructive">文档不可用</h1>
-              <p className="mb-6 max-w-md text-muted-foreground">
+        <div className="bg-background">
+          <div className="container mx-auto py-4">
+            <div className="flex min-h-[40vh] flex-col items-center justify-center text-center">
+              <h1 className="mb-3 text-3xl font-bold text-destructive">文档不可用</h1>
+              <p className="mb-4 max-w-md text-muted-foreground">
                 当前没有可用的文档内容。请检查文档配置或联系管理员。
               </p>
               <Link
@@ -98,10 +96,10 @@ export default function DocsPage() {
     const rightSidebar = <TableOfContentsCard headings={doc.headings} className="prose-sm" />;
 
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
           {/* 文档主内容 */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* 文档内容展示 */}
             <ContentDisplay
               contentType="docs"

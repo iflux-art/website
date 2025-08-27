@@ -1,14 +1,24 @@
 "use client";
 
 import type { LinksItem } from "@/features/links/types";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useLinkFilterStore } from "@/stores";
 
+// 保持兼容性，逐步迁移
 export function useFilterState(items: LinksItem[]) {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
+  const {
+    selectedCategory,
+    selectedTag,
+    availableTags,
+    setSelectedCategory,
+    setSelectedTag,
+    setFilteredItems,
+    setAvailableTags,
+  } = useLinkFilterStore();
 
+  // 过滤逻辑
   const filteredItems = useMemo(() => {
-    let result = items;
+    let result = [...items]; // 创建一个新数组，避免修改原始数据
 
     // 按分类过滤
     if (selectedCategory) {
@@ -23,7 +33,13 @@ export function useFilterState(items: LinksItem[]) {
     return result;
   }, [items, selectedCategory, selectedTag]);
 
-  const filteredTags = useMemo(() => {
+  // 更新 Zustand 状态
+  useEffect(() => {
+    setFilteredItems(filteredItems);
+  }, [filteredItems, setFilteredItems]);
+
+  // 标签过滤逻辑
+  useEffect(() => {
     const tags = new Set<string>();
 
     items.forEach(item => {
@@ -32,11 +48,17 @@ export function useFilterState(items: LinksItem[]) {
       });
     });
 
-    return Array.from(tags).sort();
-  }, [items]);
+    const sortedTags = Array.from(tags).sort();
+    setAvailableTags(sortedTags);
+  }, [items, setAvailableTags]);
 
   const handleCategoryChange = (categoryId: string) => {
-    setSelectedCategory(categoryId);
+    // 如果点击当前选中的分类，则取消选择
+    if (categoryId === selectedCategory) {
+      setSelectedCategory("");
+    } else {
+      setSelectedCategory(categoryId);
+    }
     setSelectedTag("");
   };
 
@@ -50,6 +72,6 @@ export function useFilterState(items: LinksItem[]) {
     selectedTag,
     handleTagChange,
     handleCategoryChange,
-    filteredTags,
+    filteredTags: availableTags,
   };
 }

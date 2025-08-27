@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useHeadingObserver } from "@/hooks/use-heading-observer";
 import { cn } from "@/utils";
 import { Text } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // ====== 迁移自 src/config/layout.ts ======
 /**
@@ -38,7 +38,7 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, "", `#${elementId}`);
+    window.location.hash = elementId;
   }
 }
 // ====== END ======
@@ -66,12 +66,15 @@ const HeadingItem = ({ heading, isActive }: HeadingItemProps) => {
   // 计算缩进，根据标题级别
   const indent = (heading.level - 2) * 0.75;
 
+  // 添加状态跟踪hover
+  const [isHovered, setIsHovered] = useState(false);
+
   // 根据标题级别设置不同的样式
   const headingSize =
     {
       2: "font-medium",
       3: "font-normal",
-      4: "text-xs",
+      4: "text-sm",
     }[heading.level] ?? "";
 
   return (
@@ -79,6 +82,11 @@ const HeadingItem = ({ heading, isActive }: HeadingItemProps) => {
       {/* 选中状态的粗线 */}
       {isActive && (
         <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary" />
+      )}
+
+      {/* hover状态的粗线，仅在非激活状态下显示 */}
+      {isHovered && !isActive && (
+        <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary/30" />
       )}
 
       <a
@@ -99,8 +107,15 @@ const HeadingItem = ({ heading, isActive }: HeadingItemProps) => {
         }}
         onClick={e => {
           e.preventDefault();
-          scrollToElement(heading.id, SCROLL_OFFSET);
+          // 先设置URL的hash，以便正确更新状态
+          window.location.hash = heading.id; // 这会触发hashchange事件
+          // 滚动到元素
+          setTimeout(() => {
+            scrollToElement(heading.id, SCROLL_OFFSET, false); // 不更新hash，因为已经更新过了
+          }, 10);
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <span className="overflow-wrap-anywhere block w-full text-left leading-relaxed break-words hyphens-auto whitespace-normal">
           {heading.text}
@@ -118,7 +133,7 @@ interface TocContainerProps {
 }
 
 const TocContainer = ({ headings, activeId, tocRef }: TocContainerProps) => (
-  <div ref={tocRef} className="hide-scrollbar max-h-[400px] overflow-y-auto">
+  <div ref={tocRef} className="hide-scrollbar max-h-64 overflow-y-auto">
     <div className="relative">
       {/* 左侧细线 */}
       <div className="absolute top-0 bottom-0 left-2 w-px bg-border" />

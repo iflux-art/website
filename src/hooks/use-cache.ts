@@ -82,17 +82,17 @@ interface CacheOptions {
   validator?: (data: unknown) => boolean;
 }
 
-// 防抖的缓存更新函数
+// 创建内存缓存实例，增加缓存大小
+const memoryCache = new LRUCache(200); // 增加到200项
+
+// 防抖的缓存更新函数，减少更新频率
 const debouncedUpdateStorage = debounceSync((key: string, value: string) => {
   try {
     localStorage.setItem(key, value);
   } catch {
     // Failed to save cache
   }
-}, 1000);
-
-// 创建内存缓存实例
-const memoryCache = new LRUCache(100); // 默认最大缓存100项
+}, 2000); // 增加到2秒防抖
 
 /**
  * 从内存缓存获取数据

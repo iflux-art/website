@@ -37,7 +37,7 @@ export const DocsSidebarCard = ({
       </CardHeader>
     )}
     <CardContent className={showHeader ? "pt-0 pb-4" : "py-4"}>
-      <div className="hide-scrollbar max-h-[400px] overflow-y-auto sm:max-h-[450px]">
+      <div className="hide-scrollbar max-h-[calc(100vh-12rem)] overflow-y-auto sm:max-h-[calc(100vh-12rem)]">
         <DocsSidebarWrapper currentDoc={currentDoc} />
       </div>
     </CardContent>

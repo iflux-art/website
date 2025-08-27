@@ -3,7 +3,7 @@
  * 整合了网站基础元数据生成的所有逻辑
  */
 
-import { SITE_METADATA } from "@/config/metadata";
+import { SITE_METADATA } from "@/config";
 import type { GenerateMetadataOptions } from "@/types";
 import type { Metadata } from "next";
 import { filterUndefinedValues } from "../../utils";

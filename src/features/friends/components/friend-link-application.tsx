@@ -33,21 +33,21 @@ export const FriendLinkApplication = ({ config, className = "" }: FriendLinkAppl
   };
 
   return (
-    <div className={`mt-16 mb-12 ${className}`}>
+    <div className={`mt-8 mb-6 ${className}`}>
       <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-primary/10">
-        <CardContent className="p-8">
+        <CardContent className="p-6">
           <div className="mx-auto max-w-3xl text-center">
             {/* 头部图标 */}
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/30">
-              <HandHeart className="h-8 w-8 text-primary" />
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/30">
+              <HandHeart className="h-7 w-7 text-primary" />
             </div>
 
             {/* 标题和描述 */}
-            <h2 className="mb-4 text-2xl font-bold">{application.title}</h2>
-            <p className="mb-6 leading-relaxed text-muted-foreground">{application.description}</p>
+            <h2 className="mb-3 text-2xl font-bold">{application.title}</h2>
+            <p className="mb-5 leading-relaxed text-muted-foreground">{application.description}</p>
 
             {/* 申请要求网格 */}
-            <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-3">
               {requirements.map((requirement, _index) => {
                 const IconComponent = iconMap[requirement.icon as keyof typeof iconMap];
 

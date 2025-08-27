@@ -53,6 +53,7 @@
     "fast-glob": "^3.3.3",
     "gray-matter": "^4.0.3",
     "immer": "^10.1.1",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.525.0",
     "next": "^15.5.0",
     "next-themes": "^0.4.6",
@@ -68,7 +69,8 @@
     "shiki": "^3.11.0",
     "tailwind-merge": "^3.3.1",
     "unified": "^11.0.5",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",
@@ -76,9 +78,12 @@
     "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.20",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
+    "@types/ws": "^8.18.1",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.5",
     "rimraf": "^6.0.1",

@@ -1,0 +1,153 @@
+"use client";
+
+import type { DocCategory, DocItem } from "@/features/docs/types";
+import { useCallback } from "react";
+import { useDocsStore } from "@/stores";
+
+export interface UseDocsStateReturn {
+  // 数据状态 (来自 Zustand)
+  categories: DocCategory[];
+  currentDoc: DocItem | null;
+  loading: boolean;
+  error: string | null;
+  selectedCategory: string | null;
+
+  // Actions (来自 Zustand)
+  setCategories: (categories: DocCategory[]) => void;
+  setCurrentDoc: (doc: DocItem | null) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  setSelectedCategory: (category: string | null) => void;
+  resetDocsState: () => void;
+
+  // 自定义方法
+  loadCategories: () => void;
+  loadDocContent: (path: string) => void;
+  selectCategory: (category: string | null) => void;
+}
+
+/**
+ * Docs状态管理Hook (使用 Zustand)
+ * 封装了文档模块的所有状态管理和数据处理逻辑
+ */
+export function useDocsState(): UseDocsStateReturn {
+  // 从 Zustand store 获取状态和 actions
+  const {
+    categories,
+    currentDoc,
+    loading,
+    error,
+    selectedCategory,
+    setCategories,
+    setCurrentDoc,
+    setLoading,
+    setError,
+    setSelectedCategory,
+    resetDocsState,
+  } = useDocsStore();
+
+  // 加载文档分类
+  const loadCategories = useCallback(() => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // 这里应该调用实际的 API 或数据获取函数
+      // 暂时使用模拟数据
+      const mockCategories: DocCategory[] = [
+        {
+          id: "getting-started",
+          name: "getting-started",
+          title: "Getting Started",
+          slug: "getting-started",
+          description: "入门指南",
+          count: 5,
+        },
+        {
+          id: "api",
+          name: "api",
+          title: "API",
+          slug: "api",
+          description: "API 文档",
+          count: 12,
+        },
+      ];
+
+      // 更新 Zustand 状态
+      setCategories(mockCategories);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to load categories";
+      setError(errorMessage);
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [setCategories, setLoading, setError]);
+
+  // 加载文档内容
+  const loadDocContent = useCallback(
+    (_path: string) => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // 这里应该调用实际的 API 或数据获取函数
+        // 暂时使用模拟数据
+        const mockDoc = {
+          title: "文档标题",
+          content: "# 文档标题\n\n这是文档内容。\n\n## 子标题\n\n更多内容...",
+          frontmatter: {
+            title: "文档标题",
+            description: "文档描述",
+          },
+          headings: [],
+        };
+
+        // 更新当前文档状态
+        setCurrentDoc({
+          title: mockDoc.title,
+          content: mockDoc.content,
+          frontmatter: mockDoc.frontmatter,
+          headings: mockDoc.headings,
+        });
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Failed to load document";
+        setError(errorMessage);
+        setCurrentDoc(null);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setCurrentDoc, setLoading, setError]
+  );
+
+  // 选择分类
+  const selectCategory = useCallback(
+    (category: string | null) => {
+      setSelectedCategory(category);
+    },
+    [setSelectedCategory]
+  );
+
+  return {
+    // 数据状态
+    categories,
+    currentDoc,
+    loading,
+    error,
+    selectedCategory,
+
+    // Actions
+    setCategories,
+    setCurrentDoc,
+    setLoading,
+    setError,
+    setSelectedCategory,
+    resetDocsState,
+
+    // 自定义方法
+    loadCategories,
+    loadDocContent,
+    selectCategory,
+  };
+}

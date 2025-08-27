@@ -1,79 +1,43 @@
 "use client";
 
-import { ADMIN_MENU_ITEMS, NAV_ITEMS, NAV_PATHS } from "@/components/layout/navbar/nav-config";
-import { useActiveSection } from "@/hooks/navbar/use-active-section";
+import { NAV_ITEMS, NAV_PATHS } from "@/components/layout/navbar/nav-config";
+import { PrefetchLink } from "@/components/prefetch-link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/utils";
-import { useUser } from "@clerk/nextjs";
-import Link from "next/link";
 
-interface NavProps {
-  /**
-   * 点击后的回调函数（用于关闭移动菜单）
-   */
-  onClose?: () => void;
-
-  /**
-   * 自定义类名
-   */
+interface NavListMenuProps {
   className?: string;
 }
 
-const NavList = ({ onClose, className }: NavProps) => {
-  const isActiveSection = useActiveSection(
-    NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => item.key)
-  );
+/**
+ * 导航菜单列表组件
+ * 显示主要导航项
+ */
+export const NavListMenu = ({ className = "" }: NavListMenuProps) => {
+  const pathname = usePathname();
 
   return (
-    <div className={cn("flex flex-row gap-6", className)}>
-      {NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => (
-        <Link
-          key={item.key}
-          href={NAV_PATHS[item.key]}
-          onClick={onClose}
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-primary",
-            isActiveSection === item.key ? "text-primary" : "text-muted-foreground"
-          )}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </div>
-  );
-};
+    <nav className={cn("flex items-center gap-6", className)} aria-label="主导航">
+      {NAV_ITEMS.map(item => {
+        const href = NAV_PATHS[item.key] || `/${item.key}`;
+        const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
 
-const AdminMenu = ({ onClose }: NavProps) => {
-  const { isSignedIn } = useUser();
-  const isActiveSection = useActiveSection(
-    ADMIN_MENU_ITEMS.map((item: (typeof ADMIN_MENU_ITEMS)[number]) => item.key)
-  );
-
-  if (!isSignedIn) return null;
-
-  return (
-    <>
-      {ADMIN_MENU_ITEMS.filter(item => item.key === "admin").map(
-        (item: (typeof ADMIN_MENU_ITEMS)[number]) => (
-          <Link
+        return (
+          <PrefetchLink
             key={item.key}
-            href={`/${item.key}`}
-            onClick={onClose}
+            href={href}
+            prefetchStrategy="hover"
+            prefetchDelay={100}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
-              isActiveSection === item.key ? "text-primary" : "text-muted-foreground"
+              isActive ? "text-primary" : "text-muted-foreground"
             )}
+            aria-current={isActive ? "page" : undefined}
           >
             {item.label}
-          </Link>
-        )
-      )}
-    </>
+          </PrefetchLink>
+        );
+      })}
+    </nav>
   );
 };
-
-export const NavListMenu = ({ onClose, className }: NavProps) => (
-  <div className={cn("flex flex-row items-center gap-6", className)}>
-    <NavList onClose={onClose} />
-    <AdminMenu onClose={onClose} />
-  </div>
-);

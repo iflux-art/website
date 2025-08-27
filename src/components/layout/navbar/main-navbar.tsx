@@ -1,11 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { SearchButton } from "@/features/search";
 import { useNavbarScroll } from "@/hooks/navbar/use-navbar-scroll";
-import { HamburgerMenu } from "./hamburger-menu";
 import { Logo } from "./logo";
 import { NavListMenu } from "./nav-menu";
+
+// 动态导入搜索按钮组件
+const SearchButton = dynamic(
+  () => import("@/features/search/components/search-button").then(mod => mod.SearchButton),
+  { ssr: false }
+);
+
+// 动态导入汉堡菜单组件
+const HamburgerMenu = dynamic(() => import("./hamburger-menu").then(mod => mod.HamburgerMenu), {
+  ssr: false,
+});
 
 export const MainNavbar = ({ className = "" }: { className?: string }) => {
   const { pageTitle, showTitle, scrollToTop, shouldShowPageTitle, showNavMenu } = useNavbarScroll();
@@ -23,9 +33,9 @@ export const MainNavbar = ({ className = "" }: { className?: string }) => {
         </div>
 
         <div className="hidden items-center justify-center gap-8 opacity-100 lg:flex">
-          {shouldShowPageTitle && showTitle && !showNavMenu ? (
+          {shouldShowPageTitle && showTitle ? (
             <button
-              className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight transition-colors hover:text-primary"
+              className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight hover:text-primary"
               onClick={scrollToTop}
               onKeyDown={e => e.key === "Enter" && scrollToTop()}
               title="点击返回顶部"

@@ -104,12 +104,28 @@ function generateId(): string {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
+// 添加缓存变量
+let cachedLinksData: LinksItem[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+
 // biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function GET() {
   try {
-    // Starting to get all links data
+    // 检查缓存是否有效
+    const now = Date.now();
+    if (cachedLinksData && now - cacheTimestamp < CACHE_DURATION) {
+      // 使用缓存数据
+      return NextResponse.json(cachedLinksData);
+    }
+
+    // 获取新数据
     const items = await getAllLinksData();
-    // Found items
+
+    // 更新缓存
+    cachedLinksData = items;
+    cacheTimestamp = now;
+
     return NextResponse.json(items);
   } catch (error) {
     console.error("Error in links API:", error);

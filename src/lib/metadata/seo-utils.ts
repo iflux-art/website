@@ -1,16 +1,18 @@
 import type { SEOPageOptions, SiteConfig } from "@/types";
 import type { Metadata } from "next";
 import { filterUndefinedValues } from "../../utils";
+import { SITE_METADATA } from "@/config";
 
 /**
  * 默认站点配置
  */
 const DEFAULT_SITE_CONFIG: SiteConfig = {
-  name: "个人网站",
-  description: "个人博客和作品展示网站",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  name: SITE_METADATA.title,
+  description: SITE_METADATA.description,
+  url: SITE_METADATA.url,
   locale: "zh-CN",
-  keywords: ["博客", "技术", "前端", "开发"],
+  keywords: SITE_METADATA.keywords,
+  twitterHandle: SITE_METADATA.twitter,
 };
 
 /**

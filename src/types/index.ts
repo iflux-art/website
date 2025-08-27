@@ -1,10 +1,5 @@
-/**
- * 类型定义统一导出
- * 集中管理所有全局类型定义，便于引用
- */
-
-// 内容相关类型
-export type { BaseFrontmatter, BaseContent, BaseCategory, Url as URL } from "./content-types";
+// 内容类型
+export type { Url, BaseFrontmatter, BaseContent, BaseCategory } from "./content-types";
 
 // 布局相关类型
 export type {
@@ -45,3 +40,6 @@ export type {
   SiteConfig,
   SEOPageOptions,
 } from "./seo-types";
+
+// 配置相关类型
+export type { SiteMetadata, IosConfig, WindowsConfig } from "./config-types";

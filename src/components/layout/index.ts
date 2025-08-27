@@ -24,3 +24,6 @@ export { Sidebar, SidebarWrapper } from "./sidebar";
 
 // 配置信息
 export { NAV_ITEMS, NAV_PATHS, NAV_DESCRIPTIONS, ADMIN_MENU_ITEMS } from "./navbar/nav-config";
+
+// 客户端初始化组件
+export { InitClient } from "./init-client";

@@ -12,8 +12,6 @@ export { useContentData } from "./use-content-data";
 export type {
   HookResult,
   ContentLoadOptions,
-  ContentItem,
-  ContentCategory,
 } from "./use-content-data";
 
 // ==================== SSR 相关 Hooks ====================

@@ -3,7 +3,7 @@
 import { useHeadingObserver } from "@/hooks/use-heading-observer";
 import { cn } from "@/utils";
 import { Text } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // ====== 迁移自 src/config/layout.ts ======
 /**
  * 页面顶部固定导航栏的高度
@@ -26,7 +26,7 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
   if (!element) return;
 
   const elementPosition = element.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - offset;
+  const offsetPosition = elementPosition + window.scrollY - offset;
 
   window.scrollTo({
     top: offsetPosition,
@@ -35,7 +35,7 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
 
   // 仅在需要时更新 URL hash
   if (updateHash) {
-    history.pushState(null, "", `#${elementId}`);
+    window.location.hash = elementId;
   }
 }
 // ====== END ======
@@ -67,12 +67,15 @@ const TocHeadingItem = ({ heading, isActive }: TocHeadingItemProps) => {
   // 计算缩进，根据标题级别
   const indent = (heading.level - 2) * 0.75;
 
+  // 添加状态跟踪hover
+  const [isHovered, setIsHovered] = useState(false);
+
   // 根据标题级别设置不同的样式
   const headingSize =
     {
       2: "font-medium",
       3: "font-normal",
-      4: "text-xs",
+      4: "text-sm",
     }[heading.level] ?? "";
 
   return (
@@ -80,6 +83,11 @@ const TocHeadingItem = ({ heading, isActive }: TocHeadingItemProps) => {
       {/* 选中状态的粗线 */}
       {isActive && (
         <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary" />
+      )}
+
+      {/* hover状态的粗线，仅在非激活状态下显示 */}
+      {isHovered && !isActive && (
+        <div className="absolute top-1.5 bottom-1.5 left-2 w-0.5 rounded-full bg-primary/30" />
       )}
 
       <a
@@ -100,8 +108,15 @@ const TocHeadingItem = ({ heading, isActive }: TocHeadingItemProps) => {
         }}
         onClick={e => {
           e.preventDefault();
-          scrollToElement(heading.id, SCROLL_OFFSET);
+          // 先设置URL的hash，以便正确更新状态
+          window.location.hash = heading.id; // 这会触发hashchange事件
+          // 滚动到元素
+          setTimeout(() => {
+            scrollToElement(heading.id, SCROLL_OFFSET, false); // 不更新hash，因为已经更新过了
+          }, 10);
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <span className="overflow-wrap-anywhere block w-full text-left leading-relaxed break-words hyphens-auto whitespace-normal">
           {heading.text}

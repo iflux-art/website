@@ -4,11 +4,28 @@ import type { CategoryId, LinksItem } from "@/features/links/types";
 
 const linksDir = path.join(process.cwd(), "src/content/links");
 
+// 添加缓存变量
+let cachedCategories: string[] | null = null;
+let categoriesCacheTimestamp = 0;
+const CATEGORIES_CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+
+// 添加缓存变量
+let cachedAllCategoriesData: LinksItem[] | null = null;
+let allCategoriesCacheTimestamp = 0;
+const ALL_CATEGORIES_CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+
 // 动态获取所有分类
 async function getAllCategories(): Promise<string[]> {
-  const categories: string[] = [];
-
   try {
+    // 检查缓存是否有效
+    const now = Date.now();
+    if (cachedCategories && now - categoriesCacheTimestamp < CATEGORIES_CACHE_DURATION) {
+      // 使用缓存数据
+      return cachedCategories;
+    }
+
+    const categories: string[] = [];
+
     // 读取根目录下的 JSON 文件
     const rootFiles = await fs.readdir(linksDir);
     rootFiles
@@ -33,6 +50,10 @@ async function getAllCategories(): Promise<string[]> {
     });
 
     await Promise.all(processPromises);
+
+    // 更新缓存
+    cachedCategories = categories;
+    categoriesCacheTimestamp = now;
 
     return categories;
   } catch (error) {
@@ -139,25 +160,45 @@ export async function saveCategoryData(category: string, data: LinksItem[]): Pro
 
 // 读取所有分类数据
 export async function loadAllCategoriesData(): Promise<LinksItem[]> {
-  const allItems: LinksItem[] = [];
-  const allCategories = await getAllCategories();
+  try {
+    // 检查缓存是否有效
+    const now = Date.now();
+    if (
+      cachedAllCategoriesData &&
+      now - allCategoriesCacheTimestamp < ALL_CATEGORIES_CACHE_DURATION
+    ) {
+      // 使用缓存数据
+      return cachedAllCategoriesData;
+    }
 
-  // 使用 Promise.all 并行处理所有分类
-  const categoryPromises = allCategories.map(async category => {
-    const categoryData = await loadCategoryData(category);
-    // 确保每个项目都有正确的分类标识
-    categoryData.forEach(item => {
-      item.category = category as CategoryId;
+    const allItems: LinksItem[] = [];
+    const allCategories = await getAllCategories();
+
+    // 使用 Promise.all 并行处理所有分类
+    const categoryPromises = allCategories.map(async category => {
+      const categoryData = await loadCategoryData(category);
+      // 确保每个项目都有正确的分类标识
+      categoryData.forEach(item => {
+        item.category = category as CategoryId;
+      });
+      return categoryData;
     });
-    return categoryData;
-  });
 
-  const results = await Promise.all(categoryPromises);
-  results.forEach(data => {
-    allItems.push(...data);
-  });
+    const results = await Promise.all(categoryPromises);
+    results.forEach(data => {
+      allItems.push(...data);
+    });
 
-  return allItems;
+    // 更新缓存
+    cachedAllCategoriesData = allItems;
+    allCategoriesCacheTimestamp = now;
+
+    return allItems;
+  } catch (error) {
+    console.error("Error loading all categories data:", error);
+    // 如果有缓存数据，返回缓存数据
+    return cachedAllCategoriesData || [];
+  }
 }
 
 // 根据ID查找项目及其所在分类

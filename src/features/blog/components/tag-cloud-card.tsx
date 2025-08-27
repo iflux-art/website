@@ -78,7 +78,7 @@ export const TagCloudCard = ({
                   key={tag.name}
                   variant={isSelected ? "default" : "secondary"}
                   className={cn(
-                    "h-6 min-h-[32px] cursor-pointer touch-manipulation px-2.5 py-1.5 text-xs font-normal transition-all duration-200 sm:h-5 sm:min-h-[20px] sm:px-2 sm:py-0.5 sm:text-[10px]",
+                    "h-6 min-h-[32px] cursor-pointer touch-manipulation px-2.5 py-1.5 text-sm font-normal transition-all duration-200 sm:h-5 sm:min-h-[20px] sm:px-2 sm:py-0.5 sm:text-[10px]",
                     "hover:scale-105 hover:shadow-sm active:scale-95",
                     isSelected
                       ? "bg-primary text-primary-foreground shadow-sm"

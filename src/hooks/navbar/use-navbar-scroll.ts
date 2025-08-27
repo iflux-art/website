@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { useSafeNavbar } from "./navbar-state";
+import { useNavbarStore } from "@/stores";
 
 /**
  * 节流滚动事件处理函数类型（带 cancel 方法）
@@ -15,7 +15,7 @@ type ThrottledScrollHandler = ((event: Event) => void) & {
 /**
  * 导航栏滚动配置项
  */
-const THROTTLE_DELAY = 50; // 更快的节流响应
+const THROTTLE_DELAY = 16; // 约60fps的节流响应
 
 /**
  * 导航栏滚动效果 Hook
@@ -35,10 +35,19 @@ export function useNavbarScroll() {
     showTitle,
     pageTitle,
     lastDirectionChange,
+    isInitialized,
     setScrollPosition,
     setPageTitle,
     scrollToTop,
-  } = useSafeNavbar();
+    initialize,
+  } = useNavbarStore();
+
+  // 初始化 navbar store
+  useEffect(() => {
+    if (!isInitialized) {
+      initialize();
+    }
+  }, [isInitialized, initialize]);
 
   const handleScroll = useCallback(
     (_: Event) => {
@@ -116,30 +125,30 @@ export function useNavbarScroll() {
 
   // 监听滚动事件
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !isInitialized) return;
 
     window.addEventListener("scroll", throttledHandleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", throttledHandleScroll);
       throttledHandleScroll.cancel();
     };
-  }, [throttledHandleScroll]);
+  }, [throttledHandleScroll, isInitialized]);
 
   // 路径变化时更新标题
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !isInitialized) return;
     updatePageTitle();
-  }, [updatePageTitle]);
+  }, [updatePageTitle, isInitialized]);
 
   const showNavMenu = useMemo(() => {
     if (!shouldShowPageTitle()) return true; // 非详情页始终显示导航菜单
-    return direction !== "down"; // 详情页向上滚动时显示导航菜单
-  }, [direction, shouldShowPageTitle]);
+    return !showTitle; // 当显示标题时，不显示导航菜单
+  }, [showTitle, shouldShowPageTitle]);
 
   return {
     direction,
     position,
-    showTitle: shouldShowPageTitle() ? showTitle : false, // 只在指定页面显示标题
+    showTitle, // 直接使用store中的showTitle状态
     showNavMenu, // 导航菜单显示状态
     pageTitle,
     lastDirectionChange,

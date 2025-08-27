@@ -22,7 +22,8 @@ import {
 import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksItem, LinksSubCategory } from "@/features/links/types";
 import { Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { useAdminStore } from "@/stores";
 
 // 页面标题组件
 interface PageHeaderProps {
@@ -111,34 +112,27 @@ const SearchFilter = ({
  */
 const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCategory: string) => {
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
-  const [filteredItems, setFilteredItems] = useState<LinksItem[]>([]);
 
-  useEffect(() => {
-    const filterItems = () => {
-      if (!(debouncedSearchTerm || selectedCategory)) {
-        setFilteredItems(items);
-        return;
-      }
+  const filteredItems = useMemo(() => {
+    // 如果没有搜索条件和分类筛选，直接返回原数据
+    if (!(debouncedSearchTerm || selectedCategory)) {
+      return items;
+    }
 
-      const searchLower = debouncedSearchTerm.toLowerCase();
+    const searchLower = debouncedSearchTerm.toLowerCase();
 
-      setFilteredItems(
-        items.filter(item => {
-          const matchesSearch =
-            !debouncedSearchTerm ||
-            item.title.toLowerCase().includes(searchLower) ||
-            item.description.toLowerCase().includes(searchLower) ||
-            item.url.toLowerCase().includes(searchLower) ||
-            item.tags.some((tag: string) => tag.toLowerCase().includes(searchLower));
+    return items.filter(item => {
+      const matchesSearch =
+        !debouncedSearchTerm ||
+        item.title.toLowerCase().includes(searchLower) ||
+        item.description.toLowerCase().includes(searchLower) ||
+        item.url.toLowerCase().includes(searchLower) ||
+        item.tags.some((tag: string) => tag.toLowerCase().includes(searchLower));
 
-          const matchesCategory = !selectedCategory || item.category === selectedCategory;
+      const matchesCategory = !selectedCategory || item.category === selectedCategory;
 
-          return matchesSearch && matchesCategory;
-        })
-      );
-    };
-
-    filterItems();
+      return matchesSearch && matchesCategory;
+    });
   }, [items, debouncedSearchTerm, selectedCategory]);
 
   return filteredItems;
@@ -198,24 +192,39 @@ const useEventHandlers = (
  * 封装了链接管理的所有业务逻辑和状态管理
  */
 export const LinksAdminPage = () => {
-  // 状态管理
-  const [items, setItems] = useState<LinksItem[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-  // 对话框状态
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [editingItem, setEditingItem] = useState<LinksItem | null>(null);
-  const [deletingItem, setDeletingItem] = useState<LinksItem | null>(null);
+  // 使用 Zustand 管理状态
+  const {
+    items,
+    searchTerm,
+    selectedCategory,
+    showAddDialog,
+    editingItem,
+    deletingItem,
+    setItems,
+    setSearchTerm,
+    setSelectedCategory,
+    setShowAddDialog,
+    setEditingItem,
+    setDeletingItem,
+    setLoading,
+    setError,
+  } = useAdminStore();
 
   // 使用共享的分类数据 hook
   const { categories, getCategoryName } = useCategories();
 
   // 加载数据
   const loadData = useCallback(async () => {
-    const linksData = await fetchLinksData();
-    setItems(linksData.flat());
-  }, []);
+    setLoading(true);
+    try {
+      const linksData = await fetchLinksData();
+      setItems(linksData.flat());
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Failed to load data");
+    } finally {
+      setLoading(false);
+    }
+  }, [setItems, setLoading, setError]);
 
   useEffect(() => {
     void loadData();

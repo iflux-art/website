@@ -11,27 +11,13 @@
  * @usage
  * 在 layout.tsx 中使用：
  * ```typescript
- * import { generateMetadata, generateViewport } from '@/config/metadata';
+ * import { generateMetadata, generateViewport } from '@/lib/metadata';
  *
  * export { generateMetadata as metadata, generateViewport as viewport };
  * ```
  */
 
-/**
- * 网站元数据类型
- */
-export interface SiteMetadata {
-  title: string;
-  description: string;
-  author: string;
-  url: string;
-  image: string;
-  keywords: string[];
-  twitter: string;
-  github: string;
-  email: string;
-  copyright: string;
-}
+import type { SiteMetadata, IosConfig, WindowsConfig } from "@/types";
 
 /**
  * 站点基础配置
@@ -74,22 +60,6 @@ export const VIEWPORT_CONFIG = {
  * iOS 设备配置
  * 包含iOS设备上的显示和行为配置
  */
-export interface IosConfig {
-  mobileWebAppCapable: string;
-  statusBarStyle: string;
-  appTitle: string;
-  icons: {
-    touchIcon: string;
-  };
-  splashScreens: {
-    href: string;
-    media: string;
-  }[];
-}
-/**
- * iOS 设备配置
- * 包含iOS设备上的显示和行为配置
- */
 export const IOS_CONFIG: IosConfig = {
   mobileWebAppCapable: "yes",
   statusBarStyle: "black-translucent",
@@ -125,18 +95,7 @@ export const IOS_CONFIG: IosConfig = {
  * Windows 设备配置
  * 包含Windows平台特定配置
  */
-export interface WindowsConfig {
-  msapplicationTileColor: string;
-  msapplicationTileImage: string;
-}
 export const WINDOWS_CONFIG: WindowsConfig = {
   msapplicationTileColor: "#000000",
   msapplicationTileImage: "/images/icons/ms-icon-144x144.png",
 } as const;
-
-export {
-  generateMetadata,
-  generateViewport,
-  generateArticleMetadata,
-  generateProfileMetadata,
-} from "@/lib/metadata";

@@ -49,8 +49,8 @@ export const BlogPageContainer = () => {
   // 右侧边栏内容
   const rightSidebar = (
     <>
-      <RelatedPostsCard posts={relatedPosts} currentSlug={[]} />
       <LatestPostsCard posts={latestPosts} currentSlug={[]} />
+      <RelatedPostsCard posts={relatedPosts} currentSlug={[]} />
     </>
   );
 

@@ -33,11 +33,13 @@ export const RelatedPostsCard = ({ posts, currentSlug }: RelatedPostsCardProps) 
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-0 pb-4">
-        {posts.slice(0, 5).map(post => {
+        {posts.slice(0, 5).map((post, index) => {
           const isActive = currentPath === post.href;
+          // 使用索引和href的组合作为唯一key，避免重复
+          const uniqueKey = `${post.href}-${index}`;
           return (
             <Link
-              key={post.slug.join("/")}
+              key={uniqueKey}
               href={post.href}
               className={cn(
                 "group flex items-start gap-2 rounded-md p-2 text-xs transition-all duration-200 hover:bg-muted/60",

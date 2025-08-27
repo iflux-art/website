@@ -3,7 +3,10 @@
 import { type CategoryWithCount, getAllPosts } from "@/features/blog/hooks";
 import type { BlogPost } from "@/features/blog/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+// 分页配置
+const PAGE_SIZE = 10;
 
 export interface UseBlogPageReturn {
   // 数据状态
@@ -24,6 +27,11 @@ export interface UseBlogPageReturn {
     category: string | undefined;
   }[];
 
+  // 分页状态
+  currentPage: number;
+  totalPages: number;
+  paginatedPosts: BlogPost[];
+
   // 加载状态
   loading: boolean;
 
@@ -34,6 +42,7 @@ export interface UseBlogPageReturn {
   // 事件处理器
   handleCategoryClick: (newCategory: string | null) => void;
   handleTagClick: (newTag: string | null) => void;
+  handlePageChange: (page: number) => void;
 
   // 刷新数据
   refreshData: () => Promise<void>;
@@ -48,6 +57,7 @@ export function useBlogPage(): UseBlogPageReturn {
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { category, tag } = Object.fromEntries(searchParams.entries());
 
@@ -69,50 +79,165 @@ export function useBlogPage(): UseBlogPageReturn {
   }, [loadPosts]);
 
   // 过滤文章
-  const filteredPosts = posts.filter(post => {
-    if (category && post.category !== category) return false;
-    if (tag && !post.tags?.includes(tag)) return false;
-    return true;
-  });
-
-  // 分类统计
-  const categoriesCount: Record<string, number> = {};
-  posts.forEach(post => {
-    if (post.category) {
-      categoriesCount[post.category] = (categoriesCount[post.category] || 0) + 1;
-    }
-  });
-
-  const categories: CategoryWithCount[] = Object.entries(categoriesCount)
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-
-  // 标签统计
-  const postsCount: Record<string, number> = {};
-  posts.forEach(post => {
-    post.tags?.forEach(tag => {
-      postsCount[tag] = (postsCount[tag] || 0) + 1;
+  const filteredPosts = useMemo(() => {
+    return posts.filter(post => {
+      if (category && post.category !== category) return false;
+      if (tag && !post.tags?.includes(tag)) return false;
+      return true;
     });
-  });
+  }, [posts, category, tag]);
 
-  // 相关文章（取最新的10篇）
-  const relatedPosts = posts.slice(0, 10).map(post => ({
-    title: post.title,
-    href: `/blog/${post.slug}`,
-    category: post.category,
-    slug: post.slug.split("/"),
-  }));
+  // 分页处理
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredPosts.length / PAGE_SIZE);
+  }, [filteredPosts.length]);
 
-  // 最新发布的文章
-  const latestPosts = posts
-    .filter(post => post.date)
-    .slice(0, 5)
-    .map(post => ({
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    return filteredPosts.slice(startIndex, startIndex + PAGE_SIZE);
+  }, [filteredPosts, currentPage]);
+
+  // 分类统计（带缓存）
+  const { categories, postsCount } = useMemo(() => {
+    // 创建缓存键
+    const cacheKey = `blog_categories_${posts.length}_${category ?? "all"}_${tag ?? "all"}`;
+
+    // 检查sessionStorage缓存
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        // 检查缓存是否过期（5分钟）
+        if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+          return {
+            categories: parsed.categories,
+            postsCount: parsed.postsCount,
+          };
+        }
+      }
+    } catch {
+      // 忽略缓存解析错误
+    }
+
+    // 重新计算分类统计
+    const categoriesCount: Record<string, number> = {};
+    posts.forEach(post => {
+      if (post.category) {
+        categoriesCount[post.category] = (categoriesCount[post.category] || 0) + 1;
+      }
+    });
+
+    const categories: CategoryWithCount[] = Object.entries(categoriesCount)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+
+    // 重新计算标签统计
+    const postsCount: Record<string, number> = {};
+    posts.forEach(post => {
+      post.tags?.forEach(tag => {
+        postsCount[tag] = (postsCount[tag] || 0) + 1;
+      });
+    });
+
+    // 保存到缓存
+    try {
+      const cacheData = {
+        categories,
+        postsCount,
+        timestamp: Date.now(),
+      };
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheData));
+    } catch {
+      // 忽略缓存保存错误
+    }
+
+    return { categories, postsCount };
+  }, [posts, category, tag]);
+
+  // 相关文章（取最新的10篇，带缓存）
+  const relatedPosts = useMemo(() => {
+    // 创建缓存键
+    const cacheKey = `blog_related_${posts.length}`;
+
+    // 检查sessionStorage缓存
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        // 检查缓存是否过期（5分钟）
+        if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+          return parsed.relatedPosts;
+        }
+      }
+    } catch {
+      // 忽略缓存解析错误
+    }
+
+    // 重新计算相关文章
+    const related = posts.slice(0, 10).map(post => ({
       title: post.title,
       href: `/blog/${post.slug}`,
-      date: post.date?.toString(),
       category: post.category,
+      slug: post.slug.split("/"),
     }));
+
+    // 保存到缓存
+    try {
+      const cacheData = {
+        relatedPosts: related,
+        timestamp: Date.now(),
+      };
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheData));
+    } catch {
+      // 忽略缓存保存错误
+    }
+
+    return related;
+  }, [posts]);
+
+  // 最新发布的文章（带缓存）
+  const latestPosts = useMemo(() => {
+    // 创建缓存键
+    const cacheKey = `blog_latest_${posts.length}`;
+
+    // 检查sessionStorage缓存
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        // 检查缓存是否过期（5分钟）
+        if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+          return parsed.latestPosts;
+        }
+      }
+    } catch {
+      // 忽略缓存解析错误
+    }
+
+    // 重新计算最新文章
+    const latest = posts
+      .filter(post => post.date)
+      .slice(0, 5)
+      .map(post => ({
+        title: post.title,
+        href: `/blog/${post.slug}`,
+        date: post.date?.toString(),
+        category: post.category,
+      }));
+
+    // 保存到缓存
+    try {
+      const cacheData = {
+        latestPosts: latest,
+        timestamp: Date.now(),
+      };
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheData));
+    } catch {
+      // 忽略缓存保存错误
+    }
+
+    return latest;
+  }, [posts]);
 
   // 处理分类点击
   const handleCategoryClick = (newCategory: string | null) => {
@@ -122,7 +247,10 @@ export function useBlogPage(): UseBlogPageReturn {
     } else {
       newParams.delete("category");
     }
+    // 重置页码
+    newParams.delete("page");
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
+    setCurrentPage(1);
   };
 
   // 处理标签点击
@@ -133,8 +261,30 @@ export function useBlogPage(): UseBlogPageReturn {
     } else {
       newParams.delete("tag");
     }
+    // 重置页码
+    newParams.delete("page");
     router.push(`/blog?${newParams.toString()}`, { scroll: false });
+    setCurrentPage(1);
   };
+
+  // 处理页码变更
+  const handlePageChange = (page: number) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("page", page.toString());
+    router.push(`/blog?${newParams.toString()}`, { scroll: false });
+    setCurrentPage(page);
+  };
+
+  // 监听URL参数变化以更新当前页码
+  useEffect(() => {
+    const pageParam = searchParams.get("page");
+    const page = pageParam ? parseInt(pageParam, 10) : 1;
+    if (!Number.isNaN(page) && page > 0) {
+      setCurrentPage(page);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   return {
     // 数据状态
@@ -144,6 +294,11 @@ export function useBlogPage(): UseBlogPageReturn {
     postsCount,
     relatedPosts,
     latestPosts,
+
+    // 分页状态
+    currentPage,
+    totalPages,
+    paginatedPosts,
 
     // 加载状态
     loading,
@@ -155,6 +310,7 @@ export function useBlogPage(): UseBlogPageReturn {
     // 事件处理器
     handleCategoryClick,
     handleTagClick,
+    handlePageChange,
 
     // 刷新数据
     refreshData: loadPosts,

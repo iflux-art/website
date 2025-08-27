@@ -1,55 +1,46 @@
-/**
- * 内容数据获取 Hook
- *
- * 提供统一的内容数据获取接口，支持缓存和加载状态管理。
- * 该 Hook 已从功能模块提升到全局共享目录，供多个功能模块使用。
- *
- * 特性：
- * - 自动缓存管理
- * - 加载状态跟踪
- * - 错误处理
- * - 路径感知的数据获取
- *
- * @author 系统重构
- * @since 2024
- */
-
 "use client";
 
-import type { BaseCategory, BaseContent } from "@/types";
 import { usePathname } from "next/navigation";
-import { useCache } from "./use-cache";
+import { useCache } from "@/hooks/use-cache";
 
-const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
+// 定义默认缓存时间（30分钟）
+const DEFAULT_CACHE_TIME = 30 * 60 * 1000;
 
-export type ContentItem = BaseContent;
-export type ContentCategory = BaseCategory;
+// 定义请求选项接口
+export interface ContentLoadOptions {
+  /** 内容类型 */
+  type: string;
+  /** 内容路径 */
+  path?: string;
+  /** 请求 URL */
+  url?: string;
+  /** 内容分类 */
+  category?: string;
+  /** 缓存时间（毫秒） */
+  cacheTime?: number;
+  /** 是否禁用缓存 */
+  disableCache?: boolean;
+  /** 是否强制刷新 */
+  forceRefresh?: boolean;
+  /** 请求参数 */
+  params?: Record<string, unknown>;
+  /** 请求头 */
+  headers?: Record<string, string>;
+}
 
-// 内联 HookResult 类型定义
+// 定义返回结果接口
 export interface HookResult<T> {
+  /** 数据 */
   data: T | null;
+  /** 加载状态 */
   loading: boolean;
+  /** 错误信息 */
   error: Error | null;
+  /** 刷新数据 */
   refresh: () => Promise<void>;
 }
 
-// 内联 ContentLoadOptions 类型定义
-export interface ContentLoadOptions {
-  type?: string;
-  path?: string;
-  url?: string;
-  category?: string;
-  cacheTime?: number;
-  disableCache?: boolean;
-  params?: Record<string, unknown>;
-  headers?: Record<string, string>;
-  /** 是否强制刷新缓存 */
-  forceRefresh?: boolean;
-  /** 其他可扩展选项 */
-  [key: string]: unknown;
-}
-
-// 请求去重Map
+// 存储正在进行的请求，避免重复请求
 const pendingRequests = new Map<string, Promise<unknown>>();
 
 /**
@@ -90,7 +81,7 @@ export function useContentData<T>({
       throw new Error("URL or path is required");
     }
 
-    // 添加时间戳来防止缓存
+    // 只有在强制刷新时才添加时间戳来防止缓存
     const cacheBuster = forceRefresh ? `?_t=${Date.now()}` : "";
     const finalUrl = `${apiUrl}${cacheBuster}`;
 
@@ -117,10 +108,10 @@ export function useContentData<T>({
           headerOptions.Expires = "0";
         }
 
-        const fetchOptions = {
+        const fetchOptions: RequestInit = {
           headers: headerOptions,
-          cache: forceRefresh || disableCache ? ("no-store" as RequestCache) : undefined,
-          next: { revalidate: forceRefresh || disableCache ? 0 : undefined },
+          cache: forceRefresh || disableCache ? "no-store" : "force-cache",
+          next: { revalidate: forceRefresh || disableCache ? 0 : 60 }, // 60秒重新验证
           ...(params ?? {}),
         };
 

@@ -18,16 +18,16 @@ export function useDocCategories(): HookResult<DocCategory[]> {
   return useContentData<DocCategory[]>({
     type: "docs",
     path: API_PATHS.content.DocCategories,
-    disableCache: true, // 禁用缓存，确保获取最新数据
-    params: { cache: "no-store" }, // 添加参数帮助禁用服务器缓存
-    forceRefresh: true, // 强制刷新，缓存破坏
+    disableCache: false, // 启用缓存
+    params: { cache: "force-cache" }, // 使用服务器缓存
+    forceRefresh: false, // 禁用强制刷新
   });
 }
 
 /**
  * 使用文档元数据
  *
- * @param category 分类名称
+ * @param path 分类名称
  * @returns 文档元数据
  */
 export function useDocMeta(path: string): HookResult<Record<string, unknown>> {
@@ -44,6 +44,14 @@ export type { DocItem, DocCategory, DocListItem };
  * 获取所有文档
  * @returns 所有文档列表
  */
+export async function getAllDocs(): Promise<DocListItem[]> {
+  const response = await fetch("/api/docs/list");
+  if (!response.ok) {
+    throw new Error("获取文档列表失败");
+  }
+  return response.json() as Promise<DocListItem[]>;
+}
+
 /**
  * 使用文档内容
  *

@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { SITE_METADATA } from "@/config/metadata";
+import { SITE_METADATA } from "@/config";
 import { AnimatedNumber } from "@/features/home/components/animated-number";
+
+import { Button } from "@/components/ui/button";
 import { useSiteStats } from "@/features/home/hooks/use-site-stats";
 import { Sparkles, Target, Zap } from "lucide-react";
 import Link from "next/link";
@@ -59,19 +60,19 @@ export const HeroSection = () => {
   ];
 
   return (
-    <section className="relative flex h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
+    <section className="relative flex min-h-[calc(100vh-8.5rem)] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
       {/* 背景装饰 */}
       <BackgroundDecorations />
 
-      <div className="relative container mx-auto px-4 py-24 pt-32">
+      <div className="relative container mx-auto px-4 py-2">
         <div className="mx-auto max-w-5xl text-center">
           {/* 标题区域 */}
-          <div className="mb-12">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-6 py-3 text-sm font-medium text-primary backdrop-blur-sm">
+          <div className="mb-6">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-6 py-3 text-sm font-medium text-primary backdrop-blur-sm">
               <Sparkles className="h-4 w-4 animate-spin" />
               {SITE_METADATA.title}
             </div>
-            <h1 className="mb-8 text-5xl leading-tight font-bold tracking-tight lg:text-7xl">
+            <h1 className="mb-5 text-5xl leading-tight font-bold tracking-tight lg:text-7xl">
               <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
                 斐启智境，流韵新生
               </span>
@@ -82,7 +83,7 @@ export const HeroSection = () => {
           </div>
 
           {/* CTA按钮 */}
-          <div className="mb-20 flex flex-col items-center justify-center gap-6 sm:flex-row">
+          <div className="mb-6 flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button size="lg" className="group px-4 py-4 text-lg" asChild>
               <Link href="/blog">
                 <Zap className="h-5 w-5" />
@@ -103,7 +104,7 @@ export const HeroSection = () => {
           </div>
 
           {/* 实时统计数据 */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             <div className="grid grid-cols-4">
               {statsData.map(stat => (
                 <StatCard

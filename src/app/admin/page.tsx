@@ -1,18 +1,25 @@
-import { PageContainer } from "@/components/layout";
-import { LinksAdminPage } from "@/features/admin/components";
-import { generateSEOMetadata } from "@/lib/metadata/seo-utils";
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: "管理后台",
-  description: "网站内容管理后台，用于管理链接、文章和其他网站内容",
-  noIndex: true, // 防止搜索引擎索引管理页面
-  noFollow: true,
-});
+import { PageContainer } from "@/components/layout";
+import { ProgressBarLoading } from "@/components/layout";
+import dynamicImport from "next/dynamic";
+
+// 使用动态导入来加载管理页面组件
+const LinksAdminPage = dynamicImport(
+  () => import("@/features/admin/components").then(mod => mod.LinksAdminPage),
+  {
+    ssr: false, // 管理页面不需要服务端渲染
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <ProgressBarLoading />
+      </div>
+    ),
+  }
+);
 
 const AdminPage = () => (
   <PageContainer config={{ layout: "full-width" }}>
-    <div>
+    <div className="mt-4">
       {/* 管理内容 */}
       <LinksAdminPage />
     </div>

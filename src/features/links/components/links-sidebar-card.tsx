@@ -258,7 +258,7 @@ export const LinksSidebarCard = ({
         </CardHeader>
       )}
       <CardContent className={showHeader ? "pt-0 pb-4" : "py-4"}>
-        <div className="hide-scrollbar max-h-[400px] space-y-1.5 overflow-y-auto sm:max-h-[450px] sm:space-y-2">
+        <div className="hide-scrollbar max-h-[calc(100vh-12rem)] space-y-1.5 overflow-y-auto sm:max-h-[calc(100vh-12rem)] sm:space-y-2">
           {/* 全部分类选项 */}
           <button
             type="button"

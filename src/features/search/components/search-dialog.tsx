@@ -3,10 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useSearch } from "@/features/search/hooks/use-search";
 import type { SearchResult } from "@/features/search/types";
 import { BookOpen, ExternalLink, FileText, Link, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useSearchState } from "../hooks/use-search-state";
+import { useAppStore } from "@/stores";
 
 // 搜索结果项组件
 interface SearchResultItemProps {
@@ -122,8 +123,10 @@ interface SearchDialogProps {
 }
 
 export const SearchDialog = ({ open, onOpenChange }: SearchDialogProps) => {
-  const [query, setQuery] = useState("");
-  const { search, results, isLoading } = useSearch();
+  const { search, results, isLoading, query, setSearchTerm, resetSearch } = useSearchState();
+
+  // 使用全局应用状态管理加载和错误状态
+  const { setLoading, showError, clearError } = useAppStore();
 
   // 监听键盘快捷键 (Ctrl+K 或 Command+K)
   useEffect(() => {
@@ -138,17 +141,41 @@ export const SearchDialog = ({ open, onOpenChange }: SearchDialogProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onOpenChange]);
 
+  // 同步加载和错误状态到全局状态
+  useEffect(() => {
+    setLoading(isLoading, "搜索中...");
+    if (isLoading) {
+      clearError();
+    }
+  }, [isLoading, setLoading, clearError]);
+
+  // 搜索功能
+  const performSearch = useMemo(() => {
+    return (searchQuery: string) => {
+      if (!searchQuery.trim()) {
+        resetSearch();
+        return;
+      }
+
+      search(searchQuery).catch(error => {
+        showError(error instanceof Error ? error.message : "搜索失败");
+      });
+    };
+  }, [search, resetSearch, showError]);
+
+  // 防抖搜索
   useEffect(() => {
     if (!query.trim()) {
+      resetSearch();
       return;
     }
 
     const searchTimeout = setTimeout(() => {
-      void search(query);
+      performSearch(query);
     }, 300);
 
     return () => clearTimeout(searchTimeout);
-  }, [query, search]);
+  }, [query, performSearch, resetSearch]);
 
   const handleResultClick = (result: SearchResult) => {
     if (result.url) {
@@ -166,7 +193,7 @@ export const SearchDialog = ({ open, onOpenChange }: SearchDialogProps) => {
           <DialogTitle>搜索</DialogTitle>
         </DialogHeader>
 
-        <SearchInput query={query} onChange={setQuery} />
+        <SearchInput query={query} onChange={setSearchTerm} />
 
         <div className="flex-1 overflow-y-auto">
           <SearchResults

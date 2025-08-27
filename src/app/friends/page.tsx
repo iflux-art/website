@@ -5,14 +5,10 @@ import { FriendLinkApplication } from "@/features/friends/components";
 import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from "@/features/friends/lib";
 import { LinkCard } from "@/features/links/components";
 import type { LinksItem } from "@/features/links/types";
-import { generateSEOMetadata } from "@/lib/metadata/seo-utils";
 import type { Metadata } from "next";
+import { FRIENDS_PAGE_METADATA } from "@/config";
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: "友情链接",
-  description: "友情链接列表和申请方式",
-  keywords: ["友链", "网站", "合作"],
-});
+export const metadata: Metadata = FRIENDS_PAGE_METADATA;
 
 const FriendsPage = () => {
   // 处理友链数据
@@ -43,7 +39,7 @@ const FriendsPage = () => {
 
   return (
     <PageContainer config={{ layout: "full-width" }}>
-      <div>
+      <div className="mt-4">
         {/* 友链列表网格 */}
         <AppGrid columns={5} className="items-stretch">
           {friendsItems.map(item => (
@@ -65,7 +61,7 @@ const FriendsPage = () => {
 
         {/* 评论区 */}
         {config.showComments && (
-          <div className="mt-12">
+          <div className="mt-8">
             <TwikooComment />
           </div>
         )}

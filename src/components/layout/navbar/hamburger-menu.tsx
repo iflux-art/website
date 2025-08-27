@@ -1,7 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useMounted } from "@/hooks";
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -33,7 +39,9 @@ export const HamburgerMenu = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full max-w-md p-4">
-        <DialogTitle className="sr-only">导航菜单</DialogTitle>
+        <DialogHeader className="mb-4">
+          <DialogTitle className="sr-only">导航菜单</DialogTitle>
+        </DialogHeader>
         <NavCardMenu className="p-4" onClose={handleClose} />
       </DialogContent>
     </Dialog>

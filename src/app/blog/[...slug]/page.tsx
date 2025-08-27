@@ -71,8 +71,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const rightSidebar = (
       <>
         <TableOfContentsCard headings={headings} className="prose-sm" />
-        <RelatedPostsCard posts={relatedPosts} currentSlug={slug.slice(1)} />
         <LatestPostsCard posts={latestPosts} currentSlug={slug.slice(1)} />
+        <RelatedPostsCard posts={relatedPosts} currentSlug={slug.slice(1)} />
       </>
     );
 

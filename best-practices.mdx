@@ -1,39 +1,6 @@
-高优先级 (建议优先处理)
-Re-export all 问题 (noReExportAll) - 影响性能和代码可维护性
-隐式 any 类型 (noImplicitAnyLet) - 影响类型安全
-中优先级
-逻辑表达式复杂度 (useSimplifiedLogicExpression) - 提高代码可读性
-未使用函数参数 (noUnusedFunctionParameters) - 代码规范问题
-冗余 ARIA 角色 (noRedundantRoles) - 可访问性优化
-低优先级
-命名规范问题 (useNamingConvention) - Next.js 标准命名，可通过注释忽略
-非语义化元素使用 (useSemanticElements) - 可访问性微优化
-
 # Next.js 技术栈推荐清单与最佳实践
 
-自动统一类型定义、优化 hooks 状态管理、规范 API 返回结构，批量修复其它类型分散问题，或有类型推导/校验需求
-
-目录下只被单一文件引用、且只服务于该文件的代码，全部迁移到对应实现文件顶部（即“内联”），以提升文件归属清晰度和可维护性
-
-1. 梳理并重构，让 @/types、@/lib/utils、@/lib、@/data、@/config、@/hooks 文件各归其位
-2. 重构后保证引用唯一、无冗余，全局修正 index.ts 统一导出文件、import/export
-3. pnpm build 构建 100% 通过，无 warning、无 error
-
-config：只放静态配置对象和常量，不放类型和工具函数。
-types：只放类型定义，所有 interface/type 归一。类型全部通过 @/types 引用，lib/、hooks/ 只 import 不定义。
-lib：只放工具函数/通用逻辑，不混杂类型、配置、hook 实现。
-hooks：只放自定义 hook，不混杂类型、工具函数。
-
-梳理步骤：
-检查 lib 目录下是否有类型定义、配置、hook 实现混杂，若有则迁移/拆分。
-检查 hooks 目录下是否有工具函数、类型定义混杂，若有则迁移/拆分。
-检查 lib/utils/ 下内容，确认是否有与 hooks、types、config 职责重叠的内容。
-检查 hooks/ 各子目录（ui、core、state、content、cache）是否有职责不清、可合并/拆分的内容。
-
 ---
-
-mongodb+srv://ifa:Hogyoku&mdb@ifa.8joagcy.mongodb.net/?retryWrites=true&w=majority&appName=ifa
-
 
 - react-hook-form：高性能表单管理，适合复杂表单场景。
 - Zod：TypeScript 优先的数据校验库，前后端类型一致。

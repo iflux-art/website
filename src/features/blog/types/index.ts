@@ -2,7 +2,7 @@
  * 博客相关类型定义
  */
 
-import type { BaseContent, URL } from "@/types";
+import type { BaseContent, Url } from "@/types";
 
 /**
  * 博客文章
@@ -11,7 +11,7 @@ export interface BlogPost extends BaseContent {
   /** 作者 */
   author?: string;
   /** 作者头像 */
-  authorAvatar?: URL | null;
+  authorAvatar?: Url | null;
   /** 作者简介 */
   authorBio?: string;
   /** 是否已发布 */
@@ -21,7 +21,7 @@ export interface BlogPost extends BaseContent {
   /** 是否为特色文章 */
   featured?: boolean;
   /** 文章封面图片 */
-  image?: URL;
+  image?: Url;
   /** 阅读时间（分钟） */
   readingTime?: number;
   /** 浏览次数 */

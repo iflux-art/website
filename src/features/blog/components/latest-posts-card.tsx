@@ -52,6 +52,7 @@ export const LatestPostsCard = ({ posts, currentSlug }: LatestPostsCardProps) =>
                 {post.date && (
                   <p className="mt-1 text-xs text-muted-foreground/60">
                     {new Date(post.date).toLocaleDateString("zh-CN", {
+                      year: "numeric",
                       month: "short",
                       day: "numeric",
                     })}

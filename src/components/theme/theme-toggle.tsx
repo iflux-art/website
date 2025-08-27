@@ -1,9 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useThemeStore } from "@/stores";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import * as React from "react";
+import { useEffect } from "react";
 
 /**
  * 主题切换组件
@@ -18,12 +19,12 @@ import * as React from "react";
  * <ThemeToggle />
  */
 export const ThemeToggle = () => {
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  const { mounted, setMounted } = useThemeStore();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
-  }, []);
+  }, [setMounted]);
 
   if (!mounted) {
     return null; // Let Next.js loading.tsx handle loading states

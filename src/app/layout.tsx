@@ -1,8 +1,10 @@
 import "./globals.css";
 import { GlobalContextMenu } from "@/components/global-context-menu";
 import { Footer } from "@/components/layout";
+import { InitClient } from "@/components/layout/init-client";
 import { MainNavbar } from "@/components/layout/navbar/main-navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { RoutePrefetcher } from "@/components/route-prefetcher";
 import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";
 
@@ -12,11 +14,14 @@ import React from "react";
  * 1. 先从配置文件导入 - 便于集中管理和复用
  * 2. 然后再导出 - 满足Next.js的约定要求
  */
-import { generateMetadata, generateViewport } from "@/config/metadata";
+import { generateMetadata, generateViewport } from "@/lib/metadata";
 
 // 导出元数据配置 - Next.js会在构建时处理这些导出
 export const metadata = generateMetadata();
 export const viewport = generateViewport();
+
+// 定义需要预取的关键路由
+const KEY_ROUTES = ["/", "/blog", "/docs", "/links", "/about", "/friends"];
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <ClerkProvider>
@@ -35,10 +40,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         >
           <GlobalContextMenu>
             {/* 页面主体布局容器 */}
-            <div className="flex min-h-screen flex-col">
+            <div className="flex flex-col">
               <MainNavbar className="flex-shrink-0" />
-              {/* 主内容区域 - 自动填充剩余空间 */}
-              <main className="flex-auto">{children}</main>
+              {/* 客户端初始化组件 */}
+              <InitClient />
+              {/* 路由预取器 */}
+              <RoutePrefetcher routes={KEY_ROUTES} strategy="idle" />
+              {/* 主内容区域 */}
+              <main>{children}</main>
               <Footer />
             </div>
           </GlobalContextMenu>

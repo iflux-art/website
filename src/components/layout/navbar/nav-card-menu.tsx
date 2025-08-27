@@ -10,7 +10,7 @@ import { useActiveSection } from "@/hooks/navbar/use-active-section";
 import { cn } from "@/utils";
 import { useUser } from "@clerk/nextjs";
 import type { LucideIcon } from "lucide-react";
-import Link from "next/link";
+import { PrefetchLink } from "@/components/prefetch-link";
 
 interface NavProps {
   /**
@@ -35,9 +35,11 @@ const NavCards = ({ onClose, className }: NavProps) => {
         {NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => {
           const Icon: LucideIcon = item.icon;
           return (
-            <Link
+            <PrefetchLink
               key={item.key}
               href={NAV_PATHS[item.key]}
+              prefetchStrategy="hover"
+              prefetchDelay={150}
               onClick={onClose}
               className={cn(
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
@@ -53,7 +55,7 @@ const NavCards = ({ onClose, className }: NavProps) => {
                 </div>
                 <p className="text-sm text-muted-foreground">{NAV_DESCRIPTIONS[item.key]}</p>
               </div>
-            </Link>
+            </PrefetchLink>
           );
         })}
       </div>
@@ -75,9 +77,11 @@ const AdminMenu = ({ onClose }: NavProps) => {
         {ADMIN_MENU_ITEMS.map((item: (typeof ADMIN_MENU_ITEMS)[number]) => {
           const Icon: LucideIcon = item.icon;
           return (
-            <Link
+            <PrefetchLink
               key={item.key}
               href={`/${item.key}`}
+              prefetchStrategy="hover"
+              prefetchDelay={150}
               onClick={onClose}
               className={cn(
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
@@ -93,7 +97,7 @@ const AdminMenu = ({ onClose }: NavProps) => {
                 </div>
                 <p className="text-sm text-muted-foreground">{item.description}</p>
               </div>
-            </Link>
+            </PrefetchLink>
           );
         })}
       </div>
