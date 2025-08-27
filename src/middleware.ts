@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 /**
  * 中间件缓存配置
  */
-export const MIDDLEWARE_CACHE_CONFIG = {
+const MIDDLEWARE_CACHE_CONFIG = {
   staticAssets: 3600, // 1小时
   fonts: 3600, // 1小时
   images: 86400, // 1天
@@ -15,7 +15,7 @@ export const MIDDLEWARE_CACHE_CONFIG = {
 /**
  * 内容安全策略配置 - 为 Clerk 优化
  */
-export const CSP_CONFIG = {
+const CSP_CONFIG = {
   "default-src": ["'self'"],
   "script-src": [
     "'self'",
@@ -80,7 +80,7 @@ export const CSP_CONFIG = {
 /**
  * 安全头配置
  */
-export const SECURITY_HEADERS = {
+const SECURITY_HEADERS = {
   "X-DNS-Prefetch-Control": "on",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "X-Frame-Options": "SAMEORIGIN",
@@ -93,7 +93,7 @@ export const SECURITY_HEADERS = {
 /**
  * 构建 CSP 字符串
  */
-export const buildCSP = (config: typeof CSP_CONFIG) =>
+const buildCSP = (config: typeof CSP_CONFIG) =>
   Object.entries(config)
     .map(([key, values]) => `${key} ${values.join(" ")}`)
     .join("; ");

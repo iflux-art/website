@@ -186,22 +186,6 @@
     /* Chrome/Safari/Webkit */
   }
 
-  .prose code::before,
-  .prose code::after {
-    content: none;
-  }
-
-  .prose :not(pre) > code {
-    background-color: hsl(var(--muted));
-    color: hsl(var(--foreground));
-    border-radius: 0.375rem;
-    padding: 0.2em 0.4em;
-    font-size: 0.95em;
-    font-family:
-      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-      monospace;
-  }
-
   /* 自定义 Twikoo 评论区样式 */
   #twikoo .tk-comments-container:not(:has(.tk-comment)),
   #twikoo .tk-footer {

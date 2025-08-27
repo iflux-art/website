@@ -1,33 +1,30 @@
 "use client";
-import { MDXComponents } from "@/components/mdx/mdx-components";
+
+import { useMDXComponents } from "@/components/mdx/mdx-components";
 import { evaluateSync } from "@mdx-js/mdx";
-import { MDXProvider, useMDXComponents } from "@mdx-js/react";
+import { MDXProvider } from "@mdx-js/react";
 import matter from "gray-matter";
 import { useMemo } from "react";
 import * as runtime from "react/jsx-runtime";
-import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
-
-export const prettyCodeOptions: PrettyCodeOptions = {
-  theme: "github-dark",
-};
-
-export const mdxRehypePlugins = [[rehypePrettyCode, prettyCodeOptions]];
 
 interface Props {
   content: string;
 }
 
-const ClientMDXRenderer = ({ content }: Props) => {
+export default function ClientMDXRenderer({ content }: Props) {
+  // 在组件渲染顶层调用钩子
+  const components = useMDXComponents();
+
   const MDXContent = useMemo(() => {
     try {
-      // 先去除 frontmatter
+      // 解析并移除 frontmatter
       const { content: pureContent } = matter(content);
       // 编译为 React 组件
       const mdxModule = evaluateSync(pureContent, {
         ...runtime,
         useMDXComponents,
-        remarkPlugins: [remarkGfm], // 支持 GFM 表格等扩展
+        remarkPlugins: [remarkGfm],
       });
       return mdxModule.default;
     } catch {
@@ -41,10 +38,8 @@ const ClientMDXRenderer = ({ content }: Props) => {
   }
 
   return (
-    <MDXProvider components={MDXComponents}>
+    <MDXProvider components={components}>
       <MDXContent />
     </MDXProvider>
   );
-};
-
-export default ClientMDXRenderer;
+}
