@@ -101,7 +101,10 @@ const ChildCategoryItem = ({
     <button
       type="button"
       key={child.id}
-      onClick={() => onCategoryClick(child.id)}
+      onClick={() => {
+        console.log("点击子分类:", child.id);
+        onCategoryClick(child.id);
+      }}
       className={cn(
         "flex min-h-[40px] w-full touch-manipulation items-center gap-2 rounded-md px-2.5 py-2 text-left text-xs transition-colors sm:min-h-[32px] sm:px-3 sm:py-1.5",
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
@@ -191,7 +194,10 @@ const SimpleCategory = ({ category, selectedCategory, onCategoryClick }: SimpleC
   return (
     <button
       type="button"
-      onClick={() => onCategoryClick(category.id)}
+      onClick={() => {
+        console.log("点击分类:", category.id);
+        onCategoryClick(category.id);
+      }}
       className={cn(
         "flex min-h-[44px] w-full touch-manipulation items-center gap-2 rounded-md px-2.5 py-2.5 text-left text-sm transition-colors sm:min-h-[36px] sm:px-3 sm:py-2",
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
@@ -235,6 +241,7 @@ export const LinksSidebarCard = ({
   const currentSelectedCategory = selectedCategory || "";
 
   const handleCategoryClick = (categoryId: string) => {
+    console.log("处理分类点击:", categoryId);
     // 如果点击的是当前选中的分类，则取消选择
     if (currentSelectedCategory === categoryId) {
       onCategoryChange("");
@@ -244,6 +251,7 @@ export const LinksSidebarCard = ({
   };
 
   const handleShowAll = () => {
+    console.log("显示全部分类");
     onCategoryChange("");
   };
 
@@ -277,7 +285,8 @@ export const LinksSidebarCard = ({
           {/* 分类列表 */}
           {processedCategories.map(category => {
             const hasChildren = category.children && category.children.length > 0;
-            const isOpen = openCategories[category.id];
+            // 修复：添加空值检查并提供默认值
+            const isOpen = openCategories[category.id] ?? false;
 
             return (
               <div key={category.id} className="space-y-1">

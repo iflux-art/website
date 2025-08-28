@@ -67,8 +67,12 @@ export const useGlobalContextMenu = () => {
     const availablePages = SITE_PAGES.filter(page => page !== currentPath);
 
     if (availablePages.length > 0) {
-      const randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
-      router.push(randomPage);
+      const randomIndex = Math.floor(Math.random() * availablePages.length);
+      // 修复：添加边界检查
+      const randomPage = availablePages[randomIndex];
+      if (randomPage) {
+        router.push(randomPage);
+      }
     }
   }, [router]);
 

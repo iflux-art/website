@@ -164,5 +164,5 @@ export const getRandomGreeting = (): string => {
   const timeSlot = getCurrentTimeSlot();
   const greetings = GREETINGS_BY_TIME[timeSlot];
   const randomIndex = Math.floor(Math.random() * greetings.length);
-  return greetings[randomIndex];
+  return greetings[randomIndex] ?? "你好，世界！";
 };

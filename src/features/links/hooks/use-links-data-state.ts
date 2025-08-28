@@ -64,6 +64,7 @@ export function useLinksDataState() {
   } = useFilterState(filteredItems);
 
   const handleCategoryClick = (categoryId: string) => {
+    console.log("处理分类点击事件:", categoryId);
     handleCategoryChange(categoryId);
   };
 

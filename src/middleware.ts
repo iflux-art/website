@@ -6,10 +6,9 @@ import { NextResponse } from "next/server";
  */
 const MIDDLEWARE_CACHE_CONFIG = {
   staticAssets: 3600, // 1小时
-  fonts: 3600, // 1小时
+  fonts: 86400, // 1天
   images: 86400, // 1天
   api: 30, // 30秒
-  pages: 0, // 禁用
 } as const;
 
 /**
@@ -21,14 +20,6 @@ const CSP_CONFIG = {
     "'self'",
     "'unsafe-inline'",
     "'unsafe-eval'",
-    "https://cdn.jsdelivr.net",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "script-src-elem": [
-    "'self'",
-    "'unsafe-inline'",
     "https://cdn.jsdelivr.net",
     "https://*.clerk.accounts.dev",
     "https://*.clerk.com",
@@ -124,13 +115,8 @@ const getCacheControl = (pathname: string): string => {
     return `public, max-age=${api}, s-maxage=${api * 2}, stale-while-revalidate=${api * 10}`;
   }
 
-  // 首页需要特殊处理，避免缓存
-  if (pathname === "/" || pathname === "/index" || pathname === "/index.html") {
-    return "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate";
-  }
-
-  // 主要页面和其他动态路由
-  return "public, max-age=0, must-revalidate";
+  // 其他页面不缓存
+  return "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate";
 };
 
 // 定义需要保护的路由
@@ -153,12 +139,11 @@ export default clerkMiddleware(async (auth, request) => {
   const isDevelopment = process.env.NODE_ENV === "development";
 
   if (isDevelopment) {
-    // 开发环境：更宽松的 CSP 以支持 Clerk 和 Web Workers
+    // 开发环境：适度宽松的 CSP 以支持开发工具
     response.headers.set(
       "Content-Security-Policy",
       "default-src 'self'; " +
         "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http: blob:; " +
-        "script-src-elem 'self' 'unsafe-inline' https: http:; " +
         "style-src 'self' 'unsafe-inline' https: http:; " +
         "img-src 'self' data: https: http:; " +
         "font-src 'self' data: https: http:; " +

@@ -19,7 +19,7 @@ const AboutPage = () => {
   });
 
   return (
-    <PageContainer config={{ layout: "full-width" }}>
+    <PageContainer config={{ layout: "narrow" }}>
       <div className="mt-4">
         {/* 个人信息卡片网格 */}
         {profileItems.length > 0 && (

@@ -7,7 +7,11 @@ export { FriendLinkApplication } from "./components/friend-link-application";
 export { FriendsPageContainer } from "./components/friends-page-container";
 
 // 类型导出
-export type { FriendsPageConfig, FriendLinkFormConfig, FriendLinkRequirement } from "./types";
+export type {
+  FriendsPageConfig,
+  FriendLinkFormConfig,
+  FriendLinkRequirement,
+} from "./types";
 
 // 工具函数导出
 export {

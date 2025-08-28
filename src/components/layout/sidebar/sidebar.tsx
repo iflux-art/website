@@ -240,7 +240,8 @@ export const Sidebar = ({
   // 渲染侧边栏项目
   const renderSidebarItem = useCallback(
     (item: SidebarItem, level = 0) => {
-      const isOpen = openCategories[item.id];
+      // 修复：添加空值检查并提供默认值
+      const isOpen = openCategories[item.id] ?? false;
       const hasChildren = item.children && item.children.length > 0;
       const isCurrentItem = currentItem === item.id;
 

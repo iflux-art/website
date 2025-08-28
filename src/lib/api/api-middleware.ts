@@ -212,7 +212,7 @@ class MemoryRateLimiter {
 
     if (requests.length >= maxRequests) {
       const oldestRequest = requests[0];
-      const resetTime = oldestRequest + windowMs;
+      const resetTime = oldestRequest ? oldestRequest + windowMs : undefined;
       return { allowed: false, resetTime };
     }
 

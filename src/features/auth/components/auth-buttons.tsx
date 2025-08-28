@@ -2,18 +2,25 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { SignOutButton, useUser } from "@clerk/nextjs";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export function AuthButtons() {
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
+  const [open, setOpen] = useState(false);
+
   try {
     // 如果 Clerk 还在加载中，显示登录图标
     if (!isLoaded) {
@@ -26,43 +33,33 @@ export function AuthButtons() {
       );
     }
 
-    // 如果用户已登录，显示用户菜单
+    // 如果用户已登录，显示退出确认对话框
     if (isSignedIn) {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" title="账户菜单">
+        <AlertDialog open={open} onOpenChange={setOpen}>
+          <AlertDialogTrigger asChild>
+            <Button variant="ghost" size="icon" title="退出登录">
               <User className="h-5 w-5" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <div className="px-2 py-1.5 text-sm font-medium">
-              {user?.firstName ?? user?.emailAddresses[0]?.emailAddress}
-            </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/profile" className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                个人资料
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/admin" className="flex items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                管理后台
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>确认退出登录</AlertDialogTitle>
+              <AlertDialogDescription>
+                您确定要退出登录吗？退出后需要重新登录才能访问您的账户。
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>取消</AlertDialogCancel>
               <SignOutButton>
-                <button type="button" className="flex w-full items-center">
+                <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
                   <LogOut className="mr-2 h-4 w-4" />
                   退出登录
-                </button>
+                </AlertDialogAction>
               </SignOutButton>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       );
     }
 

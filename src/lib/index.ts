@@ -10,7 +10,10 @@ export {
   generateArticleMetadata,
   generateProfileMetadata,
 } from "./metadata/metadata";
-export { generateDocsMetadata, generateSEOMetadata } from "./metadata/seo-utils"; // 基础元数据生成函数和SEO工具函数
+export {
+  generateDocsMetadata,
+  generateSEOMetadata,
+} from "./metadata/seo-utils"; // 基础元数据生成函数和SEO工具函数
 
 // ==================== API工具函数 ====================
 // 从 api-utils 导出
@@ -30,7 +33,11 @@ export {
 } from "./api/api-utils";
 
 // 从 api-middleware 导出
-export type { LoggingOptions, ValidationOptions, MiddlewareResult } from "./api/api-middleware";
+export type {
+  LoggingOptions,
+  ValidationOptions,
+  MiddlewareResult,
+} from "./api/api-middleware";
 export {
   withLogging,
   withValidation,

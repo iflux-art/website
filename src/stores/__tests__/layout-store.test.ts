@@ -26,8 +26,8 @@ describe("useLayoutStore", () => {
     it("should set layout type", () => {
       const { setLayoutType } = useLayoutStore.getState();
 
-      setLayoutType("three-column");
-      expect(useLayoutStore.getState().layoutType).toBe("three-column");
+      setLayoutType("double-sidebar");
+      expect(useLayoutStore.getState().layoutType).toBe("double-sidebar");
     });
 
     it("should set sidebars", () => {
@@ -90,7 +90,7 @@ describe("useLayoutStore", () => {
       const state = useLayoutStore.getState();
 
       // Change states
-      state.setLayoutType("three-column");
+      state.setLayoutType("double-sidebar");
       state.setIsMobile(true);
 
       // Reset

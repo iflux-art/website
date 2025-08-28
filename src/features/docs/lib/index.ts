@@ -48,7 +48,14 @@ interface DocMetaItem {
  * 从meta配置中获取标题
  */
 function getTitleFromMeta(meta: Record<string, unknown>, key: string): string | null {
-  if (meta[key] && typeof meta[key] === "object" && "title" in meta[key] && meta[key].title) {
+  // 修复：添加空值检查
+  if (
+    meta[key] &&
+    typeof meta[key] === "object" &&
+    meta[key] !== null &&
+    "title" in meta[key] &&
+    meta[key].title
+  ) {
     return meta[key].title as string;
   }
   return null;
@@ -67,12 +74,25 @@ export function getDirectoryTitle(dirSlug: string[]): string {
 
   if (fs.existsSync(metaPath)) {
     const meta = JSON.parse(fs.readFileSync(metaPath, "utf8")) as Record<string, unknown>;
-    const key = dirSlug[dirSlug.length - 1];
-    const title = getTitleFromMeta(meta, key);
-    if (title) return title;
+    const keyIndex = dirSlug.length - 1;
+    // 修复：添加边界检查
+    if (keyIndex >= 0 && dirSlug[keyIndex]) {
+      const key = dirSlug[keyIndex];
+      // 修复：添加空值检查
+      if (key) {
+        const title = getTitleFromMeta(meta, key);
+        if (title) return title;
+      }
+    }
   }
 
-  return dirSlug[dirSlug.length - 1];
+  // 修复：添加边界检查
+  const lastIndex = dirSlug.length - 1;
+  // 修复：添加空值检查
+  if (lastIndex >= 0 && dirSlug[lastIndex]) {
+    return dirSlug[lastIndex];
+  }
+  return "";
 }
 
 /**
@@ -101,8 +121,13 @@ function findDocFromMeta(
 function findFirstDocFromFiles(docsDir: string, dirSlug: string[]): string[] | null {
   const files = globSync("*.{md,mdx}", { cwd: docsDir });
   if (files.length > 0) {
-    const first = files.sort()[0].replace(/\.(md|mdx)$/, "");
-    return [...dirSlug, first];
+    const sortedFiles = files.sort();
+    // 修复：添加边界检查
+    const firstFile = sortedFiles[0];
+    if (firstFile) {
+      const first = firstFile.replace(/\.(md|mdx)$/, "");
+      return [...dirSlug, first];
+    }
   }
   return null;
 }
@@ -419,7 +444,9 @@ function loadMetaConfig(currentAbsolutePath: string): Record<string, DocMetaItem
  * 收集目录中的项目
  */
 function collectDirectoryItems(currentAbsolutePath: string): { name: string; isDir: boolean }[] {
-  const itemsInDir = fs.readdirSync(currentAbsolutePath, { withFileTypes: true });
+  const itemsInDir = fs.readdirSync(currentAbsolutePath, {
+    withFileTypes: true,
+  });
   const collectedItems: { name: string; isDir: boolean }[] = [];
 
   itemsInDir.forEach(dirItem => {
@@ -592,8 +619,11 @@ export function getDocDirectoryStructure(
   return sortedItemNames
     .map(itemName => {
       const itemMetaEntry = metaConfig[itemName];
-      const itemSpecificConfig =
-        typeof itemMetaEntry === "string" ? { title: itemMetaEntry } : (itemMetaEntry ?? {});
+      // 修复：确保 itemSpecificConfig 总是符合 DocMetaItem 类型
+      const itemSpecificConfig: DocMetaItem =
+        typeof itemMetaEntry === "string"
+          ? { title: itemMetaEntry }
+          : (itemMetaEntry ?? { title: itemName });
 
       const actualItem = collectedItems.find(ci => ci.name === itemName);
       if (!actualItem) return null; // Should not happen

@@ -1,60 +1,64 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "allowSyntheticDefaultImports": true,
-    // 更严格的类型检查
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "exactOptionalPropertyTypes": false,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false,
-    // 代码生成优化
-    "removeComments": false,
-    "sourceMap": true,
-    "inlineSources": true,
-    // 高级模块解析
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/config/*": ["./src/config/*"],
-      "@/app/*": ["./src/app/*"],
-      "@/features/*": ["./src/features/*"]
-    },
-    // 插件配置
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "src/types/global.d.ts",
-    "next-env.d.ts",
-    "src/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"allowSyntheticDefaultImports": true,
+		// 更严格的类型检查
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"exactOptionalPropertyTypes": false, // 暂时禁用，避免类型错误
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noUncheckedIndexedAccess": true,
+		"useUnknownInCatchVariables": true,
+		// 代码生成优化
+		"removeComments": false,
+		"sourceMap": true,
+		"inlineSources": true,
+		"verbatimModuleSyntax": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		// 高级模块解析
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/components/*": ["./src/components/*"],
+			"@/lib/*": ["./src/lib/*"],
+			"@/utils/*": ["./src/utils/*"],
+			"@/types/*": ["./src/types/*"],
+			"@/hooks/*": ["./src/hooks/*"],
+			"@/config/*": ["./src/config/*"],
+			"@/app/*": ["./src/app/*"],
+			"@/features/*": ["./src/features/*"]
+		},
+		// 插件配置
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": [
+		"src/types/global.d.ts",
+		"next-env.d.ts",
+		"src/types/**/*.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules"]
 }

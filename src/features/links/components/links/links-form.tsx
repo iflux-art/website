@@ -199,7 +199,7 @@ const IconInputSection = ({ formData, onInputChange }: IconInputSectionProps) =>
           <SelectTrigger className="w-32">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-popover/100">
             <SelectItem value="image">图片链接</SelectItem>
             <SelectItem value="text">文字</SelectItem>
           </SelectContent>
@@ -244,7 +244,7 @@ const CategorySection = ({
         <SelectTrigger>
           <SelectValue placeholder="选择分类" />
         </SelectTrigger>
-        <SelectContent className="max-h-[300px]">
+        <SelectContent className="max-h-[300px] bg-popover/100">
           {categories.map((category: LinksCategory) => (
             <div key={category.id}>
               {/* 主分类 */}

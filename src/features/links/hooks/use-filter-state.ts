@@ -22,7 +22,16 @@ export function useFilterState(items: LinksItem[]) {
 
     // 按分类过滤
     if (selectedCategory) {
-      result = result.filter(item => item.category === selectedCategory);
+      result = result.filter(item => {
+        // 处理子分类的情况，例如 "development/security"
+        if (selectedCategory.includes("/")) {
+          return item.category === selectedCategory;
+        }
+        // 处理主分类的情况，需要匹配所有子分类
+        return (
+          item.category === selectedCategory || item.category.startsWith(`${selectedCategory}/`)
+        );
+      });
     }
 
     // 按标签过滤

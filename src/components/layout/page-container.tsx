@@ -4,14 +4,16 @@ import { useLayoutStore } from "@/stores";
 import { getContainerClassName } from "@/lib/layout/layout-utils";
 import type { PageContainerProps } from "@/types";
 import { cn } from "@/utils";
-import { ThreeColumnGrid } from "./three-column-grid";
+import { ResponsiveGrid } from "./responsive-grid";
 import { useEffect } from "react";
 
 /**
  * 通用页面容器组件
- * 支持两种布局类型：
- * 1. three-column: 导航、博客列表/详情页、文档详情页的3栏布局
- * 2. full-width: 首页、友链、关于和管理后台的全屏内容区
+ * 支持四种布局类型：
+ * 1. narrow: 窄布局，占中间的6列（友链、关于页面）
+ * 2. single-sidebar: 单侧栏布局，左侧栏占3列，右侧主内容区占9列（后台管理系统）
+ * 3. double-sidebar: 双侧栏布局，左右侧栏各占3列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
+ * 4. full-width: 宽布局，占满全部的12列（首页）
  */
 export const PageContainer = ({
   children,
@@ -50,8 +52,9 @@ export const PageContainer = ({
     }
   }, [isClient, store, layout, sidebars, layoutType, storedSidebars]);
 
-  // 全屏布局：适用于首页、友链、关于和管理后台
-  if (layout === "full-width") {
+  // 根据布局类型渲染不同的容器
+  if (layout === "full-width" && sidebars.length === 0) {
+    // 宽布局：适用于首页
     return (
       <div className={cn(containerClassName, "w-full", className)}>
         <div className="container mx-auto px-4 py-4">{children}</div>
@@ -59,21 +62,14 @@ export const PageContainer = ({
     );
   }
 
-  // 三栏布局：适用于导航、博客列表/详情页、文档详情页
-  if (layout === "three-column" && sidebars.length > 0) {
-    return (
-      <div className={cn(containerClassName, className)}>
-        <div className="container mx-auto px-4">
-          <ThreeColumnGrid sidebars={sidebars}>{children}</ThreeColumnGrid>
-        </div>
-      </div>
-    );
-  }
-
-  // 回退到全屏布局
+  // 其他布局类型使用网格布局
   return (
-    <div className={cn(containerClassName, "w-full", className)}>
-      <div className="container mx-auto px-4 py-4">{children}</div>
+    <div className={cn(containerClassName, className)}>
+      <div className="container mx-auto px-4">
+        <ResponsiveGrid sidebars={sidebars} layoutType={layout}>
+          {children}
+        </ResponsiveGrid>
+      </div>
     </div>
   );
 };

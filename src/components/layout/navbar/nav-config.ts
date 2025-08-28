@@ -7,6 +7,7 @@ import {
   Home,
   Info,
   Link,
+  Settings,
   type LucideIcon,
 } from "lucide-react";
 
@@ -71,6 +72,13 @@ export const ADMIN_MENU_ITEMS = [
     description: "管理网站导航中的所有网址",
     icon: Globe,
     permission: "admin.links.manage",
+  },
+  {
+    key: "admin/profile",
+    label: "账号设置",
+    description: "管理个人资料和账户信息",
+    icon: Settings,
+    permission: "user.profile.manage",
   },
 ] as const satisfies (NavConfigItem & {
   permission?: string;

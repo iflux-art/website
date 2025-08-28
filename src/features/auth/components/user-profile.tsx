@@ -3,16 +3,26 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { SignOutButton, useUser } from "@clerk/nextjs";
-import { Calendar, LogOut, Mail, Settings, User } from "lucide-react";
+import { Calendar, LogOut, Mail, User } from "lucide-react";
 import Link from "next/link";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 // 加载状态组件
 const LoadingState = () => (
-  <div className="flex min-h-screen items-center justify-center">
+  <div className="flex min-h-[50vh] items-center justify-center">
     <div className="text-center">
       <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-primary" />
       <p className="text-muted-foreground">加载中...</p>
@@ -22,18 +32,14 @@ const LoadingState = () => (
 
 // 未登录状态组件
 const UnauthenticatedState = () => (
-  <div className="flex min-h-screen items-center justify-center">
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center">
-        <CardTitle>未登录</CardTitle>
-        <CardDescription>请先登录以查看个人资料</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Link href="/sign-in">
-          <Button className="w-full">前往登录</Button>
-        </Link>
-      </CardContent>
-    </Card>
+  <div className="flex min-h-[50vh] items-center justify-center">
+    <div className="w-full max-w-md rounded-lg border border-border bg-card p-4 text-center">
+      <h2 className="mb-2 text-xl font-bold">未登录</h2>
+      <p className="mb-4 text-muted-foreground">请先登录以查看个人资料</p>
+      <Link href="/sign-in">
+        <Button className="w-full">前往登录</Button>
+      </Link>
+    </div>
   </div>
 );
 
@@ -53,32 +59,30 @@ interface UserInfoCardProps {
   initials: string;
 }
 
-const UserInfoCard = ({ user, fullName, initials }: UserInfoCardProps) => (
-  <Card>
-    <CardHeader>
-      <div className="flex items-center space-x-4">
-        <Avatar className="h-16 w-16">
-          <AvatarImage src={user.imageUrl || undefined} alt={fullName} />
-          <AvatarFallback className="text-lg">
-            {initials || <User className="h-8 w-8" />}
-          </AvatarFallback>
-        </Avatar>
-        <div className="space-y-1">
-          <CardTitle className="text-2xl">{fullName ?? user.username ?? "用户"}</CardTitle>
-          <CardDescription className="flex items-center">
-            <Mail className="mr-2 h-4 w-4" />
-            {user.primaryEmailAddress?.emailAddress}
-          </CardDescription>
-          {user.createdAt && (
-            <CardDescription className="flex items-center">
-              <Calendar className="mr-2 h-4 w-4" />
-              注册于 {new Date(user.createdAt).toLocaleDateString("zh-CN")}
-            </CardDescription>
-          )}
+export const UserInfoCard = ({ user, fullName, initials }: UserInfoCardProps) => (
+  <div className="rounded-lg border border-border bg-card p-4">
+    <div className="flex items-center space-x-4">
+      <Avatar className="h-16 w-16">
+        <AvatarImage src={user.imageUrl || undefined} alt={fullName} />
+        <AvatarFallback className="text-lg">
+          {initials || <User className="h-8 w-8" />}
+        </AvatarFallback>
+      </Avatar>
+      <div className="space-y-1">
+        <h3 className="text-2xl font-semibold">{fullName ?? user.username ?? "用户"}</h3>
+        <div className="flex items-center text-muted-foreground">
+          <Mail className="mr-2 h-4 w-4" />
+          {user.primaryEmailAddress?.emailAddress}
         </div>
+        {user.createdAt && (
+          <div className="flex items-center text-muted-foreground">
+            <Calendar className="mr-2 h-4 w-4" />
+            注册于 {new Date(user.createdAt).toLocaleDateString("zh-CN")}
+          </div>
+        )}
       </div>
-    </CardHeader>
-  </Card>
+    </div>
+  </div>
 );
 
 // 账户详情组件
@@ -104,7 +108,7 @@ interface AccountDetailsCardProps {
   };
 }
 
-const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
+export const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
   // 生成唯一 ID
   const userId = useId();
   const usernameId = useId();
@@ -114,11 +118,9 @@ const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
   const externalAccountsId = useId();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>账户详情</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="rounded-lg border border-border bg-card p-4">
+      <h3 className="mb-3 text-lg font-semibold">账户详情</h3>
+      <div className="space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor={userId} className="text-sm font-medium text-muted-foreground">
@@ -204,34 +206,46 @@ const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
             </div>
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
 // 操作按钮组件
-const ActionCard = () => (
-  <Card>
-    <CardHeader>
-      <CardTitle>账户操作</CardTitle>
-    </CardHeader>
-    <CardContent className="space-y-3">
-      <Link href="/admin">
-        <Button variant="outline" className="w-full justify-start">
-          <Settings className="mr-2 h-4 w-4" />
-          管理后台
-        </Button>
-      </Link>
+export const ActionCard = () => {
+  const [open, setOpen] = useState(false);
 
-      <SignOutButton>
-        <Button variant="destructive" className="w-full justify-start">
-          <LogOut className="mr-2 h-4 w-4" />
-          退出登录
-        </Button>
-      </SignOutButton>
-    </CardContent>
-  </Card>
-);
+  return (
+    <div className="rounded-lg border border-border bg-card p-4">
+      <h3 className="mb-3 text-lg font-semibold">账户操作</h3>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" className="w-full justify-start">
+            <LogOut className="mr-2 h-4 w-4" />
+            退出登录
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>确认退出登录</AlertDialogTitle>
+            <AlertDialogDescription>
+              您确定要退出登录吗？退出后需要重新登录才能访问您的账户。
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>取消</AlertDialogCancel>
+            <SignOutButton>
+              <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                <LogOut className="mr-2 h-4 w-4" />
+                退出登录
+              </AlertDialogAction>
+            </SignOutButton>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
 
 export const UserProfile = () => {
   const { user, isLoaded } = useUser();
@@ -248,12 +262,10 @@ export const UserProfile = () => {
   const initials = `${user.firstName?.[0] ?? ""}${user.lastName?.[0] ?? ""}`.toUpperCase();
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <UserInfoCard user={user} fullName={fullName} initials={initials} />
-        <AccountDetailsCard user={user} />
-        <ActionCard />
-      </div>
+    <div className="space-y-4">
+      <UserInfoCard user={user} fullName={fullName} initials={initials} />
+      <AccountDetailsCard user={user} />
+      <ActionCard />
     </div>
   );
 };

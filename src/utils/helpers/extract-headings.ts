@@ -33,21 +33,25 @@ export function extractHeadings(content: string): {
   // 首先提取所有标题
   match = headingRegex.exec(content);
   while (match !== null) {
-    const level = match[1].length;
-    const text = match[2].trim();
-    // 解析markdown链接格式 [text](url)
-    const linkMatch = text.match(/\[([^\]]+)\]\([^)]+\)/);
-    const finalText = linkMatch ? linkMatch[1] : text;
-    const customId = match[3];
-    const id =
-      customId ||
-      `heading-${finalText
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]/g, "")}-${match.index}`;
+    // 修复：添加空值检查
+    if (match[1] && match[2]) {
+      const level = match[1].length;
+      const text = match[2].trim();
+      // 解析markdown链接格式 [text](url)
+      const linkMatch = text.match(/\[([^\]]+)\]\([^)]+\)/);
+      // 使用可选链操作符修复Biome lint错误
+      const finalText = linkMatch?.[1] ? linkMatch[1] : text;
+      const customId = match[3];
+      const id =
+        customId ||
+        `heading-${finalText
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "")}-${match.index}`;
 
-    if (level >= 1 && level <= 4) {
-      headings.push({ id, text: finalText, level });
+      if (level >= 1 && level <= 4) {
+        headings.push({ id, text: finalText, level });
+      }
     }
 
     match = headingRegex.exec(content);

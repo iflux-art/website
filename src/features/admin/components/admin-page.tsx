@@ -77,7 +77,7 @@ const SearchFilter = ({
             <SelectTrigger className="w-full">
               <SelectValue placeholder="所有分类" />
             </SelectTrigger>
-            <SelectContent className="z-50 max-h-[300px]">
+            <SelectContent className="z-50 max-h-[300px] bg-popover/100">
               <SelectItem value="all">所有分类</SelectItem>
               {categories.map((category: LinksCategory) => (
                 <div key={category.id}>

@@ -106,8 +106,13 @@ function writeItems(items: Item[]): void {
 
   // 分组项目
   items.forEach(item => {
-    if (categorizedItems[item.category]) {
-      categorizedItems[item.category].push(item);
+    // 添加更严格的空值检查
+    if (item.category && Object.hasOwn(categorizedItems, item.category)) {
+      // 确保 categorizedItems[item.category] 存在且不为 undefined
+      const categoryArray = categorizedItems[item.category];
+      if (categoryArray) {
+        categoryArray.push(item);
+      }
     }
   });
 
@@ -188,23 +193,41 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
     throw new Error("Links item not found");
   }
 
-  if (updates.url && updates.url !== items[itemIndex].url) {
-    const existingItem = items.find(item => item.url === updates.url && item.id !== id);
-    if (existingItem) {
-      throw new Error("URL already exists");
+  // 添加边界检查
+  if (itemIndex >= 0 && itemIndex < items.length && items[itemIndex]) {
+    // 添加空值检查
+    if (updates.url && items[itemIndex] && updates.url !== items[itemIndex].url) {
+      const existingItem = items.find(item => item.url === updates.url && item.id !== id);
+      if (existingItem) {
+        throw new Error("URL already exists");
+      }
     }
+
+    const updatedItem: Item = {
+      // 从 items[itemIndex] 中提取所有属性，然后覆盖需要更新的属性
+      ...items[itemIndex],
+      ...updates,
+      // 确保必要的属性有默认值
+      id: items[itemIndex]?.id ?? "",
+      title: items[itemIndex]?.title ?? "",
+      description: items[itemIndex]?.description ?? "",
+      url: items[itemIndex]?.url ?? "",
+      icon: items[itemIndex]?.icon ?? "",
+      iconType: items[itemIndex]?.iconType,
+      tags: items[itemIndex]?.tags ?? [],
+      featured: items[itemIndex]?.featured ?? false,
+      category: items[itemIndex]?.category ?? "development",
+      createdAt: items[itemIndex]?.createdAt ?? new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    items[itemIndex] = updatedItem;
+    writeItems(items);
+
+    return updatedItem;
   }
 
-  const updatedItem: Item = {
-    ...items[itemIndex],
-    ...updates,
-    updatedAt: new Date().toISOString(),
-  };
-
-  items[itemIndex] = updatedItem;
-  writeItems(items);
-
-  return updatedItem;
+  throw new Error("Links item not found");
 }
 
 /**
@@ -229,7 +252,7 @@ export function getCategories(): Category[] {
   const items = readItems();
   return categories.map(cat => ({
     ...cat,
-    count: items.filter(item => item.category === cat.id).length,
+    count: items.filter(item => item.category && item.category === cat.id).length,
   }));
 }
 
@@ -237,9 +260,12 @@ export function getAllTags(): string[] {
   const items = readItems();
   const tags = new Set<string>();
   items.forEach(item => {
-    item.tags.forEach(tag => {
-      tags.add(tag);
-    });
+    // 添加空值检查
+    if (item.tags) {
+      item.tags.forEach(tag => {
+        tags.add(tag);
+      });
+    }
   });
   return Array.from(tags).sort();
 }

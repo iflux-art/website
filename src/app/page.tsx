@@ -29,10 +29,6 @@ export default function Home() {
     <div className="flex h-full flex-col">
       {/* Hero区域 */}
       <HeroSection />
-
-      {/* 可以在这里添加更多内容区块 */}
-      {/* 例如：精选文章、热门链接、功能介绍等 */}
-      {/* 如果需要添加其他内容，可以用 PageContainer 包装 */}
     </div>
   );
 }

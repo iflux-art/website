@@ -18,7 +18,9 @@ export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogP
       });
 
       if (!response.ok) {
-        const errorData: { error?: string } = (await response.json()) as { error?: string };
+        const errorData: { error?: string } = (await response.json()) as {
+          error?: string;
+        };
         throw new Error(errorData.error ?? "Failed to add item");
       }
 

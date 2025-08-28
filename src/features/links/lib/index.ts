@@ -290,7 +290,9 @@ async function loadSubCategoryItems(
  */
 async function loadCategoryWithChildren(
   categoryId: string,
-  categoryInfo: { children: Record<string, { file: () => Promise<{ default: unknown[] } | null> }> }
+  categoryInfo: {
+    children: Record<string, { file: () => Promise<{ default: unknown[] } | null> }>;
+  }
 ): Promise<LinksItem[]> {
   const items: LinksItem[] = [];
 

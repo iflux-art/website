@@ -6,12 +6,19 @@
 // 布局结构组件
 export { AppGrid } from "./app-grid";
 export { PageContainer, type PageContainerProps } from "./page-container";
-export { ThreeColumnGrid, type ThreeColumnGridProps } from "./three-column-grid";
+export {
+  ThreeColumnGrid,
+  type ThreeColumnGridProps,
+} from "./three-column-grid";
 export {
   ThreeColumnLayout,
   type ThreeColumnLayoutProps,
   type SidebarConfig,
 } from "./three-column-layout";
+
+// 新增的多布局组件和响应式网格组件
+export { MultiLayout, ThreeColumnLayout as MultiColumnLayout } from "./multi-layout";
+export { ResponsiveGrid, ThreeColumnGrid as FlexibleGrid } from "./responsive-grid";
 
 // 状态和错误处理
 export { ProgressBarLoading } from "./progress-bar-loading";
@@ -23,7 +30,12 @@ export { Breadcrumb } from "./breadcrumb";
 export { Sidebar, SidebarWrapper } from "./sidebar";
 
 // 配置信息
-export { NAV_ITEMS, NAV_PATHS, NAV_DESCRIPTIONS, ADMIN_MENU_ITEMS } from "./navbar/nav-config";
+export {
+  NAV_ITEMS,
+  NAV_PATHS,
+  NAV_DESCRIPTIONS,
+  ADMIN_MENU_ITEMS,
+} from "./navbar/nav-config";
 
 // 客户端初始化组件
 export { InitClient } from "./init-client";

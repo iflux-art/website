@@ -182,7 +182,10 @@ describe("useLinksDataState", () => {
     const { result } = renderHook(() => useLinksDataState());
 
     expect(result.current.items).toHaveLength(1);
-    expect(result.current.items[0].category).toBe("test");
+    // 修复：添加边界检查
+    if (result.current.items.length > 0 && result.current.items[0]) {
+      expect(result.current.items[0].category).toBe("test");
+    }
   });
 
   it("should handle category click", () => {

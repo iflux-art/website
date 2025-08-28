@@ -8,7 +8,9 @@ export const AdminActions = ({
   actions,
   className = "",
 }: {
-  actions: (Omit<AdminAction, "icon"> & { icon?: React.ComponentType<{ className?: string }> })[];
+  actions: (Omit<AdminAction, "icon"> & {
+    icon?: React.ComponentType<{ className?: string }>;
+  })[];
   className?: string;
 }) => (
   <div className={`flex flex-wrap gap-2 ${className}`}>

@@ -1,5 +1,5 @@
 /**
- * Admin 功能 hooks 统一导出
+ * 管理后台相关钩子函数导出
  */
 
-export { useDebouncedValue } from "./use-debounced-value";
+export { useDashboardStats } from "./use-dashboard-stats";

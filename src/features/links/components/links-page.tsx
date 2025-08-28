@@ -11,13 +11,10 @@ import { useTagAnchors } from "@/features/links/hooks/use-tag-anchors";
  * 处理链接数据获取和交互逻辑
  */
 export const LinksPageContainer = () => {
-  const { items, categories, selectedCategory, filteredItems, handleCategoryClick } =
-    useLinksData();
+  const { categories, selectedCategory, filteredItems, handleCategoryClick } = useLinksData();
 
   // 生成标签锚点数据供 TableOfContents 使用 - 使用 useMemo 优化性能
   const tagAnchors = useTagAnchors(filteredItems);
-
-  if (!items.length) return null;
 
   // 左侧边栏内容
   const leftSidebar = (
@@ -35,7 +32,11 @@ export const LinksPageContainer = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
+      <ThreeColumnLayout
+        leftSidebar={leftSidebar}
+        rightSidebar={rightSidebar}
+        layout="double-sidebar"
+      >
         <LinksContent items={filteredItems} selectedCategory={selectedCategory} />
       </ThreeColumnLayout>
     </div>

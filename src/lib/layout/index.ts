@@ -14,4 +14,8 @@ export {
 } from "./layout-utils";
 
 // 从 responsive-utils 导出
-export { getResponsiveClasses, gridColsMap, gridGapMap } from "./responsive-utils";
+export {
+  getResponsiveClasses,
+  gridColsMap,
+  gridGapMap,
+} from "./responsive-utils";

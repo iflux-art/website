@@ -15,7 +15,11 @@ export { LinksPageContainer } from "./links-page";
 export { ProfilePageContainer } from "./profile-page-container";
 
 // 表格配置
-export { getTableColumns, getTableActions, getPageActions } from "./links/table-config";
+export {
+  getTableColumns,
+  getTableActions,
+  getPageActions,
+} from "./links/table-config";
 
 // 导出类型
 export type { LinksContentProps } from "./links/links-content";

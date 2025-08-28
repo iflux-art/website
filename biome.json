@@ -219,7 +219,8 @@
         "useNamespaceKeyword": "error",
         "noUnknownAtRules": "off"
       }
-    }
+    },
+    "includes": ["**/*.{ts,tsx}"]
   },
   "formatter": {
     "enabled": true,

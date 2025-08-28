@@ -34,9 +34,15 @@ function cleanupExpiredCache() {
 
   // 如果缓存大小超过限制，清理最早的缓存
   if (docContentCache.size > MAX_CACHE_SIZE) {
-    const oldestKey = [...docCacheTimestamp.entries()].sort((a, b) => a[1] - b[1])[0][0];
-    docContentCache.delete(oldestKey);
-    docCacheTimestamp.delete(oldestKey);
+    const sortedEntries = [...docCacheTimestamp.entries()].sort((a, b) => a[1] - b[1]);
+    // 修复：添加边界检查
+    if (sortedEntries.length > 0 && sortedEntries[0]) {
+      const oldestKey = sortedEntries[0][0];
+      if (oldestKey) {
+        docContentCache.delete(oldestKey);
+        docCacheTimestamp.delete(oldestKey);
+      }
+    }
   }
 }
 
@@ -139,7 +145,11 @@ function getNavigationDocs(
     const nextDoc =
       currentIndex < flattenedDocs.length - 1 ? flattenedDocs[currentIndex + 1] : null;
 
-    return { prevDoc, nextDoc };
+    // 修复：确保返回值符合类型要求
+    return {
+      prevDoc: prevDoc !== undefined ? prevDoc : null,
+      nextDoc: nextDoc !== undefined ? nextDoc : null,
+    };
   }
 }
 
@@ -179,8 +189,10 @@ export function getDocContent(slug: string[]): DocContentResult {
 
   const wordCount = countWords(originalContent);
   const { headings } = extractHeadings(originalContent);
-  const topLevelCategorySlug = slug[0];
-  const flattenedDocs = getFlattenedDocsOrder(topLevelCategorySlug);
+  // 修复：添加空值检查并提供默认值
+  const topLevelCategorySlug = slug[0] ?? "";
+  // 修复：添加空值检查
+  const flattenedDocs = topLevelCategorySlug ? getFlattenedDocsOrder(topLevelCategorySlug) : [];
   const { prevDoc, nextDoc } = getNavigationDocs(isIndexPage, actualSlugForNav, flattenedDocs);
 
   const result: DocContentResult = {
@@ -199,18 +211,22 @@ export function getDocContent(slug: string[]): DocContentResult {
       toc: frontmatter.toc as boolean | undefined,
     },
     headings,
-    prevDoc,
-    nextDoc,
+    // 修复：添加空值检查
+    prevDoc: prevDoc ?? null,
+    nextDoc: nextDoc ?? null,
     breadcrumbs: [],
     mdxContent: originalContent,
     wordCount,
     date,
     update: updatedAt,
-    relativePathFromTopCategory: path
-      .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
-      .replace(/\\/g, "/")
-      .replace(/\.(mdx|md)$/, ""),
-    topLevelCategorySlug,
+    relativePathFromTopCategory: topLevelCategorySlug
+      ? path
+          .relative(path.join(docsContentDir, topLevelCategorySlug), filePath)
+          .replace(/\\/g, "/")
+          .replace(/\.(mdx|md)$/, "")
+      : "",
+    // 修复：添加空值检查
+    topLevelCategorySlug: topLevelCategorySlug ?? "",
     isIndexPage,
   };
 

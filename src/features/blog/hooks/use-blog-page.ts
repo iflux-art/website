@@ -166,7 +166,7 @@ export function useBlogPage(): UseBlogPageReturn {
         const parsed = JSON.parse(cached);
         // 检查缓存是否过期（5分钟）
         if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
-          return parsed.relatedPosts;
+          return parsed.relatedPosts as UseBlogPageReturn["relatedPosts"];
         }
       }
     } catch {
@@ -175,10 +175,10 @@ export function useBlogPage(): UseBlogPageReturn {
 
     // 重新计算相关文章
     const related = posts.slice(0, 10).map(post => ({
-      title: post.title,
-      href: `/blog/${post.slug}`,
+      title: post.title ?? "",
+      href: `/blog/${post.slug ?? ""}`,
       category: post.category,
-      slug: post.slug.split("/"),
+      slug: post.slug ? post.slug.split("/") : [],
     }));
 
     // 保存到缓存
@@ -207,7 +207,7 @@ export function useBlogPage(): UseBlogPageReturn {
         const parsed = JSON.parse(cached);
         // 检查缓存是否过期（5分钟）
         if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
-          return parsed.latestPosts;
+          return parsed.latestPosts as UseBlogPageReturn["latestPosts"];
         }
       }
     } catch {
@@ -219,8 +219,8 @@ export function useBlogPage(): UseBlogPageReturn {
       .filter(post => post.date)
       .slice(0, 5)
       .map(post => ({
-        title: post.title,
-        href: `/blog/${post.slug}`,
+        title: post.title ?? "",
+        href: `/blog/${post.slug ?? ""}`,
         date: post.date?.toString(),
         category: post.category,
       }));

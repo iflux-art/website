@@ -18,7 +18,7 @@ const FriendsPage = () => {
   // 如果没有友链数据，显示空状态
   if (!hasFriendsData(friendsItems)) {
     return (
-      <PageContainer config={{ layout: "full-width" }}>
+      <PageContainer config={{ layout: "narrow" }}>
         <div className="flex min-h-[50vh] items-center justify-center">
           <div className="text-center">
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight lg:text-5xl">友情链接</h1>
@@ -38,7 +38,7 @@ const FriendsPage = () => {
   }
 
   return (
-    <PageContainer config={{ layout: "full-width" }}>
+    <PageContainer config={{ layout: "narrow" }}>
       <div className="mt-4">
         {/* 友链列表网格 */}
         <AppGrid columns={5} className="items-stretch">

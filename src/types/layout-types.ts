@@ -4,8 +4,10 @@ import type { ReactNode } from "react";
  * 页面布局类型枚举
  */
 export type PageLayoutType =
-  | "three-column" // 三栏布局：左侧边栏 + 主内容 + 右侧边栏（导航、博客、文档页面）
-  | "full-width"; // 全屏布局：铺满整个容器（首页、友链、关于、管理后台）;
+  | "narrow" // 窄布局：占中间的6列（友链、关于页面）
+  | "single-sidebar" // 单侧栏布局：左侧栏占3列，右侧主内容区占9列（后台管理系统）
+  | "double-sidebar" // 双侧栏布局：左右侧栏各占3列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
+  | "full-width"; // 宽布局：占满全部的12列（首页）
 
 /**
  * 页面容器配置接口
@@ -156,6 +158,8 @@ export interface AppGridProps {
   className?: string;
   columns?: 1 | 2 | 3 | 4 | 5;
   gap?: "small" | "default" | "large";
+  rowGap?: string; // 新增：行间距
+  columnGap?: string; // 新增：列间距
 }
 
 /**

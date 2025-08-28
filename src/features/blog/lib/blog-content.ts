@@ -9,8 +9,18 @@ export function getBlogContent(slug: string[]): {
   content: string;
   frontmatter: BlogFrontmatter;
   headings: { level: number; text: string; id: string }[];
-  relatedPosts: { title: string; href: string; category?: string; slug: string[] }[];
-  latestPosts: { title: string; href: string; date?: string; category?: string }[];
+  relatedPosts: {
+    title: string;
+    href: string;
+    category?: string;
+    slug: string[];
+  }[];
+  latestPosts: {
+    title: string;
+    href: string;
+    date?: string;
+    category?: string;
+  }[];
   allTags: { name: string; count: number }[];
   allCategories: { name: string; count: number }[];
 } {

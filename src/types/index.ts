@@ -1,5 +1,10 @@
 // 内容类型
-export type { Url, BaseFrontmatter, BaseContent, BaseCategory } from "./content-types";
+export type {
+  Url,
+  BaseFrontmatter,
+  BaseContent,
+  BaseCategory,
+} from "./content-types";
 
 // 布局相关类型
 export type {

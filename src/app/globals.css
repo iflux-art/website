@@ -9,7 +9,7 @@
  */
 
 :root {
-  --radius: 0.65rem;
+  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -94,15 +94,11 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* 主要界面颜色 */
+  /* 颜色变量映射 */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  /* 主题颜色 */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -112,13 +108,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-
-  /* 边框和输入框 */
   --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
 
   /* 图表颜色 */
@@ -161,33 +151,22 @@
       monospace;
   }
 
-  .scrollbar-hide {
+  /* 隐藏滚动条但内容可滚动 */
+  .scrollbar-hide,
+  .hide-scrollbar {
     scrollbar-width: none;
     /* Firefox */
     -ms-overflow-style: none;
     /* IE and Edge */
   }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari, Opera */
-  }
-
-  /* 隐藏滚动条但内容可滚动 */
-  .hide-scrollbar {
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* IE 10+ */
-  }
-
+  .scrollbar-hide::-webkit-scrollbar,
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
     /* Chrome/Safari/Webkit */
   }
 
   /* 自定义 Twikoo 评论区样式 */
-  #twikoo .tk-comments-container:not(:has(.tk-comment)),
   #twikoo .tk-footer {
     display: none;
   }

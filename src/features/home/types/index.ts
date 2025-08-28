@@ -11,9 +11,3 @@ export interface SiteStats {
   loading: boolean;
   error: string | null;
 }
-
-// AnimatedNumber 组件 Props 类型
-export interface AnimatedNumberProps {
-  value: number;
-  suffix?: string;
-}

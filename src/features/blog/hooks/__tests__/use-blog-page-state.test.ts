@@ -170,7 +170,10 @@ describe("useBlogPageState", () => {
     void result;
 
     expect(result.current.filteredPosts).toHaveLength(1);
-    expect(result.current.filteredPosts[0].category).toBe("test");
+    // 修复：添加边界检查
+    if (result.current.filteredPosts.length > 0 && result.current.filteredPosts[0]) {
+      expect(result.current.filteredPosts[0].category).toBe("test");
+    }
   });
 
   it("should filter posts by tag", () => {
@@ -203,6 +206,9 @@ describe("useBlogPageState", () => {
     void result;
 
     expect(result.current.filteredPosts).toHaveLength(1);
-    expect(result.current.filteredPosts[0].tags).toContain("tag1");
+    // 修复：添加边界检查
+    if (result.current.filteredPosts.length > 0 && result.current.filteredPosts[0]) {
+      expect(result.current.filteredPosts[0].tags).toContain("tag1");
+    }
   });
 });

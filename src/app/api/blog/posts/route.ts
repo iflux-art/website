@@ -12,7 +12,7 @@ const generateSlug = (relativePath: string): string => {
 
   if (pathParts.length === 1) {
     // 直接在blog目录下的文件
-    return pathParts[0].replace(/\.(mdx|md)$/, "");
+    return pathParts[0]?.replace(/\.(mdx|md)$/, "") ?? "";
   } else {
     // 在子目录中的文件
     const fileName = pathParts.pop() ?? "";

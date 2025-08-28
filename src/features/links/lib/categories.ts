@@ -69,7 +69,9 @@ async function processCategoryDirectory(
   categories: string[]
 ): Promise<void> {
   const categoryDirPath = path.join(linksDir, categoryName);
-  const categoryEntries = await fs.readdir(categoryDirPath, { withFileTypes: true });
+  const categoryEntries = await fs.readdir(categoryDirPath, {
+    withFileTypes: true,
+  });
   const categoryDirs = categoryEntries.filter(entry => entry.isDirectory());
 
   // 使用 Promise.all 并行处理所有子目录
@@ -113,7 +115,8 @@ export async function loadCategoryData(category: string): Promise<LinksItem[]> {
     if (category.includes("/")) {
       // 子分类文件 - 正确构建路径
       const parts = category.split("/");
-      if (parts.length === 2) {
+      // 修复：添加边界检查
+      if (parts.length === 2 && parts[0] && parts[1]) {
         filePath = path.join(linksDir, "category", parts[0], `${parts[1]}.json`);
       } else {
         // 向后兼容旧的路径结构
@@ -140,7 +143,8 @@ export async function saveCategoryData(category: string, data: LinksItem[]): Pro
     if (category.includes("/")) {
       // 子分类文件 - 正确构建路径
       const parts = category.split("/");
-      if (parts.length === 2) {
+      // 修复：添加边界检查
+      if (parts.length === 2 && parts[0] && parts[1]) {
         filePath = path.join(linksDir, "category", parts[0], `${parts[1]}.json`);
       } else {
         // 向后兼容旧的路径结构

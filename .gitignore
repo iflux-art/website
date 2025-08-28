@@ -41,6 +41,7 @@ pnpm-debug.log*
 .vscode/
 !.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/launch.json
 
 # 系统文件
 .DS_Store
@@ -60,6 +61,9 @@ Thumbs.db
 
 # Next.js
 .next/cache/
+.next/build-manifest.json
+.next/react-loadable-manifest.json
+.next/server/middleware-manifest.json
 
 # TypeScript
 *.tsbuildinfo
@@ -96,7 +100,6 @@ next-env.d.ts
 **/*.mov
 **/*.avi
 
-# 锁定文件 (根据项目需要选择保留一个)
+# 锁定文件 (保留 pnpm-lock.yaml，因为项目使用 pnpm)
 package-lock.json
 yarn.lock
-pnpm-lock.yaml

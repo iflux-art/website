@@ -160,7 +160,8 @@ export function validateRequiredFields(
   const missingFields: string[] = [];
 
   for (const field of requiredFields) {
-    if (!data[field] || (typeof data[field] === "string" && !data[field].toString().trim())) {
+    // 修复：添加更严格的类型检查
+    if (!data[field] || (typeof data[field] === "string" && !data[field]?.toString().trim())) {
       missingFields.push(field);
     }
   }

@@ -38,7 +38,7 @@ export const HamburgerMenu = () => {
           <Menu className="h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-full max-w-md p-4">
+      <DialogContent className="w-full max-w-md p-4 max-h-[85vh] overflow-y-auto scrollbar-hide">
         <DialogHeader className="mb-4">
           <DialogTitle className="sr-only">导航菜单</DialogTitle>
         </DialogHeader>

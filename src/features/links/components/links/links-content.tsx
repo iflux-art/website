@@ -49,7 +49,7 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
   }, [items]);
 
   // 生成锚点 ID
-  if (groupedItems.length === 0) {
+  if (!items || items.length === 0) {
     return (
       <div className={cn("flex items-center justify-center py-12", className)}>
         <div className="text-center">

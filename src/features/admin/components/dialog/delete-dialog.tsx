@@ -30,7 +30,9 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
       });
 
       if (!response.ok) {
-        const errorData: { error?: string } = (await response.json()) as { error?: string };
+        const errorData: { error?: string } = (await response.json()) as {
+          error?: string;
+        };
         throw new Error(errorData.error ?? "Failed to delete item");
       }
 

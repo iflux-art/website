@@ -111,7 +111,11 @@ const DocPage = async ({ params }: { params: Promise<DocPageParams> }) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
+      <ThreeColumnLayout
+        leftSidebar={leftSidebar}
+        rightSidebar={rightSidebar}
+        layout="double-sidebar"
+      >
         {/* 文档主内容 */}
         <div className="space-y-6">
           {/* 文档内容展示 */}

@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/utils";
-import { FileText } from "lucide-react";
+import { Folder } from "lucide-react";
 import { DocsSidebarWrapper } from "./docs-sidebar-wrapper";
 
 export interface DocsSidebarCardProps {
@@ -31,7 +31,7 @@ export const DocsSidebarCard = ({
     {showHeader && (
       <CardHeader className="pt-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-foreground">
-          <FileText className="h-3.5 w-3.5 text-primary" />
+          <Folder className="h-3.5 w-3.5 text-primary" />
           文档导航
         </CardTitle>
       </CardHeader>

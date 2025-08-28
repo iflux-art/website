@@ -1,2 +1,4 @@
-export { AnimatedNumber } from "./animated-number";
+/**
+ * 首页组件导出
+ */
 export { HeroSection } from "./hero-section";

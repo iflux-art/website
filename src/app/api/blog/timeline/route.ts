@@ -97,9 +97,11 @@ const findPostsInDirectory = (
  */
 const sortPostsByYear = (postsByYear: Record<string, BlogPost[]>): void => {
   Object.keys(postsByYear).forEach(year => {
-    postsByYear[year].sort(
-      (a, b) => new Date(b.date ?? "").getTime() - new Date(a.date ?? "").getTime()
-    );
+    // 修复：添加类型检查以确保 postsByYear[year] 存在
+    const posts = postsByYear[year];
+    if (posts) {
+      posts.sort((a, b) => new Date(b.date ?? "").getTime() - new Date(a.date ?? "").getTime());
+    }
   });
 };
 

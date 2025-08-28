@@ -10,11 +10,20 @@
 export type { SearchResult, SearchOptions, SearchResponse } from "./types";
 
 // 客户端搜索引擎导出
-export { performSearch, getSearchSuggestions, highlightSearchTerm } from "./lib/search-engine";
+export {
+  performSearch,
+  getSearchSuggestions,
+  highlightSearchTerm,
+} from "./lib/search-engine";
 
 // Hooks 导出
 export { useSearch } from "./hooks/use-search";
 export { useSearchState } from "./hooks/use-search-state";
 
 // 组件导出
-export { SearchDialog, SearchBar, SearchResults, SearchButton } from "./components";
+export {
+  SearchDialog,
+  SearchBar,
+  SearchResults,
+  SearchButton,
+} from "./components";

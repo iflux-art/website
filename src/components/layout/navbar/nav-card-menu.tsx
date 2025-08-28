@@ -34,10 +34,12 @@ const NavCards = ({ onClose, className }: NavProps) => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => {
           const Icon: LucideIcon = item.icon;
+          // 修复：添加空值检查并提供默认值
+          const href = NAV_PATHS[item.key] ?? "/";
           return (
             <PrefetchLink
               key={item.key}
-              href={NAV_PATHS[item.key]}
+              href={href}
               prefetchStrategy="hover"
               prefetchDelay={150}
               onClick={onClose}

@@ -1,104 +1,57 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  logging: {
-    level: "verbose",
-  },
-  // 基本配置
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+	logging: {
+		level: "verbose",
+	},
+	// 基本配置
+	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 
-  // 配置外部包
-  serverExternalPackages: [],
+	// TypeScript 错误检查配置
+	typescript: {
+		ignoreBuildErrors: false,
+	},
 
-  // TypeScript 错误检查配置
-  typescript: {
-    ignoreBuildErrors: false,
-  },
+	// 实验性功能
+	experimental: {
+		// 优化页面加载
+		optimisticClientCache: true,
+	},
 
-  // 实验性功能
-  experimental: {
-    // 优化构建输出 - 添加所有可能影响性能的包
-    optimizePackageImports: [
-      "lucide-react",
-      "@radix-ui/react-dialog",
-      "@radix-ui/react-collapsible",
-      "@radix-ui/react-slot",
-    ],
-    // 优化页面加载
-    optimisticClientCache: true,
-    // Turbopack 相关实验性功能
-    webpackBuildWorker: true, // 启用 webpack 构建工作器，与 Turbopack 配合使用
-  },
+	// 图片优化配置
+	images: {
+		formats: ["image/avif", "image/webp"],
+		deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+		imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+		minimumCacheTTL: 60 * 60 * 24, // 24 小时
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "**",
+			},
+		],
+		dangerouslyAllowSVG: true,
+		contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+	},
 
-  // 图片优化配置
-  images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60 * 60 * 24, // 24 小时
-    disableStaticImages: false,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "img.dava.cc",
-        pathname: "/img/**",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        pathname: "/**",
-      },
-    ],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-  },
+	// 启用压缩
+	compress: true,
 
-  // 启用压缩
-  compress: true,
+	// 强制静态生成配置
+	trailingSlash: true,
 
-  // 模块化导入配置
-  modularizeImports: {
-    "lucide-react": {
-      transform: "lucide-react/dist/esm/icons/{{kebabCase member}}",
-    },
-    "@radix-ui/react-icons": {
-      transform: "@radix-ui/react-icons/dist/{{kebabCase member}}",
-    },
-  },
-
-  // 增加全局 CSP header 以允许 va.vercel-scripts.com 和 Web Workers
-  headers: async () => [
-    {
-      source: "/(.*)",
-      headers: [
-        {
-          key: "Content-Security-Policy",
-          value:
-            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; worker-src 'self' blob:;",
-        },
-      ],
-    },
-  ],
-
-  // 强制静态生成配置
-  trailingSlash: true,
-
-  // 优化函数大小
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // 排除大文件从服务端包中
-      config.externals = config.externals || [];
-      config.externals.push({
-        "src/config/links/items.json": "commonjs src/config/links/items.json",
-        "src/config/links/categories.json": "commonjs src/config/links/categories.json",
-      });
-    }
-    return config;
-  },
+	// 优化函数大小
+	webpack: (config, { isServer }) => {
+		if (isServer) {
+			// 排除大文件从服务端包中
+			config.externals = config.externals || [];
+			config.externals.push({
+				"src/config/links/items.json": "commonjs src/config/links/items.json",
+				"src/config/links/categories.json":
+					"commonjs src/config/links/categories.json",
+			});
+		}
+		return config;
+	},
 };
 
 // 导出配置

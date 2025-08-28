@@ -20,7 +20,12 @@ export interface DocsGlobalStructureState {
   // 派生状态：结构中的分类列表
   categories: GlobalDocsStructure["categories"] | null;
   // 派生状态：结构中的所有文档项
-  allDocs: Array<{ id: string; title: string; path: string; category: string }> | null;
+  allDocs: Array<{
+    id: string;
+    title: string;
+    path: string;
+    category: string;
+  }> | null;
 }
 
 // 全局文档结构状态管理动作
@@ -55,12 +60,22 @@ export const useDocsGlobalStructureStore = create<DocsGlobalStructureStore>((set
     const isCacheValid = structure !== null && Date.now() - _get().timestamp < CACHE_VALIDITY_MS;
 
     let categories = null;
-    let allDocs: Array<{ id: string; title: string; path: string; category: string }> | null = null;
+    let allDocs: Array<{
+      id: string;
+      title: string;
+      path: string;
+      category: string;
+    }> | null = null;
 
     if (structure) {
       categories = structure.categories;
 
-      const docs: Array<{ id: string; title: string; path: string; category: string }> = [];
+      const docs: Array<{
+        id: string;
+        title: string;
+        path: string;
+        category: string;
+      }> = [];
       structure.categories.forEach(category => {
         category.docs.forEach(item => {
           // SidebarItem 可能没有 id 属性，使用 title 作为 id

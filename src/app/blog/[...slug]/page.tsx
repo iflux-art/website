@@ -78,7 +78,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     return (
       <div className="min-h-screen bg-background">
-        <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
+        <ThreeColumnLayout
+          leftSidebar={leftSidebar}
+          rightSidebar={rightSidebar}
+          layout="double-sidebar"
+        >
           <ContentDisplay
             contentType="blog"
             title={title}

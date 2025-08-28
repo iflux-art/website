@@ -27,7 +27,12 @@ export interface UseGlobalDocsStateResult {
   /** 文档分类 */
   categories: GlobalDocsStructure["categories"] | null;
   /** 所有文档 */
-  allDocs: Array<{ id: string; title: string; path: string; category: string }> | null;
+  allDocs: Array<{
+    id: string;
+    title: string;
+    path: string;
+    category: string;
+  }> | null;
 }
 
 /**

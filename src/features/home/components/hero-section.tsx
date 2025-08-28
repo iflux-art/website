@@ -1,64 +1,31 @@
 "use client";
 
 import { SITE_METADATA } from "@/config";
-import { AnimatedNumber } from "@/features/home/components/animated-number";
-
 import { Button } from "@/components/ui/button";
-import { useSiteStats } from "@/features/home/hooks/use-site-stats";
 import { Sparkles, Target, Zap } from "lucide-react";
 import Link from "next/link";
 
 // 背景装饰组件
 const BackgroundDecorations = () => (
   <>
-    <div className="bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
-    <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-20 blur-3xl" />
+    <div className="bg-grid-white/[0.05] dark:bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
+    <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/30 via-transparent to-primary/30 dark:from-primary/20 dark:to-primary/20 opacity-30 dark:opacity-20 blur-3xl" />
     <div
-      className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/10 blur-xl"
+      className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/25 dark:bg-primary/10 blur-xl"
       style={{ animationDelay: "0s", animationDuration: "3s" }}
     />
     <div
-      className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/10 blur-xl"
+      className="absolute top-40 right-32 h-16 w-16 animate-bounce rounded-full bg-purple-500/25 dark:bg-purple-500/10 blur-xl"
       style={{ animationDelay: "1s", animationDuration: "4s" }}
     />
     <div
-      className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/10 blur-xl"
+      className="absolute bottom-32 left-1/4 h-24 w-24 animate-bounce rounded-full bg-blue-500/25 dark:bg-blue-500/10 blur-xl"
       style={{ animationDelay: "2s", animationDuration: "5s" }}
     />
   </>
 );
 
-// 统计卡片组件
-interface StatCardProps {
-  label: string;
-  value: number;
-  loading: boolean;
-}
-
-const StatCard = ({ label, value, loading }: StatCardProps) => (
-  <div className="group text-center">
-    <div className="mb-2 text-3xl font-bold text-primary lg:text-4xl">
-      {loading ? (
-        <div className="mx-auto h-8 w-12 animate-pulse rounded bg-muted" />
-      ) : (
-        <AnimatedNumber value={value} suffix="+" />
-      )}
-    </div>
-    <div className="text-sm font-medium text-muted-foreground lg:text-base">{label}</div>
-  </div>
-);
-
 export const HeroSection = () => {
-  const { blogCount, docCount, linkCount, friendCount, loading } = useSiteStats();
-
-  // 统计数据数组
-  const statsData = [
-    { label: "文章", value: blogCount },
-    { label: "技术文档", value: docCount },
-    { label: "实用导航", value: linkCount },
-    { label: "友情链接", value: friendCount },
-  ];
-
   return (
     <section className="relative flex min-h-[calc(100vh-8.5rem)] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
       {/* 背景装饰 */}
@@ -86,7 +53,7 @@ export const HeroSection = () => {
           <div className="mb-6 flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button size="lg" className="group px-4 py-4 text-lg" asChild>
               <Link href="/blog">
-                <Zap className="h-5 w-5" />
+                <Zap className="mr-2 h-5 w-5" />
                 开始探索
               </Link>
             </Button>
@@ -97,24 +64,10 @@ export const HeroSection = () => {
               asChild
             >
               <Link href="/docs">
-                <Target className="h-5 w-5" />
+                <Target className="mr-2 h-5 w-5" />
                 查看文档
               </Link>
             </Button>
-          </div>
-
-          {/* 实时统计数据 */}
-          <div className="space-y-2">
-            <div className="grid grid-cols-4">
-              {statsData.map(stat => (
-                <StatCard
-                  key={stat.label}
-                  label={stat.label}
-                  value={stat.value}
-                  loading={loading}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>

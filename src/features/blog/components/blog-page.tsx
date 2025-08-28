@@ -56,7 +56,11 @@ export const BlogPageContainer = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ThreeColumnLayout leftSidebar={leftSidebar} rightSidebar={rightSidebar}>
+      <ThreeColumnLayout
+        leftSidebar={leftSidebar}
+        rightSidebar={rightSidebar}
+        layout="double-sidebar"
+      >
         <BlogListContent
           posts={filteredPosts}
           selectedCategory={category}

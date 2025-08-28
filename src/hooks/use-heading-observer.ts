@@ -69,7 +69,11 @@ export function useHeadingObserver(
       visibleHeadings.sort((a, b) => a.top - b.top);
 
       // 选择最上方的可见标题作为活动标题
-      setActiveId(visibleHeadings[0].id);
+      // 修复：添加空值检查
+      const firstVisibleHeading = visibleHeadings[0];
+      if (firstVisibleHeading) {
+        setActiveId(firstVisibleHeading.id);
+      }
     }, options);
 
     // 确保所有标题都有ID
