@@ -1,6 +1,6 @@
 import type { SEOPageOptions, SiteConfig } from "@/types";
 import type { Metadata } from "next";
-import { filterUndefinedValues } from "../../utils";
+import { filterUndefinedValues } from "@/utils/core/helpers";
 import { SITE_METADATA } from "@/config";
 
 /**

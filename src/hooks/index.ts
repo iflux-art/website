@@ -20,3 +20,11 @@ export { useMounted } from "./use-mounted";
 // ==================== 标题观察 Hooks ====================
 export { useHeadingObserver } from "./use-heading-observer";
 export type { Heading } from "@/types";
+
+// ==================== 性能监控 Hooks ====================
+export { usePerformanceTracking, useBasicPerformanceTracking } from "./use-performance-tracking";
+export type { WebVitalsMetrics, PerformanceData } from "./use-performance-tracking";
+
+// ==================== 错误追踪 Hooks ====================
+export { useErrorTracking, useErrorBoundaryTracking } from "./use-error-tracking";
+export type { ErrorReport, ErrorTrackingOptions } from "./use-error-tracking";

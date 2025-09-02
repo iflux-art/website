@@ -1,7 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { type NextRequest, NextResponse } from "next/server";
-import { loadCategoryData } from "@/features/links/lib/categories";
 
 // 动态检查分类是否存在
 async function categoryExists(category: string): Promise<boolean> {
@@ -25,7 +24,6 @@ async function categoryExists(category: string): Promise<boolean> {
   }
 }
 
-// biome-ignore lint/style/useNamingConvention: GET is a standard HTTP method name for Next.js API routes
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ category: string }> }
@@ -39,7 +37,13 @@ export async function GET(
       return NextResponse.json({ error: "Invalid category" }, { status: 400 });
     }
 
-    const items = await loadCategoryData(category);
+    // 构建文件路径
+    const filePath = path.join(process.cwd(), "src/content/links", `${category}.json`);
+
+    // 读取并解析JSON文件
+    const fileContent = await fs.readFile(filePath, "utf8");
+    const items = JSON.parse(fileContent);
+
     return NextResponse.json(items);
   } catch (error) {
     console.error("Error reading category:", error);

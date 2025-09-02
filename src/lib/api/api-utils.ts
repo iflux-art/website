@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isValidUrl as isValidUrlUtil } from "@/utils/validation";
 
 /**
  * API 错误类型
@@ -142,12 +143,7 @@ export const ApiErrors = {
  * URL 验证函数
  */
 export function isValidUrl(urlString: string): boolean {
-  try {
-    const url = new URL(urlString);
-    return ["http:", "https:"].includes(url.protocol);
-  } catch {
-    return false;
-  }
+  return isValidUrlUtil(urlString);
 }
 
 /**
@@ -187,42 +183,3 @@ export function withErrorHandling<T extends unknown[], R>(handler: (...args: T) 
     }
   };
 }
-
-/**
- * 内存缓存类
- */
-class MemoryCache {
-  private cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
-
-  set(key: string, data: unknown, ttl = 300000): void {
-    // 默认5分钟
-    this.cache.set(key, {
-      data,
-      timestamp: Date.now(),
-      ttl,
-    });
-  }
-
-  get<T = unknown>(key: string): T | null {
-    const item = this.cache.get(key);
-
-    if (!item) return null;
-
-    if (Date.now() - item.timestamp > item.ttl) {
-      this.cache.delete(key);
-      return null;
-    }
-
-    return item.data as T;
-  }
-
-  clear(): void {
-    this.cache.clear();
-  }
-
-  delete(key: string): boolean {
-    return this.cache.delete(key);
-  }
-}
-
-export const apiCache = new MemoryCache();

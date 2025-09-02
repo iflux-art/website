@@ -21,12 +21,17 @@ import {
 } from "@/features/links/components";
 import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksItem, LinksSubCategory } from "@/features/links/types";
+import type { SearchFilterProps } from "@/types/props-types";
 import { Search } from "lucide-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useAdminStore } from "@/stores";
 
-// 页面标题组件
+/**
+ * 页面标题组件 Props
+ * 显示页面标题和项目计数
+ */
 interface PageHeaderProps {
+  /** 项目总数 */
   itemCount: number;
 }
 
@@ -39,22 +44,19 @@ const PageHeader = ({ itemCount }: PageHeaderProps) => (
   </div>
 );
 
-// 搜索和过滤组件
-interface SearchFilterProps {
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
-  selectedCategory: string;
-  onCategoryChange: (value: string) => void;
-  categories: LinksCategory[];
-}
+/**
+ * 搜索和过滤组件 Props (已移除，使用通用类型)
+ */
 
-const SearchFilter = ({
-  searchTerm,
-  onSearchChange,
-  selectedCategory,
-  onCategoryChange,
-  categories,
-}: SearchFilterProps) => (
+const SearchFilter = (
+  {
+    searchTerm,
+    onSearchChange,
+    selectedCategory,
+    onCategoryChange,
+    categories,
+  }: SearchFilterProps<LinksCategory> // 使用通用类型
+) => (
   <Card className="mb-6">
     <CardContent className="py-6">
       <div className="flex gap-4">
@@ -108,20 +110,30 @@ const SearchFilter = ({
 );
 
 /**
- * 过滤数据的自定义 hook
+ * 过滤链接项的自定义 hook
+ * 根据搜索词和分类筛选链接项
+ *
+ * @param items 链接项数组
+ * @param searchTerm 搜索词
+ * @param selectedCategory 选中的分类
+ * @returns 过滤后的链接项数组
  */
 const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCategory: string) => {
+  /** 防抖后的搜索词 */
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
 
+  /** 过滤后的链接项 */
   const filteredItems = useMemo(() => {
     // 如果没有搜索条件和分类筛选，直接返回原数据
     if (!(debouncedSearchTerm || selectedCategory)) {
       return items;
     }
 
+    /** 小写搜索词，用于不区分大小写的匹配 */
     const searchLower = debouncedSearchTerm.toLowerCase();
 
     return items.filter(item => {
+      /** 检查是否匹配搜索词 */
       const matchesSearch =
         !debouncedSearchTerm ||
         item.title.toLowerCase().includes(searchLower) ||
@@ -129,6 +141,7 @@ const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCatego
         item.url.toLowerCase().includes(searchLower) ||
         item.tags.some((tag: string) => tag.toLowerCase().includes(searchLower));
 
+      /** 检查是否匹配分类 */
       const matchesCategory = !selectedCategory || item.category === selectedCategory;
 
       return matchesSearch && matchesCategory;

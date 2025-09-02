@@ -1,0 +1,348 @@
+---
+title: 链接管理API接口
+description: 链接管理系统API接口详细说明
+date: 2025-08-29
+category: API
+tags:
+  - API
+  - 链接管理
+  - 接口文档
+---
+
+# 链接管理API接口
+
+链接管理API接口提供对分类书签、友情链接和个人社交资料等链接数据的访问能力。
+
+## 基础信息
+
+### 基础URL
+
+```
+/api/links
+```
+
+### 认证要求
+
+大部分接口为公开访问，无需认证。管理接口需要用户认证。
+
+## 接口列表
+
+### 1. 获取所有链接
+
+```
+GET /api/links
+```
+
+获取所有链接数据，支持筛选和分页。
+
+#### 请求参数
+
+| 参数名 | 类型 | 必需 | 描述 |
+|--------|------|------|------|
+| category | string | 否 | 分类ID筛选 |
+| search | string | 否 | 搜索关键词 |
+| featured | boolean | 否 | 是否只获取推荐链接 |
+| page | integer | 否 | 页码，默认为1 |
+| limit | integer | 否 | 每页数量，默认为20，最大100 |
+
+#### 响应示例
+
+```json
+{
+  "success": true,
+  "data": {
+    "items": [
+      {
+        "id": "github-link",
+        "title": "GitHub",
+        "url": "https://github.com/iflux-art",
+        "description": "代码托管与版本控制平台",
+        "category": "profile",
+        "tags": ["开发平台", "代码托管"],
+        "featured": true
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 1,
+      "pages": 1
+    }
+  },
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+### 2. 获取所有链接分类
+
+```
+GET /api/links/categories
+```
+
+获取所有链接分类信息。
+
+#### 响应示例
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "ai",
+      "name": "AI工具",
+      "description": "人工智能相关工具和服务",
+      "icon": "Bot",
+      "order": 1,
+      "collapsible": true,
+      "children": [
+        {
+          "id": "ai-api",
+          "name": "API服务",
+          "description": "AI API服务提供商"
+        }
+      ]
+    }
+  ],
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+### 3. 按分类获取链接列表
+
+```
+GET /api/links/category/{categoryId}
+```
+
+根据分类ID获取该分类下的所有链接。
+
+#### 请求参数
+
+| 参数名 | 类型 | 必需 | 描述 |
+|--------|------|------|------|
+| categoryId | string | 是 | 分类ID |
+
+#### 响应示例
+
+```json
+{
+  "success": true,
+  "data": {
+    "category": {
+      "id": "ai",
+      "name": "AI工具",
+      "description": "人工智能相关工具和服务"
+    },
+    "items": [
+      {
+        "id": "openai-link",
+        "title": "OpenAI",
+        "url": "https://openai.com",
+        "description": "人工智能研究实验室",
+        "category": "ai",
+        "tags": ["AI", "机器学习"],
+        "featured": true
+      }
+    ]
+  },
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+## 数据结构
+
+### 链接项
+
+```typescript
+interface LinksItem {
+  id: string;
+  title: string;
+  url: string;
+  description?: string;
+  category: string;
+  tags?: string[];
+  featured?: boolean;
+}
+```
+
+### 链接分类
+
+```typescript
+interface LinksCategory {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+  order?: number;
+  collapsible?: boolean;
+  children?: LinksSubCategory[];
+}
+
+interface LinksSubCategory {
+  id: string;
+  name: string;
+  description?: string;
+}
+```
+
+### 分页信息
+
+```typescript
+interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+}
+```
+
+## 错误响应
+
+### 404 - 分类未找到
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "CATEGORY_NOT_FOUND",
+    "message": "分类不存在"
+  },
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+### 400 - 参数错误
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_PARAMETERS",
+    "message": "参数验证失败",
+    "details": {
+      "page": "页码必须是正整数"
+    }
+  },
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+## 使用示例
+
+### JavaScript (fetch)
+
+```javascript
+// 获取所有链接
+async function getAllLinks() {
+  try {
+    const response = await fetch('/api/links');
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('链接列表:', result.data.items);
+    } else {
+      console.error('获取失败:', result.error.message);
+    }
+  } catch (error) {
+    console.error('网络错误:', error);
+  }
+}
+
+// 获取链接分类
+async function getLinksCategories() {
+  try {
+    const response = await fetch('/api/links/categories');
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('链接分类:', result.data);
+    } else {
+      console.error('获取失败:', result.error.message);
+    }
+  } catch (error) {
+    console.error('网络错误:', error);
+  }
+}
+
+// 按分类获取链接
+async function getLinksByCategory(categoryId) {
+  try {
+    const response = await fetch(`/api/links/category/${categoryId}`);
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('分类链接:', result.data);
+    } else {
+      console.error('获取失败:', result.error.message);
+    }
+  } catch (error) {
+    console.error('网络错误:', error);
+  }
+}
+```
+
+### Python (requests)
+
+```python
+import requests
+
+# 获取所有链接
+def get_all_links():
+    try:
+        response = requests.get('https://your-domain.com/api/links')
+        result = response.json()
+        
+        if result['success']:
+            print('链接列表:', result['data']['items'])
+        else:
+            print('获取失败:', result['error']['message'])
+    except Exception as error:
+        print('网络错误:', error)
+
+# 获取链接分类
+def get_links_categories():
+    try:
+        response = requests.get('https://your-domain.com/api/links/categories')
+        result = response.json()
+        
+        if result['success']:
+            print('链接分类:', result['data'])
+        else:
+            print('获取失败:', result['error']['message'])
+    except Exception as error:
+        print('网络错误:', error)
+
+# 按分类获取链接
+def get_links_by_category(category_id):
+    try:
+        response = requests.get(f'https://your-domain.com/api/links/category/{category_id}')
+        result = response.json()
+        
+        if result['success']:
+            print('分类链接:', result['data'])
+        else:
+            print('获取失败:', result['error']['message'])
+    except Exception as error:
+        print('网络错误:', error)
+```
+
+## 速率限制
+
+- 每个IP每分钟最多100次请求
+- 由于链接数据相对静态，建议客户端实现适当的缓存机制
+
+## 更新日志
+
+### v1.0.0 (2025-08-29)
+
+- 初始化链接管理API接口
+- 实现链接列表、分类、按分类获取接口
+
+## 注意事项
+
+1. 链接数据存储在JSON文件中，更新频率较低
+2. 建议客户端实现缓存机制减少重复请求
+3. URL字段可能包含外部链接，使用时请注意安全
+4. 分类结构支持多级嵌套
+5. featured字段用于标识推荐链接
+
+通过这些API接口，开发者可以轻松地在自己的应用中集成链接管理功能，获取和展示分类书签数据。

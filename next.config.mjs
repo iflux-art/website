@@ -11,10 +11,24 @@ const nextConfig = {
 		ignoreBuildErrors: false,
 	},
 
+	// 开发环境优化
+	devIndicators: {
+		position: "bottom-right",
+	},
+
 	// 实验性功能
 	experimental: {
 		// 优化页面加载
 		optimisticClientCache: true,
+	},
+
+	// Turbopack配置
+	turbopack: {
+		rules: {
+			"*.mdx": {
+				loaders: ["@mdx-js/loader"],
+			},
+		},
 	},
 
 	// 图片优化配置
@@ -39,8 +53,16 @@ const nextConfig = {
 	// 强制静态生成配置
 	trailingSlash: true,
 
+	// 开发环境配置
+	// biome-ignore lint/style/useNamingConvention: Next.js 配置标准命名
+	onDemandEntries: {
+		// 热更新优化
+		maxInactiveAge: 25 * 1000,
+		pagesBufferLength: 2,
+	},
+
 	// 优化函数大小
-	webpack: (config, { isServer }) => {
+	webpack: (config, { isServer, dev }) => {
 		if (isServer) {
 			// 排除大文件从服务端包中
 			config.externals = config.externals || [];
@@ -50,6 +72,44 @@ const nextConfig = {
 					"commonjs src/config/links/categories.json",
 			});
 		}
+
+		// 开发环境优化
+		if (dev) {
+			// 启用更快的源映射
+			config.devtool = "eval-source-map";
+			
+			// 优化构建速度
+			config.optimization = {
+				...config.optimization,
+				removeAvailableModules: false,
+				removeEmptyChunks: false,
+				splitChunks: {
+					chunks: "all",
+					cacheGroups: {
+						default: false,
+						vendors: false,
+						// 单独打包React相关库
+						react: {
+							name: "react",
+							chunks: "all",
+							test: /[\\/]node_modules[\\/](react|react-dom|react-router)[\\/]/,
+							priority: 40,
+							enforce: true,
+						},
+						// 单独打包UI库
+						ui: {
+							name: "ui",
+							chunks: "all",
+							test: /[\\/]node_modules[\\/](@radix-ui|lucide-react)[\\/]/,
+							priority: 30,
+							enforce: true,
+						},
+					},
+				},
+				minimize: false,
+			};
+		}
+
 		return config;
 	},
 };

@@ -1,21 +1,18 @@
 import { NextResponse } from "next/server";
 import { getDocCategories } from "@/features/docs/lib";
+import { setCacheHeaders } from "@/lib/api/cache-utils";
 
 /**
  * 获取所有文档分类的 API 路由
  *
  * @returns 所有文档分类列表
  */
-// biome-ignore lint/style/useNamingConvention: GET is a standard HTTP method name for Next.js API routes
 export function GET() {
   try {
     const categories = getDocCategories();
-    // 设置缓存控制头，避免浏览器缓存
-    return NextResponse.json(categories, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
-    });
+    // 设置缓存控制头
+    const headers = setCacheHeaders("semiStatic");
+    return NextResponse.json(categories, { headers });
   } catch (error) {
     // Failed to get document categories
     return NextResponse.json(

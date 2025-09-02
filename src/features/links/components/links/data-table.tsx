@@ -1,30 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
-
-// 内联 DataTableProps 类型定义
-export interface DataTableColumn<T> {
-  key: keyof T;
-  title: string;
-  width?: string | number;
-  align?: "left" | "center" | "right";
-  render?: (value: unknown, record: T, index: number) => React.ReactNode;
-}
-
-export interface DataTableAction<T> {
-  label: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  onClick: (record: T, index: number) => void;
-  disabled?: (record: T) => boolean;
-  variant?: "default" | "outline" | "ghost" | "destructive";
-}
-
-export interface DataTablePagination {
-  current: number;
-  pageSize: number;
-  total: number;
-  onChange: (page: number) => void;
-}
+import type {
+  DataTableColumn,
+  DataTableAction,
+  DataTablePagination,
+  DataTableProps,
+} from "@/types/props-types"; // 导入通用类型
 
 // 获取对齐类名函数
 function getAlignClass(align?: "left" | "center" | "right"): string {
@@ -179,14 +160,6 @@ const Pagination = ({ pagination }: PaginationProps) => {
     </div>
   );
 };
-
-export interface DataTableProps<T> {
-  title?: string;
-  data: T[];
-  columns: DataTableColumn<T>[];
-  actions?: DataTableAction<T>[];
-  pagination?: DataTablePagination;
-}
 
 export const DataTable = <T extends object>({
   title,

@@ -11,7 +11,7 @@ import {
 } from "@/features/friends/lib";
 
 export interface UseFriendsStateReturn {
-  // 数据状态 (来自 Zustand)
+  // 数据状态
   friendsItems: LinksItem[];
   loading: boolean;
   error: string | null;
@@ -29,11 +29,11 @@ export interface UseFriendsStateReturn {
   setConfig: (config: FriendsPageConfig) => void;
   setRequirements: (requirements: FriendLinkRequirement[]) => void;
   setSearchTerm: (term: string) => void;
-  resetFriendsState: () => void;
+  resetState: () => void;
 
   // 自定义方法
   loadFriendsData: (friendsData: unknown[]) => void;
-  updateConfig: (config: Partial<FriendsPageConfig>) => void;
+  updateConfig: (partialConfig: Partial<FriendsPageConfig>) => void;
   hasFriendsData: () => boolean;
 }
 
@@ -56,7 +56,7 @@ export function useFriendsState(): UseFriendsStateReturn {
     setConfig,
     setRequirements,
     setSearchTerm,
-    resetFriendsState,
+    resetState,
   } = useFriendsStore();
 
   // 加载友链数据
@@ -148,7 +148,7 @@ export function useFriendsState(): UseFriendsStateReturn {
     setConfig,
     setRequirements,
     setSearchTerm,
-    resetFriendsState,
+    resetState,
 
     // 自定义方法
     loadFriendsData,

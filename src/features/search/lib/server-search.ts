@@ -5,7 +5,6 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { loadAllCategoriesData } from "@/features/links/lib/categories";
 import { glob } from "fast-glob";
 import matter from "gray-matter";
 import type { SearchResult } from "../types";
@@ -21,6 +20,7 @@ interface LinkItem {
 let contentCache: {
   blogs: SearchResult[];
   docs: SearchResult[];
+  links: SearchResult[];
   timestamp: number;
 } | null = null;
 
@@ -63,6 +63,66 @@ async function scanContentFiles(contentType: "blog" | "docs"): Promise<SearchRes
 }
 
 /**
+ * 扫描链接文件
+ */
+async function scanLinkFiles(): Promise<SearchResult[]> {
+  const linksDir = path.join(process.cwd(), "src/content/links");
+  const results: SearchResult[] = [];
+
+  try {
+    // 读取根目录下的JSON文件
+    const rootFiles = await fs.readdir(linksDir);
+    for (const file of rootFiles) {
+      if (file.endsWith(".json") && file !== "index.js") {
+        const filePath = path.join(linksDir, file);
+        const fileContent = await fs.readFile(filePath, "utf8");
+        const items: LinkItem[] = JSON.parse(fileContent);
+
+        items.forEach(item => {
+          results.push({
+            type: "link",
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            tags: item.tags,
+          });
+        });
+      }
+    }
+
+    // 读取分类目录下的JSON文件
+    const categoryDir = path.join(linksDir, "category");
+    if (
+      await fs
+        .stat(categoryDir)
+        .then(stat => stat.isDirectory())
+        .catch(() => false)
+    ) {
+      const categoryFiles = await glob("**/*.json", { cwd: categoryDir });
+      for (const file of categoryFiles) {
+        const filePath = path.join(categoryDir, file);
+        const fileContent = await fs.readFile(filePath, "utf8");
+        const items: LinkItem[] = JSON.parse(fileContent);
+
+        items.forEach(item => {
+          results.push({
+            type: "link",
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            tags: item.tags,
+          });
+        });
+      }
+    }
+  } catch (error) {
+    console.error("Error scanning link files:", error);
+  }
+
+  return results;
+}
+
+/**
  * 获取缓存的内容
  */
 export async function getCachedContent() {
@@ -71,32 +131,14 @@ export async function getCachedContent() {
     return contentCache;
   }
 
-  const [blogs, docs] = await Promise.all([scanContentFiles("blog"), scanContentFiles("docs")]);
+  const [blogs, docs, links] = await Promise.all([
+    scanContentFiles("blog"),
+    scanContentFiles("docs"),
+    scanLinkFiles(),
+  ]);
 
-  contentCache = { blogs, docs, timestamp: now };
+  contentCache = { blogs, docs, links, timestamp: now };
   return contentCache;
-}
-
-/**
- * 搜索链接
- */
-export async function searchLinks(query: string, limit = 5): Promise<SearchResult[]> {
-  const links = await loadAllCategoriesData();
-  const queryLower = query.toLowerCase();
-
-  return links
-    .filter((item: LinkItem) => {
-      const searchText = `${item.title} ${item.description} ${item.tags?.join(" ")}`.toLowerCase();
-      return searchText.includes(queryLower);
-    })
-    .map((item: LinkItem) => ({
-      type: "link" as const,
-      title: item.title,
-      description: item.description,
-      url: item.url,
-      tags: item.tags,
-    }))
-    .slice(0, limit);
 }
 
 /**
@@ -111,13 +153,19 @@ export async function performServerSearch(
     return { results: [], total: 0 };
   }
 
-  const { blogs, docs } = await getCachedContent();
+  const { blogs, docs, links } = await getCachedContent();
   const results: SearchResult[] = [];
   const queryLower = query.toLowerCase();
 
   // 搜索链接
   if (type === "all" || type === "links") {
-    const linkResults = await searchLinks(query, 5);
+    const linkResults = links
+      .filter(link => {
+        const searchText =
+          `${link.title} ${link.description} ${link.tags?.join(" ")}`.toLowerCase();
+        return searchText.includes(queryLower);
+      })
+      .slice(0, 5);
     results.push(...linkResults);
   }
 

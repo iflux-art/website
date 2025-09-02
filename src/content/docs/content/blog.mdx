@@ -1,0 +1,564 @@
+---
+title: 博客内容管理
+description: 博客内容管理详细介绍
+date: 2025-08-29
+category: 内容管理
+tags:
+  - 博客
+  - 内容管理
+  - MDX
+---
+
+# 博客内容管理
+
+博客内容管理系统负责处理技术文章的创建、存储、处理和展示。
+
+## 内容存储结构
+
+### 1. 目录组织
+
+博客文章按主题分类存储在 [src/content/blog/](file://c:\project\official\src\content\blog) 目录下：
+
+```
+src/content/blog/
+├── ai/ - AI相关文章
+│   ├── chatgpt-tutorial.mdx
+│   └── machine-learning-basics.mdx
+├── frontend/ - 前端开发文章
+│   ├── react-hooks-guide.mdx
+│   └── nextjs-optimization.mdx
+├── backend/ - 后端开发文章
+└── design/ - 设计相关文章
+```
+
+### 2. 文件命名规范
+
+- 使用英文小写字母和连字符命名
+- 文件扩展名使用 .mdx 格式
+- 文件名应简洁明了，反映文章主题
+
+```bash
+# 推荐命名
+nextjs-performance-optimization.mdx
+react-hooks-best-practices.mdx
+
+# 不推荐命名
+NextJS优化指南.mdx
+react_hooks_使用技巧.mdx
+```
+
+## 内容格式规范
+
+### 1. Frontmatter元数据
+
+每篇博客文章必须包含以下元数据：
+
+```mdx
+---
+title: 文章标题
+description: 文章简短描述
+date: 2025-08-29
+tags:
+  - 标签1
+  - 标签2
+category: frontend
+coverImage: /images/article-cover.jpg
+readingTime: 5
+featured: true
+---
+
+文章内容...
+```
+
+#### 必需字段
+
+| 字段名 | 类型 | 描述 |
+|--------|------|------|
+| title | string | 文章标题 |
+| description | string | 文章简短描述 |
+| date | string | 发布日期 (YYYY-MM-DD格式) |
+
+#### 可选字段
+
+| 字段名 | 类型 | 描述 |
+|--------|------|------|
+| tags | string[] | 文章标签列表 |
+| category | string | 文章分类 |
+| coverImage | string | 封面图片路径 |
+| readingTime | number | 预估阅读时间(分钟) |
+| featured | boolean | 是否为推荐文章 |
+
+### 2. 内容结构
+
+文章内容应遵循以下结构：
+
+```mdx
+# 主标题
+
+简短的引言，介绍文章主要内容。
+
+## 章节标题
+
+章节内容...
+
+### 小节标题
+
+小节内容...
+
+## 总结
+
+文章总结...
+```
+
+## 内容创作指南
+
+### 1. 标题规范
+
+- 使用清晰、具体的标题
+- 避免过于宽泛的标题
+- 标题长度控制在50字符以内
+
+```mdx
+<!-- 推荐 -->
+# React Hooks使用指南：从入门到精通
+
+<!-- 不推荐 -->
+# React的一些东西
+```
+
+### 2. 内容组织
+
+- 使用清晰的层级结构
+- 合理使用列表和代码块
+- 添加适当的图片和图表
+- 保持段落简短易读
+
+### 3. 代码示例
+
+- 提供可运行的代码示例
+- 添加必要的注释说明
+- 指明代码语言类型
+- 保持代码简洁明了
+
+````mdx
+```typescript
+// 好的示例
+function useCounter() {
+  const [count, setCount] = useState(0);
+  
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+  
+  return { count, increment, decrement };
+}
+```
+
+```typescript
+// 不好的示例
+const a = useState(0)[0];
+const b = useState(0)[1];
+// 缺少注释，变量名不清晰
+```
+````
+
+### 4. 图片使用
+
+- 使用高质量的图片
+- 添加适当的alt属性
+- 控制图片大小和格式
+- 提供图片说明文字
+
+```mdx
+![React组件生命周期](/images/react-lifecycle.png)
+React组件生命周期图解
+```
+
+## 内容处理流程
+
+### 1. 内容读取
+
+系统通过以下方式读取博客内容：
+
+```typescript
+// src/lib/blog-reader.ts
+import fs from 'fs/promises';
+import path from 'path';
+import matter from 'gray-matter';
+
+interface BlogPost {
+  slug: string[];
+  title: string;
+  description: string;
+  date: string;
+  content: string;
+  tags?: string[];
+  category?: string;
+  [key: string]: any;
+}
+
+export async function readBlogPost(filePath: string): Promise<BlogPost> {
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  const { content, data } = matter(fileContent);
+  
+  // 从文件路径生成slug
+  const slug = filePath
+    .replace(/\\/g, '/')
+    .replace(/^.*\/content\/blog\//, '')
+    .replace(/\.(mdx?)$/, '')
+    .split('/');
+  
+  return {
+    slug,
+    content,
+    ...data
+  } as BlogPost;
+}
+```
+
+### 2. 元数据验证
+
+验证博客文章元数据的完整性：
+
+```typescript
+// src/lib/blog-validator.ts
+interface BlogPostMetadata {
+  title: string;
+  description: string;
+  date: string;
+  tags?: string[];
+  category?: string;
+}
+
+export function validateBlogPostMetadata(metadata: any): metadata is BlogPostMetadata {
+  // 验证必需字段
+  if (!metadata.title || typeof metadata.title !== 'string') {
+    throw new Error('Missing or invalid title');
+  }
+  
+  if (!metadata.description || typeof metadata.description !== 'string') {
+    throw new Error('Missing or invalid description');
+  }
+  
+  if (!metadata.date || !/^\d{4}-\d{2}-\d{2}$/.test(metadata.date)) {
+    throw new Error('Missing or invalid date');
+  }
+  
+  // 验证可选字段
+  if (metadata.tags && !Array.isArray(metadata.tags)) {
+    throw new Error('Invalid tags format');
+  }
+  
+  return true;
+}
+```
+
+### 3. 内容转换
+
+将Markdown内容转换为可渲染的格式：
+
+```typescript
+// src/lib/blog-transformer.ts
+import { compileMDX } from '@mdx-js/mdx';
+import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
+
+export async function transformBlogContent(content: string): Promise<string> {
+  const compiled = await compileMDX(content, {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypePrettyCode],
+  });
+  
+  return compiled.value;
+}
+```
+
+## 内容API接口
+
+### 1. 获取文章列表
+
+```typescript
+// src/lib/blog-api.ts
+interface BlogPostSummary {
+  slug: string[];
+  title: string;
+  description: string;
+  date: string;
+  tags?: string[];
+  category?: string;
+  readingTime?: number;
+  featured?: boolean;
+}
+
+export async function getBlogPosts(options: {
+  page?: number;
+  limit?: number;
+  category?: string;
+  tag?: string;
+}): Promise<BlogPostSummary[]> {
+  // 实现获取文章列表逻辑
+  // 返回文章摘要信息
+}
+```
+
+### 2. 获取文章详情
+
+```typescript
+// src/lib/blog-api.ts
+interface BlogPostDetail extends BlogPostSummary {
+  content: string;
+  tableOfContents: TableOfContentsItem[];
+}
+
+export async function getBlogPost(slug: string[]): Promise<BlogPostDetail> {
+  // 实现获取文章详情逻辑
+  // 返回完整文章内容
+}
+```
+
+### 3. 获取标签列表
+
+```typescript
+// src/lib/blog-api.ts
+interface Tag {
+  name: string;
+  count: number;
+}
+
+export async function getBlogTags(): Promise<Tag[]> {
+  // 实现获取标签列表逻辑
+  // 返回标签及其使用次数
+}
+```
+
+## 内容渲染组件
+
+### 1. 博客文章组件
+
+```tsx
+// src/features/blog/components/blog-post.tsx
+import { ContentDisplay } from '@/features/content/components/content-display';
+
+interface BlogPostProps {
+  post: BlogPostDetail;
+}
+
+export function BlogPost({ post }: BlogPostProps) {
+  return (
+    <article className="blog-post">
+      <header className="blog-post-header">
+        <h1 className="blog-post-title">{post.title}</h1>
+        <div className="blog-post-meta">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          {post.tags && (
+            <div className="blog-post-tags">
+              {post.tags.map(tag => (
+                <span key={tag} className="blog-post-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+      
+      <div className="blog-post-content">
+        <ContentDisplay content={post.content} />
+      </div>
+    </article>
+  );
+}
+```
+
+### 2. 目录组件
+
+```tsx
+// src/features/blog/components/table-of-contents.tsx
+interface TableOfContentsProps {
+  items: TableOfContentsItem[];
+}
+
+export function TableOfContents({ items }: TableOfContentsProps) {
+  return (
+    <nav className="table-of-contents">
+      <h2>目录</h2>
+      <ul>
+        {items.map(item => (
+          <li 
+            key={item.id} 
+            className={`toc-item level-${item.level}`}
+          >
+            <a href={`#${item.id}`}>{item.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+```
+
+## 内容管理工具
+
+### 1. 内容创建脚本
+
+提供脚本快速创建博客文章模板：
+
+```bash
+# 创建新的博客文章
+pnpm blog:create "React Hooks使用指南"
+
+# 创建指定分类的文章
+pnpm blog:create "Next.js性能优化" --category frontend
+```
+
+```typescript
+// scripts/create-blog-post.ts
+import fs from 'fs/promises';
+import path from 'path';
+
+async function createBlogPost(title: string, options: { category?: string }) {
+  const { category = 'uncategorized' } = options;
+  const slug = title.toLowerCase().replace(/\s+/g, '-');
+  const fileName = `${slug}.mdx`;
+  const filePath = path.join('src/content/blog', category, fileName);
+  
+  const template = `---
+title: ${title}
+description: 
+date: ${new Date().toISOString().split('T')[0]}
+tags:
+  - 
+category: ${category}
+---
+
+# ${title}
+
+`;
+  
+  await fs.writeFile(filePath, template);
+  console.log(`Created blog post: ${filePath}`);
+}
+```
+
+### 2. 内容检查工具
+
+检查博客内容的完整性和规范性：
+
+```bash
+# 检查所有博客文章
+pnpm blog:check
+
+# 检查特定文章
+pnpm blog:check --file src/content/blog/frontend/react-hooks-guide.mdx
+```
+
+```typescript
+// scripts/check-blog-posts.ts
+import fs from 'fs/promises';
+import path from 'path';
+import matter from 'gray-matter';
+
+async function checkBlogPosts(filePath?: string) {
+  if (filePath) {
+    await checkSinglePost(filePath);
+  } else {
+    await checkAllPosts();
+  }
+}
+
+async function checkSinglePost(filePath: string) {
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const { data } = matter(content);
+    
+    // 检查必需字段
+    if (!data.title) {
+      console.error(`Missing title in ${filePath}`);
+    }
+    
+    if (!data.description) {
+      console.error(`Missing description in ${filePath}`);
+    }
+    
+    // 检查日期格式
+    if (data.date && !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
+      console.error(`Invalid date format in ${filePath}`);
+    }
+    
+    console.log(`✓ ${filePath} checked`);
+  } catch (error) {
+    console.error(`Error checking ${filePath}:`, error);
+  }
+}
+```
+
+## 内容SEO优化
+
+### 1. 元数据生成
+
+为每篇文章生成SEO友好的元数据：
+
+```typescript
+// src/lib/blog-seo.ts
+interface SEOData {
+  title: string;
+  description: string;
+  image?: string;
+  url: string;
+  type: 'article';
+  publishedTime: string;
+  tags?: string[];
+}
+
+export function generateBlogSEOData(post: BlogPostDetail): SEOData {
+  return {
+    title: post.title,
+    description: post.description,
+    image: post.coverImage,
+    url: `/blog/${post.slug.join('/')}`,
+    type: 'article',
+    publishedTime: post.date,
+    tags: post.tags
+  };
+}
+```
+
+### 2. 结构化数据
+
+添加结构化数据提高搜索引擎理解：
+
+```tsx
+// src/features/blog/components/blog-seo.tsx
+export function BlogSEO({ post }: { post: BlogPostDetail }) {
+  const seoData = generateBlogSEOData(post);
+  
+  return (
+    <>
+      <title>{seoData.title}</title>
+      <meta name="description" content={seoData.description} />
+      
+      {/* Open Graph */}
+      <meta property="og:title" content={seoData.title} />
+      <meta property="og:description" content={seoData.description} />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content={seoData.url} />
+      
+      {/* 结构化数据 */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": seoData.title,
+          "description": seoData.description,
+          "datePublished": seoData.publishedTime,
+          "author": {
+            "@type": "Person",
+            "name": "斐流艺创"
+          }
+        })}
+      </script>
+    </>
+  );
+}
+```
+
+通过这套博客内容管理系统，项目能够高效地管理技术文章内容，为读者提供优质的阅读体验。

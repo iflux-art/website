@@ -27,8 +27,6 @@ export {
   createApiError,
   createApiSuccess,
   ApiErrors,
-  isValidUrl,
-  validateRequiredFields,
   withErrorHandling,
 } from "./api/api-utils";
 
@@ -55,25 +53,14 @@ export {
   API_PATHS,
 } from "./api/api-paths";
 
-// ==================== 错误处理工具函数 ====================
-export type { ErrorInfo, LogOptions } from "./error/error-utils";
+// ==================== 验证工具函数 ====================
 export {
-  classifyError,
-  logError,
-  handleContentError,
-  handleNetworkError,
-  getUserFriendlyMessage,
-  handleComponentError,
-} from "./error/error-utils"; // 统一错误处理工具
-
-// ==================== 布局工具函数 ====================
-// 页面容器和网格布局工具函数（直接从布局模块导入）
-export {
-  getMainContentClasses,
-  getSidebarClasses,
-  DEFAULT_SIDEBAR_CONFIG,
-  THREE_COLUMN_LAYOUT_CONFIG,
-  gridColsMap,
-  gridGapMap,
-} from "@/lib/layout/layout-utils";
-export type { GridColsMap, GridGapMap } from "@/types";
+  isValidUrl,
+  normalizeUrl,
+  validateRequiredFields,
+  validatePageParams,
+  safeJsonParse,
+  validateStringLength,
+  validateArrayLength,
+  isValidCategory,
+} from "@/utils/validation";

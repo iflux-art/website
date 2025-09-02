@@ -8,7 +8,6 @@ import { getPostsByTag } from "@/features/blog/lib";
  * @param params 路由参数，包含标签名称
  * @returns 包含指定标签的文章列表
  */
-// biome-ignore lint/style/useNamingConvention: GET is a standard HTTP method name for Next.js API routes
 export async function GET(_request: Request, { params }: { params: Promise<{ tag: string }> }) {
   try {
     const resolvedParams = await params;

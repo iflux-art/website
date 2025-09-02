@@ -1,8 +1,8 @@
-import { useAppStore } from "../app-store";
+import { useAppStore } from "../app-store.standard";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useAppStore.getState().resetAppState();
+  useAppStore.getState().resetState();
 });
 
 describe("useAppStore", () => {
@@ -188,7 +188,7 @@ describe("useAppStore", () => {
       expect(useAppStore.getState().error).toBe("Error");
 
       // Reset and verify initial state
-      state.resetAppState();
+      state.resetState();
       expect(useAppStore.getState().isSidebarOpen).toBe(false);
       expect(useAppStore.getState().isSearchOpen).toBe(false);
       expect(useAppStore.getState().theme).toBe("system");

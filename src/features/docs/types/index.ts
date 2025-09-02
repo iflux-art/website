@@ -119,3 +119,23 @@ export type DocContentResult = DocItem & {
   topLevelCategorySlug: string;
   isIndexPage: boolean;
 };
+
+// ================= 文档搜索相关类型 =================
+
+/** 文档搜索结果 */
+export interface DocSearchResult {
+  /** 文档标题 */
+  title: string;
+  /** 文档路径 */
+  path: string;
+  /** 文档摘要 */
+  excerpt: string;
+}
+
+/** 文档搜索参数 */
+export interface DocSearchParams {
+  /** 搜索查询 */
+  query: string;
+  /** 搜索限制 */
+  limit?: number;
+}

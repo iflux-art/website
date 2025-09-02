@@ -43,23 +43,12 @@ const UnauthenticatedState = () => (
   </div>
 );
 
-// 用户信息卡片组件
-interface UserInfoCardProps {
-  user: {
-    imageUrl?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    username?: string | null;
-    primaryEmailAddress?: {
-      emailAddress?: string | null;
-    } | null;
-    createdAt?: Date | null;
-  };
-  fullName: string;
-  initials: string;
-}
-
-export const UserInfoCard = ({ user, fullName, initials }: UserInfoCardProps) => (
+// 使用从props-types导入的类型
+export const UserInfoCard = ({
+  user,
+  fullName,
+  initials,
+}: import("@/types/props-types").UserInfoCardProps) => (
   <div className="rounded-lg border border-border bg-card p-4">
     <div className="flex items-center space-x-4">
       <Avatar className="h-16 w-16">
@@ -85,30 +74,10 @@ export const UserInfoCard = ({ user, fullName, initials }: UserInfoCardProps) =>
   </div>
 );
 
-// 账户详情组件
-interface AccountDetailsCardProps {
-  user: {
-    id: string;
-    username?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    primaryEmailAddressId: string | null;
-    emailAddresses: {
-      id: string;
-      emailAddress: string;
-      verification?: {
-        status: string | null;
-      } | null;
-    }[];
-    externalAccounts: {
-      id: string;
-      provider: string;
-      emailAddress?: string | null;
-    }[];
-  };
-}
-
-export const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
+// 使用从props-types导入的类型
+export const AccountDetailsCard = ({
+  user,
+}: import("@/types/props-types").AccountDetailsCardProps) => {
   // 生成唯一 ID
   const userId = useId();
   const usernameId = useId();
@@ -157,7 +126,7 @@ export const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
             邮箱地址
           </label>
           <div className="mt-2 space-y-2">
-            {user.emailAddresses.map(
+            {user.emailAddresses?.map(
               (email: {
                 id: string;
                 emailAddress: string;
@@ -183,7 +152,7 @@ export const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
           </div>
         </div>
 
-        {user.externalAccounts.length > 0 && (
+        {user.externalAccounts && user.externalAccounts.length > 0 && (
           <>
             <Separator />
             <div>
@@ -194,7 +163,7 @@ export const AccountDetailsCard = ({ user }: AccountDetailsCardProps) => {
                 关联账户
               </label>
               <div className="mt-2 space-y-2">
-                {user.externalAccounts.map(
+                {user.externalAccounts?.map(
                   (account: { id: string; provider: string; emailAddress?: string | null }) => (
                     <div key={account.id} className="flex items-center justify-between">
                       <span className="capitalize">{account.provider}</span>

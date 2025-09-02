@@ -1,8 +1,8 @@
-import { useBlogPageStore } from "../blog-page-store";
+import { useBlogPageStore } from "../blog-page-store.standard";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useBlogPageStore.getState().resetBlogPageState();
+  useBlogPageStore.getState().resetState();
 });
 
 describe("useBlogPageStore", () => {
@@ -70,7 +70,7 @@ describe("useBlogPageStore", () => {
       state.setTag("tag");
 
       // Reset
-      state.resetBlogPageState();
+      state.resetState();
 
       // Check reset state
       expect(useBlogPageStore.getState().posts).toEqual([]);

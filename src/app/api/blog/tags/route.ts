@@ -7,7 +7,6 @@ import { getAllTagsWithCount } from "@/features/blog/lib";
  *
  * @returns 所有标签及其计数
  */
-// biome-ignore lint/style/useNamingConvention: GET is a standard HTTP method name for Next.js API routes
 export function GET() {
   try {
     const tagsWithCount = getAllTagsWithCount();

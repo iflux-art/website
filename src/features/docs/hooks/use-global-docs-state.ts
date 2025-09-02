@@ -8,7 +8,7 @@
 import { useCallback, useEffect } from "react";
 import type { GlobalDocsStructure } from "@/features/docs/components/global-docs";
 import { useDocsGlobalStructureStore } from "@/stores";
-import type { DocsGlobalStructureStore } from "@/stores/docs-global-structure-store";
+import type { DocsGlobalStructureStore } from "@/stores/docs-global-structure-store.standard";
 
 // 定义selector函数，避免每次创建新对象
 const useGlobalDocsStateSelector = (state: DocsGlobalStructureStore) => state;

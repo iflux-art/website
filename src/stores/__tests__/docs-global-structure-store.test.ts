@@ -1,10 +1,10 @@
-import { useDocsGlobalStructureStore } from "../docs-global-structure-store";
+import { useDocsGlobalStructureStore } from "../docs-global-structure-store.standard";
 import type { GlobalDocsStructure } from "@/features/docs/components/global-docs";
 import type { SidebarItem } from "@/features/docs/types";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useDocsGlobalStructureStore.getState().resetDocsGlobalStructureState();
+  useDocsGlobalStructureStore.getState().resetState();
 });
 
 describe("useDocsGlobalStructureStore", () => {
@@ -73,7 +73,7 @@ describe("useDocsGlobalStructureStore", () => {
       state.setTimestamp(1234567890);
 
       // Reset
-      state.resetDocsGlobalStructureState();
+      state.resetState();
 
       // Check reset state
       expect(useDocsGlobalStructureStore.getState().structure).toBeNull();

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export function GET(request: NextRequest) {
   // 检查是否是WebSocket升级请求
   if (request.headers.get("upgrade") !== "websocket") {

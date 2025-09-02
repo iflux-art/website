@@ -1,9 +1,8 @@
 /**
- * Links 功能模块统一导出
- * 集中管理链接功能的所有导出，便于外部引用
+ * 链接功能模块导出
  */
 
-// ==================== 组件导出 ====================
+// 从 components 导出
 export {
   LinksSidebar,
   LinksSidebarCard,
@@ -17,19 +16,29 @@ export {
   getTableActions,
   getPageActions,
 } from "./components";
-export type { LinksContentProps, LinksSidebarProps } from "./components";
 
-// ==================== Hooks 导出 ====================
-export { useLinksData } from "./hooks";
+export type {
+  LinksContentProps,
+  LinksSidebarProps,
+} from "./components";
 
-// ==================== 工具函数导出 ====================
+// 从 hooks 导出
+export {
+  useLinksData,
+  useCategories,
+  useFilterState,
+} from "./hooks";
+
+// 从 lib 导出
 export {
   loadAllLinksData,
   generateCategoriesData,
   categoryStructure,
+  clearCategoryCache,
+  preloadCriticalCategories,
 } from "./lib";
 
-// ==================== 类型定义导出 ====================
+// 从 types 导出
 export type {
   CategoryId,
   LinksSubCategory,
@@ -37,3 +46,14 @@ export type {
   LinksItem,
   LinksFormData,
 } from "./types";
+
+// 从 services 导出
+export {
+  linkService,
+  linkDataService,
+} from "./services";
+
+export type {
+  LinkService,
+  LinkDataService,
+} from "./services";

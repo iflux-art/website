@@ -7,6 +7,11 @@
  * @since 2024
  */
 
+import {
+  validatePageParams as validatePageParamsUtil,
+  safeJsonParse as safeJsonParseUtil,
+} from "@/utils/validation";
+
 /**
  * 验证页面参数
  */
@@ -14,23 +19,12 @@ export function validatePageParams(
   params: Record<string, unknown>,
   requiredFields: string[] = []
 ): { isValid: boolean; missingFields: string[] } {
-  const missingFields = requiredFields.filter(
-    field => params[field] === undefined || params[field] === null || params[field] === ""
-  );
-
-  return {
-    isValid: missingFields.length === 0,
-    missingFields,
-  };
+  return validatePageParamsUtil(params, requiredFields);
 }
 
 /**
  * 安全的JSON解析
  */
 export function safeJsonParse<T>(jsonString: string, defaultValue: T): T {
-  try {
-    return JSON.parse(jsonString) as T;
-  } catch {
-    return defaultValue;
-  }
+  return safeJsonParseUtil(jsonString, defaultValue);
 }

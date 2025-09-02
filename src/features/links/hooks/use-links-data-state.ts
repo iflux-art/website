@@ -6,7 +6,7 @@ import { useCategories } from "@/features/links/hooks/use-categories";
 import { loadAllLinksData } from "@/features/links/lib";
 import { useFilterState } from "@/features/links/hooks/use-filter-state";
 import type { LinksItem } from "@/features/links/types";
-import type { LinksDataStore } from "@/stores/links-data-store";
+import type { LinksDataStore } from "@/stores/links-data-store.standard";
 
 // 定义selector函数，避免每次创建新对象
 const useLinksDataStateSelector = (state: LinksDataStore) => state;

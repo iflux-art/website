@@ -2,7 +2,7 @@
 
 import { generateCategoriesData } from "@/features/links/lib";
 import type { CategoryId, LinksCategory } from "@/features/links/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * 获取链接分类数据的 Hook
@@ -58,14 +58,17 @@ export function useCategories() {
 
   /**
    * 获取过滤后的分类（排除友链和个人主页）
+   * 使用useMemo缓存结果，避免每次返回新数组
    */
-  const getFilteredCategories = () =>
-    categories.filter(cat => cat.id !== "friends" && cat.id !== "profile");
+  const getFilteredCategories = useMemo(
+    () => () => categories.filter(cat => cat.id !== "friends" && cat.id !== "profile"),
+    [categories] // 修复：使用完整依赖而不是categories.length
+  );
 
   /**
    * 获取扁平化的分类列表（包含子分类）
    */
-  const getFlatCategories = () => {
+  const getFlatCategories = useMemo(() => {
     const flatCategories: {
       id: CategoryId;
       name: string;
@@ -95,7 +98,7 @@ export function useCategories() {
     });
 
     return flatCategories;
-  };
+  }, [categories]); // 修复：使用完整依赖而不是categories.length
 
   /**
    * 重新加载分类数据

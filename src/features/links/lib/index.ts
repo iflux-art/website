@@ -16,6 +16,7 @@ const categoryStructure = {
   ai: {
     name: "人工智能",
     children: {
+      // 修复文件路径，确保它们与实际文件夹结构匹配
       api: {
         name: "API",
         file: () => safeImport(() => import("@/content/links/category/ai/api.json")),
@@ -47,6 +48,10 @@ const categoryStructure = {
       tools: {
         name: "工具",
         file: () => safeImport(() => import("@/content/links/category/ai/tools.json")),
+      },
+      agents: {
+        name: "智能体",
+        file: () => safeImport(() => import("@/content/links/category/ai/agents.json")),
       },
     },
   },
@@ -213,10 +218,15 @@ const categoryStructure = {
  */
 async function safeImport<T>(importFn: () => Promise<T>): Promise<T | null> {
   try {
-    return await importFn();
+    // 添加调试日志
+    console.log("尝试导入模块...");
+    const result = await importFn();
+    console.log("模块导入成功:", result ? "有数据" : "无数据");
+    return result;
   } catch (error) {
     // 在开发环境中，Turbopack HMR可能会导致导入失败
     // 我们记录错误但不中断执行
+    console.error("Failed to import module:", error);
     if (process.env.NODE_ENV === "development") {
       console.warn("Failed to import module, this may be due to Turbopack HMR:", error);
     } else {
@@ -431,35 +441,50 @@ async function preloadCriticalCategories(): Promise<void> {
 
 // 动态导入所有分类数据
 async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
+  console.log("loadAllLinksData 被调用，缓存键:", _cacheKey);
+
   // 首先尝试从内存缓存获取
   const now = Date.now();
   if (cachedLinksData && now - cacheTimestamp < CACHE_DURATION) {
+    console.log("使用内存缓存的数据，条目数:", cachedLinksData.length);
     return cachedLinksData;
   }
 
   // 尝试从localStorage获取缓存
   const storageCachedData = getCachedDataFromStorage();
-  if (storageCachedData) {
+  if (storageCachedData && storageCachedData.length > 0) {
+    console.log("使用localStorage缓存的数据，条目数:", storageCachedData.length);
     cachedLinksData = storageCachedData;
     cacheTimestamp = now;
     return storageCachedData;
   }
 
+  console.log("没有找到缓存数据，开始加载所有链接...");
   const allItems: LinksItem[] = [];
 
   try {
+    // 记录开始加载的分类总数
+    console.log("开始加载分类，总分类数:", Object.keys(categoryStructure).length);
+
     // 遍历所有分类
     for (const [categoryId, categoryInfo] of Object.entries(categoryStructure)) {
+      console.log(`处理分类: ${categoryId}`);
+
       // 检查是否有分类级别的缓存
       const categoryCached = categoryCache[categoryId];
       if (categoryCached && now - categoryCached.timestamp < CACHE_DURATION) {
+        console.log(`使用缓存的分类数据: ${categoryId}, 条目数:`, categoryCached.data.length);
         allItems.push(...categoryCached.data);
         continue;
       }
 
       // 尝试从localStorage获取分类缓存
       const storageCategoryCached = getCachedDataFromStorage(categoryId);
-      if (storageCategoryCached) {
+      if (storageCategoryCached && storageCategoryCached.length > 0) {
+        console.log(
+          `使用localStorage缓存的分类数据: ${categoryId}, 条目数:`,
+          storageCategoryCached.length
+        );
         categoryCache[categoryId] = {
           data: storageCategoryCached,
           timestamp: now,
@@ -470,7 +495,9 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
 
       if ("file" in categoryInfo) {
         // 根目录文件
+        console.log(`加载根目录文件: ${categoryId}`);
         const items = await loadRootCategoryItems(categoryId, categoryInfo);
+        console.log(`根目录文件 ${categoryId} 加载完成，条目数:`, items.length);
         allItems.push(...items);
         // 缓存分类数据
         categoryCache[categoryId] = {
@@ -480,7 +507,12 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
         setCachedDataToStorage(items, categoryId);
       } else if ("children" in categoryInfo) {
         // 有子分类的目录
+        console.log(
+          `加载子分类目录: ${categoryId}, 子分类数:`,
+          Object.keys(categoryInfo.children).length
+        );
         const items = await loadCategoryWithChildren(categoryId, categoryInfo);
+        console.log(`子分类目录 ${categoryId} 加载完成，条目数:`, items.length);
         allItems.push(...items);
         // 缓存分类数据
         categoryCache[categoryId] = {
@@ -492,6 +524,7 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
     }
 
     // 更新全局缓存
+    console.log("所有分类加载完成，总条目数:", allItems.length);
     cachedLinksData = allItems;
     cacheTimestamp = now;
     setCachedDataToStorage(allItems);

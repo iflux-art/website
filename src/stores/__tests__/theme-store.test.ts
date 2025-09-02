@@ -1,8 +1,8 @@
-import { useThemeStore } from "../theme-store";
+import { useThemeStore } from "../theme-store.standard";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useThemeStore.getState().resetThemeState();
+  useThemeStore.getState().resetState();
 });
 
 describe("useThemeStore", () => {
@@ -78,7 +78,7 @@ describe("useThemeStore", () => {
       state.setMounted(true);
 
       // Reset
-      state.resetThemeState();
+      state.resetState();
 
       // Check reset state
       expect(useThemeStore.getState().theme).toBe("system");

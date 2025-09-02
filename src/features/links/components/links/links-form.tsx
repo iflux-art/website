@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksFormData } from "@/features/links/types";
 import { useWebsiteParser } from "@/features/website-parser/hooks/use-website-parser";
-import { isValidUrl } from "@/lib/api/api-utils";
+import { isValidUrl } from "@/utils/validation";
 import { AlertCircle, CheckCircle, Loader2, Plus, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useId } from "react";

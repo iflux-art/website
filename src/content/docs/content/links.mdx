@@ -1,0 +1,694 @@
+---
+title: 链接内容管理
+description: 链接内容管理详细介绍
+date: 2025-08-29
+category: 内容管理
+tags:
+  - 链接管理
+  - 内容管理
+  - JSON
+---
+
+# 链接内容管理
+
+链接内容管理系统负责处理分类书签、友情链接和个人社交资料等链接数据的存储、管理和展示。
+
+## 数据存储结构
+
+### 1. 目录组织
+
+链接数据存储在 [src/content/links/](file://c:\project\official\src\content\links) 目录下：
+
+```
+src/content/links/
+├── category/ - 分类配置
+│   ├── ai.json
+│   ├── development.json
+│   └── design.json
+├── friends.json - 友情链接数据
+└── profile.json - 个人资料数据
+```
+
+### 2. 分类配置
+
+分类配置文件定义链接分类结构：
+
+```json
+// src/content/links/category/development.json
+{
+  "id": "development",
+  "name": "开发资源",
+  "description": "前端、后端开发相关资源",
+  "icon": "Code",
+  "order": 2,
+  "collapsible": true,
+  "children": [
+    {
+      "id": "frameworks",
+      "name": "框架",
+      "description": "前端和后端框架资源"
+    },
+    {
+      "id": "tools",
+      "name": "工具",
+      "description": "开发工具和实用程序"
+    }
+  ]
+}
+```
+
+### 3. 链接数据
+
+链接数据使用JSON格式存储：
+
+```json
+// src/content/links/friends.json
+[
+  {
+    "id": "sugarat-top",
+    "title": "粥里有勺糖",
+    "url": "https://sugarat.top/",
+    "description": "前端学习笔记分享",
+    "category": "friends",
+    "tags": ["前端开发", "学习笔记"],
+    "featured": true
+  },
+  {
+    "id": "iflux-art-github",
+    "title": "GitHub",
+    "url": "https://github.com/iflux-art",
+    "description": "代码托管与版本控制平台",
+    "category": "profile",
+    "tags": ["开发平台", "代码托管"],
+    "featured": true
+  }
+]
+```
+
+## 数据格式规范
+
+### 1. 链接项结构
+
+链接项包含以下字段：
+
+```typescript
+interface LinksItem {
+  id: string; // 唯一标识符
+  title: string; // 链接标题
+  url: string; // 链接URL
+  description?: string; // 链接描述
+  category: string; // 所属分类
+  tags?: string[]; // 标签列表
+  featured?: boolean; // 是否推荐
+}
+```
+
+#### 必需字段
+
+| 字段名 | 类型 | 描述 |
+|--------|------|------|
+| id | string | 唯一标识符 |
+| title | string | 链接标题 |
+| url | string | 链接URL |
+| category | string | 所属分类 |
+
+#### 可选字段
+
+| 字段名 | 类型 | 描述 |
+|--------|------|------|
+| description | string | 链接描述 |
+| tags | string[] | 标签列表 |
+| featured | boolean | 是否推荐 |
+
+### 2. 分类结构
+
+分类结构包含以下字段：
+
+```typescript
+interface LinksCategory {
+  id: string; // 分类ID
+  name: string; // 分类名称
+  description?: string; // 分类描述
+  icon?: string; // 分类图标
+  order?: number; // 显示顺序
+  collapsible?: boolean; // 是否可折叠
+  children?: LinksSubCategory[]; // 子分类
+}
+
+interface LinksSubCategory {
+  id: string; // 子分类ID
+  name: string; // 子分类名称
+  description?: string; // 子分类描述
+}
+```
+
+## 数据处理流程
+
+### 1. 数据读取
+
+读取链接数据文件：
+
+```typescript
+// src/lib/links-reader.ts
+import fs from 'fs/promises';
+import path from 'path';
+
+interface LinksData {
+  categories: LinksCategory[];
+  items: LinksItem[];
+}
+
+export async function readLinksData(): Promise<LinksData> {
+  // 读取分类配置
+  const categories = await readCategories();
+  
+  // 读取链接项数据
+  const friendsData = await fs.readFile(
+    path.join(process.cwd(), 'src/content/links/friends.json'), 
+    'utf-8'
+  );
+  const profileData = await fs.readFile(
+    path.join(process.cwd(), 'src/content/links/profile.json'), 
+    'utf-8'
+  );
+  
+  const friendsItems: LinksItem[] = JSON.parse(friendsData);
+  const profileItems: LinksItem[] = JSON.parse(profileData);
+  
+  return {
+    categories,
+    items: [...friendsItems, ...profileItems]
+  };
+}
+
+async function readCategories(): Promise<LinksCategory[]> {
+  const categoryDir = path.join(process.cwd(), 'src/content/links/category');
+  const files = await fs.readdir(categoryDir);
+  
+  const categories: LinksCategory[] = [];
+  for (const file of files) {
+    if (file.endsWith('.json')) {
+      const content = await fs.readFile(path.join(categoryDir, file), 'utf-8');
+      categories.push(JSON.parse(content));
+    }
+  }
+  
+  return categories;
+}
+```
+
+### 2. 数据验证
+
+验证链接数据完整性：
+
+```typescript
+// src/lib/links-validator.ts
+export function validateLinksItem(item: any): item is LinksItem {
+  // 验证必需字段
+  if (!item.id || typeof item.id !== 'string') {
+    throw new Error('Missing or invalid id');
+  }
+  
+  if (!item.title || typeof item.title !== 'string') {
+    throw new Error('Missing or invalid title');
+  }
+  
+  if (!item.url || typeof item.url !== 'string') {
+    throw new Error('Missing or invalid url');
+  }
+  
+  if (!item.category || typeof item.category !== 'string') {
+    throw new Error('Missing or invalid category');
+  }
+  
+  // 验证URL格式
+  try {
+    new URL(item.url);
+  } catch {
+    throw new Error('Invalid URL format');
+  }
+  
+  return true;
+}
+
+export function validateLinksCategory(category: any): category is LinksCategory {
+  // 验证必需字段
+  if (!category.id || typeof category.id !== 'string') {
+    throw new Error('Missing or invalid id');
+  }
+  
+  if (!category.name || typeof category.name !== 'string') {
+    throw new Error('Missing or invalid name');
+  }
+  
+  return true;
+}
+```
+
+### 3. 数据处理
+
+处理和组织链接数据：
+
+```typescript
+// src/lib/links-processor.ts
+interface ProcessedLinksData {
+  categories: LinksCategory[];
+  itemsByCategory: Record<string, LinksItem[]>;
+  featuredItems: LinksItem[];
+  tags: string[];
+}
+
+export function processLinksData(data: LinksData): ProcessedLinksData {
+  // 按分类组织链接项
+  const itemsByCategory: Record<string, LinksItem[]> = {};
+  data.items.forEach(item => {
+    if (!itemsByCategory[item.category]) {
+      itemsByCategory[item.category] = [];
+    }
+    itemsByCategory[item.category].push(item);
+  });
+  
+  // 提取推荐项
+  const featuredItems = data.items.filter(item => item.featured);
+  
+  // 提取所有标签
+  const tags = Array.from(
+    new Set(data.items.flatMap(item => item.tags || []))
+  );
+  
+  return {
+    categories: data.categories,
+    itemsByCategory,
+    featuredItems,
+    tags
+  };
+}
+```
+
+## 数据API接口
+
+### 1. 获取所有链接
+
+```typescript
+// src/lib/links-api.ts
+interface LinksResponse {
+  items: LinksItem[];
+  pagination: Pagination;
+}
+
+export async function getAllLinks(options: {
+  category?: string;
+  search?: string;
+  featured?: boolean;
+  page?: number;
+  limit?: number;
+}): Promise<LinksResponse> {
+  const { category, search, featured, page = 1, limit = 20 } = options;
+  let items = await loadAllLinks();
+  
+  // 应用筛选条件
+  if (category) {
+    items = items.filter(item => item.category === category);
+  }
+  
+  if (search) {
+    items = items.filter(item => 
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description?.toLowerCase().includes(search.toLowerCase()) ||
+      item.tags?.some(tag => tag.toLowerCase().includes(search.toLowerCase()))
+    );
+  }
+  
+  if (featured) {
+    items = items.filter(item => item.featured);
+  }
+  
+  // 分页处理
+  const total = items.length;
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  const paginatedItems = items.slice(start, end);
+  
+  return {
+    items: paginatedItems,
+    pagination: {
+      page,
+      limit,
+      total,
+      pages: Math.ceil(total / limit)
+    }
+  };
+}
+```
+
+### 2. 获取分类信息
+
+```typescript
+// src/lib/links-api.ts
+export async function getLinksCategories(): Promise<LinksCategory[]> {
+  const data = await readLinksData();
+  return data.categories;
+}
+```
+
+### 3. 按分类获取链接
+
+```typescript
+// src/lib/links-api.ts
+interface CategoryLinksResponse {
+  category: LinksCategory;
+  items: LinksItem[];
+}
+
+export async function getLinksByCategory(categoryId: string): Promise<CategoryLinksResponse> {
+  const data = await readLinksData();
+  const processed = processLinksData(data);
+  
+  const category = data.categories.find(c => c.id === categoryId);
+  if (!category) {
+    throw new Error(`Category not found: ${categoryId}`);
+  }
+  
+  return {
+    category,
+    items: processed.itemsByCategory[categoryId] || []
+  };
+}
+```
+
+## 数据渲染组件
+
+### 1. 链接卡片组件
+
+```tsx
+// src/features/links/components/link-card.tsx
+interface LinkCardProps {
+  link: LinksItem;
+}
+
+export function LinkCard({ link }: LinkCardProps) {
+  return (
+    <div className="link-card">
+      <div className="link-card-content">
+        <h3 className="link-card-title">
+          <a 
+            href={link.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            {link.title}
+          </a>
+        </h3>
+        
+        {link.description && (
+          <p className="link-card-description">{link.description}</p>
+        )}
+        
+        {link.tags && link.tags.length > 0 && (
+          <div className="link-card-tags">
+            {link.tags.map(tag => (
+              <span key={tag} className="link-card-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+      
+      <a 
+        href={link.url} 
+        className="link-card-action"
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        访问链接
+      </a>
+    </div>
+  );
+}
+```
+
+### 2. 分类导航组件
+
+```tsx
+// src/features/links/components/links-sidebar.tsx
+interface LinksSidebarProps {
+  categories: LinksCategory[];
+  currentCategory?: string;
+  onCategoryChange: (categoryId: string) => void;
+}
+
+export function LinksSidebar({ 
+  categories, 
+  currentCategory, 
+  onCategoryChange 
+}: LinksSidebarProps) {
+  return (
+    <nav className="links-sidebar">
+      <ul>
+        <li>
+          <button
+            className={cn('category-item', { active: !currentCategory })}
+            onClick={() => onCategoryChange('')}
+          >
+            全部链接
+          </button>
+        </li>
+        
+        {categories.map(category => (
+          <li key={category.id}>
+            <button
+              className={cn('category-item', { active: category.id === currentCategory })}
+              onClick={() => onCategoryChange(category.id)}
+            >
+              {category.icon && <Icon name={category.icon} />}
+              {category.name}
+            </button>
+            
+            {category.children && category.children.length > 0 && (
+              <ul className="subcategory-list">
+                {category.children.map(sub => (
+                  <li key={sub.id}>
+                    <button
+                      className={cn('subcategory-item', { active: sub.id === currentCategory })}
+                      onClick={() => onCategoryChange(sub.id)}
+                    >
+                      {sub.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+```
+
+### 3. 链接表格组件
+
+```tsx
+// src/features/links/components/links-table.tsx
+interface LinksTableProps {
+  items: LinksItem[];
+  onEdit?: (item: LinksItem) => void;
+  onDelete?: (item: LinksItem) => void;
+}
+
+export function LinksTable({ items, onEdit, onDelete }: LinksTableProps) {
+  return (
+    <div className="links-table-container">
+      <table className="links-table">
+        <thead>
+          <tr>
+            <th>标题</th>
+            <th>URL</th>
+            <th>分类</th>
+            <th>标签</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map(item => (
+            <tr key={item.id}>
+              <td>{item.title}</td>
+              <td>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.url}
+                </a>
+              </td>
+              <td>{item.category}</td>
+              <td>
+                {item.tags?.map(tag => (
+                  <span key={tag} className="tag">
+                    {tag}
+                  </span>
+                ))}
+              </td>
+              <td>
+                {onEdit && (
+                  <button onClick={() => onEdit(item)}>编辑</button>
+                )}
+                {onDelete && (
+                  <button onClick={() => onDelete(item)}>删除</button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+```
+
+## 数据管理工具
+
+### 1. 链接创建脚本
+
+快速创建链接数据：
+
+```bash
+# 添加新的链接
+pnpm links:add "GitHub" "https://github.com" --category development --tags "代码托管,开源"
+
+# 批量导入链接
+pnpm links:import links.csv
+```
+
+```typescript
+// scripts/add-link.ts
+interface AddLinkOptions {
+  category: string;
+  tags?: string[];
+  featured?: boolean;
+}
+
+async function addLink(title: string, url: string, options: AddLinkOptions) {
+  const { category, tags = [], featured = false } = options;
+  
+  // 生成唯一ID
+  const id = generateLinkId(title, url);
+  
+  // 创建链接对象
+  const newLink: LinksItem = {
+    id,
+    title,
+    url,
+    category,
+    tags,
+    featured
+  };
+  
+  // 验证数据
+  validateLinksItem(newLink);
+  
+  // 添加到对应的数据文件
+  const filePath = path.join('src/content/links', `${category}.json`);
+  const existingData = JSON.parse(await fs.readFile(filePath, 'utf-8'));
+  existingData.push(newLink);
+  await fs.writeFile(filePath, JSON.stringify(existingData, null, 2));
+  
+  console.log(`Added link: ${title}`);
+}
+```
+
+### 2. 数据检查工具
+
+检查链接数据完整性：
+
+```bash
+# 检查所有链接数据
+pnpm links:check
+
+# 检查特定分类
+pnpm links:check --category development
+```
+
+```typescript
+// scripts/check-links.ts
+async function checkLinksData() {
+  try {
+    const data = await readLinksData();
+    
+    // 检查链接项
+    for (const item of data.items) {
+      validateLinksItem(item);
+      
+      // 检查链接有效性
+      if (await isLinkValid(item.url)) {
+        console.log(`✓ ${item.title}: ${item.url}`);
+      } else {
+        console.warn(`✗ ${item.title}: ${item.url} (无效链接)`);
+      }
+    }
+    
+    // 检查分类配置
+    for (const category of data.categories) {
+      validateLinksCategory(category);
+    }
+    
+    console.log('All links data checked successfully');
+  } catch (error) {
+    console.error('Error checking links data:', error);
+  }
+}
+
+async function isLinkValid(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: 'HEAD', timeout: 5000 });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+```
+
+## 数据安全处理
+
+### 1. URL验证
+
+验证链接URL的安全性：
+
+```typescript
+// src/lib/url-validator.ts
+export function validateUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    
+    // 只允许HTTP和HTTPS协议
+    if (!['http:', 'https:'].includes(urlObj.protocol)) {
+      return false;
+    }
+    
+    // 检查是否为本地地址
+    if (urlObj.hostname === 'localhost' || urlObj.hostname === '127.0.0.1') {
+      return false;
+    }
+    
+    return true;
+  } catch {
+    return false;
+  }
+}
+```
+
+### 2. 内容过滤
+
+过滤链接描述中的不安全内容：
+
+```typescript
+// src/lib/content-filter.ts
+import sanitizeHtml from 'sanitize-html';
+
+export function sanitizeLinkDescription(description: string): string {
+  return sanitizeHtml(description, {
+    allowedTags: ['b', 'i', 'em', 'strong', 'code'],
+    allowedAttributes: {}
+  });
+}
+```
+
+通过这套链接内容管理系统，项目能够有效地管理各类链接数据，为用户提供有价值的资源聚合服务。

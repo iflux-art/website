@@ -1,8 +1,8 @@
-import { useLayoutStore, BREAKPOINTS } from "../layout-store";
+import { useLayoutStore, BREAKPOINTS } from "../layout-store.standard";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useLayoutStore.getState().resetLayoutState();
+  useLayoutStore.getState().resetState();
 });
 
 describe("useLayoutStore", () => {
@@ -94,7 +94,7 @@ describe("useLayoutStore", () => {
       state.setIsMobile(true);
 
       // Reset
-      state.resetLayoutState();
+      state.resetState();
 
       // Check reset state
       expect(useLayoutStore.getState().layoutType).toBe("full-width");

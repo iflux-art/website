@@ -1,8 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
 import { getDocSidebar } from "@/features/docs/lib";
 import type { DocListItem } from "@/features/docs/types";
-import matter from "gray-matter";
 import { NextResponse } from "next/server";
 
 interface SidebarNavItem {
@@ -49,28 +46,6 @@ const flattenSidebarItems = (
   });
 };
 
-/**
- * 备用方法：直接读取目录中的文件
- */
-const getFallbackDocs = (categoryDir: string, decodedCategory: string): DocListItem[] =>
-  fs
-    .readdirSync(categoryDir)
-    .filter(file => file.endsWith(".mdx") || file.endsWith(".md"))
-    .map(file => {
-      const docPath = path.join(categoryDir, file);
-      const docContent = fs.readFileSync(docPath, "utf8");
-      const { data } = matter(docContent);
-      const slug = file.replace(/\.(mdx|md)$/, "");
-
-      return {
-        slug,
-        title: (data.title as string) ?? slug,
-        description: (data.description as string) ?? (data.title as string) ?? slug,
-        path: `/docs/${decodedCategory}/${slug}`,
-      } as DocListItem;
-    });
-
-// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ category: string }> }
@@ -80,26 +55,14 @@ export async function GET(
     const categoryParam = resolvedParams.category;
     const decodedCategory = decodeURIComponent(categoryParam);
 
-    const categoryDir = path.join(process.cwd(), "src", "content", "docs", decodedCategory);
-
-    if (!(fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory())) {
-      return NextResponse.json({ error: `分类 ${decodedCategory} 不存在` }, { status: 404 });
-    }
-
     const sidebarItems = getDocSidebar(decodedCategory);
     const docs: DocListItem[] = [];
 
     flattenSidebarItems(sidebarItems, resolvedParams.category, docs);
 
-    if (docs.length === 0) {
-      // 备用方法读取分类文档
-      const fallbackDocs = getFallbackDocs(categoryDir, decodedCategory);
-      return NextResponse.json(fallbackDocs);
-    }
-
     return NextResponse.json(docs);
-  } catch {
-    // Error getting document list for category
+  } catch (error) {
+    console.error("Error getting document list for category:", error);
     return NextResponse.json({ error: "获取文档列表失败" }, { status: 500 });
   }
 }

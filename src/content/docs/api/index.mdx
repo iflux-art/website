@@ -1,0 +1,163 @@
+---
+title: API接口文档
+description: 项目API接口详细说明
+date: 2025-08-29
+category: API
+tags:
+  - API
+  - 接口文档
+---
+
+# API接口文档
+
+斐流艺创项目提供了一系列 RESTful API 接口，用于支持前端应用的数据获取和交互功能。
+
+## API设计原则
+
+### 1. RESTful设计
+
+- 使用标准HTTP方法（GET、POST、PUT、DELETE）
+- 合理的资源URI设计
+- 状态码语义化
+- JSON格式数据交换
+
+### 2. 版本控制
+
+- API版本通过URL路径控制
+- 向后兼容性保证
+- 废弃接口标记
+
+### 3. 安全性
+
+- HTTPS协议传输
+- 认证和授权机制
+- 输入验证和过滤
+- 速率限制
+
+## 基础配置
+
+### 基础URL
+
+```
+https://your-domain.com/api
+```
+
+### 请求格式
+
+- Content-Type: application/json
+- Accept: application/json
+
+### 响应格式
+
+```json
+{
+  "success": true,
+  "data": {},
+  "message": "Success message",
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+### 状态码
+
+| 状态码 | 说明 |
+|--------|------|
+| 200 | 请求成功 |
+| 201 | 创建成功 |
+| 400 | 请求参数错误 |
+| 401 | 未授权 |
+| 403 | 禁止访问 |
+| 404 | 资源不存在 |
+| 500 | 服务器内部错误 |
+
+## 认证机制
+
+大部分API接口需要认证才能访问，认证通过HTTP头部的Authorization字段传递：
+
+```
+Authorization: Bearer <token>
+```
+
+## 错误处理
+
+统一的错误响应格式：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Error description",
+    "details": {}
+  },
+  "timestamp": "2025-08-29T12:00:00Z"
+}
+```
+
+## 速率限制
+
+为了保护API服务，所有接口都有速率限制：
+
+- 每个IP每分钟最多100次请求
+- 认证用户每分钟最多1000次请求
+
+超过限制时会返回429状态码。
+
+## API接口分类
+
+项目API接口按功能模块分类，详细说明请参见各模块文档：
+
+- [博客API](/docs/api/blog) - 博客文章相关接口
+- [文档API](/docs/api/docs) - 技术文档相关接口
+- [链接API](/docs/api/links) - 链接管理相关接口
+- [搜索API](/docs/api/search) - 全局搜索相关接口
+- [用户API](/docs/api/user) - 用户认证相关接口
+
+## 调试工具
+
+推荐使用以下工具进行API调试：
+
+1. **Postman** - 功能强大的API测试工具
+2. **Insomnia** - 现代化的REST客户端
+3. **curl** - 命令行HTTP客户端
+
+## 示例代码
+
+### 获取博客文章列表
+
+```bash
+curl -X GET \
+  https://your-domain.com/api/blog/posts \
+  -H 'Accept: application/json'
+```
+
+### 搜索内容
+
+```bash
+curl -X GET \
+  "https://your-domain.com/api/search?q=react" \
+  -H 'Accept: application/json'
+```
+
+## SDK支持
+
+项目计划提供以下语言的SDK：
+
+- JavaScript/TypeScript
+- Python
+- Java
+- Go
+
+## 更新日志
+
+API接口的变更会记录在更新日志中，确保向后兼容性。
+
+## 反馈与支持
+
+如在使用API过程中遇到问题，请通过以下方式联系我们：
+
+- 提交GitHub Issue
+- 发送邮件至技术支持邮箱
+- 通过网站反馈功能提交
+
+我们会持续改进API设计和文档质量。

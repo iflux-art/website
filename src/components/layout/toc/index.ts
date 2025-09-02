@@ -5,4 +5,4 @@
 
 export { TableOfContents } from "./table-of-contents";
 export { TableOfContentsCard } from "./table-of-contents-card";
-export type { TocHeading } from "./table-of-contents-card";
+export type { TocHeading } from "@/types/props-types"; // 从统一的props-types文件导出

@@ -139,7 +139,7 @@ describe("useFriendsState", () => {
 
     // 重置状态
     act(() => {
-      result.current.resetFriendsState();
+      result.current.resetState();
     });
 
     // 验证状态重置

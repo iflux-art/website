@@ -3,6 +3,7 @@
  */
 
 import type { LinksFormData, LinksItem } from "@/features/links/types";
+import { isValidCategory, validateRequiredFields } from "@/utils/validation";
 
 const validCategories = [
   "ai",
@@ -24,21 +25,15 @@ function validateBasicFields(formData: Record<string, unknown>): {
   success: boolean;
   error?: string;
 } {
-  const { title, url, category } = formData;
-
-  if (!title || typeof title !== "string") {
-    return { success: false, error: "标题为必填项" };
+  // 验证必填字段
+  const missingFields = validateRequiredFields(formData, ["title", "url"]);
+  if (missingFields.length > 0) {
+    return { success: false, error: `${missingFields[0]}为必填项` };
   }
 
-  if (!url || typeof url !== "string") {
-    return { success: false, error: "URL为必填项" };
-  }
-
-  if (
-    !category ||
-    typeof category !== "string" ||
-    !validCategories.includes(category as (typeof validCategories)[number])
-  ) {
+  const { category } = formData;
+  // 验证分类ID
+  if (!category || typeof category !== "string" || !isValidCategory(category, validCategories)) {
     return { success: false, error: "无效的分类ID" };
   }
 

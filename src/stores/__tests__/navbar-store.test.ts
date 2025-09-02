@@ -1,8 +1,8 @@
-import { useNavbarStore, NAVBAR_STATE_CONFIG } from "../navbar-store";
+import { useNavbarStore, NAVBAR_STATE_CONFIG } from "../navbar-store.standard";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useNavbarStore.getState().resetNavbarState();
+  useNavbarStore.getState().resetState();
 });
 
 describe("useNavbarStore", () => {
@@ -54,7 +54,7 @@ describe("useNavbarStore", () => {
       state.initialize();
 
       // Reset
-      state.resetNavbarState();
+      state.resetState();
 
       // Check reset state
       expect(useNavbarStore.getState().pageTitle).toBe("");

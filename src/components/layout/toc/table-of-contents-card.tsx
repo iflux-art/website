@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useHeadingObserver } from "@/hooks/use-heading-observer";
 import { cn } from "@/utils";
+import type { TocHeading, TableOfContentsCardProps } from "@/types/props-types"; // 导入通用类型
 import { Text } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -42,19 +43,6 @@ function scrollToElement(elementId: string, offset = 0, updateHash = false): voi
   }
 }
 // ====== END ======
-
-// 内联 TocHeading、TocProps 类型定义
-export interface TocHeading {
-  id: string;
-  text: string;
-  level: number;
-}
-
-export interface TableOfContentsCardProps {
-  headings: TocHeading[];
-  className?: string;
-  title?: string;
-}
 
 // 标题项组件
 interface HeadingItemProps {

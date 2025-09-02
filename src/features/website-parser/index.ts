@@ -16,7 +16,6 @@ export {
   parseWebsites,
   clearCache,
   getCacheSize,
-  isValidUrl,
 } from "./lib/parser";
 
 // ==================== Hooks 导出 ====================

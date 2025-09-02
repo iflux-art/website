@@ -1,9 +1,9 @@
-import { useAdminStore } from "../admin-store";
+import { useAdminStore } from "../admin-store.standard";
 import type { LinksItem } from "@/features/links/types";
 
 // Reset all stores before each test
 beforeEach(() => {
-  useAdminStore.getState().resetAdminState();
+  useAdminStore.getState().resetState();
 });
 
 // Mock LinksItem data
@@ -180,7 +180,7 @@ describe("useAdminStore", () => {
     it("should set deleting item", () => {
       const { setDeletingItem } = useAdminStore.getState();
 
-      // 添加空值检查
+      // 添加空값检查
       if (mockItems[0]) {
         setDeletingItem(mockItems[0]);
         expect(useAdminStore.getState().deletingItem).toEqual(mockItems[0]);
@@ -196,20 +196,42 @@ describe("useAdminStore", () => {
       const state = useAdminStore.getState();
 
       // Change states
-      // 添加空값检查和类型断言
-      if (mockItems.length > 0) {
-        state.setItems(mockItems);
-        state.setSearchTerm("test");
-        state.setShowAddDialog(true);
-
-        // Reset
-        state.resetAdminState();
-
-        // Check reset state
-        expect(useAdminStore.getState().items).toEqual([]);
-        expect(useAdminStore.getState().searchTerm).toBe("");
-        expect(useAdminStore.getState().showAddDialog).toBe(false);
+      if (mockItems[0]) {
+        state.setItems([mockItems[0]]);
       }
+      state.setLoading(true);
+      state.setError("Test error");
+      state.setSearchTerm("test");
+      state.setSelectedCategory("test");
+      state.setShowAddDialog(true);
+      if (mockItems[0]) {
+        state.setEditingItem(mockItems[0]);
+      }
+      if (mockItems[0]) {
+        state.setDeletingItem(mockItems[0]);
+      }
+
+      // Verify states are changed
+      expect(useAdminStore.getState().items).toHaveLength(1);
+      expect(useAdminStore.getState().loading).toBe(true);
+      expect(useAdminStore.getState().error).toBe("Test error");
+      expect(useAdminStore.getState().searchTerm).toBe("test");
+      expect(useAdminStore.getState().selectedCategory).toBe("test");
+      expect(useAdminStore.getState().showAddDialog).toBe(true);
+      expect(useAdminStore.getState().editingItem).not.toBeNull();
+      expect(useAdminStore.getState().deletingItem).not.toBeNull();
+
+      // Reset and verify initial state
+      state.resetState();
+      expect(useAdminStore.getState().items).toEqual([]);
+      expect(useAdminStore.getState().loading).toBe(false);
+      expect(useAdminStore.getState().error).toBeNull();
+      expect(useAdminStore.getState().searchTerm).toBe("");
+      expect(useAdminStore.getState().selectedCategory).toBe("");
+      expect(useAdminStore.getState().showAddDialog).toBe(false);
+      expect(useAdminStore.getState().editingItem).toBeNull();
+      expect(useAdminStore.getState().deletingItem).toBeNull();
+      expect(useAdminStore.getState().itemCount).toBe(0);
     });
 
     it("should reset filters", () => {

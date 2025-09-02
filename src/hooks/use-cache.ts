@@ -4,7 +4,7 @@
 
 "use client";
 
-import { debounceSync } from "@/utils";
+import { debounceSync } from "@/utils/core/helpers";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**

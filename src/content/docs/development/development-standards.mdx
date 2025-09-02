@@ -1,0 +1,707 @@
+---
+title: 开发规范
+description: 项目开发规范和最佳实践
+date: 2025-08-29
+category: 开发指南
+tags:
+  - 开发规范
+  - 最佳实践
+  - 协作规范
+---
+
+# 开发规范
+
+本文档详细说明斐流艺创项目的开发规范和最佳实践，确保团队协作效率和代码质量。
+
+## 开发环境规范
+
+### 1. 环境要求
+
+#### Node.js 版本
+
+项目需要 Node.js 版本 >= 22.x
+
+```bash
+# 检查 Node.js 版本
+node --version
+
+# 推荐使用 nvm 管理 Node.js 版本
+nvm install 22
+nvm use 22
+```
+
+#### pnpm 版本
+
+项目使用 pnpm 作为包管理器，需要版本 >= 9.11.0
+
+```bash
+# 检查 pnpm 版本
+pnpm --version
+
+# 安装 pnpm
+npm install -g pnpm
+```
+
+### 2. 编辑器配置
+
+#### VS Code 配置
+
+推荐安装以下 VS Code 扩展：
+
+- **ESLint**: JavaScript/TypeScript linting
+- **Prettier**: 代码格式化
+- **Tailwind CSS IntelliSense**: Tailwind CSS 智能提示
+- **MDX**: MDX 语法支持
+- **GitLens**: Git 增强工具
+
+推荐的 [settings.json](file://c:\project\official\.vscode\settings.json) 配置：
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass"],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+## 代码规范
+
+### 1. TypeScript 规范
+
+#### 类型安全
+
+1. **避免使用 any 类型**：
+   ```typescript
+   // 不推荐
+   const data: any = fetchData();
+   
+   // 推荐
+   interface ApiResponse {
+     success: boolean;
+     data: UserData;
+   }
+   const data: ApiResponse = fetchData();
+   ```
+
+2. **使用严格的类型定义**：
+   ```typescript
+   // 不推荐
+   type Status = string;
+   
+   // 推荐
+   type Status = 'pending' | 'approved' | 'rejected';
+   ```
+
+#### 函数规范
+
+1. **明确函数返回类型**：
+   ```typescript
+   // 推荐
+   const getUserById = (id: string): Promise<User | null> => {
+     // 实现
+   };
+   ```
+
+2. **使用可选参数和默认值**：
+   ```typescript
+   interface ConfigOptions {
+     timeout?: number;
+     retries?: number;
+   }
+   
+   const defaultOptions: ConfigOptions = {
+     timeout: 5000,
+     retries: 3
+   };
+   
+   const fetchWithConfig = (url: string, options: ConfigOptions = defaultOptions) => {
+     // 实现
+   };
+   ```
+
+### 2. React 规范
+
+#### 组件设计
+
+1. **单一职责原则**：
+   ```tsx
+   // 好的示例：单一职责的组件
+   const UserAvatar = ({ user }: { user: User }) => (
+     <img src={user.avatar} alt={user.name} className="rounded-full" />
+   );
+   
+   const UserName = ({ user }: { user: User }) => (
+     <span className="font-medium">{user.name}</span>
+   );
+   ```
+
+2. **合理的组件拆分**：
+   ```tsx
+   // 复杂组件应该拆分为多个小组件
+   const UserProfile = ({ user }: { user: User }) => (
+     <div className="user-profile">
+       <UserAvatar user={user} />
+       <UserName user={user} />
+       <UserEmail user={user} />
+       <UserActions user={user} />
+     </div>
+   );
+   ```
+
+#### Hooks 使用
+
+1. **自定义 Hooks 提取复用逻辑**：
+   ```tsx
+   // src/hooks/use-toggle.ts
+   import { useState, useCallback } from 'react';
+   
+   export function useToggle(initialValue = false) {
+     const [value, setValue] = useState(initialValue);
+     
+     const toggle = useCallback(() => {
+       setValue(prev => !prev);
+     }, []);
+     
+     const setTrue = useCallback(() => {
+       setValue(true);
+     }, []);
+     
+     const setFalse = useCallback(() => {
+       setValue(false);
+     }, []);
+     
+     return [value, { toggle, setTrue, setFalse }] as const;
+   }
+   ```
+
+2. **遵循 Hooks 规则**：
+   ```tsx
+   // 正确：Hooks 在顶层调用
+   function MyComponent() {
+     const [count, setCount] = useState(0);
+     const [name, setName] = useState('');
+     
+     useEffect(() => {
+       // 副作用
+     }, [count]);
+     
+     return <div>{count} - {name}</div>;
+   }
+   ```
+
+### 3. 样式规范
+
+#### Tailwind CSS 使用
+
+1. **合理的类名组织**：
+   ```tsx
+   <button
+     className={cn(
+       'inline-flex items-center justify-center rounded-md font-medium transition-colors',
+       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+       'disabled:pointer-events-none disabled:opacity-50',
+       {
+         'bg-primary text-primary-foreground hover:bg-primary/90': variant === 'primary',
+         'bg-secondary text-secondary-foreground hover:bg-secondary/80': variant === 'secondary',
+       },
+       {
+         'h-9 rounded-md px-3': size === 'sm',
+         'h-10 py-2 px-4': size === 'md',
+         'h-11 rounded-md px-8': size === 'lg',
+       },
+       className
+     )}
+   >
+     {children}
+   </button>
+   ```
+
+2. **响应式设计**：
+   ```tsx
+   <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+       {/* 内容 */}
+     </div>
+   </div>
+   ```
+
+## 代码组织规范
+
+### 1. 目录结构
+
+遵循功能驱动的目录结构：
+
+```
+src/
+├── app/ - Next.js 应用路由
+├── components/ - 共享UI组件
+│   ├── ui/ - 基础UI组件
+│   ├── layout/ - 布局组件
+│   └── mdx/ - MDX渲染组件
+├── features/ - 功能模块
+│   ├── blog/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   ├── types/
+│   │   └── index.ts
+│   └── auth/
+│       ├── components/
+│       ├── hooks/
+│       ├── lib/
+│       ├── types/
+│       └── index.ts
+├── lib/ - 工具函数
+├── hooks/ - 自定义Hooks
+├── stores/ - 状态管理
+├── types/ - 类型定义
+└── utils/ - 工具函数
+```
+
+### 2. 模块导出
+
+合理组织模块导出：
+
+```typescript
+// src/features/blog/index.ts
+export * from './components';
+export * from './hooks';
+export * from './lib';
+export * from './types';
+
+// src/features/blog/components/index.ts
+export * from './blog-card';
+export * from './tag-cloud-card';
+export * from './latest-posts-card';
+```
+
+### 3. 文件命名
+
+使用一致的文件命名规范：
+
+```bash
+# 组件文件
+user-profile.tsx
+button.tsx
+card.tsx
+
+# 工具文件
+utils.ts
+helpers.ts
+constants.ts
+
+# 类型文件
+types.ts
+interfaces.ts
+enums.ts
+
+# 测试文件
+button.test.tsx
+utils.test.ts
+```
+
+## Git 工作流规范
+
+### 1. 分支管理
+
+#### 分支命名规范
+
+```bash
+# 功能开发分支
+feature/user-authentication
+feature/blog-search
+
+# bug 修复分支
+fix/login-error
+fix/api-response
+
+# 热修复分支
+hotfix/critical-security-issue
+
+# 版本发布分支
+release/v1.2.0
+```
+
+#### 分支策略
+
+采用 Git Flow 工作流：
+
+1. `main` 分支：生产环境代码
+2. `develop` 分支：开发环境代码
+3. 功能分支：从 `develop` 分支创建，完成后合并回 `develop`
+4. 发布分支：从 `develop` 分支创建，完成后合并到 `main` 和 `develop`
+
+### 2. 提交信息规范
+
+遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
+
+```bash
+# 功能新增
+git commit -m "feat: add user authentication system"
+
+# 问题修复
+git commit -m "fix: resolve login timeout issue"
+
+# 文档更新
+git commit -m "docs: update API documentation"
+
+# 代码重构
+git commit -m "refactor: optimize component structure"
+
+# 性能优化
+git commit -m "perf: improve loading speed"
+
+# 测试相关
+git commit -m "test: add unit tests for search functionality"
+
+# 构建相关
+git commit -m "build: update dependencies"
+
+# 样式修改（不影响代码逻辑）
+git commit -m "style: format code with prettier"
+
+# CI/CD 配置修改
+git commit -m "ci: update deployment workflow"
+```
+
+### 3. Pull Request 规范
+
+#### PR 标题
+
+使用与提交信息相同的格式：
+
+```
+feat: add user authentication system
+fix: resolve login timeout issue
+```
+
+#### PR 描述
+
+PR 描述应包含以下内容：
+
+1. **变更描述**：简要说明本次变更的内容
+2. **解决的问题**：关联的 Issue 或问题描述
+3. **测试方法**：如何测试这些变更
+4. **截图**（如果适用）：UI 变更的截图
+
+#### 代码审查
+
+1. **审查清单**：
+   - 代码是否符合规范
+   - 是否有适当的测试
+   - 文档是否已更新
+   - 是否有潜在的性能问题
+
+2. **审查评论**：
+   - 使用建设性的语言
+   - 提供具体的改进建议
+   - 解释为什么需要修改
+
+## 测试规范
+
+### 1. 单元测试
+
+使用 Vitest 编写单元测试：
+
+```typescript
+// src/lib/utils.test.ts
+import { describe, it, expect } from 'vitest';
+import { formatDate, slugify } from './utils';
+
+describe('utils', () => {
+  describe('formatDate', () => {
+    it('should format date correctly', () => {
+      const date = '2025-08-29';
+      const formatted = formatDate(date);
+      expect(formatted).toBe('2025年8月29日');
+    });
+    
+    it('should handle invalid date', () => {
+      const date = 'invalid-date';
+      const formatted = formatDate(date);
+      expect(formatted).toBe('Invalid Date');
+    });
+  });
+});
+```
+
+### 2. 组件测试
+
+使用 React Testing Library 测试组件：
+
+```tsx
+// src/components/button.test.tsx
+import { describe, it, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Button } from './button';
+
+describe('Button', () => {
+  it('should render correctly', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByText('Click me')).toBeInTheDocument();
+  });
+  
+  it('should handle click events', () => {
+    const handleClick = vi.fn();
+    render(<Button onClick={handleClick}>Click me</Button>);
+    
+    fireEvent.click(screen.getByText('Click me'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+### 3. 测试覆盖率
+
+目标测试覆盖率达到 80% 以上：
+
+```bash
+# 运行测试并生成覆盖率报告
+pnpm test:coverage
+```
+
+## 文档规范
+
+### 1. 代码注释
+
+编写清晰的代码注释：
+
+```typescript
+/**
+ * 格式化日期字符串
+ * 
+ * @param date - 日期字符串 (YYYY-MM-DD格式)
+ * @returns 格式化后的日期字符串 (YYYY年M月D日格式)
+ * 
+ * @example
+ * ```typescript
+ * const formatted = formatDate('2025-08-29');
+ * console.log(formatted); // "2025年8月29日"
+ * ```
+ */
+export function formatDate(date: string): string {
+  try {
+    const [year, month, day] = date.split('-');
+    return `${year}年${parseInt(month, 10)}月${parseInt(day, 10)}日`;
+  } catch {
+    return 'Invalid Date';
+  }
+}
+```
+
+### 2. 组件文档
+
+为组件编写详细的文档：
+
+```tsx
+/**
+ * 按钮组件
+ * 
+ * @description 一个可定制的按钮组件，支持多种样式和尺寸
+ * 
+ * @param {ButtonProps} props - 组件Props
+ * @param {('primary'|'secondary'|'ghost')} [props.variant='primary'] - 按钮样式变体
+ * @param {('sm'|'md'|'lg')} [props.size='md'] - 按钮尺寸
+ * @param {boolean} [props.disabled=false] - 是否禁用
+ * @param {Function} [props.onClick] - 点击事件处理函数
+ * @param {React.ReactNode} props.children - 按钮内容
+ * 
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="md" onClick={handleClick}>
+ *   点击我
+ * </Button>
+ * ```
+ */
+```
+
+### 3. 技术文档
+
+维护完整的技术文档：
+
+1. **及时更新文档**：功能变更时同步更新相关文档
+2. **文档结构清晰**：使用一致的文档结构和格式
+3. **示例代码完整**：提供可运行的示例代码
+
+## 性能优化规范
+
+### 1. 代码分割
+
+合理使用代码分割：
+
+```tsx
+import dynamic from 'next/dynamic';
+
+// 动态导入非关键组件
+const HeavyComponent = dynamic(() => import('@/components/heavy-component'));
+
+// 带加载状态的动态导入
+const ChartComponent = dynamic(
+  () => import('@/components/chart-component'),
+  {
+    loading: () => <div>加载中...</div>,
+    ssr: false
+  }
+);
+```
+
+### 2. 图片优化
+
+使用 Next.js Image 组件优化图片：
+
+```tsx
+import Image from 'next/image';
+
+<Image 
+  src="/images/photo.jpg" 
+  alt="描述" 
+  width={800} 
+  height={600}
+  quality={85}
+  placeholder="blur"
+  blurDataURL="data:image/jpeg;base64,..."
+/>
+```
+
+### 3. 数据获取优化
+
+合理使用 TanStack Query 优化数据获取：
+
+```typescript
+import { useQuery } from '@tanstack/react-query';
+
+const useUserData = (userId: string) => {
+  return useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => fetchUser(userId),
+    staleTime: 5 * 60 * 1000, // 5分钟
+    cacheTime: 10 * 60 * 1000, // 10分钟
+  });
+};
+```
+
+## 安全规范
+
+### 1. 环境变量安全
+
+```env
+# 不要提交敏感信息到代码库
+# 使用平台提供的密钥管理功能
+
+# 正确的做法
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_***
+CLERK_SECRET_KEY=sk_test_***
+
+# 错误的做法
+DATABASE_URL=mysql://root:123456@localhost/myapp
+```
+
+### 2. 输入验证
+
+对所有用户输入进行验证：
+
+```typescript
+import { z } from 'zod';
+
+const userSchema = z.object({
+  name: z.string().min(1).max(50),
+  email: z.string().email(),
+  age: z.number().min(0).max(150)
+});
+
+const validateUser = (data: unknown) => {
+  try {
+    return userSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(`Validation failed: ${error.errors.map(e => e.message).join(', ')}`);
+    }
+    throw error;
+  }
+};
+```
+
+### 3. 内容安全策略
+
+配置严格的内容安全策略：
+
+```typescript
+// next.config.mjs
+const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+          }
+        ]
+      }
+    ];
+  }
+};
+```
+
+## 国际化规范
+
+### 1. 文本管理
+
+使用统一的文本管理方式：
+
+```typescript
+// src/lib/i18n/zh-CN.ts
+export default {
+  common: {
+    save: '保存',
+    cancel: '取消',
+    delete: '删除'
+  },
+  user: {
+    profile: '用户资料',
+    settings: '设置'
+  }
+};
+
+// src/lib/i18n/en-US.ts
+export default {
+  common: {
+    save: 'Save',
+    cancel: 'Cancel',
+    delete: 'Delete'
+  },
+  user: {
+    profile: 'User Profile',
+    settings: 'Settings'
+  }
+};
+```
+
+### 2. 组件国际化
+
+```tsx
+import { useTranslation } from 'next-i18next';
+
+const UserProfile = () => {
+  const { t } = useTranslation('user');
+  
+  return (
+    <div>
+      <h1>{t('profile')}</h1>
+      <button>{t('common:save')}</button>
+    </div>
+  );
+};
+```
+
+通过遵循这些开发规范，我们可以确保项目的一致性、可维护性和团队协作效率。

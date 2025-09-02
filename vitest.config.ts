@@ -36,7 +36,7 @@ export default defineConfig({
 			experimentalAstAwareRemapping: true,
 		},
 		testTimeout: 10000,
-		// 替换 watchExclude 为正确的 watch.ignore 配置
+		// 优化监视模式
 		watch: {
 			ignore: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
 		} as any,
@@ -54,10 +54,25 @@ export default defineConfig({
 		sequence: {
 			concurrent: true,
 		},
+		// 开发体验优化
+		// 启用更详细的日志
+		logHeapUsage: true,
+		// 启用隔离模式以提高稳定性
+		// isolate: true,
+		// 启用更清晰的错误报告
+		reporters: ["default", "verbose"],
 	},
 	resolve: {
 		alias: {
 			"@": resolve(__dirname, "./src"),
+		},
+	},
+	// 开发体验优化
+	server: {
+		// 启用文件监视优化
+		watch: {
+			// 忽略大文件变化以提高性能
+			ignored: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/public/**"],
 		},
 	},
 });

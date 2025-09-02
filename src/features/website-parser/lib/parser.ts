@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { isValidUrl as isValidUrlUtil } from "@/utils/validation";
 import type {
   CacheItem,
   ParseOptions,
@@ -22,12 +23,7 @@ const metadataCache = new Map<string, CacheItem>();
  * URL 验证函数
  */
 export function isValidUrl(urlString: string): boolean {
-  try {
-    const url = new URL(urlString);
-    return ["http:", "https:"].includes(url.protocol);
-  } catch {
-    return false;
-  }
+  return isValidUrlUtil(urlString);
 }
 
 /**

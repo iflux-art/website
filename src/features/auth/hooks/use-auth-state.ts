@@ -42,7 +42,7 @@ export interface UseAuthStateReturn {
   setLanguage: (language: string) => void;
   setAdminMode: (isAdminMode: boolean) => void;
   updateLastActive: () => void;
-  resetAuthState: () => void;
+  resetState: () => void;
 
   // 自定义方法
   initializeAuth: (user: UserResource | null, isLoaded: boolean, isSignedIn: boolean) => void;
@@ -76,7 +76,7 @@ export function useAuthState(): UseAuthStateReturn {
     setLanguage,
     setAdminMode,
     updateLastActive,
-    resetAuthState,
+    resetState,
   } = useAuthStore();
 
   // 初始化认证状态
@@ -139,7 +139,7 @@ export function useAuthState(): UseAuthStateReturn {
     setLanguage,
     setAdminMode,
     updateLastActive,
-    resetAuthState,
+    resetState,
 
     // 自定义方法
     initializeAuth,

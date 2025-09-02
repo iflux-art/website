@@ -26,7 +26,7 @@ interface UseSearchStateReturn {
 
 export function useSearchState(): UseSearchStateReturn {
   // 使用 Zustand 管理搜索状态
-  const { searchTerm, selectedCategory, setSearchTerm, setSelectedCategory, resetSearch } =
+  const { searchTerm, selectedCategory, setSearchTerm, setSelectedCategory, resetState } =
     useSearchStore();
 
   // 本地状态管理搜索结果和加载状态
@@ -94,6 +94,6 @@ export function useSearchState(): UseSearchStateReturn {
     selectedCategory,
     setSearchTerm,
     setSelectedCategory,
-    resetSearch,
+    resetSearch: resetState,
   };
 }

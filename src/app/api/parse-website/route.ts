@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
-import { parseWebsite } from "@/features/website-parser";
+import { parseWebsite } from "@/features/website-parser/lib/parser";
 import { withPublicApi } from "@/lib/api/api-middleware";
-import { ApiErrors, createApiSuccess, isValidUrl } from "@/lib/api/api-utils";
+import { ApiErrors, createApiSuccess } from "@/lib/api/api-utils";
+import { isValidUrl } from "@/utils/validation";
 
 async function handleParseWebsite(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -37,27 +38,7 @@ async function handleParseWebsite(request: NextRequest) {
 const handler = withPublicApi(handleParseWebsite);
 
 // 添加CORS响应头的包装函数
-// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
 export async function GET(request: NextRequest) {
   const response = await handler(request);
-
-  // 确保响应有正确的CORS头
-  if (response instanceof Response) {
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    response.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  }
-
   return response;
-}
-
-// biome-ignore lint/style/useNamingConvention: Next.js API 路由标准命名
-export function OPTIONS() {
-  const headers = new Headers();
-  headers.set("Access-Control-Allow-Origin", "*");
-  headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  headers.set("Access-Control-Max-Age", "86400"); // 24小时
-
-  return new Response(null, { headers });
 }

@@ -1,22 +1,6 @@
 /**
- * API工具函数导出
+ * API工具模块导出
  */
-
-// 从 api-utils 导出
-export type {
-  ApiErrorType,
-  ApiErrorResponse,
-  ApiSuccessResponse,
-  CacheConfig,
-} from "./api-utils";
-export {
-  createApiError,
-  createApiSuccess,
-  ApiErrors,
-  isValidUrl,
-  validateRequiredFields,
-  withErrorHandling,
-} from "./api-utils";
 
 // 从 api-middleware 导出
 export type {
@@ -40,3 +24,36 @@ export {
   NOTIFICATION_API_PATHS,
   API_PATHS,
 } from "./api-paths";
+
+// 从 api-utils 导出
+export type {
+  ApiErrorType,
+  ApiErrorResponse,
+  ApiSuccessResponse,
+  CacheConfig,
+} from "./api-utils";
+export {
+  createApiError,
+  createApiSuccess,
+  ApiErrors,
+  withErrorHandling,
+} from "./api-utils";
+
+// 从 cache-utils 导出
+export {
+  CACHE_CONFIG,
+  generateCacheControl,
+  setCacheHeaders,
+  getCacheStrategy,
+} from "./cache-utils";
+
+// 从 api-client 导出
+export type { ApiResponse } from "./api-client";
+export {
+  apiRequest,
+  get,
+  post,
+  put,
+  del,
+  patch,
+} from "./api-client";

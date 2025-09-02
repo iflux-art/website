@@ -25,7 +25,18 @@
 		"update-deps:latest": "pnpm update --latest",
 		"test": "vitest",
 		"test:run": "vitest run",
-		"test:coverage": "vitest run --coverage"
+		"test:coverage": "vitest run --coverage",
+		"check-project": "node scripts/check-project.js",
+		"depcheck": "node scripts/depcheck.js",
+		"dev-tools": "node scripts/dev-tools.js",
+		"dev-tools:clean": "node scripts/dev-tools.js clean",
+		"dev-tools:optimize": "node scripts/dev-tools.js optimize",
+		"dev-tools:stats": "node scripts/dev-tools.js stats",
+		"perf-monitor": "node scripts/perf-monitor.js",
+		"perf-monitor:build": "node scripts/perf-monitor.js build",
+		"perf-monitor:dev": "node scripts/perf-monitor.js dev",
+		"perf-monitor:test": "node scripts/perf-monitor.js test",
+		"perf-monitor:stats": "node scripts/perf-monitor.js stats"
 	},
 	"repository": {
 		"type": "git",
@@ -69,6 +80,7 @@
 		"tailwind-merge": "^3.3.1",
 		"unified": "^11.0.5",
 		"vaul": "^1.1.2",
+		"web-vitals": "^5.1.0",
 		"zustand": "^5.0.8"
 	},
 	"devDependencies": {

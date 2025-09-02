@@ -2,33 +2,20 @@
  * URL 验证相关工具函数
  */
 
+import { isValidUrl as isValidUrlUtil, normalizeUrl as normalizeUrlUtil } from "@/utils/validation";
+
 /**
  * 验证 URL 格式
  */
 export function isValidUrl(url: string): boolean {
-  try {
-    new URL(normalizeUrl(url));
-    return true;
-  } catch {
-    return false;
-  }
+  return isValidUrlUtil(url);
 }
 
 /**
  * 标准化 URL
  */
 export function normalizeUrl(url: string): string {
-  // 如果没有协议，添加 https://
-  if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-    url = `https://${url}`;
-  }
-
-  try {
-    const urlObj = new URL(url);
-    return urlObj.href;
-  } catch {
-    throw new Error("Invalid URL format");
-  }
+  return normalizeUrlUtil(url);
 }
 
 /**

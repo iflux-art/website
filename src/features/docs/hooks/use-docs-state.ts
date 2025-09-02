@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { useDocsStore } from "@/stores";
 
 export interface UseDocsStateReturn {
-  // 数据状态 (来自 Zustand)
+  // 数据状态
   categories: DocCategory[];
   currentDoc: DocItem | null;
   loading: boolean;
@@ -18,7 +18,7 @@ export interface UseDocsStateReturn {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setSelectedCategory: (category: string | null) => void;
-  resetDocsState: () => void;
+  resetState: () => void;
 
   // 自定义方法
   loadCategories: () => void;
@@ -43,7 +43,7 @@ export function useDocsState(): UseDocsStateReturn {
     setLoading,
     setError,
     setSelectedCategory,
-    resetDocsState,
+    resetState,
   } = useDocsStore();
 
   // 加载文档分类
@@ -143,7 +143,7 @@ export function useDocsState(): UseDocsStateReturn {
     setLoading,
     setError,
     setSelectedCategory,
-    resetDocsState,
+    resetState,
 
     // 自定义方法
     loadCategories,

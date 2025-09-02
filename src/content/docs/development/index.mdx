@@ -1,0 +1,485 @@
+---
+title: 开发指南
+description: 项目开发环境搭建和配置指南
+date: 2025-08-29
+category: 开发指南
+tags:
+  - 开发环境
+  - 配置指南
+---
+
+# 开发指南
+
+本文档详细介绍如何搭建和配置斐流艺创项目的开发环境，以及相关的开发流程和最佳实践。
+
+## 开发环境搭建
+
+### 1. 系统要求
+
+在开始开发之前，请确保您的系统满足以下要求：
+
+#### 操作系统
+
+- **Windows**: Windows 10及以上版本
+- **macOS**: macOS 10.15及以上版本
+- **Linux**: Ubuntu 18.04、CentOS 7及以上版本
+
+#### 软件依赖
+
+- **Node.js**: 版本 >= 22.x
+- **pnpm**: 版本 >= 9.11.0
+- **Git**: 最新稳定版本
+- **编辑器**: 推荐使用 VS Code
+
+### 2. 环境安装
+
+#### Node.js安装
+
+推荐使用[nvm](https://github.com/nvm-sh/nvm)（Node Version Manager）管理Node.js版本：
+
+```bash
+# 安装nvm (macOS/Linux)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# 安装nvm (Windows)
+# 下载并安装nvm-windows: https://github.com/coreybutler/nvm-windows
+
+# 安装并使用Node.js 22.x
+nvm install 22
+nvm use 22
+```
+
+#### pnpm安装
+
+```bash
+# 通过npm安装pnpm
+npm install -g pnpm
+
+# 验证安装
+pnpm --version
+```
+
+#### Git安装
+
+访问[Git官网](https://git-scm.com/)下载并安装适合您操作系统的版本。
+
+### 3. 项目初始化
+
+#### 克隆项目
+
+```bash
+# 克隆项目代码
+git clone https://github.com/iflux-art/official.git
+
+# 进入项目目录
+cd official
+```
+
+#### 安装依赖
+
+```bash
+# 安装项目依赖
+pnpm install
+```
+
+#### 环境变量配置
+
+复制环境变量模板文件并根据需要进行配置：
+
+```bash
+# 复制环境变量文件
+cp .env.example .env.local
+```
+
+编辑 [.env.local](file://c:\project\official\.env.local) 文件，配置必要的环境变量：
+
+```env
+# Clerk 认证配置
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+# 网站配置
+NEXT_PUBLIC_SITE_URL=https://your-site-url.com
+```
+
+## 开发流程
+
+### 1. 启动开发服务器
+
+```bash
+# 启动开发服务器
+pnpm dev
+```
+
+开发服务器将在 [http://localhost:3000](http://localhost:3000) 上运行，并启用热重载功能。
+
+### 2. 代码检查
+
+项目集成了多种代码质量工具：
+
+```bash
+# 运行所有检查
+pnpm check
+
+# 运行TypeScript类型检查
+pnpm type-check
+
+# 运行代码格式化检查
+pnpm format:check
+
+# 运行代码lint检查
+pnpm lint
+```
+
+### 3. 代码格式化
+
+```bash
+# 自动格式化代码
+pnpm format
+
+# 应用lint修复
+pnpm lint:fix
+
+# 应用所有修复
+pnpm check:fix
+```
+
+### 4. 测试
+
+```bash
+# 运行测试
+pnpm test
+
+# 运行测试一次
+pnpm test:run
+
+# 生成测试覆盖率报告
+pnpm test:coverage
+```
+
+## 项目结构
+
+### 1. 目录结构
+
+```
+.
+├── src/
+│   ├── app/ - Next.js 应用路由
+│   ├── components/ - 共享UI组件
+│   ├── content/ - 内容数据（MDX、JSON）
+│   ├── features/ - 功能模块（高内聚）
+│   ├── lib/ - 工具函数
+│   ├── middleware.ts - 中间件
+│   └── styles/ - 全局样式
+├── public/ - 静态资源
+├── next.config.mjs - Next.js 配置
+└── tailwind.config.mjs - Tailwind 配置
+```
+
+### 2. 功能模块结构
+
+每个功能模块遵循以下结构：
+
+```
+src/features/blog/
+├── components/ - 功能相关UI组件
+├── hooks/ - 自定义React钩子
+├── lib/ - 业务逻辑库
+├── types/ - TypeScript类型定义
+└── index.ts - 模块导出入口
+```
+
+## 开发工具配置
+
+### 1. VS Code配置
+
+推荐安装以下VS Code扩展：
+
+- **ESLint**: JavaScript/TypeScript linting
+- **Prettier**: 代码格式化
+- **Tailwind CSS IntelliSense**: Tailwind CSS智能提示
+- **MDX**: MDX语法支持
+- **GitLens**: Git增强工具
+
+#### settings.json配置
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass"],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+### 2. Git配置
+
+#### 提交钩子
+
+项目使用Husky和lint-staged自动检查代码质量：
+
+```bash
+# 提交代码时自动运行检查
+git add .
+git commit -m "feat: add new feature"
+```
+
+#### 提交信息规范
+
+遵循[Conventional Commits](https://www.conventionalcommits.org/)规范：
+
+```bash
+# 功能新增
+git commit -m "feat: add user authentication"
+
+# 问题修复
+git commit -m "fix: resolve login issue"
+
+# 文档更新
+git commit -m "docs: update README"
+
+# 代码重构
+git commit -m "refactor: optimize component structure"
+
+# 性能优化
+git commit -m "perf: improve loading speed"
+
+# 测试相关
+git commit -m "test: add unit tests"
+
+# 构建相关
+git commit -m "build: update dependencies"
+```
+
+## 开发最佳实践
+
+### 1. 组件开发
+
+#### 组件结构
+
+```tsx
+// src/components/example-component.tsx
+import { cn } from '@/lib/utils';
+
+interface ExampleComponentProps {
+  className?: string;
+  children: React.ReactNode;
+}
+
+export function ExampleComponent({ 
+  className, 
+  children 
+}: ExampleComponentProps) {
+  return (
+    <div className={cn('example-component', className)}>
+      {children}
+    </div>
+  );
+}
+```
+
+#### 组件文档
+
+每个组件应包含清晰的文档注释：
+
+```tsx
+/**
+ * 示例组件
+ * 
+ * @description 一个用于演示的示例组件
+ * 
+ * @param {ExampleComponentProps} props - 组件Props
+ * @param {string} [props.className] - 自定义CSS类名
+ * @param {React.ReactNode} props.children - 子元素
+ * 
+ * @example
+ * ```tsx
+ * <ExampleComponent>
+ *   <p>示例内容</p>
+ * </ExampleComponent>
+ * ```
+ */
+```
+
+### 2. 状态管理
+
+#### Zustand使用
+
+```tsx
+// src/stores/example-store.ts
+import { create } from 'zustand';
+
+interface ExampleState {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+}
+
+export const useExampleStore = create<ExampleState>((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+}));
+```
+
+#### React Hooks
+
+```tsx
+// src/hooks/use-example.ts
+import { useState, useEffect } from 'react';
+
+export function useExample(initialValue: number) {
+  const [value, setValue] = useState(initialValue);
+  
+  useEffect(() => {
+    // 副作用处理
+  }, []);
+  
+  return { value, setValue };
+}
+```
+
+### 3. 数据获取
+
+#### TanStack Query使用
+
+```tsx
+// src/lib/api/example-api.ts
+import { useQuery } from '@tanstack/react-query';
+
+interface ExampleData {
+  id: string;
+  name: string;
+}
+
+export function useExampleData() {
+  return useQuery<ExampleData[]>({
+    queryKey: ['exampleData'],
+    queryFn: async () => {
+      const response = await fetch('/api/example');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      return response.json();
+    },
+  });
+}
+```
+
+### 4. 样式处理
+
+#### Tailwind CSS使用
+
+```tsx
+import { cn } from '@/lib/utils';
+
+interface ButtonProps {
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  children: React.ReactNode;
+}
+
+export function Button({ 
+  variant = 'primary', 
+  size = 'md', 
+  className, 
+  children 
+}: ButtonProps) {
+  return (
+    <button
+      className={cn(
+        'inline-flex items-center justify-center rounded-md font-medium transition-colors',
+        {
+          'bg-blue-500 text-white hover:bg-blue-600': variant === 'primary',
+          'bg-gray-200 text-gray-800 hover:bg-gray-300': variant === 'secondary',
+          'px-3 py-1.5 text-sm': size === 'sm',
+          'px-4 py-2 text-base': size === 'md',
+          'px-6 py-3 text-lg': size === 'lg',
+        },
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+## 调试技巧
+
+### 1. 浏览器调试
+
+- 使用React DevTools检查组件状态
+- 使用Redux DevTools检查全局状态
+- 使用浏览器开发者工具检查网络请求
+
+### 2. 日志调试
+
+```typescript
+// src/lib/logger.ts
+export function logInfo(message: string, data?: any) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[INFO] ${message}`, data);
+  }
+}
+
+export function logError(message: string, error?: any) {
+  console.error(`[ERROR] ${message}`, error);
+}
+```
+
+### 3. 性能监控
+
+```tsx
+// src/hooks/use-performance-monitor.ts
+import { useEffect } from 'react';
+
+export function usePerformanceMonitor(name: string) {
+  useEffect(() => {
+    const start = performance.now();
+    
+    return () => {
+      const end = performance.now();
+      console.log(`${name} took ${end - start} milliseconds`);
+    };
+  }, [name]);
+}
+```
+
+## 常见问题
+
+### 1. 依赖安装失败
+
+```bash
+# 清除缓存并重新安装
+pnpm store prune
+pnpm install --force
+```
+
+### 2. 开发服务器启动失败
+
+```bash
+# 检查端口占用
+netstat -ano | findstr :3000
+
+# 清理构建文件
+pnpm clean
+```
+
+### 3. 类型检查错误
+
+```bash
+# 检查并修复类型错误
+pnpm type-check
+```
+
+通过遵循这些开发指南和最佳实践，您可以更高效地参与斐流艺创项目的开发工作。

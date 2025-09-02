@@ -2,7 +2,6 @@
  * 专用辅助工具函数导出
  */
 
-export { validatePageParams, safeJsonParse } from "./validation-helpers";
 export { createPageUrl, isMobileUserAgent } from "./url-helpers";
 export { formatPublishTime, getLoadingText, getErrorText } from "./ui-helpers";
 export { formatSegmentLabel, generateBreadcrumbs } from "./breadcrumb-helpers";

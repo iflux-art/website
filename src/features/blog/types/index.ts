@@ -72,3 +72,23 @@ export interface BlogFrontmatter {
   excerpt?: string;
   cover?: string;
 }
+
+// ================= 博客搜索相关类型 =================
+
+/** 博客搜索结果 */
+export interface BlogSearchResult {
+  /** 文章标题 */
+  title: string;
+  /** 文章路径 */
+  path: string;
+  /** 文章摘要 */
+  excerpt: string;
+}
+
+/** 博客搜索参数 */
+export interface BlogSearchParams {
+  /** 搜索查询 */
+  query: string;
+  /** 搜索限制 */
+  limit?: number;
+}
