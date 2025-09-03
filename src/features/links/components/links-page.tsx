@@ -1,10 +1,8 @@
 "use client";
 
 import { ThreeColumnLayout } from "@/components/layout";
-import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
 import { LinksContent, LinksSidebarCard } from "@/features/links/components";
 import { useLinksData } from "@/features/links/hooks";
-import { useTagAnchors } from "@/features/links/hooks/use-tag-anchors";
 import { useEffect, useState } from "react";
 import { loadAllLinksData } from "@/features/links/lib";
 import type { LinksItem } from "@/features/links/types";
@@ -81,21 +79,14 @@ export const LinksPageContainer = () => {
     error,
   ]); // 简化依赖数组，只包含必要的依赖
 
-  // 生成标签锚点数据供 TableOfContents 使用
-  const tagAnchors = useTagAnchors(filteredItems);
-
   // 左侧边栏内容
   const leftSidebar = (
     <LinksSidebarCard
       categories={categories}
       selectedCategory={selectedCategory}
       onCategoryChange={handleCategoryClick}
+      showHeader={false}
     />
-  );
-
-  // 右侧边栏内容
-  const rightSidebar = (
-    <TableOfContentsCard headings={tagAnchors} title="标签导航" className="prose-sm" />
   );
 
   // 如果正在加载，显示加载状态
@@ -187,11 +178,7 @@ export const LinksPageContainer = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ThreeColumnLayout
-        leftSidebar={leftSidebar}
-        rightSidebar={rightSidebar}
-        layout="double-sidebar"
-      >
+      <ThreeColumnLayout leftSidebar={leftSidebar} layout="single-sidebar">
         <LinksContent items={filteredItems} selectedCategory={selectedCategory} />
       </ThreeColumnLayout>
     </div>

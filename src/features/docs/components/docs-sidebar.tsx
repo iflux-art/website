@@ -299,7 +299,7 @@ export const DocsSidebar = ({ structure, currentDoc, className }: DocsSidebarPro
       structure.categories.map((category, index) => {
         const categoryId = `category-${index}`;
         return (
-          <div key={categoryId} className="mb-4">
+          <div key={categoryId} className="space-y-1">
             <CategoryHeader
               category={category}
               categoryId={categoryId}
@@ -321,7 +321,7 @@ export const DocsSidebar = ({ structure, currentDoc, className }: DocsSidebarPro
     >
       <div className="space-y-2">
         {/* 分类列表 */}
-        <div className="space-y-1">{renderAllCategories}</div>
+        <div className="space-y-1.5 sm:space-y-2">{renderAllCategories}</div>
       </div>
     </div>
   );

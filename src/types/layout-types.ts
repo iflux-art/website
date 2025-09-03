@@ -4,9 +4,9 @@ import type { ReactNode } from "react";
  * 页面布局类型枚举
  */
 export type PageLayoutType =
-  | "narrow" // 窄布局：占中间的6列（友链、关于页面）
-  | "single-sidebar" // 单侧栏布局：左侧栏占3列，右侧主内容区占9列（后台管理系统）
-  | "double-sidebar" // 双侧栏布局：左右侧栏各占3列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
+  | "narrow" // 窄布局：占中间的8列（友链、关于页面）
+  | "single-sidebar" // 单侧栏布局：左侧栏占2列，右侧主内容区占10列（后台管理系统）
+  | "double-sidebar" // 双侧栏布局：左右侧栏各占2列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
   | "full-width"; // 宽布局：占满全部的12列（首页）
 
 /**

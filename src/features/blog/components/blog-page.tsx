@@ -34,6 +34,7 @@ export const BlogPageContainer = () => {
         categories={categories}
         selectedCategory={category}
         onCategoryClick={handleCategoryClick}
+        showHeader={false}
       />
       <TagCloudCard
         allTags={Object.entries(postsCount).map(([name, count]) => ({

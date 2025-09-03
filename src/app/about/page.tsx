@@ -20,10 +20,10 @@ const AboutPage = () => {
 
   return (
     <PageContainer config={{ layout: "narrow" }}>
-      <div className="mt-4">
+      <div>
         {/* 个人信息卡片网格 */}
         {profileItems.length > 0 && (
-          <AppGrid columns={5} className="items-stretch">
+          <AppGrid columns={4} className="items-stretch">
             {profileItems.map(item => (
               <LinkCard
                 key={item.id}

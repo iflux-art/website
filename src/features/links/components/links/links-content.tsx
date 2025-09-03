@@ -79,7 +79,7 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
             </h2>
 
             {/* 链接卡片网格 */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {tagItems.map(item => (
                 <LinkCard
                   key={item.id}

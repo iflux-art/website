@@ -90,7 +90,7 @@ export default function DocsPage() {
     const breadcrumbs = createDocBreadcrumbsServer(slug, doc.frontmatter.title);
 
     // 左侧边栏内容 - 文档导航
-    const leftSidebar = <DocsSidebarCard currentDoc={structure.firstDocPath} />;
+    const leftSidebar = <DocsSidebarCard currentDoc={structure.firstDocPath} showHeader={false} />;
 
     // 右侧边栏内容 - 目录导航
     const rightSidebar = <TableOfContentsCard headings={doc.headings} className="prose-sm" />;

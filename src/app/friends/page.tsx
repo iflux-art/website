@@ -39,9 +39,9 @@ const FriendsPage = () => {
 
   return (
     <PageContainer config={{ layout: "narrow" }}>
-      <div className="mt-4">
+      <div>
         {/* 友链列表网格 */}
-        <AppGrid columns={5} className="items-stretch">
+        <AppGrid columns={4} className="items-stretch">
           {friendsItems.map(item => (
             <LinkCard
               key={item.id}

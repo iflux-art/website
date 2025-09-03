@@ -62,6 +62,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           categories={allCategories}
           selectedCategory={frontmatter.category}
           enableRouting
+          showHeader={false}
         />
         <TagCloudCard allTags={allTags} selectedTag={undefined} useDefaultRouting />
       </>
