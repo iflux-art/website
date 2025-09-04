@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage, type StateStorage } from "zustand/middleware";
 import type { CustomStorageApi } from "@/lib/storage/index";
+import { createResetFunction as sharedCreateResetFunction } from "@/utils/store";
 
 // 状态接口
 export interface State {
@@ -26,8 +27,13 @@ export const initialState: State = {
   example: "",
 };
 
+// 创建标准化的重置函数
+export const createResetFunction = sharedCreateResetFunction;
+
 // 创建函数
 export const createStore = (storage?: StateStorage | CustomStorageApi) => {
+  const resetState = createResetFunction(initialState);
+
   return storage
     ? create<Store>()(
         persist(
@@ -36,7 +42,7 @@ export const createStore = (storage?: StateStorage | CustomStorageApi) => {
 
             // Actions
             setExample: value => set({ example: value }),
-            resetState: () => set({ ...initialState }),
+            resetState: () => set(resetState()),
 
             // 派生状态通过getter函数实现
             // get derivedExample() {
@@ -55,7 +61,7 @@ export const createStore = (storage?: StateStorage | CustomStorageApi) => {
 
         // Actions
         setExample: value => set({ example: value }),
-        resetState: () => set({ ...initialState }),
+        resetState: () => set(resetState()),
 
         // 派生状态通过getter函数实现
         // get derivedExample() {

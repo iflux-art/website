@@ -1,6 +1,6 @@
 "use client";
 
-import type { Heading } from "@/types";
+import type { Heading } from "@/features/navbar/types";
 import { useEffect, useState, useRef } from "react";
 
 export function useHeadingObserver(

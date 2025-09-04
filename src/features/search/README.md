@@ -205,7 +205,6 @@ GET /api/search?q=React&type=all&limit=10
 
 搜索功能整合了以下数据源：
 
-- **链接数据**: 来自 `@/features/links/lib/categories`
 - **博客数据**: 来自 `src/content/blog/**/*.mdx`
 - **文档数据**: 来自 `src/content/docs/**/*.mdx`
 

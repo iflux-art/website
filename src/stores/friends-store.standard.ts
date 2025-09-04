@@ -1,11 +1,14 @@
 import { create } from "zustand";
-import type { LinksItem } from "@/features/links/types";
-import type { FriendsPageConfig, FriendLinkRequirement } from "@/features/friends/types";
+import type {
+  FriendLink,
+  FriendsPageConfig,
+  FriendLinkRequirement,
+} from "@/features/friends/types";
 
 // 状态接口
 export interface FriendsState {
   // 数据状态
-  friendsItems: LinksItem[];
+  friendsItems: FriendLink[];
   loading: boolean;
   error: string | null;
 
@@ -19,7 +22,7 @@ export interface FriendsState {
 
 // 动作接口
 export interface FriendsActions {
-  setFriendsItems: (items: LinksItem[]) => void;
+  setFriendsItems: (items: FriendLink[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setConfig: (config: FriendsPageConfig) => void;

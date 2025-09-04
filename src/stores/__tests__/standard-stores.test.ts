@@ -1,18 +1,14 @@
 import { describe, it, expect } from "vitest";
 import { useAppStore } from "../app-store.standard";
-import { useAuthStore } from "../auth-store.standard";
 import { useBlogPageStore } from "../blog-page-store.standard";
 import { useBlogStore } from "../blog-store.standard";
 import { useDocsGlobalStructureStore } from "../docs-global-structure-store.standard";
 import { useDocsStore } from "../docs-store.standard";
 import { useFriendsStore } from "../friends-store.standard";
 import { useLayoutStore } from "../layout-store.standard";
-import { useLinkFilterStore } from "../link-filter-store.standard";
-import { useLinksDataStore } from "../links-data-store.standard";
 import { useNavbarStore } from "../navbar-store.standard";
 import { useSearchStore } from "../search-store.standard";
 import { useThemeStore } from "../theme-store.standard";
-import { useAdminStore } from "../admin-store.standard";
 
 describe("Standard Stores", () => {
   describe("useAppStore", () => {
@@ -29,23 +25,6 @@ describe("Standard Stores", () => {
       expect(typeof store.setIsSidebarOpen).toBe("function");
       expect(typeof store.setIsSearchOpen).toBe("function");
       expect(typeof store.toggleSidebar).toBe("function");
-      expect(typeof store.resetState).toBe("function");
-    });
-  });
-
-  describe("useAuthStore", () => {
-    it("should initialize with correct default state", () => {
-      const store = useAuthStore.getState();
-      expect(store.user).toBeNull();
-      expect(store.isLoaded).toBe(false);
-      expect(store.isSignedIn).toBe(false);
-      expect(store.preferences.theme).toBe("system");
-    });
-
-    it("should have all required actions", () => {
-      const store = useAuthStore.getState();
-      expect(typeof store.setUser).toBe("function");
-      expect(typeof store.setPreferences).toBe("function");
       expect(typeof store.resetState).toBe("function");
     });
   });
@@ -146,38 +125,6 @@ describe("Standard Stores", () => {
     });
   });
 
-  describe("useLinkFilterStore", () => {
-    it("should initialize with correct default state", () => {
-      const store = useLinkFilterStore.getState();
-      expect(store.selectedCategory).toBe("");
-      expect(store.selectedTag).toBe("");
-      expect(store.filteredItems).toEqual([]);
-    });
-
-    it("should have all required actions", () => {
-      const store = useLinkFilterStore.getState();
-      expect(typeof store.setSelectedCategory).toBe("function");
-      expect(typeof store.setSelectedTag).toBe("function");
-      expect(typeof store.resetState).toBe("function");
-    });
-  });
-
-  describe("useLinksDataStore", () => {
-    it("should initialize with correct default state", () => {
-      const store = useLinksDataStore.getState();
-      expect(store.items).toEqual([]);
-      expect(store.loading).toBe(true);
-      expect(store.error).toBeNull();
-    });
-
-    it("should have all required actions", () => {
-      const store = useLinksDataStore.getState();
-      expect(typeof store.setItems).toBe("function");
-      expect(typeof store.setLoading).toBe("function");
-      expect(typeof store.resetState).toBe("function");
-    });
-  });
-
   describe("useNavbarStore", () => {
     it("should initialize with correct default state", () => {
       const store = useNavbarStore.getState();
@@ -221,22 +168,6 @@ describe("Standard Stores", () => {
       const store = useThemeStore.getState();
       expect(typeof store.setTheme).toBe("function");
       expect(typeof store.setResolvedTheme).toBe("function");
-      expect(typeof store.resetState).toBe("function");
-    });
-  });
-
-  describe("useAdminStore", () => {
-    it("should initialize with correct default state", () => {
-      const store = useAdminStore.getState();
-      expect(store.items).toEqual([]);
-      expect(store.loading).toBe(false);
-      expect(store.error).toBeNull();
-    });
-
-    it("should have all required actions", () => {
-      const store = useAdminStore.getState();
-      expect(typeof store.setItems).toBe("function");
-      expect(typeof store.setLoading).toBe("function");
       expect(typeof store.resetState).toBe("function");
     });
   });

@@ -26,16 +26,15 @@ export { NotFound } from "./not-found";
 
 // 导航相关组件
 export { Footer } from "./footer";
-export { Breadcrumb } from "./breadcrumb";
-export { Sidebar, SidebarWrapper } from "./sidebar";
+export { Breadcrumb } from "@/features/navigation";
+export { Sidebar, SidebarWrapper } from "@/features/navigation";
 
 // 配置信息
 export {
   NAV_ITEMS,
   NAV_PATHS,
   NAV_DESCRIPTIONS,
-  ADMIN_MENU_ITEMS,
-} from "./navbar/nav-config";
+} from "@/features/navbar/components/nav-config";
 
 // 客户端初始化组件
 export { InitClient } from "./init-client";

@@ -1,5 +1,5 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 /**
  * 中间件缓存配置
@@ -12,57 +12,18 @@ const MIDDLEWARE_CACHE_CONFIG = {
 } as const;
 
 /**
- * 内容安全策略配置 - 为 Clerk 优化
+ * 内容安全策略配置
  */
 const CSP_CONFIG = {
   "default-src": ["'self'"],
-  "script-src": [
-    "'self'",
-    "'unsafe-inline'",
-    "'unsafe-eval'",
-    "https://cdn.jsdelivr.net",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "style-src": [
-    "'self'",
-    "'unsafe-inline'",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "img-src": [
-    "'self'",
-    "data:",
-    "https:",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "font-src": [
-    "'self'",
-    "data:",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "connect-src": [
-    "'self'",
-    "https:",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://api.clerk.com",
-    "https://js.clerk.com",
-  ],
-  "frame-src": [
-    "'self'",
-    "https://*.clerk.accounts.dev",
-    "https://*.clerk.com",
-    "https://js.clerk.com",
-  ],
+  "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.jsdelivr.net"],
+  "style-src": ["'self'", "'unsafe-inline'"],
+  "img-src": ["'self'", "data:", "https:"],
+  "font-src": ["'self'", "data:"],
+  "connect-src": ["'self'", "https:"],
+  "frame-src": ["'self'"],
   "frame-ancestors": ["'none'"],
-  "form-action": ["'self'", "https://*.clerk.accounts.dev", "https://*.clerk.com"],
+  "form-action": ["'self'"],
   "base-uri": ["'self'"],
   "worker-src": ["'self'", "blob:"],
   "upgrade-insecure-requests": [],
@@ -97,41 +58,45 @@ const getCacheControl = (pathname: string): string => {
 
   // 静态资源
   if (/\.(js|css|json|xml|txt|ico)$/.test(pathname) || pathname.startsWith("/_next/static/")) {
-    return `public, max-age=${staticAssets}, s-maxage=${staticAssets * 2}, stale-while-revalidate=${staticAssets * 24}`;
+    const maxAge = staticAssets;
+    const sMaxAge = maxAge * 2;
+    const staleWhileRevalidate = maxAge * 24;
+    return `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
   }
 
   // 图片
   if (/\.(png|jpg|jpeg|gif|webp|avif|svg)$/.test(pathname)) {
-    return `public, max-age=${images}, s-maxage=${images * 2}, stale-while-revalidate=${images * 10}`;
+    const maxAge = images;
+    const sMaxAge = maxAge * 2;
+    const staleWhileRevalidate = maxAge * 10;
+    return `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
   }
 
   // 字体
   if (/\.(woff|woff2|ttf|otf)$/.test(pathname)) {
-    return `public, max-age=${fonts}, s-maxage=${fonts * 2}, stale-while-revalidate=${fonts * 24}`;
+    const maxAge = fonts;
+    const sMaxAge = maxAge * 2;
+    const staleWhileRevalidate = maxAge * 24;
+    return `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
   }
 
   // API路由
   if (pathname.includes("/api/")) {
-    return `public, max-age=${api}, s-maxage=${api * 2}, stale-while-revalidate=${api * 10}`;
+    const maxAge = api;
+    const sMaxAge = maxAge * 2;
+    const staleWhileRevalidate = maxAge * 10;
+    return `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
   }
 
   // 其他页面不缓存
   return "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate";
 };
 
-// 定义需要保护的路由
-const isProtectedRoute = createRouteMatcher(["/admin(.*)"]);
-
 /**
  * 中间件
  */
-export default clerkMiddleware(async (auth, request) => {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // 保护管理员路由
-  if (isProtectedRoute(request)) {
-    await auth.protect();
-  }
 
   const response = NextResponse.next();
 
@@ -158,12 +123,14 @@ export default clerkMiddleware(async (auth, request) => {
   }
 
   response.headers.set("Cache-Control", getCacheControl(pathname));
-  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
+
+  // 设置安全头
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
     response.headers.set(key, value);
-  });
+  }
 
   return response;
-});
+}
 
 export const config = {
   matcher: [
@@ -171,6 +138,5 @@ export const config = {
     "/images/:path*",
     "/fonts/:path*",
     "/api/:path*",
-    "/app/api/:path*",
   ],
 };

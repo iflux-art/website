@@ -1,11 +1,9 @@
 import "./globals.css";
-import { GlobalContextMenu } from "@/components/global-context-menu";
 import { Footer } from "@/components/layout";
 import { InitClient } from "@/components/layout/init-client";
-import { MainNavbar } from "@/components/layout/navbar/main-navbar";
+import { MainNavbar } from "@/features/navbar/components/main-navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { RoutePrefetcher } from "@/components/route-prefetcher";
-import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";
 
 /**
@@ -21,40 +19,31 @@ export const metadata = generateMetadata();
 export const viewport = generateViewport();
 
 // 定义需要预取的关键路由
-const KEY_ROUTES = ["/", "/blog", "/docs", "/links", "/about", "/friends"];
+const KEY_ROUTES = ["/", "/blog", "/docs", "/about", "/friends"];
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <ClerkProvider>
-    <html
-      lang="zh-CN"
-      // 禁用hydration warning提示 - next-themes要求
-      suppressHydrationWarning
-    >
-      <head />
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <GlobalContextMenu>
-            {/* 页面主体布局容器 */}
-            <div className="flex flex-col">
-              <MainNavbar className="flex-shrink-0" />
-              {/* 客户端初始化组件 */}
-              <InitClient />
-              {/* 路由预取器 */}
-              <RoutePrefetcher routes={KEY_ROUTES} strategy="idle" />
-              {/* 主内容区域 */}
-              <main>{children}</main>
-              <Footer />
-            </div>
-          </GlobalContextMenu>
-        </ThemeProvider>
-      </body>
-    </html>
-  </ClerkProvider>
+  <html
+    lang="zh-CN"
+    // 禁用hydration warning提示 - next-themes要求
+    suppressHydrationWarning
+  >
+    <head />
+    <body>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        {/* 页面主体布局容器 */}
+        <div className="flex flex-col">
+          <MainNavbar className="flex-shrink-0" />
+          {/* 客户端初始化组件 */}
+          <InitClient />
+          {/* 路由预取器 */}
+          <RoutePrefetcher routes={KEY_ROUTES} strategy="idle" />
+          {/* 主内容区域 */}
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </ThemeProvider>
+    </body>
+  </html>
 );
 
 export default RootLayout;

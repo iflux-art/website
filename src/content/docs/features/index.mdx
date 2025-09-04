@@ -28,8 +28,7 @@ src/features/
 ├── friends/ - 友情链接功能
 ├── home/ - 首页功能
 ├── links/ - 链接管理功能
-├── search/ - 全局搜索功能
-└── website-parser/ - 网站解析功能
+└── search/ - 全局搜索功能
 ```
 
 每个功能模块都包含自己的组件、钩子、类型和业务逻辑，实现了功能的完全封装。
@@ -155,12 +154,10 @@ class SearchAPI {
 +GET(query) : SearchResult[]
 +getBlogPosts() : BlogPost[]
 +getDocs() : DocPost[]
-+getLinks() : LinksItem[]
 }
 SearchAPI --> SearchResult : "返回"
 SearchAPI --> BlogPost : "调用"
 SearchAPI --> DocPost : "调用"
-SearchAPI --> LinksItem : "调用"
 ```
 
 ## 5. 用户认证系统
@@ -227,10 +224,8 @@ graph TD
 subgraph "核心功能模块"
 A[features/blog]
 B[features/docs]
-C[features/links]
-D[features/search]
-E[features/auth]
-F[features/admin]
+C[features/search]
+D[features/friends]
 end
 subgraph "共享资源"
 G[components]
@@ -241,20 +236,13 @@ A --> G
 B --> G
 C --> G
 D --> G
-E --> G
-F --> G
 A --> H
 B --> H
 C --> H
 D --> H
-E --> H
-F --> H
 A --> I
 B --> I
-C --> I
 D --> I
-E --> I
-F --> I
 ```
 
 ## 扩展性设计

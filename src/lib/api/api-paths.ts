@@ -15,11 +15,6 @@ export const CONTENT_API_PATHS = {
   Docs: "/api/docs",
   Doc: (slug: string) => `/api/docs/${slug}`,
   DocCategories: "/api/docs/categories",
-
-  // 链接相关
-  Links: "/api/links",
-  Link: (id: string) => `/api/links/${id}`,
-  LinkCategories: "/api/links/categories",
 } as const;
 
 // 博客API路径
@@ -55,6 +50,13 @@ export const NOTIFICATION_API_PATHS = {
   MarkAsRead: "/api/notifications/mark-as-read",
 } as const;
 
+// 友链API路径
+export const FRIENDS_API_PATHS = {
+  Friends: "/api/friends",
+  Apply: "/api/friends/apply",
+  Stats: "/api/friends/stats",
+} as const;
+
 // 导出API_PATHS以保持向后兼容性
 export const API_PATHS = {
   blog: BLOG_API_PATHS,
@@ -63,5 +65,6 @@ export const API_PATHS = {
   search: SEARCH_API_PATHS,
   analytics: ANALYTICS_API_PATHS,
   notification: NOTIFICATION_API_PATHS,
+  friends: FRIENDS_API_PATHS,
   docs: CONTENT_API_PATHS, // 为文档API提供别名以保持向后兼容性
 } as const;

@@ -42,11 +42,10 @@ export function getContainerClassName(config: PageContainerConfig = {}): string 
 
 /**
  * 获取主内容区域的响应式类名
- * 支持四种布局类型：
+ * 支持三种布局类型：
  * 1. 窄布局(narrow)：主内容占8列
- * 2. 单侧栏布局(single-sidebar)：左侧栏占2列，主内容占10列
- * 3. 双侧栏布局(double-sidebar)：左右侧栏各占2列，主内容占8列
- * 4. 宽布局(full-width)：主内容占满12列
+ * 2. 双侧栏布局(double-sidebar)：左右侧栏各占2列，主内容占8列
+ * 3. 宽布局(full-width)：主内容占满12列
  */
 export function getMainContentClasses(layout: PageLayoutType): string {
   const baseClasses = "min-w-0";
@@ -55,9 +54,6 @@ export function getMainContentClasses(layout: PageLayoutType): string {
     case "narrow":
       // 窄布局：主内容占8列
       return `${baseClasses} md:col-span-8 lg:col-span-8 xl:col-span-8 md:col-start-3 lg:col-start-3 xl:col-start-3`;
-    case "single-sidebar":
-      // 单侧栏布局：左侧栏占2列，主内容占10列
-      return `${baseClasses} md:col-span-10 lg:col-span-10 xl:col-span-10 md:col-start-3 lg:col-start-3 xl:col-start-3`;
     case "double-sidebar":
       // 双侧栏布局：左右侧栏各占2列，主内容占8列
       return `${baseClasses} md:col-span-8 lg:col-span-8 xl:col-span-8 md:col-start-3 lg:col-start-3 xl:col-start-3`;
@@ -76,15 +72,8 @@ export function getSidebarClasses(position: "left" | "right", layout: PageLayout
     case "narrow":
       // 窄布局不显示侧边栏
       return "hidden";
-    case "single-sidebar":
-      // 单侧栏布局：侧边栏占2列
-      if (position === "left") {
-        return "md:col-span-2 lg:col-span-2 xl:col-span-2 md:col-start-1 lg:col-start-1 xl:col-start-1";
-      }
-      // 右侧边栏在单侧栏布局中不显示
-      return "hidden";
     case "double-sidebar":
-      // 双侧栏布局：左右侧边栏各占2列
+      // 双侧栏布局：左右侧栏各占2列
       if (position === "left") {
         return "md:col-span-2 lg:col-span-2 xl:col-span-2 md:col-start-1 lg:col-start-1 xl:col-start-1";
       } else {

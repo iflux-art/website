@@ -1,11 +1,3 @@
-// 内容类型
-export type {
-  Url,
-  BaseFrontmatter,
-  BaseContent,
-  BaseCategory,
-} from "./content-types";
-
 // 布局相关类型
 export type {
   PageLayoutType,
@@ -23,17 +15,8 @@ export type {
   GridGapMap,
 } from "./layout-types";
 
-// 导航相关类型
-export type {
-  BreadcrumbItem,
-  Heading,
-  SidebarItem,
-  SidebarProps,
-  BaseNavItem,
-  NestedNavItem,
-  BaseSearchResult,
-  NavbarSearchResult,
-} from "./nav-types";
+// 新增异步操作相关类型
+export type { UseAsyncOptions, AsyncOperationResult, CacheOptions } from "./async-types";
 
 // SEO相关类型
 export type {

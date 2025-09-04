@@ -1,6 +1,6 @@
 "use client";
 
-import { NavLink } from "@/components/layout/navbar/nav-link";
+import { NavLink } from "@/features/navbar/components/nav-link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { SidebarItem } from "@/features/docs/types";
 import { cn } from "@/utils";

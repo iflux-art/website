@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { isValidUrl as isValidUrlUtil } from "@/utils/validation";
 
 /**
  * API 错误类型
@@ -138,32 +137,6 @@ export const ApiErrors = {
       405
     ),
 };
-
-/**
- * URL 验证函数
- */
-export function isValidUrl(urlString: string): boolean {
-  return isValidUrlUtil(urlString);
-}
-
-/**
- * 基本字段验证
- */
-export function validateRequiredFields(
-  data: Record<string, unknown>,
-  requiredFields: string[]
-): string[] {
-  const missingFields: string[] = [];
-
-  for (const field of requiredFields) {
-    // 修复：添加更严格的类型检查
-    if (!data[field] || (typeof data[field] === "string" && !data[field]?.toString().trim())) {
-      missingFields.push(field);
-    }
-  }
-
-  return missingFields;
-}
 
 /**
  * 异步错误处理包装器

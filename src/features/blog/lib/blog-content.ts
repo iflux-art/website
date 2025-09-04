@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { extractHeadings } from "@/utils/helpers";
+import { extractHeadings } from "@/features/content/lib";
 import type { BlogFrontmatter } from "@/features/blog/types";
 
 export function getBlogContent(slug: string[]): {

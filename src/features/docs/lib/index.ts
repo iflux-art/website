@@ -11,7 +11,7 @@ import type {
   NavDocItem,
   SidebarItem,
 } from "@/features/docs/types";
-import type { BreadcrumbItem } from "@/types";
+import type { BreadcrumbItem } from "@/features/navbar/types";
 import { sync as globSync } from "glob";
 import matter from "gray-matter";
 import { getDocContent } from "./doc-content";
@@ -27,7 +27,7 @@ export {
 } from "./doc-path-resolver";
 
 // 从全局helpers导出字数统计函数
-export { countWords } from "@/utils/helpers/text-helpers";
+export { countWords } from "./word-count";
 
 interface DocMetaItem {
   title: string;

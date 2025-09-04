@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { DocContentResult, NavDocItem } from "@/features/docs/types";
-import { extractHeadings } from "@/utils/helpers";
+import { extractHeadings } from "@/features/content/lib";
 import matter from "gray-matter";
 import { getFlattenedDocsOrder } from "./doc-paths";
 import { countWords } from "./word-count";

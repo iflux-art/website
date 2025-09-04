@@ -6,7 +6,7 @@
 import { SITE_METADATA } from "@/config";
 import type { GenerateMetadataOptions } from "@/types";
 import type { Metadata } from "next";
-import { filterUndefinedValues } from "@/utils/core/helpers";
+import { filterUndefinedValues } from "@/utils/helpers";
 
 /**
  * 生成视口配置

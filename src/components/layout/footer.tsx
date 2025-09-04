@@ -1,7 +1,6 @@
 "use client";
 
 import { GitHubButton, TravelButton } from "@/components/button";
-import { AuthButtons } from "@/features/auth";
 import { cn } from "@/utils";
 
 /**
@@ -13,7 +12,6 @@ export const Footer = () => (
     <div className="container mx-auto flex items-center justify-between px-4">
       <div className="text-sm text-muted-foreground">© 2025 iFluxArt 保留所有权利</div>
       <div className="flex items-center gap-1">
-        <AuthButtons />
         <GitHubButton />
         <TravelButton />
       </div>

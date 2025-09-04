@@ -2,8 +2,7 @@
  * Friends 功能相关工具函数
  */
 
-import type { LinksItem } from "@/features/links/types";
-import type { FriendLinkRequirement, FriendsPageConfig } from "../types";
+import type { FriendLink, FriendLinkRequirement, FriendsPageConfig } from "../types";
 
 /**
  * 友链表单URL配置
@@ -51,11 +50,11 @@ export const DEFAULT_FRIENDS_CONFIG: FriendsPageConfig = {
  * @param friendsData 原始友链数据
  * @returns 处理后的友链数据
  */
-export function processFriendsData(friendsData: unknown[]): LinksItem[] {
+export function processFriendsData(friendsData: unknown[]): FriendLink[] {
   return friendsData.map(item => ({
-    ...(item as LinksItem),
+    ...(item as FriendLink),
     category: "friends" as const,
-    iconType: ((item as LinksItem & { iconType?: "image" | "text" }).iconType ?? "image") as
+    iconType: ((item as FriendLink & { iconType?: "image" | "text" }).iconType ?? "image") as
       | "image"
       | "text",
   }));
@@ -66,6 +65,6 @@ export function processFriendsData(friendsData: unknown[]): LinksItem[] {
  * @param friendsItems 友链数据
  * @returns 是否有数据
  */
-export function hasFriendsData(friendsItems: LinksItem[]): boolean {
+export function hasFriendsData(friendsItems: FriendLink[]): boolean {
   return friendsItems.length > 0;
 }

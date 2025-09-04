@@ -89,32 +89,6 @@ async function scanLinkFiles(): Promise<SearchResult[]> {
         });
       }
     }
-
-    // 读取分类目录下的JSON文件
-    const categoryDir = path.join(linksDir, "category");
-    if (
-      await fs
-        .stat(categoryDir)
-        .then(stat => stat.isDirectory())
-        .catch(() => false)
-    ) {
-      const categoryFiles = await glob("**/*.json", { cwd: categoryDir });
-      for (const file of categoryFiles) {
-        const filePath = path.join(categoryDir, file);
-        const fileContent = await fs.readFile(filePath, "utf8");
-        const items: LinkItem[] = JSON.parse(fileContent);
-
-        items.forEach(item => {
-          results.push({
-            type: "link",
-            title: item.title,
-            description: item.description,
-            url: item.url,
-            tags: item.tags,
-          });
-        });
-      }
-    }
   } catch (error) {
     console.error("Error scanning link files:", error);
   }

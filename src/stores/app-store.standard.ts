@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createResetFunction } from "@/utils/store";
 
 // 状态接口
 export interface AppUIState {
@@ -76,22 +77,13 @@ export const initialState: AppUIState = {
   error: null,
 };
 
+// 创建标准化的重置函数
+const resetState = createResetFunction(initialState);
+
 // 创建函数
 export const createAppStore = () => {
   return create<AppStore>()((set, _get) => ({
-    // ...initialState,
-    isSidebarOpen: false,
-    isSearchOpen: false,
-    isMobile: false,
-    theme: "system",
-    language: "zh-CN",
-    notifications: {
-      hasUnread: false,
-      count: 0,
-    },
-    isLoading: false,
-    loadingMessage: "",
-    error: null,
+    ...initialState,
 
     // UI Actions
     setIsSidebarOpen: isOpen => set({ isSidebarOpen: isOpen }),
@@ -136,21 +128,7 @@ export const createAppStore = () => {
     clearError: () => set({ error: null }),
 
     // 重置 Actions
-    resetState: () =>
-      set({
-        isSidebarOpen: false,
-        isSearchOpen: false,
-        isMobile: false,
-        theme: "system",
-        language: "zh-CN",
-        notifications: {
-          hasUnread: false,
-          count: 0,
-        },
-        isLoading: false,
-        loadingMessage: "",
-        error: null,
-      }),
+    resetState: () => set(resetState()),
     resetUIState: () =>
       set({
         isSidebarOpen: false,

@@ -218,6 +218,22 @@ export interface TocHeading {
 }
 
 /**
+ * 目录 Props
+ */
+export interface TocProps {
+  /** 标题列表 */
+  headings: TocHeading[];
+  /** 自定义类名 */
+  className?: string;
+  /** 卡片标题 */
+  title?: string;
+  /** 是否自适应高度 */
+  adaptive?: boolean;
+  /** 自适应偏移量 */
+  adaptiveOffset?: number;
+}
+
+/**
  * 目录卡片 Props
  */
 export interface TableOfContentsCardProps {

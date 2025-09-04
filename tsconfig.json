@@ -50,7 +50,8 @@
 			{
 				"name": "next"
 			}
-		]
+		],
+		"typeRoots": ["./node_modules/@types"]
 	},
 	"include": [
 		"src/types/global.d.ts",

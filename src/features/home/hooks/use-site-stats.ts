@@ -8,7 +8,6 @@
 import { useBlogPosts } from "@/features/blog/hooks";
 import { useDocCategories } from "@/features/docs/hooks";
 import type { SiteStats } from "@/features/home/types";
-import { useLinksData } from "@/features/links/hooks";
 import { useMemo } from "react";
 
 /**
@@ -29,7 +28,6 @@ export function useSiteStats(): SiteStats & { refresh: () => void } {
     error: docError,
     refresh: refreshDocs,
   } = useDocCategories();
-  const { allItems: linkItems, loading: linkLoading, error: linkError } = useLinksData();
 
   const stats = useMemo(() => {
     // 博客数量
@@ -42,24 +40,18 @@ export function useSiteStats(): SiteStats & { refresh: () => void } {
         0
       ) ?? 0;
 
-    // 导航链接数量 - 排除友链和个人主页分类
-    const linkCount =
-      linkItems?.filter(item => item.category !== "friends" && item.category !== "profile")
-        .length ?? 0;
-
-    // 友链数量
-    const friendCount = linkItems?.filter(item => item.category === "friends").length ?? 0;
+    // 友链数量 - 从友链功能获取
+    const friendCount = 0; // TODO: 从友链功能获取实际数量
 
     return {
       blogCount,
       docCount,
-      linkCount,
       friendCount,
     };
-  }, [blogPosts, docCategories, linkItems]);
+  }, [blogPosts, docCategories]);
 
-  const loading = blogLoading || docLoading || linkLoading;
-  const error = blogError?.message ?? docError?.message ?? linkError ?? null;
+  const loading = blogLoading || docLoading;
+  const error = blogError?.message ?? docError?.message ?? null;
 
   return {
     ...stats,
@@ -68,8 +60,6 @@ export function useSiteStats(): SiteStats & { refresh: () => void } {
     refresh: () => {
       refreshBlog();
       refreshDocs();
-      // 为链接数据添加刷新功能需要对 useLinksData 进行修改
-      // 目前无法直接刷新，已经在 useLinksData 中添加了缓存破坏机制
     },
   };
 }

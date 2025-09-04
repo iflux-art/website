@@ -9,11 +9,10 @@ import { useEffect } from "react";
 
 /**
  * 通用页面容器组件
- * 支持四种布局类型：
+ * 支持三种布局类型：
  * 1. narrow: 窄布局，占中间的6列（友链、关于页面）
- * 2. single-sidebar: 单侧栏布局，左侧栏占3列，右侧主内容区占9列（后台管理系统）
- * 3. double-sidebar: 双侧栏布局，左右侧栏各占3列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
- * 4. full-width: 宽布局，占满全部的12列（首页）
+ * 2. double-sidebar: 双侧栏布局，左右侧栏各占3列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
+ * 3. full-width: 宽布局，占满全部的12列（首页）
  */
 export const PageContainer = ({
   children,

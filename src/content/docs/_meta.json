@@ -23,17 +23,5 @@
   "content": {
     "title": "内容管理",
     "description": "项目内容管理和渲染机制"
-  },
-  "development": {
-    "title": "开发指南",
-    "description": "开发环境搭建、编码规范和最佳实践"
-  },
-  "deployment": {
-    "title": "部署与构建",
-    "description": "项目部署和构建配置说明"
-  },
-  "community": {
-    "title": "社区与贡献",
-    "description": "如何参与社区和贡献代码"
   }
 }

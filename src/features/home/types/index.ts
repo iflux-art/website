@@ -6,7 +6,6 @@
 export interface SiteStats {
   blogCount: number;
   docCount: number;
-  linkCount: number;
   friendCount: number;
   loading: boolean;
   error: string | null;

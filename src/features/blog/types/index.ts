@@ -2,7 +2,7 @@
  * 博客相关类型定义
  */
 
-import type { BaseContent, Url } from "@/types";
+import type { BaseContent, Url } from "@/features/content/types";
 
 /**
  * 博客文章

@@ -5,18 +5,17 @@
  */
 
 // ==================== MDX 组件 ====================
-export { default as ClientMDXRenderer } from "./mdx/client-mdx-renderer";
-export { MDXComponents } from "./mdx/mdx-components";
-export { MDXImg } from "./mdx/mdx-img";
-export { MDXLink } from "./mdx/mdx-link";
-export { MDXBlockquote } from "./mdx/mdx-blockquote";
-export { MDXCode } from "./mdx/mdx-code";
+export {
+  ClientMDXRenderer,
+  MDXComponents,
+  MDXImg,
+  MDXLink,
+  MDXBlockquote,
+  MDXCode,
+} from "@/features/content/components/mdx";
 
 // ==================== 主题提供者 ====================
 export { ThemeProvider } from "./theme/theme-provider";
-
-// ==================== 全局功能组件 ====================
-export { GlobalContextMenu } from "./global-context-menu";
 
 // ==================== 业务按钮组件 ====================
 export { GitHubButton } from "./button/github-button";

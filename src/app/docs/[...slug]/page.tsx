@@ -1,8 +1,9 @@
 import { ThreeColumnLayout } from "@/components/layout";
-import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
-import { ClientMDXRenderer } from "@/components/mdx";
+import { TableOfContentsCard } from "@/features/navigation";
+import { ClientMDXRenderer } from "@/features/content/components/mdx";
 import { TwikooComment } from "@/features/comment";
-import { ContentDisplay, DocPagination } from "@/features/content-display/components";
+import { ContentDisplay } from "@/features/content/components/display";
+import { DocPagination } from "@/features/navigation";
 import { DocErrorHandler, DocsSidebarCard } from "@/features/docs/components";
 import {
   createDocBreadcrumbsServer,

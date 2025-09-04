@@ -1,7 +1,10 @@
 "use client";
 
-import type { LinksItem } from "@/features/links/types";
-import type { FriendsPageConfig, FriendLinkRequirement } from "@/features/friends/types";
+import type {
+  FriendLink,
+  FriendsPageConfig,
+  FriendLinkRequirement,
+} from "@/features/friends/types";
 import { useCallback, useMemo } from "react";
 import { useFriendsStore } from "@/stores";
 import {
@@ -9,10 +12,16 @@ import {
   FRIEND_LINK_REQUIREMENTS,
   processFriendsData,
 } from "@/features/friends/lib";
+// 导入新的工具函数
+import {
+  createStandardStateActions,
+  createFilteredStateManager,
+  createConfigManager,
+} from "@/utils/state";
 
 export interface UseFriendsStateReturn {
   // 数据状态
-  friendsItems: LinksItem[];
+  friendsItems: FriendLink[];
   loading: boolean;
   error: string | null;
   config: FriendsPageConfig;
@@ -20,10 +29,10 @@ export interface UseFriendsStateReturn {
   searchTerm: string;
 
   // 计算后的数据
-  filteredFriendsItems: LinksItem[];
+  filteredFriendsItems: FriendLink[];
 
   // Actions (来自 Zustand)
-  setFriendsItems: (items: LinksItem[]) => void;
+  setFriendsItems: (items: FriendLink[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setConfig: (config: FriendsPageConfig) => void;
@@ -59,44 +68,53 @@ export function useFriendsState(): UseFriendsStateReturn {
     resetState,
   } = useFriendsStore();
 
+  // 创建标准化的状态操作函数
+  const stateActions = createStandardStateActions<FriendLink[]>(
+    setLoading,
+    setError,
+    setFriendsItems
+  );
+
+  // 创建过滤管理器
+  const filterManager = createFilteredStateManager<FriendLink>(friendsItems, (item, searchTerm) => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return (
+      item.title.toLowerCase().includes(lowerSearchTerm) ||
+      item.description?.toLowerCase().includes(lowerSearchTerm) ||
+      item.url.toLowerCase().includes(lowerSearchTerm)
+    );
+  });
+
+  // 创建配置管理器
+  const configManager = createConfigManager<FriendsPageConfig>(
+    DEFAULT_FRIENDS_CONFIG,
+    config,
+    setConfig
+  );
+
   // 加载友链数据
   const loadFriendsData = useCallback(
     (friendsData: unknown[]) => {
-      try {
-        setLoading(true);
-        setError(null);
-
+      const operation = () => {
         // 处理友链数据
-        const processedItems: LinksItem[] = processFriendsData(friendsData);
+        const processedItems: FriendLink[] = processFriendsData(friendsData);
+        return Promise.resolve(processedItems);
+      };
 
-        // 更新 Zustand 状态
-        setFriendsItems(processedItems);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Failed to load friends data";
-        setError(errorMessage);
-        setFriendsItems([]);
-      } finally {
-        setLoading(false);
-      }
+      void stateActions.loadData(operation, {
+        onError: () => {
+          setFriendsItems([]);
+        },
+        contentType: "links",
+      });
     },
-    [setFriendsItems, setLoading, setError]
+    [stateActions, setFriendsItems]
   );
 
   // 更新配置
   const updateConfig = useCallback(
     (partialConfig: Partial<FriendsPageConfig>) => {
-      const newConfig: FriendsPageConfig = {
-        ...DEFAULT_FRIENDS_CONFIG,
-        ...config,
-        ...partialConfig,
-        application: {
-          ...DEFAULT_FRIENDS_CONFIG.application,
-          ...config.application,
-          ...partialConfig.application,
-        },
-      };
-
-      setConfig(newConfig);
+      configManager.updateConfig(partialConfig);
 
       // 如果有新的要求配置，更新要求状态
       if (partialConfig.requirements) {
@@ -106,28 +124,18 @@ export function useFriendsState(): UseFriendsStateReturn {
         setRequirements(FRIEND_LINK_REQUIREMENTS);
       }
     },
-    [config, setConfig, setRequirements]
+    [configManager, config, setRequirements]
   );
 
   // 检查是否有友链数据
   const hasFriendsData = useCallback(() => {
-    return friendsItems.length > 0;
-  }, [friendsItems]);
+    return filterManager.hasData();
+  }, [filterManager]);
 
   // 过滤友链项目
   const filteredFriendsItems = useMemo(() => {
-    if (!searchTerm) {
-      return friendsItems;
-    }
-
-    const lowerSearchTerm = searchTerm.toLowerCase();
-    return friendsItems.filter(
-      item =>
-        item.title.toLowerCase().includes(lowerSearchTerm) ||
-        item.description?.toLowerCase().includes(lowerSearchTerm) ||
-        item.url.toLowerCase().includes(lowerSearchTerm)
-    );
-  }, [friendsItems, searchTerm]);
+    return filterManager.filterItems(searchTerm);
+  }, [filterManager, searchTerm]);
 
   return {
     // 数据状态

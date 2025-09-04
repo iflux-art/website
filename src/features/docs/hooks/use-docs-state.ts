@@ -3,6 +3,8 @@
 import type { DocCategory, DocItem } from "@/features/docs/types";
 import { useCallback } from "react";
 import { useDocsStore } from "@/stores";
+// 导入新的异步操作工具
+import { executeAsyncOperation } from "@/utils/async";
 
 export interface UseDocsStateReturn {
   // 数据状态
@@ -48,10 +50,7 @@ export function useDocsState(): UseDocsStateReturn {
 
   // 加载文档分类
   const loadCategories = useCallback(() => {
-    try {
-      setLoading(true);
-      setError(null);
-
+    const operation = () => {
       // 这里应该调用实际的 API 或数据获取函数
       // 暂时使用模拟数据
       const mockCategories: DocCategory[] = [
@@ -73,24 +72,27 @@ export function useDocsState(): UseDocsStateReturn {
         },
       ];
 
-      // 更新 Zustand 状态
-      setCategories(mockCategories);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to load categories";
-      setError(errorMessage);
-      setCategories([]);
-    } finally {
-      setLoading(false);
-    }
+      return Promise.resolve(mockCategories);
+    };
+
+    void executeAsyncOperation(operation, {
+      setLoading,
+      setError,
+      onSuccess: mockCategories => {
+        // 更新 Zustand 状态
+        setCategories(mockCategories);
+      },
+      onError: () => {
+        setCategories([]);
+      },
+      contentType: "docs",
+    });
   }, [setCategories, setLoading, setError]);
 
   // 加载文档内容
   const loadDocContent = useCallback(
-    (_path: string) => {
-      try {
-        setLoading(true);
-        setError(null);
-
+    (path: string) => {
+      const operation = () => {
         // 这里应该调用实际的 API 或数据获取函数
         // 暂时使用模拟数据
         const mockDoc = {
@@ -103,20 +105,27 @@ export function useDocsState(): UseDocsStateReturn {
           headings: [],
         };
 
-        // 更新当前文档状态
-        setCurrentDoc({
-          title: mockDoc.title,
-          content: mockDoc.content,
-          frontmatter: mockDoc.frontmatter,
-          headings: mockDoc.headings,
-        });
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Failed to load document";
-        setError(errorMessage);
-        setCurrentDoc(null);
-      } finally {
-        setLoading(false);
-      }
+        return Promise.resolve(mockDoc);
+      };
+
+      void executeAsyncOperation(operation, {
+        setLoading,
+        setError,
+        onSuccess: mockDoc => {
+          // 更新当前文档状态
+          setCurrentDoc({
+            title: mockDoc.title,
+            content: mockDoc.content,
+            frontmatter: mockDoc.frontmatter,
+            headings: mockDoc.headings,
+          });
+        },
+        onError: () => {
+          setCurrentDoc(null);
+        },
+        contentType: "docs",
+        contentId: path,
+      });
     },
     [setCurrentDoc, setLoading, setError]
   );

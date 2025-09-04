@@ -5,6 +5,8 @@ import type { BlogPost, CategoryWithCount } from "@/features/blog/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { useBlogPageStore } from "@/stores";
+// 导入新的异步操作工具
+import { executeAsyncOperation } from "@/utils/async";
 
 export interface UseBlogPageStateReturn {
   // 数据状态
@@ -54,15 +56,18 @@ export function useBlogPageState(): UseBlogPageStateReturn {
 
   // 加载文章数据
   const loadPosts = useCallback(async () => {
-    try {
-      setLoading(true);
+    const operation = async () => {
       const data = await getAllPosts();
-      setPosts(data);
-    } catch (error) {
-      console.error("Failed to load posts", error);
-    } finally {
-      setLoading(false);
-    }
+      return data;
+    };
+
+    await executeAsyncOperation(operation, {
+      setLoading,
+      onSuccess: data => {
+        setPosts(data);
+      },
+      contentType: "blog",
+    });
   }, [setPosts, setLoading]);
 
   // 初始化时加载数据

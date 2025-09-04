@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useCache } from "@/hooks/use-cache";
+import { useCache } from "@/hooks/use-advanced-cache";
 
 // 定义默认缓存时间（30分钟）
 const DEFAULT_CACHE_TIME = 30 * 60 * 1000;

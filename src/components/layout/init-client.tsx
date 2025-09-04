@@ -5,7 +5,6 @@
  * 处理需要在客户端执行的初始化逻辑
  */
 
-import { initLinksPreload } from "@/lib/init/preload-links";
 import { useEffect } from "react";
 
 /**
@@ -14,12 +13,8 @@ import { useEffect } from "react";
  */
 export function InitClient() {
   useEffect(() => {
-    // 初始化链接数据预加载
-    initLinksPreload().catch(error => {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("Failed to initialize links preload:", error);
-      }
-    });
+    // 客户端初始化逻辑
+    // 目前没有需要初始化的内容
   }, []);
 
   return null; // 此组件不渲染任何UI

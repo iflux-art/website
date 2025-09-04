@@ -2,11 +2,10 @@
 
 import { AppGrid, PageContainer } from "@/components/layout";
 import { TwikooComment } from "@/features/comment";
-import { LinkCard } from "@/features/links/components";
-import type { LinksItem } from "@/features/links/types";
 import { DEFAULT_FRIENDS_CONFIG, hasFriendsData, processFriendsData } from "../lib";
-import type { FriendsPageConfig } from "../types";
+import type { FriendLink, FriendsPageConfig } from "../types";
 import { FriendLinkApplication } from "./friend-link-application";
+import { FriendLinkCard } from "./friend-link-card";
 
 interface FriendsPageContainerProps {
   /** 友链数据 */
@@ -39,7 +38,7 @@ export const FriendsPageContainer = ({
   };
 
   // 处理友链数据
-  const friendsItems: LinksItem[] = processFriendsData(friendsData);
+  const friendsItems: FriendLink[] = processFriendsData(friendsData);
 
   // 如果没有友链数据，显示空状态
   if (!hasFriendsData(friendsItems)) {
@@ -68,7 +67,7 @@ export const FriendsPageContainer = ({
         {/* 友链列表网格 */}
         <AppGrid columns={5} className="items-stretch">
           {friendsItems.map(item => (
-            <LinkCard
+            <FriendLinkCard
               key={item.id}
               title={item.title}
               description={item.description || item.url}

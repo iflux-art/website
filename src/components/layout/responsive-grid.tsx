@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { SidebarConfig } from "@/types";
 import type { PageLayoutType } from "@/types";
 import { cn } from "@/utils";
-import { SidebarWrapper } from "@/components/layout/sidebar";
+import { SidebarWrapper } from "@/features/navigation";
 import { getMainContentClasses, getSidebarClasses } from "@/lib/layout/layout-utils";
 import { useLayoutStore } from "@/stores";
 
@@ -27,11 +27,10 @@ interface ResponsiveGridProps {
 
 /**
  * 响应式网格布局组件
- * 支持四种布局类型：
- * 1. 窄布局(narrow)：主内容占6列，不显示侧边栏
- * 2. 单侧栏布局(single-sidebar)：左侧栏占3列，主内容占9列
- * 3. 双侧栏布局(double-sidebar)：左右侧栏各占3列，主内容占6列
- * 4. 宽布局(full-width)：主内容占满12列，不显示侧边栏
+ * 支持三种布局类型：
+ * 1. 窄布局(narrow)：主内容占8列
+ * 2. 双侧栏布局(double-sidebar)：左右侧栏各占2列，主内容占8列
+ * 3. 宽布局(full-width)：主内容占满12列
  */
 export const ResponsiveGrid = ({
   children,

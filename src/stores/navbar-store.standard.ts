@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { debounce } from "lodash";
+import { debounceSync } from "@/utils/helpers";
+import { createResetFunction } from "@/utils/store";
 
 // 状态接口
 export interface NavbarState {
@@ -45,26 +46,22 @@ export const initialState: NavbarState = {
   isInitialized: false,
 };
 
+// 创建标准化的重置函数
+const resetStateFunc = createResetFunction(initialState);
+
 // 创建函数
 export const createNavbarStore = () => {
   return create<NavbarStore>()((set, _get) => {
     // 创建防抖的滚动处理函数
-    const debouncedSetState = debounce((newState: Partial<NavbarState>) => {
+    const debouncedSetState = debounceSync((newState: Partial<NavbarState>) => {
       set(state => ({ ...state, ...newState }));
     }, NAVBAR_STATE_CONFIG.debounceTime);
 
     return {
-      // ...initialState,
-      direction: "up",
-      position: 0,
-      showTitle: false,
-      pageTitle: "",
-      lastDirectionChange: 0,
-      isInitialized: false,
+      ...initialState,
 
       // Actions
       setScrollPosition: position => {
-        // 只有在滚动距离超过阈值时才更新方向
         set(state => {
           const distance = Math.abs(position - state.position);
           if (distance < NAVBAR_STATE_CONFIG.scrollThreshold) {
@@ -74,10 +71,14 @@ export const createNavbarStore = () => {
           const newDirection = position > state.position ? "down" : "up";
           const shouldUpdateDirection = newDirection !== state.direction;
 
+          // 根据滚动位置决定是否显示页面标题
+          const shouldShowTitle = position > NAVBAR_STATE_CONFIG.showThreshold;
+
           // 更新状态
           debouncedSetState({
             position,
             direction: newDirection,
+            showTitle: shouldShowTitle,
             lastDirectionChange: shouldUpdateDirection ? Date.now() : state.lastDirectionChange,
           });
 
@@ -96,10 +97,7 @@ export const createNavbarStore = () => {
 
       initialize: () => set({ isInitialized: true }),
 
-      resetState: () =>
-        set({
-          ...initialState,
-        }),
+      resetState: () => set(resetStateFunc()),
     };
   });
 };

@@ -1,6 +1,6 @@
 import { ThreeColumnLayout } from "@/components/layout";
-import { TableOfContentsCard } from "@/components/layout/toc/table-of-contents-card";
-import ClientMDXRenderer from "@/components/mdx/client-mdx-renderer";
+import { TableOfContentsCard } from "@/features/navigation";
+import ClientMDXRenderer from "@/features/content/components/mdx/client-mdx-renderer";
 import {
   BlogCategoryCard,
   LatestPostsCard,
@@ -9,7 +9,7 @@ import {
 } from "@/features/blog/components";
 import { createBlogBreadcrumbs, getBlogContent } from "@/features/blog/lib";
 import { TwikooComment } from "@/features/comment";
-import { ContentDisplay } from "@/features/content-display/components";
+import { ContentDisplay } from "@/features/content/components/display";
 import { handleContentError } from "@/lib/error/error-utils";
 import { notFound } from "next/navigation";
 

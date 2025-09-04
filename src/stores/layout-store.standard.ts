@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { PageLayoutType, SidebarConfig } from "@/types";
+import { createResetFunction } from "@/utils/store";
 
 // 状态接口
 export interface LayoutState {
@@ -59,19 +60,13 @@ export const initialState: LayoutState = {
   },
 };
 
+// 修改这里，确保 initialState 符合 Record<string, unknown> 类型
+const resetStateFunc = createResetFunction(initialState);
+
 // 创建函数
 export const createLayoutStore = () => {
   return create<LayoutStore>()((set, _get) => ({
-    // ...initialState,
-    layoutType: "full-width",
-    sidebars: [],
-    isMobile: false,
-    isTablet: false,
-    isDesktop: true,
-    containerConfig: {
-      className: "",
-      minHeight: "min-h-screen",
-    },
+    ...initialState,
 
     // Actions
     setLayoutType: layoutType => set({ layoutType }),
@@ -91,10 +86,7 @@ export const createLayoutStore = () => {
         isDesktop,
       });
     },
-    resetState: () =>
-      set({
-        ...initialState,
-      }),
+    resetState: () => set(resetStateFunc()),
   }));
 };
 

@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { LinksItem } from "@/features/links/types";
+import type { FriendLink } from "@/features/friends/types";
 import { useFriendsState } from "../use-friends-state";
 
 // Mock 数据
@@ -29,7 +29,7 @@ const mockFriendsData = [
   },
 ];
 
-const mockFriendsItems: LinksItem[] = [
+const mockFriendsItems: FriendLink[] = [
   {
     id: "1",
     title: "Friend Site 1",

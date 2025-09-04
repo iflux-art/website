@@ -5,7 +5,7 @@ export { getBlogContent } from "./blog-content";
 import fs from "node:fs";
 import path from "node:path";
 import type { BlogPost } from "@/features/blog/types";
-import type { BreadcrumbItem } from "@/types";
+import type { BreadcrumbItem } from "@/features/navbar/types";
 import matter from "gray-matter";
 
 // ==================== 面包屑导航相关类型和函数 ====================
