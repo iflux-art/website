@@ -1,34 +1,42 @@
-import dynamicImport from "next/dynamic";
 import type { Metadata } from "next";
-import { HOME_PAGE_METADATA } from "@/config";
-
-// 启用自动缓存策略
-export const dynamic = "force-static";
-
-// 设置60秒重新验证
-export const revalidate = 60;
+import { HOME_CONFIG } from "@/features/home/config";
+import { HeroSection } from "@/features/home/components/hero-section";
+import { FeaturedLinks } from "@/features/home/components/featured-links";
 
 // 页面元数据
-export const metadata: Metadata = HOME_PAGE_METADATA;
-
-// 使用动态导入来加载客户端组件，并添加预加载策略
-const HeroSection = dynamicImport(
-  () => import("@/features/home/components").then(mod => mod.HeroSection),
-  {
-    ssr: true, // 启用服务端渲染
-    loading: () => (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    ),
-  }
-);
+export const metadata: Metadata = {
+  title: HOME_CONFIG.seo.title,
+  description: HOME_CONFIG.seo.description,
+  openGraph: {
+    title: HOME_CONFIG.seo.title,
+    description: HOME_CONFIG.seo.description,
+    type: HOME_CONFIG.seo.type,
+    url: "https://iflux.art",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: HOME_CONFIG.seo.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_CONFIG.seo.title,
+    description: HOME_CONFIG.seo.description,
+    images: ["/images/og-image.png"],
+  },
+};
 
 export default function Home() {
   return (
-    <div className="flex h-full flex-col">
+    <>
       {/* Hero区域 */}
       <HeroSection />
-    </div>
+
+      {/* 特色链接 */}
+      <FeaturedLinks />
+    </>
   );
 }

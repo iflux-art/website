@@ -1,12 +1,11 @@
 /**
- * Home 功能模块统一导出
+ * @file src/features/home/index.ts
+ * @description 主页模块统一导出文件
  */
 
-// 组件导出
-export { HeroSection } from "./components";
+// 导出组件
+export { HeroSection } from "./components/hero-section";
+export { FeaturedLinks } from "./components/featured-links";
 
-// 类型导出
-export type { SiteStats } from "./types";
-
-// Hooks 导出
-export { useSiteStats } from "./hooks";
+// 导出配置
+export { HOME_CONFIG } from "./config";

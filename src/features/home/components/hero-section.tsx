@@ -1,14 +1,18 @@
 "use client";
 
-import { SITE_METADATA } from "@/config";
-import { Button } from "@/components/ui/button";
-import { Sparkles, Target, Zap } from "lucide-react";
-import Link from "next/link";
+import { HOME_CONFIG } from "@/features/home/config";
+import { Sparkles } from "lucide-react";
+
+// 背景装饰组件的属性类型
+interface HeroDecorationProps {
+  className?: string;
+  style?: React.CSSProperties;
+}
 
 // 背景装饰组件
-const BackgroundDecorations = () => (
+const BackgroundDecorations = (_props: HeroDecorationProps) => (
   <>
-    <div className="bg-grid-white/[0.05] dark:bg-grid-white/[0.02] absolute inset-0 bg-[size:50px_50px]" />
+    <div className="bg-grid-white/[0.01] dark:bg-grid-white/[0.01] absolute inset-0 bg-[size:50px_50px]" />
     <div className="absolute top-1/4 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 animate-pulse rounded-full bg-gradient-to-r from-primary/30 via-transparent to-primary/30 dark:from-primary/20 dark:to-primary/20 opacity-30 dark:opacity-20 blur-3xl" />
     <div
       className="absolute top-20 left-20 h-20 w-20 animate-bounce rounded-full bg-primary/25 dark:bg-primary/10 blur-xl"
@@ -27,47 +31,26 @@ const BackgroundDecorations = () => (
 
 export const HeroSection = () => {
   return (
-    <section className="relative flex min-h-[calc(100vh-8.5rem)] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
+    <section className="relative flex h-[calc(100vh-4rem)] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
       {/* 背景装饰 */}
       <BackgroundDecorations />
 
-      <div className="relative container mx-auto px-4 py-2">
+      <div className="relative container mx-auto px-4 py-6">
         <div className="mx-auto max-w-5xl text-center">
           {/* 标题区域 */}
-          <div className="mb-6">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-6 py-3 text-sm font-medium text-primary backdrop-blur-sm">
+          <div className="mb-3">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-5 py-1.5 text-sm font-medium text-primary backdrop-blur-sm">
               <Sparkles className="h-4 w-4 animate-spin" />
-              {SITE_METADATA.title}
+              {HOME_CONFIG.title}
             </div>
             <h1 className="mb-5 text-5xl leading-tight font-bold tracking-tight lg:text-7xl">
               <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-                斐启智境，流韵新生
+                {HOME_CONFIG.hero.title}
               </span>
             </h1>
             <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground lg:text-2xl">
-              探索AI与艺术的无限可能，分享技术与创意的完美结合
+              {HOME_CONFIG.hero.subtitle}
             </p>
-          </div>
-
-          {/* CTA按钮 */}
-          <div className="mb-6 flex flex-col items-center justify-center gap-6 sm:flex-row">
-            <Button size="lg" className="group px-4 py-4 text-lg" asChild>
-              <Link href="/blog">
-                <Zap className="mr-2 h-5 w-5" />
-                开始探索
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="px-4 py-4 text-lg backdrop-blur-sm"
-              asChild
-            >
-              <Link href="/docs">
-                <Target className="mr-2 h-5 w-5" />
-                查看文档
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

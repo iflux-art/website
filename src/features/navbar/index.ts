@@ -1,35 +1,15 @@
 /**
- * Navbar 功能模块统一导出
+ * Navbar 功能模块导出
+ * 集中导出导航栏相关组件和配置
  */
 
 // 组件导出
-export {
-  Logo,
-  MainNavbar,
-  NavItem,
-  NavItemList,
-  NavLink,
-  ActiveLink,
-  NavListMenu,
-  HamburgerMenu,
-  NavCardMenu,
-} from "./components";
+export { MainNavbar } from "./main-navbar";
+export { NavListMenu } from "./nav-menu";
+export { Logo } from "./logo";
 
-// Hooks 导出
-export { useNavbarScroll, useActiveSection } from "./hooks";
+// 配置导出
+export { NAV_ITEMS, NAV_PATHS, NAV_DESCRIPTIONS } from "./navbar-config";
 
 // 类型导出
-export type {
-  BreadcrumbItem,
-  Heading,
-  SidebarItem,
-  SidebarProps,
-  BaseNavItem,
-  NestedNavItem,
-  BaseSearchResult,
-  NavbarSearchResult,
-} from "./types";
-
-// 配置和类型导出
-export { NAV_ITEMS, NAV_PATHS, NAV_DESCRIPTIONS } from "./components/nav-config";
-export type { NavConfigItem } from "./components/nav-config";
+export type { BaseNavItem } from "./navbar-types";

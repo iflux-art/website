@@ -4,26 +4,13 @@
  *
  * 本文件聚合所有元数据配置，包括：
  * - 基础站点信息（标题、描述等）
- * - iOS设备特定配置
- * - Windows平台特定配置
- * - 图标配置
- *
- * @usage
- * 在 layout.tsx 中使用：
- * ```typescript
- * import { generateMetadata, generateViewport } from '@/lib/metadata';
- *
- * export { generateMetadata as metadata, generateViewport as viewport };
- * ```
  */
-
-import type { SiteMetadata, IosConfig, WindowsConfig } from "@/types";
 
 /**
  * 站点基础配置
  * 包含网站的基本信息
  */
-export const SITE_METADATA: SiteMetadata = {
+export const SITE_METADATA = {
   title: "iFluxArt · 斐流艺创",
   description:
     '"斐流艺创" 是 "iFluxArt" 的中文翻译，代表智能技术与艺术创作的有机融合，"斐然成章" 的创作力与 "川流不息" 的技术流。我们致力于通过智能技术推动艺术创作，让创意与技术交融共生。探索未来艺术的可能性，共创数字时代的视觉盛宴。',
@@ -35,7 +22,8 @@ export const SITE_METADATA: SiteMetadata = {
   github: "iflux-art",
   email: "hello@iflux.art",
   copyright: `© ${new Date().getFullYear()} iFluxArt · 斐流艺创`,
-};
+} as const;
+
 export const SITE_AUTHOR = "iFluxArt Team";
 export const SITE_URL = "https://www.iflux.art";
 export const SITE_TWITTER = "@ifluxart";
@@ -60,7 +48,7 @@ export const VIEWPORT_CONFIG = {
  * iOS 设备配置
  * 包含iOS设备上的显示和行为配置
  */
-export const IOS_CONFIG: IosConfig = {
+export const IOS_CONFIG = {
   mobileWebAppCapable: "yes",
   statusBarStyle: "black-translucent",
   appTitle: "iFluxArt · 斐流艺创",
@@ -95,7 +83,7 @@ export const IOS_CONFIG: IosConfig = {
  * Windows 设备配置
  * 包含Windows平台特定配置
  */
-export const WINDOWS_CONFIG: WindowsConfig = {
+export const WINDOWS_CONFIG = {
   msapplicationTileColor: "#000000",
   msapplicationTileImage: "/images/icons/ms-icon-144x144.png",
 } as const;

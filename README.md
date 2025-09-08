@@ -26,9 +26,8 @@
 ├── src/                  # 源代码
 │   ├── app/              # Next.js 应用路由
 │   ├── components/       # 共享组件
-│   ├── content/          # MDX 内容
+│   ├── content/          # 内容数据
 │   ├── features/         # 功能模块
-│   ├── lib/              # 工具函数
 │   ├── middleware.ts     # 中间件
 │   └── styles/           # 全局样式
 ├── public/               # 静态资源
@@ -143,12 +142,8 @@ pnpm test:coverage
 - `src/app/`: Next.js App Router 路由和页面
 - `src/components/`: 共享的UI组件
 - `src/features/`: 按功能模块组织的代码
-- `src/lib/`: 工具函数和库
-- `src/stores/`: Zustand 状态管理
-- `src/hooks/`: 自定义 React Hooks
 - `src/types/`: TypeScript 类型定义
-- `src/services/`: 业务服务层
-- `src/config/`: 配置文件
+- `src/utils/`: 通用工具函数
 
 ### 功能模块 (src/features/)
 
@@ -186,13 +181,6 @@ pnpm test:coverage
 
 ## 新增工具和功能
 
-### 异步操作工具
-
-项目现在包含统一的异步操作处理工具，可以简化错误处理和加载状态管理：
-
-- `executeAsyncOperation`: 执行异步操作并统一处理加载状态和错误
-- `executeWithRetry`: 带重试机制的异步操作执行器
-
 ### 状态管理工具
 
 提供标准化的状态管理工具函数，减少重复代码：
@@ -200,20 +188,6 @@ pnpm test:coverage
 - `createStandardStateActions`: 创建标准化的状态操作函数
 - `createFilteredStateManager`: 创建带过滤功能的状态管理器
 - `createConfigManager`: 创建配置管理器
-
-### API客户端
-
-统一的API客户端，提供标准化的API请求处理：
-
-- `ApiClient`: API客户端类
-- `apiClient`: 默认API客户端实例
-- 便捷函数: `get`, `post`, `put`, `deleteRequest`, `patch`
-
-### 增强版缓存Hook
-
-提供更强大的缓存功能：
-
-- `useAdvancedCache`: 增强版数据缓存Hook
 
 ## 更新日志
 

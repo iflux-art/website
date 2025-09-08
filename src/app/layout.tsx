@@ -1,49 +1,65 @@
+import type { Metadata } from "next";
+import { MainNavbar } from "@/features/navbar";
+import { Footer } from "@/components/footer";
+import { SITE_METADATA } from "@/config";
+import { ThemeProvider } from "@/features/theme";
 import "./globals.css";
-import { Footer } from "@/components/layout";
-import { InitClient } from "@/components/layout/init-client";
-import { MainNavbar } from "@/features/navbar/components/main-navbar";
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import { RoutePrefetcher } from "@/components/route-prefetcher";
-import React from "react";
 
-/**
- * 导入集中管理的元数据配置
- * Next.js要求这些配置必须从layout.tsx中导出，这是一个约定
- * 1. 先从配置文件导入 - 便于集中管理和复用
- * 2. 然后再导出 - 满足Next.js的约定要求
- */
-import { generateMetadata, generateViewport } from "@/lib/metadata";
+// 转换 SITE_METADATA 为 Next.js Metadata 格式
+export const metadata: Metadata = {
+  title: SITE_METADATA.title,
+  description: SITE_METADATA.description,
+  keywords: [...SITE_METADATA.keywords], // 转换为可变数组
+  authors: [{ name: SITE_METADATA.author }],
+  creator: SITE_METADATA.author,
+  publisher: SITE_METADATA.author,
+  metadataBase: new URL(SITE_METADATA.url),
+  openGraph: {
+    type: "website",
+    locale: "zh_CN",
+    url: SITE_METADATA.url,
+    title: SITE_METADATA.title,
+    description: SITE_METADATA.description,
+    siteName: SITE_METADATA.title,
+    images: [
+      {
+        url: SITE_METADATA.image,
+        width: 1200,
+        height: 630,
+        alt: SITE_METADATA.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_METADATA.title,
+    description: SITE_METADATA.description,
+    images: [SITE_METADATA.image],
+    creator: SITE_METADATA.twitter,
+  },
+};
 
-// 导出元数据配置 - Next.js会在构建时处理这些导出
-export const metadata = generateMetadata();
-export const viewport = generateViewport();
-
-// 定义需要预取的关键路由
-const KEY_ROUTES = ["/", "/blog", "/docs", "/about", "/friends"];
-
-const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <html
-    lang="zh-CN"
-    // 禁用hydration warning提示 - next-themes要求
-    suppressHydrationWarning
-  >
-    <head />
-    <body>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        {/* 页面主体布局容器 */}
-        <div className="flex flex-col">
-          <MainNavbar className="flex-shrink-0" />
-          {/* 客户端初始化组件 */}
-          <InitClient />
-          {/* 路由预取器 */}
-          <RoutePrefetcher routes={KEY_ROUTES} strategy="idle" />
-          {/* 主内容区域 */}
-          <main>{children}</main>
-          <Footer />
-        </div>
-      </ThemeProvider>
-    </body>
-  </html>
-);
-
-export default RootLayout;
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <MainNavbar />
+          <div className="relative flex min-h-screen flex-col">
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

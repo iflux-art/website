@@ -1,12 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
-
-/* Typography 使用 @tailwindcss/typography 插件提供 */
-
-@custom-variant dark (&:is(.dark *));
-/**
- * CSS 变量定义 - 按功能分组
- */
 
 :root {
   --radius: 0.625rem;
@@ -164,10 +156,5 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
     /* Chrome/Safari/Webkit */
-  }
-
-  /* 自定义 Twikoo 评论区样式 */
-  #twikoo .tk-footer {
-    display: none;
   }
 }

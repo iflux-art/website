@@ -4,7 +4,7 @@ const nextConfig = {
 		level: "verbose",
 	},
 	// 基本配置
-	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+	pageExtensions: ["js", "jsx", "ts", "tsx"],
 
 	// TypeScript 错误检查配置
 	typescript: {
@@ -20,15 +20,6 @@ const nextConfig = {
 	experimental: {
 		// 优化页面加载
 		optimisticClientCache: true,
-	},
-
-	// Turbopack配置
-	turbopack: {
-		rules: {
-			"*.mdx": {
-				loaders: ["@mdx-js/loader"],
-			},
-		},
 	},
 
 	// 图片优化配置

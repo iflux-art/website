@@ -2,76 +2,9 @@ import type { ReactNode } from "react";
 
 /**
  * 页面布局类型枚举
+ * 简化为只支持一种布局类型：宽布局（默认网格布局）
  */
-export type PageLayoutType =
-  | "narrow" // 窄布局：占中间的8列（友链、关于页面）
-  | "double-sidebar" // 双侧栏布局：左右侧栏各占2列，中间主内容区占6列（博客列表、博客详情、文档详情页、导航页面）
-  | "full-width"; // 宽布局：占满全部的12列（首页）
-
-/**
- * 页面容器配置接口
- */
-export interface PageContainerConfig {
-  /**
-   * 布局类型
-   */
-  layout?: PageLayoutType;
-  /**
-   * 是否显示页面头部
-   */
-  showHeader?: boolean;
-  /**
-   * 是否显示页面footer
-   */
-  showFooter?: boolean;
-  /**
-   * 自定义容器类名
-   */
-  className?: string;
-  /**
-   * 最小高度设置
-   */
-  minHeight?: string;
-}
-
-/**
- * 侧边栏配置接口
- * 简化版本，只支持两种布局类型
- */
-export interface SidebarConfig {
-  /**
-   * 侧边栏唯一标识符（可选）
-   */
-  id?: string;
-  /**
-   * 侧边栏内容
-   */
-  content: ReactNode;
-  /**
-   * 侧边栏位置
-   */
-  position: "left" | "right";
-  /**
-   * 是否粘性定位
-   */
-  sticky?: boolean;
-  /**
-   * 粘性定位的top值
-   */
-  stickyTop?: string;
-  /**
-   * 最大高度
-   */
-  maxHeight?: string;
-  /**
-   * 响应式显示设置
-   */
-  responsive?: {
-    hideOnMobile?: boolean;
-    hideOnTablet?: boolean;
-    hideOnDesktop?: boolean;
-  };
-}
+export type PageLayoutType = "full-width"; // 宽布局：默认网格布局
 
 /**
  * NotFound组件属性接口
@@ -130,14 +63,6 @@ export interface PageLayoutProps extends PageProps {
    */
   children: ReactNode;
   /**
-   * 页面配置
-   */
-  config?: PageContainerConfig;
-  /**
-   * 侧边栏配置
-   */
-  sidebars?: SidebarConfig[];
-  /**
    * 页面标题
    */
   title?: string;
@@ -159,66 +84,6 @@ export interface AppGridProps {
   gap?: "small" | "default" | "large";
   rowGap?: string; // 新增：行间距
   columnGap?: string; // 新增：列间距
-}
-
-/**
- * PageContainer 组件属性接口
- */
-export interface PageContainerProps {
-  /**
-   * 页面内容
-   */
-  children: ReactNode;
-  /**
-   * 页面配置
-   */
-  config?: PageContainerConfig;
-  /**
-   * 侧边栏配置数组
-   */
-  sidebars?: SidebarConfig[];
-  /**
-   * 自定义类名
-   */
-  className?: string;
-}
-
-/**
- * ThreeColumnLayout 组件属性接口
- */
-export interface ThreeColumnLayoutProps {
-  /**
-   * 左侧边栏内容
-   */
-  leftSidebar?: ReactNode;
-  /**
-   * 主内容
-   */
-  children: ReactNode;
-  /**
-   * 右侧边栏内容
-   */
-  rightSidebar?: ReactNode;
-  /**
-   * 自定义类名
-   */
-  className?: string;
-}
-
-/**
- * 三栏网格布局组件属性接口
- */
-export interface ThreeColumnGridProps {
-  children: ReactNode;
-  sidebars: SidebarConfig[];
-}
-
-/**
- * 侧边栏包装组件属性接口
- */
-export interface SidebarWrapperProps {
-  children: ReactNode;
-  config: SidebarConfig;
 }
 
 /**

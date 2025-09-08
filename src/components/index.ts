@@ -1,44 +1,19 @@
-/**
- * 全局共享组件统一导出
- * 集中管理所有通用共享组件，便于引用和维护
- * 业务相关组件已移动到对应的 features 目录中
- */
+// ==================== 核心组件导出 ====================
+export { AppGrid } from "./app-grid";
 
-// ==================== MDX 组件 ====================
-export {
-  ClientMDXRenderer,
-  MDXComponents,
-  MDXImg,
-  MDXLink,
-  MDXBlockquote,
-  MDXCode,
-} from "@/features/content/components/mdx";
-
-// ==================== 主题提供者 ====================
-export { ThemeProvider } from "./theme/theme-provider";
-
-// ==================== 业务按钮组件 ====================
-export { GitHubButton } from "./button/github-button";
-export { TravelButton } from "./button/travel-button";
-
-// ==================== UI 组件库 ====================
-export { BackButton } from "./ui/back-button";
+// ==================== UI组件导出 ====================
+// 只导出项目中实际使用的UI组件
 export { Button, buttonVariants } from "./ui/button";
-export { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-export {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
-  AlertDialogCancel,
-} from "./ui/alert-dialog";
-export { Badge } from "./ui/badge";
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./ui/card";
-export { Input } from "./ui/input";
-export { Label } from "./ui/label";
-export { Switch } from "./ui/switch";
-export { Textarea } from "./ui/textarea";
+export { Card, CardContent } from "./ui/card";
+export { BackButton } from "./ui/back-button";
+
+// ==================== 业务组件导出 ====================
+export { LinkCard } from "./link-card";
+export { GitHubButton } from "./button/github-button";
+
+// ==================== 布局组件导出 ====================
+export { Footer } from "./footer";
+
+// ==================== 主题组件导出 ====================
+export { ThemeProvider } from "@/features/theme";
+export { ThemeToggle } from "@/features/theme";
