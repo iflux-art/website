@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { HOME_CONFIG } from "@/features/home/config";
-import { HeroSection } from "@/features/home/components/hero-section";
 import { FeaturedLinks } from "@/features/home/components/featured-links";
+import { HeroSection } from "@/features/home/components/hero-section";
+import { HOME_CONFIG } from "@/features/home/config";
 
 // 页面元数据
 export const metadata: Metadata = {

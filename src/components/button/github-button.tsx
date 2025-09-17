@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const GITHUB_URL = "https://github.com/iflux-art";
 

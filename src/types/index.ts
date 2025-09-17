@@ -1,9 +1,9 @@
 export type {
-  PageLayoutType,
-  NotFoundProps,
-  PageProps,
-  PageLayoutProps,
   AppGridProps,
   GridColsMap,
   GridGapMap,
+  NotFoundProps,
+  PageLayoutProps,
+  PageLayoutType,
+  PageProps,
 } from "./layout-types";

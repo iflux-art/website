@@ -1,7 +1,7 @@
 "use client";
 
-import { HOME_CONFIG } from "@/features/home/config";
 import { Sparkles } from "lucide-react";
+import { HOME_CONFIG } from "@/features/home/config";
 
 // 背景装饰组件的属性类型
 interface HeroDecorationProps {

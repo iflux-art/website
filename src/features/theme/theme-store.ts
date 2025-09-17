@@ -29,12 +29,12 @@ export const createThemeStore = () => {
     mounted: false,
 
     // Actions
-    setTheme: theme => set({ theme }),
-    setResolvedTheme: resolvedTheme => set({ resolvedTheme }),
-    setConfig: config => set({ config }),
-    setMounted: mounted => set({ mounted }),
+    setTheme: (theme) => set({ theme }),
+    setResolvedTheme: (resolvedTheme) => set({ resolvedTheme }),
+    setConfig: (config) => set({ config }),
+    setMounted: (mounted) => set({ mounted }),
     toggleTheme: () =>
-      set(state => ({
+      set((state) => ({
         theme: state.theme === "dark" ? "light" : "dark",
       })),
     resetState: () =>

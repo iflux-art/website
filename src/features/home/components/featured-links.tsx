@@ -1,8 +1,8 @@
 "use client";
 
-import profileData from "../data/profile.json";
-import { LinkCard } from "@/components/link-card";
 import { AppGrid } from "@/components/app-grid";
+import { LinkCard } from "@/components/link-card";
+import profileData from "../data/profile.json";
 
 // 定义个人资料链接类型
 interface ProfileLink {
@@ -16,7 +16,7 @@ interface ProfileLink {
 
 export const FeaturedLinks = () => {
   // 处理个人资料数据，转换为 ProfileLink 格式
-  const profileItems: ProfileLink[] = profileData.map(item => {
+  const profileItems: ProfileLink[] = profileData.map((item) => {
     const typedItem = item as ProfileLink & { iconType?: "image" | "text" };
     return {
       ...typedItem,
@@ -34,7 +34,7 @@ export const FeaturedLinks = () => {
 
         {profileItems.length > 0 && (
           <AppGrid columns={5} className="items-stretch">
-            {profileItems.map(item => (
+            {profileItems.map((item) => (
               <LinkCard
                 key={item.id}
                 title={item.title}

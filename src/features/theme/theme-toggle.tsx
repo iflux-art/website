@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useThemeStore } from "./theme-store";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { useThemeStore } from "./theme-store";
 
 /**
  * 主题切换组件
@@ -47,7 +47,13 @@ export const ThemeToggle = () => {
   const label = isDark ? "切换到浅色模式" : "切换到深色模式";
 
   return (
-    <Button variant="ghost" size="icon" aria-label={label} title={label} onClick={handleToggle}>
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label={label}
+      title={label}
+      onClick={handleToggle}
+    >
       {icon}
       <span className="sr-only">{label}</span>
     </Button>

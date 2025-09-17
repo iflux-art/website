@@ -131,16 +131,16 @@
 
     /* 系统字体回退方案 */
     font-family:
-      var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-      Arial, sans-serif;
+      var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
   }
 
   kbd,
   samp {
     /* 系统等宽字体回退方案 */
     font-family:
-      var(--font-mono), SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-      monospace;
+      var(--font-mono), SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
   }
 
   /* 隐藏滚动条但内容可滚动 */

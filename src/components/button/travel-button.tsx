@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { TramFront } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const TRAVEL_URL = "https://www.travellings.cn/go.html";
 

@@ -21,7 +21,8 @@ export const HOME_CONFIG = {
   // SEO配置
   seo: {
     title: "首页",
-    description: "iFluxArt · 斐流艺创 - 智能技术与艺术创作的有机融合，探索AI与艺术的无限可能",
+    description:
+      "iFluxArt · 斐流艺创 - 智能技术与艺术创作的有机融合，探索AI与艺术的无限可能",
     type: "website",
   },
 } as const;

@@ -17,7 +17,7 @@ export default function Loading() {
     }, 100);
 
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 90) {
           clearInterval(progressInterval);
           return prev;
@@ -28,7 +28,7 @@ export default function Loading() {
     }, 300);
 
     const opacityInterval = setInterval(() => {
-      setOpacity(prev => (prev === 0.8 ? 1 : 0.8));
+      setOpacity((prev) => (prev === 0.8 ? 1 : 0.8));
     }, 800);
 
     return () => {
@@ -49,7 +49,8 @@ export default function Loading() {
             opacity,
             transition: "width 300ms ease-out",
             transform: "translateZ(0)",
-            boxShadow: "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
+            boxShadow:
+              "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
           }}
         />
       </div>

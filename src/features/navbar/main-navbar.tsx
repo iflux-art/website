@@ -1,11 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { GitHubButton } from "@/components/button";
+import { TravelButton } from "@/components/button/travel-button";
 import { ThemeToggle } from "@/features/theme";
 import { Logo } from "./logo";
 import { NavListMenu } from "./nav-menu";
-import { TravelButton } from "@/components/button/travel-button";
-import { useEffect, useState } from "react";
 
 export const MainNavbar = ({ className = "" }: { className?: string }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +28,10 @@ export const MainNavbar = ({ className = "" }: { className?: string }) => {
   }, []);
 
   return (
-    <nav className={`sticky top-0 z-40 h-16 w-full backdrop-blur ${className}`} aria-label="导航栏">
+    <nav
+      className={`sticky top-0 z-40 h-16 w-full backdrop-blur ${className}`}
+      aria-label="导航栏"
+    >
       <div className="container mx-auto flex h-full items-center justify-between px-4">
         <div className="flex items-center opacity-100">
           <Logo />

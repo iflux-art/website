@@ -1,13 +1,17 @@
 "use client";
 
-import { useThemeStore } from "./theme-store";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useEffect, useMemo } from "react";
+import { useThemeStore } from "./theme-store";
 
 // 创建一个内部组件来同步主题状态
 const ThemeSync = () => {
   const { theme, resolvedTheme } = useTheme();
-  const { setTheme: setStoreTheme, setResolvedTheme, setMounted } = useThemeStore();
+  const {
+    setTheme: setStoreTheme,
+    setResolvedTheme,
+    setMounted,
+  } = useThemeStore();
 
   useEffect(() => {
     setStoreTheme(theme as "light" | "dark" | "system");
@@ -25,7 +29,8 @@ export const ThemeProvider = ({
   const { setConfig } = useThemeStore();
 
   // 提取props中的各个属性并使用useMemo包装，以避免每次重新渲染时创建新对象
-  const { attribute, defaultTheme, enableSystem, disableTransitionOnChange } = props;
+  const { attribute, defaultTheme, enableSystem, disableTransitionOnChange } =
+    props;
   const memoizedConfig = useMemo(
     () => ({
       attribute,
@@ -33,7 +38,7 @@ export const ThemeProvider = ({
       enableSystem,
       disableTransitionOnChange,
     }),
-    [attribute, defaultTheme, enableSystem, disableTransitionOnChange]
+    [attribute, defaultTheme, enableSystem, disableTransitionOnChange],
   );
 
   // 同步配置到 Zustand store，只在必要时更新
