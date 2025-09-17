@@ -15,9 +15,9 @@ export const NAV_ITEMS: BaseNavItem[] = [
     external: true,
   },
   {
-    key: "nav",
+    key: "hub",
     label: "导航",
-    href: "https://nav.iflux.art/",
+    href: "https://hub.iflux.art/",
     external: true,
   },
   {
@@ -32,7 +32,7 @@ export const NAV_ITEMS: BaseNavItem[] = [
 export const NAV_PATHS: Record<string, string> = {
   blog: "https://blog.iflux.art/",
   docs: "https://docs.iflux.art/",
-  nav: "https://nav.iflux.art/",
+  hub: "https://hub.iflux.art/",
   friends: "https://blog.iflux.art/friends/",
 };
 
@@ -40,6 +40,6 @@ export const NAV_PATHS: Record<string, string> = {
 export const NAV_DESCRIPTIONS: Record<string, string> = {
   blog: "查看最新博客文章",
   docs: "查阅技术文档和指南",
-  nav: "查看网站导航",
+  hub: "查看网站导航",
   friends: "查看友情链接",
 };
