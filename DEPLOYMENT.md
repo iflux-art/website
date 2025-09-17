@@ -15,15 +15,16 @@ Got: 8.15.0
 
 ## 问题原因
 
-这个问题是由于 Vercel 当前支持的 pnpm 版本（8.15.0）与本地开发环境要求的 pnpm 版本（>=9.11.0）不兼容导致的。
+这是由于 Vercel 当前支持的 pnpm 版本（8.15.0）与本地开发环境要求的 pnpm 版本（>=9.11.0）不兼容导致的。
 
 ## 解决方案
 
-我们已经通过以下方式解决了这个问题：
+我们已经通过以下方式解决了这些问题：
 
 1. 在每个子应用的 [package.json](file://c:\project\ifa\apps\website\package.json) 中，将 pnpm 的要求从 `>=9.11.0` 调整为 `>=8.0.0`，以兼容 Vercel 环境
 2. 保留了 `packageManager` 字段为 `pnpm@9.11.0`，这样在本地开发时仍会使用高版本
 3. 为每个子应用添加了 [vercel.json](file://c:\project\ifa\apps\website\vercel.json) 配置文件，确保部署时的正确配置
+4. 移除了未使用的 workspace 依赖，使子应用完全独立，无需任何额外脚本
 
 ## 部署步骤
 
@@ -40,8 +41,8 @@ Got: 8.15.0
 
 ## 本地开发与部署的版本差异
 
-- **本地开发**：使用 pnpm 9.11.0 和 Node.js 22.x
-- **Vercel 部署**：使用 pnpm 8.15.0 和 Node.js 18.x
+- **本地开发**：使用 pnpm 9.11.0 和 Node.js 20.x
+- **Vercel 部署**：使用 pnpm 8.15.0 和 Node.js 20.x
 
 这种配置确保了：
 1. 本地开发时可以使用最新的工具特性
