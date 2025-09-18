@@ -1,3 +1,4 @@
+import { FileText, Home, Link, PenTool } from "lucide-react";
 import type { BaseNavItem } from "./navbar-types";
 
 // 导航项配置
@@ -6,25 +7,25 @@ export const NAV_ITEMS: BaseNavItem[] = [
     key: "blog",
     label: "博客",
     href: "https://blog.iflux.art/",
-    external: true,
+    icon: PenTool,
   },
   {
     key: "docs",
     label: "文档",
     href: "https://docs.iflux.art/",
-    external: true,
+    icon: FileText,
   },
   {
     key: "hub",
     label: "导航",
     href: "https://hub.iflux.art/",
-    external: true,
+    icon: Home,
   },
   {
     key: "friends",
     label: "友链",
     href: "https://blog.iflux.art/friends/",
-    external: true,
+    icon: Link,
   },
 ];
 
