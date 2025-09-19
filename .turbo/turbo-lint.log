@@ -2,21 +2,4 @@
 > website@1.0.0 lint C:\project\ifa\apps\website
 > biome lint .
 
-src\app\not-found.tsx:1:10 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Several of these imports are unused.
-  
-  > 1 │ import { ArrowLeft, Home } from "lucide-react";
-      │          ^^^^^^^^^
-Checked 55 files in 78ms. No fixes applied.
-Found 1 warning.
-    2 │ import type { Metadata } from "next";
-    3 │ import Link from "next/link";
-  
-  i Unused imports might be the result of an incomplete refactoring.
-  
-  i Unsafe fix: Remove the unused imports.
-  
-    1 │ import·{·ArrowLeft,·Home·}·from·"lucide-react";
-      │          -----------                           
-
+Checked 54 files in 96ms. No fixes applied.

@@ -4,7 +4,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import type * as React from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 const Sheet = ({
   ...props

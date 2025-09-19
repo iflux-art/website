@@ -5,12 +5,5 @@
 
 // 主题提供者组件
 export { ThemeProvider } from "./theme-provider";
-// 主题状态存储
-export { useThemeStore } from "./theme-store";
 // 主题切换组件
 export { ThemeToggle } from "./theme-toggle";
-export type {
-  ThemeActions as ThemeActionsType,
-  ThemeState as ThemeStateType,
-  ThemeStore as ThemeStoreType,
-} from "./theme-types";

@@ -1,7 +1,7 @@
 "use client";
 
 import { AppGrid } from "@/components/app-grid";
-import { LinkCard } from "@/components/link-card";
+import { LinkCard } from "@/components/cards";
 import profileData from "../data/profile.json";
 
 // 定义个人资料链接类型

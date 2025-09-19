@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { NAV_ITEMS, NAV_PATHS } from "./navbar-config";
 import type { BaseNavItem } from "./navbar-types";
 

@@ -2,35 +2,22 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useThemeStore } from "./theme-store";
 
-/**
- * 主题切换组件
- * 用于切换明暗主题模式
- *
- * 简化版本：
- * - 移除所有动画效果
- * - 保留基础功能
- * - 支持系统主题
- *
- * @example
- * <ThemeToggle />
- */
-export const ThemeToggle = () => {
+export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const { mounted, setMounted } = useThemeStore();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, [setMounted]);
+  }, []);
 
   if (!mounted) {
-    return null; // Let Next.js loading.tsx handle loading states
+    return null;
   }
 
-  const handleToggle = () => {
+  const toggleTheme = () => {
     if (resolvedTheme === "dark") {
       setTheme("light");
     } else {
@@ -38,24 +25,19 @@ export const ThemeToggle = () => {
     }
   };
 
-  const isDark = resolvedTheme === "dark";
-  const icon = isDark ? (
-    <Sun className="h-[1.2rem] w-[1.2rem]" />
-  ) : (
-    <Moon className="h-[1.2rem] w-[1.2rem]" />
-  );
-  const label = isDark ? "切换到浅色模式" : "切换到深色模式";
-
   return (
     <Button
       variant="ghost"
       size="icon"
-      aria-label={label}
-      title={label}
-      onClick={handleToggle}
+      onClick={toggleTheme}
+      aria-label="切换主题"
+      title={resolvedTheme === "dark" ? "切换到浅色模式" : "切换到深色模式"}
     >
-      {icon}
-      <span className="sr-only">{label}</span>
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">
+        {resolvedTheme === "dark" ? "切换到浅色模式" : "切换到深色模式"}
+      </span>
     </Button>
   );
-};
+}

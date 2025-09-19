@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 底栏组件

@@ -1,8 +1,8 @@
 "use client";
 
 import type { AppGridProps } from "@/types/layout-types";
-import { cn } from "@/utils";
-import { gridColsMap, gridGapMap } from "@/utils/layout-utils";
+import { cn } from "@/lib/utils";
+import { gridColsMap, gridGapMap } from "@/lib/utils/layout-utils";
 
 /**
  * 通用网格布局组件
